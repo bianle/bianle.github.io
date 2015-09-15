@@ -4,10 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>system-windows-reg | Hear</title>
+    <title>VMWare虚拟机下安装RedHat Enterprise Linux 5 网络配置过程 | Hear</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="bianle">
+    
+    <meta name="description" content="本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx1.网上邻居-属性-可以看到在你安装好 VM虚拟机后又多了两个网络连接(vmnet1是ho">
     
     
     
@@ -36,7 +38,7 @@
 				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
 				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -68,15 +70,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/31/system-windows-reg/" title="system-windows-reg" itemprop="url">system-windows-reg</a>
+      <a href="/2013/01/10/linux-vm-rhl/" title="VMWare虚拟机下安装RedHat Enterprise Linux 5 网络配置过程" itemprop="url">VMWare虚拟机下安装RedHat Enterprise Linux 5 网络配置过程</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://2le.me" title="bianle">bianle</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-08-31T07:28:17.389Z" itemprop="datePublished">2015-08-31</time>
-    更新日期:<time datetime="2015-08-31T06:52:48.132Z" itemprop="dateModified">2015-08-31</time>
+    <time datetime="2013-01-10T13:26:00.000Z" itemprop="datePublished">2013-01-10</time>
+    更新日期:<time datetime="2015-09-21T03:21:10.017Z" itemprop="dateModified">2015-09-21</time>
     
   </p>
 </header>
@@ -84,20 +86,31 @@
 		
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 		</div>
 		
-		  
+		<p>本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程<br><a href="http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx" target="_blank" rel="external">http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx</a><br>1.网上邻居-属性-可以看到在你安装好 VM虚拟机后又多了两个网络连接<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl1.png" alt="rhl"><br>(vmnet1是host-only，也就是说，选择用vmnet1的话就相当于VMware给你提供了一个虚拟交换机，仅将虚拟机和真实系统连上了，虚拟机可以与真实系统相互共享文件，但是虚拟机无法访问外部互联网，而vmnet8是NAT，就是网络地址转换，相当于给你一个虚拟交换机，将虚拟机和真实系统连上去了，同时这台虚拟交换机又和外部互联网相连，这样虚拟机和真是系统可以相互共享，同时又都能访问外部互联网，而且虚拟机是借用真实系统的IP上网的，不会受到IP-MAC绑定的限制。)<br>右键VMnet8-属性-tcp/ip协议<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl2.png" alt="rhl"><br>-双击打开 -勾选使用下面的IP地址，<br>把IP地址改为192.168.132(这个自己随便设1-224内的数字）.1 /255.255.255.0 网关以及DNS不用设置，点确定。<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl3.png" alt="rhl"><br>2.打开vm虚拟机，点左上方的编辑-虚拟网络设置-nat<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl4.png" alt="rhl"><br>edit—&gt;virtual network editor<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl5.png" alt="rhl"><br>NAT Settings<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl6.png" alt="rhl"><br>OK<br>虚拟机的DNS就是这里的网关IP地址192.168.132.2,这个vmnet8相当于局域网里的网关。<br>3.编辑-虚拟网络设置-主机虚拟网络映射,在vmnet0下拉框勾选自己的网卡，其余的一般默认即可。<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl7.png" alt="rhl"><br>4.回到win主机,开始-运行-CMD,打开DOS，输入命令ipconfig/all，可以看到相关的IP配置<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl8.png" alt="rhl"><br>5.进入VM虚拟机中的linux系统，主菜单-系统设置-网络-勾选下面的设备eth0-进入以太网设备编辑状态<br>system —-&gt;administration—–&gt;network<br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl9.png" alt="rhl"><br><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl10.png" alt="rhl"><br>设置完成保存后 主菜单-系统工具-终端 打开后输入：service network restart (重启网络命令)</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/rhl/">rhl</a><a href="/tags/vm/">vm</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://2le.me/2015/08/31/system-windows-reg/" data-title="system-windows-reg | Hear" data-tsina="null" class="share clearfix">
+  <div data-url="http://2le.me/2013/01/10/linux-vm-rhl/" data-title="VMWare虚拟机下安装RedHat Enterprise Linux 5 网络配置过程 | Hear" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -107,18 +120,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/08/31/system-bt5-guide/" title="system-bt5-guide">
+ <a href="/2013/01/17/java-tomcat-memory/" title="Linux和Windows下的Tomcat JVM内存设置">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  system-bt5-guide</span>
+  Linux和Windows下的Tomcat JVM内存设置</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/08/31/linux-ubuntu-ssh-server/"  title="linux-ubuntu-ssh-server">
+<a href="/2013/01/10/system-windows-reg/"  title="使用reg文件修改注册表">
  <strong>NEXT:</strong><br/> 
- <span>linux-ubuntu-ssh-server
+ <span>使用reg文件修改注册表
 </span>
 </a>
 </div>
@@ -131,20 +144,20 @@
 </section>
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">文章目錄</strong>
   
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
@@ -153,11 +166,11 @@
 		
 			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
 		
-			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>30</sup></a></li>
 		
-			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+			<li><a href="/categories/life/" title="life">life<sup>0</sup></a></li>
 		
-			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+			<li><a href="/categories/linux/" title="linux">linux<sup>13</sup></a></li>
 		
 			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
 		
@@ -177,9 +190,9 @@
 		
 			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
 		
-			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+			<li><a href="/categories/生活/" title="生活">生活<sup>3</sup></a></li>
 		
-			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+			<li><a href="/categories/系统/" title="系统">系统<sup>8</sup></a></li>
 		
 		</ul>
 </div>
@@ -187,8 +200,12 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>0</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>0</sup></a></li>
 		
 			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
 		
@@ -205,6 +222,8 @@
 			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
 		
 			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/bt5/" title="bt5">bt5<sup>2</sup></a></li>
 		
 			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
 		
@@ -224,22 +243,16 @@
 		
 			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
 		
-			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
-		
-			<li><a href="/tags/dbcp/" title="dbcp">dbcp<sup>1</sup></a></li>
-		
-			<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
-		
 		</ul>
 </div>
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
   <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
+  <p class="asidetitle">友情鏈接</p>
     <ul>
       <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
       <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>

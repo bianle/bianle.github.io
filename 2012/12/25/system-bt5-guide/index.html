@@ -4,10 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>java-tomcat-deploy | Hear</title>
+    <title>BackTrack5(BT5)硬盘安装完美教程 | Hear</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="bianle">
+    
+    <meta name="description" content="BackTrack5的硬盘安装分两步走，第一步是BT5的硬盘引导，第二步是BT5的硬盘安装。过程中用到BT5的LIVE镜像，可以在这里下载BackTrack5发布，提供多种镜像下载 。
+第一部分 BackTrack5(BT5)硬盘引导BackTrack5 （BT5）的硬盘引导我们是借助grub4do">
     
     
     
@@ -36,7 +39,7 @@
 				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
 				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -68,15 +71,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/31/java-tomcat-deploy/" title="java-tomcat-deploy" itemprop="url">java-tomcat-deploy</a>
+      <a href="/2012/12/25/system-bt5-guide/" title="BackTrack5(BT5)硬盘安装完美教程" itemprop="url">BackTrack5(BT5)硬盘安装完美教程</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://2le.me" title="bianle">bianle</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-08-31T07:28:17.327Z" itemprop="datePublished">2015-08-31</time>
-    更新日期:<time datetime="2015-08-31T06:59:21.363Z" itemprop="dateModified">2015-08-31</time>
+    <time datetime="2012-12-25T13:01:00.000Z" itemprop="datePublished">2012-12-25</time>
+    更新日期:<time datetime="2015-09-21T03:21:10.033Z" itemprop="dateModified">2015-09-21</time>
     
   </p>
 </header>
@@ -84,20 +87,33 @@
 		
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 		</div>
 		
-		  
+		<p>BackTrack5的硬盘安装分两步走，第一步是BT5的硬盘引导，第二步是BT5的硬盘安装。过程中用到BT5的LIVE镜像，可以在这里下载BackTrack5发布，提供多种镜像下载 。</p>
+<p>第一部分 BackTrack5(BT5)硬盘引导<br>BackTrack5 （BT5）的硬盘引导我们是借助grub4dos来完成的，grub跟grub2下还木有测试。grub4dos在xp跟win7下可以都用 boot.ini的方法来完成，win7也认识boot.ini，如果你是xp，直接修改boot.ini，如果你是win7，在系统盘根目录下新建 boot.ini。<br>写入内容：<br>c:\grldr=”GRUB4DOS Menu”<br>xp是在文件最后加上上面这行，win7在空白文件中只写这行就可以了。当然，win7也可以用easyBCD来安装grub4dos，可以参考的文章ubuntu11.04硬盘安装详细教程，xp、win7完美支持<br>下面你需要下载grub4dos的配置文件：点此下载配置文件 将此文件解压缩到系统盘根目录即可。<br>其实如果你对grub的menu.lst比较熟悉的话，可以看下menu.lst引导BT5的内容<br>title BackTrack5 Text - Default Boot Text Mode<br>  root (hd0,0)<br>  kernel /casper/vmlinuz file=/preseed/custom.seed boot=casper text splash vga=791–<br>  initrd /casper/initrd.gz<br>  boot<br>下载好CD镜像后，用UltraISO将全部文件解压缩到系统盘根目录（你的系统盘）下即可。<br>重启时选择引导，会进入BackTrack5的引导。这一步完成后你就已经完成了硬盘引导工作，可以正常进入BT5的LIVE了。默认账户是root，密码是toor，进入图形化桌面是startx。</p>
+<p>第二部分 BackTrack5(BT5)硬盘安装<br>这一部分，说说missing filesystem.size错误的产生原因，missing filesystem.size是因为install.sh那个文件无法找到安装所需要的filesystem.size，而这个文件就在/cdrom中，而当你运行了umount -l /cdrom之后，该目录变成了空目录，所以系统无法找到原来我们拷贝过去的文件filesystem.size，因此会报错。那么如何解决呢？方案有两个，一个是将iso镜像中的所有文件都重新拷贝到/cdrom文件夹中，当然，这是不太可行的，至少2G内存是木有搞定，呵呵，说不定你是4G内存可以搞定呢~~~这个方法我们pass掉，现在说说真正的方法，用loop将iso文件挂载到/cdrom目录下。具体做法：<br>1.准备好你的bt5的安装iso，最好是放在你的系统盘也就是sda1中，如果放不开当然放别的盘里也可以的，命名全部用英文，免得有不必要的麻烦。打开一个终端，终端在程序的附件中。<br>在终端中运行<br>cd /<br>sudo mkdir nenew<br>sudo umount -l /cdrom<br>sudo mount /dev/sda1 /nenew<br>ls /nenew | grep iso<br>运行到这一步的时候，看看回显的结果中是否有你的镜像文件，如果你放到了第一个分区中，应该可以看到你的镜像名称，可以继续第二步了。如果你没有放到系统根目录下，就执行下面的命令，将sda的数字依次递增，直到ls 的结果有你的镜像为止。<br>sudo umount -l /nenew<br>sudo mount /dev/sda2 /nenew<br>ls /nenew | grep iso<br>好了，到此我们假设你已经看到了你的BackTrack5的iso镜像文件，如果你没有看到，自己找找原因吧，不解释。<br>2.执行下列命令<br>sudo modprobe loop<br>sudo mount -o loop /nenew/BT5-GNOME-32.iso /cdrom<br>这里的BT5-GNOME-32.iso为你的BT5的镜像名称。<br>sudo umount -l /nenew<br>ls /cdrom<br>这时候会回显cdrom目录下的文件，自己确定下跟iso文件中是否一致，如果一致，ok，你的操作正确了，可以进行安装了，如果不一致，sorry，回头继续看教程找原因。<br>3.运行桌面上的install来安装即可，安装过程可以参考ubuntu的安装过程，这里就不熬述了。最后安装结束，提示是否重启，选择reboot重启，当出现提示让输入enter的时候回车，这个地方没法过去，当然这并没有什么影响，直接关掉电源就可以了，因为该关闭的东东已经都关闭了。如果你是笔记本就长按开机按钮就可以关机的。重新开机就可以进入系统了。当然，你没有看到windows的启动项。启动正常后，用户名root密码toor进入系统，startx进入图形，打开终端，sudo update-grub就有windows的启动项了。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/bt5/">bt5</a><a href="/tags/linux/">linux</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://2le.me/2015/08/31/java-tomcat-deploy/" data-title="java-tomcat-deploy | Hear" data-tsina="null" class="share clearfix">
+  <div data-url="http://2le.me/2012/12/25/system-bt5-guide/" data-title="BackTrack5(BT5)硬盘安装完美教程 | Hear" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -107,18 +123,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/08/31/linux-bt5-wlan/" title="linux-bt5-wlan">
+ <a href="/2012/12/27/web-frameset-fixed/" title="frameset固定宽度并且居中显示">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  linux-bt5-wlan</span>
+  frameset固定宽度并且居中显示</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/08/28/system-win7-active/"  title="win7激活程序">
+<a href="/2012/12/25/db-sql-convert/"  title="SQL中CONVERT转化函数的用法">
  <strong>NEXT:</strong><br/> 
- <span>win7激活程序
+ <span>SQL中CONVERT转化函数的用法
 </span>
 </a>
 </div>
@@ -131,20 +147,20 @@
 </section>
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">文章目錄</strong>
   
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
@@ -153,11 +169,11 @@
 		
 			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
 		
-			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>30</sup></a></li>
 		
-			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+			<li><a href="/categories/life/" title="life">life<sup>0</sup></a></li>
 		
-			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+			<li><a href="/categories/linux/" title="linux">linux<sup>13</sup></a></li>
 		
 			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
 		
@@ -177,9 +193,9 @@
 		
 			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
 		
-			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+			<li><a href="/categories/生活/" title="生活">生活<sup>3</sup></a></li>
 		
-			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+			<li><a href="/categories/系统/" title="系统">系统<sup>8</sup></a></li>
 		
 		</ul>
 </div>
@@ -187,8 +203,12 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>0</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>0</sup></a></li>
 		
 			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
 		
@@ -205,6 +225,8 @@
 			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
 		
 			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/bt5/" title="bt5">bt5<sup>2</sup></a></li>
 		
 			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
 		
@@ -224,22 +246,16 @@
 		
 			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
 		
-			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
-		
-			<li><a href="/tags/dbcp/" title="dbcp">dbcp<sup>1</sup></a></li>
-		
-			<li><a href="/tags/debug/" title="debug">debug<sup>1</sup></a></li>
-		
 		</ul>
 </div>
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
   <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
+  <p class="asidetitle">友情鏈接</p>
     <ul>
       <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
       <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
