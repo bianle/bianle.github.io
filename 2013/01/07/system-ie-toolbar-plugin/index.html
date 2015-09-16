@@ -1,0 +1,476 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>IE工具栏上添加自己的按钮 | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="问题提出金山词霸、网络蚂蚁等软件安装后会向IE的工具条添加自己的按钮。按下按钮后还会作出相应的动作，这种功能是如何实现的呢？读完本文，您也可以将自己应用程序的按钮添加到IE的工具条中。
+基本原理从IE5开始便允许我们向工具栏添加自己的按钮，其本质就是修改注册表，添加创建此按钮所需的信息。 
+实现步骤">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/01/07/system-ie-toolbar-plugin/" title="IE工具栏上添加自己的按钮" itemprop="url">IE工具栏上添加自己的按钮</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-01-07T10:09:17.000Z" itemprop="datePublished">2013-01-07</time>
+    更新日期:<time datetime="2015-09-11T10:01:57.046Z" itemprop="dateModified">2015-09-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题提出"><span class="toc-number">1.</span> <span class="toc-text">问题提出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本原理"><span class="toc-number">2.</span> <span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现步骤"><span class="toc-number">3.</span> <span class="toc-text">实现步骤</span></a></li></ol>
+		</div>
+		
+		<h1 id="问题提出">问题提出</h1><p>金山词霸、网络蚂蚁等软件安装后会向IE的工具条添加自己的按钮。按下按钮后还会作出相应的动作，这种功能是如何实现的呢？读完本文，您也可以将自己应用程序的按钮添加到IE的工具条中。</p>
+<h1 id="基本原理">基本原理</h1><p>从IE5开始便允许我们向工具栏添加自己的按钮，其本质就是修改注册表，添加创建此按钮所需的信息。 </p>
+<h1 id="实现步骤">实现步骤</h1><ol>
+<li>创建此按钮的GUID(globally unique identifier)<br>你可以通过<code>Visual Studio</code>中的<code>Guidgen.exe</code>来产生GUID。<br>例如我生成的GUID是<code>{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}</code><br>以下的例子中我都使用这个GUID来作说明。 </li>
+<li>创建子键HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Extensions{1FBA04EE-3024-11D2-8F1F-0000F87ABD16} </li>
+<li>在此子键下创建如下字串值。<br>（1）CLSID<br>这是IE的CLSID，其值必须为{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}<br>（2）Default Visible<br>指明此按钮默认状态下是否可见，Yes表示可见,No为不可见<br>（3）ButtonText<br>按钮文字<br>（4）Icon<br>默认状态下的图标全路径，例如c:\vckbase.ico。也可以是EXE文件中包含的图标，例如：C:\PROGRA~1\NETANTS\NetAnts.exe,1000<br>（5）HotIcon<br>鼠标移到按钮上时的图标全路径<br>如下子键为按下按钮后需要执行的相应动作：可以是COM对象、浏览条Explorer Bar、脚本Script、可执行文件。<br>下面我们逐个进行介绍。<br>①COM对象<br>你需要建立名为ClsidExtension的字串值，其值应该为此COM对象的GUID<br>例如金山词霸就使用ClsidExtension来调用自己的COM对象。<br>②浏览条Explorer Bar<br>所谓浏览条就是类似我们按下往IE历史按钮后打开的历史记录列表，其本质好比MFC中的CReBar对象。 浏览条也可以自己制作，<br>因为超出了本文的范围，暂不作讲解。<br>为了在按下按钮后打开一个浏览条，你需要建立名为BandCLSID的字串值，其值为浏览条的CLSID<br>③脚本Script<br>按下按钮后执行的脚本，例如：”%SystemRoot%\web\related.htm”<br>你可以在这个HTML文件里面加上脚本来得到IE当前的许多信息，需要注意的是假如你想通过Script打开非脚本的HTML文件是不可行的。<br>请参考如下NetAnts取得当前页所有链接的脚本代码<br><script language="VBScript"><br>－－On Error Resume Next<br>－－set NetAntsApi = CreateObject( “NetAnts.API” )<br>－－if err&lt;&gt;0 then<br>－－ －－Alert(“NetAnts not properly installed on this PC!”)<br>－－else<br>－－ －－set links = external.menuArguments.document.links<br>－－ －－ReDim params(links.length<em>2)<br>－－ －－params(0)=external.menuArguments.document.Url<br>－－ －－for i = 0 to links.length-1<br>－－ －－ －－params(i</em>2+1)=links(i).href<br>－－ －－ －－params(i*2+2)=links(i).innerText<br>－－ －－next<br>－－ －－NetAntsApi.AddUrlList params<br>－－end if<br>&lt; /script&gt;<br>我们再看一个比较有用的脚本,这段脚本的作用是得到当前地址，并打开此网址的首页。<br><script><br>－－//userURL得到的是当前地址,例如是<a href="http://www.vckbase.com/article/controls/index.html">http://www.vckbase.com/article/controls/index.html</a><br>－－userURL=external.menuArguments.location.href;<br>－－protocolIndex=userURL.indexOf(“://“,4);<br>－－serverIndex=userURL.indexOf(“/“,protocolIndex + 3);<br>－－finalURL=userURL.substring(0,serverIndex);<br>－－external.menuArguments.open(finalURL, “_blank”);///打开网址<a href="http://www.vckbase.com/">http://www.vckbase.com/</a><br>&lt; /script&gt;<br>关于external等对象的具体使用方法请参阅微软的《动态HTML开发参考大全》–人民邮电出版社出版<br>④可执行文件<br>假如我们想让IE在按下按钮后执行一个可执行文件, 你可以增加名为Exec的字串值，其值为此可执行文件的全路径，<br>例如c:\windows\notepad.exe或者是一个网址<a href="http://www.vckbase.com/index.html">http://www.vckbase.com/index.html</a><br>下面我们介绍一个简单的例子。<br>void CIEButtonDlg::OnAdd()<br>{<br>－－///这是由GUIDGEN产生的GUID：{06926B30-424E-4f1c-8EE3-543CD96573DC}<br>－－CRegKey reg;<br>－－char KeyName[]=”Software\Microsoft\Internet Explorer\Extensions\{06926B30-424E-4f1c-8EE3-543CD96573DC}”;<br>－－TCHAR PathName[MAX_PATH];<br>－－TCHAR IconPathName[MAX_PATH]; ///正常时的图标全路径<br>－－TCHAR HotIconPathName[MAX_PATH]; ///鼠标覆盖时的图标全路径<br>－－GetModuleFileName(0,PathName,MAX_PATH); ///得到本可执行文件的路径<br>－－strcpy(IconPathName,PathName);<br>－－strcpy(HotIconPathName,PathName);<br>－－strcat(HotIconPathName,”,131”); ///131是图标的ID，你可以以资源方式打开EXE文件就可以看到所有资源及其ID<br>－－strcat(IconPathName,”,129”);<br>－－reg.Create(HKEY_LOCAL_MACHINE,KeyName);<br>－－reg.SetValue(“{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}”,”CLSID”);<br>－－reg.SetValue(“Yes”,”Default Visible”);<br>－－reg.SetValue(“VC知识库”,”ButtonText”);<br>－－reg.SetValue(IconPathName,”Icon”);<br>－－reg.SetValue(HotIconPathName,”HotIcon”);<br>－－/////假如是执行脚本，可以是reg.SetValue(“c:\test.html”,”Script”); ///在test.html 存放你的脚本代码<br>－－reg.SetValue(“<a href="http://www.vckbase.com/&quot;,&quot;Exec&quot;);///打开网页">http://www.vckbase.com/&quot;,&quot;Exec&quot;);///打开网页</a><br>}</li>
+</ol>
+</script></li></ol>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ie/">ie</a><a href="/tags/工具栏/">工具栏</a><a href="/tags/自定义/">自定义</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/系统/">系统</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2013/01/07/system-ie-toolbar-plugin/" data-title="IE工具栏上添加自己的按钮 | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/01/10/web-scrollxxx/" title="scrollLeft,scrollTop等等详解">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  scrollLeft,scrollTop等等详解</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/01/07/java-hibernate-could-not-initialize-proxy/"  title="could not initialize proxy – no Session">
+ <strong>NEXT:</strong><br/> 
+ <span>could not initialize proxy – no Session
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题提出"><span class="toc-number">1.</span> <span class="toc-text">问题提出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本原理"><span class="toc-number">2.</span> <span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现步骤"><span class="toc-number">3.</span> <span class="toc-text">实现步骤</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

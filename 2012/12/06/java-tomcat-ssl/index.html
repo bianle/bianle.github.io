@@ -1,0 +1,481 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>TOMCAT-SSL双向认证-配置实例 | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="SSL (Secure Socket Layer – 安全套接字层)功能：保障在Internet上数据传输之安全，利用数据加密(Encryption)技术，确保数据在网络上之传输过程中不会被截取及窃听，防止篡改。如何让我们的WEB应用程序应用SSL安全保障？经过几天摸索，终于实现 TOMCAT+SS">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/12/06/java-tomcat-ssl/" title="TOMCAT-SSL双向认证-配置实例" itemprop="url">TOMCAT-SSL双向认证-配置实例</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-12-06T10:09:17.000Z" itemprop="datePublished">2012-12-06</time>
+    更新日期:<time datetime="2015-08-31T09:52:05.866Z" itemprop="dateModified">2015-08-31</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>SSL (Secure Socket Layer – 安全套接字层)<br>功能：保障在Internet上数据传输之安全，利用数据加密(Encryption)技术，确保数据在网络上之传输过程中不会被截取及窃听，防止篡改。<br>如何让我们的WEB应用程序应用SSL安全保障？经过几天摸索，终于实现 TOMCAT+SSL 双向认证，也就是说，首先，客户端将要认证服务器的安全性，确保访问的是正确的服务器，而非假冒的钓鱼网站；其次，服务器也要认证客户端的安全性，只有那些拥有服务器授权证书的客户端才可以访问。<br>下面请遵循详细步骤<br>1.在D盘建立目录：mykeys<br>2.启动命令行，并转移到 d:/mykeys<br>a)创建服务器密钥，其密钥库为 d:/mykeys/server.ks，注意keypass和storepass保持一致，它们分别代表 密钥密码和密钥库密码，注意 CN=localhost 中，localhost表示要配置SSL的主机名，不能任意指定<br>D:/mykeys&gt;keytool -genkey -v -alias serverKey -dname “CN=localhost” -keyalg RSA -keypass rwm258 -keystore server.ks -storepass rwm258<br>b)创建客户端密钥，其密钥库为 d:/mykeys/client.p12，注意这个密钥库的后缀名，注意密钥库类型PKCS12<br>D:/mykeys&gt;keytool -genkey -v -alias clientKey -dname “CN=SomeOne” -keyalg RSA -keypass lyl147 -keystore client.p12 -storepass lyl147 -storetype PKCS12<br>c)        将客户端密钥导出为证书文件<br>D:/mykeys&gt;keytool -export -alias clientKey -file clientKey.cer -keystore client.p12 -storepass lyl147 -storetype PKCS12<br>d)        将上述客户端密钥文件导入服务器证书库，并设置为信任证书；注意会问你是否信任该证书，回答 y 即可<br>D:/mykeys&gt;keytool -import -v -alias clientKey -file clientKey.cer -keystore server.ks -storepass rwm258<br>3.为了在本机浏览器中进行SSL访问，请：双击 d:/mykeys/client.p12 ，将启动证书向导<br>a)要导入的文件 文件名  D:/mykeys/client.p12<br>b)为私钥键入密码lyl147 ，勾选：标志此密钥为可导出的<br>c)证书存储，选：将所有的证书放入下列存储区，然后，浏览-个人<br>d)现在，打开IE，查看证书：工具-Internet选项-内容-证书-个人，可以看到 SomeOne 证书已被安装</p>
+<ol>
+<li>配置TOMCAT服务器，以支持SSL认证，编辑文件：%tomcat_home%/conf/server.xml，下面这段配置代码本来是被屏蔽的，现在请取消其屏蔽，并相应增加密钥库的配置，其中clientAuth=”true” 用以启动双向认证，否则，只有客户端认证服务器-单向<br>&lt;Connector port=”8443” protocol=”HTTP/1.1” SSLEnabled=”true”</li>
+</ol>
+<p>maxThreads=”150” scheme=”https” secure=”true”</p>
+<p>clientAuth=”true” sslProtocol=”TLS”</p>
+<p>keystoreFile=”D:/mykeys/server.ks” keystorePass=”rwm258”</p>
+<p>truststoreFile=”D:/mykeys/server.ks “ truststorePass=” rwm258” /&gt;</p>
+<ol>
+<li>启动 TOMCAT，然后在IE浏览器中访问：<a href="https://localhost:8443/" target="_blank" rel="external">https://localhost:8443/</a><br>a) 将弹出一个消息框，这是要客户端认证服务器，查看证书可看到服务器证书为 localhost ，回顾前面的步骤，正是我们创建的那个服务器证书；这里点 是<br>b) 页面出现，说明客户端被允许访问</li>
+<li>现在，再次打开IE，工具-Internet选项-内容-证书-个人 ，删除那个 SomeOne 证书<br>a) 现在，再次在IE浏览器中访问：<a href="https://localhost:8443/" target="_blank" rel="external">https://localhost:8443/</a> 你会发现，回顾前面的 3 步骤，你会明白为什么要将客户端证书导入 IE 浏览器；<br>7.请再次重复 3 步骤，之后再尝试访问<br>OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一台电脑来访问本机服务器如何处理呢？很简单，把 d:/mykeys/client.p12 复制到该机器，然后执行 3 步骤，将这个证书导入到该机器的 IE 浏览器个人证书中，记得密码是：lyl147；当然，在那台电脑上访问时，要将localhost修改为本机主机名或IP地址<br>——————————————————————-<br>要使你自己的WEB程序应用SSL安全访问，请遵循如下配置<br>在你应用的 web.xml 文件的 <web-app></web-app> 中加入如下配置</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">login-config</span>&gt;</span> </span><br><span class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="title">auth-method</span>&gt;</span>CLIENT-CERT<span class="tag">&lt;/<span class="title">auth-method</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="title">realm-name</span>&gt;</span>Client Cert Users-only Area<span class="tag">&lt;/<span class="title">realm-name</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="title">login-config</span>&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">security-constraint</span>&gt;</span> </span><br><span class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="title">web-resource-collection</span> &gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="title">web-resource-name</span> &gt;</span>SSL<span class="tag">&lt;/<span class="title">web-resource-name</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">web-resource-collection</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="title">user-data-constraint</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="title">transport-guarantee</span>&gt;</span>CONFIDENTIAL<span class="tag">&lt;/<span class="title">transport-guarantee</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="title">user-data-constraint</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="title">security-constraint</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>你会发现，即使使用 <a href="http://….:8080" target="_blank" rel="external">http://….:8080</a> 来访问你的应用程序，它也会重定向为 <a href="https://….8443" target="_blank" rel="external">https://….8443</a> 访问，也就是说，你的应用已经强制使用SSL安全访问层</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/ssl/">ssl</a><a href="/tags/tomcat/">tomcat</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2012/12/06/java-tomcat-ssl/" data-title="TOMCAT-SSL双向认证-配置实例 | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/12/10/web-jquery-selector/" title="jquery多选选择器">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  jquery多选选择器</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/12/05/java-reflex/"  title="JAVA反射机制-class类的获取">
+ <strong>NEXT:</strong><br/> 
+ <span>JAVA反射机制-class类的获取
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

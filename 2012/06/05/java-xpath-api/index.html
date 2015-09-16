@@ -1,0 +1,561 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Java 语言的 XPath API | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="如果要告诉别人买一加仑牛奶，您会怎么说？“请去买一加仑牛奶回来” 还是 “从前门出去，向左转，走三个街区向右转，再走半个街区向右转进入商店。走向四号通道，沿通道走五米向左，拿一瓶一加仑装的牛奶然后到收银台付款。再沿原路回家。” 简直太可笑了。只要在 “请去买一加仑牛奶回来” 的基础上稍加指示，多数成">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/06/05/java-xpath-api/" title="Java 语言的 XPath API" itemprop="url">Java 语言的 XPath API</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-06-05T09:58:51.000Z" itemprop="datePublished">2012-06-05</time>
+    更新日期:<time datetime="2015-08-28T10:08:18.938Z" itemprop="dateModified">2015-08-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XPath"><span class="toc-number">1.</span> <span class="toc-text">XPath</span></a></li></ol>
+		</div>
+		
+		<p>如果要告诉别人买一加仑牛奶，您会怎么说？“请去买一加仑牛奶回来” 还是 “从前门出去，向左转，走三个街区向右转，再走半个街区向右转进入商店。走向四号通道，沿通道走五米向左，拿一瓶一加仑装的牛奶然后到收银台付款。再沿原路回家。” 简直太可笑了。只要在 “请去买一加仑牛奶回来” 的基础上稍加指示，多数成人都能自己买回牛奶来。<br>查询语言和计算机搜索与此类似。直接说 “找一个 Cryptonomicon 的副本” 要比编写搜索某个数据库的详细逻辑容易得多。由于搜索操作的逻辑非常相似，可以发明一种通用语言让您使用 “找到 Neal Stephenson 的所有著作” 这样的命令，然后编写对特定数据存储执行此类查询的引擎。</p>
+<h1 id="XPath">XPath</h1><p>在众多查询语言之中，结构化查询语言（SQL）是一种针对查询特定类型的关系库而设计和优化的语言。其他不那么常见的查询语言还有对象查询语言（OQL）和 XQuery。但本文的主题是 XPath，一种为查询 XML 文档而设计的查询语言。比如，下面这个简单的 XPath 查询可以在文档中找到作者为 Neal Stephenson 的所有图书的标题：<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//<span class="atom">book</span>[<span class="atom">author</span>=<span class="string">"Neal Stephenson"</span>]/<span class="atom">title</span></span><br></pre></td></tr></table></figure></p>
+<p>作为对照，查询同样信息的纯 DOM 搜索代码如下所示：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ArrayList</span> <span class="literal">result</span> = new <span class="type">ArrayList</span>();</span><br><span class="line"><span class="type">NodeList</span> books = doc.getElementsByTagName(<span class="string">"book"</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; books.getLength(); i++) &#123;</span><br><span class="line">    <span class="type">Element</span> book = (<span class="type">Element</span>) books.item(i);</span><br><span class="line">    <span class="type">NodeList</span> authors = book.getElementsByTagName(<span class="string">"author"</span>);</span><br><span class="line">    boolean stephenson = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; authors.getLength(); j++) &#123;</span><br><span class="line">        <span class="type">Element</span> author = (<span class="type">Element</span>) authors.item(j);</span><br><span class="line">        <span class="type">NodeList</span> children = author.getChildNodes();</span><br><span class="line">        <span class="type">StringBuffer</span> sb = new <span class="type">StringBuffer</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; children.getLength(); k++) &#123;</span><br><span class="line">            <span class="type">Node</span> child = children.item(k);</span><br><span class="line">            // really should to <span class="keyword">do</span> this recursively</span><br><span class="line">            <span class="keyword">if</span> (child.getNodeType() == <span class="type">Node</span>.<span class="type">TEXT_NODE</span>) &#123;</span><br><span class="line">                sb.append(child.getNodeValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sb.toString().equals(<span class="string">"Neal Stephenson"</span>)) &#123;</span><br><span class="line">            stephenson = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (stephenson) &#123;</span><br><span class="line">        <span class="type">NodeList</span> titles = book.getElementsByTagName(<span class="string">"title"</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; titles.getLength(); j++) &#123;</span><br><span class="line">            <span class="literal">result</span>.add(titles.item(j));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>不论您是否相信，以上代码中的 DOM 显然不如简单的 XPath 表达式通用或者健壮。您愿意编写、调试和维护哪一个？我想答案很明显。<br>但是虽然有很强的表达能力，XPath 并不是 Java 语言，事实上 XPath 不是一种完整的编程语言。有很多东西用 XPath 表达不出来，甚至有些查询也无法表达。比方说，XPath 不能查找国际标准图书编码（ISBN）检验码不匹配的所有图书，或者找出境外帐户数据库显示欠帐的所有作者。幸运的是，可以把 XPath 结合到 Java 程序中，这样就能发挥两者的优势了：Java 做 Java 所擅长的，XPath 做 XPath 所擅长的。<br>直到最近，Java 程序执行 XPath 查询所需要的应用程序编程接口（API）还因形形色色的 XPath 引擎而各不相同。Xalan 有一种 API，Saxon 使用另一种，其他引擎则使用其他的 API。这意味着代码往往把您限制到一种产品上。理想情况下，最好能够试验具有不同性能特点的各种引擎，而不会带来不适当的麻烦或者重新编写代码。<br>于是，Java 5 推出了 javax.xml.xpath 包，提供一个引擎和对象模型独立的 XPath 库。这个包也可用于 Java 1.3 及以后的版本，但需要单独安装 Java API for XML Processing (JAXP) 1.3。Xalan 2.7 和 Saxon 8 以及其他产品包含了这个库的实现。</p>
+<p>一个简单的例子<br>我将举例说明如何使用它。然后再讨论一些细节问题。假设要查询一个图书列表，寻找 Neal Stephenson 的著作。具体来说，这个图书列表的形式如 清单 2 所示：<br>清单 2. 包含图书信息的 XML 文档</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">inventory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">book</span> <span class="attribute">year</span>=<span class="value">"2000"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>Snow Crash<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">author</span>&gt;</span>Neal Stephenson<span class="tag">&lt;/<span class="title">author</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">publisher</span>&gt;</span>Spectra<span class="tag">&lt;/<span class="title">publisher</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">isbn</span>&gt;</span>0553380958<span class="tag">&lt;/<span class="title">isbn</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">price</span>&gt;</span>14.95<span class="tag">&lt;/<span class="title">price</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">book</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">book</span> <span class="attribute">year</span>=<span class="value">"2005"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>Burning Tower<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">author</span>&gt;</span>Larry Niven<span class="tag">&lt;/<span class="title">author</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">author</span>&gt;</span>Jerry Pournelle<span class="tag">&lt;/<span class="title">author</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">publisher</span>&gt;</span>Pocket<span class="tag">&lt;/<span class="title">publisher</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">isbn</span>&gt;</span>0743416910<span class="tag">&lt;/<span class="title">isbn</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">price</span>&gt;</span>5.99<span class="tag">&lt;/<span class="title">price</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">book</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="title">book</span> <span class="attribute">year</span>=<span class="value">"1995"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">title</span>&gt;</span>Zodiac<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">author</span>&gt;</span>Neal Stephenson<span class="tag">&lt;<span class="title">author</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">publisher</span>&gt;</span>Spectra<span class="tag">&lt;/<span class="title">publisher</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">isbn</span>&gt;</span>0553573862<span class="tag">&lt;/<span class="title">isbn</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">price</span>&gt;</span>7.50<span class="tag">&lt;/<span class="title">price</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">book</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- more books... --&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="title">inventory</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>查找所有图书的 XPath 查询非常简单：//book[author=”Neal Stephenson”]。为了找出这些图书的标题，只要增加一步，表达式就变成了 //book[author=”Neal Stephenson”]/title。最后，真正需要的是 title 元素的文本节点孩子。这就要求再增加一步，完整的表达式就是 //book[author=”Neal Stephenson”]/title/text()。<br>现在我提供一个简单的程序，它从 Java 语言中执行这个查询，然后把找到的所有图书的标题打印出来。首先，需要将文档加载到一个 DOM Document 对象中。为了简化起见，假设该文档在当前工作目录的 books.xml 文件中。下面的简单代码片段解析文档并建立对应的 Document 对象：<br>清单 3. 用 JAXP 解析文档</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DocumentBuilderFactory <span class="literal">factory</span> = DocumentBuilderFactory.newInstance();</span><br><span class="line">        <span class="literal">factory</span>.setNamespaceAware(<span class="keyword">true</span>); <span class="comment">// never forget this!</span></span><br><span class="line">        DocumentBuilder builder = <span class="literal">factory</span>.newDocumentBuilder();</span><br><span class="line">        Document doc = builder.parse(<span class="string">"books.xml"</span>);</span><br></pre></td></tr></table></figure>
+<p>到目前为止，这仅仅是标准的 JAXP 和 DOM，没有什么新鲜的。<br>接下来创建 XPathFactory：<br>XPathFactory factory = XPathFactory.newInstance();<br>然后使用这个工厂创建 XPath 对象：<br>XPath xpath = factory.newXPath();<br>XPath 对象编译 XPath 表达式：<br>PathExpression expr = xpath.compile(“//book[author=’Neal Stephenson’]/title/text()”);<br>直接求值<br>如果 XPath 表达式只使用一次，可以跳过编译步骤直接对 XPath 对象调用 evaluate() 方法。但是，如果同一个表达式要重复使用多次，编译可能更快一些。<br>最后，计算 XPath 表达式得到结果。表达式是针对特定的上下文节点计算的，在这个例子中是整个文档。还必须指定返回类型。这里要求返回一个节点集：<br>Object result = expr.evaluate(doc, XPathConstants.NODESET);<br>可以将结果强制转化成 DOM NodeList，然后遍历列表得到所有的标题：<br>        NodeList nodes = (NodeList) result;<br>        for (int i = 0; i &lt; nodes.getLength(); i++) {<br>            System.out.println(nodes.item(i).getNodeValue());<br>        }<br>清单 4 把上述片段组合到了一个程序中。还要注意，这些方法可能抛出一些检查异常，这些异常必须在 throws 子句中声明，但是我在上面把它们掩盖起来了：<br>清单 4. 用固定的 XPath 表达式查询 XML 文档的完整程序<br>import java.io.IOException;<br>import org.w3c.dom.<em>;<br>import org.xml.sax.SAXException;<br>import javax.xml.parsers.</em>;<br>import javax.xml.xpath.*;</p>
+<p>public class XPathExample {</p>
+<p>  public static void main(String[] args)<br>   throws ParserConfigurationException, SAXException,<br>          IOException, XPathExpressionException {</p>
+<pre><code><span class="type">DocumentBuilderFactory</span> domFactory = <span class="type">DocumentBuilderFactory</span>.newInstance();
+domFactory.setNamespaceAware(<span class="literal">true</span>); // never forget this!
+<span class="type">DocumentBuilder</span> builder = domFactory.newDocumentBuilder();
+<span class="type">Document</span> doc = builder.parse(<span class="string">"books.xml"</span>);
+
+<span class="type">XPathFactory</span> factory = <span class="type">XPathFactory</span>.newInstance();
+<span class="type">XPath</span> xpath = factory.newXPath();
+<span class="type">XPathExpression</span> <span class="type">expr</span> 
+ = xpath.compile(<span class="string">"//book[author='Neal Stephenson']/title/text()"</span>);
+
+<span class="type">Object</span> <span class="literal">result</span> = <span class="type">expr</span>.evaluate(doc, <span class="type">XPathConstants</span>.<span class="type">NODESET</span>);
+<span class="type">NodeList</span> nodes = (<span class="type">NodeList</span>) <span class="literal">result</span>;
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nodes.getLength(); i++) {
+    <span class="type">System</span>.<span class="keyword">out</span>.println(nodes.item(i).getNodeValue()); 
+}
+</code></pre><p>  }</p>
+<p>}<br>XPath 数据模型<br>每当混合使用诸如 XPath 和 Java 这样两种不同的语言时，必定会有某些将两者粘合在一起的明显接缝。并非一切都很合拍。XPath 和 Java 语言没有同样的类型系统。XPath 1.0 只有四种基本数据类型：<br>node-set<br>number<br>boolean<br>string<br>当然，Java 语言有更多的数据类型，包括用户定义的对象类型。<br>多数 XPath 表达式，特别是位置路径，都返回节点集。但是还有其他可能。比如，XPath 表达式 count(//book) 返回文档中的图书数量。XPath 表达式 count(//book[@author=”Neal Stephenson”]) &gt; 10 返回一个布尔值：如果文档中 Neal Stephenson 的著作超过 10 本则返回 true，否则返回 false。<br>evaluate() 方法被声明为返回 Object。实际返回什么依赖于 XPath 表达式的结果以及要求的类型。一般来说，XPath 的<br>number 映射为 java.lang.Double<br>string 映射为 java.lang.String<br>boolean 映射为 java.lang.Boolean<br>node-set 映射为 org.w3c.dom.NodeList<br>XPath 2<br>前面一直假设您使用的是 XPath 1.0。XPath 2 大大扩展和修改了类型系统。Java XPath API 支持 XPath 2 所需的主要修改是为返回 XPath 2 新数据类型增加常量。<br>在 Java 中计算 XPath 表达式时，第二个参数指定需要的返回类型。有五种可能，都在 javax.xml.xpath.XPathConstants 类中命名了常量：<br>XPathConstants.NODESET<br>XPathConstants.BOOLEAN<br>XPathConstants.NUMBER<br>XPathConstants.STRING<br>XPathConstants.NODE<br>最后一个 XPathConstants.NODE 实际上没有匹配的 XPath 类型。只有知道 XPath 表达式只返回一个节点或者只需要一个节点时才使用它。如果 XPath 表达式返回了多个节点并且指定了 XPathConstants.NODE，则 evaluate() 按照文档顺序返回第一个节点。如果 XPath 表达式选择了一个空集并指定了 XPathConstants.NODE，则 evaluate() 返回 null。<br>如果不能完成要求的转换，evaluate() 将抛出 XPathException。<br>回页首<br>名称空间上下文<br>若 XML 文档中的元素在名称空间中，查询该文档的 XPath 表达式必须使用相同的名称空间。XPath 表达式不一定要使用相同的前缀，只需要名称空间 URI 相同即可。事实上，如果 XML 文档使用默认名称空间，那么尽管目标文档没有使用前缀，XPath 表达式也必须使用前缀。<br>但是，Java 程序不是 XML 文档，因此不能用一般的名称空间解析。必须提供一个对象将前缀映射到名称空间 URI。该对象是 javax.xml.namespace.NamespaceContext 接口的实例。比如，假设图书文档放在 <a href="http://www.example.com/books" target="_blank" rel="external">http://www.example.com/books</a> 名称空间中，如 清单 5 所示：<br>清单 5. 使用默认名称空间的 XML 文档</p>
+<p><inventory xmlns="http://www.example.com/books"><br>    <book year="2000"><br>        <title>Snow Crash</title><br>        <author>Neal Stephenson</author><br>        <publisher>Spectra</publisher><br>        <isbn>0553380958</isbn><br>        <price>14.95<price><br>    </price></price></book></inventory></p>
+<pre><code><span class="comment">&lt;!-- more books... --&gt;</span>
+</code></pre><p><inventory><br>查找 Neal Stephenson 全部著作标题的 XPath 表达式就要改为 //pre:book[pre:author=”Neal Stephenson”]/pre:title/text()。但是，必须将前缀 pre 映射到 URI <a href="http://www.example.com/books。NamespaceContext" target="_blank" rel="external">http://www.example.com/books。NamespaceContext</a> 接口在 Java 软件开发工具箱（JDK）或 JAXP 中没有默认实现似乎有点笨，但确实如此。不过，自己实现也不难。清单 6 对一个名称空间给出了简单的实现。还需要映射 xml 前缀。<br>清单 6. 绑定一个名称空间和默认名称空间的简单上下文<br>import java.util.Iterator;<br>import javax.xml.*;<br>import javax.xml.namespace.NamespaceContext;</inventory></p>
+<p>public class PersonalNamespaceContext implements NamespaceContext {</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">String</span> getNamespaceURI(<span class="keyword">String</span> prefix) {
+    <span class="keyword">if</span> (prefix == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Null prefix"</span>);
+    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"pre"</span>.equals(prefix)) <span class="keyword">return</span> <span class="string">"http://www.example.org/books"</span>;
+    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"xml"</span>.equals(prefix)) <span class="keyword">return</span> XMLConstants.XML_NS_URI;
+    <span class="keyword">return</span> XMLConstants.NULL_NS_URI;
+}
+
+<span class="comment">// This method isn't necessary for XPath processing.</span>
+<span class="keyword">public</span> <span class="keyword">String</span> getPrefix(<span class="keyword">String</span> uri) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();
+}
+
+<span class="comment">// This method isn't necessary for XPath processing either.</span>
+<span class="keyword">public</span> Iterator getPrefixes(<span class="keyword">String</span> uri) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();
+}
+</code></pre><p>}<br>使用映射存储绑定和增加 setter 方法实现名称空间上下文的重用也不难。<br>创建 NamespaceContext 对象后，在编译表达式之前将其安装到 XPath 对象上。以后就可以像以前一样是用这些前缀查询了。比如：<br>清单 7. 使用名称空间的 XPath 查询<br>  XPathFactory factory = XPathFactory.newInstance();<br>  XPath xpath = factory.newXPath();<br>  xpath.setNamespaceContext(new PersonalNamespaceContext());<br>  XPathExpression expr<br>    = xpath.compile(“//pre:book[pre:author=’Neal Stephenson’]/pre:title/text()”);</p>
+<p>  Object result = expr.evaluate(doc, XPathConstants.NODESET);<br>  NodeList nodes = (NodeList) result;<br>  for (int i = 0; i &lt; nodes.getLength(); i++) {<br>      System.out.println(nodes.item(i).getNodeValue());<br>  }<br>回页首<br>函数求解器<br>有时候，在 Java 语言中定义用于 XPath 表达式的扩展函数很有用。这些函数可以执行用纯 XPath 很难或者无法执行的任务。不过必须是真正的函数，而不是随意的方法。就是说不能有副作用。（XPath 函数可以按照任意的顺序求值任意多次。）<br>通过 Java XPath API 访问的扩展函数必须实现 javax.xml.xpath.XPathFunction 接口。这个接口只声明了一个方法 evaluate：<br>public Object evaluate(List args) throws XPathFunctionException<br>该方法必须返回 Java 语言能够转换到 XPath 的五种类型之一：<br>String<br>Double<br>Boolean<br>Nodelist<br>Node<br>比如，清单 8 显示了一个扩展函数，它检查 ISBN 的校验和并返回 Boolean。这个校验和的基本规则是前九位数的每一位乘上它的位置（即第一位数乘上 1，第二位数乘上 2，依次类推）。将这些数加起来然后取除以 11 的余数。如果余数是 10，那么最后一位数就是 X。<br>清单 8. 检查 ISBN 的 XPath 扩展函数<br>import java.util.List;<br>import javax.xml.xpath.<em>;<br>import org.w3c.dom.</em>;</p>
+<p>public class ISBNValidator implements XPathFunction {</p>
+<p>  // This class could easily be implemented as a Singleton.</p>
+<p>  public Object evaluate(List args) throws XPathFunctionException {</p>
+<pre><code><span class="keyword">if</span> (args.size() != <span class="number">1</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> XPathFunctionException(<span class="string">"Wrong number of arguments to valid-isbn()"</span>);
+}
+
+String isbn;
+Object o = args.get(<span class="number">0</span>);
+
+<span class="comment">// perform conversions</span>
+<span class="keyword">if</span> (o instanceof String) isbn = (String) args.get(<span class="number">0</span>);
+<span class="keyword">else</span> <span class="keyword">if</span> (o instanceof Boolean) isbn = o.toString();
+<span class="keyword">else</span> <span class="keyword">if</span> (o instanceof Double) isbn = o.toString();
+<span class="keyword">else</span> <span class="keyword">if</span> (o instanceof NodeList) {
+    NodeList <span class="built_in">list</span> = (NodeList) o;
+    Node node = <span class="built_in">list</span>.item(<span class="number">0</span>);
+    <span class="comment">// getTextContent is available in Java 5 and DOM 3.</span>
+    <span class="comment">// In Java 1.4 and DOM 2, you'd need to recursively </span>
+    <span class="comment">// accumulate the content.</span>
+    isbn= node.getTextContent();
+}
+<span class="keyword">else</span> {
+    <span class="keyword">throw</span> <span class="keyword">new</span> XPathFunctionException(<span class="string">"Could not convert argument type"</span>);
+}
+
+<span class="keyword">char</span>[] data = isbn.toCharArray();
+<span class="keyword">if</span> (data.length != <span class="number">10</span>) <span class="keyword">return</span> Boolean.FALSE;
+<span class="keyword">int</span> checksum = <span class="number">0</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) {
+    checksum += (i+<span class="number">1</span>) * (data[i]-<span class="string">'0'</span>);
+}
+<span class="keyword">int</span> checkdigit = checksum % <span class="number">11</span>;
+
+<span class="keyword">if</span> (checkdigit + <span class="string">'0'</span> == data[<span class="number">9</span>] || (data[<span class="number">9</span>] == <span class="string">'X'</span> &amp;&amp; checkdigit == <span class="number">10</span>)) {
+    <span class="keyword">return</span> Boolean.TRUE;
+}
+<span class="keyword">return</span> Boolean.FALSE;
+</code></pre><p>  }</p>
+<p>}<br>下一步让这个扩展函数能够在 Java 程序中使用。为此，需要在编译表达式之前向 XPath 对象安装 javax.xml.xpath.XPathFunctionResolver。函数求解器将函数的 XPath 名称和名称空间 URI 映射到实现该函数的 Java 类。清单 9 是一个简单的函数求解器，将扩展函数 valid-isbn 和名称空间 <a href="http://www.example.org/books" target="_blank" rel="external">http://www.example.org/books</a> 映射到 清单 8 中的类。比如，XPath 表达式 //book[not(pre:valid-isbn(isbn))] 可以找到 ISBN 校验和不匹配的所有图书。<br>清单 9. 识别 valid-isbn 扩展函数的上下文<br>iimport javax.xml.namespace.QName;<br>import javax.xml.xpath.*;</p>
+<p>public class ISBNFunctionContext implements XPathFunctionResolver {</p>
+<p>  private static final QName name<br>   = new QName(“<a href="http://www.example.org/books" target="_blank" rel="external">http://www.example.org/books</a>“, “valid-isbn”);</p>
+<p>  public XPathFunction resolveFunction(QName name, int arity) {<br>      if (name.equals(ISBNFunctionContext.name) &amp;&amp; arity == 1) {<br>          return new ISBNValidator();<br>      }<br>      return null;<br>  }</p>
+<p>}<br>由于扩展函数必须有名称空间，所以计算包含扩展函数的表达式时必须使用 NamespaceResolver，即便查询的文档没有使用任何名称空间。由于 XPathFunctionResolver、XPathFunction 和 NamespaceResolver 都是接口，如果方便的话可以将它们放在所有的类中。<br>回页首<br>结束语<br>用 SQL 和 XPath 这样的声明性语言编写查询，要比使用 Java 和 C 这样的命令式语言容易得多。但是，用 Java 和 C 这样的图灵完整语言编写复杂的逻辑，又比 SQL 和 XPath 这样的声明性语言容易得多。所幸的是，通过使用 Java Database Connectivity (JDBC) 和 javax.xml.xpath 之类的 API 可以将两者结合起来。随着世界上越来越多的数据转向 XML，javax.xml.xpath 将与 java.sql 一样变得越来越重要。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/xpath/">xpath</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2012/06/05/java-xpath-api/" data-title="Java 语言的 XPath API | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/06/20/web-js-callback/" title="js回调函数">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  js回调函数</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/06/05/linux-wget-guide/"  title="wget用法">
+ <strong>NEXT:</strong><br/> 
+ <span>wget用法
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XPath"><span class="toc-number">1.</span> <span class="toc-text">XPath</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

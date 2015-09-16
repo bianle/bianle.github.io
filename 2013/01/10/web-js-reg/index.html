@@ -1,0 +1,501 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>js正则 | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="正则表达式符号说明12345678910111213141516171819202122232425262728293031323334353637383940“+”元字符规定其前导字符必须在目标对象中连续出现一次或多次。==&amp;#123;1,&amp;#125; “*”元字符规定其前导字符必须在目标对象中出">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/01/10/web-js-reg/" title="js正则" itemprop="url">js正则</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-01-10T10:09:17.000Z" itemprop="datePublished">2013-01-10</time>
+    更新日期:<time datetime="2015-09-07T05:08:53.622Z" itemprop="dateModified">2015-09-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式符号说明"><span class="toc-number">1.</span> <span class="toc-text">正则表达式符号说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式应用模式参数"><span class="toc-number">2.</span> <span class="toc-text">正则表达式应用模式参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一次匹配多少个符合条件的子元素(匹配最大量和最小量)"><span class="toc-number">3.</span> <span class="toc-text">一次匹配多少个符合条件的子元素(匹配最大量和最小量)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#处理多个匹配"><span class="toc-number">4.</span> <span class="toc-text">处理多个匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#replace使用正则"><span class="toc-number">5.</span> <span class="toc-text">replace使用正则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#split使用正则"><span class="toc-number">6.</span> <span class="toc-text">split使用正则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#找到首次匹配的子串的开始位置"><span class="toc-number">7.</span> <span class="toc-text">找到首次匹配的子串的开始位置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exec方法详解"><span class="toc-number">8.</span> <span class="toc-text">exec方法详解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#test方法"><span class="toc-number">9.</span> <span class="toc-text">test方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#match方法"><span class="toc-number">10.</span> <span class="toc-text">match方法</span></a></li></ol>
+		</div>
+		
+		<h1 id="正则表达式符号说明">正则表达式符号说明</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">“+”元字符规定其前导字符必须在目标对象中连续出现一次或多次。==&#123;1,&#125; </span><br><span class="line">“*”元字符规定其前导字符必须在目标对象中出现零次或连续多次。==&#123;0,&#125; </span><br><span class="line">“?”元字符规定其前导对象必须在目标对象中连续出现零次或一次。==&#123;0,1&#125; </span><br><span class="line"> </span><br><span class="line"><span class="keyword">n</span>,<span class="keyword">m</span>为非负整数,<span class="keyword">n</span>&lt;<span class="keyword">m</span> </span><br><span class="line">&#123;<span class="keyword">n</span>&#125; 确定匹配<span class="keyword">n</span>次 如p&#123;2&#125; pp才匹配 </span><br><span class="line">&#123;<span class="keyword">n</span>,&#125; 至少匹配<span class="keyword">n</span>次 如p&#123;2,&#125; pp,ppp,pppp都匹配,p不匹配 </span><br><span class="line">&#123;<span class="keyword">n</span>,<span class="keyword">m</span>&#125; 匹配&gt;=<span class="keyword">n</span>,&lt;=<span class="keyword">m</span>次, 如p&#123;2,4&#125; pp,ppp,pppp都匹配, p,ppppp都不匹配 </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">s：用于匹配单个空格符，包括<span class="keyword">tab</span>键和换行符； </span><br><span class="line">S：用于匹配除单个空格符之外的所有字符； </span><br><span class="line"><span class="keyword">d</span>：用于匹配从0到9的数字； </span><br><span class="line">w：用于匹配字母，数字或下划线字符； </span><br><span class="line">W：用于匹配所有与w不匹配的字符； </span><br><span class="line">. ：用于匹配除换行符之外的所有字符。 </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">“^”定位符规定匹配模式必须出现在目标字符串的开头 </span><br><span class="line">/^hell/ 匹配“hell”, “hello”或“hellhound”开头的字符串 </span><br><span class="line"> </span><br><span class="line">“$”定位符规定匹配模式必须出现在目标对象的结尾 </span><br><span class="line">/ar$/　匹配“car”, “bar”或 “ar” 结尾的字符串 </span><br><span class="line"> </span><br><span class="line">“b”定位符规定匹配模式必须出现在目标字符串的开头或结尾的两个边界之一(代表着单词的开头或结尾) </span><br><span class="line">/bbom/　以“b”定位符开头，匹配以 “bomb”, 或 “bom”开头的字符串。 </span><br><span class="line">/manb/　以“b”定位符结尾，匹配以 “human”, “woman”或 “<span class="keyword">man</span>”结尾的字符串相 </span><br><span class="line"> </span><br><span class="line">“B”匹配不是单词开头或结束的位置 </span><br><span class="line"> </span><br><span class="line">()符号包含的内容必须同时出现在目标对象中。 </span><br><span class="line">如:/([a-z][A-Z][0-9])+/  abc不匹配 aA9才匹配 </span><br><span class="line"> </span><br><span class="line">|符号表示:或 </span><br><span class="line">如:/to|too|2/ 与目标对象中的 “to”, “too”, 或 “2” 相匹配 </span><br><span class="line"> </span><br><span class="line">[^]符号表示:否定符号(必须放在[]中) </span><br><span class="line">如:/[^A-C]/　上述字符串将会与目标对象中除A，B，和C之外的任何字符相匹配 </span><br><span class="line"> </span><br><span class="line">符号表示:转义符号</span><br></pre></td></tr></table></figure>
+<h1 id="正则表达式应用模式参数">正则表达式应用模式参数</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">语法 <span class="number">1</span> re = <span class="regexp">/pattern/</span>[flags] </span><br><span class="line">语法 <span class="number">2</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"pattern"</span>,[<span class="string">"flags"</span>]) </span><br><span class="line"> </span><br><span class="line">g （全文查找出现的所有 pattern） </span><br><span class="line">i （忽略大小写） </span><br><span class="line">m （多行查找） </span><br><span class="line"> </span><br><span class="line">语法<span class="number">1</span>:<span class="keyword">var</span> pattern = <span class="regexp">/Java/g</span>; (用 <span class="string">"/"</span> 字符分隔模式) </span><br><span class="line">语法<span class="number">2</span>:<span class="keyword">var</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"ain"</span>,<span class="string">"g"</span>); (用引号将模式引起来)</span><br></pre></td></tr></table></figure>
+<h1 id="一次匹配多少个符合条件的子元素(匹配最大量和最小量)">一次匹配多少个符合条件的子元素(匹配最大量和最小量)</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Greedy: 在能匹配的前提下，取量词的最大值。 </span><br><span class="line">Reluctant: 在匹配的前提下，取量词的最小值。 </span><br><span class="line">Possessive: 取量词的最大值，无论匹配与否。 </span><br><span class="line">如： </span><br><span class="line">Pattern.<span class="function"><span class="title">compile</span><span class="params">(<span class="string">"^.*B"</span>)</span></span>.<span class="function"><span class="title">matcher</span><span class="params">(<span class="string">"AABAABAA"</span>)</span></span> : <span class="string">"AABAAB"</span> </span><br><span class="line">Pattern.<span class="function"><span class="title">compile</span><span class="params">(<span class="string">"^.*?B"</span>)</span></span>.<span class="function"><span class="title">matcher</span><span class="params">(<span class="string">"AABAABAA"</span>)</span></span> : <span class="string">"AAB"</span> </span><br><span class="line">Pattern.<span class="function"><span class="title">compile</span><span class="params">(<span class="string">"^.*+B"</span>)</span></span>.<span class="function"><span class="title">matcher</span><span class="params">(<span class="string">"AABAABAA"</span>)</span></span> : null</span><br></pre></td></tr></table></figure>
+<h1 id="处理多个匹配">处理多个匹配</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//第一种</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pattern = new <span class="type">RegExp</span>(<span class="string">"Java"</span>,<span class="string">"g"</span>);//一定要有g不然会死循环</span><br><span class="line"></span><br><span class="line">//初始化<span class="literal">result</span>数组</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="literal">result</span> = null;</span><br><span class="line"></span><br><span class="line">//多次使用<span class="type">RegExp</span>对象pattern2指定的正则表达式匹配不表字符串text,如果返回null,则不再循环下去</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>((<span class="literal">result</span> = pattern.exec(text)) != null)&#123;</span><br><span class="line"></span><br><span class="line">   alert(<span class="string">"返回结果为: "</span>+<span class="literal">result</span>);</span><br><span class="line"></span><br><span class="line">   //显示本次匹配的子串的开始位置和下一次匹配开始的位置(<span class="literal">result</span>[<span class="number">0</span>]为匹配的字符串)</span><br><span class="line"></span><br><span class="line">   alert(<span class="string">"Matched '"</span>+ <span class="literal">result</span>[<span class="number">0</span>] +<span class="string">"'"</span>+<span class="string">"at Position "</span>+<span class="literal">result</span>.index+<span class="string">"; next Search begins at "</span>+ pattern2.lastIndex);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="replace使用正则">replace使用正则</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">//实例化<span class="type">RegExp</span>对象pattern2， 使用g选项匹配所有符合正则表达式的子串</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pattern2 = new <span class="type">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</span><br><span class="line"></span><br><span class="line">//对目标子串调用replace调用replace方法用另一个字符串替换匹配给定的正则表达式的子串</span><br><span class="line"></span><br><span class="line"><span class="literal">result</span> = text.replace(pattern2, <span class="string">"VB"</span>);</span><br><span class="line"></span><br><span class="line">//显示替换后的字符串</span><br><span class="line"></span><br><span class="line">alert(<span class="string">"替换后的新串为： "</span>+<span class="literal">result</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">//使用方法处理找到匹配的字符串</span><br><span class="line"></span><br><span class="line">function test($<span class="number">1</span>)&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> gyear=(new <span class="type">Date</span>()).getYear()-parseInt($<span class="number">1</span>)+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> $<span class="number">1</span>+<span class="string">"("</span>+gyear+<span class="string">"年出生)"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> reg=new <span class="type">RegExp</span>(<span class="string">"(d+)岁"</span>,<span class="string">"g"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> newstr=str.replace(reg,test);//使用方法作为要替代的字符串</span><br><span class="line"></span><br><span class="line">alert(str);</span><br><span class="line"></span><br><span class="line">alert(newstr);</span><br></pre></td></tr></table></figure>
+<h1 id="split使用正则">split使用正则</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pattern2 = new <span class="type">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</span><br><span class="line"></span><br><span class="line">//对目标字符串调用split方法</span><br><span class="line"></span><br><span class="line"><span class="literal">result</span> = text.split(pattern2);</span><br><span class="line"></span><br><span class="line">//遍历结果集</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="literal">result</span>.length; i++)&#123;</span><br><span class="line"></span><br><span class="line">   //显示拆分后的每一个子串</span><br><span class="line"></span><br><span class="line">   alert(<span class="string">"拆分后的每一个子串: "</span>+<span class="string">"' "</span>+<span class="literal">result</span>+<span class="string">" '"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="找到首次匹配的子串的开始位置">找到首次匹配的子串的开始位置</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pattern2 = new <span class="type">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</span><br><span class="line"></span><br><span class="line"><span class="literal">result</span> = text.search(pattern);</span><br><span class="line"></span><br><span class="line">//显示首次匹配子串的开始位置</span><br><span class="line"></span><br><span class="line">alert(<span class="string">"匹配子串的开始位置: "</span>+<span class="literal">result</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="exec方法详解">exec方法详解</h1><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">exec</span>方法返回的其实并不是匹配结果字符串，而是一个对象 </span><br><span class="line"> </span><br><span class="line">它的属性: <span class="keyword">index</span> input <span class="number">0</span>。其中<span class="keyword">index</span>是表示匹配在原字符串中的索引；而input则是表示输入的字符串； </span><br><span class="line"> </span><br><span class="line">至于<span class="number">0</span>则是表示只有一个匹配结果，可以用下标<span class="number">0</span>来引用这个匹配结果，这个数量可能改变。我们可以通过返回值的<span class="keyword">length</span>属性来得知匹配结果的总数量。</span><br></pre></td></tr></table></figure>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function  execReg(reg,str)&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="literal">result</span> =  reg.exec(str);</span><br><span class="line"></span><br><span class="line">document.write('index:'+<span class="literal">result</span>.index+'&lt;br  /&gt;'+'input:'+<span class="literal">result</span>.input+'&lt;br  /&gt;');</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="literal">result</span>.length;i++)&#123;</span><br><span class="line"></span><br><span class="line">document.write('<span class="literal">result</span>['+i+']:'+<span class="literal">result</span>[i]+'&lt;br  /&gt;')</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> reg = /w/;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span>  str='bbs.bblueidea.com';</span><br><span class="line"></span><br><span class="line">execReg(reg,str);</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<blockquote>
+<p>index:0 input:bbs.bblueidea.com result[0]:b</p>
+</blockquote>
+<p>输入字符串为bbs.bblueidea.com； 匹配的b在原字符串的索引是0。 正则的匹配结果为一个，b；</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var reg =  /<span class="comment">(w)</span><span class="comment">(w)</span><span class="comment">(.+)</span>/;</span><br><span class="line"></span><br><span class="line">var  str=<span class="string">'bbs.bblueidea.com'</span>;</span><br><span class="line"></span><br><span class="line">execReg<span class="comment">(reg,str)</span>;</span><br></pre></td></tr></table></figure>
+<p>结果为：</p>
+<blockquote>
+<p>index:0 input:bbs.bblueidea.com result[0]:bbs.bblueidea.com result[1]:b result[2]:b result[3]:s.bblueidea.com</p>
+</blockquote>
+<p>由上面两个例子可见，返回对象[0]就是整个正则表达式所匹配的内容。后续的元素则是各个子正则表达式的匹配内容。 //g修饰的区别 exec方法在返回结果对象的同时，还可能会更新原来的正则表达式，这就要看正则表达式是否设置了g修饰符。先来看两个例子吧：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">reg</span> = /b/;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str =  'bbs.blueidea.com';</span><br><span class="line"></span><br><span class="line">execReg(<span class="keyword">reg</span>,str);</span><br><span class="line"></span><br><span class="line">execReg(<span class="keyword">reg</span>,str);</span><br></pre></td></tr></table></figure></p>
+<p>结果如下：</p>
+<blockquote>
+<p>index:0 input:bbs.blueidea.com result[0]:b index:0 input:bbs.blueidea.com result[0]:b<br>也就是说，两次匹配的结果完全一样，从索引可以看出来，匹配的都是字符串首的b字符。 下面看看设置了g的正则表达式表现如何：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">reg</span> = /b/<span class="keyword">g</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str =  'bbs.blueidea.com';</span><br><span class="line"></span><br><span class="line">execReg(<span class="keyword">reg</span>,str);</span><br><span class="line"></span><br><span class="line">execReg(<span class="keyword">reg</span>,str);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>结果如下：</p>
+<blockquote>
+<p>index:0 input:bbs.blueidea.com result[0]:b index:1 input:bbs.blueidea.com result[0]:b<br>可以看得出来，第二次匹配的是字符串的字符串的第二个b。这也就是g修饰符的作用了，下面来看exec是如何区别对待g和非g正则表达式的。  如果正则表达式没有设置g，那么exec方法不会对正则表达式有任何的影响，如果设置了g，那么exec执行之后会更新正则表达式的lastIndex属性，表示本次匹配后，所匹配字符串的下一个字符的索引，下一次再用这个正则表达式匹配字符串的时候就会从上次的lastIndex属性开始匹配，也就是上面两个例子结果不同的原因了。</p>
+</blockquote>
+<h1 id="test方法">test方法</h1><p>test方法仅仅检查是否能够匹配str，并且返回布尔值以表示是否成功</p>
+<h1 id="match方法">match方法</h1><p>与正则表达式的exec方法类似，该方法同样返回一个类似数组的对象，也有input和index属性。我们定义如下一个函数用来测试：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">function  matchReg(reg,str)&#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">var</span> <span class="literal">result</span> =  str.match(reg);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span> )&#123;</span><br><span class="line"></span><br><span class="line">document.write('index:'+<span class="literal">result</span>.index+'&lt;br  /&gt;'</span><br><span class="line"></span><br><span class="line">+'input:'+<span class="literal">result</span>.input+'&lt;br  /&gt;'</span><br><span class="line"></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="literal">result</span>.length;i++)&#123;</span><br><span class="line"></span><br><span class="line">document.write('<span class="literal">result</span>['+i+']:'+<span class="literal">result</span>[i]+'&lt;br  /&gt;')</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"></span><br><span class="line">alert('null：匹配失败！')</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> reg = /b/;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str =  'bbs.blueidea.com';</span><br><span class="line"></span><br><span class="line">matchReg(reg,str);</span><br></pre></td></tr></table></figure></p>
+<p>结果如下：</p>
+<blockquote>
+<p>index:0 input:bbs.blueidea.com result[0]:b<br>可见，和exec的结果一样。 但是如果正则表达式设置了g修饰符，exec和match的行为可就不一样了，见下例： index:undefined input:undefined result[0]:b result[1]:b result[2]:b 设置了g修饰符的正则表达式在完成一次成功匹配后不会停止，而是继续找到所有可以匹配到的字符。返回的结果包括了三个b。不过没有提供input和index这些信息。</p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a><a href="/tags/正则/">正则</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/web前端/">web前端</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2013/01/10/web-js-reg/" data-title="js正则 | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/01/17/java-tomcat-memory/" title="Linux和Windows下的Tomcat JVM内存设置">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Linux和Windows下的Tomcat JVM内存设置</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/01/10/web-disabled-statebar/"  title="禁止状态栏显示链接">
+ <strong>NEXT:</strong><br/> 
+ <span>禁止状态栏显示链接
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式符号说明"><span class="toc-number">1.</span> <span class="toc-text">正则表达式符号说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式应用模式参数"><span class="toc-number">2.</span> <span class="toc-text">正则表达式应用模式参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一次匹配多少个符合条件的子元素(匹配最大量和最小量)"><span class="toc-number">3.</span> <span class="toc-text">一次匹配多少个符合条件的子元素(匹配最大量和最小量)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#处理多个匹配"><span class="toc-number">4.</span> <span class="toc-text">处理多个匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#replace使用正则"><span class="toc-number">5.</span> <span class="toc-text">replace使用正则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#split使用正则"><span class="toc-number">6.</span> <span class="toc-text">split使用正则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#找到首次匹配的子串的开始位置"><span class="toc-number">7.</span> <span class="toc-text">找到首次匹配的子串的开始位置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exec方法详解"><span class="toc-number">8.</span> <span class="toc-text">exec方法详解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#test方法"><span class="toc-number">9.</span> <span class="toc-text">test方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#match方法"><span class="toc-number">10.</span> <span class="toc-text">match方法</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

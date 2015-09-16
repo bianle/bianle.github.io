@@ -1,0 +1,477 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>java实现http文件下载 | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源分了几百甚至上千上万，那简直是个灾难。　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因如此，我们就可以用">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/07/04/java-http-download/" title="java实现http文件下载" itemprop="url">java实现http文件下载</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-07-04T10:09:17.000Z" itemprop="datePublished">2012-07-04</time>
+    更新日期:<time datetime="2015-08-31T10:04:33.429Z" itemprop="dateModified">2015-08-31</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成<br>了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源<br>分了几百甚至上千上万，那简直是个灾难。<br>　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因<br>如此，我们就可以用程序来完成这个资源的完全下载。<br>　　1. 基础知识<br>　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource<br>Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:<br>　　步骤1:客户端发起连接请求一个URL<br>　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户<br>　　步骤3:客户端接收输入流，将流中的内容存到文件<br>　　2. 网络连接的建立<br>　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的<br>存取,下面的代码段就完成了对一个网站的资源进行访问:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">destUrl=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>;</span><br><span class="line">url = <span class="keyword">new</span> URL(destUrl);</span><br><span class="line">httpUrl = (HttpURLConnection) url.openConnection();</span><br><span class="line"><span class="comment">//连接指定的网络资源</span></span><br><span class="line">httpUrl.connect();</span><br><span class="line"><span class="comment">//获取网络输入流</span></span><br><span class="line">bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>代理的访问<br>　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了<br>，访问的JAVA代码如下:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//设置代理服务器</span><br><span class="line">System.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</span><br><span class="line">System.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</span><br><span class="line">System.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>网络资源的保存<br>　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入<br>流中的所以内容，并将其保存在文件中。示例代码:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.DEBUG)</span><br><span class="line">System.out.<span class="keyword">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</span><br><span class="line">fileName +<span class="string">"]"</span>);</span><br><span class="line"><span class="comment">//保存文件</span></span><br><span class="line"><span class="keyword">while</span> ( (<span class="keyword">size</span> = bis.<span class="keyword">read</span>(buf)) != -<span class="number">1</span>)</span><br><span class="line">fos.<span class="keyword">write</span>(buf, <span class="number">0</span>, <span class="keyword">size</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</span><br><span class="line"> **/</span></span><br><span class="line"><span class="keyword">public</span> class SaveFile &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="built_in">boolean</span> DEBUG = <span class="keyword">true</span>; <span class="comment">// 调试用</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></span><br><span class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></span><br><span class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 　* 构造方法 　</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> SaveFile() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 　* 清除下载列表 　</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</span><br><span class="line">		vDownLoad.<span class="built_in">clear</span>();</span><br><span class="line">		vFileList.<span class="built_in">clear</span>();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</span><br><span class="line">		vDownLoad.<span class="built_in">add</span>(url);</span><br><span class="line">		vFileList.<span class="built_in">add</span>(filename);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 　* 根据列表下载资源 　</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</span><br><span class="line">		<span class="keyword">String</span> url = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">String</span> filename = <span class="keyword">null</span>;</span><br><span class="line">		<span class="comment">// 按列表顺序保存资源</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</span><br><span class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				saveToFile(url, filename);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (IOException err) &#123;</span><br><span class="line">				<span class="keyword">if</span> (DEBUG) &#123;</span><br><span class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (DEBUG) &#123;</span><br><span class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 将HTTP资源另存为文件</span><br><span class="line">	 * </span><br><span class="line">	 * @param destUrl</span><br><span class="line">	 *            String</span><br><span class="line">	 * @param fileName</span><br><span class="line">	 *            String</span><br><span class="line">	 * @throws Exception</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		FileOutputStream fos = <span class="keyword">null</span>;</span><br><span class="line">		BufferedInputStream bis = <span class="keyword">null</span>;</span><br><span class="line">		HttpURLConnection httpUrl = <span class="keyword">null</span>;</span><br><span class="line">		URL url = <span class="keyword">null</span>;</span><br><span class="line">		<span class="built_in">byte</span>[] buf = <span class="keyword">new</span> <span class="built_in">byte</span>[BUFFER_SIZE];</span><br><span class="line">		<span class="built_in">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">		<span class="comment">// 建立链接</span></span><br><span class="line">		url = <span class="keyword">new</span> URL(destUrl);</span><br><span class="line">		httpUrl = (HttpURLConnection) url.openConnection();</span><br><span class="line">		<span class="comment">// 连接指定的资源</span></span><br><span class="line">		httpUrl.connect();</span><br><span class="line">		<span class="comment">// 获取网络输入流</span></span><br><span class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</span><br><span class="line">		<span class="comment">// 建立文件</span></span><br><span class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span>.DEBUG)</span><br><span class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></span><br><span class="line">					+ fileName + <span class="string">"]"</span>);</span><br><span class="line">		<span class="comment">// 保存文件</span></span><br><span class="line">		<span class="keyword">while</span> ((<span class="built_in">size</span> = bis.read(buf)) != -<span class="number">1</span>)</span><br><span class="line">			fos.write(buf, <span class="number">0</span>, <span class="built_in">size</span>);</span><br><span class="line">		fos.close();</span><br><span class="line">		bis.close();</span><br><span class="line">		httpUrl.disconnect();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 将HTTP资源另存为文件</span><br><span class="line">	 * </span><br><span class="line">	 * @param destUrl</span><br><span class="line">	 *            String</span><br><span class="line">	 * @param fileName</span><br><span class="line">	 *            String</span><br><span class="line">	 * @throws Exception</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		FileOutputStream fos = <span class="keyword">null</span>;</span><br><span class="line">		BufferedInputStream bis = <span class="keyword">null</span>;</span><br><span class="line">		HttpURLConnection httpUrl = <span class="keyword">null</span>;</span><br><span class="line">		URL url = <span class="keyword">null</span>;</span><br><span class="line">		<span class="built_in">byte</span>[] buf = <span class="keyword">new</span> <span class="built_in">byte</span>[BUFFER_SIZE];</span><br><span class="line">		<span class="built_in">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">		<span class="comment">// 建立链接</span></span><br><span class="line">		url = <span class="keyword">new</span> URL(destUrl);</span><br><span class="line">		httpUrl = (HttpURLConnection) url.openConnection();</span><br><span class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></span><br><span class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</span><br><span class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></span><br><span class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</span><br><span class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</span><br><span class="line">		<span class="comment">// 连接指定的资源</span></span><br><span class="line">		httpUrl.connect();</span><br><span class="line">		<span class="comment">// 获取网络输入流</span></span><br><span class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</span><br><span class="line">		<span class="comment">// 建立文件</span></span><br><span class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span>.DEBUG)</span><br><span class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></span><br><span class="line">					+ fileName + <span class="string">"]"</span>);</span><br><span class="line">		<span class="comment">// 保存文件</span></span><br><span class="line">		<span class="keyword">while</span> ((<span class="built_in">size</span> = bis.read(buf)) != -<span class="number">1</span>)</span><br><span class="line">			fos.write(buf, <span class="number">0</span>, <span class="built_in">size</span>);</span><br><span class="line">		fos.close();</span><br><span class="line">		bis.close();</span><br><span class="line">		httpUrl.disconnect();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 设置代理服务器</span><br><span class="line">	 * </span><br><span class="line">	 * @param proxy</span><br><span class="line">	 *            String</span><br><span class="line">	 * @param proxyPort</span><br><span class="line">	 *            String</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</span><br><span class="line">		<span class="comment">// 设置代理服务器</span></span><br><span class="line">		System.getProperties().put(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</span><br><span class="line">		System.getProperties().put(<span class="string">"proxyHost"</span>, proxy);</span><br><span class="line">		System.getProperties().put(<span class="string">"proxyPort"</span>, proxyPort);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</span><br><span class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 主方法(用于测试)</span><br><span class="line">	 * </span><br><span class="line">	 * @param argv</span><br><span class="line">	 *            String[]</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</span><br><span class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></span><br><span class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></span><br><span class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></span><br><span class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></span><br><span class="line">			<span class="comment">// //开始下载</span></span><br><span class="line">			<span class="comment">// oInstance.downLoadByList();</span></span><br><span class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</span><br><span class="line">					<span class="string">"./down.zip"</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception err) &#123;</span><br><span class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/download/">download</a><a href="/tags/http/">http</a><a href="/tags/java/">java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2012/07/04/java-http-download/" data-title="java实现http文件下载 | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/07/04/web-js-animate/" title="js渐变效果">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  js渐变效果</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/07/04/linux-ubuntu-telnet/"  title="如何启动ubuntu下的telnet服务">
+ <strong>NEXT:</strong><br/> 
+ <span>如何启动ubuntu下的telnet服务
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,509 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>could not initialize proxy – no Session | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="在&amp;lt;many-to-on&amp;gt;中这错误很常见，字面意义就是不能被初始化，因为session已经关闭了。简单理解就是因为，你使用了lazy=true，这样hibernate在从数据库中调数据的时候是不会把关联的对象查出来的，而是保存一个获取值得方法，在你使用getXXX()调用的时候，hibe">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/01/07/java-hibernate-could-not-initialize-proxy/" title="could not initialize proxy – no Session" itemprop="url">could not initialize proxy – no Session</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-01-07T10:09:17.000Z" itemprop="datePublished">2013-01-07</time>
+    更新日期:<time datetime="2015-09-07T09:54:51.501Z" itemprop="dateModified">2015-09-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>在<code>&lt;many-to-on&gt;</code>中这错误很常见，字面意义就是不能被初始化，因为<code>session</code>已经关闭了。<br>简单理解就是因为，你使用了<code>lazy=true</code>，这样hibernate在从数据库中调数据的时候是不会把关联的对象查出来的，而是保存一个获取值得方法，在你使用getXXX()调用的时候，hiberante会利用这个保存的方法去从数据库中取数据。而往往我们在jsp页面中使用getXXX()准备展示数据的时候，session早已经在dao中就关闭了，我们该如何解决这种异常呢？<br>简单的说有三种： </p>
+<ol>
+<li>把lazy设成false,最简单。 </li>
+<li>我没试过，但听说过</li>
+</ol>
+<p>在web.xml中加入<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="attribute">filter</span>&gt; </span><br><span class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/<span class="attribute">filter</span>-name&gt; </span><br><span class="line">     &lt;<span class="attribute">filter</span>-class&gt; </span><br><span class="line">     org<span class="class">.springframework</span><span class="class">.orm</span><span class="class">.hibernate3</span><span class="class">.support</span><span class="class">.OpenSessionInViewFilter</span> </span><br><span class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </span><br><span class="line">&lt;/<span class="attribute">filter</span>&gt; </span><br><span class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </span><br><span class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/<span class="attribute">filter</span>-name&gt; </span><br><span class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </span><br><span class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>我用的方法，也是我认为比较不错的方法，灵活性更好。用left join fetch或inner join fetch语法。<br>例如：from Item i left join fetch i.parentItem ii<br>解释一下Item表是一个自关联的表，它的关联关系在hbm.xml中配置好了。<br>如下：</li>
+</ol>
+<p>程序代码<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;many-<span class="keyword">to</span>-one <span class="property">name</span>=<span class="string">"parentItem"</span> lazy=<span class="string">"false"</span> fetch=<span class="string">"join"</span> <span class="type">class</span>=<span class="string">"cn.sports.matchs.model.Item"</span>&gt; </span><br><span class="line">             &lt;column <span class="property">name</span>=<span class="string">"PARENT_ID"</span>&gt;&lt;/column&gt; </span><br><span class="line">&lt;/many-<span class="keyword">to</span>-one&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在Item类中</p>
+<p>程序代码<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Item parentItem;</span><br></pre></td></tr></table></figure></p>
+<p>关于lazy机制：<br>延迟初始化错误是运用Hibernate开发项目时最常见的错误。如果对一个类或者集合配置了延迟检索策略，那么必须当代理类实例或代理集合处于持久化状态（即处于Session范围内）时，才能初始化它。如果在游离状态时才初始化它，就会产生延迟初始化错误。</p>
+<p>下面把Customer.hbm.xml文件的<class>元素的lazy属性设为true，表示使用延迟检索策略：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="type">class</span> <span class="property">name</span>=<span class="string">"mypack.Customer"</span> table=<span class="string">"CUSTOMERS"</span> lazy=<span class="string">"true"</span>&gt;</span><br></pre></td></tr></table></figure></class></p>
+<p>当执行Session的load()方法时，Hibernate不会立即执行查询CUSTOMERS表的select语句，仅仅返回Customer类的代理类的实例，这个代理类具由以下特征：<br>（1）由Hibernate在运行时动态生成，它扩展了Customer类，因此它继承了Customer类的所有属性和方法，但它的实现对于应用程序是透明的。<br>（2）当Hibernate创建Customer代理类实例时，仅仅初始化了它的OID属性，其他属性都为null，因此这个代理类实例占用的内存很少。<br>（3）当应用程序第一次访问Customer代理类实例时（例如调用customer.getXXX()或customer.setXXX()方法）， Hibernate会初始化代理类实例，在初始化过程中执行select语句，真正从数据库中加载Customer对象的所有数据。但有个例外，那就是当应用程序访问Customer代理类实例的getId()方法时，Hibernate不会初始化代理类实例，因为在创建代理类实例时OID就存在了，不必到数据库中去查询。<br>提示：Hibernate采用CGLIB工具来生成持久化类的代理类。CGLIB是一个功能强大的Java字节码生成工具，它能够在程序运行时动态生成扩展 Java类或者实现Java接口的代理类。关于CGLIB的更多知识，请参考：<a href="http://cglib.sourceforge.net/。" target="_blank" rel="external">http://cglib.sourceforge.net/。</a><br>以下代码先通过Session的load()方法加载Customer对象，然后访问它的name属性：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tx = session.beginTransaction()<span class="comment">; </span></span><br><span class="line">Customer customer=(Customer)session.load(Customer.class,new Long(1))<span class="comment">; </span></span><br><span class="line">customer.getName()<span class="comment">; </span></span><br><span class="line">tx.commit()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>在运行session.load()方法时Hibernate不执行任何select语句，仅仅返回Customer类的代理类的实例，它的OID为1，这是由load()方法的第二个参数指定的。当应用程序调用customer.getName()方法时，Hibernate会初始化Customer代理类实例，从数据库中加载Customer对象的数据，执行以下select语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> CUSTOMERS <span class="keyword">where</span> <span class="keyword">ID</span>=<span class="number">1</span>;</span> </span><br><span class="line"><span class="operator"><span class="keyword">select</span> * <span class="keyword">from</span> orDERS <span class="keyword">where</span> CUSTOMER_ID=<span class="number">1</span>;</span></span><br></pre></td></tr></table></figure></p>
+<p>当<class>元素的lazy属性为true，会影响Session的load()方法的各种运行时行为，下面举例说明。<br>1．如果加载的Customer对象在数据库中不存在，Session的load()方法不会抛出异常，只有当运行customer.getName()方法时才会抛出以下异常： </class></p>
+<blockquote>
+<p>ERROR LazyInitializer:63 -Exception initializing proxy<br>net.sf.hibernate.ObjectNotFoundException: No row with thegiven identifier exists: 1, of class:<br>mypack.Customer<br>2．如果在整个Session范围内，应用程序没有访问过Customer对象，那么Customer代理类的实例一直不会被初始化，Hibernate不会执行任何select语句。以下代码试图在关闭Session后访问Customer游离对象：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tx = session.beginTransaction()<span class="comment">; </span></span><br><span class="line">Customer customer=(Customer)session.load(Customer.class,new Long(1))<span class="comment">; </span></span><br><span class="line">tx.commit()<span class="comment">; </span></span><br><span class="line">session.close()<span class="comment">; </span></span><br><span class="line">customer.getName()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>由于引用变量customer引用的Customer代理类的实例在Session范围内始终没有被初始化，因此在执行customer.getName()方法时，Hibernate会抛出以下异常：<br>ERROR LazyInitializer:63 -Exception initializing proxy<br>net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed<br>由此可见，Customer代理类的实例只有在当前Session范围内才能被初始化。</p>
+<p>3．net.sf.hibernate.Hibernate类的initialize()静态方法用于在Session范围内显式初始化代理类实例，isInitialized()方法用于判断代理类实例是否已经被初始化。例如：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tx = session.beginTransaction()<span class="comment">; </span></span><br><span class="line">Customer customer=(Customer)session.load(Customer.class,new Long(1))<span class="comment">; </span></span><br><span class="line">if(!Hibernate.isInitialized(customer)) </span><br><span class="line">Hibernate.initialize(customer)<span class="comment">; </span></span><br><span class="line">tx.commit()<span class="comment">; </span></span><br><span class="line">session.close()<span class="comment">; </span></span><br><span class="line">customer.getName()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>以上代码在Session范围内通过Hibernate类的initialize()方法显式初始化了Customer代理类实例，因此当Session关闭后，可以正常访问Customer游离对象。</p>
+<p>4．当应用程序访问代理类实例的getId()方法时，不会触发Hibernate初始化代理类实例的行为，例如：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tx = session.beginTransaction()<span class="comment">; </span></span><br><span class="line">Customer customer=(Customer)session.load(Customer.class,new Long(1))<span class="comment">; </span></span><br><span class="line">customer.getId()<span class="comment">; </span></span><br><span class="line">tx.commit()<span class="comment">; </span></span><br><span class="line">session.close()<span class="comment">; </span></span><br><span class="line">customer.getName()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>当应用程序访问customer.getId()方法时，该方法直接返回Customer代理类实例的OID值，无需查询数据库。由于引用变量 customer始终引用的是没有被初始化的Customer代理类实例，因此当Session关闭后再执行customer.getName()方法， Hibernate会抛出以下异常： </p>
+<blockquote>
+<p>ERROR LazyInitializer:63 -Exception initializing proxy<br>net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed</p>
+</blockquote>
+<p>解决方法：<br>由于hibernate采用了lazy=true,这样当你用hibernate查询时,返回实际为利用cglib增强的代理类,但其并没有实际填充;当你在前端,利用它来取值(getXXX)时,这时Hibernate才会到数据库执行查询,并填充对象,但此时如果和这个代理类相关的session已关闭掉,就会产生种错误.<br>在做一对多时，有时会出现”could not initialize proxy – clothe owning Session was sed,这个好像是hibernate的缓存问题.问题解决:需要在<many-to-one>里设置lazy=”false”. 但有可能会引发另一个异常叫<br>failed to lazily initialize a collection of role: XXXXXXXX, no session or session was closed<br>解决方法:在web.xml中加入<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="attribute">filter</span>&gt; </span><br><span class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/<span class="attribute">filter</span>-name&gt; </span><br><span class="line">     &lt;<span class="attribute">filter</span>-class&gt; </span><br><span class="line">     org<span class="class">.springframework</span><span class="class">.orm</span><span class="class">.hibernate3</span><span class="class">.support</span><span class="class">.OpenSessionInViewFilter</span> </span><br><span class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </span><br><span class="line">&lt;/<span class="attribute">filter</span> &gt; </span><br><span class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </span><br><span class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/<span class="attribute">filter</span>-name&gt; </span><br><span class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </span><br><span class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</span><br></pre></td></tr></table></figure></many-to-one></p>
+<p>就可以了;</p>
+<p>参考了:<br>Hibernate与延迟加载：<br>Hibernate对象关系映射提供延迟的与非延迟的对象初始化。非延迟加载在读取一个对象的时候会将与这个对象所有相关的其他对象一起读取出来。这有时会导致成百的（如果不是成千的话）select语句在读取对象的时候执行。这个问题有时出现在使用双向关系的时候，经常会导致整个数据库都在初始化的阶段被读出来了。当然，你可以不厌其烦地检查每一个对象与其他对象的关系，并把那些最昂贵的删除，但是到最后，我们可能会因此失去了本想在ORM工具中获得的便利。<br>一个明显的解决方法是使用Hibernate提供的延迟加载机制。这种初始化策略只在一个对象调用它的一对多或多对多关系时才将关系对象读取出来。这个过程对开发者来说是透明的，而且只进行了很少的数据库操作请求，因此会得到比较明显的性能提升。这项技术的一个缺陷是延迟加载技术要求一个Hibernate会话要在对象使用的时候一直开着。这会成为通过使用DAO模式将持久层抽象出来时的一个主要问题。为了将持久化机制完全地抽象出来，所有的数据库逻辑，包括打开或关闭会话，都不能在应用层出现。最常见的是，一些实现了简单接口的DAO实现类将数据库逻辑完全封装起来了。一种快速但是笨拙的解决方法是放弃DAO模式，将数据库连接逻辑加到应用层中来。这可能对一些小的应用程序有效，但是在大的系统中，这是一个严重的设计缺陷，妨碍了系统的可扩展性。<br>在Web层进行延迟加载<br>幸运的是，Spring框架为Hibernate延迟加载与DAO模式的整合提供了一种方便的解决方法。对那些不熟悉Spring与Hibernate集成使用的人，我不会在这里讨论过多的细节，但是我建议你去了解Hibernate与Spring集成的数据访问。以一个Web应用为例，Spring提供了OpenSessionInViewFilter和OpenSessionInViewInterceptor。我们可以随意选择一个类来实现相同的功能。两种方法唯一的不同就在于interceptor在Spring容器中运行并被配置在web应用的上下文中，而Filter在Spring之前运行并被配置在web.xml中。不管用哪个，他们都在请求将当前会话与当前（数据库）线程绑定时打开Hibernate会话。一旦已绑定到线程，这个打开了的Hibernate会话可以在DAO实现类中透明地使用。这个会话会为延迟加载数据库中值对象的视图保持打开状态。一旦这个逻辑视图完成了，Hibernate会话会在Filter的doFilter方法或者Interceptor的postHandle方法中被关闭。下面是每个组件的配置示例：<br>Interceptor的配置:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name=<span class="string">"openSessionInViewInterceptor"</span> </span><br><span class="line">class=<span class="string">"org.springframework.orm.hibernate.support.OpenSessionInViewInterceptor"</span>&gt; </span><br><span class="line">&lt;property name=<span class="string">"sessionFactory"</span>&gt;&lt;<span class="keyword">ref</span> bean=<span class="string">"sessionFactory"</span>/&gt;&lt;/property&gt; </span><br><span class="line">&lt;/bean&gt; </span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Filter的配置<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;web-app&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="attribute">filter</span>&gt; </span><br><span class="line">&lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/<span class="attribute">filter</span>-name&gt; </span><br><span class="line">&lt;<span class="attribute">filter</span>-class&gt; </span><br><span class="line">org<span class="class">.springframework</span><span class="class">.orm</span><span class="class">.hibernate</span><span class="class">.support</span><span class="class">.OpenSessionInViewFilter</span> </span><br><span class="line">&lt;/<span class="attribute">filter</span>-class&gt; </span><br><span class="line">&lt;/<span class="attribute">filter</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </span><br><span class="line">&lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/<span class="attribute">filter</span>-name&gt; </span><br><span class="line">&lt;url-pattern&gt;*. spring &lt;/url-pattern&gt; </span><br><span class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</span><br><span class="line"></span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure></p>
+<p>实现Hibernate的Dao接口来使用打开的会话是很容易的。事实上，如果你已经使用了Spring框架来实现你的Hibernate Dao,很可能你不需要改变任何东西。方便的HibernateTemplate公用组件使访问数据库变成小菜一碟，而DAO接口只有通过这个组件才可以访问到数据库。下面是一个示例的DAO：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> HibernateProductDAO <span class="keyword">extends</span> HibernateDaoSupport implements ProductDAO &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">Product</span> getProduct(<span class="type">Integer</span> productId) &#123; </span><br><span class="line">       <span class="keyword">return</span> (<span class="built_in">Product</span>)getHibernateTemplate().load(<span class="built_in">Product</span>.<span class="keyword">class</span>, productId); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="type">Integer</span> saveProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </span><br><span class="line">       <span class="keyword">return</span> (<span class="type">Integer</span>) getHibernateTemplate().<span class="keyword">save</span>(<span class="built_in">product</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void updateProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </span><br><span class="line">       getHibernateTemplate().update(<span class="built_in">product</span>); </span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在业务逻辑层中使用延迟加载<br>即使在视图外面，Spring框架也通过使用AOP 拦截器 HibernateInterceptor来使得延迟加载变得很容易实现。这个Hibernate 拦截器透明地将调用配置在Spring应用程序上下文中的业务对象中方法的请求拦截下来，在调用方法之前打开一个Hibernate会话，然后在方法执行完之后将会话关闭。让我们来看一个简单的例子，假设我们有一个接口BussinessObject：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>     <span class="keyword">interface</span>     <span class="title">BusinessObject</span>     &#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span>(<span class="params"></span>)</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>类BusinessObjectImpl实现了BusinessObject接口:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>     <span class="class"><span class="keyword">class</span>     <span class="title">BusinessObjectImpl</span>     <span class="keyword">implements</span>     <span class="title">BusinessObject</span>     </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span><span class="params">()</span>     </span>&#123; </span><br><span class="line"><span class="comment">//     lots of logic that calls </span></span><br><span class="line"><span class="comment">//     DAO classes Which access </span></span><br><span class="line"><span class="comment">//     data objects lazily  </span></span><br><span class="line">&#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过在Spring应用程序上下文中的一些配置，我们可以让将调用BusinessObject的方法拦截下来，再令它的方法支持延迟加载。看看下面的一个程序片段：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt; </span><br><span class="line">&lt;bean id=<span class="string">"hibernateInterceptor"</span> class=<span class="string">"org.springframework.orm.hibernate.HibernateInterceptor"</span>&gt; </span><br><span class="line">&lt;property name=<span class="string">"sessionFactory"</span>&gt; </span><br><span class="line">&lt;<span class="keyword">ref</span> bean=<span class="string">"sessionFactory"</span>/&gt; </span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;/bean&gt; </span><br><span class="line">&lt;bean id=<span class="string">"businessObjectTarget"</span> class=<span class="string">"com.acompany.BusinessObjectImpl"</span>&gt; </span><br><span class="line">&lt;property name=<span class="string">"someDAO"</span>&gt;&lt;<span class="keyword">ref</span> bean=<span class="string">"someDAO"</span>/&gt;&lt;/property&gt; </span><br><span class="line">&lt;/bean&gt; </span><br><span class="line">&lt;bean id=<span class="string">"businessObject"</span> class=<span class="string">"org.springframework.aop.framework.ProxyFactoryBean"</span>&gt; </span><br><span class="line">&lt;property name=<span class="string">"target"</span>&gt;&lt;<span class="keyword">ref</span> bean=<span class="string">"businessObjectTarget"</span>/&gt;&lt;/property&gt; </span><br><span class="line">&lt;property name=<span class="string">"proxyInterfaces"</span>&gt; </span><br><span class="line">&lt;value&gt;com.acompany.<span class="type">BusinessObject</span>&lt;/value&gt; </span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;property name=<span class="string">"interceptorNames"</span>&gt; </span><br><span class="line">&lt;list&gt; </span><br><span class="line">&lt;value&gt;hibernateInterceptor&lt;/value&gt; </span><br><span class="line">&lt;/list&gt; </span><br><span class="line">&lt;/property&gt; </span><br><span class="line">&lt;/bean&gt; </span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<p>当businessObject被调用的时候，HibernateInterceptor打开一个Hibernate会话，并将调用请求传递给BusinessObjectImpl对象。当BusinessObjectImpl执行完成后，HibernateInterceptor透明地关闭了会话。应用层的代码不用了解任何持久层逻辑，还是实现了延迟加载。<br>在单元测试中测试延迟加载<br>最后，我们需要用J-Unit来测试我们的延迟加载程序。我们可以轻易地通过重写TestCase类中的setUp和tearDown方法来实现这个要求。我比较喜欢用这个方便的抽象类作为我所有测试类的基类。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLazyTestCase</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">TestCase</span> &#123;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="type">SessionFactory</span> sessionFactory; </span><br><span class="line"><span class="keyword">private</span> <span class="type">Session</span> session;</span><br><span class="line"></span><br><span class="line">public void setUp() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </span><br><span class="line"><span class="keyword">super</span>.setUp(); </span><br><span class="line"><span class="type">SessionFactory</span> sessionFactory = (<span class="type">SessionFactory</span>) getBean(<span class="string">"sessionFactory"</span>); </span><br><span class="line">session = <span class="type">SessionFactoryUtils</span>.getSession(sessionFactory, <span class="literal">true</span>); </span><br><span class="line"><span class="type">Session</span> s = sessionFactory.openSession(); </span><br><span class="line"><span class="type">TransactionSynchronizationManager</span>.bindResource(sessionFactory, <span class="keyword">new</span> <span class="type">SessionHolder</span>(s));</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> <span class="type">Object</span> getBean(<span class="type">String</span> beanName) &#123; </span><br><span class="line"><span class="comment">//Code to get objects from Spring application context </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void tearDown() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </span><br><span class="line"><span class="keyword">super</span>.tearDown(); </span><br><span class="line"><span class="type">SessionHolder</span> holder = (<span class="type">SessionHolder</span>) <span class="type">TransactionSynchronizationManager</span>.getResource(sessionFactory); </span><br><span class="line"><span class="type">Session</span> s = holder.getSession(); </span><br><span class="line">s.flush(); </span><br><span class="line"><span class="type">TransactionSynchronizationManager</span>.unbindResource(sessionFactory); </span><br><span class="line"><span class="type">SessionFactoryUtils</span>.closeSessionIfNecessary(s, sessionFactory); </span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们首先说利用lazy=false来解决问题，这种方法是很好用，但是在实际的过程并不实用，如果你某个对象关联好几个甚至十几个自对象，那么每次加载一个的话要执行很多HQL语句，可想而知这个效率问题啦，特别是在使用列表的时候。所以不实用，而在上述所说的“在业务逻辑层中使用延迟加载” 也是这种情况吧。<br>很多使用WEB的朋友都喜欢利用openSessionView来加载这个问题。不错我也喜欢用，简单方便。但是说几种情况： </p>
+<ol>
+<li>在quartz中总不能使用openSessionView模式吧 </li>
+<li>在spring后拦截的过程中，如果取拦截对象中的子对象利用openSessionView也不行<br>还有很多情况是不能用的，那么怎么解决呢。有人说那就lazy=False吧，你想在单纯的解决一个quartz的时候调整整个WEB工程的加载好像不合适吧。<br>那怎么办呢，我觉得这个时候就可以考虑利用SQL语句使用这个重新加载一遍这个代理类，这样在想调用的时候才手动加载比较合适和方便吧，但是估计要多几行代码，好好考虑</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hibernate/">hibernate</a><a href="/tags/java/">java</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2013/01/07/java-hibernate-could-not-initialize-proxy/" data-title="could not initialize proxy – no Session | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/01/07/system-ie-toolbar-plugin/" title="IE工具栏上添加自己的按钮">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  IE工具栏上添加自己的按钮</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/01/05/db-sqlserver-return-autogen-id/"  title="在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例">
+ <strong>NEXT:</strong><br/> 
+ <span>在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

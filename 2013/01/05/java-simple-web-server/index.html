@@ -1,0 +1,491 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files. | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="This is the window that comes up when you run the program, just a little motivator so you can see what��s in the end of the tunnel.
+Note to get the ma">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/01/05/java-simple-web-server/" title="Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files." itemprop="url">Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files.</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-01-05T10:09:17.000Z" itemprop="datePublished">2013-01-05</time>
+    更新日期:<time datetime="2015-09-07T10:10:57.819Z" itemprop="dateModified">2015-09-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>This is the window that comes up when you run the program, just a little motivator so you can see what��s in the end of the tunnel.</p>
+<p>Note to get the maximum out of this tutorial it is recommended that you have a basic grasp on how HTTP works. If the little man inside your head says what tha H is HTTP, you should go to the bottom and check some of the pointers. There you will find some nice text to explain the basic concept.</p>
+<p>Let��s get started!<br>When making a program nowadays the first thing you should think about is the GUI (graphical user interface). If the program dosen��t look fancy, you can just press all the cancel buttons on the project. Ok that was meant as a joke, but there is some truth in it. People tend to judge a program a lot on its look, even though the real coding job is in making the stuff that goes on behind the scenes.</p>
+<p>The good news is that we are making this in Java, and since Java is such a friendly programming language it��s real easy to get some interface going. Comments are in green.</p>
+<p>//file: webserver_starter.java<br>//declare a class wich inherit JFrame<br>public classwebserver_starter<br>extendsJFrame {<br>//declare some panel, scrollpanel, textarea for gui<br>JPanel jPanel1 = newJPanel();<br>JScrollPane jScrollPane1 = newJScrollPane();<br>JTextArea jTextArea2 = newJTextArea();<br>staticInteger listen_port = null;<br>//basic class constructor<br>publicwebserver_starter() {<br>try{<br>jbInit();<br>}<br>catch(Exception e) {<br>e.printStackTrace();<br>}<br>}<br>//the JavaAPI entry point<br>//where it starts this class if run<br>public staticvoidmain(String[] args) {<br>//start server on port x, default 80<br>//use argument to main for what port to start on<br>try{<br>listen_port = newInteger(args[0]);<br>//catch parse error<br>}<br>catch(Exception e) {<br>listen_port = newInteger(80);<br>}<br>//create an instance of this class<br>webserver_starter webserver = newwebserver_starter();<br>}<br>//set up the user interface<br>privatevoidjbInit() throwsException {<br>//oh the pretty colors<br>jTextArea2.setBackground(newColor(16, 12, 66));<br>jTextArea2.setForeground(newColor(151, 138, 255));<br>jTextArea2.setBorder(BorderFactory.createLoweredBevelBorder());<br>jTextArea2.setToolTipText(“”);<br>jTextArea2.setEditable(false);<br>jTextArea2.setColumns(30);<br>jTextArea2.setRows(15);<br>//change this to impress your friends<br>this.setTitle(“Jon��s fancy prancy webserver”);<br>//ugly inline listener, it��s for handling closing of the window<br>this.addWindowListener(newjava.awt.event.WindowAdapter() {<br>publicvoidwindowClosing(WindowEvent e) {<br>this_windowClosed(e);<br>}<br>});<br>//add the various to the proper containers<br>jScrollPane1.getViewport().add(jTextArea2);<br>jPanel1.add(jScrollPane1);<br>this.getContentPane().add(jPanel1, BorderLayout.EAST);<br>//tveak the apearance<br>this.setVisible(true);<br>this.setSize(420, 350);<br>this.setResizable(false);<br>//make sure it is drawn<br>this.validate();<br>//create the actual serverstuff,<br>//all that is implemented in another class<br>newserver(listen_port.intValue(), this);<br>}<br>//exit program when “X” is pressed.<br>voidthis_windowClosed(WindowEvent e) {<br>System.exit(1);<br>}<br>//this is a method to get messages from the actual<br>//server to the window<br>publicvoidsend_message_to_window(String s) {<br>jTextArea2.append(s);<br>}<br>} //class end</p>
+<p>In a nutshell this code sets up the window and makes everything look good. If you look at the picture of the program on top of this page. This code makes that!</p>
+<p>Ok, enough time wasted on the look. Lets get down with the fun stuff, making the actual httpserver.</p>
+<p>//file: server.java<br>//the real (http) serverclass<br>//it extends thread so the server is run in a different<br>//thread than the gui, that is to make it responsive.<br>//it��s really just a macho coding thing.<br>public classserver<br>extendsThread {<br>//the constructor method<br>//the parameters it takes is what port to bind to, the default tcp port<br>//for a httpserver is port 80. the other parameter is a reference to<br>//the gui, this is to pass messages to our nice interface<br>publicserver(intlisten_port, webserver_starter to_send_message_to) {<br>message_to = to_send_message_to;<br>port = listen_port;<br>//this makes a new thread, as mentioned before,it��s to keep gui in<br>//one thread, server in another. You may argue that this is totally<br>//unnecessary, but we are gonna have this on the web so it needs to<br>//be a bit macho! Another thing is that real pro webservers handles<br>//each request in a new thread. This server dosen��t, it handles each<br>//request one after another in the same thread. This can be a good<br>//assignment!! To redo this code so that each request to the server<br>//is handled in its own thread. The way it is now it blocks while<br>//one client access the server, ex if it transferres a big file the<br>//client have to wait real long before it gets any response.<br>this.start();<br>}<br>privatevoids(String s2) { //an alias to avoid typing so much!<br>message_to.send_message_to_window(s2);<br>}<br>privatewebserver_starter message_to; //the starter class, needed for gui<br>privateintport; //port we are going to listen to<br>//this is a overridden method from the Thread class we extended from<br>publicvoidrun() {<br>//we are now inside our own thread separated from the gui.<br>ServerSocket serversocket = null;<br>//To easily pick up lots of girls, change this to your name!!!<br>s(“The simple httpserver v. 0000000000nCoded by Jon Berg” +<br>“<jon.berg[on server]turtlemeat.com="">nn”);<br>//Pay attention, this is where things starts to cook!<br>try{<br>//print/send message to the guiwindow<br>s(“Trying to bind to localhost on port “ + Integer.toString(port) + “��”);<br>//make a ServerSocket and bind it to given port,<br>serversocket = newServerSocket(port);<br>}<br>catch(Exception e) { //catch any errors and print errors to gui<br>s(“nFatal Error:” + e.getMessage());<br>return;<br>}<br>s(“OK!n”);<br>//go in a infinite loop, wait for connections, process request, send response<br>while(true) {<br>s(“nReady, Waiting for requests��n”);<br>try{<br>//this call waits/blocks until someone connects to the port we<br>//are listening to<br>Socket connectionsocket = serversocket.accept();<br>//figure out what ipaddress the client commes from, just for show!<br>InetAddress client = connectionsocket.getInetAddress();<br>//and print it to gui<br>s(client.getHostName() + “ connected to server.n”);<br>//Read the http request from the client from the socket interface<br>//into a buffer.<br>BufferedReader input =<br>newBufferedReader(newInputStreamReader(connectionsocket.<br>getInputStream()));<br>//Prepare a outputstream from us to the client,<br>//this will be used sending back our response<br>//(header + requested file) to the client.<br>DataOutputStream output =<br>newDataOutputStream(connectionsocket.getOutputStream());<br>//as the name suggest this method handles the http request, see further down.<br>//abstraction rules<br>http_handler(input, output);<br>}<br>catch(Exception e) { //catch any errors, and print them<br>s(“nError:” + e.getMessage());<br>}<br>} //go back in loop, wait for next request<br>}<br>//our implementation of the hypertext transfer protocol<br>//its very basic and stripped down<br>privatevoidhttp_handler(BufferedReader input, DataOutputStream output) {<br>intmethod = 0; //1 get, 2 head, 0 not supported<br>String http = newString(); //a bunch of strings to hold<br>String path = newString(); //the various things, what http v, what path,<br>String file = newString(); //what file<br>String user_agent = newString(); //what user_agent<br>try{<br>//This is the two types of request we can handle<br>//GET /index.html HTTP/1.0<br>//HEAD /index.html HTTP/1.0<br>String tmp = input.readLine(); //read from the stream<br>String tmp2 = newString(tmp);<br>tmp.toUpperCase(); //convert it to uppercase<br>if(tmp.startsWith(“GET”)) { //compare it is it GET<br>method = 1;<br>} //if we set it to method 1<br>if(tmp.startsWith(“HEAD”)) { //same here is it HEAD<br>method = 2;<br>} //set method to 2<br>if(method == 0) { // not supported<br>try{<br>output.writeBytes(construct_http_header(501, 0));<br>output.close();<br>return;<br>}<br>catch(Exception e3) { //if some error happened catch it<br>s(“error:” + e3.getMessage());<br>} //and display error<br>}<br>//}<br>//tmp contains “GET /index.html HTTP/1.0 ����.”<br>//find first space<br>//find next space<br>//copy whats between minus slash, then you get “index.html”<br>//it��s a bit of dirty code, but bear with me��<br>intstart = 0;<br>intend = 0;<br>for(inta = 0; a &lt; tmp2.length(); a++) {<br>if(tmp2.charAt(a) == �� �� &amp;&amp; start != 0) {<br>end = a;<br>break;<br>}<br>if(tmp2.charAt(a) == �� �� &amp;&amp; start == 0) {<br>start = a;<br>}<br>}<br>path = tmp2.substring(start + 2, end); //fill in the path<br>}<br>catch(Exception e) {<br>s(“errorr” + e.getMessage());<br>} //catch any exception<br>//path do now have the filename to what to the file it wants to open<br>s(“nClient requested:” + newFile(path).getAbsolutePath() + “n”);<br>FileInputStream requestedfile = null;<br>try{<br>//NOTE that there are several security consideration when passing<br>//the untrusted string “path” to FileInputStream.<br>//You can access all files the current user has read access to!!!<br>//current user is the user running the javaprogram.<br>//you can do this by passing “../“ in the url or specify absoulute path<br>//or change drive (win)<br>//try to open the file,<br>requestedfile = newFileInputStream(path);<br>}<br>catch(Exception e) {<br>try{<br>//if you could not open the file send a 404<br>output.writeBytes(construct_http_header(404, 0));<br>//close the stream<br>output.close();<br>}<br>catch(Exception e2) {}<br>;<br>s(“error” + e.getMessage());<br>} //print error to gui<br>//happy day scenario<br>try{<br>inttype_is = 0;<br>//find out what the filename ends with,<br>//so you can construct a the right content type<br>if(path.endsWith(“.zip”<br>) {<br>type_is = 3;<br>}<br>if(path.endsWith(“.jpg”) || path.endsWith(“.jpeg”)) {<br>type_is = 1;<br>}<br>if(path.endsWith(“.gif”)) {<br>type_is = 2;<br>//write out the header, 200 -&gt;everything is ok we are all happy.<br>}<br>output.writeBytes(construct_http_header(200, 5));<br>//if it was a HEAD request, we don��t print any BODY<br>if(method == 1) { //1 is GET 2 is head and skips the body<br>while(true) {<br>//read the file from filestream, and print out through the<br>//client-outputstream on a byte per byte base.<br>intb = requestedfile.read();<br>if(b == -1) {<br>break; //end of file<br>}<br>output.write(b);<br>}<br>}<br>//clean up the files, close open handles<br>output.close();<br>requestedfile.close();<br>}<br>catch(Exception e) {}<br>}<br>//this method makes the HTTP header for the response<br>//the headers job is to tell the browser the result of the request<br>//among if it was successful or not.<br>privateString construct_http_header(intreturn_code, intfile_type) {<br>String s = “HTTP/1.0 “;<br>//you probably have seen these if you have been surfing the web a while<br>switch(return_code) {<br>case200:<br>s = s + “200 OK”;<br>break;<br>case400:<br>s = s + “400 Bad Request”;<br>break;<br>case403:<br>s = s + “403 Forbidden”;<br>break;<br>case404:<br>s = s + “404 Not Found”;<br>break;<br>case500:<br>s = s + “500 Internal Server Error”;<br>break;<br>case501:<br>s = s + “501 Not Implemented”;<br>break;<br>}<br>s = s + “rn”; //other header fields,<br>s = s + “Connection: closern”; //we can��t handle persistent connections<br>s = s + “Server: SimpleHTTPtutorial v0rn”; //server name<br>//Construct the right Content-Type for the header.<br>//This is so the browser knows what to do with the<br>//file, you may know the browser dosen��t look on the file<br>//extension, it is the servers job to let the browser know<br>//what kind of file is being transmitted. You may have experienced<br>//if the server is miss configured it may result in<br>//pictures displayed as text!<br>switch(file_type) {<br>//plenty of types for you to fill in<br>case0:<br>break;<br>case1:<br>s = s + “Content-Type: image/jpegrn”;<br>break;<br>case2:<br>s = s + “Content-Type: image/gifrn”;<br>case3:<br>s = s + “Content-Type: application/x-zip-compressedrn”;<br>default:<br>s = s + “Content-Type: text/htmlrn”;<br>break;<br>}<br>////so on and so on����<br>s = s + “rn”; //this marks the end of the httpheader<br>//and the start of the body<br>//ok return our newly created header!<br>returns;<br>}<br>} //class phhew caffeine yes please!</jon.berg[on></p>
+<p>BEWARE! When you run the web server you are potentially opening for all your files to be red by the entire Internet! The httpserver is only ment to be used for testing. If you absoulutely want to run this httpserver for longer periods of time; consider creating a new user with only read access to the files you want to share and running it only with this user!</p>
+<p>Download the tutorial files! this zipfile contains both sourcecode and compiled javabytecode files. So you can test the program without having the javacompiler. It also contains a sample index.html and a jpg file.</p>
+<p>How to run the program? Get into commandline, cd to the dir where you extracted the files (webserver_starter.class and the other files). Then type: java webserver_starter</p>
+<p>Then the window you see on top of this page should pop up. To test if this httpserver is really functioning, you open your browser, and in the location line you type: <a href="http://localhost/index.html" target="_blank" rel="external">http://localhost/index.html</a> ,this will bring up a sample html file that is in the zipfile.</p>
+<p>If you want to test the httpserver from another machine on the Internet, then you need to know the ip-address or hostname the httpserver is running on, then you type that in the location line in the browser, like <a href="http://123.123.123.123/index.html" target="_blank" rel="external">http://123.123.123.123/index.html</a> .Note, it may not work if you are behind a firewall or a NAT router, but that��s not the programs�� fault!</p>
+<p>Update: Oct 2011. This code is not actively updated, but I changed a few things mainly due to many people are referencing this. The switch (file_type) was missing breaks. requestedfile.read() and output.write() now reads and writes a byte array which speeds things up. And added favicon support since somebody asked about it.</p>
+<p>How to compile: Open command line. cd to directory where you unpacked it. javac *.java<br>How to run: Open command line. cd to directory where you unpacked it. java -cp . webserver_starter</p>
+<p>Pointers to related stuff on the hypertext transfer protocol (http) and web servers:</p>
+<p>HowStuffWorks This is a very basic introduction for the novice on how web servers works. Has also other text about Internet and Routers, in easy to understandable language. Nice if you are starting out learning.</p>
+<p>HTTP Made Really Easy Here is some nice text that goes through the main points in HTTP. A little more technical. It��s recommended that you know these things to understand the above tutorial.<br>Apache the best and most widely used web server on the Internet today, check it out. If you want to run your own web server this is the one to get, you can get binaries for both Windows and Unix. You can download the entire sourcecode if you want to check how it was made.</p>
+<p>Mozilla / Netscape is a nice web browser. Get rid of the Explorer, there are some rumors that Internet Explorer secretly collects all the pages you are visiting and sends it to microsoft.com.</p>
+<p>RFC-1945 RFC describing Hypertext Transfer Protocol �� HTTP/1.0</p>
+<p>RFC-2616 RFC describing Hypertext Transfer Protocol �� HTTP/1.1</p>
+<p>RFC webpage The Request For Comment webpage, RFC are technical documents describing all sorts of protocols on the Internet.</p>
+<p>Java2 Runtime / SDK Download site for the Java Runtime (needed for running Java programs) and Java Software Development Kit (needed for making Java programs).</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/web-server/">web server</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2013/01/05/java-simple-web-server/" data-title="Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files. | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/01/05/util-editplus/" title="使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/01/05/linux-port-view/"  title="怎么查看端口占用情况">
+ <strong>NEXT:</strong><br/> 
+ <span>怎么查看端口占用情况
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>

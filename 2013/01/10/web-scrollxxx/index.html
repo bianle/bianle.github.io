@@ -1,0 +1,489 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>scrollLeft,scrollTop等等详解 | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="一张图
+image网页可见区域宽： document.body.clientWidth;网页可见区域高： document.body.clientHeight;网页可见区域宽： document.body.offsetWidth (包括边线的宽);网页可见区域高： document.body.off">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/01/10/web-scrollxxx/" title="scrollLeft,scrollTop等等详解" itemprop="url">scrollLeft,scrollTop等等详解</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-01-10T07:39:00.000Z" itemprop="datePublished">2013-01-10</time>
+    更新日期:<time datetime="2015-08-31T07:41:26.357Z" itemprop="dateModified">2015-08-31</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>一张图</p>
+<p>image<br>网页可见区域宽： document.body.clientWidth;<br>网页可见区域高： document.body.clientHeight;<br>网页可见区域宽： document.body.offsetWidth (包括边线的宽);<br>网页可见区域高： document.body.offsetHeight (包括边线的宽);<br>网页正文全文宽： document.body.scrollWidth;<br>网页正文全文高： document.body.scrollHeight;<br>网页被卷去的高： document.body.scrollTop;<br>网页被卷去的左： document.body.scrollLeft;<br>网页正文部分上： window.screenTop;<br>网页正文部分左： window.screenLeft;<br>屏幕分辨率的高： window.screen.height;<br>屏幕分辨率的宽： window.screen.width;<br>屏幕可用工作区高度： window.screen.availHeight;<br>屏幕可用工作区宽度：window.screen.availWidth;<br>1、offsetLeft<br>假设 obj 为某个 HTML 控件。<br>obj.offsetTop 指 obj 距离上方或上层控件的位置，整型，单位像素。<br>obj.offsetLeft 指 obj 距离左方或上层控件的位置，整型，单位像素。<br>obj.offsetWidth 指 obj 控件自身的宽度，整型，单位像素。<br>obj.offsetHeight 指 obj 控件自身的高度，整型，单位像素。<br>我们对前面提到的“上方或上层”与“左方或上层”控件作个说明。<br>例如： </p>
+<div id="tool"><br><input type="button" value="提交"><br><input type="button" value="重置"><br></div><br>“提交”按钮的 offsetTop 指“提交”按钮距“tool”层上边框的距离，因为距其上边最近的是 “tool” 层的上边框。<br>“重置”按钮的 offsetTop 指“重置”按钮距“tool”层上边框的距离，因为距其上边最近的是 “tool” 层的上边框。<br>“提交”按钮的 offsetLeft 指“提交”按钮距“tool”层左边框的距离，因为距其左边最近的是 “tool” 层的左边框。<br>“重置”按钮的 offsetLeft 指“重置”按钮距“提交”按钮右边框的距离，因为距其左边最近的是“提交”按钮的右边框。<br>以上属性在 FireFox 中也有效。<br>另 外：我们这里所说的是指 HTML 控件的属性值，并不是 document.body，document.body 的值在不同浏览器中有不同解释（实际上大多数环境是由于对 document.body 解释不同造成的，并不是由于对 offset 解释不同造成的），点击这里查看不同点。<br>标题：offsetTop 与 style.top 的区别<br>预备知识：offsetTop、offsetLeft、offsetWidth、offsetHeight<br>我们知道 offsetTop 可以获得 HTML 元素距离上方或外层元素的位置，style.top 也是可以的，二者的区别是：<br>一、offsetTop 返回的是数字，而 style.top 返回的是字符串，除了数字外还带有单位：px。<br>二、offsetTop 只读，而 style.top 可读写。<br>三、如果没有给 HTML 元素指定过 top 样式，则 style.top 返回的是空字符串。<br>offsetLeft 与 style.left、offsetWidth 与 style.width、offsetHeight 与 style.height 也是同样道理。<br>标题：clientHeight、offsetHeight和scrollHeight<br>我们这里说说四种浏览器对 document.body 的 clientHeight、offsetHeight 和 scrollHeight 的解释，这里说的是 document.body，如果是 HTML 控件，则又有不同，点击这里查看。<br>这四种浏览器分别为IE（Internet Explorer）、NS（Netscape）、Opera、FF（FireFox）。<br>2、clientHeight<br>clientHeight<br>大家对 clientHeight 都没有什么异议，都认为是内容可视区域的高度，也就是说页面浏览器中可以看到内容的这个区域的高度，一般是最后一个工具条以下到状态栏以上的这个区域，与页面内容无关。<br>offsetHeight<br>IE、Opera 认为 offsetHeight = clientHeight + 滚动条 + 边框。<br>NS、FF 认为 offsetHeight 是网页内容实际高度，可以小于 clientHeight。<br>scrollHeight<br>IE、Opera 认为 scrollHeight 是网页内容实际高度，可以小于 clientHeight。<br>NS、FF 认为 scrollHeight 是网页内容高度，不过最小值是 clientHeight。<br>简单地说<br>clientHeight 就是透过浏览器看内容的这个区域高度。<br>NS、 FF 认为 offsetHeight 和 scrollHeight 都是网页内容高度，只不过当网页内容高度小于等于 clientHeight 时，scrollHeight 的值是 clientHeight，而 offsetHeight 可以小于 clientHeight。<br>IE、Opera 认为 offsetHeight 是可视区域 clientHeight 滚动条加边框。scrollHeight 则是网页内容实际高度。<br>同理<br>clientWidth、offsetWidth 和 scrollWidth 的解释与上面相同，只是把高度换成宽度即可。<br>但是<br>FF 在不同的 DOCTYPE 中对 clientHeight 的解释不同， xhtml 1 trasitional 中则不是如上解释的。其它浏览器则不存在此问题。<br>标题：scrollTop、scrollLeft、scrollWidth、scrollHeight<br>3、scrollLeft<br>scrollTop 是“卷”起来的高度值，示例：<br><div style="width:100px;height:100px;background-color:#FF0000;overflow:hidden;" id="p"><br><br>  <div style="width:50px;height:300px;background-color:#0000FF;" id="t">如果为 p 设置了 scrollTop，这些内容可能不会完全显示。</div>
+
+<p>  </p></div><p></p>
+  <script type="text/javascript">
+
+<p>  var p = document.getElementById(“p”);</p>
+<p>  p.scrollTop = 10;</p>
+<p>  </script><br>由于为外层元素 p 设置了 scrollTop，所以内层元素会向上卷。<br>scrollLeft 也是类似道理。<br>我们已经知道 offsetHeight 是自身元素的宽度。<br>而 scrollHeight 是内部元素的绝对宽度，包含内部元素的隐藏的部分。<br>上述中 p 的 scrollHeight 为 300，而 p 的 offsetHeight 为 100。<br>scrollWidth 也是类似道理。<br>IE 和 FireFox 全面支持，而 Netscape 和 Opera 不支持 scrollTop、scrollLeft（document.body 除外）。<br>发表时间：2007-10-15 20:20:16<br>标题：offsetTop、offsetLeft、offsetWidth、offsetHeight<br>4、clientLeft<br>返回对象的offsetLeft属性值和到当前窗口左边的真实值之间的距离，可以理解为边框的长度<br>一直以来对offsetLeft，offsetTop，scrollLeft，scrollTop这几个方法很迷糊，花了一天的时间好好的学习了一下．得出了以下的结果：<br>1.offsetTop :<br>当前对象到其上级层顶部的距离.<br>不能对其进行赋值.设置对象到页面顶部的距离请用style.top属性.<br>2.offsetLeft :<br>当前对象到其上级层左边的距离.<br>不能对其进行赋值.设置对象到页面左部的距离请用style.left属性.<br>3.offsetWidth :<br>当前对象的宽度.<br>与style.width属性的区别在于:如对象的宽度设定值为百分比宽度,则无论页面变大还是变小,style.width都返回此百分比,而offsetWidth则返回在不同页面中对象的宽度值而不是百分比值<br>4.offsetHeight :<br>与style.height属性的区别在于:如对象的宽度设定值为百分比高度,则无论页面变大还是变小,style.height都返回此百分比,而offsetHeight则返回在不同页面中对象的高度值而不是百分比值<br>5.offsetParent :<br>当前对象的上级层对象.<br>注意.如果对象是包括在一个DIV中时,此DIV不会被当做是此对象的上级层,(即对象的上级层会跳过DIV对象)上级层是Table时则不会有问题.<br>利用这个属性，可以得到当前对象在不同大小的页面中的绝对位置．<br>得到绝对位置脚本代码<br>function GetPosition(obj) <p></p>
+<p>{ </p>
+<p>var left = 0; </p>
+<p>var top = 0; </p>
+<p>while(obj != document.body) </p>
+<p>{ </p>
+<p>left = obj.offsetLeft; </p>
+<p>top = obj.offsetTop; </p>
+<p>obj = obj.offsetParent; </p>
+<p>} </p>
+<p>alert(“Left Is : “ + left + “\r\n” + “Top Is : “ + top); </p>
+<p>}<br>6.scrollLeft :<br>对象的最左边到对象在当前窗口显示的范围内的左边的距离．<br>即是在出现了横向滚动条的情况下，滚动条拉动的距离．<br>7.scrollTop<br>对象的最顶部到对象在当前窗口显示的范围内的顶边的距离．<br>即是在出现了纵向滚动条的情况下，滚动条拉动的距离．<br>我们这里说说四种浏览器对 document.body 的 clientHeight、offsetHeight 和 scrollHeight 的解释，这里说的是 document.body，如果是 HTML 控件，则又有不同，点击这里查看。<br>这四种浏览器分别为IE（Internet Explorer）、NS（Netscape）、Opera、FF（FireFox）。<br>clientHeight<br>大家对 clientHeight 都没有什么异议，都认为是内容可视区域的高度，也就是说页面浏览器中可以看到内容的这个区域的高度，一般是最后一个工具条以下到状态栏以上的这个区域，与页面内容无关。<br>offsetHeight<br>IE、Opera 认为 offsetHeight = clientHeight + 滚动条 + 边框。<br>NS、FF 认为 offsetHeight 是网页内容实际高度，可以小于 clientHeight。<br>scrollHeight<br>IE、Opera 认为 scrollHeight 是网页内容实际高度，可以小于 clientHeight。<br>NS、FF 认为 scrollHeight 是网页内容高度，不过最小值是 clientHeight。<br>简单地说<br>clientHeight 就是透过浏览器看内容的这个区域高度。<br>NS、 FF 认为 offsetHeight 和 scrollHeight 都是网页内容高度，只不过当网页内容高度小于等于 clientHeight 时，scrollHeight 的值是 clientHeight，而 offsetHeight 可以小于 clientHeight。<br>IE、Opera 认为 offsetHeight 是可视区域 clientHeight 滚动条加边框。scrollHeight 则是网页内容实际高度。<br>同理<br>clientWidth、offsetWidth 和 scrollWidth 的解释与上面相同，只是把高度换成宽度即可。<br>说明<br>以 上基于 DTD HTML 4.01 Transitional，如果是 DTD XHTML 1.0 Transitional 则意义又会不同，在 XHTML 中这三个值都是同一个值，都表示内容的实际高度。新版本的浏览器大多支持根据页面指定的 DOCTYPE 来启用不同的解释器。下载或浏览测试文件。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/html/">html</a><a href="/tags/web/">web</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/web前端/">web前端</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2013/01/10/web-scrollxxx/" data-title="scrollLeft,scrollTop等等详解 | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/01/10/java-gwt-code-lv/" title="GWT 项目中代码分四级概念">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  GWT 项目中代码分四级概念</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/01/07/system-ie-toolbar-plugin/"  title="IE工具栏上添加自己的按钮">
+ <strong>NEXT:</strong><br/> 
+ <span>IE工具栏上添加自己的按钮
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/game/" title="game">game<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>29</sup></a></li>
+		
+			<li><a href="/categories/life/" title="life">life<sup>1</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>9</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>1</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>2</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/system/" title="system">system<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>48</sup></a></li>
+		
+			<li><a href="/categories/学习笔记/" title="学习笔记">学习笔记<sup>1</sup></a></li>
+		
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>2</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>7</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
+		
+			<li><a href="/tags/java-tomcat/" title="-java -tomcat">-java -tomcat<sup>1</sup></a></li>
+		
+			<li><a href="/tags/1像素/" title="1像素">1像素<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Dr-com/" title="Dr.com">Dr.com<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JPA/" title="JPA">JPA<sup>1</sup></a></li>
+		
+			<li><a href="/tags/QRCode/" title="QRCode">QRCode<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ajax/" title="ajax">ajax<sup>1</sup></a></li>
+		
+			<li><a href="/tags/alert/" title="alert">alert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/awt/" title="awt">awt<sup>1</sup></a></li>
+		
+			<li><a href="/tags/blog/" title="blog">blog<sup>4</sup></a></li>
+		
+			<li><a href="/tags/cache/" title="cache">cache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/call/" title="call">call<sup>1</sup></a></li>
+		
+			<li><a href="/tags/chrome/" title="chrome">chrome<sup>1</sup></a></li>
+		
+			<li><a href="/tags/cmd/" title="cmd">cmd<sup>2</sup></a></li>
+		
+			<li><a href="/tags/connect-by/" title="connect by">connect by<sup>1</sup></a></li>
+		
+			<li><a href="/tags/convert/" title="convert">convert<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>2</sup></a></li>
+		
+			<li><a href="/tags/css3/" title="css3">css3<sup>1</sup></a></li>
+		
+			<li><a href="/tags/db/" title="db">db<sup>4</sup></a></li>
+		
+			<li><a href="/tags/db2/" title="db2">db2<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754## e.g. 436062867 for http://weibo.com/436062867" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/https://github.com/bianle## e.g. A-limon for https://github.com/A-limon" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>
