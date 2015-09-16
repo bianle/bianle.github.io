@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>WordPress���θ������� | Hear</title>
+    <title>WordPress如何更换域名 | Hear</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="bianle">
     
-    <meta name="description" content="wordpress��̨������������������ʱ����ô����ʹ��ǰ���ݿ��еĵ�ַ�����������أ����潫������wordpress���ݿ��������������滻�ķ�����
+    <meta name="description" content="wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。
 
-�޸����ݿ������ļ�����������ͬһ����ͬһ�ռ�">
+修改数据库配置文件，如果你在同一主机同一空间上更改域名，这步可以省掉，如果数据库不同，还得要打开wp-config.php将数据库配置正确才可以正常访">
     
     
     
@@ -40,7 +40,7 @@
 				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
 				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -72,7 +72,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2012/02/01/blog-wp-domain/" title="WordPress���θ�������" itemprop="url">WordPress���θ�������</a>
+      <a href="/2012/02/01/blog-wp-domain/" title="WordPress如何更换域名" itemprop="url">WordPress如何更换域名</a>
   </h1>
   <p class="article-author">By
     
@@ -80,7 +80,7 @@
     </p>
   <p class="article-time">
     <time datetime="2012-02-01T10:09:17.000Z" itemprop="datePublished">2012-02-01</time>
-    更新日期:<time datetime="2015-09-07T07:45:59.836Z" itemprop="dateModified">2015-09-07</time>
+    更新日期:<time datetime="2015-09-16T09:33:20.437Z" itemprop="dateModified">2015-09-16</time>
     
   </p>
 </header>
@@ -88,22 +88,22 @@
 		
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 		</div>
 		
-		<p>wordpress��̨������������������ʱ����ô����ʹ��ǰ���ݿ��еĵ�ַ�����������أ����潫������wordpress���ݿ��������������滻�ķ�����</p>
+		<p>wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。</p>
 <ol>
-<li><p>�޸����ݿ������ļ�����������ͬһ����ͬһ�ռ��ϸ����������ⲽ����ʡ�����������ݿⲻͬ������Ҫ����wp-config.php�����ݿ�������ȷ�ſ�������������������</p>
+<li><p>修改数据库配置文件，如果你在同一主机同一空间上更改域名，这步可以省掉，如果数据库不同，还得要打开wp-config.php将数据库配置正确才可以正常访问新域名。</p>
 </li>
-<li><p>���Ĳ��͵İ�װ��ַ�Ͳ��͵�ַ��������phpmyadmin�����������ݿ⣬Ȼ���ҵ�wp-options�������ݱ��ҵ���һ����¼Ҳ����siteurl���񣬻��е�39��home�������񽫵�ַ�ĳ��������������������ɡ�ֻ��������һ���󣬲ſ���˳��������̨��������ʹ���������룬Ҳ���Զ���ת��ԭ������������PHP My������ѡ�����ݿ⣬��-&gt;���� SQL �����������������´��룺 </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">UPDATE</span> wp_options <span class="keyword">SET</span> option_value = <span class="keyword">replace</span>( option_value, ��<span class="keyword">http</span>://��������, ��<span class="keyword">http</span>://��������) <span class="keyword">WHERE</span> option_name = ��home�� <span class="keyword">OR</span> option_name =��siteurl�� ;</span></span><br></pre></td></tr></table></figure>
+<li><p>更改博客的安装地址和博客地址，首先用phpmyadmin打开你的数据库，然后找到wp-options这个数据表，找到第一条记录也就是siteurl这条，还有第39条home，这两条将地址改成你更换后的最域名即可。只有完成这一步后，才可以顺利进入后台，否则即使你输入密码，也会自动跳转到原来的老域名。PHP My管理中选择数据库，—-&gt;点击 SQL 在输入栏中输入如下代码： </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">UPDATE</span> wp_options <span class="keyword">SET</span> option_value = <span class="keyword">replace</span>( option_value, ‘<span class="keyword">http</span>://老域名’, ’<span class="keyword">http</span>://新域名’) <span class="keyword">WHERE</span> option_name = ‘home’ <span class="keyword">OR</span> option_name =’siteurl’ ;</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>�޸������ڲ����е�����Ϊ�����������Ŵ�������ǰ������������һ�����˲��������ɣ����������ˣ��ϵ�����Ҳ��û�������ˡ���ʱ��Ҫ�����������ľ������޸�Ϊ�������������Ӻ�̨���±༭��һ��һ�������ǲ���ʵ�ģ�������һ����ͨ��phpmyadmin���������ڵ����ݿ⣬ִ�����������Ϳ��԰������ڵ���������������������Ϊ�������� </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> post_content = <span class="keyword">replace</span>(post_content, ��<span class="keyword">http</span>://��������, ��<span class="keyword">http</span>://��������);</span> </span><br><span class="line"><span class="operator"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> guid = <span class="keyword">replace</span>( guid, ��<span class="keyword">http</span>://�������� , ��<span class="keyword">http</span>://�������� ) ;</span></span><br></pre></td></tr></table></figure>
+<li><p>修改文章内部所有的链接为新域名，相信大家在以前发表的文章中一定加了不少内链吧，域名更换了，老的内链也就没有意义了。此时得要将文章内链的旧域名修改为新域名。如果从后台文章编辑里一个一个找那是不现实的，方法有一个，通用phpmyadmin进入你所在的数据库，执行以下语句就可以把文章内的所有内链旧域名批量改为新域名： </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> post_content = <span class="keyword">replace</span>(post_content, ‘<span class="keyword">http</span>://老域名’, ‘<span class="keyword">http</span>://新域名’);</span> </span><br><span class="line"><span class="operator"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> guid = <span class="keyword">replace</span>( guid, ‘<span class="keyword">http</span>://老域名’ , ’<span class="keyword">http</span>://新域名’ ) ;</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>���˽�����̨����ǰ���˺�������½�ͺ��ˡ�</p>
+<p>好了进入后台用以前的账号密码登陆就好了。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -123,7 +123,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://2le.me/2012/02/01/blog-wp-domain/" data-title="WordPress���θ������� | Hear" data-tsina="null" class="share clearfix">
+  <div data-url="http://2le.me/2012/02/01/blog-wp-domain/" data-title="WordPress如何更换域名 | Hear" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -157,20 +157,20 @@
 </section>
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">文章目錄</strong>
   
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">分類</p>
 		<ul>
 		
 			<li><a href="/categories/blog/" title="blog">blog<sup>5</sup></a></li>
@@ -213,7 +213,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			<li><a href="/tags//" title="$">$<sup>1</sup></a></li>
@@ -261,11 +261,11 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
   <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
+  <p class="asidetitle">友情鏈接</p>
     <ul>
       <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
       <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
