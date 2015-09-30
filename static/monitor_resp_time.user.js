@@ -12,7 +12,6 @@
 // @modified    28/09/2015
 // @include     http://log.monitor.cnsuning.com/monitor-log/ihs/myPage/myRealTimePage
 // @match       http://log.monitor.cnsuning.com/monitor-log/ihs/myPage/myRealTimePage
-// @require     http://2le.me/static/jquery.js
 // @grant       none
 // @run-at      document-end
 // @version     1.0.0
