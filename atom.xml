@@ -4,7 +4,7 @@
   <subtitle><![CDATA[The quieter you become, the more you are able to hear.]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://2le.me/"/>
-  <updated>2015-11-02T05:10:06.090Z</updated>
+  <updated>2015-11-17T01:12:06.733Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -15,12 +15,202 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[RSA加密算法原理及RES签名算法]]></title>
+    <link href="http://2le.me/2015/11/16/rsa-encrypt/"/>
+    <id>http://2le.me/2015/11/16/rsa-encrypt/</id>
+    <published>2015-11-16T05:29:58.000Z</published>
+    <updated>2015-11-17T01:12:06.733Z</updated>
+    <content type="html"><![CDATA[<h1 id="RSA算法原理与加密解密">RSA算法原理与加密解密</h1><h2 id="RSA加密过程简述">RSA加密过程简述</h2><p>A和B进行加密通信时,B首先要生成一对密钥。一个是公钥，给A，B自己持有私钥。A使用B的公钥加密要加密发送的内容，然后B在通过自己的私钥解密内容。</p>
+<h2 id="RSA加密算法基础">RSA加密算法基础</h2><p>整个RSA加密算法的安全性基于大数不能分解质因数。</p>
+<h2 id="数学原理">数学原理</h2><h3 id="互质关系：">互质关系：</h3><p>两个数a和b没有除1外的其他公约数，则a与b互质</p>
+<ol>
+<li>任意两个质数构成互质关系</li>
+<li>两个数中，如果大数为质数，则两数必定互质</li>
+<li>1和任意整数互质</li>
+<li>当p&gt;1时，p与p-1互质(相邻两数互质)</li>
+<li>当$p=2n+1$(n&gt;0且n为整数)时，p与p+2互质(相连的两个奇数互质)</li>
+</ol>
+<h3 id="求欧拉函数：">求欧拉函数：</h3><p>定义：与正整数n互质且小于正整数n的正整数的个数。通常使用ψ(n)表示。</p>
+<p>求取与正整数n互质的正整数的个数ψ(n),且ψ(n)满足ψ(n)∈(2,n)</p>
+<ol>
+<li>如果n=1,则ψ(n)=1</li>
+<li>如果n是质数,则ψ(n)=n-1</li>
+<li>如果n是质数p的次方,则：ψ(p^k)=p^k-p^(k-1) = p^k*(1-1/p)</li>
+<li>若p1和p2互质,$n=p1<em>p2$,则$ψ(n)= ψ(p1</em>p2)= ψ(p1) ψ(p2)$</li>
+<li>任意一个大于1的正整数都可以写成一系列质数的积</li>
+<li>根据定理5，推导欧拉定理：</li>
+</ol>
+<p>因为<br>$n = (p1^{k1})\cdot (p2^{k2})\cdot……(pr^{kr})$(p1~pr都是质数)</p>
+<p>所以<br>$\psi(n)= \psi((p1^{k1})) \psi(p2^{k2}) ……\psi(pr^{kr})$ 定理4</p>
+<p>$\psi(n)= (p1^{k1})\cdot(1-\frac{1}{p1}) \cdot (p2^{k2})(1-\frac{1}{p2})……(pr^{kr})\cdot(1-\frac{1}{pr})$   定理3</p>
+<p>$\psi(n)= (p1^{k1})\cdot (p2^{k2})\cdot……(pr^{kr}) \cdot (1-\frac{1}{p1}) (1-\frac{1}{p2})…… (1-\frac{1}{pr})$</p>
+<p>$\psi(n)=n (1-\frac{1}{p1}) (1-\frac{1}{p2})…… (1-\frac{1}{pr})$  </p>
+<h3 id="欧拉定理：">欧拉定理：</h3><p>正整数a与n互质，则下式恒成立</p>
+<p>$$a^{\psi(n)} \equiv {1(mod　n)}$$</p>
+<p>即：</p>
+<p>a的ψ(n)次幂除以n,余数恒为1</p>
+<h3 id="模反元素">模反元素</h3><p>如果两个正整数a和n互质,则必定存在整数b使得a*b-1被n除余数为1</p>
+<p>$$ab \equiv 1(mod　n)$$</p>
+<p>其中b被称为a的模反元素</p>
+<h2 id="RSA算法详解：">RSA算法详解：</h2><p>假设A和B要通信</p>
+<h3 id="生成密钥">生成密钥</h3><h4 id="公钥">公钥</h4><ol>
+<li><p>随机生成两个不相等的质数p和q(质数越大越安全)</p>
+</li>
+<li><p>计算n,n=p*q 则n的二进制位数就是密钥的长度。</p>
+</li>
+<li><p>计算n的欧拉函数ψ(n)        </p>
+</li>
+</ol>
+<p>因为</p>
+<p>$n=p \cdot q$</p>
+<p>所以</p>
+<p>$\psi(n) =\psi(p)\cdot \psi(q)$    定理4</p>
+<p>又p和q为质数</p>
+<p>所以</p>
+<p>$\psi(p)=p-1$    定理2</p>
+<p>$\psi(q)=q-1$    定理2</p>
+<p>所以</p>
+<p>$\psi(n) = (p-1)(q-1)$</p>
+<ol>
+<li>获取随机正整数e,e满足  e∈(1, ψ(n))且e与ψ(n)互质(通常选择65537)</li>
+</ol>
+<p>将n和e封装成公钥</p>
+<h4 id="私钥">私钥</h4><ol>
+<li>计算e对于ψ(n)的模反元素d</li>
+</ol>
+<p>$e*d=1(mod　\psi(n))$;</p>
+<p>设正整数k, $e*d = k\psi(n)+1$;</p>
+<p>则$ed-k\psi(n)=1$</p>
+<p>  $d = (k\psi(n)+1) / e$;</p>
+<p>对于不定方程$ax+by=c$，设$gcd(a,b)=d$，如果$ax+by=c$有解，则d|c—–&gt;也就是说如果$ed-k\psi(n)=1$ 有解,则gcd(d,-k)能够整除1,而1显然可以被任何整数整除,所以该二元一次方程必定有解(d,k)</p>
+<p> (欧几里得定理和扩展欧几里得定理计算二元一次方程)</p>
+<ol>
+<li>将n和d封装成私钥</li>
+</ol>
+<h2 id="RSA算法可靠性论证">RSA算法可靠性论证</h2><p>从上文可以统计出整个算法涉及到的量有6个，其中三个为由私钥持有者生成，三个是私钥持有者推导出来的</p>
+<p>生成量：p,q,e</p>
+<p>推导量：n, ψ(n),d</p>
+<p>密钥中只有公钥被发布,所有人都可以获取。而公钥由n和e封装起来,因此,如果要破解一份RSA加密过的密文,我们必须使用私钥(私钥由n和d封装而成)</p>
+<p>n可以从公钥获取。</p>
+<p>(假设mc为明文，c为密文，则公钥由n和e封装则意味着求取密文的运算中，n，e和mc是已知数，只有c是未知数；私钥由n和d封装，同上，解密密文的运算中，n，d和c是已知的，只有mc是未知数。)</p>
+<p>因此,破解私钥的关键就是破解e对于ψ(n)的模反元素d。</p>
+<p>其数学关系是：  e*d=1(modψ(n));</p>
+<p>因此需需要先求出ψ(n),而求出ψ(n)需要知道ψ(p)和ψ(q)(因为ψ(n)= ψ(p* ψ(q))</p>
+<p>而p和q只能通过分解n的质因数获得。所以,整个RSA算法都基于n这个大数不能分解质因数这个基础上。</p>
+<p>因此，只要n够大，私钥就不会被破解</p>
+<h2 id="加解密过程：假设明文是m,c是密文">加解密过程：假设明文是m,c是密文</h2><h3 id="加密：使用公钥(n,e)">加密：使用公钥(n,e)</h3><p>先将其换算成asc码或者unicode等其他数值。且m必须小于n</p>
+<p>则加密算法是</p>
+<p>m^e=c(mod n)</p>
+<p>推出</p>
+<p>m^e / n = k ……c这里c就是密文，k我们不关心</p>
+<h3 id="解密：使用私钥(n,d)">解密：使用私钥(n,d)</h3><ol>
+<li>简单的说解密就是通过下式求m。(一定可以求解出m)</li>
+</ol>
+<p>c^d = m(mod n)</p>
+<p>推出<br>c^d / n = k … … m    m就是明文编码，不关心k</p>
+<p>查表得出明文</p>
+<h1 id="RSA算法签名与验签">RSA算法签名与验签</h1><p>假设A要想B发送消息，A会先计算出消息的消息摘要，然后使用自己的私钥加密这段摘要加密，最后将加密后的消息摘要和消息一起发送给B，被加密的消息摘要就是“签名”。</p>
+<p>B收到消息后，也会使用和A相同的方法提取消息摘要，然后使用A的公钥解密A发送的来签名，并与自己计算出来的消息摘要进行比较。如果相同则说明消息是A发送给B的，同时，A也无法否认自己发送消息给B的事实。</p>
+<p>其中，A用自己的私钥给消息摘要加密成为“签名”；B使用A的公钥解密签名文件的过程，就叫做“验签”。</p>
+<p>数字签名的作用是保证数据完整性，机密性和发送方角色的不可抵赖性</p>
+<p>下面是对签名和验签过程的简要描述：</p>
+<h2 id="签名过程：">签名过程：</h2><ol>
+<li><p>A计算消息m的消息摘要,记为 h(m)</p>
+</li>
+<li><p>A使用私钥(n,d)对h(m)加密，生成签名s ,s满足：</p>
+</li>
+</ol>
+<p>s=(h(m))^d mod n;</p>
+<p>由于A是用自己的私钥对消息摘要加密，所以只用使用s的公钥才能解密该消息摘要，这样A就不可否认自己发送了该消息给B。</p>
+<ol>
+<li>A发送消息和签名(m,s)给B。</li>
+</ol>
+<h2 id="验签过程：">验签过程：</h2><ol>
+<li><p>B计算消息m的消息摘要,记为h(m);</p>
+</li>
+<li><p>B使用A的公钥(n,e)解密s,得到</p>
+</li>
+</ol>
+<p>H(m) = s^e mod n;</p>
+<ol>
+<li>B比较H(m)与h(m),相同则证明</li>
+</ol>
+<h1 id="总结">总结</h1><p>下面简单总结加密和解密的完整过程。</p>
+<h2 id="签名过程：-1">签名过程：</h2><ol>
+<li><p>A提取消息m的消息摘要h(m),并使用自己的私钥对摘要h(m)进行加密,生成签名s</p>
+</li>
+<li><p>A将签名s和消息m一起,使用B的公钥进行加密,生成密文c,发送给B。</p>
+</li>
+</ol>
+<h2 id="验证过程：">验证过程：</h2><ol>
+<li><p>B接收到密文c,使用自己的私钥解密c得到明文m和数字签名s</p>
+</li>
+<li><p>B使用A的公钥解密数字签名s解密得到H(m).</p>
+</li>
+<li><p>B使用相同的方法提取消息m的消息摘要h(m)</p>
+</li>
+<li><p>B比较两个消息摘要。相同则验证成功;不同则验证失败。</p>
+</li>
+</ol>
+<h2 id="java_Demo">java Demo</h2><p>EnAndDe.java</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line">package com.joe.main;</span><br><span class="line"></span><br><span class="line">import java.io.*;</span><br><span class="line">import java.math.BigInteger;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * Company: 建工学院</span><br><span class="line"> * &lt;/p&gt;</span><br><span class="line"> * </span><br><span class="line"> * @author 04信息（1）程晟</span><br><span class="line"> * @modify Joe</span><br><span class="line"> * @Description Demo说明：</span><br><span class="line"> *              1、按照加密解密和签名验签的逻辑,编写简单的demo,不涉及java中继承的RSA相关类和Sigesture签名类</span><br><span class="line"> *              2、只能对数字和字母进行加密, 不涉及编码和解码问题 。 3、不做数字签名和验证了,涉及到提取信息摘要。</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> EnAndDe &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> p = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> q = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> n = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> t = <span class="number">0</span>; <span class="comment">// 欧拉函数</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> e = <span class="number">0</span>; <span class="comment">// 公匙</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> d = <span class="number">0</span>; <span class="comment">// 密匙</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String mc; <span class="comment">// 明文</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> c = <span class="number">0</span>; <span class="comment">// 密文</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> word = <span class="number">0</span>; <span class="comment">// 解密后明文</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 判断是一个数 x 否为素数素数就是判断在 (2,√x)范围内有没有除1外的因数,如果没有则x数素数</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> boolean <span class="title">isPrime</span><span class="params">(<span class="keyword">long</span> t)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> k = <span class="number">0</span>;</span><br><span class="line">		k = (<span class="keyword">long</span>) Math.<span class="built_in">sqrt</span>((<span class="keyword">double</span>) t);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= k; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> ((t % i) == <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 随机产生大素数(1e6数量级，注意，太大了要超出范围)</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bigprimeRandom</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">do</span> &#123;</span><br><span class="line">			p = (<span class="keyword">long</span>) (Math.random() * <span class="number">1000000</span>);</span><br><span class="line">		&#125; <span class="keyword">while</span> (!<span class="keyword">this</span>.isPrime(p));</span><br><span class="line">		<span class="keyword">do</span> &#123;</span><br><span class="line">			q = (<span class="keyword">long</span>) (Math.random() * <span class="number">1000000</span>);</span><br><span class="line">		&#125; <span class="keyword">while</span> (p == q || !<span class="keyword">this</span>.isPrime(q));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 输入PQ</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inputPQ</span><span class="params">()</span> throws Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">this</span>.bigprimeRandom();</span><br><span class="line">		System.out.println(<span class="string">"自动生成两个大素数p,q分别为:"</span> + <span class="keyword">this</span>.p + <span class="string">" "</span> + <span class="keyword">this</span>.q);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">this</span>.n = (<span class="keyword">long</span>) p * q;</span><br><span class="line">		<span class="keyword">this</span>.t = (<span class="keyword">long</span>) (p - <span class="number">1</span>) * (q - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">"这两个素数的乘积为p*q："</span> + <span class="keyword">this</span>.n);</span><br><span class="line">		System.out.println(<span class="string">"所得的t=(p-1)(q-1)："</span> + <span class="keyword">this</span>.t);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 求最大公约数</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">gcd</span><span class="params">(<span class="keyword">long</span> a, <span class="keyword">long</span> b)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> gcd;</span><br><span class="line">		<span class="keyword">if</span> (b == <span class="number">0</span>)</span><br><span class="line">			gcd = a;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			gcd = gcd(b, a % b);</span><br><span class="line">		<span class="keyword">return</span> gcd;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生成公匙</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getPublic_key</span><span class="params">()</span> throws Exception </span>&#123;</span><br><span class="line">		<span class="keyword">do</span> &#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">this</span>.e = (<span class="keyword">long</span>) (Math.random() * <span class="number">100000</span>);</span><br><span class="line">			<span class="comment">// e满足 e∈(1, ψ(n))且e与ψ(n)最大公约数为1,即 e与t互质</span></span><br><span class="line">		&#125; <span class="keyword">while</span> ((<span class="keyword">this</span>.e &gt;= <span class="keyword">this</span>.t) || (<span class="keyword">this</span>.gcd(<span class="keyword">this</span>.t, <span class="keyword">this</span>.e) != <span class="number">1</span>));</span><br><span class="line">		System.out.println(<span class="string">"生成的公钥为："</span> + <span class="string">"("</span> + <span class="keyword">this</span>.n + <span class="string">","</span> + <span class="keyword">this</span>.e + <span class="string">")"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生成私钥 e*d=1(modψ(n))==&gt; d = (kψ(n)+1) / e</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getPrivate_key</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> value = <span class="number">1</span>; <span class="comment">// value 是e和d的乘积</span></span><br><span class="line">		outer: <span class="keyword">for</span> (<span class="keyword">long</span> k = <span class="number">1</span>;; k++) &#123;</span><br><span class="line">			value = k * <span class="keyword">this</span>.t + <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span> ((value % <span class="keyword">this</span>.e == <span class="number">0</span>)) &#123;</span><br><span class="line">				<span class="keyword">this</span>.d = value / <span class="keyword">this</span>.e;</span><br><span class="line">				<span class="keyword">break</span> outer;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"产生的一个私钥为："</span> + <span class="string">"("</span> + <span class="keyword">this</span>.n + <span class="string">","</span> + <span class="keyword">this</span>.d + <span class="string">")"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 输入明文</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getText</span><span class="params">()</span> throws Exception </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"请输入明文："</span>);</span><br><span class="line">		BufferedReader <span class="built_in">stdin</span> = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(</span><br><span class="line">				System.in));</span><br><span class="line">		mc = <span class="built_in">stdin</span>.readLine();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 解密密文</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pascolum</span><span class="params">()</span> throws Exception </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.getText();</span><br><span class="line">		System.out.println(<span class="string">"输入明文为: "</span> + <span class="keyword">this</span>.mc);</span><br><span class="line">		<span class="comment">// 加密</span></span><br><span class="line">		ArrayList cestr = <span class="keyword">new</span> ArrayList();</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mc.length(); i++) &#123;</span><br><span class="line">			<span class="keyword">this</span>.c = <span class="keyword">this</span>.colum((<span class="keyword">long</span>) mc.charAt(i), <span class="keyword">this</span>.n, <span class="keyword">this</span>.e);</span><br><span class="line">			cestr.add(c);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"加密后所得的密文为："</span> + cestr);</span><br><span class="line">		<span class="comment">// 解密</span></span><br><span class="line">		StringBuffer destr = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cestr.size(); j++) &#123;</span><br><span class="line">			<span class="keyword">this</span>.word = <span class="keyword">this</span>.colum(Long.parseLong(cestr.get(j).toString()),</span><br><span class="line">					<span class="keyword">this</span>.n, <span class="keyword">this</span>.d);</span><br><span class="line">			destr.append((<span class="keyword">char</span>) word);</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(<span class="string">"解密后所得的明文为："</span> + destr);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 加密、解密计算</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">colum</span><span class="params">(<span class="keyword">long</span> mc, <span class="keyword">long</span> n, <span class="keyword">long</span> key)</span> </span>&#123;</span><br><span class="line">		BigInteger bigy = <span class="keyword">new</span> BigInteger(String.valueOf(mc));</span><br><span class="line">		BigInteger bign = <span class="keyword">new</span> BigInteger(String.valueOf(n));</span><br><span class="line">		BigInteger bigkey = <span class="keyword">new</span> BigInteger(String.valueOf(key));</span><br><span class="line">		<span class="keyword">return</span> Long.parseLong(bigy.modPow(bigkey, bign).toString());<span class="comment">// 备注1</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			EnAndDe t = <span class="keyword">new</span> EnAndDe();</span><br><span class="line">			t.inputPQ();</span><br><span class="line">			t.getPublic_key();</span><br><span class="line">			t.getPrivate_key();</span><br><span class="line">			t.pascolum();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>备注1：modPow(a,b)是java类BigInteger中的一个方法，返回结果是：调用该方法的对象的a次幂,模b的结果</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="RSA算法原理与加密解密">RSA算法原理与加密解密</h1><h2 id="RSA加密过程简述">RSA加密过程简述</h2><p>A和B进行加密通信时,B首先要生成一对密钥。一个是公钥，给A，B自己持有私钥。A使用B的公钥加密要加密发送的内容，然后B在通过自己]]>
+    </summary>
+    
+      <category term="算法" scheme="http://2le.me/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="算法" scheme="http://2le.me/categories/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[hexo-math]]></title>
+    <link href="http://2le.me/2015/11/16/hexo-math/"/>
+    <id>http://2le.me/2015/11/16/hexo-math/</id>
+    <published>2015-11-16T03:16:25.000Z</published>
+    <updated>2015-11-16T05:39:42.501Z</updated>
+    <content type="html"><![CDATA[<ul>
+<li>MathJax inline:  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Simple inline <span class="variable">$a</span>=b+c$.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Simple inline $a=b+c$.</p>
+<ul>
+<li>MathJax Block:  <figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="formula">$$<span class="command">\frac</span><span class="special">&#123;</span><span class="command">\partial</span> u<span class="special">&#125;</span><span class="special">&#123;</span><span class="command">\partial</span> t<span class="special">&#125;</span></span><br><span class="line">= h^2 <span class="command">\left</span>( <span class="command">\frac</span><span class="special">&#123;</span><span class="command">\partial</span>^2 u<span class="special">&#125;</span><span class="special">&#123;</span><span class="command">\partial</span> x^2<span class="special">&#125;</span> +</span><br><span class="line"><span class="command">\frac</span><span class="special">&#123;</span><span class="command">\partial</span>^2 u<span class="special">&#125;</span><span class="special">&#123;</span><span class="command">\partial</span> y^2<span class="special">&#125;</span> +</span><br><span class="line"><span class="command">\frac</span><span class="special">&#123;</span><span class="command">\partial</span>^2 u<span class="special">&#125;</span><span class="special">&#123;</span><span class="command">\partial</span> z^2<span class="special">&#125;</span><span class="command">\right</span>)$$</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>$$\frac{\partial u}{\partial t}<br>= h^2 \left( \frac{\partial^2 u}{\partial x^2} +<br>\frac{\partial^2 u}{\partial y^2} +<br>\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+<ul>
+<li>Tag:  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This equation &#123;% math %&#125;\<span class="built_in">cos</span> <span class="number">2</span>\theta = \<span class="built_in">cos</span>^<span class="number">2</span> \theta - \<span class="built_in">sin</span>^<span class="number">2</span> \theta =  <span class="number">2</span> \<span class="built_in">cos</span>^<span class="number">2</span> \theta - <span class="number">1</span> &#123;% endmath %&#125; is <span class="keyword">inline</span>.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>This equation <span>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1$</span><!-- Has MathJax --> is inline.<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;% math %&#125;</span><br><span class="line"><span class="string">\begin&#123;aligned&#125;</span></span><br><span class="line"><span class="string">\dot&#123;x&#125;</span> &amp; = <span class="string">\sigma(y-x)</span> <span class="string">\\</span></span><br><span class="line"><span class="string">\dot&#123;y&#125;</span> &amp; = <span class="string">\rho</span> x - y - xz <span class="string">\\</span></span><br><span class="line"><span class="string">\dot&#123;z&#125;</span> &amp; = -<span class="string">\beta</span> z + xy</span><br><span class="line"><span class="string">\end&#123;aligned&#125;</span></span><br><span class="line">&#123;% endmath %&#125;</span><br></pre></td></tr></table></figure></p>
+<span>$$\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}$$</span><!-- Has MathJax -->
+]]></content>
+    <summary type="html">
+    <![CDATA[<ul>
+<li>MathJax inline:  <figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td ]]>
+    </summary>
+    
+      <category term="hexo" scheme="http://2le.me/tags/hexo/"/>
+    
+      <category term="nodejs" scheme="http://2le.me/categories/nodejs/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[搬家]]></title>
     <link href="http://2le.me/2015/11/02/life-move/"/>
     <id>http://2le.me/2015/11/02/life-move/</id>
     <published>2015-11-02T03:25:06.000Z</published>
-    <updated>2015-11-02T05:10:06.090Z</updated>
-    <content type="html"><![CDATA[<p>周六,搬家到铁建广场,<ruby>兴奋<rp> (</rp><rt>lèi de</rt><rp>) </rp></ruby>难眠,周日逛了一上午华贸品超市,<ruby>你好北苑<rp> (</rp><rt>zài jiàn xī yuàn</rt><rp>) </rp></ruby></p>
+    <updated>2015-11-02T05:14:27.302Z</updated>
+    <content type="html"><![CDATA[<p>周六,搬家到铁建广场,<ruby>兴奋<rp> (</rp><rt>lèi de</rt><rp>) </rp></ruby>难眠,周日逛了一上午华贸品超市,<ruby>你好北苑<rp> (</rp><rt>zài jiàn xī yuàn</rt><rp>) </rp></ruby> !</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>周六,搬家到铁建广场,<ruby>兴奋<rp> (</rp><rt>lèi de</rt><rp>) </rp></ruby>难眠,周日逛了一上午华贸品超市,<ruby>你好北苑<rp> (</rp><rt>zài jiàn xī yuàn</rt><rp>) </rp><]]>
@@ -701,70 +891,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[linux配置环境变量]]></title>
-    <link href="http://2le.me/2014/03/25/linux-env-vars/"/>
-    <id>http://2le.me/2014/03/25/linux-env-vars/</id>
-    <published>2014-03-25T10:09:17.000Z</published>
-    <updated>2015-09-21T03:21:09.959Z</updated>
-    <content type="html"><![CDATA[<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\<span class="id">#vi</span>  /etc/profile</span><br></pre></td></tr></table></figure>
-<p>在该profile文件中添加：</p>
-<blockquote>
-<p>JAVA_HOME=/usr/java/jdk1.6.0_10<br>JRE_HOME=/usr/java/jdk1.6.0_10/jre<br>PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin<br>CLASSPATH=.:$JAVA_HOME/lib/jt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib(注意：前面的.: ，linux中的；号为：号)<br>export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
-</blockquote>
-<p>添加完毕保存退出<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\#<span class="keyword">source</span> <span class="regexp">/etc/</span>profile</span><br></pre></td></tr></table></figure></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span cl]]>
-    </summary>
-    
-      <category term="linux" scheme="http://2le.me/tags/linux/"/>
-    
-      <category term="环境变量" scheme="http://2le.me/tags/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"/>
-    
-      <category term="web前端" scheme="http://2le.me/categories/web%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[ORACLE 创建视图时,提示用户权限不足]]></title>
-    <link href="http://2le.me/2014/03/25/db-oracle-grant/"/>
-    <id>http://2le.me/2014/03/25/db-oracle-grant/</id>
-    <published>2014-03-25T10:09:17.000Z</published>
-    <updated>2015-10-20T06:56:48.244Z</updated>
-    <content type="html"><![CDATA[<p>首先使用system帐户进行登录<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlplus <span class="keyword">system</span>/<span class="keyword">pwd</span>[<span class="variable">@DB</span>]</span><br></pre></td></tr></table></figure></p>
-<p>然后执行：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">view</span> <span class="keyword">to</span> scott</span></span><br></pre></td></tr></table></figure></p>
-<p>提示：授权成功。<br>执行：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">exit</span></span><br></pre></td></tr></table></figure></p>
-<p>退出当前system帐户。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>首先使用system帐户进行登录<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class=]]>
-    </summary>
-    
-      <category term="oracle" scheme="http://2le.me/tags/oracle/"/>
-    
-      <category term="db" scheme="http://2le.me/categories/db/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[查询本月天数]]></title>
-    <link href="http://2le.me/2014/03/25/db-oracle-get-month-days/"/>
-    <id>http://2le.me/2014/03/25/db-oracle-get-month-days/</id>
-    <published>2014-03-25T10:09:17.000Z</published>
-    <updated>2015-09-21T03:21:09.760Z</updated>
-    <content type="html"><![CDATA[<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </span><br><span class="line">  <span class="keyword">FROM</span> DUAL </span><br><span class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</span></span><br></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="]]>
-    </summary>
-    
-      <category term="oracle" scheme="http://2le.me/tags/oracle/"/>
-    
-      <category term="db" scheme="http://2le.me/categories/db/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[oracle sql整理]]></title>
     <link href="http://2le.me/2014/03/25/db-oracle-sql/"/>
     <id>http://2le.me/2014/03/25/db-oracle-sql/</id>
@@ -784,6 +910,30 @@
       <category term="sql" scheme="http://2le.me/tags/sql/"/>
     
       <category term="db" scheme="http://2le.me/categories/db/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[启动tomcat报java.lang.NoClassDefFoundError: javax/el/ExpressionFactory]]></title>
+    <link href="http://2le.me/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/"/>
+    <id>http://2le.me/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/</id>
+    <published>2014-03-25T10:09:17.000Z</published>
+    <updated>2015-09-21T07:43:06.911Z</updated>
+    <content type="html"><![CDATA[<p>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory异常<br>如果你按照以上目录发布工程，抛出以下异常：</p>
+<ol>
+<li>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory</li>
+<li>或打开页面后显示： HTTP Status 404 – /xxx/xxx<br>报404错误<br>Tomcat/5.5.17<br>则将javaee.jar包再copy一份放在tomcat目录的common\lib下就不会了。<br>关于用到的javaee.jar、jsf-api.jar、jsf-impl.jar、jstl-1.2.jar这四个包可以通过myeclipse中获得，<br>如果你安装了myeclipse5.5的话，我安装的是MyEclipse，这四个包的所在的目录是：<code>MyEclipse\myeclipse\eclipse\plugins\com.genuitec.eclipse.j2eedt.core_6(目录下)\data\libraryset\EE_5</code></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory异常<br>如果你按照以上目录发布工程，抛出以下异常：</p>
+<ol>
+<li>java.lang.NoClassDefFoundError: javax/]]>
+    </summary>
+    
+      <category term="tomcat" scheme="http://2le.me/tags/tomcat/"/>
+    
+      <category term="java" scheme="http://2le.me/categories/java/"/>
     
   </entry>
   
