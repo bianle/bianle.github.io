@@ -70,7 +70,7 @@
     <link href="http://2le.me/2015/11/19/error/"/>
     <id>http://2le.me/2015/11/19/error/</id>
     <published>2015-11-19T02:05:32.000Z</published>
-    <updated>2015-11-19T02:09:26.938Z</updated>
+    <updated>2015-11-23T08:27:53.099Z</updated>
     <content type="html"><![CDATA[<h2 id="git">git</h2><ul>
 <li>disconnected no supported authentication methods available(server sent: publickey，keyboard interae）</li>
 </ul>
@@ -78,6 +78,18 @@
 <p>因为TortoiseGit和Git的冲突 我们需要把TortoiseGit设置改正如下。<br>1.找到TortoiseGit -&gt; Settings -&gt; Network<br>2.将SSH client指向~\Git\bin\ssh.exe(Git安装路径下)<br>然后便可正确push和pull</p>
 </blockquote>
 <p><a href="http://blog.csdn.net/lifuxiangcaohui/article/details/40820097" target="_blank" rel="external">http://blog.csdn.net/lifuxiangcaohui/article/details/40820097</a></p>
+<ul>
+<li>fatal: Not a valid object name: ‘master’</li>
+</ul>
+<p>背景:git刚初始化完,新建分支,即:</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">git</span> init</span><br><span class="line"><span class="label">git</span> <span class="keyword">branch </span>src</span><br></pre></td></tr></table></figure>
+<p>原因:</p>
+<blockquote>
+<p>Until you commit, there is no master branch.</p>
+</blockquote>
+<p>解决:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">add</span> .</span><br><span class="line">git commit -<span class="keyword">am</span> <span class="string">'init'</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master" target="_blank" rel="external">http://stackoverflow.com/questions/9162271/fatal-not-a-valid-object-name-master</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="git">git</h2><ul>
