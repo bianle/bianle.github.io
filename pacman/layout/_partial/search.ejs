@@ -1,0 +1,122 @@
+<% if(theme.google_cse.enable) { %>
+<div  id="main" class="page">
+  <div id='cse' style='width:100%;text-align:center'>正在加载搜索结果，请稍等。</div>
+</div>
+<script src="http://www.google.com.hk/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+google.load('search', '1', {language : 'zh-CN',style: google.loader.themes.MINIMALIST});
+google.setOnLoadCallback(function(){
+  var customSearchControl = new google.search.CustomSearchControl('<%= theme.google_cse.cx %>');
+  customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+  var options = new google.search.DrawOptions();
+  options.setAutoComplete(true);
+  customSearchControl.draw('cse', options);
+  var match = location.search.match(/q=([^&]*)(&|$)/);
+  if(match && match[1]){
+    var search = decodeURIComponent(match[1]); 
+    customSearchControl.execute(search);
+  }
+},true);
+</script>
+<% }else if(theme.tinysou_search.enable){ %>
+<div id="ts-results-container" style="margin-top:32px;"></div>
+
+<style>
+.ts-small{
+  display:none;
+}
+.ts-result {
+  background: #fafafa;
+  display: block;
+  border-left: 0.5em solid #ccc;
+  -webkit-transition: border-left 0.45s;
+  -moz-transition: border-left 0.45s;
+  -o-transition: border-left 0.45s;
+  -ms-transition: border-left 0.45s;
+  transition: border-left 0.45s;
+  padding: 0.5em;
+}
+@media only screen and (min-width: 768px) {
+  .ts-result {
+    padding: 1em;
+  }
+}
+.ts-result:hover {
+  border-left: 0.5em solid #ea6753;
+}
+.ts-result h3 a{
+  color: #2ca6cb;
+  line-height: 1.5;
+  font-size: 22px;
+}
+.ts-snippet em {
+  font-weight: bold;
+  color: #ea6753;
+}</style>
+
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+
+
+
+<% }else if(theme.swift_search.enable){ %>
+
+<div  id="container" class="page">
+  <div id="st-results-container" style="width:80%">正在加载搜索结果，请稍等。</div>
+  <style>.st-result-text {
+  background: #fafafa;
+  display: block;
+  border-left: 0.5em solid #ccc;
+  -webkit-transition: border-left 0.45s;
+  -moz-transition: border-left 0.45s;
+  -o-transition: border-left 0.45s;
+  -ms-transition: border-left 0.45s;
+  transition: border-left 0.45s;
+  padding: 0.5em;
+}
+
+@media only screen and (min-width: 768px) {
+  .st-result-text {
+    padding: 1em;
+  }
+}
+.st-result-text:hover {
+  border-left: 0.5em solid #ea6753;
+}
+.st-result-text h3 a{
+  color: #2ca6cb;
+  line-height: 1.5;
+  font-size: 22px;
+}
+.st-snippet em {
+  font-weight: bold;
+  color: #ea6753;
+}</style>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','RdB5ZQDX1N5isGsyWxi6'); //其实每个人不同的也就是这个userID
+</script>
+
+<% } %>
