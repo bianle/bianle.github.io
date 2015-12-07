@@ -1,0 +1,540 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>视觉直观感受7种常用的排序算法 | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="快速排序介绍：快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要Ο(n log n)次比较。在最坏状况下则需要Ο(n2)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他Ο(n log n) 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<script type="text/javascript" src="http://tajs.qq.com/stats?sId=51843264" charset="UTF-8"></script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2013/05/08/java-sorting-algorithm/" title="视觉直观感受7种常用的排序算法" itemprop="url">视觉直观感受7种常用的排序算法</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2013-05-08T10:09:17.000Z" itemprop="datePublished">2013-05-08</time>
+    更新日期:<time datetime="2015-09-21T03:21:09.857Z" itemprop="dateModified">2015-09-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#快速排序"><span class="toc-number">1.</span> <span class="toc-text">快速排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍："><span class="toc-number">1.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤："><span class="toc-number">1.2.</span> <span class="toc-text">步骤：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#归并排序"><span class="toc-number">2.</span> <span class="toc-text">归并排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-1"><span class="toc-number">2.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-1"><span class="toc-number">2.2.</span> <span class="toc-text">步骤：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果："><span class="toc-number">2.3.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆排序"><span class="toc-number">3.</span> <span class="toc-text">堆排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-2"><span class="toc-number">3.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-2"><span class="toc-number">3.2.</span> <span class="toc-text">步骤：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-1"><span class="toc-number">3.3.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择排序"><span class="toc-number">4.</span> <span class="toc-text">选择排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-3"><span class="toc-number">4.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-2"><span class="toc-number">4.2.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#冒泡排序"><span class="toc-number">5.</span> <span class="toc-text">冒泡排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-4"><span class="toc-number">5.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-3"><span class="toc-number">5.2.</span> <span class="toc-text">步骤：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-3"><span class="toc-number">5.3.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#插入排序"><span class="toc-number">6.</span> <span class="toc-text">插入排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-5"><span class="toc-number">6.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-4"><span class="toc-number">6.2.</span> <span class="toc-text">步骤：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#希尔排序"><span class="toc-number">7.</span> <span class="toc-text">希尔排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-6"><span class="toc-number">7.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-4"><span class="toc-number">7.2.</span> <span class="toc-text">排序效果：</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="快速排序">快速排序</h1><h2 id="介绍：">介绍：</h2><p>快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要Ο(n log n)次比较。在最坏状况下则需要Ο(n2)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他Ο(n log n) 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来，且在大部分真实世界的数据，可以决定设计的选择，减少所需时间的二次方项之可能性。</p>
+<h2 id="步骤：">步骤：</h2><ol>
+<li><p>从数列中挑出一个元素，称为 “基准”（Pivot），</p>
+</li>
+<li><p>重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作。</p>
+</li>
+<li><p>递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。</p>
+</li>
+</ol>
+<p>##排序效果：</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/05/08/sort1.gif" alt="sort"></p>
+<h1 id="归并排序">归并排序</h1><h2 id="介绍：-1">介绍：</h2><p>归并排序（Merge sort，台湾译作：合并排序）是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用</p>
+<h2 id="步骤：-1">步骤：</h2><ol>
+<li><p>申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列</p>
+</li>
+<li><p>设定两个指针，最初位置分别为两个已经排序序列的起始位置</p>
+</li>
+<li><p>比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置</p>
+</li>
+<li><p>重复步骤3直到某一指针达到序列尾</p>
+</li>
+<li><p>将另一序列剩下的所有元素直接复制到合并序列尾</p>
+</li>
+</ol>
+<h2 id="排序效果：">排序效果：</h2><p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/05/08/sort2.gif" alt="sort"></p>
+<h1 id="堆排序">堆排序</h1><h2 id="介绍：-2">介绍：</h2><p>堆积排序（Heapsort）是指利用堆这种数据结构所设计的一种排序算法。堆是一个近似完全二叉树的结构，并同时满足堆性质：即子结点的键值或索引总是小于（或者大于）它的父节点。</p>
+<h2 id="步骤：-2">步骤：</h2><p>（比较复杂，自己上网查吧）</p>
+<h2 id="排序效果：-1">排序效果：</h2><p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/05/08/sort3.gif" alt="sort"></p>
+<h1 id="选择排序">选择排序</h1><h2 id="介绍：-3">介绍：</h2><p>选择排序(Selection sort)是一种简单直观的排序算法。它的工作原理如下。首先在未排序序列中找到最小元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小元素，然后放到排序序列末尾。以此类推，直到所有元素均排序完毕。</p>
+<h2 id="排序效果：-2">排序效果：</h2><p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/05/08/sort4.gif" alt="sort"></p>
+<h1 id="冒泡排序">冒泡排序</h1><h2 id="介绍：-4">介绍：</h2><p>冒泡排序（Bubble Sort，台湾译为：泡沫排序或气泡排序）是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。</p>
+<h2 id="步骤：-3">步骤：</h2><ol>
+<li><p>比较相邻的元素。如果第一个比第二个大，就交换他们两个。</p>
+</li>
+<li><p>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。</p>
+</li>
+<li><p>针对所有的元素重复以上的步骤，除了最后一个。</p>
+</li>
+<li><p>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</p>
+</li>
+</ol>
+<h2 id="排序效果：-3">排序效果：</h2><p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/05/08/sort5.gif" alt="sort"></p>
+<h1 id="插入排序">插入排序</h1><h2 id="介绍：-5">介绍：</h2><p>插入排序（Insertion Sort）的算法描述是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。插入排序在实现上，通常采用in-place排序（即只需用到O(1)的额外空间的排序），因而在从后向前扫描过程中，需要反复把已排序元素逐步向后挪位，为最新元素提供插入空间。</p>
+<h2 id="步骤：-4">步骤：</h2><ol>
+<li><p>从第一个元素开始，该元素可以认为已经被排序</p>
+</li>
+<li><p>取出下一个元素，在已经排序的元素序列中从后向前扫描</p>
+</li>
+<li><p>如果该元素（已排序）大于新元素，将该元素移到下一位置</p>
+</li>
+<li><p>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</p>
+</li>
+<li><p>将新元素插入到该位置中</p>
+</li>
+<li><p>重复步骤2</p>
+</li>
+</ol>
+<p>排序效果：</p>
+<p>（暂无）</p>
+<h1 id="希尔排序">希尔排序</h1><h2 id="介绍：-6">介绍：</h2><p>希尔排序，也称递减增量排序算法，是插入排序的一种高速而稳定的改进版本。</p>
+<p>希尔排序是基于插入排序的以下两点性质而提出改进方法的：</p>
+<ol>
+<li><p>插入排序在对几乎已经排好序的数据操作时， 效率高， 即可以达到线性排序的效率</p>
+</li>
+<li><p>但插入排序一般来说是低效的， 因为插入排序每次只能将数据移动一位&gt;</p>
+</li>
+</ol>
+<h2 id="排序效果：-4">排序效果：</h2><p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/05/08/sort7.gif" alt="sort"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/排序算法/">排序算法</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2013/05/08/java-sorting-algorithm/" data-title="视觉直观感受7种常用的排序算法 | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2013/08/20/java-heap/" title="优化Java堆大小的5个技巧">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  优化Java堆大小的5个技巧</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2013/02/04/web-flex-music-player/"  title="web-flex-music-player">
+ <strong>NEXT:</strong><br/> 
+ <span>web-flex-music-player
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#快速排序"><span class="toc-number">1.</span> <span class="toc-text">快速排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍："><span class="toc-number">1.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤："><span class="toc-number">1.2.</span> <span class="toc-text">步骤：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#归并排序"><span class="toc-number">2.</span> <span class="toc-text">归并排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-1"><span class="toc-number">2.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-1"><span class="toc-number">2.2.</span> <span class="toc-text">步骤：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果："><span class="toc-number">2.3.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆排序"><span class="toc-number">3.</span> <span class="toc-text">堆排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-2"><span class="toc-number">3.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-2"><span class="toc-number">3.2.</span> <span class="toc-text">步骤：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-1"><span class="toc-number">3.3.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择排序"><span class="toc-number">4.</span> <span class="toc-text">选择排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-3"><span class="toc-number">4.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-2"><span class="toc-number">4.2.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#冒泡排序"><span class="toc-number">5.</span> <span class="toc-text">冒泡排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-4"><span class="toc-number">5.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-3"><span class="toc-number">5.2.</span> <span class="toc-text">步骤：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-3"><span class="toc-number">5.3.</span> <span class="toc-text">排序效果：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#插入排序"><span class="toc-number">6.</span> <span class="toc-text">插入排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-5"><span class="toc-number">6.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤：-4"><span class="toc-number">6.2.</span> <span class="toc-text">步骤：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#希尔排序"><span class="toc-number">7.</span> <span class="toc-text">希尔排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍：-6"><span class="toc-number">7.1.</span> <span class="toc-text">介绍：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序效果：-4"><span class="toc-number">7.2.</span> <span class="toc-text">排序效果：</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/error/" title="error">error<sup>1</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>31</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>14</sup></a></li>
+		
+			<li><a href="/categories/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>6</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/websocket/" title="websocket">websocket<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>49</sup></a></li>
+		
+			<li><a href="/categories/windows/" title="windows">windows<sup>1</sup></a></li>
+		
+			<li><a href="/categories/技巧/" title="技巧">技巧<sup>1</sup></a></li>
+		
+			<li><a href="/categories/游戏/" title="游戏">游戏<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>5</sup></a></li>
+		
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>8</sup></a></li>
+		
+			<li><a href="/categories/软件/" title="软件">软件<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">歸檔</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">27</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">26</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">4</span></li></ul>
+  </div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">標簽雲</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Dr-com/" style="font-size: 10px;">Dr.com</a> <a href="/tags/Gravatar/" style="font-size: 10px;">Gravatar</a> <a href="/tags/JPA/" style="font-size: 10px;">JPA</a> <a href="/tags/QRCode/" style="font-size: 10px;">QRCode</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/awt/" style="font-size: 10px;">awt</a> <a href="/tags/bt5/" style="font-size: 11.25px;">bt5</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/cmd/" style="font-size: 11.25px;">cmd</a> <a href="/tags/css/" style="font-size: 13.75px;">css</a> <a href="/tags/css3/" style="font-size: 10px;">css3</a> <a href="/tags/db/" style="font-size: 11.25px;">db</a> <a href="/tags/db2/" style="font-size: 10px;">db2</a> <a href="/tags/dbcp/" style="font-size: 10px;">dbcp</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/dnf/" style="font-size: 10px;">dnf</a> <a href="/tags/eclipse/" style="font-size: 12.5px;">eclipse</a> <a href="/tags/editplus/" style="font-size: 10px;">editplus</a> <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/extjs/" style="font-size: 11.25px;">extjs</a> <a href="/tags/firefox/" style="font-size: 10px;">firefox</a> <a href="/tags/flash/" style="font-size: 10px;">flash</a> <a href="/tags/flex/" style="font-size: 11.25px;">flex</a> <a href="/tags/frameset/" style="font-size: 10px;">frameset</a> <a href="/tags/grub/" style="font-size: 10px;">grub</a> <a href="/tags/gwt/" style="font-size: 13.75px;">gwt</a> <a href="/tags/gxt/" style="font-size: 10px;">gxt</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/hexo/" style="font-size: 11.25px;">hexo</a> <a href="/tags/hibernate/" style="font-size: 11.25px;">hibernate</a> <a href="/tags/html/" style="font-size: 16.25px;">html</a> <a href="/tags/html5/" style="font-size: 11.25px;">html5</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/i18n/" style="font-size: 10px;">i18n</a> <a href="/tags/ie/" style="font-size: 13.75px;">ie</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/jdbc/" style="font-size: 11.25px;">jdbc</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/jquery/" style="font-size: 13.75px;">jquery</a> <a href="/tags/jre/" style="font-size: 10px;">jre</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/lightbox/" style="font-size: 10px;">lightbox</a> <a href="/tags/linux/" style="font-size: 17.5px;">linux</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nano/" style="font-size: 10px;">nano</a> <a href="/tags/native2ascii/" style="font-size: 10px;">native2ascii</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/oracle/" style="font-size: 16.25px;">oracle</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/qq/" style="font-size: 10px;">qq</a> <a href="/tags/red-hat/" style="font-size: 10px;">red hat</a> <a href="/tags/resize/" style="font-size: 10px;">resize</a> <a href="/tags/robot/" style="font-size: 10px;">robot</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/runcode/" style="font-size: 10px;">runcode</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sonatype/" style="font-size: 10px;">sonatype</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/sql-server/" style="font-size: 11.25px;">sql server</a> <a href="/tags/sql-server/" style="font-size: 10px;">sql-server</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/string/" style="font-size: 10px;">string</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/swf/" style="font-size: 10px;">swf</a> <a href="/tags/swing/" style="font-size: 10px;">swing</a> <a href="/tags/swt/" style="font-size: 10px;">swt</a> <a href="/tags/telnet/" style="font-size: 10px;">telnet</a> <a href="/tags/tomcat/" style="font-size: 13.75px;">tomcat</a> <a href="/tags/trim/" style="font-size: 10px;">trim</a> <a href="/tags/trunc/" style="font-size: 10px;">trunc</a> <a href="/tags/ubuntu/" style="font-size: 12.5px;">ubuntu</a> <a href="/tags/uuid/" style="font-size: 10px;">uuid</a> <a href="/tags/vbs/" style="font-size: 10px;">vbs</a> <a href="/tags/vi/" style="font-size: 10px;">vi</a> <a href="/tags/vim/" style="font-size: 11.25px;">vim</a> <a href="/tags/vmware/" style="font-size: 10px;">vmware</a> <a href="/tags/web/" style="font-size: 13.75px;">web</a> <a href="/tags/web-server/" style="font-size: 10px;">web server</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/wget/" style="font-size: 10px;">wget</a> <a href="/tags/whois/" style="font-size: 10px;">whois</a> <a href="/tags/win7/" style="font-size: 10px;">win7</a> <a href="/tags/windows/" style="font-size: 12.5px;">windows</a> <a href="/tags/wordpress/" style="font-size: 15px;">wordpress</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/zip/" style="font-size: 10px;">zip</a> <a href="/tags/乱码/" style="font-size: 11.25px;">乱码</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/云/" style="font-size: 10px;">云</a> <a href="/tags/半透明/" style="font-size: 10px;">半透明</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/变态/" style="font-size: 10px;">变态</a> <a href="/tags/图标/" style="font-size: 10px;">图标</a> <a href="/tags/备份/" style="font-size: 10px;">备份</a> <a href="/tags/大小写/" style="font-size: 10px;">大小写</a> <a href="/tags/恶搞/" style="font-size: 10px;">恶搞</a> <a href="/tags/排序算法/" style="font-size: 10px;">排序算法</a> <a href="/tags/插件/" style="font-size: 10px;">插件</a> <a href="/tags/摄影/" style="font-size: 10px;">摄影</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/数字/" style="font-size: 11.25px;">数字</a> <a href="/tags/校园网/" style="font-size: 10px;">校园网</a> <a href="/tags/正则/" style="font-size: 11.25px;">正则</a> <a href="/tags/油猴/" style="font-size: 10px;">油猴</a> <a href="/tags/注册表/" style="font-size: 10px;">注册表</a> <a href="/tags/渐变/" style="font-size: 10px;">渐变</a> <a href="/tags/状态栏/" style="font-size: 10px;">状态栏</a> <a href="/tags/环境变量/" style="font-size: 10px;">环境变量</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a> <a href="/tags/端口/" style="font-size: 11.25px;">端口</a> <a href="/tags/算法/" style="font-size: 11.25px;">算法</a> <a href="/tags/自动更新/" style="font-size: 10px;">自动更新</a> <a href="/tags/越狱/" style="font-size: 10px;">越狱</a> <a href="/tags/软件/" style="font-size: 10px;">软件</a> <a href="/tags/还原/" style="font-size: 10px;">还原</a> <a href="/tags/远程桌面/" style="font-size: 10px;">远程桌面</a>
+    </div>
+  </div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+      <li><a href="http://xn--l28hc.ws" target="_blank" title="http://😇😈.ws">http://😇😈.ws</a></li>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+      <li><a href="http://http://lifegoo.pluskid.org/wiki/index.html" target="_blank" title="Tim's Blog">星黎殿</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754" target="_blank" title="weibo"></a>
+		
+		
+		
+		<a href="https://github.com/bianle" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
