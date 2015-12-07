@@ -67,6 +67,23 @@ hixie-76 hybi-00   | 2010年5月10日，2010年5月23日 |    |        4.0（已
 8 hybi-10          | 2011年7月11日                |    |                      7 |                 7 |                       14 |                    |                         |
 13 RFC 6455        | 2011年12月                   | 10 |                     11 |                11 |                       16 |                  6 | 12.10                   |   4.4
 
+## 服务器
+在服务器方面，网上都有不同对websocket支持的服务器：
+
+php - http://code.google.com/p/phpwebsocket/
+jetty - http://jetty.codehaus.org/jetty/（版本7开始支持websocket）
+netty - http://www.jboss.org/netty
+ruby - http://github.com/gimite/web-socket-ruby
+Kaazing - http://www.kaazing.org/confluence/display/KAAZING/Home
+Tomcat - http://tomcat.apache.org/（7.0.27支持websocket，建议用tomcat8，7.0.27中的接口已经过时）
+WebLogic - http://www.oracle.com/us/products/middleware/cloud-app-foundation/weblogic/overview/index.html（12.1.2開始支持）
+node.js - https://github.com/Worlize/WebSocket-Node
+node.js - http://socket.io
+nginx - http://nginx.com/
+mojolicious - http://mojolicio.us/
+python - https://github.com/abourget/gevent-socketio
+Django - https://github.com/stephenmcd/django-socketio
+
 
 
 轮询：客户端定时向服务器发送Ajax请求，服务器接到请求后马上返回响应信息并关闭连接。
