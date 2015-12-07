@@ -1,4 +1,24 @@
 <script src="<%- config.root %>js/jquery-2.1.0.min.js"></script>
+<!-- js-full-image -->
+<script>
+$(".flow ol li img").bind('click',function(){
+  var $this = $(this);
+  var $img = $this.prop('outerHTML'); 
+  var $li = $this.closest("li")
+  if($("div.full-image",$li).length>0){
+    $("div.full-image",$li).show();
+  }else{
+    var $div = $("<div class=\"js-full-image full-image\"></div>");
+    var $x = $("<span class=\"octicon octicon-x\"></span>");
+    $div.append($img).append($x);
+    $li.append($div);
+    $(".octicon-x").bind('click',function(){
+      $(this).closest("div.full-image").hide();
+    });
+  }
+});
+</script>
+<!-- js-full-image -->
 <script type="text/javascript">
 $(document).ready(function(){ 
   $('.navbar').click(function(){
