@@ -2,6 +2,7 @@ title: 安装kubuntu后
 date: 2015-12-06 01:36:41
 tags: linux
 categories: linux
+layout: flow
 ---
 
 
