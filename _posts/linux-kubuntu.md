@@ -7,13 +7,11 @@ layout: flow
 
 
 1. 安装中文包
-
 ```
 sudo apt-get install language-pack-kde-zh-hans --openoffice.org-l10n-zh-cn--
 ```
 
 2. 安装pidgin
-
 ```
 Sudo apt-get install pidgin
 sudo add-apt-repository ppa:lainme/pidgin-lwqq
@@ -26,7 +24,6 @@ Sudo apt-get install pidgin-lwqq
 4. 安装yakuake
 
 5. 安装fcitx
-
 ```
 sudo apt-get install fcitx-pinyin
 sudo apt-get install fcitx-table-wbpy
@@ -34,7 +31,6 @@ reboot
 ```
 
 6. ssh
-
 安装
 ```
 sudo apt-get install openssh-server
@@ -47,7 +43,6 @@ sudo ps -e |grep ssh
 ```
 sudo service ssh start
 ```
-
 配置文件
 
 `/etc/ssh/sshd_config`
@@ -69,7 +64,6 @@ Sudo apt-get install git
 git config --global user.email "229371515@qq.com"
 git config --global user.name "bianle"
 ```
-
 ```
 ssh-keygen -t rsa -C "229371515@qq.com"
 ```
@@ -86,7 +80,6 @@ sudo npm install hexo-cli -g
 ```
 npm install hexo --save
 ```
-
 进入一个目录
 
 ```
@@ -95,15 +88,12 @@ hexo init <folder>
 >/usr/bin/env: node: No such file or directory
 >(ubuntu :ln -s /usr/bin/nodejs /usr/bin/node )
 http://stackoverflow.com/questions/20886217/browserify-error-usr-bin-env-node-no-such-file-or-directory
-
 ```
 npm install
 ```
-
 ```
 hexo generate
 ```
-
 ```
 hexo server
 ```
