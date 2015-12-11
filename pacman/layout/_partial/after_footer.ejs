@@ -1,4 +1,8 @@
 <script src="<%- config.root %>js/jquery-2.1.0.min.js"></script>
+<script src="<%- config.root %>js/jquery.qrcode.min.js"></script>
+<script>
+$("#qrcode").qrcode(window.location.href);
+</script>
 <!-- js-full-image -->
 <script>
 $(".flow ol li img").bind('click',function(){
@@ -127,7 +131,7 @@ $(document).ready(function(){
 });     
 </script>
 <% } %>
-<% if ((page.layout=='post'||page.layout=='page')&&theme.duoshuo.enable && page.comments){ %>
+<% if ((page.layout=='post'||page.layout=='page'||page.layout=='flow')&&theme.duoshuo.enable && page.comments){ %>
 <script type="text/javascript">
   var duoshuoQuery = {short_name:"<%= theme.duoshuo.short_name %>"};
   (function() {
