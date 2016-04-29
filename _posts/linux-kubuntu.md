@@ -2,16 +2,15 @@ title: 安装kubuntu后
 date: 2015-12-06 01:36:41
 tags: linux
 categories: linux
-layout: flow
 ---
 
 
-1. 安装中文包
+## 安装中文包
 ```
-sudo apt-get install language-pack-kde-zh-hans --openoffice.org-l10n-zh-cn--
+sudo apt-get install language-pack-kde-zh-hans 
 ```
 
-2. 安装pidgin
+## 安装pidgin
 ```
 Sudo apt-get install pidgin
 sudo add-apt-repository ppa:lainme/pidgin-lwqq
@@ -19,18 +18,18 @@ sudo apt-get update
 Sudo apt-get install pidgin-lwqq
 ```
 
-3. 安装finch
+## 安装finch
 
-4. 安装yakuake
+## 安装yakuake
 
-5. 安装fcitx
+## 安装fcitx
 ```
 sudo apt-get install fcitx-pinyin
 sudo apt-get install fcitx-table-wbpy
 reboot
 ```
 
-6. ssh
+## ssh
 安装
 ```
 sudo apt-get install openssh-server
@@ -48,7 +47,7 @@ sudo service ssh start
 `/etc/ssh/sshd_config`
 
 
-7. Emacs
+## Emacs
 `~/.profile`加入
 `emacs --daemon&`
 开机自动启动server
@@ -57,8 +56,9 @@ http://www.cnblogs.com/guyufei/p/3536133.html
 https://github.com/wenbinye/emacs-eim
 C-spac 冲突
 http://blog.sina.com.cn/s/blog_a04f0d1c0101bwk1.html
-8. secureCRT -> 选项 ->  会话选项 -> 仿真 -> 映射键； 勾上backspace发送delete。	
-9. git
+## secureCRT 
+选项 ->  会话选项 -> 仿真 -> 映射键； 勾上backspace发送delete。	
+## git
 ```
 Sudo apt-get install git
 git config --global user.email "229371515@qq.com"
@@ -70,7 +70,7 @@ ssh-keygen -t rsa -C "229371515@qq.com"
 
 
 
-10.  hexo
+##  hexo
 ```
 sudo apt-get install nodejs
 sudo apt-get install npm
@@ -133,17 +133,17 @@ cat ./ssh/id_rsa.pub
 >  path: atom.xml
 >  limit: 20
 
-11. rz sz
+## rz sz
 ```
 Sudo apt-get install lrzsz
 ```
 
-12. 
+## 
 ```
 sudo apt-get install tree
 ```
 
-13.  chrome
+##  chrome
 ```
 Wget https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb
 sudo dpkg -i *.deb 
@@ -163,10 +163,10 @@ sudo apt-get install lib32stdc++6-s390x-cross
 ```
 
 
-14. yakuake
+## yakuake
 
-15. zsh
-Oh my zsh
+## zsh
+## Oh my zsh
 ```
 sudo apt-get install url
 ```
