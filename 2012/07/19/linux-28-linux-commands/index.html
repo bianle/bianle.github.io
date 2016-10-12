@@ -1,0 +1,544 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  
+    <title>28个Unix/Linux的命令行神器 | Hear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="bianle">
+    
+    <meta name="description" content="下面是Kristóf Kovács收集的28个Unix/Linux下的28个命令行下的工具（原文链接），有一些是大家熟悉的，有一些是非常有用的，有一些是不为人知的。这些工具都非常不错，希望每个人都知道。本篇文章还在Hacker News上被讨论，你可以过去看看。dstat &amp;amp; sariost">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="bianlelpqi" />
+    <meta name="twitter:title" content="28个Unix/Linux的命令行神器 | Hear" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Hear" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+	<script type="text/javascript" src="http://tajs.qq.com/stats?sId=51843264" charset="UTF-8"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+  <body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Hear" title="Hear"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hear">Hear</a></h1>
+				<h2 class="blog-motto">The quieter you become, the more you are able to hear.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/tags">Tags</a></li>
+					
+						<li><a href="/categories">Categories</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+					
+					<form class="search">
+						<label>Search</label>
+						<input type="text" id="ts-search-input" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/07/19/linux-28-linux-commands/" title="28个Unix/Linux的命令行神器" itemprop="url">28个Unix/Linux的命令行神器</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://2le.me" title="bianle">bianle</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-07-19T10:09:17.000Z" itemprop="datePublished">2012-07-19</time>
+    更新日期:<time datetime="2016-10-12T06:01:11.000Z" itemprop="dateModified">2016-10-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>下面是Kristóf Kovács收集的28个Unix/Linux下的28个命令行下的工具（原文链接），有一些是大家熟悉的，有一些是非常有用的，有一些是不为人知的。这些工具都非常不错，希望每个人都知道。本篇文章还在Hacker News上被讨论，你可以过去看看。<br>dstat &amp; sar<br>iostat, vmstat, ifstat 三合一的工具，用来查看系统性能。<br>官方网站：<a href="http://dag.wieers.com/rpm/packages/dstat/" target="_blank" rel="external">http://dag.wieers.com/rpm/packages/dstat/</a><br>你可以这样使用：<br>alias dstat=’dstat -cdlmnpsy’</p>
+<p>slurm<br>查看网络流量的一个工具<br>官方网站：Simple Linux Utility for Resource Management</p>
+<p>vim &amp; emacs<br>真正程序员的代码编辑器。</p>
+<p>screen, dtach, tmux, byobu<br>你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。<br>screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。请参看IBM DeveloperWorks的这篇文章《使用 screen 管理你的远程会话》</p>
+<p>dtach 是用来模拟screen的detach的功能的小工具，其可以让你随意地attach到各种会话上 。下图为dtach+dvtm的样子。</p>
+<p>tmux是一个优秀的终端复用软件，类似GNU Screen，但来自于OpenBSD，采用BSD授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机；当然其功能远不止于此。与screen相比的优点：可以横向和纵向分割窗口，且窗格可以自由移动和调整大小。可在多个缓冲区进行复制和粘贴，支持跨窗口搜索；非正常断线后不需重新detach；……  有人说——与tmux相比，screen简直弱爆了。</p>
+<p>byobu是Ubuntu开发的，在Screen的基础上进行包装，使其更加易用的一个工具。最新的Byobu，已经是基于Tmux作为后端了。可通过“byobu-tmux”这个命令行前端来接受各种与tmux一模一样的参数来控制它。Byobu的细节做的非常好，效果图如下：</p>
+<p>multitail<br>multiTail是个用来实现同时监控多个文档、类似tail命令的功能的软件。他和tail的区别就是他会在控制台中打开多个窗口，这样使同时监控多个日志文档成为可能。他还可以看log文件的统计，合并log文件，过滤log文件，分屏，……。<br>官网：<a href="http://www.vanheusden.com/multitail/" target="_blank" rel="external">http://www.vanheusden.com/multitail/</a></p>
+<p>tpp<br>终端下的PPT，要是在某某大会上用这个演示PPT，就太TMD的Geek了。<br>官网：<a href="http://www.ngolde.de/tpp.html" target="_blank" rel="external">http://www.ngolde.de/tpp.html</a></p>
+<p>xargs &amp; parallel<br>Executes tasks from input (even multithread).<br>xargs 是一个比较古老的命令，有简单的并行功能，这个不说了。对于GNU parallel(online manpage)来说，它不仅能够处理本机上多执行绪，还能分散至远端电脑协助处理。而使用GNU parallel前，要先确定本机有安装GNU parallel/ssh/rsync，远端电脑也要安装ssh。</p>
+<p>duplicity &amp; rsyncrypto<br>duplicity是使用rsync算法加密的高效率备份软件，Duplicity支持目录加密生产和格式上传到远程或本地文件服务器。<br>rsyncrypto 就是 rsync + encryption。<br>Encrypting backup tools.</p>
+<p>nethack &amp; slash’em<br>netHack（Wiki），20年历史的古老电脑游戏。没有声音，没有漂亮的界面，不过这个游戏真的很有意思。网上有个家伙说：如果你一生只做一件事情，那么玩NetHack。这句话很惹眼，但也让人觉得这个游戏很复杂不容易上手。其实，这个游戏很虽然很复杂，却容易上手。虽然玩通关很难，但上手很容易。NetHack上有许多复杂的规则，”the DevTeam thinks of everything”（开发团队想到了所有的事情)。各种各样的怪物，各种各样的武器….，有许多spoilers文件来说明其规则。除了每次开始随机生成的地图，每次玩游戏，你也都会碰到奇怪的事情: 因为喝了一种药水，变成了机器人;因为踢坏了商店的门被要求高价赔偿;你的狗为你偷来了商店的东西….. 这有点象人生，你不能完全了解这个世界，但你仍然可以选择自己的面对方式。<br>网上有许多文章所这是最好的电脑游戏或最好的电脑游戏之一。也许是因为它开放的源代码让人赞赏，古老的历史让人宽容，复杂的规则让人敬畏。虽然它不是当前流行的游戏，但它比任何一个当前流行的游戏都更有可能再经受20年的考验。<br>Slash’EM 也是一个基于NetHack的经典游戏。</p>
+<p>lftp<br>利用lftp命令行ftp工具进行网站数据的增量备份，镜像，就像使用rsync一样。</p>
+<p>ack<br>ack是一个perl脚本，是grep的一个可选替换品。其可以对匹配字符有高亮显示。是为程序员专门设计的，默认递归搜索，省提供多种文件类型供选。</p>
+<p>calcurse &amp; remind + wyrd<br>calcurse是一个命令行下的日历和日程软件。remind + wyrd也很类似。关于日历，我不得不提一个Linux的Cycle日历，也是一个神器，呵呵。</p>
+<p>newsbeuter &amp; rsstail<br>newsbeuter 和 rsstail 是命令行下RSS的阅读工具。</p>
+<p>powertop<br>做个环保的程序员，看看自己的电脑里哪些程序费电。powerTOP 是一个让 Intel 平台的笔记本电脑节省电源的 Linux 工具。此工具由 Intel 公司发布。它可以帮助用户找出那些耗电量大的程序，通过修复或者关闭那些应用程序或进程，从而为用户节省电源。</p>
+<p>htop &amp; iotop<br>htop 和 iotop用来查看进程，内存和IO负载。</p>
+<p>ttyrec &amp; ipbt<br>ttyrec是一个 tty 控制台录制程序，其所录制的数据文件可以使用与之配套的 ttyplay 播放。不管是你在 tty 中的各种操作，还是在 tty 中耳熟能详的软件，都可进行录制。<br>ipbt是一个用来回放 ttyrec 所录制的控制台输入过程的工具。<br>与此类似的还有Shelr和termrec </p>
+<p>rsync<br>通过SSH进行文件同步的经典工具</p>
+<p>mtr<br>MTR – traceroute 2.0，其是把 traceroute 和 ping 集成在一块的一个小工具 用于诊断网络。</p>
+<p>socat &amp; netpipes<br>socat是一个多功能的网络工具，名字来由是” Socket CAT”，可以看作是netcat的N倍加强版。<br>netpipes 和socat一样，主要是用来在命令行来进行socket操作的命令，这样你就可以在Shell脚本下行进socket网络通讯了。</p>
+<p>iftop &amp; iptraf<br>iftop和iptraf可以用来查看当前网络链接的一些流量情况。</p>
+<p>siege &amp; tsung<br>siege是一个压力测试和评测工具，设计用于WEB开发这评估应用在压力下的承受能力：可以根据配置对一个WEB站点进行多用户的并发访问，记录每个用户所有请求过程的相应时间，并在一定数量的并发访问下重复进行。<br>Tsung是一个压力测试工具，可以测试包括HTTP, WebDAV, PostgreSQL, MySQL, LDAP, and XMPP/Jabber等服务器。针对 HTTP 测试，Tsung 支持 HTTP 1.0/1.1 ，包含一个代理模式的会话记录、支持 GET、POST 和 PUT 以及 DELETE 方法，支持 Cookie 和基本的 WWW 认证，同时还支持 SSL。</p>
+<p>ledger<br>ledger 是一个命令行下记帐的小工具。</p>
+<p>taskwarrior<br>taskWarrior 是一个基于命令行的 TODO 列表管理工具。主要功能包括：标签、彩色表格输出、报表和图形、大量的命令、底层API、多用户文件锁等功能。</p>
+<p>下图是TaskWarrior 2.0的界面：</p>
+<p>curl<br>cURL是一个利用URL语法在命令行下工作的文件传输工具，1997年首次发行。它支持文件上传和下载，所以是综合传输工具，但按传统，习惯称cURL为下载工具。cURL还包含了用于程序开发的libcurl。cURL支援的通訊協定有FTP、FTPS、HTTP、HTTPS、TFTP、SFTP、Gopher、SCP、Telnet、DICT、FILE、LDAP、LDAPS、IMAP、POP3、SMTP和RTSP。</p>
+<p>rtorrent &amp; aria2<br>rTorrent 是一个非常简洁、优秀、非常轻量的BT客户端. 它使用了 ncurses 库以 C++ 编写, 因此它完全基于文本并在终端中运行. 将 rTorrent 用在安装有 GNU Screen 和 Secure Shell 的低端系统上作为远程的 BT 客户端是非常理想的。<br>aria2 是 Linux 下一个不错的高速下载工具。由于它具有分段下载引擎，所以支持从多个地址或者从一个地址的多个连接来下载同一个文件。这样自然就大大加快了文件的下载速度。aria2 也具有断点续传功能，这使你随时能够恢复已经中断的文件下载。除了支持一般的 http(s) 和 ftp 协议外，aria2 还支持 BitTorrent 协议。这意味着，你也可以使用 aria2 来下载 torrent 文件。</p>
+<p>ttytter &amp; earthquake<br>TTYtter 是一个Perl写的命令行上发Twitter的工具，可以进行所有其他平台客户端能进行的事情，当然，支持中文。脚本控、CLI控、终端控、Perl控的最愛。<br>Earthquake也是一个命令行上的Twitter客户端。</p>
+<p>vifm &amp; ranger<br>Vifm 基于ncurses的文件管理器，DOS风格，用键盘操作。</p>
+<p>Ranger用 Python 完成，默认为使用 Vim 风格的按键绑定，比如 hjkl（上下左右），dd（剪切），yy（复制）等等。功能很全，扩展/可配置性也非常不错。类似MacOS X下Finder（文件管理器）的多列文件管理方式。支持多标签页。实时预览文本文件和目录。</p>
+<p>cowsay &amp; sl<br>cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己搜一搜。</p>
+<p>sl是什么？ls？呵呵，你会经常把ls 打成sl吗？如果是的话，这个东西可以让你娱乐一下，你会看到一辆火车呼啸而过~~，相当拉风。你可以使用sudo apt-get install sl 安装。</p>
+<p>最后，再介绍一个命令中linuxlogo，你可以使用 sudo apt-get install linuxlogo来安装，然后，就可以使用linuxlogo -L来看一下各种Linux的logo。</p>
+<p>本文来自：酷壳</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/cmd/">cmd</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://2le.me/2012/07/19/linux-28-linux-commands/" data-title="28个Unix/Linux的命令行神器 | Hear" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/07/20/web-html5canvas/" title="HTML5 jQuery 绘图插件">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  HTML5 jQuery 绘图插件</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/07/12/java-cloud-server-for-java/"  title="推荐6个可用于托管Java应用的云计算平台">
+ <strong>NEXT:</strong><br/> 
+ <span>推荐6个可用于托管Java应用的云计算平台
+</span>
+</a>
+</div>
+
+</nav>
+
+        <div id="qrcode"></div>
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/db/" title="db">db<sup>12</sup></a></li>
+		
+			<li><a href="/categories/eclipse/" title="eclipse">eclipse<sup>2</sup></a></li>
+		
+			<li><a href="/categories/emacs/" title="emacs">emacs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/error/" title="error">error<sup>1</sup></a></li>
+		
+			<li><a href="/categories/google/" title="google">google<sup>1</sup></a></li>
+		
+			<li><a href="/categories/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>31</sup></a></li>
+		
+			<li><a href="/categories/linux/" title="linux">linux<sup>15</sup></a></li>
+		
+			<li><a href="/categories/maven/" title="maven">maven<sup>1</sup></a></li>
+		
+			<li><a href="/categories/ngrok/" title="ngrok">ngrok<sup>1</sup></a></li>
+		
+			<li><a href="/categories/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+		
+			<li><a href="/categories/php/" title="php">php<sup>8</sup></a></li>
+		
+			<li><a href="/categories/python/" title="python">python<sup>3</sup></a></li>
+		
+			<li><a href="/categories/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/categories/vbs/" title="vbs">vbs<sup>1</sup></a></li>
+		
+			<li><a href="/categories/websocket/" title="websocket">websocket<sup>1</sup></a></li>
+		
+			<li><a href="/categories/web前端/" title="web前端">web前端<sup>49</sup></a></li>
+		
+			<li><a href="/categories/windows/" title="windows">windows<sup>1</sup></a></li>
+		
+			<li><a href="/categories/技巧/" title="技巧">技巧<sup>1</sup></a></li>
+		
+			<li><a href="/categories/游戏/" title="游戏">游戏<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>5</sup></a></li>
+		
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		
+			<li><a href="/categories/系统/" title="系统">系统<sup>8</sup></a></li>
+		
+			<li><a href="/categories/软件/" title="软件">软件<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/08/">August 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/05/">May 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/02/">February 2013</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a><span class="archive-list-count">27</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12/">December 2012</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">26</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">4</span></li></ul>
+  </div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Dr-com/" style="font-size: 10px;">Dr.com</a> <a href="/tags/Gravatar/" style="font-size: 10px;">Gravatar</a> <a href="/tags/JPA/" style="font-size: 10px;">JPA</a> <a href="/tags/QRCode/" style="font-size: 10px;">QRCode</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/awt/" style="font-size: 10px;">awt</a> <a href="/tags/bt5/" style="font-size: 11.11px;">bt5</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/chrome/" style="font-size: 10px;">chrome</a> <a href="/tags/cmd/" style="font-size: 11.11px;">cmd</a> <a href="/tags/css/" style="font-size: 13.33px;">css</a> <a href="/tags/css3/" style="font-size: 10px;">css3</a> <a href="/tags/db/" style="font-size: 11.11px;">db</a> <a href="/tags/db2/" style="font-size: 10px;">db2</a> <a href="/tags/dbcp/" style="font-size: 10px;">dbcp</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/dnf/" style="font-size: 10px;">dnf</a> <a href="/tags/eclipse/" style="font-size: 15.56px;">eclipse</a> <a href="/tags/editplus/" style="font-size: 10px;">editplus</a> <a href="/tags/emacs/" style="font-size: 10px;">emacs</a> <a href="/tags/error/" style="font-size: 10px;">error</a> <a href="/tags/extjs/" style="font-size: 11.11px;">extjs</a> <a href="/tags/firefox/" style="font-size: 10px;">firefox</a> <a href="/tags/flash/" style="font-size: 10px;">flash</a> <a href="/tags/flex/" style="font-size: 11.11px;">flex</a> <a href="/tags/frameset/" style="font-size: 10px;">frameset</a> <a href="/tags/ghost/" style="font-size: 10px;">ghost</a> <a href="/tags/google/" style="font-size: 10px;">google</a> <a href="/tags/grub/" style="font-size: 10px;">grub</a> <a href="/tags/gwt/" style="font-size: 13.33px;">gwt</a> <a href="/tags/gxt/" style="font-size: 10px;">gxt</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/hexo/" style="font-size: 11.11px;">hexo</a> <a href="/tags/hibernate/" style="font-size: 11.11px;">hibernate</a> <a href="/tags/html/" style="font-size: 16.67px;">html</a> <a href="/tags/html5/" style="font-size: 11.11px;">html5</a> <a href="/tags/httpclient/" style="font-size: 10px;">httpclient</a> <a href="/tags/i18n/" style="font-size: 10px;">i18n</a> <a href="/tags/ie/" style="font-size: 13.33px;">ie</a> <a href="/tags/java/" style="font-size: 18.89px;">java</a> <a href="/tags/jdbc/" style="font-size: 11.11px;">jdbc</a> <a href="/tags/jdk/" style="font-size: 10px;">jdk</a> <a href="/tags/jquery/" style="font-size: 13.33px;">jquery</a> <a href="/tags/jre/" style="font-size: 10px;">jre</a> <a href="/tags/js/" style="font-size: 20px;">js</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/lightbox/" style="font-size: 10px;">lightbox</a> <a href="/tags/linux/" style="font-size: 17.78px;">linux</a> <a href="/tags/log4j/" style="font-size: 10px;">log4j</a> <a href="/tags/maven/" style="font-size: 11.11px;">maven</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nano/" style="font-size: 10px;">nano</a> <a href="/tags/native2ascii/" style="font-size: 10px;">native2ascii</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/ngrok/" style="font-size: 10px;">ngrok</a> <a href="/tags/openshift/" style="font-size: 10px;">openshift</a> <a href="/tags/oracle/" style="font-size: 16.67px;">oracle</a> <a href="/tags/php/" style="font-size: 11.11px;">php</a> <a href="/tags/python/" style="font-size: 12.22px;">python</a> <a href="/tags/qq/" style="font-size: 10px;">qq</a> <a href="/tags/red-hat/" style="font-size: 10px;">red hat</a> <a href="/tags/resize/" style="font-size: 10px;">resize</a> <a href="/tags/robot/" style="font-size: 10px;">robot</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/runcode/" style="font-size: 10px;">runcode</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/sonatype/" style="font-size: 10px;">sonatype</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/sql-server/" style="font-size: 11.11px;">sql server</a> <a href="/tags/sql-server/" style="font-size: 10px;">sql-server</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/ssl/" style="font-size: 10px;">ssl</a> <a href="/tags/string/" style="font-size: 10px;">string</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/swf/" style="font-size: 10px;">swf</a> <a href="/tags/swing/" style="font-size: 10px;">swing</a> <a href="/tags/swt/" style="font-size: 10px;">swt</a> <a href="/tags/telnet/" style="font-size: 10px;">telnet</a> <a href="/tags/tomcat/" style="font-size: 13.33px;">tomcat</a> <a href="/tags/trim/" style="font-size: 10px;">trim</a> <a href="/tags/trunc/" style="font-size: 10px;">trunc</a> <a href="/tags/ubuntu/" style="font-size: 12.22px;">ubuntu</a> <a href="/tags/uuid/" style="font-size: 10px;">uuid</a> <a href="/tags/vbs/" style="font-size: 10px;">vbs</a> <a href="/tags/vi/" style="font-size: 10px;">vi</a> <a href="/tags/vim/" style="font-size: 11.11px;">vim</a> <a href="/tags/vmware/" style="font-size: 10px;">vmware</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/web-server/" style="font-size: 10px;">web server</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/wget/" style="font-size: 10px;">wget</a> <a href="/tags/whois/" style="font-size: 10px;">whois</a> <a href="/tags/win7/" style="font-size: 10px;">win7</a> <a href="/tags/windows/" style="font-size: 12.22px;">windows</a> <a href="/tags/wordpress/" style="font-size: 14.44px;">wordpress</a> <a href="/tags/xpath/" style="font-size: 10px;">xpath</a> <a href="/tags/zip/" style="font-size: 10px;">zip</a> <a href="/tags/乱码/" style="font-size: 11.11px;">乱码</a> <a href="/tags/二维码/" style="font-size: 10px;">二维码</a> <a href="/tags/云/" style="font-size: 10px;">云</a> <a href="/tags/半透明/" style="font-size: 10px;">半透明</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/变态/" style="font-size: 10px;">变态</a> <a href="/tags/图标/" style="font-size: 10px;">图标</a> <a href="/tags/备份/" style="font-size: 10px;">备份</a> <a href="/tags/大小写/" style="font-size: 10px;">大小写</a> <a href="/tags/恶搞/" style="font-size: 10px;">恶搞</a> <a href="/tags/排序算法/" style="font-size: 10px;">排序算法</a> <a href="/tags/插件/" style="font-size: 10px;">插件</a> <a href="/tags/摄影/" style="font-size: 10px;">摄影</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/数字/" style="font-size: 11.11px;">数字</a> <a href="/tags/校园网/" style="font-size: 10px;">校园网</a> <a href="/tags/正则/" style="font-size: 11.11px;">正则</a> <a href="/tags/油猴/" style="font-size: 10px;">油猴</a> <a href="/tags/注册表/" style="font-size: 10px;">注册表</a> <a href="/tags/渐变/" style="font-size: 10px;">渐变</a> <a href="/tags/状态栏/" style="font-size: 10px;">状态栏</a> <a href="/tags/环境变量/" style="font-size: 10px;">环境变量</a> <a href="/tags/生活/" style="font-size: 10px;">生活</a> <a href="/tags/端口/" style="font-size: 11.11px;">端口</a> <a href="/tags/算法/" style="font-size: 11.11px;">算法</a> <a href="/tags/自动更新/" style="font-size: 10px;">自动更新</a> <a href="/tags/越狱/" style="font-size: 10px;">越狱</a> <a href="/tags/软件/" style="font-size: 10px;">软件</a> <a href="/tags/还原/" style="font-size: 10px;">还原</a> <a href="/tags/远程桌面/" style="font-size: 10px;">远程桌面</a>
+    </div>
+  </div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://xn--l28hc.ws" target="_blank" title="http://😇😈.ws">http://😇😈.ws</a></li>
+      <li><a href="http://dzm.la" target="_blank" title="dzm.la">短怎么啦</a></li>
+      <li><a href="http://www.tunnel.ink" target="_blank" title="www.tunnel.ink">ngrok</a></li>
+      <li><a href="http://xingyetang.com" target="_blank" title="xingyetang">唐兴业的博客</a></li>
+      <li><a href="http://www.panpan.lu" target="_blank" title="lupanpan">卢盼盼的博客</a></li>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://timyang.net" target="_blank" title="Tim's Blog">Tim's Blog</a></li>
+      <li><a href="http://lifegoo.pluskid.org/wiki/index.html" target="_blank" title="Tim's Blog">星黎殿</a></li>
+      <li><a href="http://phl.iteye.com/" target="_blank" title="Tim's Blog">猫头哥（朴海林）</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Bian Le <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/1797965754" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/bianlelpqi" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/bianle" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://2le.me" target="_blank" title="bianle">bianle</a>
+		
+		</p>
+<!--tinysou search code-->
+<script>
+var option = {
+  engineKey: '5d785049e407794cdbc5',
+  resultContainingElement: '#ts-results-container',
+  renderStyle: 'new_page',
+  resultPageURL: '/search/index.html'
+};
+(function(w,d,t,u,n,s,e){
+  s = d.createElement(t);
+  s.src = u;
+  s.async = 1;
+  w[n] = function(r){
+    w[n].opts = r;
+  };
+  e = d.getElementsByTagName(t)[0];
+  e.parentNode.insertBefore(s, e);
+})(window,document,'script','//tinysou-cdn.b0.upaiyun.com/ts.js','_ts');
+_ts(option);
+</script>
+<!--tinysou search code-->
+
+
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script src="/js/jquery.qrcode.min.js"></script>
+<script>
+$("#qrcode").qrcode(window.location.href);
+</script>
+<!-- js-full-image -->
+<script>
+$(".flow ol li img").bind('click',function(){
+  var $this = $(this);
+  var $img = $this.prop('outerHTML'); 
+  var $li = $this.closest("li")
+  if($("div.full-image",$li).length>0){
+    $("div.full-image",$li).show();
+  }else{
+    var $div = $("<div class=\"js-full-image full-image\"></div>");
+    var $x = $("<span class=\"octicon octicon-x\"></span>");
+    $div.append($img).append($x);
+    $li.append($div);
+    $(".octicon-x").bind('click',function(){
+      $(this).closest("div.full-image").hide();
+    });
+  }
+});
+</script>
+<!-- js-full-image -->
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"2le"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  </body>
+</html>
