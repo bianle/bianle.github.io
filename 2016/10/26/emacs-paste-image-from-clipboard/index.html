@@ -9,7 +9,8 @@
     
     <meta name="author" content="bianle">
     
-    <meta name="description" content="背景emacs写日志时插入图片链接一般步骤：
+    <meta name="description" content="背景
+emacs写日志时插入图片链接一般步骤：
 
 准备图片（截图或下载）
 上传图床(我一般用七牛)
@@ -17,11 +18,12 @@
 粘贴到emacs
 
 超级繁琐！
-前车之鉴接着就是在网上搜到了这篇文章
+ 前车之鉴
+接着就是在网上搜到了这篇文章
 讲述了两种插入图片的方法：
 
 emacs调用截图命令保存图片到指定目录然后插入图片链接
-拷贝本地图片（文件）然后获取剪贴板">
+拷贝本地图片（文件）然后获取">
     
     
     
@@ -107,10 +109,11 @@ emacs调用截图命令保存图片到指定目录然后插入图片链接
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前车之鉴"><span class="toc-number">2.</span> <span class="toc-text">前车之鉴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#造轮子"><span class="toc-number">3.</span> <span class="toc-text">造轮子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么跑起来"><span class="toc-number">4.</span> <span class="toc-text">怎么跑起来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">4.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#效果"><span class="toc-number">4.3.</span> <span class="toc-text">效果</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text"> 背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前车之鉴"><span class="toc-number">2.</span> <span class="toc-text"> 前车之鉴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#造轮子"><span class="toc-number">3.</span> <span class="toc-text"> 造轮子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么跑起来"><span class="toc-number">4.</span> <span class="toc-text"> 怎么跑起来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text"> 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">4.2.</span> <span class="toc-text"> 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#效果"><span class="toc-number">4.3.</span> <span class="toc-text"> 效果</span></a></li></ol></li></ol>
 		</div>
 		
-		<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>emacs写日志时插入图片链接一般步骤：</p>
+		<h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
+<p>emacs写日志时插入图片链接一般步骤：</p>
 <ol>
 <li>准备图片（截图或下载）</li>
 <li>上传图床(我一般用<a href="https://portal.qiniu.com/signup?code=3l7qkpblwkspe" target="_blank" rel="external">七牛</a>)</li>
@@ -118,26 +121,34 @@ emacs调用截图命令保存图片到指定目录然后插入图片链接
 <li>粘贴到emacs</li>
 </ol>
 <p>超级繁琐！</p>
-<h2 id="前车之鉴"><a href="#前车之鉴" class="headerlink" title="前车之鉴"></a>前车之鉴</h2><p>接着就是在网上搜到了<a href="http://everet.org/screenshot-and-image-paste-in-emacs-when-writing-markdown.html" target="_blank" rel="external">这篇文章</a></p>
+<h2 id="前车之鉴"><a class="header-anchor" href="#前车之鉴"> </a>前车之鉴</h2>
+<p>接着就是在网上搜到了<a href="http://everet.org/screenshot-and-image-paste-in-emacs-when-writing-markdown.html" target="_blank" rel="external">这篇文章</a></p>
 <p>讲述了两种插入图片的方法：</p>
 <ol>
 <li>emacs调用截图命令保存图片到指定目录然后插入图片链接</li>
 <li>拷贝本地图片（文件）然后获取剪贴板中文件地址，拷贝文件到指定目录插入图片链接</li>
 </ol>
-<p>方法1基本能满足现在的需求:<br>问题1：我用的mac，截图用的scrot为linux版本，这个好解决，替换成<code>screencapture</code><br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="name">call-process</span> <span class="string">"screencapture"</span> <span class="literal">nil</span> <span class="literal">nil</span> <span class="literal">nil</span> <span class="string">"-i"</span> filename)</div></pre></td></tr></table></figure></p>
+<p>方法1基本能满足现在的需求:
+问题1：我用的mac，截图用的scrot为linux版本，这个好解决，替换成<code>screencapture</code></p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="name">call-process</span> <span class="string">"screencapture"</span> <span class="literal">nil</span> <span class="literal">nil</span> <span class="literal">nil</span> <span class="string">"-i"</span> filename)</div></pre></td></tr></table></figure>
 <p>问题2：截图时emacs一直保持在屏幕中，截图emacs之外的应用有点复杂</p>
-<h2 id="造轮子"><a href="#造轮子" class="headerlink" title="造轮子"></a>造轮子</h2><p>既然如此，花费一晚上,稍加改造就有了如下代码：</p>
+<h2 id="造轮子"><a class="header-anchor" href="#造轮子"> </a>造轮子</h2>
+<p>既然如此，花费一晚上,稍加改造就有了如下代码：</p>
 <figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">;;------------------------------------------------------------------</span></div><div class="line"><span class="comment">;; 粘贴图片到七牛服务器</span></div><div class="line"><span class="comment">;;------------------------------------------------------------------</span></div><div class="line">(<span class="name">defun</span> paste-image()</div><div class="line">  <span class="string">"paste image from clipboard"</span></div><div class="line">  (<span class="name">interactive</span>)</div><div class="line">  (<span class="name">setq</span> localBaseDir <span class="string">"~/.qiniu/bianle/"</span>)</div><div class="line">  (<span class="name">call-process-shell-command</span> (<span class="name"><span class="builtin-name">concat</span></span> <span class="string">"mkdir -p "</span> (<span class="name"><span class="builtin-name">concat</span></span> localBaseDir <span class="string">"$(date +%Y/%m/%d)"</span>)) )</div><div class="line">  (<span class="name">setq</span> relFilename (<span class="name">format-time-string</span> <span class="string">"%Y/%m/%d/%Y%m%d%H%M%S.png"</span> (<span class="name">current-time</span>)) )</div><div class="line">  (<span class="name">setq</span> filename (<span class="name"><span class="builtin-name">concat</span></span> localBaseDir relFilename ))</div><div class="line">  (<span class="name">message</span> (<span class="name"><span class="builtin-name">concat</span></span> <span class="string">"/usr/local/bin/pngpaste "</span> filename))</div><div class="line">  (<span class="name">call-process-shell-command</span> (<span class="name"><span class="builtin-name">concat</span></span> <span class="string">"/usr/local/bin/pngpaste "</span> filename))</div><div class="line">  (<span class="name">call-process-shell-command</span> <span class="string">"~/sh/sync.sh"</span>)</div><div class="line">  (<span class="name">insert</span> (<span class="name"><span class="builtin-name">concat</span></span> <span class="string">"![](http://7xlbo3.com1.z0.glb.clouddn.com/"</span> relFilename <span class="string">")"</span>))</div><div class="line">  )</div></pre></td></tr></table></figure>
-<h2 id="怎么跑起来"><a href="#怎么跑起来" class="headerlink" title="怎么跑起来"></a>怎么跑起来</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
-<li><p>安装<a href="https://github.com/jcsalterego/pngpaste" target="_blank" rel="external">pngpaste</a></p>
+<h2 id="怎么跑起来"><a class="header-anchor" href="#怎么跑起来"> </a>怎么跑起来</h2>
+<h3 id="安装"><a class="header-anchor" href="#安装"> </a>安装</h3>
+<ol>
+<li>安装<a href="https://github.com/jcsalterego/pngpaste" target="_blank" rel="external">pngpaste</a></li>
+</ol>
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">brew </span><span class="keyword">install </span>pngpaste</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装<a href="http://docs.qiniu.com/tools/v6/qrsync.html" target="_blank" rel="external">七牛命令行同步工具</a></p>
-</li>
+<ol start="2">
+<li>安装<a href="http://docs.qiniu.com/tools/v6/qrsync.html" target="_blank" rel="external">七牛命令行同步工具</a></li>
 <li>emacs配置文件添加上边的脚本</li>
 </ol>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>使用任意截图软件截图，然后<code>M-x</code>输入<code>paste-image</code>然后<code>RET</code></p>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>我要在这之后插入一张截图：<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/10/26/20161026125447.png" alt=""></p>
+<h3 id="使用"><a class="header-anchor" href="#使用"> </a>使用</h3>
+<p>使用任意截图软件截图，然后<code>M-x</code>输入<code>paste-image</code>然后<code>RET</code></p>
+<h3 id="效果"><a class="header-anchor" href="#效果"> </a>效果</h3>
+<p>我要在这之后插入一张截图：<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/10/26/20161026125447.png" alt=""></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -196,7 +207,7 @@ emacs调用截图命令保存图片到指定目录然后插入图片链接
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前车之鉴"><span class="toc-number">2.</span> <span class="toc-text">前车之鉴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#造轮子"><span class="toc-number">3.</span> <span class="toc-text">造轮子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么跑起来"><span class="toc-number">4.</span> <span class="toc-text">怎么跑起来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">4.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#效果"><span class="toc-number">4.3.</span> <span class="toc-text">效果</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text"> 背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前车之鉴"><span class="toc-number">2.</span> <span class="toc-text"> 前车之鉴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#造轮子"><span class="toc-number">3.</span> <span class="toc-text"> 造轮子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么跑起来"><span class="toc-number">4.</span> <span class="toc-text"> 怎么跑起来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.1.</span> <span class="toc-text"> 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">4.2.</span> <span class="toc-text"> 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#效果"><span class="toc-number">4.3.</span> <span class="toc-text"> 效果</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">

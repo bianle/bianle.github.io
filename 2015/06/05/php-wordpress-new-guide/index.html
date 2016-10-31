@@ -10,7 +10,8 @@
     <meta name="author" content="bianle">
     
     <meta name="description" content="修改默认登录logo
-123456function custom_login_logo() &amp;#123;        echo &#39;&amp;lt;style type=&quot;text/css&quot;&amp;gt;            h1 a &amp;#123; background-image:url(&#39;.get_blog">
+
+123456function custom_login_logo() &amp;#123;        echo &#39;&amp;lt;style type=&quot;text/css&quot;&amp;gt;            h1 a &amp;#123; background-image:url(&#39;.get_blo">
     
     
     
@@ -100,28 +101,33 @@
 		</div>
 		
 		<ol>
-<li><p>修改默认登录logo</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function custom_login_logo() &#123;    </div><div class="line">    echo '<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css">    </span></div><div class="line">        <span class="selector-tag">h1</span> <span class="selector-tag">a</span> &#123; <span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">'.get_bloginfo('</span>template_directory<span class="string">').'</span>/images/login_logo.png) <span class="meta">!important</span>; &#125;    </div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span>';    </div><div class="line">&#125;    </div><div class="line">add_action('login_head', 'custom_login_logo');</div></pre></td></tr></table></figure>
-</li>
-<li><p>预览模式下取消google分析自动运行</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>( !is_preview()):    </div><div class="line">  # Google Analytics Code <span class="meta">#    </span></div><div class="line"><span class="meta-keyword">endif</span>;</div></pre></td></tr></table></figure>
-</li>
-<li><p>激活小工具段代码</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">add_filter</span>(<span class="string">'widget_text'</span>, <span class="string">'do_shortcode'</span>);</div></pre></td></tr></table></figure>
-</li>
-<li><p>启用网站维护模式</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">maintenace_mode</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> ( !current_user_can( <span class="string">'administrator'</span> ) ) </div><div class="line">            &#123; wp_die(<span class="string">'The site will be up soon.'</span>); </div><div class="line">           &#125; </div><div class="line">&#125; </div><div class="line">add_action(<span class="string">'get_header'</span>, <span class="string">'maintenace_mode'</span>);</div></pre></td></tr></table></figure>
-</li>
-<li><p>取消更新通知</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">if</span> ( !current_user_can(<span class="string">'administrator'</span>) ) &#123;    </div><div class="line">    <span class="selector-tag">add_action</span>( <span class="string">'init'</span>, create_function( <span class="string">'$a'</span>, <span class="string">"remove_action( 'init', 'wp_version_check' );"</span> ), <span class="number">2</span> );    </div><div class="line">    <span class="selector-tag">add_filter</span>( <span class="string">'pre_option_update_core'</span>, create_function( <span class="string">'$a'</span>, <span class="string">"return null;"</span> ) );    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>取消自我追踪</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">disable_self_ping</span><span class="params">( &amp;$links )</span> </span>&#123;</div><div class="line">     <span class="keyword">foreach</span> ( $links <span class="keyword">as</span> $l =&gt; $link )</div><div class="line">         <span class="keyword">if</span> ( <span class="number">0</span> === strpos( $link, get_option( <span class="string">'home'</span> ) ) )</div><div class="line">             <span class="keyword">unset</span>($links[$l]); &#125; </div><div class="line">add_action( <span class="string">'pre_ping'</span>, <span class="string">'disable_self_ping'</span> );</div></pre></td></tr></table></figure>
-</li>
-<li><p>自定义可是编辑器css</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$your_custom_stylesheet = <span class="string">'css/custom-editor-style.css'</span><span class="comment">;    </span></div><div class="line">add_editor_style($your_custom_stylesheet)<span class="comment">;</span></div></pre></td></tr></table></figure>
-</li>
+<li>修改默认登录logo</li>
 </ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function custom_login_logo() &#123;    </div><div class="line">    echo '<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css">    </span></div><div class="line">        <span class="selector-tag">h1</span> <span class="selector-tag">a</span> &#123; <span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">'.get_bloginfo('</span>template_directory<span class="string">').'</span>/images/login_logo.png) <span class="meta">!important</span>; &#125;    </div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span>';    </div><div class="line">&#125;    </div><div class="line">add_action('login_head', 'custom_login_logo');</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>预览模式下取消google分析自动运行</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>( !is_preview()):    </div><div class="line">  # Google Analytics Code <span class="meta">#    </span></div><div class="line"><span class="meta-keyword">endif</span>;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>激活小工具段代码</li>
+</ol>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">add_filter</span>(<span class="string">'widget_text'</span>, <span class="string">'do_shortcode'</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>启用网站维护模式</li>
+</ol>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">maintenace_mode</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> ( !current_user_can( <span class="string">'administrator'</span> ) ) </div><div class="line">            &#123; wp_die(<span class="string">'The site will be up soon.'</span>); </div><div class="line">           &#125; </div><div class="line">&#125; </div><div class="line">add_action(<span class="string">'get_header'</span>, <span class="string">'maintenace_mode'</span>);</div></pre></td></tr></table></figure>
+<ol start="5">
+<li>取消更新通知</li>
+</ol>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">if</span> ( !current_user_can(<span class="string">'administrator'</span>) ) &#123;    </div><div class="line">    <span class="selector-tag">add_action</span>( <span class="string">'init'</span>, create_function( <span class="string">'$a'</span>, <span class="string">"remove_action( 'init', 'wp_version_check' );"</span> ), <span class="number">2</span> );    </div><div class="line">    <span class="selector-tag">add_filter</span>( <span class="string">'pre_option_update_core'</span>, create_function( <span class="string">'$a'</span>, <span class="string">"return null;"</span> ) );    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol start="6">
+<li>取消自我追踪</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">disable_self_ping</span><span class="params">( &amp;$links )</span> </span>&#123;</div><div class="line">     <span class="keyword">foreach</span> ( $links <span class="keyword">as</span> $l =&gt; $link )</div><div class="line">         <span class="keyword">if</span> ( <span class="number">0</span> === strpos( $link, get_option( <span class="string">'home'</span> ) ) )</div><div class="line">             <span class="keyword">unset</span>($links[$l]); &#125; </div><div class="line">add_action( <span class="string">'pre_ping'</span>, <span class="string">'disable_self_ping'</span> );</div></pre></td></tr></table></figure>
+<ol start="7">
+<li>自定义可是编辑器css</li>
+</ol>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$your_custom_stylesheet = <span class="string">'css/custom-editor-style.css'</span><span class="comment">;    </span></div><div class="line">add_editor_style($your_custom_stylesheet)<span class="comment">;</span></div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">

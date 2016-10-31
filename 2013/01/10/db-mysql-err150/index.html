@@ -98,17 +98,19 @@
 		
 		</div>
 		
-		<p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。<br>在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序<br>已知的原因： </p>
+		<p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
+在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序
+已知的原因：</p>
 <ol>
-<li>两个字段的类型或者大小不严格匹配，例如，如果一个是INT(10), 那么外键也必须设置成INT(10), 而不是 INT(11) 也不能是 TINYINT. 你得使用 SHOW 命令来查看字段的大小，因为一些查询浏览器有时候把 int(10) 和int(11) 都显示为integer。另外，你还必须确定两个字段是否一个为 SIGNED,而另一个又是UNSIGNED, 这两字段必须严格地一致匹配，更多关于signed 和 unsigned 的信息，请参阅：<a href="http://www.verysimple.com/blog/?p=57" target="_blank" rel="external">http://www.verysimple.com/blog/?p=57</a> </li>
-<li>你试图引用的其中一个外键没有建立起索引，或者不是一个primary key , 如果其中一个不是primary key 的放，你必须为它创建一个索引。 </li>
-<li>外键的名字是一个已经存在的一个键值了，这个时候，你应该检查你的数据库以确保外健名字是唯一的，或者你在键名后面加上几个随机的字符以测试是否是这个原因。 </li>
-<li>其中一个或者两个表是MyISAM引擎的表，若想要使用外键约束，必须是InnoDB引擎，（实际上，如果两个表都是MyISAM 引擎的，这个错误根本不会发生，但也不会产生外键），你可以通过查询浏览器来设置表的引擎类型 </li>
-<li>你可能设置了ON DELETE SET NULL, 但是相关的键的字段又设置成了NOTS NULL 值。你可能通过修改cascade 的属性值或者把字段属性设置成 allow null 来搞定这个bug. </li>
-<li>请确定你的Charset 和 Collate 选项在表级和字段级上的一致 </li>
-<li>你可能设置为外键设置了一个默认值，如 default=0 </li>
-<li>在这个关系里面，其中的一个字段是一个混合键值中的一个，它没有自己独立的索引，这时，你必须为它创建一个独立的索引。 </li>
-<li>ALTER 声明中有语法错误 </li>
+<li>两个字段的类型或者大小不严格匹配，例如，如果一个是INT(10), 那么外键也必须设置成INT(10), 而不是 INT(11) 也不能是 TINYINT. 你得使用 SHOW 命令来查看字段的大小，因为一些查询浏览器有时候把 int(10) 和int(11) 都显示为integer。另外，你还必须确定两个字段是否一个为 SIGNED,而另一个又是UNSIGNED, 这两字段必须严格地一致匹配，更多关于signed 和 unsigned 的信息，请参阅：<a href="http://www.verysimple.com/blog/?p=57" target="_blank" rel="external">http://www.verysimple.com/blog/?p=57</a></li>
+<li>你试图引用的其中一个外键没有建立起索引，或者不是一个primary key , 如果其中一个不是primary key 的放，你必须为它创建一个索引。</li>
+<li>外键的名字是一个已经存在的一个键值了，这个时候，你应该检查你的数据库以确保外健名字是唯一的，或者你在键名后面加上几个随机的字符以测试是否是这个原因。</li>
+<li>其中一个或者两个表是MyISAM引擎的表，若想要使用外键约束，必须是InnoDB引擎，（实际上，如果两个表都是MyISAM 引擎的，这个错误根本不会发生，但也不会产生外键），你可以通过查询浏览器来设置表的引擎类型</li>
+<li>你可能设置了ON DELETE SET NULL, 但是相关的键的字段又设置成了NOTS NULL 值。你可能通过修改cascade 的属性值或者把字段属性设置成 allow null 来搞定这个bug.</li>
+<li>请确定你的Charset 和 Collate 选项在表级和字段级上的一致</li>
+<li>你可能设置为外键设置了一个默认值，如 default=0</li>
+<li>在这个关系里面，其中的一个字段是一个混合键值中的一个，它没有自己独立的索引，这时，你必须为它创建一个独立的索引。</li>
+<li>ALTER 声明中有语法错误</li>
 <li>要连接的两个表的编码格式不同</li>
 </ol>
   
@@ -140,18 +142,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2013/01/10/web-js-radio/" title="js取radio值">
+ <a href="/2013/01/10/web-js-number-check/" title="js判断数字">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  js取radio值</span>
+  js判断数字</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2013/01/10/web-js-reg/"  title="js正则">
+<a href="/2013/01/10/web-1px-table/"  title="1像素表格">
  <strong>NEXT:</strong><br/> 
- <span>js正则
+ <span>1像素表格
 </span>
 </a>
 </div>

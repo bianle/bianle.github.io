@@ -9,9 +9,12 @@
     
     <meta name="author" content="bianle">
     
-    <meta name="description" content="安装ppp和pptp1yum -y install ppp pptp pptp-setup
-配置pptp1pptpsetup --create wjvpn --server 192.200.194.142 --username bianle
-wjvpn为自定义连接名bianle为vpn用户名192.">
+    <meta name="description" content="安装ppp和pptp
+1yum -y install ppp pptp pptp-setup
+ 配置pptp
+1pptpsetup --create wjvpn --server 192.200.194.142 --username bianle
+wjvpn为自定义连接名
+bianle为vpn用户名">
     
     
     
@@ -97,34 +100,71 @@ wjvpn为自定义连接名bianle为vpn用户名192.">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装ppp和pptp"><span class="toc-number">1.</span> <span class="toc-text">安装ppp和pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置pptp"><span class="toc-number">2.</span> <span class="toc-text">配置pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑-etc-ppp-peers-wjvpn"><span class="toc-number">3.</span> <span class="toc-text">编辑/etc/ppp/peers/wjvpn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑chap-secrets"><span class="toc-number">4.</span> <span class="toc-text">编辑chap-secrets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把pon和poff命令拷贝-或者链接-到系统path目录"><span class="toc-number">5.</span> <span class="toc-text">把pon和poff命令拷贝(或者链接)到系统path目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拨号"><span class="toc-number">6.</span> <span class="toc-text">拨号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看是否连接"><span class="toc-number">7.</span> <span class="toc-text">查看是否连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#断开连接"><span class="toc-number">8.</span> <span class="toc-text">断开连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试模式"><span class="toc-number">9.</span> <span class="toc-text">调试模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由"><span class="toc-number">10.</span> <span class="toc-text">添加路由</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装ppp和pptp"><span class="toc-number">1.</span> <span class="toc-text"> 安装ppp和pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置pptp"><span class="toc-number">2.</span> <span class="toc-text"> 配置pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑-etc-ppp-peers-wjvpn"><span class="toc-number">3.</span> <span class="toc-text"> 编辑/etc/ppp/peers/wjvpn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑chap-secrets"><span class="toc-number">4.</span> <span class="toc-text"> 编辑chap-secrets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把pon和poff命令拷贝-或者链接-到系统path目录"><span class="toc-number">5.</span> <span class="toc-text"> 把pon和poff命令拷贝(或者链接)到系统path目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拨号"><span class="toc-number">6.</span> <span class="toc-text"> 拨号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看是否连接"><span class="toc-number">7.</span> <span class="toc-text"> 查看是否连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#断开连接"><span class="toc-number">8.</span> <span class="toc-text"> 断开连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试模式"><span class="toc-number">9.</span> <span class="toc-text"> 调试模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由"><span class="toc-number">10.</span> <span class="toc-text"> 添加路由</span></a></li></ol>
 		</div>
 		
-		<h2 id="安装ppp和pptp"><a href="#安装ppp和pptp" class="headerlink" title="安装ppp和pptp"></a>安装ppp和pptp</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install ppp pptp pptp-<span class="built_in">setup</span></div></pre></td></tr></table></figure>
-<h2 id="配置pptp"><a href="#配置pptp" class="headerlink" title="配置pptp"></a>配置pptp</h2><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">pptpsetup</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="comment">wjvpn</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">server</span> <span class="comment">192</span><span class="string">.</span><span class="comment">200</span><span class="string">.</span><span class="comment">194</span><span class="string">.</span><span class="comment">142</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">bianle</span></div></pre></td></tr></table></figure>
-<p><code>wjvpn</code>为自定义连接名<br><code>bianle</code>为vpn用户名<br><code>192.200.194.142</code>为vpn服务器地址<br>执行命令系统会提示输入vpn的密码</p>
-<h2 id="编辑-etc-ppp-peers-wjvpn"><a href="#编辑-etc-ppp-peers-wjvpn" class="headerlink" title="编辑/etc/ppp/peers/wjvpn"></a>编辑<code>/etc/ppp/peers/wjvpn</code></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim  <span class="regexp">/etc/</span>ppp<span class="regexp">/peers/</span>wjvpn</div></pre></td></tr></table></figure>
-<p>改为:  </p>
+		<h2 id="安装ppp和pptp"><a class="header-anchor" href="#安装ppp和pptp"> </a>安装ppp和pptp</h2>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install ppp pptp pptp-<span class="built_in">setup</span></div></pre></td></tr></table></figure>
+<h2 id="配置pptp"><a class="header-anchor" href="#配置pptp"> </a>配置pptp</h2>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">pptpsetup</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="comment">wjvpn</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">server</span> <span class="comment">192</span><span class="string">.</span><span class="comment">200</span><span class="string">.</span><span class="comment">194</span><span class="string">.</span><span class="comment">142</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">bianle</span></div></pre></td></tr></table></figure>
+<p><code>wjvpn</code>为自定义连接名<br>
+<code>bianle</code>为vpn用户名<br>
+<code>192.200.194.142</code>为vpn服务器地址<br>
+执行命令系统会提示输入vpn的密码</p>
+<h2 id="编辑-etc-ppp-peers-wjvpn"><a class="header-anchor" href="#编辑-etc-ppp-peers-wjvpn"> </a>编辑<code>/etc/ppp/peers/wjvpn</code></h2>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim  <span class="regexp">/etc/</span>ppp<span class="regexp">/peers/</span>wjvpn</div></pre></td></tr></table></figure>
+<p>改为:</p>
 <blockquote>
-<p># written by pptpsetup<br>pty “pptp 192.200.194.142 –nolaunchpppd”<br>lock<br>#noauth<br>nobsdcomp<br>nodeflate<br>name bianle<br>remotename wjvpn<br>ipparam wjvpn2<br>require-mppe-128<br>refuse-pap<br>refuse-chap<br>refuse-eap<br>refuse-mschap</p>
+<p># written by pptpsetup<br>
+pty &quot;pptp 192.200.194.142 --nolaunchpppd&quot;<br>
+lock<br>
+#noauth<br>
+nobsdcomp<br>
+nodeflate<br>
+name bianle<br>
+remotename wjvpn<br>
+ipparam wjvpn2<br>
+require-mppe-128<br>
+refuse-pap<br>
+refuse-chap<br>
+refuse-eap<br>
+refuse-mschap</p>
 </blockquote>
-<h2 id="编辑chap-secrets"><a href="#编辑chap-secrets" class="headerlink" title="编辑chap-secrets"></a>编辑<code>chap-secrets</code></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim <span class="regexp">/etc/</span>ppp<span class="regexp">/chap-secrets</span></div></pre></td></tr></table></figure>
-<p>改为:  </p>
+<h2 id="编辑chap-secrets"><a class="header-anchor" href="#编辑chap-secrets"> </a>编辑<code>chap-secrets</code></h2>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim <span class="regexp">/etc/</span>ppp<span class="regexp">/chap-secrets</span></div></pre></td></tr></table></figure>
+<p>改为:</p>
 <blockquote>
-<p># Secrets for authentication using CHAP<br># client        server  secret                  IP addresses  </p>
-<p># added by pptpsetup for wjvpn<br>bianle wjvpn “xxxxx” *</p>
+<p># Secrets for authentication using CHAP<br>
+# client        server  secret                  IP addresses</p>
 </blockquote>
-<h2 id="把pon和poff命令拷贝-或者链接-到系统path目录"><a href="#把pon和poff命令拷贝-或者链接-到系统path目录" class="headerlink" title="把pon和poff命令拷贝(或者链接)到系统path目录"></a>把<code>pon</code>和<code>poff</code>命令拷贝(或者链接)到系统path目录</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>pon <span class="regexp">/usr/</span>sbin/</div><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>poff <span class="regexp">/usr/</span>sbin/</div><div class="line">chmod +x <span class="regexp">/usr/</span>sbin<span class="regexp">/pon /</span>usr<span class="regexp">/sbin/</span>poff</div></pre></td></tr></table></figure>
-<h2 id="拨号"><a href="#拨号" class="headerlink" title="拨号"></a>拨号</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pon wjvpn</span></div></pre></td></tr></table></figure>
-<h2 id="查看是否连接"><a href="#查看是否连接" class="headerlink" title="查看是否连接"></a>查看是否连接</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ifconfig</span></div></pre></td></tr></table></figure>
-<p>正常情况话会提示如下信息:  </p>
 <blockquote>
-<p>ppp0: flags=4305<up,pointopoint,running,noarp,multicast>  mtu 1456<br>inet 172.16.21.77  netmask 255.255.255.255  destination 172.16.20.208<br>ppp  txqueuelen 3  (Point-to-Point Protocol)<br>RX packets 9  bytes 106 (106.0 B)<br>RX errors 0  dropped 0  overruns 0  frame 0<br>TX packets 7  bytes 82 (82.0 B)<br>TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</up,pointopoint,running,noarp,multicast></p>
+<p># added by pptpsetup for wjvpn
+bianle wjvpn “xxxxx” *</p>
 </blockquote>
-<h2 id="断开连接"><a href="#断开连接" class="headerlink" title="断开连接"></a>断开连接</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">poff wjvpn</span></div></pre></td></tr></table></figure>
-<h2 id="调试模式"><a href="#调试模式" class="headerlink" title="调试模式"></a>调试模式</h2><p><del>vi /etc/ppp/options.pptpd</del></p>
+<h2 id="把pon和poff命令拷贝-或者链接-到系统path目录"><a class="header-anchor" href="#把pon和poff命令拷贝-或者链接-到系统path目录"> </a>把<code>pon</code>和<code>poff</code>命令拷贝(或者链接)到系统path目录</h2>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>pon <span class="regexp">/usr/</span>sbin/</div><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>poff <span class="regexp">/usr/</span>sbin/</div><div class="line">chmod +x <span class="regexp">/usr/</span>sbin<span class="regexp">/pon /</span>usr<span class="regexp">/sbin/</span>poff</div></pre></td></tr></table></figure>
+<h2 id="拨号"><a class="header-anchor" href="#拨号"> </a>拨号</h2>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pon wjvpn</span></div></pre></td></tr></table></figure>
+<h2 id="查看是否连接"><a class="header-anchor" href="#查看是否连接"> </a>查看是否连接</h2>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ifconfig</span></div></pre></td></tr></table></figure>
+<p>正常情况话会提示如下信息:</p>
+<blockquote>
+<p>ppp0: flags=4305&lt;UP,POINTOPOINT,RUNNING,NOARP,MULTICAST&gt;  mtu 1456<br>
+inet 172.16.21.77  netmask 255.255.255.255  destination 172.16.20.208<br>
+ppp  txqueuelen 3  (Point-to-Point Protocol)<br>
+RX packets 9  bytes 106 (106.0 B)<br>
+RX errors 0  dropped 0  overruns 0  frame 0<br>
+TX packets 7  bytes 82 (82.0 B)<br>
+TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</p>
+</blockquote>
+<h2 id="断开连接"><a class="header-anchor" href="#断开连接"> </a>断开连接</h2>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">poff wjvpn</span></div></pre></td></tr></table></figure>
+<h2 id="调试模式"><a class="header-anchor" href="#调试模式"> </a>调试模式</h2>
+<p><s>vi /etc/ppp/options.pptpd</s></p>
 <p><code>/var/log/message</code>查看日志</p>
-<h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2><p>添加路由后才能用ppp上网<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo route <span class="keyword">add</span> <span class="keyword">default</span> dev ppp0</div></pre></td></tr></table></figure></p>
+<h2 id="添加路由"><a class="header-anchor" href="#添加路由"> </a>添加路由</h2>
+<p>添加路由后才能用ppp上网</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo route <span class="keyword">add</span> <span class="keyword">default</span> dev ppp0</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -183,7 +223,7 @@ wjvpn为自定义连接名bianle为vpn用户名192.">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装ppp和pptp"><span class="toc-number">1.</span> <span class="toc-text">安装ppp和pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置pptp"><span class="toc-number">2.</span> <span class="toc-text">配置pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑-etc-ppp-peers-wjvpn"><span class="toc-number">3.</span> <span class="toc-text">编辑/etc/ppp/peers/wjvpn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑chap-secrets"><span class="toc-number">4.</span> <span class="toc-text">编辑chap-secrets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把pon和poff命令拷贝-或者链接-到系统path目录"><span class="toc-number">5.</span> <span class="toc-text">把pon和poff命令拷贝(或者链接)到系统path目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拨号"><span class="toc-number">6.</span> <span class="toc-text">拨号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看是否连接"><span class="toc-number">7.</span> <span class="toc-text">查看是否连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#断开连接"><span class="toc-number">8.</span> <span class="toc-text">断开连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试模式"><span class="toc-number">9.</span> <span class="toc-text">调试模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由"><span class="toc-number">10.</span> <span class="toc-text">添加路由</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装ppp和pptp"><span class="toc-number">1.</span> <span class="toc-text"> 安装ppp和pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置pptp"><span class="toc-number">2.</span> <span class="toc-text"> 配置pptp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑-etc-ppp-peers-wjvpn"><span class="toc-number">3.</span> <span class="toc-text"> 编辑/etc/ppp/peers/wjvpn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑chap-secrets"><span class="toc-number">4.</span> <span class="toc-text"> 编辑chap-secrets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把pon和poff命令拷贝-或者链接-到系统path目录"><span class="toc-number">5.</span> <span class="toc-text"> 把pon和poff命令拷贝(或者链接)到系统path目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拨号"><span class="toc-number">6.</span> <span class="toc-text"> 拨号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看是否连接"><span class="toc-number">7.</span> <span class="toc-text"> 查看是否连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#断开连接"><span class="toc-number">8.</span> <span class="toc-text"> 断开连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试模式"><span class="toc-number">9.</span> <span class="toc-text"> 调试模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由"><span class="toc-number">10.</span> <span class="toc-text"> 添加路由</span></a></li></ol>
   </div>
 
 <div id="asidepart">

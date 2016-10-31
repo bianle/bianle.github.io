@@ -9,9 +9,14 @@
     
     <meta name="author" content="bianle">
     
-    <meta name="description" content="RSA算法原理与加密解密RSA加密过程简述A和B进行加密通信时,B首先要生成一对密钥。一个是公钥，给A，B自己持有私钥。A使用B的公钥加密要加密发送的内容，然后B在通过自己的私钥解密内容。
-RSA加密算法基础整个RSA加密算法的安全性基于大数不能分解质因数。
-数学原理互质关系：两个数a和b没有除1外">
+    <meta name="description" content="RSA算法原理与加密解密
+ RSA加密过程简述
+A和B进行加密通信时,B首先要生成一对密钥。一个是公钥，给A，B自己持有私钥。A使用B的公钥加密要加密发送的内容，然后B在通过自己的私钥解密内容。
+ RSA加密算法基础
+整个RSA加密算法的安全性基于大数不能分解质因数。
+ 数学原理
+ 互质关系：
+两个">
     
     
     
@@ -97,12 +102,17 @@ RSA加密算法基础整个RSA加密算法的安全性基于大数不能分解�
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA算法原理与加密解密"><span class="toc-number">1.</span> <span class="toc-text">RSA算法原理与加密解密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA加密过程简述"><span class="toc-number">1.1.</span> <span class="toc-text">RSA加密过程简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA加密算法基础"><span class="toc-number">1.2.</span> <span class="toc-text">RSA加密算法基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数学原理"><span class="toc-number">1.3.</span> <span class="toc-text">数学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#互质关系："><span class="toc-number">1.3.1.</span> <span class="toc-text">互质关系：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求欧拉函数："><span class="toc-number">1.3.2.</span> <span class="toc-text">求欧拉函数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#欧拉定理："><span class="toc-number">1.3.3.</span> <span class="toc-text">欧拉定理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模反元素"><span class="toc-number">1.3.4.</span> <span class="toc-text">模反元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA算法详解："><span class="toc-number">1.4.</span> <span class="toc-text">RSA算法详解：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成密钥"><span class="toc-number">1.4.1.</span> <span class="toc-text">生成密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公钥"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">公钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私钥"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">私钥</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA算法可靠性论证"><span class="toc-number">1.5.</span> <span class="toc-text">RSA算法可靠性论证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加解密过程：假设明文是m-c是密文"><span class="toc-number">1.6.</span> <span class="toc-text">加解密过程：假设明文是m,c是密文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密：使用公钥-n-e"><span class="toc-number">1.6.1.</span> <span class="toc-text">加密：使用公钥(n,e)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解密：使用私钥-n-d"><span class="toc-number">1.6.2.</span> <span class="toc-text">解密：使用私钥(n,d)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA算法签名与验签"><span class="toc-number">2.</span> <span class="toc-text">RSA算法签名与验签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程："><span class="toc-number">2.1.</span> <span class="toc-text">签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验签过程："><span class="toc-number">2.2.</span> <span class="toc-text">验签过程：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程：-1"><span class="toc-number">3.1.</span> <span class="toc-text">签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证过程："><span class="toc-number">3.2.</span> <span class="toc-text">验证过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-Demo"><span class="toc-number">3.3.</span> <span class="toc-text">java Demo</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#rsa算法原理与加密解密"><span class="toc-number">1.</span> <span class="toc-text"> RSA算法原理与加密解密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa加密过程简述"><span class="toc-number">1.1.</span> <span class="toc-text"> RSA加密过程简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa加密算法基础"><span class="toc-number">1.2.</span> <span class="toc-text"> RSA加密算法基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数学原理"><span class="toc-number">1.3.</span> <span class="toc-text"> 数学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#互质关系："><span class="toc-number">1.3.1.</span> <span class="toc-text"> 互质关系：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求欧拉函数："><span class="toc-number">1.3.2.</span> <span class="toc-text"> 求欧拉函数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#欧拉定理："><span class="toc-number">1.3.3.</span> <span class="toc-text"> 欧拉定理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模反元素"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 模反元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa算法详解："><span class="toc-number">1.4.</span> <span class="toc-text"> RSA算法详解：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成密钥"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 生成密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公钥"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 公钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私钥"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> 私钥</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa算法可靠性论证"><span class="toc-number">1.5.</span> <span class="toc-text"> RSA算法可靠性论证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加解密过程：假设明文是m-c是密文"><span class="toc-number">1.6.</span> <span class="toc-text"> 加解密过程：假设明文是m,c是密文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密：使用公钥-n-e"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 加密：使用公钥(n,e)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解密：使用私钥-n-d"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 解密：使用私钥(n,d)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#rsa算法签名与验签"><span class="toc-number">2.</span> <span class="toc-text"> RSA算法签名与验签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程："><span class="toc-number">2.1.</span> <span class="toc-text"> 签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验签过程："><span class="toc-number">2.2.</span> <span class="toc-text"> 验签过程：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text"> 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程：-v2"><span class="toc-number">3.1.</span> <span class="toc-text"> 签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证过程："><span class="toc-number">3.2.</span> <span class="toc-text"> 验证过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-demo"><span class="toc-number">3.3.</span> <span class="toc-text"> java Demo</span></a></li></ol></li></ol>
 		</div>
 		
-		<h1 id="RSA算法原理与加密解密"><a href="#RSA算法原理与加密解密" class="headerlink" title="RSA算法原理与加密解密"></a>RSA算法原理与加密解密</h1><h2 id="RSA加密过程简述"><a href="#RSA加密过程简述" class="headerlink" title="RSA加密过程简述"></a>RSA加密过程简述</h2><p>A和B进行加密通信时,B首先要生成一对密钥。一个是公钥，给A，B自己持有私钥。A使用B的公钥加密要加密发送的内容，然后B在通过自己的私钥解密内容。</p>
-<h2 id="RSA加密算法基础"><a href="#RSA加密算法基础" class="headerlink" title="RSA加密算法基础"></a>RSA加密算法基础</h2><p>整个RSA加密算法的安全性基于大数不能分解质因数。</p>
-<h2 id="数学原理"><a href="#数学原理" class="headerlink" title="数学原理"></a>数学原理</h2><h3 id="互质关系："><a href="#互质关系：" class="headerlink" title="互质关系："></a>互质关系：</h3><p>两个数a和b没有除1外的其他公约数，则a与b互质</p>
+		<h1 id="rsa算法原理与加密解密"><a class="header-anchor" href="#rsa算法原理与加密解密"> </a>RSA算法原理与加密解密</h1>
+<h2 id="rsa加密过程简述"><a class="header-anchor" href="#rsa加密过程简述"> </a>RSA加密过程简述</h2>
+<p>A和B进行加密通信时,B首先要生成一对密钥。一个是公钥，给A，B自己持有私钥。A使用B的公钥加密要加密发送的内容，然后B在通过自己的私钥解密内容。</p>
+<h2 id="rsa加密算法基础"><a class="header-anchor" href="#rsa加密算法基础"> </a>RSA加密算法基础</h2>
+<p>整个RSA加密算法的安全性基于大数不能分解质因数。</p>
+<h2 id="数学原理"><a class="header-anchor" href="#数学原理"> </a>数学原理</h2>
+<h3 id="互质关系："><a class="header-anchor" href="#互质关系："> </a>互质关系：</h3>
+<p>两个数a和b没有除1外的其他公约数，则a与b互质</p>
 <ol>
 <li>任意两个质数构成互质关系</li>
 <li>两个数中，如果大数为质数，则两数必定互质</li>
@@ -110,64 +120,77 @@ RSA加密算法基础整个RSA加密算法的安全性基于大数不能分解�
 <li>当p&gt;1时，p与p-1互质(相邻两数互质)</li>
 <li>当$p=2n+1$(n&gt;0且n为整数)时，p与p+2互质(相连的两个奇数互质)</li>
 </ol>
-<h3 id="求欧拉函数："><a href="#求欧拉函数：" class="headerlink" title="求欧拉函数："></a>求欧拉函数：</h3><p>定义：与正整数n互质且小于正整数n的正整数的个数。通常使用ψ(n)表示。</p>
+<h3 id="求欧拉函数："><a class="header-anchor" href="#求欧拉函数："> </a>求欧拉函数：</h3>
+<p>定义：与正整数n互质且小于正整数n的正整数的个数。通常使用ψ(n)表示。</p>
 <p>求取与正整数n互质的正整数的个数ψ(n),且ψ(n)满足ψ(n)∈(2,n)</p>
 <ol>
 <li>如果n=1,则ψ(n)=1</li>
 <li>如果n是质数,则ψ(n)=n-1</li>
-<li>如果n是质数p的次方,则：ψ(p^k)=p^k-p^(k-1) = p^k*(1-1/p)</li>
+<li>如果n是质数p的次方,则：ψ(p<sup>k)=p</sup>k-p^(k-1) = p^k*(1-1/p)</li>
 <li>若p1和p2互质,$n=p1<em>p2$,则$ψ(n)= ψ(p1</em>p2)= ψ(p1) ψ(p2)$</li>
 <li>任意一个大于1的正整数都可以写成一系列质数的积</li>
 <li>根据定理5，推导欧拉定理：</li>
 </ol>
-<p>因为<br>$n = (p1^{k1})\cdot (p2^{k2})\cdot……(pr^{kr})$(p1~pr都是质数)</p>
-<p>所以<br>$\psi(n)= \psi((p1^{k1})) \psi(p2^{k2}) ……\psi(pr^{kr})$ 定理4</p>
-<p>$\psi(n)= (p1^{k1})\cdot(1-\frac{1}{p1}) \cdot (p2^{k2})(1-\frac{1}{p2})……(pr^{kr})\cdot(1-\frac{1}{pr})$   定理3</p>
-<p>$\psi(n)= (p1^{k1})\cdot (p2^{k2})\cdot……(pr^{kr}) \cdot (1-\frac{1}{p1}) (1-\frac{1}{p2})…… (1-\frac{1}{pr})$</p>
-<p>$\psi(n)=n (1-\frac{1}{p1}) (1-\frac{1}{p2})…… (1-\frac{1}{pr})$  </p>
-<h3 id="欧拉定理："><a href="#欧拉定理：" class="headerlink" title="欧拉定理："></a>欧拉定理：</h3><p>正整数a与n互质，则下式恒成立</p>
+<p>因为
+$n = (p1^{k1})\cdot (p2<sup>{k2})\cdot……(pr</sup>{kr})$(p1~pr都是质数)</p>
+<p>所以
+$\psi(n)= \psi((p1^{k1})) \psi(p2^{k2}) ……\psi(pr^{kr})$ 定理4</p>
+<p>$\psi(n)= (p1^{k1})\cdot(1-\frac{1}{p1}) \cdot (p2<sup>{k2})(1-\frac{1}{p2})……(pr</sup>{kr})\cdot(1-\frac{1}{pr})$   定理3</p>
+<p>$\psi(n)= (p1^{k1})\cdot (p2<sup>{k2})\cdot……(pr</sup>{kr}) \cdot (1-\frac{1}{p1}) (1-\frac{1}{p2})…… (1-\frac{1}{pr})$</p>
+<p>$\psi(n)=n (1-\frac{1}{p1}) (1-\frac{1}{p2})…… (1-\frac{1}{pr})$</p>
+<h3 id="欧拉定理："><a class="header-anchor" href="#欧拉定理："> </a>欧拉定理：</h3>
+<p>正整数a与n互质，则下式恒成立</p>
 <p>$$a^{\psi(n)} \equiv {1(mod　n)}$$</p>
 <p>即：</p>
 <p>a的ψ(n)次幂除以n,余数恒为1</p>
-<h3 id="模反元素"><a href="#模反元素" class="headerlink" title="模反元素"></a>模反元素</h3><p>如果两个正整数a和n互质,则必定存在整数b使得a*b-1被n除余数为1</p>
+<h3 id="模反元素"><a class="header-anchor" href="#模反元素"> </a>模反元素</h3>
+<p>如果两个正整数a和n互质,则必定存在整数b使得a*b-1被n除余数为1</p>
 <p>$$ab \equiv 1(mod　n)$$</p>
 <p>其中b被称为a的模反元素</p>
-<h2 id="RSA算法详解："><a href="#RSA算法详解：" class="headerlink" title="RSA算法详解："></a>RSA算法详解：</h2><p>假设A和B要通信</p>
-<h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a>生成密钥</h3><h4 id="公钥"><a href="#公钥" class="headerlink" title="公钥"></a>公钥</h4><ol>
-<li><p>随机生成两个不相等的质数p和q(质数越大越安全)</p>
+<h2 id="rsa算法详解："><a class="header-anchor" href="#rsa算法详解："> </a>RSA算法详解：</h2>
+<p>假设A和B要通信</p>
+<h3 id="生成密钥"><a class="header-anchor" href="#生成密钥"> </a>生成密钥</h3>
+<h4 id="公钥"><a class="header-anchor" href="#公钥"> </a>公钥</h4>
+<ol>
+<li>
+<p>随机生成两个不相等的质数p和q(质数越大越安全)</p>
 </li>
-<li><p>计算n,n=p*q 则n的二进制位数就是密钥的长度。</p>
+<li>
+<p>计算n,n=p*q 则n的二进制位数就是密钥的长度。</p>
 </li>
-<li><p>计算n的欧拉函数ψ(n)        </p>
+<li>
+<p>计算n的欧拉函数ψ(n)</p>
 </li>
 </ol>
 <p>因为</p>
 <p>$n=p \cdot q$</p>
 <p>所以</p>
-<p>$\psi(n) =\psi(p)\cdot \psi(q)$    定理4</p>
+<p>$\psi(n) =\psi§\cdot \psi(q)$    定理4</p>
 <p>又p和q为质数</p>
 <p>所以</p>
-<p>$\psi(p)=p-1$    定理2</p>
+<p>$\psi§=p-1$    定理2</p>
 <p>$\psi(q)=q-1$    定理2</p>
 <p>所以</p>
 <p>$\psi(n) = (p-1)(q-1)$</p>
-<ol>
+<ol start="4">
 <li>获取随机正整数e,e满足  e∈(1, ψ(n))且e与ψ(n)互质(通常选择65537)</li>
 </ol>
 <p>将n和e封装成公钥</p>
-<h4 id="私钥"><a href="#私钥" class="headerlink" title="私钥"></a>私钥</h4><ol>
+<h4 id="私钥"><a class="header-anchor" href="#私钥"> </a>私钥</h4>
+<ol>
 <li>计算e对于ψ(n)的模反元素d</li>
 </ol>
 <p>$e*d=1(mod　\psi(n))$;</p>
 <p>设正整数k, $e*d = k\psi(n)+1$;</p>
 <p>则$ed-k\psi(n)=1$</p>
-<p>  $d = (k\psi(n)+1) / e$;</p>
-<p>对于不定方程$ax+by=c$，设$gcd(a,b)=d$，如果$ax+by=c$有解，则d|c—–&gt;也就是说如果$ed-k\psi(n)=1$ 有解,则gcd(d,-k)能够整除1,而1显然可以被任何整数整除,所以该二元一次方程必定有解(d,k)</p>
-<p> (欧几里得定理和扩展欧几里得定理计算二元一次方程)</p>
-<ol>
+<p>$d = (k\psi(n)+1) / e$;</p>
+<p>对于不定方程$ax+by=c$，设$gcd(a,b)=d$，如果$ax+by=c$有解，则d|c-----&gt;也就是说如果$ed-k\psi(n)=1$ 有解,则gcd(d,-k)能够整除1,而1显然可以被任何整数整除,所以该二元一次方程必定有解(d,k)</p>
+<p>(欧几里得定理和扩展欧几里得定理计算二元一次方程)</p>
+<ol start="2">
 <li>将n和d封装成私钥</li>
 </ol>
-<h2 id="RSA算法可靠性论证"><a href="#RSA算法可靠性论证" class="headerlink" title="RSA算法可靠性论证"></a>RSA算法可靠性论证</h2><p>从上文可以统计出整个算法涉及到的量有6个，其中三个为由私钥持有者生成，三个是私钥持有者推导出来的</p>
+<h2 id="rsa算法可靠性论证"><a class="header-anchor" href="#rsa算法可靠性论证"> </a>RSA算法可靠性论证</h2>
+<p>从上文可以统计出整个算法涉及到的量有6个，其中三个为由私钥持有者生成，三个是私钥持有者推导出来的</p>
 <p>生成量：p,q,e</p>
 <p>推导量：n, ψ(n),d</p>
 <p>密钥中只有公钥被发布,所有人都可以获取。而公钥由n和e封装起来,因此,如果要破解一份RSA加密过的密文,我们必须使用私钥(私钥由n和d封装而成)</p>
@@ -175,64 +198,101 @@ RSA加密算法基础整个RSA加密算法的安全性基于大数不能分解�
 <p>(假设mc为明文，c为密文，则公钥由n和e封装则意味着求取密文的运算中，n，e和mc是已知数，只有c是未知数；私钥由n和d封装，同上，解密密文的运算中，n，d和c是已知的，只有mc是未知数。)</p>
 <p>因此,破解私钥的关键就是破解e对于ψ(n)的模反元素d。</p>
 <p>其数学关系是：  e*d=1(modψ(n));</p>
-<p>因此需需要先求出ψ(n),而求出ψ(n)需要知道ψ(p)和ψ(q)(因为ψ(n)= ψ(p* ψ(q))</p>
+<p>因此需需要先求出ψ(n),而求出ψ(n)需要知道ψ§和ψ(q)(因为ψ(n)= ψ(p* ψ(q))</p>
 <p>而p和q只能通过分解n的质因数获得。所以,整个RSA算法都基于n这个大数不能分解质因数这个基础上。</p>
 <p>因此，只要n够大，私钥就不会被破解</p>
-<h2 id="加解密过程：假设明文是m-c是密文"><a href="#加解密过程：假设明文是m-c是密文" class="headerlink" title="加解密过程：假设明文是m,c是密文"></a>加解密过程：假设明文是m,c是密文</h2><h3 id="加密：使用公钥-n-e"><a href="#加密：使用公钥-n-e" class="headerlink" title="加密：使用公钥(n,e)"></a>加密：使用公钥(n,e)</h3><p>先将其换算成asc码或者unicode等其他数值。且m必须小于n</p>
+<h2 id="加解密过程：假设明文是m-c是密文"><a class="header-anchor" href="#加解密过程：假设明文是m-c是密文"> </a>加解密过程：假设明文是m,c是密文</h2>
+<h3 id="加密：使用公钥-n-e"><a class="header-anchor" href="#加密：使用公钥-n-e"> </a>加密：使用公钥(n,e)</h3>
+<p>先将其换算成asc码或者unicode等其他数值。且m必须小于n</p>
 <p>则加密算法是</p>
 <p>m^e=c(mod n)</p>
 <p>推出</p>
 <p>m^e / n = k ……c这里c就是密文，k我们不关心</p>
-<h3 id="解密：使用私钥-n-d"><a href="#解密：使用私钥-n-d" class="headerlink" title="解密：使用私钥(n,d)"></a>解密：使用私钥(n,d)</h3><ol>
+<h3 id="解密：使用私钥-n-d"><a class="header-anchor" href="#解密：使用私钥-n-d"> </a>解密：使用私钥(n,d)</h3>
+<ol>
 <li>简单的说解密就是通过下式求m。(一定可以求解出m)</li>
 </ol>
 <p>c^d = m(mod n)</p>
-<p>推出<br>c^d / n = k … … m    m就是明文编码，不关心k</p>
+<p>推出
+c^d / n = k … … m    m就是明文编码，不关心k</p>
 <p>查表得出明文</p>
-<h1 id="RSA算法签名与验签"><a href="#RSA算法签名与验签" class="headerlink" title="RSA算法签名与验签"></a>RSA算法签名与验签</h1><p>假设A要想B发送消息，A会先计算出消息的消息摘要，然后使用自己的私钥加密这段摘要加密，最后将加密后的消息摘要和消息一起发送给B，被加密的消息摘要就是“签名”。</p>
+<h1 id="rsa算法签名与验签"><a class="header-anchor" href="#rsa算法签名与验签"> </a>RSA算法签名与验签</h1>
+<p>假设A要想B发送消息，A会先计算出消息的消息摘要，然后使用自己的私钥加密这段摘要加密，最后将加密后的消息摘要和消息一起发送给B，被加密的消息摘要就是“签名”。</p>
 <p>B收到消息后，也会使用和A相同的方法提取消息摘要，然后使用A的公钥解密A发送的来签名，并与自己计算出来的消息摘要进行比较。如果相同则说明消息是A发送给B的，同时，A也无法否认自己发送消息给B的事实。</p>
 <p>其中，A用自己的私钥给消息摘要加密成为“签名”；B使用A的公钥解密签名文件的过程，就叫做“验签”。</p>
 <p>数字签名的作用是保证数据完整性，机密性和发送方角色的不可抵赖性</p>
 <p>下面是对签名和验签过程的简要描述：</p>
-<h2 id="签名过程："><a href="#签名过程：" class="headerlink" title="签名过程："></a>签名过程：</h2><ol>
-<li><p>A计算消息m的消息摘要,记为 h(m)</p>
+<h2 id="签名过程："><a class="header-anchor" href="#签名过程："> </a>签名过程：</h2>
+<ol>
+<li>
+<pre><code>   A计算消息m的消息摘要,记为 h(m)
+</code></pre>
 </li>
-<li><p>A使用私钥(n,d)对h(m)加密，生成签名s ,s满足：</p>
+<li>
+<pre><code>   A使用私钥(n,d)对h(m)加密，生成签名s ,s满足：
+</code></pre>
 </li>
 </ol>
 <p>s=(h(m))^d mod n;</p>
 <p>由于A是用自己的私钥对消息摘要加密，所以只用使用s的公钥才能解密该消息摘要，这样A就不可否认自己发送了该消息给B。</p>
-<ol>
-<li>A发送消息和签名(m,s)给B。</li>
-</ol>
-<h2 id="验签过程："><a href="#验签过程：" class="headerlink" title="验签过程："></a>验签过程：</h2><ol>
-<li><p>B计算消息m的消息摘要,记为h(m);</p>
+<ol start="3">
+<li>
+<pre><code>   A发送消息和签名(m,s)给B。
+</code></pre>
 </li>
-<li><p>B使用A的公钥(n,e)解密s,得到</p>
+</ol>
+<h2 id="验签过程："><a class="header-anchor" href="#验签过程："> </a>验签过程：</h2>
+<ol>
+<li>
+<pre><code>   B计算消息m的消息摘要,记为h(m);
+</code></pre>
+</li>
+<li>
+<pre><code>   B使用A的公钥(n,e)解密s,得到
+</code></pre>
 </li>
 </ol>
 <p>H(m) = s^e mod n;</p>
+<ol start="3">
+<li>
+<pre><code>   B比较H(m)与h(m),相同则证明
+</code></pre>
+</li>
+</ol>
+<h1 id="总结"><a class="header-anchor" href="#总结"> </a>总结</h1>
+<p>下面简单总结加密和解密的完整过程。</p>
+<h2 id="签名过程：-v2"><a class="header-anchor" href="#签名过程：-v2"> </a>签名过程：</h2>
 <ol>
-<li>B比较H(m)与h(m),相同则证明</li>
-</ol>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>下面简单总结加密和解密的完整过程。</p>
-<h2 id="签名过程：-1"><a href="#签名过程：-1" class="headerlink" title="签名过程："></a>签名过程：</h2><ol>
-<li><p>A提取消息m的消息摘要h(m),并使用自己的私钥对摘要h(m)进行加密,生成签名s</p>
+<li>
+<pre><code>   A提取消息m的消息摘要h(m),并使用自己的私钥对摘要h(m)进行加密,生成签名s
+</code></pre>
 </li>
-<li><p>A将签名s和消息m一起,使用B的公钥进行加密,生成密文c,发送给B。</p>
-</li>
-</ol>
-<h2 id="验证过程："><a href="#验证过程：" class="headerlink" title="验证过程："></a>验证过程：</h2><ol>
-<li><p>B接收到密文c,使用自己的私钥解密c得到明文m和数字签名s</p>
-</li>
-<li><p>B使用A的公钥解密数字签名s解密得到H(m).</p>
-</li>
-<li><p>B使用相同的方法提取消息m的消息摘要h(m)</p>
-</li>
-<li><p>B比较两个消息摘要。相同则验证成功;不同则验证失败。</p>
+<li>
+<pre><code>   A将签名s和消息m一起,使用B的公钥进行加密,生成密文c,发送给B。
+</code></pre>
 </li>
 </ol>
-<h2 id="java-Demo"><a href="#java-Demo" class="headerlink" title="java Demo"></a>java Demo</h2><p>EnAndDe.java</p>
+<h2 id="验证过程："><a class="header-anchor" href="#验证过程："> </a>验证过程：</h2>
+<ol>
+<li>
+<pre><code>   B接收到密文c,使用自己的私钥解密c得到明文m和数字签名s
+</code></pre>
+</li>
+<li>
+<pre><code>   B使用A的公钥解密数字签名s解密得到H(m).
+</code></pre>
+</li>
+<li>
+<pre><code>   B使用相同的方法提取消息m的消息摘要h(m)
+</code></pre>
+</li>
+<li>
+<pre><code>   B比较两个消息摘要。相同则验证成功;不同则验证失败。
+</code></pre>
+</li>
+</ol>
+<h2 id="java-demo"><a class="header-anchor" href="#java-demo"> </a>java Demo</h2>
+<p>EnAndDe.java</p>
 <figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.joe.main;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.math.BigInteger;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * &lt;p&gt;</div><div class="line"> * Company: 建工学院</div><div class="line"> * &lt;/p&gt;</div><div class="line"> * </div><div class="line"> * @author 04信息（1）程晟</div><div class="line"> * @modify Joe</div><div class="line"> * @Description Demo说明：</div><div class="line"> *              1、按照加密解密和签名验签的逻辑,编写简单的demo,不涉及java中继承的RSA相关类和Sigesture签名类</div><div class="line"> *              2、只能对数字和字母进行加密, 不涉及编码和解码问题 。 3、不做数字签名和验证了,涉及到提取信息摘要。</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> class EnAndDe &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> p = <span class="number">0</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> q = <span class="number">0</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> n = <span class="number">0</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> t = <span class="number">0</span>; <span class="comment">// 欧拉函数</span></div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> e = <span class="number">0</span>; <span class="comment">// 公匙</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> d = <span class="number">0</span>; <span class="comment">// 密匙</span></div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> mc; <span class="comment">// 明文</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> c = <span class="number">0</span>; <span class="comment">// 密文</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">long</span> word = <span class="number">0</span>; <span class="comment">// 解密后明文</span></div><div class="line"></div><div class="line">	<span class="comment">// 判断是一个数 x 否为素数素数就是判断在 (2,√x)范围内有没有除1外的因数,如果没有则x数素数</span></div><div class="line">	<span class="keyword">public</span> <span class="built_in">boolean</span> isPrime(<span class="keyword">long</span> t) &#123;</div><div class="line">		<span class="keyword">long</span> k = <span class="number">0</span>;</div><div class="line">		k = (<span class="keyword">long</span>) Math.<span class="built_in">sqrt</span>((<span class="keyword">double</span>) t);</div><div class="line">		<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">2</span>; i &lt;= k; i++) &#123;</div><div class="line">			<span class="keyword">if</span> ((t % i) == <span class="number">0</span>) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 随机产生大素数(1e6数量级，注意，太大了要超出范围)</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> bigprimeRandom() &#123;</div><div class="line">		do &#123;</div><div class="line">			p = (<span class="keyword">long</span>) (Math.<span class="built_in">random</span>() * <span class="number">1000000</span>);</div><div class="line">		&#125; <span class="keyword">while</span> (!<span class="keyword">this</span>.isPrime(p));</div><div class="line">		do &#123;</div><div class="line">			q = (<span class="keyword">long</span>) (Math.<span class="built_in">random</span>() * <span class="number">1000000</span>);</div><div class="line">		&#125; <span class="keyword">while</span> (p == q || !<span class="keyword">this</span>.isPrime(q));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 输入PQ</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> inputPQ() <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">		<span class="keyword">this</span>.bigprimeRandom();</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"自动生成两个大素数p,q分别为:"</span> + <span class="keyword">this</span>.p + <span class="string">" "</span> + <span class="keyword">this</span>.q);</div><div class="line"></div><div class="line">		<span class="keyword">this</span>.n = (<span class="keyword">long</span>) p * q;</div><div class="line">		<span class="keyword">this</span>.t = (<span class="keyword">long</span>) (p - <span class="number">1</span>) * (q - <span class="number">1</span>);</div><div class="line"></div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"这两个素数的乘积为p*q："</span> + <span class="keyword">this</span>.n);</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"所得的t=(p-1)(q-1)："</span> + <span class="keyword">this</span>.t);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 求最大公约数</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">long</span> gcd(<span class="keyword">long</span> a, <span class="keyword">long</span> b) &#123;</div><div class="line">		<span class="keyword">long</span> gcd;</div><div class="line">		<span class="keyword">if</span> (b == <span class="number">0</span>)</div><div class="line">			gcd = a;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			gcd = gcd(b, a % b);</div><div class="line">		<span class="keyword">return</span> gcd;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 生成公匙</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> getPublic_key() <span class="keyword">throws</span> Exception &#123;</div><div class="line">		do &#123;</div><div class="line"></div><div class="line">			<span class="keyword">this</span>.e = (<span class="keyword">long</span>) (Math.<span class="built_in">random</span>() * <span class="number">100000</span>);</div><div class="line">			<span class="comment">// e满足 e∈(1, ψ(n))且e与ψ(n)最大公约数为1,即 e与t互质</span></div><div class="line">		&#125; <span class="keyword">while</span> ((<span class="keyword">this</span>.e &gt;= <span class="keyword">this</span>.t) || (<span class="keyword">this</span>.gcd(<span class="keyword">this</span>.t, <span class="keyword">this</span>.e) != <span class="number">1</span>));</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"生成的公钥为："</span> + <span class="string">"("</span> + <span class="keyword">this</span>.n + <span class="string">","</span> + <span class="keyword">this</span>.e + <span class="string">")"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 生成私钥 e*d=1(modψ(n))==&gt; d = (kψ(n)+1) / e</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> getPrivate_key() &#123;</div><div class="line">		<span class="keyword">long</span> value = <span class="number">1</span>; <span class="comment">// value 是e和d的乘积</span></div><div class="line">		outer: <span class="keyword">for</span> (<span class="keyword">long</span> k = <span class="number">1</span>;; k++) &#123;</div><div class="line">			value = k * <span class="keyword">this</span>.t + <span class="number">1</span>;</div><div class="line">			<span class="keyword">if</span> ((value % <span class="keyword">this</span>.e == <span class="number">0</span>)) &#123;</div><div class="line">				<span class="keyword">this</span>.d = value / <span class="keyword">this</span>.e;</div><div class="line">				<span class="keyword">break</span> outer;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"产生的一个私钥为："</span> + <span class="string">"("</span> + <span class="keyword">this</span>.n + <span class="string">","</span> + <span class="keyword">this</span>.d + <span class="string">")"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 输入明文</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> getText() <span class="keyword">throws</span> Exception &#123;</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"请输入明文："</span>);</div><div class="line">		<span class="keyword">BufferedReader</span> stdin = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(</div><div class="line">				System.in));</div><div class="line">		mc = stdin.readLine();</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 解密密文</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> pascolum() <span class="keyword">throws</span> Exception &#123;</div><div class="line">		<span class="keyword">this</span>.getText();</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"输入明文为: "</span> + <span class="keyword">this</span>.mc);</div><div class="line">		<span class="comment">// 加密</span></div><div class="line">		ArrayList cestr = <span class="keyword">new</span> ArrayList();</div><div class="line">		<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; mc.length(); i++) &#123;</div><div class="line">			<span class="keyword">this</span>.c = <span class="keyword">this</span>.colum((<span class="keyword">long</span>) mc.charAt(i), <span class="keyword">this</span>.n, <span class="keyword">this</span>.e);</div><div class="line">			cestr.<span class="built_in">add</span>(c);</div><div class="line">		&#125;</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"加密后所得的密文为："</span> + cestr);</div><div class="line">		<span class="comment">// 解密</span></div><div class="line">		StringBuffer destr = <span class="keyword">new</span> StringBuffer();</div><div class="line">		<span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; cestr.<span class="built_in">size</span>(); j++) &#123;</div><div class="line">			<span class="keyword">this</span>.word = <span class="keyword">this</span>.colum(Long.parseLong(cestr.<span class="built_in">get</span>(j).toString()),</div><div class="line">					<span class="keyword">this</span>.n, <span class="keyword">this</span>.d);</div><div class="line">			destr.<span class="built_in">append</span>((<span class="built_in">char</span>) word);</div><div class="line">		&#125;</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"解密后所得的明文为："</span> + destr);</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 加密、解密计算</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">long</span> colum(<span class="keyword">long</span> mc, <span class="keyword">long</span> n, <span class="keyword">long</span> <span class="built_in">key</span>) &#123;</div><div class="line">		BigInteger bigy = <span class="keyword">new</span> BigInteger(<span class="keyword">String</span>.valueOf(mc));</div><div class="line">		BigInteger bign = <span class="keyword">new</span> BigInteger(<span class="keyword">String</span>.valueOf(n));</div><div class="line">		BigInteger bigkey = <span class="keyword">new</span> BigInteger(<span class="keyword">String</span>.valueOf(<span class="built_in">key</span>));</div><div class="line">		<span class="keyword">return</span> Long.parseLong(bigy.modPow(bigkey, bign).toString());<span class="comment">// 备注1</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			EnAndDe t = <span class="keyword">new</span> EnAndDe();</div><div class="line">			t.inputPQ();</div><div class="line">			t.getPublic_key();</div><div class="line">			t.getPrivate_key();</div><div class="line">			t.pascolum();</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>备注1：modPow(a,b)是java类BigInteger中的一个方法，返回结果是：调用该方法的对象的a次幂,模b的结果</p>
   
@@ -293,7 +353,7 @@ RSA加密算法基础整个RSA加密算法的安全性基于大数不能分解�
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA算法原理与加密解密"><span class="toc-number">1.</span> <span class="toc-text">RSA算法原理与加密解密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA加密过程简述"><span class="toc-number">1.1.</span> <span class="toc-text">RSA加密过程简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA加密算法基础"><span class="toc-number">1.2.</span> <span class="toc-text">RSA加密算法基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数学原理"><span class="toc-number">1.3.</span> <span class="toc-text">数学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#互质关系："><span class="toc-number">1.3.1.</span> <span class="toc-text">互质关系：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求欧拉函数："><span class="toc-number">1.3.2.</span> <span class="toc-text">求欧拉函数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#欧拉定理："><span class="toc-number">1.3.3.</span> <span class="toc-text">欧拉定理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模反元素"><span class="toc-number">1.3.4.</span> <span class="toc-text">模反元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA算法详解："><span class="toc-number">1.4.</span> <span class="toc-text">RSA算法详解：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成密钥"><span class="toc-number">1.4.1.</span> <span class="toc-text">生成密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公钥"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">公钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私钥"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">私钥</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA算法可靠性论证"><span class="toc-number">1.5.</span> <span class="toc-text">RSA算法可靠性论证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加解密过程：假设明文是m-c是密文"><span class="toc-number">1.6.</span> <span class="toc-text">加解密过程：假设明文是m,c是密文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密：使用公钥-n-e"><span class="toc-number">1.6.1.</span> <span class="toc-text">加密：使用公钥(n,e)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解密：使用私钥-n-d"><span class="toc-number">1.6.2.</span> <span class="toc-text">解密：使用私钥(n,d)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA算法签名与验签"><span class="toc-number">2.</span> <span class="toc-text">RSA算法签名与验签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程："><span class="toc-number">2.1.</span> <span class="toc-text">签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验签过程："><span class="toc-number">2.2.</span> <span class="toc-text">验签过程：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程：-1"><span class="toc-number">3.1.</span> <span class="toc-text">签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证过程："><span class="toc-number">3.2.</span> <span class="toc-text">验证过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-Demo"><span class="toc-number">3.3.</span> <span class="toc-text">java Demo</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#rsa算法原理与加密解密"><span class="toc-number">1.</span> <span class="toc-text"> RSA算法原理与加密解密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa加密过程简述"><span class="toc-number">1.1.</span> <span class="toc-text"> RSA加密过程简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa加密算法基础"><span class="toc-number">1.2.</span> <span class="toc-text"> RSA加密算法基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数学原理"><span class="toc-number">1.3.</span> <span class="toc-text"> 数学原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#互质关系："><span class="toc-number">1.3.1.</span> <span class="toc-text"> 互质关系：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求欧拉函数："><span class="toc-number">1.3.2.</span> <span class="toc-text"> 求欧拉函数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#欧拉定理："><span class="toc-number">1.3.3.</span> <span class="toc-text"> 欧拉定理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模反元素"><span class="toc-number">1.3.4.</span> <span class="toc-text"> 模反元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa算法详解："><span class="toc-number">1.4.</span> <span class="toc-text"> RSA算法详解：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成密钥"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 生成密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公钥"><span class="toc-number">1.4.1.1.</span> <span class="toc-text"> 公钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私钥"><span class="toc-number">1.4.1.2.</span> <span class="toc-text"> 私钥</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rsa算法可靠性论证"><span class="toc-number">1.5.</span> <span class="toc-text"> RSA算法可靠性论证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加解密过程：假设明文是m-c是密文"><span class="toc-number">1.6.</span> <span class="toc-text"> 加解密过程：假设明文是m,c是密文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密：使用公钥-n-e"><span class="toc-number">1.6.1.</span> <span class="toc-text"> 加密：使用公钥(n,e)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解密：使用私钥-n-d"><span class="toc-number">1.6.2.</span> <span class="toc-text"> 解密：使用私钥(n,d)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#rsa算法签名与验签"><span class="toc-number">2.</span> <span class="toc-text"> RSA算法签名与验签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程："><span class="toc-number">2.1.</span> <span class="toc-text"> 签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验签过程："><span class="toc-number">2.2.</span> <span class="toc-text"> 验签过程：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text"> 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名过程：-v2"><span class="toc-number">3.1.</span> <span class="toc-text"> 签名过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#验证过程："><span class="toc-number">3.2.</span> <span class="toc-text"> 验证过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-demo"><span class="toc-number">3.3.</span> <span class="toc-text"> java Demo</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">

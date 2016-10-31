@@ -9,8 +9,9 @@
     
     <meta name="author" content="bianle">
     
-    <meta name="description" content="Linux下修改Tomcat JVM内存设置:要添加在Tomcat的bin下catalina.sh里，位置cygwin=false前。注意引号要带上,红色的为新添加的.
-12345\#OSspecificsupport.$var_must_besettoeithertrueorfalse.JAVA_">
+    <meta name="description" content="Linux下修改Tomcat JVM内存设置:
+要添加在Tomcat的bin下catalina.sh里，位置cygwin=false前。注意引号要带上,红色的为新添加的.
+12345\#OSspecificsupport.$var_must_besettoeithertrueorfalse.JAVA">
     
     
     
@@ -96,23 +97,24 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux下修改Tomcat-JVM内存设置"><span class="toc-number">1.</span> <span class="toc-text">Linux下修改Tomcat JVM内存设置:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows下修改Tomcat-JVM内存设置"><span class="toc-number">2.</span> <span class="toc-text">windows下修改Tomcat JVM内存设置:</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux下修改tomcat-jvm内存设置"><span class="toc-number">1.</span> <span class="toc-text"> Linux下修改Tomcat JVM内存设置:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows下修改tomcat-jvm内存设置"><span class="toc-number">2.</span> <span class="toc-text"> windows下修改Tomcat JVM内存设置:</span></a></li></ol>
 		</div>
 		
-		<h1 id="Linux下修改Tomcat-JVM内存设置"><a href="#Linux下修改Tomcat-JVM内存设置" class="headerlink" title="Linux下修改Tomcat JVM内存设置:"></a>Linux下修改Tomcat JVM内存设置:</h1><p>要添加在Tomcat的bin下catalina.sh里，位置cygwin=false前。注意引号要带上,红色的为新添加的.</p>
+		<h1 id="linux下修改tomcat-jvm内存设置"><a class="header-anchor" href="#linux下修改tomcat-jvm内存设置"> </a>Linux下修改Tomcat JVM内存设置:</h1>
+<p>要添加在Tomcat的bin下catalina.sh里，位置cygwin=false前。注意引号要带上,红色的为新添加的.</p>
 <figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">\#OSspecificsupport.$var_must_besettoeithertrueorfalse.</div><div class="line"></div><div class="line">JAVA_OPTS=<span class="string">"-Xms256m-Xmx512m-Xss1024K-XX:PermSize=128m-XX:MaxPermSize=256m"</span></div><div class="line"></div><div class="line">cygwin=<span class="literal">false</span></div></pre></td></tr></table></figure>
-<h1 id="windows下修改Tomcat-JVM内存设置"><a href="#windows下修改Tomcat-JVM内存设置" class="headerlink" title="windows下修改Tomcat JVM内存设置:"></a>windows下修改Tomcat JVM内存设置:</h1><p>情况一:</p>
+<h1 id="windows下修改tomcat-jvm内存设置"><a class="header-anchor" href="#windows下修改tomcat-jvm内存设置"> </a>windows下修改Tomcat JVM内存设置:</h1>
+<p>情况一:</p>
 <p>解压版本的Tomcat,要通过startup.bat启动Tomcat才能加载配置</p>
 <p>要添加在Tomcat的bin下catalina.bat里</p>
-<p>remGuessCATALINA_HOMEifnotdefined  </p>
+<p>remGuessCATALINA_HOMEifnotdefined</p>
 <p>setCURRENT_DIR=%cd%后面添加,红色的为新添加的.</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">setJAVA_OPTS=-Xms256m-Xmx512m   </div><div class="line">-<span class="string">XX:</span>PermSize=<span class="number">128</span>M-<span class="string">XX:</span>MaxNewSize=<span class="number">256</span>m  </div><div class="line">-<span class="string">XX:</span>MaxPermSize=<span class="number">256</span>m-Djava.awt.headless=<span class="literal">true</span></div></pre></td></tr></table></figure>
 <p>情况二:</p>
 <p>安装版的Tomcat下没有catalina.bat</p>
 <p>windows服务执行的是binTomcat.exe.他读取注册表中的值,而不是catalina.bat的设置.</p>
 <p>修改注册表</p>
-<p><code>HKEY_LOCAL_MACHINESOFTWARE  ApacheSoftwareFoundationTomcatServiceManager 
-Tomcat5ParametersJavaOptions</code></p>
+<p><code>HKEY_LOCAL_MACHINESOFTWARE ApacheSoftwareFoundationTomcatServiceManager Tomcat5ParametersJavaOptions</code></p>
 <p>原值为</p>
 <figure class="highlight haml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby">Dcatalina.home=<span class="string">"C:ApacheGroupTomcat5.0"</span> </span></div><div class="line">-<span class="ruby">Djava.endorsed.dirs=<span class="string">"C:ApacheGroup </span></span></div><div class="line">Tomcat5.0commonendorsed" </div><div class="line">-<span class="ruby"><span class="string">Xrs</span></span></div></pre></td></tr></table></figure>
 <p>加入</p>
@@ -176,7 +178,7 @@ Tomcat5ParametersJavaOptions</code></p>
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux下修改Tomcat-JVM内存设置"><span class="toc-number">1.</span> <span class="toc-text">Linux下修改Tomcat JVM内存设置:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows下修改Tomcat-JVM内存设置"><span class="toc-number">2.</span> <span class="toc-text">windows下修改Tomcat JVM内存设置:</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux下修改tomcat-jvm内存设置"><span class="toc-number">1.</span> <span class="toc-text"> Linux下修改Tomcat JVM内存设置:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows下修改tomcat-jvm内存设置"><span class="toc-number">2.</span> <span class="toc-text"> windows下修改Tomcat JVM内存设置:</span></a></li></ol>
   </div>
 
 <div id="asidepart">

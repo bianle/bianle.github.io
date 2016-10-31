@@ -9,7 +9,9 @@
     
     <meta name="author" content="bianle">
     
-    <meta name="description" content="网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：sudo apt-get install openssh-serverUbuntu缺省安装了opens">
+    <meta name="description" content="网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：
+sudo apt-get install openssh-server
+Ubuntu缺省安装了ope">
     
     
     
@@ -98,12 +100,28 @@
 		
 		</div>
 		
-		<p>网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：<br>sudo apt-get install openssh-server<br>Ubuntu缺省安装了openssh-client,所以在这里就不安装了，如果你的系统没有安装的话，再用apt-get安装上即可。<br>然后确认sshserver是否启动了：<br>ps -e |grep ssh<br>如果只有ssh-agent那ssh-server还没有启动，需要/etc/init.d/ssh start，如果看到sshd那说明ssh-server已经启动了。<br>ssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：<br>sudo /etc/init.d/ssh resar<br>ssh连接：ssh xjtu129@202.117.15.165<br>————————————————-</p>
+		<p>网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：
+sudo apt-get install openssh-server
+Ubuntu缺省安装了openssh-client,所以在这里就不安装了，如果你的系统没有安装的话，再用apt-get安装上即可。
+然后确认sshserver是否启动了：
+ps -e |grep ssh
+如果只有ssh-agent那ssh-server还没有启动，需要/etc/init.d/ssh start，如果看到sshd那说明ssh-server已经启动了。
+ssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：
+sudo /etc/init.d/ssh resar
+ssh连接：ssh <a href="mailto:xjtu129@202.117.15.165" target="_blank" rel="external">xjtu129@202.117.15.165</a>
+————————————————-</p>
 <ol>
-<li>首先在服务器上安装ssh的服务器端。<br>$ sudo aptitude install openssh-server</li>
-<li>启动ssh-server。<br>$ /etc/init.d/ssh restart</li>
-<li>确认ssh-server已经正常工作。<br>$ netstat -tlp<br>tcp6 0 0 <em>:ssh </em>:* LISTEN –<br>看到上面这一行输出说明ssh-server已经在运行了。</li>
-<li>在客户端通过ssh登录服务器。假设服务器的IP地址是192.168.0.103，登录的用户名是hyx。<br>$ ssh -l hyx 192.168.0.103<br>接下来会提示输入密码，然后就能成功登录到服务器上了</li>
+<li>首先在服务器上安装ssh的服务器端。
+$ sudo aptitude install openssh-server</li>
+<li>启动ssh-server。
+$ /etc/init.d/ssh restart</li>
+<li>确认ssh-server已经正常工作。
+$ netstat -tlp
+tcp6 0 0 *:ssh <em>:</em> LISTEN –
+看到上面这一行输出说明ssh-server已经在运行了。</li>
+<li>在客户端通过ssh登录服务器。假设服务器的IP地址是192.168.0.103，登录的用户名是hyx。
+$ ssh -l hyx 192.168.0.103
+接下来会提示输入密码，然后就能成功登录到服务器上了</li>
 </ol>
   
 	</div>
@@ -143,9 +161,9 @@
 
 
 <div class="next">
-<a href="/2013/01/05/linux-port-view/"  title="怎么查看端口占用情况">
+<a href="/2013/01/05/software-editplus/"  title="使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)">
  <strong>NEXT:</strong><br/> 
- <span>怎么查看端口占用情况
+ <span>使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)
 </span>
 </a>
 </div>
