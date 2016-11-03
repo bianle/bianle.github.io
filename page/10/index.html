@@ -278,130 +278,6 @@
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">
-                  自定义js的trim()方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-trim/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-trim/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
-<p>写成类的方法格式如下：（str.trim();）</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>写成函数可以这样：(trim(str))</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2013/01/10/web-js-reg/" itemprop="url">
                   js正则
                 </a>
@@ -571,8 +447,8 @@
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-radio/" itemprop="url">
-                  js取radio值
+                <a class="post-title-link" href="/2013/01/10/java-gwt-code-lv/" itemprop="url">
+                  GWT 项目中代码分四级概念
                 </a>
               
             
@@ -599,8 +475,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -615,8 +491,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-radio/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-radio/" itemprop="commentsCount"></span>
+                <a href="/2013/01/10/java-gwt-code-lv/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/java-gwt-code-lv/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -641,7 +517,145 @@
       
         
           
-            <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function">function <span class="title">ok</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">var</span> temp=document.getElementsByName(<span class="string">"radio"</span>);</div><div class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;temp.length;i++)&#123;</div><div class="line">  <span class="comment">//遍历Radio</span></div><div class="line">    <span class="keyword">if</span>(temp[i].<span class="keyword">checked</span>)</div><div class="line">      &#123;alert(<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>);</div><div class="line">      <span class="comment">//获取Radio的值</span></div><div class="line">      document.form2.textfield.<span class="keyword">value</span>=<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>;</div><div class="line">      <span class="comment">//传递给另外一个表单</span></div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
+使用多个 Module 和 EntryPoint 相对都是非常简单的。创建过程同官方的新建一个Module 和 EntryPoint 没什么两样。那么我们，还有一种需求就是需要一些额外的关注：一个 application , 多个 hostpage， 因为 GWT 默认项目就只是一个 Single Host Page 的 Application。其实，我们有很多人已经注意到了这一点，并且有人 open 了一个 gwt module 来帮助大家实现这一点，它就是 gwtmultipage 。
+gwtmultipage 使用起来相当简单，简单三步就可以了：
+1.加载 org.gwtmultipage.gwtmultipage 这个 GWT module java 包到项目中
+2.修改主 Module 的 gwt.xml， EntryPoint 改成&lt;entry -point class=’org.gwtmultipage.client.EntrypointDispatcher’/&gt;
+当然要先加上它所在的 module<inherits name="’org.gwtmultipage.gwtmultipage’/">
+3.在你的 EntryPoint 类名前加 annotation:@UrlPatternEntryPoint(value=”module.html”)
+就可把 前端 jsp 或者 html 文件与 某个 EntryPoint 对应起来了。gwtmultipage 通过 org.gwtmultipage.client.EntrypointDispatcher 把 host page与 EntryPoint 一一对应。
+EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/10/java-eclipse-console/" itemprop="url">
+                  Eclipse 的控制台console乱码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/java-eclipse-console/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/java-eclipse-console/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Eclipse 的控制台必须用GBK编码。
+条件1，Window | Preferences | Workspace | Text file encoding | GBK编码。
+这样定义的是整个工作区间的编码。
+这样就把整个工作空间的编码格式定死了，但是如果某一个工程用的是不同的编码格式的话这样单独再解决。如下：
+条件2，工程上 右键 | Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是整个工程的编码。
+这样就把整个工程的编码格式定死了，但是如果某一个文件用的是不同的编码格式的话这样单独再解决。如下：
+条件3，在某个文件上 右键| Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是单独某个文件的编码。
+这里要说的是文件的实际编码格式优先用的是：第3个，其次再用2，最后先用1。有时候是123，必须满足条件。无论怎样这几种编码格式试一试就全知道了。
+条件4，还有运行时编码设置如下：菜单：Run Configuration | 右侧的选项卡Common 的 Console Encoding 选择GBK编码。这个是用来控制console控制台显示，必须是GBK，就不会乱码。尽管1，2，3条件都不是GBK，只要4是GBK。控制台就不会乱码。</p>
+<p>这样保证了工作空间和工程代码编程方式和工程里的单独文件的编码格式的不冲突。</p>
+<p>我们想改变别人的代码的编码格式的话用如下方法：1：用记事本打开，2:改变下面的编码格式如UTF-8，3：另存为xxx.java。这样另存的编码格式就变成自己想要的编码格式了。</p>
 
           
         
@@ -1689,8 +1703,8 @@ $ ssh -l hyx 192.168.0.103
             
               
                 
-                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">
-                  ��װUbuntu���Ҳ���windows sudo update-grub
+                <a class="post-title-link" href="/2013/01/05/java-simple-web-server/" itemprop="url">
+                  Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files.
                 </a>
               
             
@@ -1717,8 +1731,8 @@ $ ssh -l hyx 192.168.0.103
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -1733,8 +1747,8 @@ $ ssh -l hyx 192.168.0.103
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-ubuntu-update-grub/" itemprop="commentsCount"></span>
+                <a href="/2013/01/05/java-simple-web-server/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/java-simple-web-server/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1759,20 +1773,355 @@ $ ssh -l hyx 192.168.0.103
       
         
           
-            <p>���Ѿ���Ubuntu 9.10��ͨ���ն�sudo update-grub�����ˣ���������һ����������XP��Windows 7����������һλ���ĵ����ѵ����İ����£����������������飬������֮��Ч�Ľ���������</p>
-<p>ԭ���ǲ�����Ӳ�̰�װ��ʽ��װUbuntu�󣬰��Ǹ���������grldr�ƻ���</p>
-<p>�޸�Ubuntu 9.10����/boot/grub/grub.cfg�ļ���Windows 7������ѡ�����ֱ�Ӹ���������������Windows 7ѡ���ɡ�</p>
-<p>menuentry “Windows 7” {
-insmod ntfs
-set root=(hd0,1)
-drivemap -s (hd0) ${root}</p>
-<p>chainloader +1
-}</p>
-<p>����Ӧ�þͿ��Խ���grub4dos �Ĳ˵���Ȼ���� C ����GRUB��DOS״̬ ����grub&gt;��ʾ�����������������������޸���������grldr����</p>
-<p>grub&gt;root (hd0,0)
-grub&gt;chainloader /bootmgr
-grub&gt;boot</p>
-<p>����Windows 7��Ҫ���¼���Windows 7��Ȼ������ʽ�ָ���Ubuntu 9.10��Windows 7��˫ϵͳ�����˵��ˣ�����XP����Windows 7�������˵����ģ�һ�������ˡ�������</p>
+            <p>This is the window that comes up when you run the program, just a little motivator so you can see what��s in the end of the tunnel.</p>
+<p>Note to get the maximum out of this tutorial it is recommended that you have a basic grasp on how HTTP works. If the little man inside your head says what tha H is HTTP, you should go to the bottom and check some of the pointers. There you will find some nice text to explain the basic concept.</p>
+<p>Let��s get started!
+When making a program nowadays the first thing you should think about is the GUI (graphical user interface). If the program dosen��t look fancy, you can just press all the cancel buttons on the project. Ok that was meant as a joke, but there is some truth in it. People tend to judge a program a lot on its look, even though the real coding job is in making the stuff that goes on behind the scenes.</p>
+<p>The good news is that we are making this in Java, and since Java is such a friendly programming language it��s real easy to get some interface going. Comments are in green.</p>
+<p>//file: webserver_starter.java
+//declare a class wich inherit JFrame
+public classwebserver_starter
+extendsJFrame {
+//declare some panel, scrollpanel, textarea for gui
+JPanel jPanel1 = newJPanel();
+JScrollPane jScrollPane1 = newJScrollPane();
+JTextArea jTextArea2 = newJTextArea();
+staticInteger listen_port = null;
+//basic class constructor
+publicwebserver_starter() {
+try{
+jbInit();
+}
+catch(Exception e) {
+e.printStackTrace();
+}
+}
+//the JavaAPI entry point
+//where it starts this class if run
+public staticvoidmain(String[] args) {
+//start server on port x, default 80
+//use argument to main for what port to start on
+try{
+listen_port = newInteger(args[0]);
+//catch parse error
+}
+catch(Exception e) {
+listen_port = newInteger(80);
+}
+//create an instance of this class
+webserver_starter webserver = newwebserver_starter();
+}
+//set up the user interface
+privatevoidjbInit() throwsException {
+//oh the pretty colors
+jTextArea2.setBackground(newColor(16, 12, 66));
+jTextArea2.setForeground(newColor(151, 138, 255));
+jTextArea2.setBorder(BorderFactory.createLoweredBevelBorder());
+jTextArea2.setToolTipText(&quot;&quot;);
+jTextArea2.setEditable(false);
+jTextArea2.setColumns(30);
+jTextArea2.setRows(15);
+//change this to impress your friends
+this.setTitle(“Jon��s fancy prancy webserver”);
+//ugly inline listener, it��s for handling closing of the window
+this.addWindowListener(newjava.awt.event.WindowAdapter() {
+publicvoidwindowClosing(WindowEvent e) {
+this_windowClosed(e);
+}
+});
+//add the various to the proper containers
+jScrollPane1.getViewport().add(jTextArea2);
+jPanel1.add(jScrollPane1);
+this.getContentPane().add(jPanel1, BorderLayout.EAST);
+//tveak the apearance
+this.setVisible(true);
+this.setSize(420, 350);
+this.setResizable(false);
+//make sure it is drawn
+this.validate();
+//create the actual serverstuff,
+//all that is implemented in another class
+newserver(listen_port.intValue(), this);
+}
+//exit program when “X” is pressed.
+voidthis_windowClosed(WindowEvent e) {
+System.exit(1);
+}
+//this is a method to get messages from the actual
+//server to the window
+publicvoidsend_message_to_window(String s) {
+jTextArea2.append(s);
+}
+} //class end</p>
+<p>In a nutshell this code sets up the window and makes everything look good. If you look at the picture of the program on top of this page. This code makes that!</p>
+<p>Ok, enough time wasted on the look. Lets get down with the fun stuff, making the actual httpserver.</p>
+<p>//file: server.java
+//the real (http) serverclass
+//it extends thread so the server is run in a different
+//thread than the gui, that is to make it responsive.
+//it��s really just a macho coding thing.
+public classserver
+extendsThread {
+//the constructor method
+//the parameters it takes is what port to bind to, the default tcp port
+//for a httpserver is port 80. the other parameter is a reference to
+//the gui, this is to pass messages to our nice interface
+publicserver(intlisten_port, webserver_starter to_send_message_to) {
+message_to = to_send_message_to;
+port = listen_port;
+//this makes a new thread, as mentioned before,it��s to keep gui in
+//one thread, server in another. You may argue that this is totally
+//unnecessary, but we are gonna have this on the web so it needs to
+//be a bit macho! Another thing is that real pro webservers handles
+//each request in a new thread. This server dosen��t, it handles each
+//request one after another in the same thread. This can be a good
+//assignment!! To redo this code so that each request to the server
+//is handled in its own thread. The way it is now it blocks while
+//one client access the server, ex if it transferres a big file the
+//client have to wait real long before it gets any response.
+this.start();
+}
+privatevoids(String s2) { //an alias to avoid typing so much!
+message_to.send_message_to_window(s2);
+}
+privatewebserver_starter message_to; //the starter class, needed for gui
+privateintport; //port we are going to listen to
+//this is a overridden method from the Thread class we extended from
+publicvoidrun() {
+//we are now inside our own thread separated from the gui.
+ServerSocket serversocket = null;
+//To easily pick up lots of girls, change this to your name!!!
+s(“The simple httpserver v. 0000000000nCoded by Jon Berg” +
+&quot;&lt;jon.berg[on server]<a href="http://turtlemeat.com" target="_blank" rel="external">turtlemeat.com</a>&gt;nn&quot;);
+//Pay attention, this is where things starts to cook!
+try{
+//print/send message to the guiwindow
+s(“Trying to bind to localhost on port &quot; + Integer.toString(port) + “��”);
+//make a ServerSocket and bind it to given port,
+serversocket = newServerSocket(port);
+}
+catch(Exception e) { //catch any errors and print errors to gui
+s(“nFatal Error:” + e.getMessage());
+return;
+}
+s(“OK!n”);
+//go in a infinite loop, wait for connections, process request, send response
+while(true) {
+s(“nReady, Waiting for requests��n”);
+try{
+//this call waits/blocks until someone connects to the port we
+//are listening to
+Socket connectionsocket = serversocket.accept();
+//figure out what ipaddress the client commes from, just for show!
+InetAddress client = connectionsocket.getInetAddress();
+//and print it to gui
+s(client.getHostName() + &quot; connected to server.n”);
+//Read the http request from the client from the socket interface
+//into a buffer.
+BufferedReader input =
+newBufferedReader(newInputStreamReader(connectionsocket.
+getInputStream()));
+//Prepare a outputstream from us to the client,
+//this will be used sending back our response
+//(header + requested file) to the client.
+DataOutputStream output =
+newDataOutputStream(connectionsocket.getOutputStream());
+//as the name suggest this method handles the http request, see further down.
+//abstraction rules
+http_handler(input, output);
+}
+catch(Exception e) { //catch any errors, and print them
+s(“nError:” + e.getMessage());
+}
+} //go back in loop, wait for next request
+}
+//our implementation of the hypertext transfer protocol
+//its very basic and stripped down
+privatevoidhttp_handler(BufferedReader input, DataOutputStream output) {
+intmethod = 0; //1 get, 2 head, 0 not supported
+String http = newString(); //a bunch of strings to hold
+String path = newString(); //the various things, what http v, what path,
+String file = newString(); //what file
+String user_agent = newString(); //what user_agent
+try{
+//This is the two types of request we can handle
+//GET /index.html HTTP/1.0
+//HEAD /index.html HTTP/1.0
+String tmp = input.readLine(); //read from the stream
+String tmp2 = newString(tmp);
+tmp.toUpperCase(); //convert it to uppercase
+if(tmp.startsWith(“GET”)) { //compare it is it GET
+method = 1;
+} //if we set it to method 1
+if(tmp.startsWith(“HEAD”)) { //same here is it HEAD
+method = 2;
+} //set method to 2
+if(method == 0) { // not supported
+try{
+output.writeBytes(construct_http_header(501, 0));
+output.close();
+return;
+}
+catch(Exception e3) { //if some error happened catch it
+s(“error:” + e3.getMessage());
+} //and display error
+}
+//}
+//tmp contains “GET /index.html HTTP/1.0 ����.”
+//find first space
+//find next space
+//copy whats between minus slash, then you get “index.html”
+//it��s a bit of dirty code, but bear with me��
+intstart = 0;
+intend = 0;
+for(inta = 0; a &lt; tmp2.length(); a++) {
+if(tmp2.charAt(a) == �� �� &amp;&amp; start != 0) {
+end = a;
+break;
+}
+if(tmp2.charAt(a) == �� �� &amp;&amp; start == 0) {
+start = a;
+}
+}
+path = tmp2.substring(start + 2, end); //fill in the path
+}
+catch(Exception e) {
+s(“errorr” + e.getMessage());
+} //catch any exception
+//path do now have the filename to what to the file it wants to open
+s(“nClient requested:” + newFile(path).getAbsolutePath() + “n”);
+FileInputStream requestedfile = null;
+try{
+//NOTE that there are several security consideration when passing
+//the untrusted string “path” to FileInputStream.
+//You can access all files the current user has read access to!!!
+//current user is the user running the javaprogram.
+//you can do this by passing “…/” in the url or specify absoulute path
+//or change drive (win)
+//try to open the file,
+requestedfile = newFileInputStream(path);
+}
+catch(Exception e) {
+try{
+//if you could not open the file send a 404
+output.writeBytes(construct_http_header(404, 0));
+//close the stream
+output.close();
+}
+catch(Exception e2) {}
+;
+s(“error” + e.getMessage());
+} //print error to gui
+//happy day scenario
+try{
+inttype_is = 0;
+//find out what the filename ends with,
+//so you can construct a the right content type
+if(path.endsWith(&quot;.zip&quot;
+) {
+type_is = 3;
+}
+if(path.endsWith(&quot;.jpg&quot;) || path.endsWith(&quot;.jpeg&quot;)) {
+type_is = 1;
+}
+if(path.endsWith(&quot;.gif&quot;)) {
+type_is = 2;
+//write out the header, 200 -&gt;everything is ok we are all happy.
+}
+output.writeBytes(construct_http_header(200, 5));
+//if it was a HEAD request, we don��t print any BODY
+if(method == 1) { //1 is GET 2 is head and skips the body
+while(true) {
+//read the file from filestream, and print out through the
+//client-outputstream on a byte per byte base.
+intb = requestedfile.read();
+if(b == -1) {
+break; //end of file
+}
+output.write(b);
+}
+}
+//clean up the files, close open handles
+output.close();
+requestedfile.close();
+}
+catch(Exception e) {}
+}
+//this method makes the HTTP header for the response
+//the headers job is to tell the browser the result of the request
+//among if it was successful or not.
+privateString construct_http_header(intreturn_code, intfile_type) {
+String s = &quot;HTTP/1.0 &quot;;
+//you probably have seen these if you have been surfing the web a while
+switch(return_code) {
+case200:
+s = s + “200 OK”;
+break;
+case400:
+s = s + “400 Bad Request”;
+break;
+case403:
+s = s + “403 Forbidden”;
+break;
+case404:
+s = s + “404 Not Found”;
+break;
+case500:
+s = s + “500 Internal Server Error”;
+break;
+case501:
+s = s + “501 Not Implemented”;
+break;
+}
+s = s + “rn”; //other header fields,
+s = s + “Connection: closern”; //we can��t handle persistent connections
+s = s + “Server: SimpleHTTPtutorial v0rn”; //server name
+//Construct the right Content-Type for the header.
+//This is so the browser knows what to do with the
+//file, you may know the browser dosen��t look on the file
+//extension, it is the servers job to let the browser know
+//what kind of file is being transmitted. You may have experienced
+//if the server is miss configured it may result in
+//pictures displayed as text!
+switch(file_type) {
+//plenty of types for you to fill in
+case0:
+break;
+case1:
+s = s + “Content-Type: image/jpegrn”;
+break;
+case2:
+s = s + “Content-Type: image/gifrn”;
+case3:
+s = s + “Content-Type: application/x-zip-compressedrn”;
+default:
+s = s + “Content-Type: text/htmlrn”;
+break;
+}
+////so on and so on����
+s = s + “rn”; //this marks the end of the httpheader
+//and the start of the body
+//ok return our newly created header!
+returns;
+}
+} //class phhew caffeine yes please!</p>
+<p>BEWARE! When you run the web server you are potentially opening for all your files to be red by the entire Internet! The httpserver is only ment to be used for testing. If you absoulutely want to run this httpserver for longer periods of time; consider creating a new user with only read access to the files you want to share and running it only with this user!</p>
+<p>Download the tutorial files! this zipfile contains both sourcecode and compiled javabytecode files. So you can test the program without having the javacompiler. It also contains a sample index.html and a jpg file.</p>
+<p>How to run the program? Get into commandline, cd to the dir where you extracted the files (webserver_starter.class and the other files). Then type: java webserver_starter</p>
+<p>Then the window you see on top of this page should pop up. To test if this httpserver is really functioning, you open your browser, and in the location line you type: <a href="http://localhost/index.html" target="_blank" rel="external">http://localhost/index.html</a> ,this will bring up a sample html file that is in the zipfile.</p>
+<p>If you want to test the httpserver from another machine on the Internet, then you need to know the ip-address or hostname the httpserver is running on, then you type that in the location line in the browser, like <a href="http://123.123.123.123/index.html" target="_blank" rel="external">http://123.123.123.123/index.html</a> .Note, it may not work if you are behind a firewall or a NAT router, but that��s not the programs�� fault!</p>
+<p>Update: Oct 2011. This code is not actively updated, but I changed a few things mainly due to many people are referencing this. The switch (file_type) was missing breaks. requestedfile.read() and output.write() now reads and writes a byte array which speeds things up. And added favicon support since somebody asked about it.</p>
+<p>How to compile: Open command line. cd to directory where you unpacked it. javac *.java
+How to run: Open command line. cd to directory where you unpacked it. java -cp . webserver_starter</p>
+<p>Pointers to related stuff on the hypertext transfer protocol (http) and web servers:</p>
+<p>HowStuffWorks This is a very basic introduction for the novice on how web servers works. Has also other text about Internet and Routers, in easy to understandable language. Nice if you are starting out learning.</p>
+<p>HTTP Made Really Easy Here is some nice text that goes through the main points in HTTP. A little more technical. It��s recommended that you know these things to understand the above tutorial.
+Apache the best and most widely used web server on the Internet today, check it out. If you want to run your own web server this is the one to get, you can get binaries for both Windows and Unix. You can download the entire sourcecode if you want to check how it was made.</p>
+<p>Mozilla / Netscape is a nice web browser. Get rid of the Explorer, there are some rumors that Internet Explorer secretly collects all the pages you are visiting and sends it to <a href="http://microsoft.com" target="_blank" rel="external">microsoft.com</a>.</p>
+<p>RFC-1945 RFC describing Hypertext Transfer Protocol �� HTTP/1.0</p>
+<p>RFC-2616 RFC describing Hypertext Transfer Protocol �� HTTP/1.1</p>
+<p>RFC webpage The Request For Comment webpage, RFC are technical documents describing all sorts of protocols on the Internet.</p>
+<p>Java2 Runtime / SDK Download site for the Java Runtime (needed for running Java programs) and Java Software Development Kit (needed for making Java programs).</p>
 
           
         
@@ -1822,8 +2171,8 @@ grub&gt;boot</p>
             
               
                 
-                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">
-                  在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
+                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">
+                  httpclient����xml�ַ��������ͣ�
                 </a>
               
             
@@ -1850,8 +2199,8 @@ grub&gt;boot</p>
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -1866,8 +2215,8 @@ grub&gt;boot</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentsCount"></span>
+                <a href="/2013/01/05/java-httpclient-xml/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/java-httpclient-xml/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1892,24 +2241,16 @@ grub&gt;boot</p>
       
         
           
-            <p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
-<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
-<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
-<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
-<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
-<p>使用示例：</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
-<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
-<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
+            <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// �½ӵ�һ����Ŀ�ӿڣ���Ҫ��xml�������Ҳ�������post��ʽ������ѡ�����ַ�ʽ��������ƴ��xml�ַ���</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//������xml�ļ�����������д </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// ������ַ</span></div><div class="line"></div><div class="line">        <span class="comment">// ��������������ֱ�Ӵ��ļ��ж�ȡ </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// ��������xml�ַ���</span></div><div class="line"></div><div class="line">        <span class="comment">// ָ���������ݵ����� </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// ���� HttpClient ��ʵ�� </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// ����200Ϊ�ɹ� </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// ���ص����� </span></div><div class="line">            post.releaseConnection();<span class="comment">// �ͷ����� </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ���Ͼ��Ƿ��������Ĵ��룬�Է����յ����ݿ���ֱ�ӽ�����xml</span></div><div class="line"></div><div class="line">    <span class="comment">// ��ȡxml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>��Ҫjar����</p>
 <ol>
 <li>
-<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
+<p>jdom.jar</p>
 </li>
 <li>
-<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
+<p>commons-httpclient.jar</p>
 </li>
 </ol>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
 
           
         
