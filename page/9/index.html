@@ -301,6 +301,189 @@
             
               
                 
+                <a class="post-title-link" href="/2013/01/17/java-tomcat-deploy/" itemprop="url">
+                  Tomcat部署Web应用方法总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-17T21:30:00+08:00" content="2013-01-17">
+              2013-01-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/17/java-tomcat-deploy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/17/java-tomcat-deploy/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Tomcat部署Web应用方法总结
+在Tomcat中部署Java Web应用程序有两种方式：静态部署和动态部署。
+在下文中$CATALINA_HOME指的是Tomcat根目录。
+一、静态部署
+静态部署指的是我们在服务器启动之前部署我们的程序，只有当服务器启动之后，我们的Web应用程序才能访问。
+以下3种方式都可以部署：（以PetWeb项目为例说明，PetWeb目录假设是F:/PetWeb）
+1.利用Tomcat自动部署
+将PetWeb目录拷贝到$CATALINA_HOME/webapps下，然后启动服务器就可以了，Tomcat启动时将自动加载应用。
+访问地址如下：<a href="http://localhost:8080/PetWeb/" target="_blank" rel="external">http://localhost:8080/PetWeb/</a>
+这种方式比较简单，但是web应用程序必须在webapps目录下。Tomcat的Webapps目录是Tomcat默认的应用目录，当服务器启动时，会加载所有这个目录下的应用。
+2.修改Server.xml文件部署
+这种方式可以不必将PetWeb目录拷贝到webapps下，直接在F:/部署。方法如下，更改$CATALINA_HOME/conf/server.xml文件，
+找到以下内容：
+Xml代码：
+<context path="/Pet" reloadable="false" docbase="F:/PetWeb" workdir="d:/Mywebapps/emp">
+path：是访问时的根地址，表示访问的路径；如上述例子中，访问该应用程序地址如下：<a href="http://localhost:8080/Pet/" target="_blank" rel="external">http://localhost:8080/Pet/</a>
+reloadable：表示可以在运行时在classes与lib文件夹下自动加载类包。其中reloadable=&quot;false&quot;表示当应用程序 中的内容发生更改之后服务器不会自动加载，这个属性在开发阶段通常都设为true，方便开发，在发布阶段应该设置为false，提高应用程序的访问速度。
+docbase：表示应用程序的路径，注意斜杠的方向“/”。docBase可以使用绝对路径，也可以使用相对路径，相对路径相对于webapps。
+workdir：表示缓存文件的放置地址
+3.增加自定义web部署文件(推荐使用，不需要重启Tomcat)
+这种方式和方法2差不多，但不是在Server.xml文件中添加Context标签，而是在$CATALINA_HOME/conf /Catalina/localhost中添加一个xml文件，如Pet.xml.在Tomcat安装目录conf/Catalina /localhost下，里面有Tomcat自带的三个应用，随意复制其中的一个XML文件，然后修改docbase指向你自己的应用程序，并把文件名改 名，各参数参见方法2中的<context>标签的参数，或者你也可以自己新建一个XML文件。(注意此文件名将作为Context中的path属性值,不管文件里的path属性值如何设置也是无效的)，将以下内容复制过去，修改相应路径即可。
+Xml代码：
+<context path="/Pet" docbase="F:/PetWeb" debug="0" privileged="true" reloadable="false"></context>
+访问地址如下：<a href="http://localhost:8080/Pet/" target="_blank" rel="external">http://localhost:8080/Pet/</a>
+注：Web应用以.war文件的形式部署
+可以将JSP程序打包成一个war包放在目录下，服务器会自动解开这个war包，并在这个目录下生成一个同名的文件夹。一个war包就是有特性格式的jar包，它是将一个Web程序的所有内容进行压缩得到。
+我们刚才是将PetWeb文件夹部署在了服务器中，我们知道可以将Web应用程序的内容打成.war包，然后在部署在服务器上。打包请参考如下步骤：
+1、打开命令提示符（cmd）
+2、设置jdk环境变量
+3、在命令提示符中进入项目文件夹F:/PetWeb后，键入如下命令：jar cvf Pet.war */ . （注意最后有个“.”）。这样在F:/PetWeb下应该有Pet.war文件。 （也可以打包到指定的地方，命令如下：jar cvf d:/Pet.war */ .）
+部署Pet.war文件非常简单，将刚才xml文件中的docBase=&quot;F:/PetWeb&quot;更改为docBase=“F:/Pet.war&quot;或者直接将其拷贝到webapps目录下就可以。然后重新启动服务器就可以将Pet.war部署为一个Web应用程序了。
+如果你够细心的话你会发现，服务器将Pet.war文件解开，并且在webapps下面又生成了一个Pet文件夹，然后把Pet.war的内容拷贝到里面去了。我们可以通过以下方式取消自动解压缩，将xml配置文件中的unpackWAR属性设置为&quot;false” 即可。
+二、动态部署
+动态部署是指可以在服务器启动之后部署web应用程序，而不用重新启动服务器。动态部署要用到服务器提供的manager.war文件，如果 在$CATALINA_HOME/webapps/下没有该文件，你必须去重新下载tomcat，否则不能完成以下的功能。要想使用该管理程序必须首先编 辑$CATALINA_HOME/conf/tomcat-users.xml文件，内容如下：（关于这个文件的更多内容，请参考 Java Web应用程序的安全模型二 ）
+<tomcat-users>
+&lt; role rolename=“tomcat”/&gt;
+&lt; role rolename=“role1”/&gt;
+<role rolename="manager">
+&lt; user username=“coresun” password=“coresun” roles=“manager”/&gt;
+&lt; user username=“tomcat” password=“tomcat” roles=“tomcat”/&gt;
+&lt; user username=“both” password=“tomcat” roles=“tomcat,role1”/&gt;
+&lt; user username=“role1” password=“tomcat” roles=“role1”/&gt;
+&lt; /tomcat-users&gt;
+然后在浏览器中键入如下地址：<a href="http://localhost:8080/%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%9C%8B%E5%88%B0%E4%B8%80%E4%B8%AAtom%E7%8C%AB%E4%BA%86%E5%90%A7%E3%80%82%E7%82%B9%E5%87%BB%E5%B7%A6%E8%BE%B9%E7%9A%84Tomcat" target="_blank" rel="external">http://localhost:8080/，应该看到一个tom猫了吧。点击左边的Tomcat</a> Manager链接，提示输入用户名和密码，本文都是coresun，然后可以看到以下页面：
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/17/tomcat1.png" alt="tomcat">
+(1)Context Path(option):中输入/Pet
+(2)XML Configration file URL中要指定一个.xml文件，比如我们在F:/下建立一个Pet.xml文件，内容如下：<context reloadable="false">。docBase不用写了，因为要在下一个文本框中填入。或者更简单点，这个文本框什么都不填。
+(3)WAR or Directory URL:中键入F:/PetWet或者F:/Pet.war都可以，然后点击Deploy按钮，看看上面是不是已经看到了你web应用程序，名字就是你Context Path(option):中的名字。
+(4)如果你部署.war文件还有更加简单的方式，下面还有个Select WAR file upload点击浏览选择.war文件，然后点击Deploy也可以。
+让tomcat只运行conf/server.xml中指定的web应用
+可以有以下2种办法：
+实现一:
+1)将要部署的WEB应用放在webapps以外的路径, 并在server.xml相应的Context 中的docBase指定.
+2)删除webapps中的所有文件夹, 以及conf/catalina/localhost下所有xml文件.
+注: webapps是server.xml中的Host 元素的appBase属性的值.
+实现二:
+修改server.xml中Host 元素的属性, 添加或修改: deployXML=“false” deployOnStartup=“false” autoDeploy=&quot;false&quot;
+含义:
+deployXML=“false” : 不部署conf/catalina/localhost下的xml相应的WEB应用
+deployOnStartup=“false” :tomcat启动时, 不部署webapps下的所有web应用
+autoDeploy=“false” :避免tomcat在扫描改动时, 再次把webapps下的web应用给部署进来.
+注：
+Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法访问到该文件，必须有子目录才能访问该网页文件。
+例如：我们直接将index.html放在webapps目录中，通过浏览器http://localhost:8080/index.html是无法访问到index.html的。而必须要webapps/petweb/index.html才可以通过http://localhost:8080/petweb/index.html访问到index.html页面。</context></role></tomcat-users></context></context></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/01/17/java-tomcat-memory/" itemprop="url">
                   Linux和Windows下的Tomcat JVM内存设置
                 </a>
@@ -781,8 +964,142 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">
-                  可拖动模式窗口
+                <a class="post-title-link" href="/2013/01/10/db-mysql-err150/" itemprop="url">
+                  mysql errno:150
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/db-mysql-err150/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/db-mysql-err150/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
+在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序
+已知的原因：</p>
+<ol>
+<li>两个字段的类型或者大小不严格匹配，例如，如果一个是INT(10), 那么外键也必须设置成INT(10), 而不是 INT(11) 也不能是 TINYINT. 你得使用 SHOW 命令来查看字段的大小，因为一些查询浏览器有时候把 int(10) 和int(11) 都显示为integer。另外，你还必须确定两个字段是否一个为 SIGNED,而另一个又是UNSIGNED, 这两字段必须严格地一致匹配，更多关于signed 和 unsigned 的信息，请参阅：<a href="http://www.verysimple.com/blog/?p=57" target="_blank" rel="external">http://www.verysimple.com/blog/?p=57</a></li>
+<li>你试图引用的其中一个外键没有建立起索引，或者不是一个primary key , 如果其中一个不是primary key 的放，你必须为它创建一个索引。</li>
+<li>外键的名字是一个已经存在的一个键值了，这个时候，你应该检查你的数据库以确保外健名字是唯一的，或者你在键名后面加上几个随机的字符以测试是否是这个原因。</li>
+<li>其中一个或者两个表是MyISAM引擎的表，若想要使用外键约束，必须是InnoDB引擎，（实际上，如果两个表都是MyISAM 引擎的，这个错误根本不会发生，但也不会产生外键），你可以通过查询浏览器来设置表的引擎类型</li>
+<li>你可能设置了ON DELETE SET NULL, 但是相关的键的字段又设置成了NOTS NULL 值。你可能通过修改cascade 的属性值或者把字段属性设置成 allow null 来搞定这个bug.</li>
+<li>请确定你的Charset 和 Collate 选项在表级和字段级上的一致</li>
+<li>你可能设置为外键设置了一个默认值，如 default=0</li>
+<li>在这个关系里面，其中的一个字段是一个混合键值中的一个，它没有自己独立的索引，这时，你必须为它创建一个独立的索引。</li>
+<li>ALTER 声明中有语法错误</li>
+<li>要连接的两个表的编码格式不同</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-radio/" itemprop="url">
+                  js取radio值
                 </a>
               
             
@@ -825,8 +1142,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-mode-window/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-mode-window/" itemprop="commentsCount"></span>
+                <a href="/2013/01/10/web-js-radio/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-radio/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -851,7 +1168,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
       
         
           
-            <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>可拖动模式窗口<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"> </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertWin</span>(<span class="params">title, msg, w, h</span>)</span>&#123;  </div><div class="line">    <span class="keyword">var</span> titleheight = <span class="string">"22px"</span>; <span class="comment">// 提示窗口标题高度  </span></div><div class="line">    <span class="keyword">var</span> bordercolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的边框颜色  </span></div><div class="line">    <span class="keyword">var</span> titlecolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示窗口的标题颜色  </span></div><div class="line">    <span class="keyword">var</span> titlebgcolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的标题背景色 </span></div><div class="line">    <span class="keyword">var</span> bgcolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示内容的背景色 </span></div><div class="line">     </div><div class="line">    <span class="keyword">var</span> iWidth = <span class="built_in">document</span>.documentElement.clientWidth;  </div><div class="line">    <span class="keyword">var</span> iHeight = <span class="built_in">document</span>.documentElement.clientHeight;  </div><div class="line">    <span class="keyword">var</span> bgObj = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);  </div><div class="line">    bgObj.style.cssText = <span class="string">"position:absolute;left:0px;top:0px;width:"</span>+iWidth+<span class="string">"px;height:"</span>+<span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, iHeight)+<span class="string">"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(bgObj);  </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> msgObj=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>); </div><div class="line">    msgObj.style.cssText = <span class="string">"position:absolute;font:11px ‘宋体’;top:"</span>+(iHeight-h)/<span class="number">2</span>+<span class="string">"px;left:"</span>+(iWidth-w)/<span class="number">2</span>+<span class="string">"px;width:"</span>+w+<span class="string">"px;height:"</span>+h+<span class="string">"px;text-align:center;border:1px solid "</span>+bordercolor+<span class="string">";background-color:"</span>+bgcolor+<span class="string">";padding:1px;line-height:22px;z-index:102;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(msgObj); </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>); </div><div class="line">    msgObj.appendChild(table); </div><div class="line">    table.style.cssText = <span class="string">"margin:0px;border:0px;padding:0px;"</span>; </div><div class="line">    table.cellSpacing = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> tr = table.insertRow(<span class="number">-1</span>); </div><div class="line">    <span class="keyword">var</span> titleBar = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    titleBar.style.cssText = <span class="string">"width:100%;height:"</span>+titleheight+<span class="string">"px;text-align:left;padding:3px;margin:0px;font:bold 13px ‘宋体’;color:"</span>+titlecolor+<span class="string">";border:1px solid "</span> + bordercolor + <span class="string">";cursor:move;background-color:"</span> + titlebgcolor; </div><div class="line">    titleBar.style.paddingLeft = <span class="string">"10px"</span>; </div><div class="line">    titleBar.innerHTML = title; </div><div class="line">    <span class="keyword">var</span> moveX = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveY = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveTop = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveLeft = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveable = <span class="literal">false</span>; </div><div class="line">    <span class="keyword">var</span> docMouseMoveEvent = <span class="built_in">document</span>.onmousemove; </div><div class="line">    <span class="keyword">var</span> docMouseUpEvent = <span class="built_in">document</span>.onmouseup; </div><div class="line">    titleBar.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">var</span> evt = getEvent(); </div><div class="line">        moveable = <span class="literal">true</span>;  </div><div class="line">        moveX = evt.clientX; </div><div class="line">        moveY = evt.clientY; </div><div class="line">        moveTop = <span class="built_in">parseInt</span>(msgObj.style.top); </div><div class="line">        moveLeft = <span class="built_in">parseInt</span>(msgObj.style.left); </div><div class="line">         </div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">if</span> (moveable) &#123; </div><div class="line">                <span class="keyword">var</span> evt = getEvent(); </div><div class="line">                <span class="keyword">var</span> x = moveLeft + evt.clientX – moveX; </div><div class="line">                <span class="keyword">var</span> y = moveTop + evt.clientY – moveY; </div><div class="line">                <span class="keyword">if</span> ( x &gt; <span class="number">0</span> &amp;&amp;( x + w &lt; iWidth) &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; (y + h &lt; iHeight) ) &#123; </div><div class="line">                    msgObj.style.left = x + <span class="string">"px"</span>; </div><div class="line">                    msgObj.style.top = y + <span class="string">"px"</span>; </div><div class="line">                &#125; </div><div class="line">            &#125;     </div><div class="line">        &#125;; </div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">            <span class="keyword">if</span> (moveable) &#123;  </div><div class="line">                <span class="built_in">document</span>.onmousemove = docMouseMoveEvent; </div><div class="line">                <span class="built_in">document</span>.onmouseup = docMouseUpEvent; </div><div class="line">                moveable = <span class="literal">false</span>;  </div><div class="line">                moveX = <span class="number">0</span>; </div><div class="line">                moveY = <span class="number">0</span>; </div><div class="line">                moveTop = <span class="number">0</span>; </div><div class="line">                moveLeft = <span class="number">0</span>; </div><div class="line">            &#125;  </div><div class="line">        &#125;; </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> closeBtn = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    closeBtn.style.cssText = <span class="string">"cursor:pointer; padding:2px;background-color:"</span> + titlebgcolor; </div><div class="line">    closeBtn.innerHTML = <span class="string">"&lt;span style=’font-size:15pt; color:"</span>+titlecolor+<span class="string">";’&gt;×&lt;/span&gt;"</span>; </div><div class="line">    closeBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(bgObj);  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(msgObj);  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">var</span> msgBox = table.insertRow(<span class="number">-1</span>).insertCell(<span class="number">-1</span>); </div><div class="line">    msgBox.style.cssText = <span class="string">"font:10pt ‘宋体’;"</span>; </div><div class="line">    msgBox.colSpan  = <span class="number">2</span>; </div><div class="line">    msgBox.innerHTML = msg; </div><div class="line">     </div><div class="line">    <span class="comment">// 获得事件Event对象，用于兼容IE和FireFox </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.event || <span class="built_in">arguments</span>.callee.caller.arguments[<span class="number">0</span>]; </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点这里"</span> <span class="attr">onclick</span>=<span class="string">"alertWin(‘标题’,'这里是内容’,300,200);"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function">function <span class="title">ok</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">var</span> temp=document.getElementsByName(<span class="string">"radio"</span>);</div><div class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;temp.length;i++)&#123;</div><div class="line">  <span class="comment">//遍历Radio</span></div><div class="line">    <span class="keyword">if</span>(temp[i].<span class="keyword">checked</span>)</div><div class="line">      &#123;alert(<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>);</div><div class="line">      <span class="comment">//获取Radio的值</span></div><div class="line">      document.form2.textfield.<span class="keyword">value</span>=<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>;</div><div class="line">      <span class="comment">//传递给另外一个表单</span></div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1029,6 +1346,256 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
             
               
                 
+                <a class="post-title-link" href="/2013/01/10/java-eclipse-console/" itemprop="url">
+                  Eclipse 的控制台console乱码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/java-eclipse-console/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/java-eclipse-console/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Eclipse 的控制台必须用GBK编码。
+条件1，Window | Preferences | Workspace | Text file encoding | GBK编码。
+这样定义的是整个工作区间的编码。
+这样就把整个工作空间的编码格式定死了，但是如果某一个工程用的是不同的编码格式的话这样单独再解决。如下：
+条件2，工程上 右键 | Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是整个工程的编码。
+这样就把整个工程的编码格式定死了，但是如果某一个文件用的是不同的编码格式的话这样单独再解决。如下：
+条件3，在某个文件上 右键| Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是单独某个文件的编码。
+这里要说的是文件的实际编码格式优先用的是：第3个，其次再用2，最后先用1。有时候是123，必须满足条件。无论怎样这几种编码格式试一试就全知道了。
+条件4，还有运行时编码设置如下：菜单：Run Configuration | 右侧的选项卡Common 的 Console Encoding 选择GBK编码。这个是用来控制console控制台显示，必须是GBK，就不会乱码。尽管1，2，3条件都不是GBK，只要4是GBK。控制台就不会乱码。</p>
+<p>这样保证了工作空间和工程代码编程方式和工程里的单独文件的编码格式的不冲突。</p>
+<p>我们想改变别人的代码的编码格式的话用如下方法：1：用记事本打开，2:改变下面的编码格式如UTF-8，3：另存为xxx.java。这样另存的编码格式就变成自己想要的编码格式了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">
+                  可拖动模式窗口
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/web-js-mode-window/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-mode-window/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>可拖动模式窗口<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"> </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertWin</span>(<span class="params">title, msg, w, h</span>)</span>&#123;  </div><div class="line">    <span class="keyword">var</span> titleheight = <span class="string">"22px"</span>; <span class="comment">// 提示窗口标题高度  </span></div><div class="line">    <span class="keyword">var</span> bordercolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的边框颜色  </span></div><div class="line">    <span class="keyword">var</span> titlecolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示窗口的标题颜色  </span></div><div class="line">    <span class="keyword">var</span> titlebgcolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的标题背景色 </span></div><div class="line">    <span class="keyword">var</span> bgcolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示内容的背景色 </span></div><div class="line">     </div><div class="line">    <span class="keyword">var</span> iWidth = <span class="built_in">document</span>.documentElement.clientWidth;  </div><div class="line">    <span class="keyword">var</span> iHeight = <span class="built_in">document</span>.documentElement.clientHeight;  </div><div class="line">    <span class="keyword">var</span> bgObj = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);  </div><div class="line">    bgObj.style.cssText = <span class="string">"position:absolute;left:0px;top:0px;width:"</span>+iWidth+<span class="string">"px;height:"</span>+<span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, iHeight)+<span class="string">"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(bgObj);  </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> msgObj=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>); </div><div class="line">    msgObj.style.cssText = <span class="string">"position:absolute;font:11px ‘宋体’;top:"</span>+(iHeight-h)/<span class="number">2</span>+<span class="string">"px;left:"</span>+(iWidth-w)/<span class="number">2</span>+<span class="string">"px;width:"</span>+w+<span class="string">"px;height:"</span>+h+<span class="string">"px;text-align:center;border:1px solid "</span>+bordercolor+<span class="string">";background-color:"</span>+bgcolor+<span class="string">";padding:1px;line-height:22px;z-index:102;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(msgObj); </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>); </div><div class="line">    msgObj.appendChild(table); </div><div class="line">    table.style.cssText = <span class="string">"margin:0px;border:0px;padding:0px;"</span>; </div><div class="line">    table.cellSpacing = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> tr = table.insertRow(<span class="number">-1</span>); </div><div class="line">    <span class="keyword">var</span> titleBar = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    titleBar.style.cssText = <span class="string">"width:100%;height:"</span>+titleheight+<span class="string">"px;text-align:left;padding:3px;margin:0px;font:bold 13px ‘宋体’;color:"</span>+titlecolor+<span class="string">";border:1px solid "</span> + bordercolor + <span class="string">";cursor:move;background-color:"</span> + titlebgcolor; </div><div class="line">    titleBar.style.paddingLeft = <span class="string">"10px"</span>; </div><div class="line">    titleBar.innerHTML = title; </div><div class="line">    <span class="keyword">var</span> moveX = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveY = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveTop = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveLeft = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveable = <span class="literal">false</span>; </div><div class="line">    <span class="keyword">var</span> docMouseMoveEvent = <span class="built_in">document</span>.onmousemove; </div><div class="line">    <span class="keyword">var</span> docMouseUpEvent = <span class="built_in">document</span>.onmouseup; </div><div class="line">    titleBar.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">var</span> evt = getEvent(); </div><div class="line">        moveable = <span class="literal">true</span>;  </div><div class="line">        moveX = evt.clientX; </div><div class="line">        moveY = evt.clientY; </div><div class="line">        moveTop = <span class="built_in">parseInt</span>(msgObj.style.top); </div><div class="line">        moveLeft = <span class="built_in">parseInt</span>(msgObj.style.left); </div><div class="line">         </div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">if</span> (moveable) &#123; </div><div class="line">                <span class="keyword">var</span> evt = getEvent(); </div><div class="line">                <span class="keyword">var</span> x = moveLeft + evt.clientX – moveX; </div><div class="line">                <span class="keyword">var</span> y = moveTop + evt.clientY – moveY; </div><div class="line">                <span class="keyword">if</span> ( x &gt; <span class="number">0</span> &amp;&amp;( x + w &lt; iWidth) &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; (y + h &lt; iHeight) ) &#123; </div><div class="line">                    msgObj.style.left = x + <span class="string">"px"</span>; </div><div class="line">                    msgObj.style.top = y + <span class="string">"px"</span>; </div><div class="line">                &#125; </div><div class="line">            &#125;     </div><div class="line">        &#125;; </div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">            <span class="keyword">if</span> (moveable) &#123;  </div><div class="line">                <span class="built_in">document</span>.onmousemove = docMouseMoveEvent; </div><div class="line">                <span class="built_in">document</span>.onmouseup = docMouseUpEvent; </div><div class="line">                moveable = <span class="literal">false</span>;  </div><div class="line">                moveX = <span class="number">0</span>; </div><div class="line">                moveY = <span class="number">0</span>; </div><div class="line">                moveTop = <span class="number">0</span>; </div><div class="line">                moveLeft = <span class="number">0</span>; </div><div class="line">            &#125;  </div><div class="line">        &#125;; </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> closeBtn = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    closeBtn.style.cssText = <span class="string">"cursor:pointer; padding:2px;background-color:"</span> + titlebgcolor; </div><div class="line">    closeBtn.innerHTML = <span class="string">"&lt;span style=’font-size:15pt; color:"</span>+titlecolor+<span class="string">";’&gt;×&lt;/span&gt;"</span>; </div><div class="line">    closeBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(bgObj);  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(msgObj);  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">var</span> msgBox = table.insertRow(<span class="number">-1</span>).insertCell(<span class="number">-1</span>); </div><div class="line">    msgBox.style.cssText = <span class="string">"font:10pt ‘宋体’;"</span>; </div><div class="line">    msgBox.colSpan  = <span class="number">2</span>; </div><div class="line">    msgBox.innerHTML = msg; </div><div class="line">     </div><div class="line">    <span class="comment">// 获得事件Event对象，用于兼容IE和FireFox </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.event || <span class="built_in">arguments</span>.callee.caller.arguments[<span class="number">0</span>]; </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点这里"</span> <span class="attr">onclick</span>=<span class="string">"alertWin(‘标题’,'这里是内容’,300,200);"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">
                   1像素表格
                 </a>
@@ -1128,500 +1695,6 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">
-                  禁止状态栏显示链接
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-disabled-statebar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-disabled-statebar/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-window-resize/" itemprop="url">
-                  改变当前浏览器窗口大小
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-window-resize/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-window-resize/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"JavaScript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    self.resizeTo(200,300)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/db-mysql-err150/" itemprop="url">
-                  mysql errno:150
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/db-mysql-err150/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/db-mysql-err150/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
-在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序
-已知的原因：</p>
-<ol>
-<li>两个字段的类型或者大小不严格匹配，例如，如果一个是INT(10), 那么外键也必须设置成INT(10), 而不是 INT(11) 也不能是 TINYINT. 你得使用 SHOW 命令来查看字段的大小，因为一些查询浏览器有时候把 int(10) 和int(11) 都显示为integer。另外，你还必须确定两个字段是否一个为 SIGNED,而另一个又是UNSIGNED, 这两字段必须严格地一致匹配，更多关于signed 和 unsigned 的信息，请参阅：<a href="http://www.verysimple.com/blog/?p=57" target="_blank" rel="external">http://www.verysimple.com/blog/?p=57</a></li>
-<li>你试图引用的其中一个外键没有建立起索引，或者不是一个primary key , 如果其中一个不是primary key 的放，你必须为它创建一个索引。</li>
-<li>外键的名字是一个已经存在的一个键值了，这个时候，你应该检查你的数据库以确保外健名字是唯一的，或者你在键名后面加上几个随机的字符以测试是否是这个原因。</li>
-<li>其中一个或者两个表是MyISAM引擎的表，若想要使用外键约束，必须是InnoDB引擎，（实际上，如果两个表都是MyISAM 引擎的，这个错误根本不会发生，但也不会产生外键），你可以通过查询浏览器来设置表的引擎类型</li>
-<li>你可能设置了ON DELETE SET NULL, 但是相关的键的字段又设置成了NOTS NULL 值。你可能通过修改cascade 的属性值或者把字段属性设置成 allow null 来搞定这个bug.</li>
-<li>请确定你的Charset 和 Collate 选项在表级和字段级上的一致</li>
-<li>你可能设置为外键设置了一个默认值，如 default=0</li>
-<li>在这个关系里面，其中的一个字段是一个混合键值中的一个，它没有自己独立的索引，这时，你必须为它创建一个独立的索引。</li>
-<li>ALTER 声明中有语法错误</li>
-<li>要连接的两个表的编码格式不同</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">
-                  js判断数字
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-number-check/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-number-check/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight scilab"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1667,7 +1740,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-count">180</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1675,7 +1748,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1684,7 +1757,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">138</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

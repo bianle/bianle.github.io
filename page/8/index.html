@@ -301,6 +301,197 @@
             
               
                 
+                <a class="post-title-link" href="/2013/08/20/java-heap/" itemprop="url">
+                  优化Java堆大小的5个技巧
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-08-20T17:12:12+08:00" content="2013-08-20">
+              2013-08-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/08/20/java-heap/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/20/java-heap/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文作者Pierre是一名有10多年经验的高级系统架构师，他的主要专业领域是Java EE、中间件和JVM技术。根据他多年的工作实践经验，他发现许多性能问题都是由Java堆容量不足和调优引起的。下面他将和大家分享非常实用的5个Java堆优化技巧。
+1.JVM：对难以理解的东西产生恐惧感
+千万不要以为，通过配置，调优，就可以排除那些你所不明白的问题。有些人认为Java程序员不需要知道内部JVM内存管理。毫无疑问，这种观点明显是错误的，如果想拓宽知识面和提升排除故障能力，你就必须要了解和学习一下JVM内存管理。
+对于Java或者是Java EE新手来说，Java Heap调优和故障排除是一项非常有挑战的工作。下面会提供一些典型的案例场景：
+客户端环境面临着有规律的OutOfMemoryError错误并且对业务造成了很大的影响。
+你的开发团队要在如此大的压力下去解决这个问题，通常会怎么做？
+用谷歌搜索引擎找到类似的问题并且你会相信（或假设）你也面临同样的问题。
+你会抓住JVM-Xms和存在OutOfMemoryError异常这几个关键字的例子，然后希望通过这样的案例来快速解决客户端问题。
+最后你会在你环境中使用相同的调优方法。两天后，问题仍然发生（甚至更糟或者稍微好点）……
+到底是哪里错了呢？
+首先，没有摸清问题根源所在？对开发环境没有正确地进行深层面（规格、负载情况等）理解。网络搜索是一个非常优秀的学习方法和知识分享工具，但是你必须结合自己的实际项目，从根本上进行分析解决。
+可能缺乏基本的JVM和JVM内存管理技能，阻止你把所有的点给连接起来。
+今天讲的第一条技巧是帮助你理解基本的JVM原则及其与众不同的内存空间。这些知识都是相当重要的，它可以帮助你做出有效的调优策略、更加正确合理的预测将来会产生的影响、提前知道未来需要做哪些调优工作。下面来看一下JVM参考指南：
+JVM内存分为3个内存空间
+Java Heap：适用于所有的JVM厂商，通常用来拆分YoungGen（幼苗）和OldGen（终身享用）空间。
+PermGen（永久代）：适用于Sun HotSpot VM（(PermGen空间在Java7或者Java8更新中将会被删除）
+Native Heap（C-Heap）：适用于所有的JVM厂商。
+建议把下面的文章都能看一遍，最好把Sun的Java内存管理白皮书和OpenJDKS实现下载下来并仔细阅读。
+Sun HotSpot VM
+IBM VM
+Oracle JRockit VM
+Sun(Oracle)–Java memory management white paper
+OpenJDK–Open-source Java implementation
+正如你所看到的，JVM内存管理比使用Xmx设置最大值更为复杂。你需要查看每个角度，包括本地和PermGen需求以及从主机上查看物理内存可用性（CPU core）。
+在较大的Java Heap和较小的本地Heap比赛中，32位虚拟机可能会变得相当棘手。试图在一个32位VM如2.5GB+上设置一个大型堆，根据应用程序占用和线程数量等因素会增加OutOfMemoryError这个异常抛出。64位JVM可以解决这个问题，但物理资源可用性和垃圾回收成本仍然是有限制的（成本主要集中在GC大小收集上）。最大并不表示是最好的，所以请不要假设在一个16GB的64位虚拟机上可以运行20个Java EE应用程序。
+2.数据和应用程序为王：回顾静态占用需求
+应用程序以及相关数据将决定Java堆空间占用需求。通过静态内存，可“预测”下面的内存需求：
+确定将会有多少不同的应用程序部署到预先计划的一个单独的JVM进程上，例如有多少个ear文件、war文件、jar文件等。在一个JVM上部署的应用程序越多，对本机堆的需求就越多。
+确定有多少个类需要在运行时加载：包括第三方API。越多的类加载器和类在运行时被加载，在HotSpot VM PermGen空间和内部JIT相关优化对象上的需求就越高。
+确定数据缓存占用，如应用程序加载内部缓存数据结构（和第三方API），例如数据库中的数据缓存，从文件中读取数据等。数据缓存使用越多，Java Heap OldGen空间需求就越高。
+确定允许建立的中间件线程数量。这是非常重要的，因为Java线程需要足够的本机内存，否则会抛OutOfMemoryError异常。
+在JVM进程上部署的应用程序越多，对本地内存和PermGen空间的要求就越高。数据缓存并不是序列化为一个磁盘或数据库，它将从OldGen空间里面需要额外的内存。</p>
+<p>设法对静态内存占用进行合理的评估，在真正进行数据测试之前，设置一些JVM能力起点是非常有用的。对于32位JVM,通常不推荐一个Java堆大小超过2 GB(-Xms2048m,-Xmx2048m)，对于Java EE应用程序和线程来说这样将需要足够的内存和本机堆PermGen。
+这个评估是非常重要因为太多的应用程序部署在一个32位JVM进程上很容易导致本机堆耗尽；尤其是在多重线程环境。
+对于64位JVM， 一个3GB或者4GB的Java堆/JVM进程是推荐的起点。
+3.业务流量设置规则：审查动态内存占用需求
+业务流量通常会决定动态内存占用。通过观察各种监控工具可以发现并发用户与请求生成的JVM GC“心跳”，这是由于频繁的创建和垃圾回收短期或者长期对象。
+一个典型的32位JVM，Java堆大小设置在2 GB(使用分代&amp;并发收集器)通常为500 MB YoungGen分配空间和1.5 GB的OldGen空间。
+最大限度地减少重大GC收集的频率是获得最佳性能的关键因素，所以在高峰的时候理解和评估需要多少内存是非常重要的。
+再次声明，应用程序类型和数据将决定内存需求。购物车的应用程序类型（长期居住的对象）涉及大型和非序列化会话数据，这个通常需要大型Java堆和很多OldGen空间。无状态和XML处理（很多短命的对象）繁重的应用程序需要适当YoungGen空间，以尽量减少频率主要集合。
+例如：
+你有5个ear应用程序（2000多个Java类）要部署（包含中间件代码）
+本地堆需求估计为1GB（必须足够大以处理线程创建等等。）PermGen空间大约是512 MB。
+内部静态缓存大约500MB
+在高峰时间，总预测流量是5000个并发用户
+每个用户的会话数据大约500K
+在高峰期间，总流量会话要求是2.5GB。
+正如你所看到的一样，在如此情况下，32位JVM进程就无法满足。一个典型的解决方案是进行流量拆分，在几个JVM进程或物理主机（假设有足够的硬件和CPU core可用）上。
+大多数时候，业务流量将推动内存占用。除非你需要大量的数据缓存来实现适当的性能，典型的门户应用网站（媒体）繁重的应用程序需求。数据缓存太多的时候应该用一个黄色的标志标注一下，最好早点去重新审视一下一些设计元素。
+4.量体裁衣
+这一条，你应该做到：
+理解基本的JVM原则和内存空间。
+对所有应用程序有深入的了解及其它们的特点（大小、类型、动态流量、无状态对象VS有状态对象、内部内存缓存等）。
+对预测业务流量（并发用户）给每一个应用程序能提出很好的观点—如果你需要一个64位的虚拟内存，那么将设置哪个作为开始。
+如果需要多个JVM（中间件）过程。
+等一下，这样做并不足够。虽然上面的信息是至关重要的，并且关于Java堆的设置进行了“最佳猜测”，对应用程序的行为进行模拟并且进行适当的分析、负载和性能测试来验证Java堆内存要求。
+推荐Jprofiler工具给大家，学习如何使用一个分析器的最好方法是正确理解应用程序的内存占用。另一个方法是使用Eclipse MAT工具根据现有的环境进行堆转储分析。堆转储非常强大，它可以允许你查看和理解Java堆的整个内存占用，包含类加载器相关数据和在内存占用分析中必须要做的，特别是内存泄漏。
+Java分析器和堆转储分析工具允许你理解和验证应用程序内存足迹，包含内存泄漏的检测和解决方案。负载测试和性能测试是必不可少的，通过模拟并发用户来验证早期评估是否正确，它也会把应用程序瓶颈暴露出来并且允许你进行微调。推荐一个非常容易上手的工具：Apache Jmeter。
+最后将看一下这样的情况，应用程序在Java EE环境非常正常，直到有一天完全正常的设备启动失败，例如硬件问题。突然的环境运行能力下降和整体环境下降，到底发生了什么？
+引起“多米诺效应”的原因有很多，但缺少JVM调优和处理故障转移的能力（短期额外负荷）是很常见的。如果JVM进程运行在80% + OldGen空间容量和频繁的垃圾收集,你如何预期故障转移场景?
+前面模拟的负载和性能测试应该模拟这样的场景，调整你的调优设置使您的Java堆有足够的缓冲来处理额外的负载(额外的对象)在短期内。这主要适用于动态内存占用，由于故障转移意味着将重定向一些固定的并发用户给可利用的JVM进程（中间件实例）。
+5.分而治之
+这一条的前提是你已经完成了几十个负载测试。JVM已经不存在泄露，你的应用程序内存不能再进行任何减少。你已经尝试了几个调优策略，例如使用一个64位的Java堆空间在10GB以上。多个GC策略，尽管这样，仍然没有找到合适的可以接受的性能水平？
+与当前的JVM规范相比，适当的垂直和水平伸缩，包括在每个物理主机和跨多个主机上建立JVM进程来满足整个吞吐量和容量。如果在几个逻辑仓、自身的JVM进程、线程和调优值里打破应用程序列表那么IT环境的容错能力将更强大。
+“分而治之”策略包括拆分应用程序流量到多个JVM进程，下面提供一些拆分技巧：
+减少每个JVM进程的Java堆大小（静态和动态的占用）
+降低JVM调优复杂度。
+减少GC流失和暂停每个JVM进程
+增加冗余和故障切换功能
+排列最新的Cloud和IT虚拟化战略
+当你发现已经花费了大量的时间在64位JVM进程调优上，是时候该好好审视一下你的中间件和JVM部署策略并且利用垂直和水平缩放。这条策略的实现需要更多的硬件支持，但是从长远角度来看，是非常有效和有益的。（张红月/编译）
+原文链接：5 Tips for Proper Java Heap Size</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/05/08/java-sorting-algorithm/" itemprop="url">
                   视觉直观感受7种常用的排序算法
                 </a>
@@ -652,288 +843,6 @@
             
               
                 
-                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">
-                  IE中样式表、选择符的数量限制记录
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/web-ie-css-limit/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-ie-css-limit/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
-<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
-<blockquote>
-<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 4095 rules</li>
-<li>A sheet may @import up to 31 sheets</li>
-<li>@import nesting supports up to 4 levels deep
-Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>There’s a simple test page for the limits here.</p>
-</blockquote>
-<blockquote>
-<p>-Eric</p>
-</blockquote>
-<blockquote>
-<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 65534 rules</li>
-<li>A document may use up to 4095 stylesheets</li>
-<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
-</ul>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">
-                  Flex-代码格式化eclipse插件:Flex Formatter
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-flex-formmater/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
-<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
-<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
-<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
-<ol>
-<li>Start up FlexBuilder / FlashBuilder.</li>
-<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
-<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
-<li>Click ‘New Remote Site…’</li>
-<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
-<li>Click OK</li>
-<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
-<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
-</ol>
-<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">
                   python 小写转大写
                 </a>
@@ -1184,6 +1093,288 @@ Some folks have wondered about the math that underlies these numbers. The root o
 </li>
 </ol>
 </section>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">
+                  IE中样式表、选择符的数量限制记录
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/web-ie-css-limit/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-ie-css-limit/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
+<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
+<blockquote>
+<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 4095 rules</li>
+<li>A sheet may @import up to 31 sheets</li>
+<li>@import nesting supports up to 4 levels deep
+Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>There’s a simple test page for the limits here.</p>
+</blockquote>
+<blockquote>
+<p>-Eric</p>
+</blockquote>
+<blockquote>
+<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 65534 rules</li>
+<li>A document may use up to 4095 stylesheets</li>
+<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
+</ul>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">
+                  Flex-代码格式化eclipse插件:Flex Formatter
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-flex-formmater/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
+<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
+<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
+<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
+<ol>
+<li>Start up FlexBuilder / FlashBuilder.</li>
+<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
+<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
+<li>Click ‘New Remote Site…’</li>
+<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
+<li>Click OK</li>
+<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
+<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
+</ol>
+<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
 
           
         
@@ -1623,189 +1814,6 @@ Some folks have wondered about the math that underlies these numbers. The root o
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/17/java-tomcat-deploy/" itemprop="url">
-                  Tomcat部署Web应用方法总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-17T21:30:00+08:00" content="2013-01-17">
-              2013-01-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/17/java-tomcat-deploy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/17/java-tomcat-deploy/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Tomcat部署Web应用方法总结
-在Tomcat中部署Java Web应用程序有两种方式：静态部署和动态部署。
-在下文中$CATALINA_HOME指的是Tomcat根目录。
-一、静态部署
-静态部署指的是我们在服务器启动之前部署我们的程序，只有当服务器启动之后，我们的Web应用程序才能访问。
-以下3种方式都可以部署：（以PetWeb项目为例说明，PetWeb目录假设是F:/PetWeb）
-1.利用Tomcat自动部署
-将PetWeb目录拷贝到$CATALINA_HOME/webapps下，然后启动服务器就可以了，Tomcat启动时将自动加载应用。
-访问地址如下：<a href="http://localhost:8080/PetWeb/" target="_blank" rel="external">http://localhost:8080/PetWeb/</a>
-这种方式比较简单，但是web应用程序必须在webapps目录下。Tomcat的Webapps目录是Tomcat默认的应用目录，当服务器启动时，会加载所有这个目录下的应用。
-2.修改Server.xml文件部署
-这种方式可以不必将PetWeb目录拷贝到webapps下，直接在F:/部署。方法如下，更改$CATALINA_HOME/conf/server.xml文件，
-找到以下内容：
-Xml代码：
-<context path="/Pet" reloadable="false" docbase="F:/PetWeb" workdir="d:/Mywebapps/emp">
-path：是访问时的根地址，表示访问的路径；如上述例子中，访问该应用程序地址如下：<a href="http://localhost:8080/Pet/" target="_blank" rel="external">http://localhost:8080/Pet/</a>
-reloadable：表示可以在运行时在classes与lib文件夹下自动加载类包。其中reloadable=&quot;false&quot;表示当应用程序 中的内容发生更改之后服务器不会自动加载，这个属性在开发阶段通常都设为true，方便开发，在发布阶段应该设置为false，提高应用程序的访问速度。
-docbase：表示应用程序的路径，注意斜杠的方向“/”。docBase可以使用绝对路径，也可以使用相对路径，相对路径相对于webapps。
-workdir：表示缓存文件的放置地址
-3.增加自定义web部署文件(推荐使用，不需要重启Tomcat)
-这种方式和方法2差不多，但不是在Server.xml文件中添加Context标签，而是在$CATALINA_HOME/conf /Catalina/localhost中添加一个xml文件，如Pet.xml.在Tomcat安装目录conf/Catalina /localhost下，里面有Tomcat自带的三个应用，随意复制其中的一个XML文件，然后修改docbase指向你自己的应用程序，并把文件名改 名，各参数参见方法2中的<context>标签的参数，或者你也可以自己新建一个XML文件。(注意此文件名将作为Context中的path属性值,不管文件里的path属性值如何设置也是无效的)，将以下内容复制过去，修改相应路径即可。
-Xml代码：
-<context path="/Pet" docbase="F:/PetWeb" debug="0" privileged="true" reloadable="false"></context>
-访问地址如下：<a href="http://localhost:8080/Pet/" target="_blank" rel="external">http://localhost:8080/Pet/</a>
-注：Web应用以.war文件的形式部署
-可以将JSP程序打包成一个war包放在目录下，服务器会自动解开这个war包，并在这个目录下生成一个同名的文件夹。一个war包就是有特性格式的jar包，它是将一个Web程序的所有内容进行压缩得到。
-我们刚才是将PetWeb文件夹部署在了服务器中，我们知道可以将Web应用程序的内容打成.war包，然后在部署在服务器上。打包请参考如下步骤：
-1、打开命令提示符（cmd）
-2、设置jdk环境变量
-3、在命令提示符中进入项目文件夹F:/PetWeb后，键入如下命令：jar cvf Pet.war */ . （注意最后有个“.”）。这样在F:/PetWeb下应该有Pet.war文件。 （也可以打包到指定的地方，命令如下：jar cvf d:/Pet.war */ .）
-部署Pet.war文件非常简单，将刚才xml文件中的docBase=&quot;F:/PetWeb&quot;更改为docBase=“F:/Pet.war&quot;或者直接将其拷贝到webapps目录下就可以。然后重新启动服务器就可以将Pet.war部署为一个Web应用程序了。
-如果你够细心的话你会发现，服务器将Pet.war文件解开，并且在webapps下面又生成了一个Pet文件夹，然后把Pet.war的内容拷贝到里面去了。我们可以通过以下方式取消自动解压缩，将xml配置文件中的unpackWAR属性设置为&quot;false” 即可。
-二、动态部署
-动态部署是指可以在服务器启动之后部署web应用程序，而不用重新启动服务器。动态部署要用到服务器提供的manager.war文件，如果 在$CATALINA_HOME/webapps/下没有该文件，你必须去重新下载tomcat，否则不能完成以下的功能。要想使用该管理程序必须首先编 辑$CATALINA_HOME/conf/tomcat-users.xml文件，内容如下：（关于这个文件的更多内容，请参考 Java Web应用程序的安全模型二 ）
-<tomcat-users>
-&lt; role rolename=“tomcat”/&gt;
-&lt; role rolename=“role1”/&gt;
-<role rolename="manager">
-&lt; user username=“coresun” password=“coresun” roles=“manager”/&gt;
-&lt; user username=“tomcat” password=“tomcat” roles=“tomcat”/&gt;
-&lt; user username=“both” password=“tomcat” roles=“tomcat,role1”/&gt;
-&lt; user username=“role1” password=“tomcat” roles=“role1”/&gt;
-&lt; /tomcat-users&gt;
-然后在浏览器中键入如下地址：<a href="http://localhost:8080/%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%9C%8B%E5%88%B0%E4%B8%80%E4%B8%AAtom%E7%8C%AB%E4%BA%86%E5%90%A7%E3%80%82%E7%82%B9%E5%87%BB%E5%B7%A6%E8%BE%B9%E7%9A%84Tomcat" target="_blank" rel="external">http://localhost:8080/，应该看到一个tom猫了吧。点击左边的Tomcat</a> Manager链接，提示输入用户名和密码，本文都是coresun，然后可以看到以下页面：
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/17/tomcat1.png" alt="tomcat">
-(1)Context Path(option):中输入/Pet
-(2)XML Configration file URL中要指定一个.xml文件，比如我们在F:/下建立一个Pet.xml文件，内容如下：<context reloadable="false">。docBase不用写了，因为要在下一个文本框中填入。或者更简单点，这个文本框什么都不填。
-(3)WAR or Directory URL:中键入F:/PetWet或者F:/Pet.war都可以，然后点击Deploy按钮，看看上面是不是已经看到了你web应用程序，名字就是你Context Path(option):中的名字。
-(4)如果你部署.war文件还有更加简单的方式，下面还有个Select WAR file upload点击浏览选择.war文件，然后点击Deploy也可以。
-让tomcat只运行conf/server.xml中指定的web应用
-可以有以下2种办法：
-实现一:
-1)将要部署的WEB应用放在webapps以外的路径, 并在server.xml相应的Context 中的docBase指定.
-2)删除webapps中的所有文件夹, 以及conf/catalina/localhost下所有xml文件.
-注: webapps是server.xml中的Host 元素的appBase属性的值.
-实现二:
-修改server.xml中Host 元素的属性, 添加或修改: deployXML=“false” deployOnStartup=“false” autoDeploy=&quot;false&quot;
-含义:
-deployXML=“false” : 不部署conf/catalina/localhost下的xml相应的WEB应用
-deployOnStartup=“false” :tomcat启动时, 不部署webapps下的所有web应用
-autoDeploy=“false” :避免tomcat在扫描改动时, 再次把webapps下的web应用给部署进来.
-注：
-Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法访问到该文件，必须有子目录才能访问该网页文件。
-例如：我们直接将index.html放在webapps目录中，通过浏览器http://localhost:8080/index.html是无法访问到index.html的。而必须要webapps/petweb/index.html才可以通过http://localhost:8080/petweb/index.html访问到index.html页面。</context></role></tomcat-users></context></context></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1851,7 +1859,7 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">179</span>
+              <span class="site-state-item-count">180</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1859,7 +1867,7 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1868,7 +1876,7 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">138</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
