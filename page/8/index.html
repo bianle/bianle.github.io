@@ -301,6 +301,260 @@
             
               
                 
+                <a class="post-title-link" href="/2013/02/04/web-flex-music-player/" itemprop="url">
+                  web-flex-music-player
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-04T18:09:17+08:00" content="2013-02-04">
+              2013-02-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/04/web-flex-music-player/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/04/web-flex-music-player/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">
+                  Flex-代码格式化eclipse插件:Flex Formatter
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-flex-formmater/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
+<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
+<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
+<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
+<ol>
+<li>Start up FlexBuilder / FlashBuilder.</li>
+<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
+<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
+<li>Click ‘New Remote Site…’</li>
+<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
+<li>Click OK</li>
+<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
+<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
+</ol>
+<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">
                   python 小写转大写
                 </a>
@@ -372,185 +626,6 @@
         
           
             <figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/03/web-num-reg/" itemprop="url">
-                  数字正则
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/web-num-reg/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-num-reg/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
-验证n位的数字：^d{n}$
-验证至少n位数字：^d{n,}$
-验证m-n位的数字：^d{m,n}$
-验证零和非零开头的数字：^(0|[1-9][0-9]</em>)$
-验证有两位小数的正实数：<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>+(.[0-9]{2})?$
-验证有1-3位小数的正实数：<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+(.[0-9]{1,3})?$
-验证非零的正整数：^+?[1-9][0-9]<em>$
-验证非零的负整数：^-[1-9][0-9]</em>$
-验证非负整数（正整数 + 0） ^d+$
-验证非正整数（负整数 + 0） ^((-d+)|(0+))$
-验证长度为3的字符：^.{3}$
-验证由26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>+$
-验证由26个大写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>+$
-验证由26个小写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>+$
-验证由数字和26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>+$
-验证由数字、26个英文字母或者下划线组成的字符串：^w+$
-验证用户密码:<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
-验证是否含有 ^%&amp;’,;=?$&quot; 等字符：[^%&amp;’,;=?$x22]+
-验证汉字：<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>,{0,}$
-验证Email地址：^w+[-+.]w+)<em>@w+([-.]w+)</em>.w+([-.]w+)<em>$
-验证InternetURL：^http://([w-]+.)+[w-]+(/[w-./?%&amp;=]</em>)?$ ；<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>+://(w+(-w+)<em>)(.(w+(-w+)</em>))<em>(?S</em>)?$
-验证电话号码：^((d{3,4})|d{3,4}-)?d{7,8}$：–正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
-验证身份证号（15位或18位数字）：^d{15}|d{}18$
-验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
-验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
-整数：^-?d+$
-非负浮点数（正浮点数 + 0）：^d+(.d+)?$
-正浮点数 ^(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>))$
-非正浮点数（负浮点数 + 0） ^((-d+(.d+)?)|(0+(.0+)?))$
-负浮点数 ^(-(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>)))$
-浮点数 ^(-?d+)(.d+)?</p>
-<p>验证货币格式 <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>{1,3}(,[0-9]{3})*(.[0-9]{2})?$  –正确格式为123,456.00</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>0-9 <a href="#fnref1" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>0-9 <a href="#fnref2" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>0-9 <a href="#fnref3" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>A-Za-z <a href="#fnref4" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>A-Z <a href="#fnref5" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>a-z <a href="#fnref6" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>A-Za-z0-9 <a href="#fnref7" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>a-zA-Z <a href="#fnref8" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>u4e00-u9fa5 <a href="#fnref9" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>a-zA-z <a href="#fnref10" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>0-9 <a href="#fnref11" class="footnote-backref">↩</a></p>
-</li>
-</ol>
-</section>
 
           
         
@@ -748,8 +823,8 @@ Some folks have wondered about the math that underlies these numbers. The root o
             
               
                 
-                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">
-                  Flex-代码格式化eclipse插件:Flex Formatter
+                <a class="post-title-link" href="/2013/02/03/web-num-reg/" itemprop="url">
+                  数字正则
                 </a>
               
             
@@ -792,8 +867,8 @@ Some folks have wondered about the math that underlies these numbers. The root o
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-flex-formmater/" itemprop="commentsCount"></span>
+                <a href="/2013/02/03/web-num-reg/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-num-reg/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -818,21 +893,66 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
-<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
-<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
-<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
-<ol>
-<li>Start up FlexBuilder / FlashBuilder.</li>
-<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
-<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
-<li>Click ‘New Remote Site…’</li>
-<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
-<li>Click OK</li>
-<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
-<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
+            <p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
+验证n位的数字：^d{n}$
+验证至少n位数字：^d{n,}$
+验证m-n位的数字：^d{m,n}$
+验证零和非零开头的数字：^(0|[1-9][0-9]</em>)$
+验证有两位小数的正实数：<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>+(.[0-9]{2})?$
+验证有1-3位小数的正实数：<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+(.[0-9]{1,3})?$
+验证非零的正整数：^+?[1-9][0-9]<em>$
+验证非零的负整数：^-[1-9][0-9]</em>$
+验证非负整数（正整数 + 0） ^d+$
+验证非正整数（负整数 + 0） ^((-d+)|(0+))$
+验证长度为3的字符：^.{3}$
+验证由26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>+$
+验证由26个大写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>+$
+验证由26个小写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>+$
+验证由数字和26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>+$
+验证由数字、26个英文字母或者下划线组成的字符串：^w+$
+验证用户密码:<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
+验证是否含有 ^%&amp;’,;=?$&quot; 等字符：[^%&amp;’,;=?$x22]+
+验证汉字：<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>,{0,}$
+验证Email地址：^w+[-+.]w+)<em>@w+([-.]w+)</em>.w+([-.]w+)<em>$
+验证InternetURL：^http://([w-]+.)+[w-]+(/[w-./?%&amp;=]</em>)?$ ；<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>+://(w+(-w+)<em>)(.(w+(-w+)</em>))<em>(?S</em>)?$
+验证电话号码：^((d{3,4})|d{3,4}-)?d{7,8}$：–正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
+验证身份证号（15位或18位数字）：^d{15}|d{}18$
+验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
+验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
+整数：^-?d+$
+非负浮点数（正浮点数 + 0）：^d+(.d+)?$
+正浮点数 ^(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>))$
+非正浮点数（负浮点数 + 0） ^((-d+(.d+)?)|(0+(.0+)?))$
+负浮点数 ^(-(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>)))$
+浮点数 ^(-?d+)(.d+)?</p>
+<p>验证货币格式 <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>{1,3}(,[0-9]{3})*(.[0-9]{2})?$  –正确格式为123,456.00</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>0-9 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>0-9 <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>0-9 <a href="#fnref3" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>A-Za-z <a href="#fnref4" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>A-Z <a href="#fnref5" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>a-z <a href="#fnref6" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>A-Za-z0-9 <a href="#fnref7" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>a-zA-Z <a href="#fnref8" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>u4e00-u9fa5 <a href="#fnref9" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>a-zA-z <a href="#fnref10" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>0-9 <a href="#fnref11" class="footnote-backref">↩</a></p>
+</li>
 </ol>
-<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
+</section>
 
           
         
@@ -1594,152 +1714,6 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/linux-vm-rhl/" itemprop="url">
-                  VMWare虚拟机下安装RedHat Enterprise Linux 5 网络配置过程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T21:26:00+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/linux-vm-rhl/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/linux-vm-rhl/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程
-<a href="http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx" target="_blank" rel="external">http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx</a>
-1.网上邻居-属性-可以看到在你安装好 VM虚拟机后又多了两个网络连接
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl1.png" alt="rhl">
-(vmnet1是host-only，也就是说，选择用vmnet1的话就相当于VMware给你提供了一个虚拟交换机，仅将虚拟机和真实系统连上了，虚拟机可以与真实系统相互共享文件，但是虚拟机无法访问外部互联网，而vmnet8是NAT，就是网络地址转换，相当于给你一个虚拟交换机，将虚拟机和真实系统连上去了，同时这台虚拟交换机又和外部互联网相连，这样虚拟机和真是系统可以相互共享，同时又都能访问外部互联网，而且虚拟机是借用真实系统的IP上网的，不会受到IP-MAC绑定的限制。)
-右键VMnet8-属性-tcp/ip协议
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl2.png" alt="rhl">
--双击打开 -勾选使用下面的IP地址，
-把IP地址改为192.168.132(这个自己随便设1-224内的数字）.1 /255.255.255.0 网关以及DNS不用设置，点确定。
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl3.png" alt="rhl">
-2.打开vm虚拟机，点左上方的编辑-虚拟网络设置-nat
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl4.png" alt="rhl">
-edit—&gt;virtual network editor
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl5.png" alt="rhl">
-NAT Settings
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl6.png" alt="rhl">
-OK
-虚拟机的DNS就是这里的网关IP地址192.168.132.2,这个vmnet8相当于局域网里的网关。
-3.编辑-虚拟网络设置-主机虚拟网络映射,在vmnet0下拉框勾选自己的网卡，其余的一般默认即可。
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl7.png" alt="rhl">
-4.回到win主机,开始-运行-CMD,打开DOS，输入命令ipconfig/all，可以看到相关的IP配置
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl8.png" alt="rhl">
-5.进入VM虚拟机中的linux系统，主菜单-系统设置-网络-勾选下面的设备eth0-进入以太网设备编辑状态
-system —-&gt;administration—–&gt;network
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl9.png" alt="rhl">
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl10.png" alt="rhl">
-设置完成保存后 主菜单-系统工具-终端 打开后输入：service network restart (重启网络命令)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1785,7 +1759,7 @@ system —-&gt;administration—–&gt;network
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">177</span>
+              <span class="site-state-item-count">178</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1793,7 +1767,7 @@ system —-&gt;administration—–&gt;network
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1802,7 +1776,7 @@ system —-&gt;administration—–&gt;network
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">138</span>
+                <span class="site-state-item-count">137</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
