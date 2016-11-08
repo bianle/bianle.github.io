@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://2le.me/2016/11/02/exception-springmvc/index.html">
 <meta property="og:site_name" content="BianLe's Blog">
 <meta property="og:description" content="这一贴比较费流量！">
-<meta property="og:updated_time" content="2016-11-05T15:42:43.000Z">
+<meta property="og:updated_time" content="2016-11-08T09:34:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="好大的异常-springmvc篇">
 <meta name="twitter:description" content="这一贴比较费流量！">
@@ -393,6 +393,34 @@ java.lang.IllegalStateException: ApplicationEventMulticaster not initialized - c
 at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]</p>
 </blockquote>
 <p>bean id 重复了</p>
+<h2 id="springmvc3-2-mybatis3-2集成报错"><a class="header-anchor" href="#springmvc3-2-mybatis3-2集成报错"> </a>SpringMVC3.2+Mybatis3.2集成报错</h2>
+<blockquote>
+<p>Exception in thread “main” java.lang.AbstractMethodError: org.mybatis.spring.transaction.SpringManagedTransactionFactory.newTransaction(Ljava/sql/Connection;)Lorg/apache/ibatis/transaction/Transaction;
+	at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSessionFromConnection(DefaultSqlSessionFactory.java:98)
+	at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSession(DefaultSqlSessionFactory.java:71)
+	at org.mybatis.spring.SqlSessionUtils.getSqlSession(SqlSessionUtils.java:135)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:345)
+	at com.sun.proxy.$Proxy1.selectOne(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:155)
+	at im.le.hello.dao.TestDao.select(TestDao.java:13)
+at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
+</blockquote>
+<p>mybatis-spring插件升级到1.0.2-&gt;1.1.1</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="quartz2-spring3"><a class="header-anchor" href="#quartz2-spring3"> </a>quartz2+spring3</h2>
+<blockquote>
+<p>Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘runMeJob’ defined in URL [jar:file:/D:/bl/git/cpx/cpx-admin/target/cpx-admin/WEB-INF/lib/cpx-business-1.0.0-SNAPSHOT.jar!/conf/spring/spring-job.xml]: Invocation of init method failed; nested exception is java.lang.IncompatibleClassChangeError: Implementing class
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1514) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:293) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:290) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
+七月 29, 2016 8:41:51 上午 org.apache.catalina.core.StandardContext startInternal
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:191) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]</p>
+</blockquote>
+<p>spring3不兼容quartz2
+<a href="http://www.mkyong.com/spring/incompatibleclasschangeerror-jobdetailbean-has-interface-org-quartz-jobdetail-as-super-class/" target="_blank" rel="external">http://www.mkyong.com/spring/incompatibleclasschangeerror-jobdetailbean-has-interface-org-quartz-jobdetail-as-super-class/</a></p>
 
       
     </div>
@@ -550,7 +578,7 @@ at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]</p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">184</span>
+              <span class="site-state-item-count">188</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -558,7 +586,7 @@ at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]</p>
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -567,7 +595,7 @@ at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]</p>
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">141</span>
+                <span class="site-state-item-count">143</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -682,7 +710,7 @@ at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]</p>
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字call-refresh-before-multicasting-events-via-the-context"><span class="nav-number">1.</span> <span class="nav-text"> 关键字call 'refresh' before multicasting events via the context</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字call-refresh-before-multicasting-events-via-the-context"><span class="nav-number">1.</span> <span class="nav-text"> 关键字call 'refresh' before multicasting events via the context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springmvc3-2-mybatis3-2集成报错"><span class="nav-number">2.</span> <span class="nav-text"> SpringMVC3.2+Mybatis3.2集成报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quartz2-spring3"><span class="nav-number">3.</span> <span class="nav-text"> quartz2+spring3</span></a></li></ol></div>
             
           </div>
         </section>
