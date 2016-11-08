@@ -423,6 +423,153 @@
             
               
                 
+                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-open-root-user/" itemprop="url">
+                  如何开启Ubuntu 的 root 用户
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/linux-ubuntu-open-root-user/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/linux-ubuntu-open-root-user/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Ubuntu安装后，root用户默认是被锁定了的，不允许登录，也不允许“su”到 root。有人说这是个不好的实践，特别是对于服务器来说。我觉得对于桌面用户来说，这样安全性更高一些，是应该的；但对于服务器可以设置成“允许 su 到root，但不允许root用户直接登录”。而我为了开发时的方便，则在桌面和服务器上都采用这种方式。
+允许 su 到 root
+非常简单，下面是设置的方法：
+me@tipfoo:~$ sudo passwd
+Password: &lt;— 输入安装时那个用户的密码
+Enter new UNIX password: &lt;— 新的Root用户密码
+Retype new UNIX password: &lt;— 重复新的Root用户密码
+passwd：已成功更新密码
+允许root登录
+如果要允许root登录（不推荐），则这样操作：
+me@tipfoo:~$ gksu /usr/sbin/gdmsetup
+（或者使用桌面菜单：系统＞系统管理＞登录窗口）
+点“安全”选项页，选择“允许本地管理员登录”。
+注：这一步依赖上一步
+不输入密码直接登录
+在论坛上也看见有人抱怨，家中的Ubuntu不能像Window$那样──不用输入密码就能登录。其实同样能做到：
+就在上一步的“安全”选项页中，勾选：
+“启用自动登录”，“用户”选择（如：“me”）;
+注意：公共用的计算机千万不能这么设置！
+SSH登录远程服务器
+如果远程服务器只允许root用户SSH到服务器时，在Ubuntu下，必须“su 到root”用户才能登录成功(具体是看服务器端的配置)。
+首先，复制密钥到“/root/.ssh/”目录，
+me@tipfoo:~$ su</p>
+<p>Password:</p>
+<p>root@tipfoo:/home/me# chmod 600 -R /root/.ssh/</p>
+<p>root@tipfoo:/home/me# ssh -p 27482 11.22.33.44</p>
+<p>Enter passphrase for key ‘/root/.ssh/id_rsa’:</p>
+<p>Last login: Thu Jun 21 14:29:00 2007 from 11.22.33.45</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/07/04/linux-nano-vim-vi/" itemprop="url">
                   文本编辑器：nano vim/vi
                 </a>
@@ -1645,185 +1792,6 @@ return null;
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/06/05/linux-wget-guide/" itemprop="url">
-                  wget用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-06-05T17:43:35+08:00" content="2012-06-05">
-              2012-06-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/06/05/linux-wget-guide/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/05/linux-wget-guide/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>wget是在Linux下开发的开放源代码的软件，作者是Hrvoje Niksic，后来被移植到包括Windows在内的各个平台上。
-它有以下功能和特点：</p>
-<ol>
-<li>支持断点下传功能；这一点，也是网络蚂蚁和FlashGet当年最大的卖点，现在，Wget也可以使用此功能，那些网络不是太好的用户可以放心了；</li>
-<li>同时支持FTP和HTTP下载方式；尽管现在大部分软件可以使用HTTP方式下载，但是，有些时候，仍然需要使用FTP方式下载软件；</li>
-<li>支持代理服务器；对安全强度很高的系统而言，一般不会将自己的系统直接暴露在互联网上，所以，支持代理是下载软件必须有的功能；</li>
-<li>设置方便简单；可能，习惯图形界面的用户已经不是太习惯命令行了，但是，命令行在设置上其实有更多的优点，最少，鼠标可以少点很多次，也不要担心是否错点鼠标；</li>
-<li>程序小，完全免费；程序小可以考虑不计，因为现在的硬盘实在太大了；完全免费就不得不考虑了，即使网络上有很多所谓的免费软件，但是，这些软件的广告却不是我们喜欢的； wget虽然功能强大，但是使用起来还是比较简单的，基本的语法是：wget [参数列表] URL。</li>
-</ol>
-<p>下面就结合具体的例子来说明一下wget的用法。</p>
-<ol>
-<li>下载整个http或者ftp站点。 <code>wget http://place.your.url/here</code> 这个命令可以将<code>http://place.your.url/here</code> 首页下载下来。使用-x会强制建立服务器上一模一样的目录，如果使用-nd参数，那么服务器上下载的所有内容都会加到本地当前目录。
-<code>wget -r http://place.your.url/here</code> 这 个命令会按照递归的方法，下载服务器上所有的目录和文件，实质就是下载整个网站。这个命令一定要小心使用，因为在下载的时候，被下载网站指向的所有地址同 样会被下载，因此，如果这个网站引用了其他网站，那么被引用的网站也会被下载下来！基于这个原因，这个参数不常用。可以用<code>-l number</code>参数来指定下载的层次。例如只下载两层，那么使用<code>-l 2</code>。
-要是您想制作镜像站点，那么可以使用－m参数，例如：<code>wget -m http://place.your.url/here</code>这时wget会自动判断合适的参数来制作镜像站点。此时，wget会登录到服务器上，读入robots.txt并按robots.txt的规定来执行。</li>
-<li>断点续传。 当文件特别大或者网络特别慢的时候，往往一个文件还没有下载完，连接就已经被切断，此时就需要断点续传。wget的断点续传是自动的，只需要使用<code>-c</code>参数，例如： <code>wget -c http://the.url.of/incomplete/file</code>使用断点续传要求服务器支持断点续传。<code>-t</code>参数表示重试次数，例如需要重试100次，那么就写<code>-t 100</code>，如果设成<code>-t 0</code>，那么表示无穷次重试，直到连接成功。<code>-T</code>参数表示超时等待时间，例如<code>-T 120</code>，表示等待120秒连接不上就算超时。</li>
-<li>批量下载。 如果有多个文件需要下载，那么可以生成一个文件，把每个文件的URL写一行，例如生成文件download.txt，然后用命令：<code>wget -i download.txt</code>这样就会把download.txt里面列出的每个URL都下载下来。（如果列的是文件就下载文件，如果列的是网站，那么下载首页）</li>
-<li>选择性的下载。 可以指定让wget只下载一类文件，或者不下载什么文件。例如： <code>wget -m –reject=gif http://target.web.site/subdirectory</code>表示下载<code>http://target.web.site/subdirectory</code>，但是忽略gif文件。<code>–accept=LIST</code> 可以接受的文件类型，<code>–reject=LIST</code>拒绝接受的文件类型。</li>
-<li>密码和认证。 wget只能处理利用用户名/密码方式限制访问的网站，可以利用两个参数： –http-user=USER设置HTTP用户 <code>–http-passwd=PASS</code>设置HTTP密码 对于需要证书做认证的网站，就只能利用其他下载工具了，例如curl。</li>
-<li>利用代理服务器进行下载。 如果用户的网络需要经过代理服务器，那么可以让wget通过代理服务器进行文件的下载。此时需要在当前用户的目录下创建一个.wgetrc文件。文件中可以设置代理服务器： <code>http-proxy = 111.111.111.111:8080 ftp-proxy = 111.111.111.111:8080</code> 分别表示http的代理服务器和ftp的代理服务器。如果代理服务器需要密码则使用： <code>–proxy-user=USER</code>设置代理用户 <code>–proxy-passwd=PASS</code>设置代理密码 这两个参数。 使用参数<code>–proxy=on/off</code> 使用或者关闭代理。 wget还有很多有用的功能，需要用户去挖掘。</li>
-</ol>
-<p>附录：</p>
-<blockquote>
-<p>命令格式： wget [参数列表] [目标软件、网页的网址]
--V,–version 显示软件版本号然后退出；
--h,–help显示软件帮助信息；
--e,–execute=COMMAND 执行一个 “.wgetrc”命令
--o,–output-file=FILE 将软件输出信息保存到文件；
--a,–append-output=FILE将软件输出信息追加到文件；
--d,–debug显示输出信息；
--q,–quiet 不显示输出信息；
--i,–input-file=FILE 从文件中取得URL；
--t,–tries=NUMBER 是否下载次数（0表示无穷次）
--O –output-document=FILE下载文件保存为别的文件名
--nc, –no-clobber 不要覆盖已经存在的文件
--N,–timestamping只下载比本地新的文件
--T,–timeout=SECONDS 设置超时时间
--Y,–proxy=on/off 关闭代理
--nd,–no-directories 不建立目录
--x,–force-directories 强制建立目录
-–http-user=USER设置HTTP用户
-–http-passwd=PASS设置HTTP密码
-–proxy-user=USER设置代理用户
-–proxy-passwd=PASS设置代理密码
--r,–recursive 下载整个网站、目录（小心使用）
--l,–level=NUMBER 下载层次
--A,–accept=LIST 可以接受的文件类型
--R,–reject=LIST拒绝接受的文件类型
--D,–domains=LIST可以接受的域名
-–exclude-domains=LIST拒绝的域名
--L,–relative 下载关联链接 –follow-ftp 只下载FTP链接
--H,–span-hosts 可以下载外面的主机
--I,–include-directories=LIST允许的目录
--X,–exclude-directories=LIST 拒绝的目录
-中文文档名在平常的情况下会被编码， 但是在 –cut-dirs 时又是正常的，
-wget -r -np -nH –cut-dirs=3 <a href="ftp://host/test/" target="_blank" rel="external">ftp://host/test/</a> 测试.txt
-wget -r -np -nH -nd <a href="ftp://host/test/" target="_blank" rel="external">ftp://host/test/</a> %B4%FA%B8%D5.txt
-wget “<a href="ftp://host/test/*%E2%80%9D" target="_blank" rel="external">ftp://host/test/*”</a> %B4%FA%B8%D5.txt
-由 於不知名的原因，可能是为了避开特殊档名， wget 会自动将抓取档名的部分用 encode_string 处理过， 所以该 patch 就把被 encode_string 处理成 “%3A” 这种东西， 用 decode_string 还原成 “:”，并套用在目录与档案名称的部分，decode_string 是 wget 内建的函式。
-wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloads1.kaspersky-labs.com/bases/" target="_blank" rel="external">http://downloads1.kaspersky-labs.com/bases/</a> -o wget.log</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1869,7 +1837,7 @@ wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloa
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">183</span>
+              <span class="site-state-item-count">184</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1886,7 +1854,7 @@ wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloa
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">140</span>
+                <span class="site-state-item-count">141</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
