@@ -301,8 +301,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/01/10/skill-hide-file-in-picture/" itemprop="url">
-                  将文件藏到图片
+                <a class="post-title-link" href="/2012/03/25/java-log4j/" itemprop="url">
+                  log4j.properties
                 </a>
               
             
@@ -315,8 +315,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-01-10T18:09:17+08:00" content="2012-01-10">
-              2012-01-10
+            <time itemprop="dateCreated" datetime="2012-03-25T18:09:17+08:00" content="2012-03-25">
+              2012-03-25
             </time>
           </span>
 
@@ -329,8 +329,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">技巧</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -345,8 +345,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/01/10/skill-hide-file-in-picture/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/skill-hide-file-in-picture/" itemprop="commentsCount"></span>
+                <a href="/2012/03/25/java-log4j/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/03/25/java-log4j/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -371,35 +371,264 @@
       
         
           
-            <p>有些论坛对低权限用户是不开放附件上传功能的，但可能开放图片上传功能，我们可以把我们要上传的非图片文件“隐藏”到图片中，特洛伊木马的方式达到这种目的，当然这不是解决这种问题的唯一方法，你如果愿意也可以贴个外链链到网盘前提是你有你的网盘你 的网盘支持分享下载链接。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy /<span class="selector-tag">b</span> abc.jpg+abc<span class="selector-class">.rar</span> abc.jpg</div></pre></td></tr></table></figure>
-<blockquote>
-<p>COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
-[+ source [/A | /B] [+ …]] [destination [/A | /B]]</p>
-</blockquote>
-<blockquote>
-<p>source 指定要复制的文件。
-/A 表示一个 ASCII 文本文件。
-/B 表示一个二进位文件。
-/D 允许解密要创建的目标文件
-destination 为新文件指定目录和/或文件名。
-/V 验证新文件写入是否正确。
-/N 复制带有非 8dot3 名称的文件时，
-尽可能使用短文件名。
-/Y 不使用确认是否要覆盖现有目标文件
-的提示。
-/-Y 使用确认是否要覆盖现有目标文件
-的提示。
-/Z 用可重新启动模式复制已联网的文件。
-/L 如果源是符号链接，请将链接复制
-到目标而不是源链接指向的实际文件。</p>
-</blockquote>
-<blockquote>
-<p>命令行开关 /Y 可以在 COPYCMD 环境变量中预先设定。
-这可能会被命令行上的 /-Y 替代。除非 COPY
-命令是在一个批处理脚本中执行的，默认值应为
-在覆盖时进行提示。</p>
-</blockquote>
+            <figure class="highlight mel"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">log4j.rootCategory=DEBUG, stdout, R</div><div class="line"></div><div class="line">#Console config </div><div class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div><div class="line"></div><div class="line">#File config </div><div class="line">log4j.appender.R=org.apache.log4j.RollingFileAppender </div><div class="line">log4j.appender.R.File=c:/jmsLog.<span class="keyword">log</span> </div><div class="line">#log4j.appender.R.File=<span class="comment">//oracle/icdc/instance/lib/jmsLog.log </span></div><div class="line">log4j.appender.R.MaxFileSize=<span class="number">100</span>KB </div><div class="line">log4j.appender.R.MaxBackupIndex=<span class="number">0</span> </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/02/01/php-wp-domain/" itemprop="url">
+                  WordPress如何更换域名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-02-01T18:09:17+08:00" content="2012-02-01">
+              2012-02-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/02/01/php-wp-domain/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/02/01/php-wp-domain/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。</p>
+<ol>
+<li>
+<p>修改数据库配置文件，如果你在同一主机同一空间上更改域名，这步可以省掉，如果数据库不同，还得要打开wp-config.php将数据库配置正确才可以正常访问新域名。</p>
+</li>
+<li>
+<p>更改博客的安装地址和博客地址，首先用phpmyadmin打开你的数据库，然后找到wp-options这个数据表，找到第一条记录也就是siteurl这条，还有第39条home，这两条将地址改成你更换后的最域名即可。只有完成这一步后，才可以顺利进入后台，否则即使你输入密码，也会自动跳转到原来的老域名。PHP My管理中选择数据库，—-&gt;点击 SQL 在输入栏中输入如下代码：</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_options <span class="keyword">SET</span> option_value = <span class="keyword">replace</span>( option_value, ‘<span class="keyword">http</span>://老域名’, ’<span class="keyword">http</span>://新域名’) <span class="keyword">WHERE</span> option_name = ‘home’ <span class="keyword">OR</span> option_name =’siteurl’ ;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改文章内部所有的链接为新域名，相信大家在以前发表的文章中一定加了不少内链吧，域名更换了，老的内链也就没有意义了。此时得要将文章内链的旧域名修改为新域名。如果从后台文章编辑里一个一个找那是不现实的，方法有一个，通用phpmyadmin进入你所在的数据库，执行以下语句就可以把文章内的所有内链旧域名批量改为新域名：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> post_content = <span class="keyword">replace</span>(post_content, ‘<span class="keyword">http</span>://老域名’, ‘<span class="keyword">http</span>://新域名’); </div><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> guid = <span class="keyword">replace</span>( guid, ‘<span class="keyword">http</span>://老域名’ , ’<span class="keyword">http</span>://新域名’ ) ;</div></pre></td></tr></table></figure>
+<p>好了进入后台用以前的账号密码登陆就好了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/01/30/php-wp-runcode/" itemprop="url">
+                  WordPress RunCode – WordPress文章运行代码插件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-01-30T18:09:17+08:00" content="2012-01-30">
+              2012-01-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/01/30/php-wp-runcode/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/30/php-wp-runcode/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一直都想在博客文章中实现这个功能，也曾经尝试过把代码加入到PHP页面中去，但总不是太方便，今天，看到了这个功能，被告之是用的一个WordPress文章运行代码插件实现，这个插件就是<a href="http://blog.sunshow.net/" target="_blank" rel="external">Sunshow</a>写的WordPress RunCode插件。</p>
+<p>WordPress RunCode插件对于做网站前端开发的朋友来说，非常有用。可以在文章中及时地展示自己的一些前端的设计效果，包括CSS、Javascript等等。</p>
+<p>使用方法：</p>
+<p><runcode>……</runcode>之间加入你要运行的代码即可。</p>
 
           
         
@@ -758,6 +987,154 @@ destination 为新文件指定目录和/或文件名。
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/01/10/skill-hide-file-in-picture/" itemprop="url">
+                  将文件藏到图片
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-01-10T18:09:17+08:00" content="2012-01-10">
+              2012-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">技巧</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/01/10/skill-hide-file-in-picture/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/skill-hide-file-in-picture/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有些论坛对低权限用户是不开放附件上传功能的，但可能开放图片上传功能，我们可以把我们要上传的非图片文件“隐藏”到图片中，特洛伊木马的方式达到这种目的，当然这不是解决这种问题的唯一方法，你如果愿意也可以贴个外链链到网盘前提是你有你的网盘你 的网盘支持分享下载链接。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy /<span class="selector-tag">b</span> abc.jpg+abc<span class="selector-class">.rar</span> abc.jpg</div></pre></td></tr></table></figure>
+<blockquote>
+<p>COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
+[+ source [/A | /B] [+ …]] [destination [/A | /B]]</p>
+</blockquote>
+<blockquote>
+<p>source 指定要复制的文件。
+/A 表示一个 ASCII 文本文件。
+/B 表示一个二进位文件。
+/D 允许解密要创建的目标文件
+destination 为新文件指定目录和/或文件名。
+/V 验证新文件写入是否正确。
+/N 复制带有非 8dot3 名称的文件时，
+尽可能使用短文件名。
+/Y 不使用确认是否要覆盖现有目标文件
+的提示。
+/-Y 使用确认是否要覆盖现有目标文件
+的提示。
+/Z 用可重新启动模式复制已联网的文件。
+/L 如果源是符号链接，请将链接复制
+到目标而不是源链接指向的实际文件。</p>
+</blockquote>
+<blockquote>
+<p>命令行开关 /Y 可以在 COPYCMD 环境变量中预先设定。
+这可能会被命令行上的 /-Y 替代。除非 COPY
+命令是在一个批处理脚本中执行的，默认值应为
+在覆盖时进行提示。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -803,7 +1180,7 @@ destination 为新文件指定目录和/或文件名。
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">193</span>
+              <span class="site-state-item-count">196</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -811,7 +1188,7 @@ destination 为新文件指定目录和/或文件名。
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -820,7 +1197,7 @@ destination 为新文件指定目录和/或文件名。
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">144</span>
+                <span class="site-state-item-count">146</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

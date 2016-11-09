@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2016-11-09T02:00:25.000Z</updated>
+  <updated>2016-11-09T07:50:28.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,117 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ssh</title>
+    <link href="http://2le.me/2016/11/09/ssh/"/>
+    <id>http://2le.me/2016/11/09/ssh/</id>
+    <published>2016-11-09T07:45:35.000Z</published>
+    <updated>2016-11-09T07:50:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="ssh无密码登入非root用户如何设置"><a class="header-anchor" href="#ssh无密码登入非root用户如何设置"> </a>SSH无密码登入非root用户如何设置</h2>
+<blockquote>
+<p>1#:
+大家好，由于近期要管理大批机器，我在设置SSH登入的采用公钥无密码登入。但是只有ROOT用户才有效果
+客户机A 把id_rsa.pub内容拷贝到服务器主机B /root/.ssh/authorized_keys
+这时客户机A  ssh root@B
+不用输入密码直接登入
+然后我在设置无密码登入test账号
+客户机A 把id_rsa.pub内容拷贝到服务器主机B /home/test/.ssh/authorized_keys
+这时客户机A  ssh test@B
+这时提示还是要输入密码
+大家知道我哪里还需要设置吗？</p>
+</blockquote>
+<blockquote>
+<p>5#:
+多半是权限问题。</p>
+<p>.ssh目录的权限和authorized_keys的权限都要看， 权限大了是不行的</p>
+<p>.ssh的权限700， authorized_keys的权限600， 就够了，  属主要是登陆用户自己（root是不行的），组无所谓</p>
+<p>不管是什么原因， 查/var/log/secure就明白了</p>
+</blockquote>
+<blockquote>
+<p>6#:
+查看/var/log/secure
+报Authentication refused: bad ownership or modes for directory /home/test
+确实是用户主目录的权限问题造成的
+/home/test 之前是777
+后来改成755后就正常了
+只是感到困惑，权限改小确可以。。。。
+总之问题解决了
+谢了各位</p>
+</blockquote>
+<p>原文：<a href="http://bbs.chinaunix.net/forum.php?mod=viewthread&amp;tid=3554821" target="_blank" rel="external">http://bbs.chinaunix.net/forum.php?mod=viewthread&amp;tid=3554821</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;ssh无密码登入非root用户如何设置&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#ssh无密码登入非root用户如何设置&quot;&gt; &lt;/a&gt;SSH无密码登入非root用户如何设置&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1#:
+大家好，由于近期
+    
+    </summary>
+    
+      <category term="ssh" scheme="http://2le.me/categories/ssh/"/>
+    
+    
+      <category term="ssh" scheme="http://2le.me/tags/ssh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>好大的异常-windows篇</title>
+    <link href="http://2le.me/2016/11/09/exception-windows/"/>
+    <id>http://2le.me/2016/11/09/exception-windows/</id>
+    <published>2016-11-09T07:05:39.000Z</published>
+    <updated>2016-11-09T07:07:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="outlook一直显示正在加载中"><a class="header-anchor" href="#outlook一直显示正在加载中"> </a>outlook一直显示正在加载中</h2>
+<p>打开office其他软件如word，excel禁用硬件加速</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;outlook一直显示正在加载中&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#outlook一直显示正在加载中&quot;&gt; &lt;/a&gt;outlook一直显示正在加载中&lt;/h2&gt;
+&lt;p&gt;打开office其他软件如word，excel禁用硬件加速&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="Windows" scheme="http://2le.me/categories/Windows/"/>
+    
+    
+      <category term="异常" scheme="http://2le.me/tags/%E5%BC%82%E5%B8%B8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于logo</title>
+    <link href="http://2le.me/2016/11/09/about-logo/"/>
+    <id>http://2le.me/2016/11/09/about-logo/</id>
+    <published>2016-11-09T06:46:49.000Z</published>
+    <updated>2016-11-09T06:51:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>就是他–
+<img src="https://avatars1.githubusercontent.com/u/3324365" alt="logo"></p>
+<p>我是仿照这个<a href="http://www.guokr.com/article/50618/#id6" target="_blank" rel="external">光照派纹章</a>做的，感兴趣的可以看下</p>
+<p>这个网站也可以自动生成http://www.flipscript.com/ambigram-generator.aspx</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;就是他–
+&lt;img src=&quot;https://avatars1.githubusercontent.com/u/3324365&quot; alt=&quot;logo&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我是仿照这个&lt;a href=&quot;http://www.guokr.com/article/50618/#id
+    
+    </summary>
+    
+      <category term="其它" scheme="http://2le.me/categories/%E5%85%B6%E5%AE%83/"/>
+    
+    
+      <category term="关于" scheme="http://2le.me/tags/%E5%85%B3%E4%BA%8E/"/>
+    
+  </entry>
   
   <entry>
     <title>jquery-tips</title>
@@ -560,143 +671,6 @@ C-x r t 在选定区域的所有列前插入样的字符</p>
     
     
       <category term="emacs" scheme="http://2le.me/tags/emacs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>好大的异常-springmvc篇</title>
-    <link href="http://2le.me/2016/11/02/exception-springmvc/"/>
-    <id>http://2le.me/2016/11/02/exception-springmvc/</id>
-    <published>2016-11-02T09:50:43.000Z</published>
-    <updated>2016-11-08T09:34:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这一贴比较费流量！</p>
-<a id="more"></a>
-<h2 id="关键字call-refresh-before-multicasting-events-via-the-context"><a class="header-anchor" href="#关键字call-refresh-before-multicasting-events-via-the-context"> </a>关键字<code>call 'refresh' before multicasting events via the context</code></h2>
-<blockquote>
-<p>21:29:25.216 [localhost-startStop-1] WARN  o.s.w.c.s.XmlWebApplicationContext - Exception thrown from ApplicationListener handling ContextClosedEvent
-java.lang.IllegalStateException: ApplicationEventMulticaster not initialized - call ‘refresh’ before multicasting events via the context: Root WebApplicationContext: startup date [Thu Mar 24 21:29:24 CST 2016]; root of context hierarchy
-	at org.springframework.context.support.AbstractApplicationContext.getApplicationEventMulticaster(AbstractApplicationContext.java:347) [spring-context-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:334) [spring-context-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1051) [spring-context-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1012) [spring-context-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.web.context.ContextLoader.closeWebApplicationContext(ContextLoader.java:586) [spring-web-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.web.context.ContextLoaderListener.contextDestroyed(ContextLoaderListener.java:143) [spring-web-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at com.suning.pai.service.listener.SystemListener.contextDestroyed(SystemListener.java:76) [SystemListener.class:na]
-	at org.apache.catalina.core.StandardContext.listenerStop(StandardContext.java:5014) [catalina.jar:7.0.54]
-	at org.apache.catalina.core.StandardContext.stopInternal(StandardContext.java:5659) [catalina.jar:7.0.54]
-	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:232) [catalina.jar:7.0.54]
-	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:160) [catalina.jar:7.0.54]
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1559) [catalina.jar:7.0.54]
-	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1549) [catalina.jar:7.0.54]
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_45]
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_45]
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_45]
-at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]</p>
-</blockquote>
-<p>bean id 重复了</p>
-<h2 id="springmvc3-2-mybatis3-2集成报错"><a class="header-anchor" href="#springmvc3-2-mybatis3-2集成报错"> </a>SpringMVC3.2+Mybatis3.2集成报错</h2>
-<blockquote>
-<p>Exception in thread “main” java.lang.AbstractMethodError: org.mybatis.spring.transaction.SpringManagedTransactionFactory.newTransaction(Ljava/sql/Connection;)Lorg/apache/ibatis/transaction/Transaction;
-	at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSessionFromConnection(DefaultSqlSessionFactory.java:98)
-	at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSession(DefaultSqlSessionFactory.java:71)
-	at org.mybatis.spring.SqlSessionUtils.getSqlSession(SqlSessionUtils.java:135)
-	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:345)
-	at com.sun.proxy.$Proxy1.selectOne(Unknown Source)
-	at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:155)
-	at im.le.hello.dao.TestDao.select(TestDao.java:13)
-at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
-</blockquote>
-<p>mybatis-spring插件升级到1.0.2-&gt;1.1.1</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="quartz2-spring3"><a class="header-anchor" href="#quartz2-spring3"> </a>quartz2+spring3</h2>
-<blockquote>
-<p>Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘runMeJob’ defined in URL [jar:file:/D:/bl/git/cpx/cpx-admin/target/cpx-admin/WEB-INF/lib/cpx-business-1.0.0-SNAPSHOT.jar!/conf/spring/spring-job.xml]: Invocation of init method failed; nested exception is java.lang.IncompatibleClassChangeError: Implementing class
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1514) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:293) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:290) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]
-七月 29, 2016 8:41:51 上午 org.apache.catalina.core.StandardContext startInternal
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:191) ~[spring-beans-3.2.13.RELEASE.jar:3.2.13.RELEASE]</p>
-</blockquote>
-<p>spring3不兼容quartz2
-<a href="http://www.mkyong.com/spring/incompatibleclasschangeerror-jobdetailbean-has-interface-org-quartz-jobdetail-as-super-class/" target="_blank" rel="external">http://www.mkyong.com/spring/incompatibleclasschangeerror-jobdetailbean-has-interface-org-quartz-jobdetail-as-super-class/</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这一贴比较费流量！&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://2le.me/categories/java/"/>
-    
-    
-      <category term="springmvc" scheme="http://2le.me/tags/springmvc/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>好用的网址</title>
-    <link href="http://2le.me/2016/11/02/useful-sites/"/>
-    <id>http://2le.me/2016/11/02/useful-sites/</id>
-    <published>2016-11-02T09:14:02.000Z</published>
-    <updated>2016-11-09T02:23:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="破解"><a class="header-anchor" href="#破解"> </a>破解</h2>
-<p><a href="http://blog.lanyus.com/" target="_blank" rel="external">http://blog.lanyus.com/</a></p>
-<h2 id="前端"><a class="header-anchor" href="#前端"> </a>前端</h2>
-<p>What the font <a href="http://www.myfonts.com/WhatTheFont/" target="_blank" rel="external">http://www.myfonts.com/WhatTheFont/</a>
-浏览器兼容性 <a href="http://caniuse.com/" target="_blank" rel="external">http://caniuse.com/</a>
-网页性能测试 gtmetrix <a href="https://gtmetrix.com/" target="_blank" rel="external">https://gtmetrix.com/</a></p>
-<h2 id="有趣的"><a class="header-anchor" href="#有趣的"> </a>有趣的</h2>
-<p>一个前端大神的个人网站 <a href="http://strml.net/" target="_blank" rel="external">http://strml.net/</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;破解&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#破解&quot;&gt; &lt;/a&gt;破解&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;http://blog.lanyus.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog
-    
-    </summary>
-    
-      <category term="开发" scheme="http://2le.me/categories/%E5%BC%80%E5%8F%91/"/>
-    
-    
-      <category term="网址" scheme="http://2le.me/tags/%E7%BD%91%E5%9D%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>maven</title>
-    <link href="http://2le.me/2016/11/02/maven/"/>
-    <id>http://2le.me/2016/11/02/maven/</id>
-    <published>2016-11-02T09:10:55.000Z</published>
-    <updated>2016-11-05T13:59:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="国内maven镜像"><a class="header-anchor" href="#国内maven镜像"> </a>国内maven镜像</h2>
-<p><a href="http://nexus.hsweb.me/content/groups/public/" target="_blank" rel="external">http://nexus.hsweb.me/content/groups/public/</a></p>
-<p><a href="http://maven.aliyun.com/nexus/content/groups/public/" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/</a></p>
-<p><a href="http://mvnrepo.tae.taobao.com/content/groups/public/" target="_blank" rel="external">http://mvnrepo.tae.taobao.com/content/groups/public/</a></p>
-<p><a href="http://maven.mofasuidao.xyz/nexus/content/groups/public/" target="_blank" rel="external">http://maven.mofasuidao.xyz/nexus/content/groups/public/</a></p>
-<h2 id="nexus环境搭建及简单介绍"><a class="header-anchor" href="#nexus环境搭建及简单介绍"> </a>Nexus环境搭建及简单介绍</h2>
-<p><a href="http://blog.csdn.net/wang379275614/article/details/43940259" target="_blank" rel="external">http://blog.csdn.net/wang379275614/article/details/43940259</a></p>
-<p>默认密码admin/admin123</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;国内maven镜像&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#国内maven镜像&quot;&gt; &lt;/a&gt;国内maven镜像&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;http://nexus.hsweb.me/content/groups/public/&quot; 
-    
-    </summary>
-    
-      <category term="java" scheme="http://2le.me/categories/java/"/>
-    
-    
-      <category term="maven" scheme="http://2le.me/tags/maven/"/>
     
   </entry>
   
