@@ -1,4 +1,4 @@
-// ==UserScript==
+<script src="/assets/js/APlayer.min.js"> </script>// ==UserScript==
 // @name         博客-油猴脚本
 // @namespace    http://2le.me
 // @version      0.1

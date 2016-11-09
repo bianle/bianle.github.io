@@ -1,4 +1,4 @@
-// ==UserScript==
+<script src="/assets/js/APlayer.min.js"> </script>// ==UserScript==
 // @name        监控-响应时间
 // @author      边乐
 // @description 监控-响应时间

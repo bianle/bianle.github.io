@@ -1,4 +1,4 @@
-// ==UserScript==
+<script src="/assets/js/APlayer.min.js"> </script>// ==UserScript==
 // @name        监控-Mysql
 // @author      边乐
 // @description 监控-Mysql

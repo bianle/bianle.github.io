@@ -87,18 +87,18 @@
 
 
 <meta name="description" content="创建包
-1234567891011121314151617181920create or replace package p_view_param  is   function set_param(num number) return number;   function get_param  return number;    end p_view_param;     create or re">
+1234567891011121314151617181920create or replace package p_view_param  is   function set_param(num number) return number;   function get_param  return number;    end p_view_param;     create or">
 <meta property="og:type" content="article">
 <meta property="og:title" content="oracle视图传参数">
 <meta property="og:url" content="http://2le.me/2014/09/25/db-oracle-view-vars/index.html">
 <meta property="og:site_name" content="BianLe's Blog">
 <meta property="og:description" content="创建包
-1234567891011121314151617181920create or replace package p_view_param  is   function set_param(num number) return number;   function get_param  return number;    end p_view_param;     create or re">
+1234567891011121314151617181920create or replace package p_view_param  is   function set_param(num number) return number;   function get_param  return number;    end p_view_param;     create or">
 <meta property="og:updated_time" content="2016-11-03T08:12:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oracle视图传参数">
 <meta name="twitter:description" content="创建包
-1234567891011121314151617181920create or replace package p_view_param  is   function set_param(num number) return number;   function get_param  return number;    end p_view_param;     create or re">
+1234567891011121314151617181920create or replace package p_view_param  is   function set_param(num number) return number;   function get_param  return number;    end p_view_param;     create or">
 
 
 
@@ -371,7 +371,7 @@
       
 
       
-        <p>创建包</p>
+        <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>创建包</p>
 <figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">create <span class="keyword">or</span> replace <span class="keyword">package</span> <span class="title">p_view_param  </span><span class="keyword">is</span></div><div class="line">   <span class="keyword">function</span> <span class="title">set_param</span>(num number) <span class="keyword">return</span> <span class="type">number</span>;</div><div class="line">   <span class="keyword">function</span> <span class="title">get_param</span>  <span class="keyword">return</span> <span class="type">number</span>;</div><div class="line"> </div><div class="line">   <span class="keyword">end</span> p_view_param;</div><div class="line">  </div><div class="line">   create <span class="keyword">or</span> replace <span class="keyword">package</span> <span class="keyword">body</span> <span class="title">p_view_param </span><span class="keyword">is</span></div><div class="line">       paramValue number;</div><div class="line">       <span class="keyword">function</span> <span class="title">set_param</span>(num number) <span class="keyword">return</span> <span class="type">number</span> <span class="keyword">is</span></div><div class="line">       <span class="keyword">begin</span></div><div class="line">         paramValue:=num;</div><div class="line">         <span class="keyword">return</span> num;</div><div class="line">        <span class="keyword">end</span>; </div><div class="line">      </div><div class="line">       <span class="keyword">function</span> <span class="title">get_param</span> <span class="keyword">return</span> <span class="type">number</span> <span class="keyword">is</span></div><div class="line">       <span class="keyword">begin</span></div><div class="line">         <span class="keyword">return</span> paramValue;</div><div class="line">       <span class="keyword">end</span>;</div><div class="line">      </div><div class="line">   <span class="keyword">end</span> p_view_param;</div></pre></td></tr></table></figure>
 <p>创建视图</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">view</span> p_view_user <span class="keyword">as</span></div><div class="line">     <span class="keyword">select</span> <span class="keyword">id</span>,realName,address <span class="keyword">from</span> tbl_info <span class="keyword">where</span> <span class="keyword">id</span>=p_view_param.get_param();</div></pre></td></tr></table></figure>
