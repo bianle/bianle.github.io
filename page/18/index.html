@@ -301,6 +301,697 @@
             
               
                 
+                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">
+                  java实现http文件下载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-http-download/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
+了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
+分了几百甚至上千上万，那简直是个灾难。
+　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
+如此，我们就可以用程序来完成这个资源的完全下载。
+　　1. 基础知识
+　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
+Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
+　　步骤1:客户端发起连接请求一个URL
+　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
+　　步骤3:客户端接收输入流，将流中的内容存到文件
+　　2. 网络连接的建立
+　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
+存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>代理的访问
+　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
+，访问的JAVA代码如下:</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>网络资源的保存
+　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
+流中的所以内容，并将其保存在文件中。示例代码:</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/04/linux-nano-vim-vi/" itemprop="url">
+                  文本编辑器：nano vim/vi
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T17:30:33+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/linux-nano-vim-vi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/linux-nano-vim-vi/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.Nano是一个简单的没有花梢及华丽效果的文本编辑器。Nano在做简单文本文件编辑时相当不错,可以满足一些基本操作.
+直接在命令行模式下输入nano 文件名，就可以对文件进行简单的编辑。
+文件编辑中常用快捷键：ctrl+X 离开nano软件，若有修改过的文件会提示是否保存；
+ctrl+O 保存文件； Ctrl+W 查询字符串；
+ctrl +C 说明目前光标所在处的行数和列数等信息；
+ctrl+ _ 可以直接输入行号，让光标快速移到该行；
+<a href="http://2.vi" target="_blank" rel="external">2.vi</a> ：vi编辑器是所有Unix及Linux系统下标准的编辑器 ，功能强大，vim可视作vi的高级版本。
+1） vi可以分为三种模式：命令行模式，输入模式，末行模式。
+命令行模式—&gt;输入模式： i，a，A,o，O，c，C，r，R均可从命令行切换到输入行；
+i:在当前光标所在处插入； a：当前光标所在行的后面插入； A：当前光标所在行行尾插入；
+o:在当前光标所在处的下一行插入新的一行； O:在当前光标所在处的上一行插入新的一行；
+c:先删除在载入新的一行； C:删除光标所在一行在插入；
+r:替换光标所在那一个字符一次； R:一直替换光标所在处的文字；
+输入模式—&gt;命令行模式：Esc
+命令行模式—&gt;末行模式：：
+末行模式-—&gt;命令行模式：Esc
+2） 光标移动： h(&lt;—) 左移光标一个字符 ；
+l（—&gt;） 右移光标一个字符 ；
+k(↑) 光标上移一行 ;
+j (↓) 光标下移一行
+「ctrl」+「b」：屏幕往”后”移动一页。
+「ctrl」+「f」：屏幕往”前”移动一页。
+「ctrl」+「u」：屏幕往”后”移动半页。
+「ctrl」+「d」：屏幕往”前”移动半页
+3)行内移动：^ 移动到非空白行的行首
+0 绝对位置的行首
+$移动到行尾
+4）以单词为单位移动：
+w：一次移动一个单词，到下一个单词的词尾
+b：移到当前单词词首（向回跳）
+e：跳到词尾
+5）行间移动：
+n(数字）G ：n数值为几，就移到这个文件的第几行；当n=1时，相当于gg的功能，移到该文件的第一行；
+G：移到这个文件的最后一行；
+6）删除命令：
+x：向后删除一个字符，使用del键同样功能；
+X:向后删除一个字符；
+nx：连续向后删除n个字符；
+dd：删除光标所在的那一整行；
+ndd：删除光标所在的向下n行；
+d1G：删除光标所在到第一行的所有数据；
+dG：删除从光标所在到最后易方达额所有数据；
+7）复制，粘贴
+yy：复制光标所在的那一整行；
+nyy：复制光标所在的向下n行；
+y0：复制光标所在的那一个字符到该行行首的所有数据；
+y$:复制光标所在的那一个字符到该行行尾的所有数据；
+p：将已经复制的数据在光标的下一行粘贴；
+P：粘在光标的上一行；
+8）查找，替换
+/word:向下查找一个名称为word的字符串；
+？word：向上查找一个名称为word的字符串；
+：n1，n2 s/word1/word2/g ：在n1与n2行之间寻找一个word1的字符串，并将其替换为word2
+：1，$ s/word1/word2/g:从第一行到最后一行查找word1字符串，并将其替换为word2
+9）文件的保存与退出：
+w：在冒号输入字母「w」就可以将文件保存起来；
+q：退出；
+q!:强制退出；
+wq ：保存退出；
+wq！：强制保存退出
+10）显示行号：在末行模式输入：set nu
+取消行号：在末行模式输入：set nonu</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/02/it-beauty-code/" itemprop="url">
+                  一段惊艳的代码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-02T18:09:17+08:00" content="2012-07-02">
+              2012-07-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/02/it-beauty-code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/02/it-beauty-code/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight scilab"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">with(m=Math)C=<span class="built_in">cos</span>,S=<span class="built_in">sin</span>,P=pow,R=random;c.width=c.height=f=<span class="number">500</span>;h=<span class="number">-250</span>;<span class="function"><span class="keyword">function</span> <span class="title">p</span><span class="params">(a,b,c)</span>&#123;<span class="title">if</span><span class="params">(c&gt;60)</span><span class="title">return</span>[<span class="title">S</span><span class="params">(a*7)</span>*<span class="params">(13+5/(.2+P(b*4,4)</span>))-<span class="title">S</span><span class="params">(b)</span>*50,<span class="title">b</span>*<span class="title">f</span>+50,625+<span class="title">C</span><span class="params">(a*7)</span>*<span class="params">(13+5/(.2+P(b*4,4)</span>))+<span class="title">b</span>*400,<span class="title">a</span>*1-<span class="title">b</span>/2,<span class="title">a</span>];<span class="title">A</span>=<span class="title">a</span>*2-1;<span class="title">B</span>=<span class="title">b</span>*2-1;<span class="title">if</span><span class="params">(A*A+B*B&lt;1)</span>&#123;<span class="title">if</span><span class="params">(c&gt;37)</span>&#123;<span class="title">n</span>=<span class="params">(j=c&amp;1)</span>?6:4;<span class="title">o</span>=.5/<span class="params">(a+.01)</span>+<span class="title">C</span><span class="params">(b*125)</span>*3-<span class="title">a</span>*300;<span class="title">w</span>=<span class="title">b</span>*<span class="title">h</span>;<span class="title">return</span>[<span class="title">o</span>*<span class="title">C</span><span class="params">(n)</span>+<span class="title">w</span>*<span class="title">S</span><span class="params">(n)</span>+<span class="title">j</span>*610-390,<span class="title">o</span>*<span class="title">S</span><span class="params">(n)</span>-<span class="title">w</span>*<span class="title">C</span><span class="params">(n)</span>+550-<span class="title">j</span>*350,1180+<span class="title">C</span><span class="params">(B+A)</span>*99-<span class="title">j</span>*300,.4-<span class="title">a</span>*.1+<span class="title">P</span><span class="params">(1-B*B,-h*6)</span>*.15-<span class="title">a</span>*<span class="title">b</span>*.4+<span class="title">C</span><span class="params">(a+b)</span>/5+<span class="title">P</span><span class="params">(C((o*(a+1)</span>+<span class="params">(B&gt;0?w:-w)</span>)/25),30)*.1*<span class="params">(1-B*B)</span>,<span class="title">o</span>/1<span class="title">e3</span>+.7-<span class="title">o</span>*<span class="title">w</span>*3<span class="title">e</span>-6]&#125;<span class="title">if</span><span class="params">(c&gt;32)</span>&#123;<span class="title">c</span>=<span class="title">c</span>*1.16-.15;<span class="title">o</span>=<span class="title">a</span>*45-20;<span class="title">w</span>=<span class="title">b</span>*<span class="title">b</span>*<span class="title">h</span>;<span class="title">z</span>=<span class="title">o</span>*<span class="title">S</span><span class="params">(c)</span>+<span class="title">w</span>*<span class="title">C</span><span class="params">(c)</span>+620;<span class="title">return</span>[<span class="title">o</span>*<span class="title">C</span><span class="params">(c)</span>-<span class="title">w</span>*<span class="title">S</span><span class="params">(c)</span>,28+<span class="title">C</span><span class="params">(B*.5)</span>*99-<span class="title">b</span>*<span class="title">b</span>*<span class="title">b</span>*60-<span class="title">z</span>/2-<span class="title">h</span>,<span class="title">z</span>,<span class="params">(b*b*.3+P((1-(A*A)</span>),7)*.15+.3)*<span class="title">b</span>,<span class="title">b</span>*.7]&#125;<span class="title">o</span>=<span class="title">A</span>*<span class="params">(2-b)</span>*<span class="params">(80-c*2)</span>;<span class="title">w</span>=99-<span class="title">C</span><span class="params">(A)</span>*120-<span class="title">C</span><span class="params">(b)</span>*<span class="params">(-h-c*4.9)</span>+<span class="title">C</span><span class="params">(P(1-b,7)</span>)*50+<span class="title">c</span>*2;<span class="title">z</span>=<span class="title">o</span>*<span class="title">S</span><span class="params">(c)</span>+<span class="title">w</span>*<span class="title">C</span><span class="params">(c)</span>+700;<span class="title">return</span>[<span class="title">o</span>*<span class="title">C</span><span class="params">(c)</span>-<span class="title">w</span>*<span class="title">S</span><span class="params">(c)</span>,<span class="title">B</span>*99-<span class="title">C</span><span class="params">(P(b, 7)</span>)*50-<span class="title">c</span>/3-<span class="title">z</span>/1.35+450,<span class="title">z</span>,<span class="params">(1-b/1.2)</span>*.9+<span class="title">a</span>*.1, <span class="title">P</span><span class="params">((1-b)</span>,20)/4+.05]&#125;&#125;<span class="title">setInterval</span><span class="params">('for(i=0;i&lt;1e4;i++)</span><span class="title">if</span><span class="params">(s=p(R()</span>,<span class="title">R</span><span class="params">()</span>,<span class="title">i</span>%46/.74))&#123;<span class="title">z</span>=<span class="title">s</span>[2];<span class="title">x</span>=~~<span class="params">(s[0]*f/z-h)</span>;<span class="title">y</span>=~~<span class="params">(s[1]*f/z-h)</span>;<span class="title">if</span><span class="params">(!m[q=y*f+x]|m[q]&gt;z)</span><span class="title">m</span>[<span class="title">q</span>]=<span class="title">z</span>,<span class="title">a</span>.<span class="title">fillStyle</span>="<span class="title">rgb</span><span class="params">("+~(s[3]*h)</span>+","+~<span class="params">(s[4]*h)</span>+","+~<span class="params">(s[3]*s[3]*-80)</span>+")",<span class="title">a</span>.<span class="title">fillRect</span><span class="params">(x,y,1,1)</span>&#125;',0)</span></div></pre></td></tr></table></figure>
+<p>上面这段JavaScript代码一共有1018个字符，每个字符占一个字节，一共1018B，约等于1K。这1K大小的js能做什么，点一下这面这个按钮就知道了（需要使用最新版的谷歌浏览器、IE9或火狐浏览器等支持html5的浏览器才能看到效果）。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/06/30/php-zip/" itemprop="url">
+                  php在线解压工具
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-06-30T18:09:17+08:00" content="2012-06-30">
+              2012-06-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/06/30/php-zip/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/30/php-zip/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>部分空间不支持在线解压，造成ftp上传文件量大的文件夹很慢，于是网上找到了一个不错的php在线解压工具，本地xampp环境下测试通过，收藏备用。所有代码均为转载，版权归原作者。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div><div class="line">390</div><div class="line">391</div><div class="line">392</div><div class="line">393</div><div class="line">394</div><div class="line">395</div><div class="line">396</div><div class="line">397</div><div class="line">398</div><div class="line">399</div><div class="line">400</div><div class="line">401</div><div class="line">402</div><div class="line">403</div><div class="line">404</div><div class="line">405</div><div class="line">406</div><div class="line">407</div><div class="line">408</div><div class="line">409</div><div class="line">410</div><div class="line">411</div><div class="line">412</div><div class="line">413</div><div class="line">414</div><div class="line">415</div><div class="line">416</div><div class="line">417</div><div class="line">418</div><div class="line">419</div><div class="line">420</div><div class="line">421</div><div class="line">422</div><div class="line">423</div><div class="line">424</div><div class="line">425</div><div class="line">426</div><div class="line">427</div><div class="line">428</div><div class="line">429</div><div class="line">430</div><div class="line">431</div><div class="line">432</div><div class="line">433</div><div class="line">434</div><div class="line">435</div><div class="line">436</div><div class="line">437</div><div class="line">438</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"></div><div class="line"><span class="comment">//设定密码</span></div><div class="line">$password = <span class="string">"bianle"</span>;</div><div class="line"></div><div class="line"><span class="meta">?&gt;</span></div><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">profile</span>=<span class="string">"http://gmpg.org/xfn/11"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Language"</span> <span class="attr">content</span>=<span class="string">"zh-CN"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>在线解压ZIP - PhpUnZip<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">    &lt;!<span class="selector-tag">--</span></div><div class="line">    <span class="selector-tag">body</span> &#123;</div><div class="line">		<span class="attribute">margin</span>:<span class="number">0</span>;</div><div class="line">		<span class="attribute">padding</span>:<span class="number">0</span>;</div><div class="line">		<span class="attribute">background</span>:<span class="number">#ccc</span>;</div><div class="line">		<span class="attribute">font</span>:<span class="number">14px</span>/<span class="number">24px</span> <span class="string">"Microsoft Yahei"</span>,Verdana, Geneva, sans-serif</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#wrapper</span> &#123;</div><div class="line">		<span class="attribute">width</span>:<span class="number">760px</span>;</div><div class="line">		<span class="attribute">margin</span>:<span class="number">0</span> auto;</div><div class="line">		<span class="attribute">margin-top</span>:<span class="number">10px</span>;</div><div class="line">		<span class="attribute">background</span>:<span class="number">#fff</span>;</div><div class="line">		<span class="attribute">border</span>:<span class="number">1px</span> solid <span class="number">#888</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#header</span> &#123;</div><div class="line">		<span class="attribute">background</span>:<span class="number">#f7f7f7</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#header</span> <span class="selector-tag">h1</span> &#123;</div><div class="line">		<span class="attribute">font</span>:<span class="number">20px</span>/<span class="number">30px</span> Verdana, Geneva, sans-serif;</div><div class="line">		<span class="attribute">font-weight</span>:bold;</div><div class="line">		<span class="attribute">text-shadow</span>:<span class="number">0</span> <span class="number">0</span> <span class="number">1px</span> <span class="number">#DDD</span>;</div><div class="line">		<span class="attribute">text-align</span>:center;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#main</span> &#123;</div><div class="line">		<span class="attribute">margin</span>:<span class="number">20px</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#footer</span> &#123;</div><div class="line">		<span class="attribute">text-align</span>:center;</div><div class="line">		<span class="attribute">font-size</span>:<span class="number">12px</span>;</div><div class="line">		<span class="attribute">color</span>:<span class="number">#666</span>;</div><div class="line">		<span class="attribute">border-top</span>:<span class="number">1px</span> solid <span class="number">#ccc</span>;</div><div class="line">		<span class="attribute">position</span>:relative;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#footer</span> <span class="selector-tag">a</span> &#123;</div><div class="line">		<span class="attribute">text-decoration</span>:none;</div><div class="line">		<span class="attribute">color</span>:<span class="number">#666</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#footer</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</div><div class="line">		<span class="attribute">text-decoration</span>:underline;</div><div class="line">	&#125;</div><div class="line">	<span class="selector-id">#eincy</span> &#123;</div><div class="line">		<span class="attribute">width</span>:<span class="number">82px</span>;</div><div class="line">		<span class="attribute">height</span>:<span class="number">36px</span>;</div><div class="line">		<span class="attribute">background</span>:<span class="built_in">url</span>(http://www.eincy.com/logo/s.png);</div><div class="line">		<span class="attribute">position</span>:absolute;</div><div class="line">		<span class="attribute">right</span>:<span class="number">3px</span>;</div><div class="line">		<span class="attribute">top</span>:<span class="number">3px</span>;</div><div class="line">	&#125;</div><div class="line">    <span class="selector-tag">--</span>&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"wrapper"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"header"</span>&gt;</span></div><div class="line">    	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>PHP在线解压ZIP工具 - PHPUnZip<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">name</span>=<span class="string">"myform"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"&lt;?=$_SERVER[PHP_SELF];?&gt;"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span> <span class="attr">onSubmit</span>=<span class="string">"return check_uploadObject(this);"</span>&gt;</span></div><div class="line">            <span class="php"><span class="meta">&lt;?</span></span></div><div class="line">                <span class="keyword">if</span>(!$_REQUEST[<span class="string">"myaction"</span>]):</div><div class="line">            <span class="meta">?&gt;</span></div><div class="line"></div><div class="line">            <span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="actionscript"></span></div><div class="line">            <span class="function"><span class="keyword">function</span> <span class="title">check_uploadObject</span><span class="params">(form)</span></span>&#123;</div><div class="line">                <span class="keyword">if</span>(form.password.value==<span class="string">''</span>)&#123;</div><div class="line">                    alert(<span class="string">'请输入密码.'</span>);</div><div class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    	<span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"choose"</span>&gt;</span> </div><div class="line">            选择ZIP文件:</div><div class="line">            <span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"zipfile"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span> <span class="attr">selected</span>&gt;</span>- 请选择 -<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">            <span class="php"><span class="meta">&lt;?</span></span></div><div class="line">                $fdir = opendir(<span class="string">'./'</span>);</div><div class="line">                <span class="keyword">while</span>($file=readdir($fdir))&#123;</div><div class="line">                    <span class="keyword">if</span>(!is_file($file)) <span class="keyword">continue</span>;</div><div class="line">                    <span class="keyword">if</span>(preg_match(<span class="string">'/\.zip$/mis'</span>,$file))&#123;</div><div class="line">                        <span class="keyword">echo</span> <span class="string">"&lt;option value='$file'&gt;$file&lt;/option&gt;\r\n"</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            <span class="meta">?&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">            或上传文件: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"upfile"</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"upfile"</span> <span class="attr">size</span>=<span class="string">"20"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"dir"</span>&gt;</span></div><div class="line">            解压到目录: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"todir"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"todir"</span> <span class="attr">value</span>=<span class="string">""</span> <span class="attr">size</span>=<span class="string">"15"</span>&gt;</span> </div><div class="line">                  (留空为本目录,必须有写入权限)</div><div class="line">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"password"</span>&gt;</span></div><div class="line">        	验证密码:<span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">id</span>=<span class="string">"password"</span> <span class="attr">size</span>=<span class="string">"15"</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"unzip"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"myaction"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">id</span>=<span class="string">"myaction"</span> <span class="attr">value</span>=<span class="string">"dounzip"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"Submit"</span> <span class="attr">value</span>=<span class="string">" 解 压 "</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">        <span class="php"><span class="meta">&lt;?</span></span></div><div class="line"></div><div class="line">		<span class="keyword">elseif</span>($_REQUEST[<span class="string">"myaction"</span>]==<span class="string">"dounzip"</span>):</div><div class="line"></div><div class="line">		<span class="class"><span class="keyword">class</span> <span class="title">zip</span></span></div><div class="line">		&#123;</div><div class="line"></div><div class="line">		 <span class="keyword">var</span> $total_files = <span class="number">0</span>;</div><div class="line">		 <span class="keyword">var</span> $total_folders = <span class="number">0</span>; </div><div class="line"></div><div class="line">		 <span class="function"><span class="keyword">function</span> <span class="title">Extract</span> <span class="params">( $zn, $to, $index = Array<span class="params">(<span class="number">-1</span>)</span> )</span></span></div><div class="line">		 &#123;</div><div class="line">		   $ok = <span class="number">0</span>; $zip = @fopen($zn,<span class="string">'rb'</span>);</div><div class="line">		   <span class="keyword">if</span>(!$zip) <span class="keyword">return</span>(<span class="number">-1</span>);</div><div class="line">		   $cdir = <span class="keyword">$this</span>-&gt;ReadCentralDir($zip,$zn);</div><div class="line">		   $pos_entry = $cdir[<span class="string">'offset'</span>];</div><div class="line"></div><div class="line">		   <span class="keyword">if</span>(!is_array($index))&#123; $index = <span class="keyword">array</span>($index);  &#125;</div><div class="line">		   <span class="keyword">for</span>($i=<span class="number">0</span>; $index[$i];$i++)&#123;</div><div class="line">				<span class="keyword">if</span>(intval($index[$i])!=$index[$i]||$index[$i]&gt;$cdir[<span class="string">'entries'</span>])</div><div class="line">				<span class="keyword">return</span>(<span class="number">-1</span>);</div><div class="line">		   &#125;</div><div class="line">		   <span class="keyword">for</span> ($i=<span class="number">0</span>; $i&lt;$cdir[<span class="string">'entries'</span>]; $i++)</div><div class="line">		   &#123;</div><div class="line">			 @fseek($zip, $pos_entry);</div><div class="line">			 $header = <span class="keyword">$this</span>-&gt;ReadCentralFileHeaders($zip);</div><div class="line">			 $header[<span class="string">'index'</span>] = $i; $pos_entry = ftell($zip);</div><div class="line">			 @rewind($zip); fseek($zip, $header[<span class="string">'offset'</span>]);</div><div class="line">			 <span class="keyword">if</span>(in_array(<span class="string">"-1"</span>,$index)||in_array($i,$index))</div><div class="line">				$stat[$header[<span class="string">'filename'</span>]]=<span class="keyword">$this</span>-&gt;ExtractFile($header, $to, $zip);</div><div class="line">		   &#125;</div><div class="line">		   fclose($zip);</div><div class="line">		   <span class="keyword">return</span> $stat;</div><div class="line">		 &#125;</div><div class="line"></div><div class="line">		  <span class="function"><span class="keyword">function</span> <span class="title">ReadFileHeader</span><span class="params">($zip)</span></span></div><div class="line">		  &#123;</div><div class="line">			$binary_data = fread($zip, <span class="number">30</span>);</div><div class="line">			$data = unpack(<span class="string">'vchk/vid/vversion/vflag/vcompression/vmtime/vmdate/Vcrc/Vcompressed_size/Vsize/vfilename_len/vextra_len'</span>, $binary_data);</div><div class="line"></div><div class="line">			$header[<span class="string">'filename'</span>] = fread($zip, $data[<span class="string">'filename_len'</span>]);</div><div class="line">			<span class="keyword">if</span> ($data[<span class="string">'extra_len'</span>] != <span class="number">0</span>) &#123;</div><div class="line">			  $header[<span class="string">'extra'</span>] = fread($zip, $data[<span class="string">'extra_len'</span>]);</div><div class="line">			&#125; <span class="keyword">else</span> &#123; $header[<span class="string">'extra'</span>] = <span class="string">''</span>; &#125;</div><div class="line"></div><div class="line">			$header[<span class="string">'compression'</span>] = $data[<span class="string">'compression'</span>];$header[<span class="string">'size'</span>] = $data[<span class="string">'size'</span>];</div><div class="line">			$header[<span class="string">'compressed_size'</span>] = $data[<span class="string">'compressed_size'</span>];</div><div class="line">			$header[<span class="string">'crc'</span>] = $data[<span class="string">'crc'</span>]; $header[<span class="string">'flag'</span>] = $data[<span class="string">'flag'</span>];</div><div class="line">			$header[<span class="string">'mdate'</span>] = $data[<span class="string">'mdate'</span>];$header[<span class="string">'mtime'</span>] = $data[<span class="string">'mtime'</span>];</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($header[<span class="string">'mdate'</span>] &amp;&amp; $header[<span class="string">'mtime'</span>])&#123;</div><div class="line">			 $hour=($header[<span class="string">'mtime'</span>]&amp;<span class="number">0xF800</span>)&gt;&gt;<span class="number">11</span>;$minute=($header[<span class="string">'mtime'</span>]&amp;<span class="number">0x07E0</span>)&gt;&gt;<span class="number">5</span>;</div><div class="line">			 $seconde=($header[<span class="string">'mtime'</span>]&amp;<span class="number">0x001F</span>)*<span class="number">2</span>;$year=(($header[<span class="string">'mdate'</span>]&amp;<span class="number">0xFE00</span>)&gt;&gt;<span class="number">9</span>)+<span class="number">1980</span>;</div><div class="line">			 $month=($header[<span class="string">'mdate'</span>]&amp;<span class="number">0x01E0</span>)&gt;&gt;<span class="number">5</span>;$day=$header[<span class="string">'mdate'</span>]&amp;<span class="number">0x001F</span>;</div><div class="line">			 $header[<span class="string">'mtime'</span>] = mktime($hour, $minute, $seconde, $month, $day, $year);</div><div class="line">			&#125;<span class="keyword">else</span>&#123;$header[<span class="string">'mtime'</span>] = time();&#125;</div><div class="line"></div><div class="line">			$header[<span class="string">'stored_filename'</span>] = $header[<span class="string">'filename'</span>];</div><div class="line">			$header[<span class="string">'status'</span>] = <span class="string">"ok"</span>;</div><div class="line">			<span class="keyword">return</span> $header;</div><div class="line">		  &#125;</div><div class="line"></div><div class="line">		 <span class="function"><span class="keyword">function</span> <span class="title">ReadCentralFileHeaders</span><span class="params">($zip)</span></span>&#123;</div><div class="line">			$binary_data = fread($zip, <span class="number">46</span>);</div><div class="line">			$header = unpack(<span class="string">'vchkid/vid/vversion/vversion_extracted/vflag/vcompression/vmtime/vmdate/Vcrc/Vcompressed_size/Vsize/vfilename_len/vextra_len/vcomment_len/vdisk/vinternal/Vexternal/Voffset'</span>, $binary_data);</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($header[<span class="string">'filename_len'</span>] != <span class="number">0</span>)</div><div class="line">			  $header[<span class="string">'filename'</span>] = fread($zip,$header[<span class="string">'filename_len'</span>]);</div><div class="line">			<span class="keyword">else</span> $header[<span class="string">'filename'</span>] = <span class="string">''</span>;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($header[<span class="string">'extra_len'</span>] != <span class="number">0</span>)</div><div class="line">			  $header[<span class="string">'extra'</span>] = fread($zip, $header[<span class="string">'extra_len'</span>]);</div><div class="line">			<span class="keyword">else</span> $header[<span class="string">'extra'</span>] = <span class="string">''</span>;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($header[<span class="string">'comment_len'</span>] != <span class="number">0</span>)</div><div class="line">			  $header[<span class="string">'comment'</span>] = fread($zip, $header[<span class="string">'comment_len'</span>]);</div><div class="line">			<span class="keyword">else</span> $header[<span class="string">'comment'</span>] = <span class="string">''</span>;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($header[<span class="string">'mdate'</span>] &amp;&amp; $header[<span class="string">'mtime'</span>])</div><div class="line">			&#123;</div><div class="line">			  $hour = ($header[<span class="string">'mtime'</span>] &amp; <span class="number">0xF800</span>) &gt;&gt; <span class="number">11</span>;</div><div class="line">			  $minute = ($header[<span class="string">'mtime'</span>] &amp; <span class="number">0x07E0</span>) &gt;&gt; <span class="number">5</span>;</div><div class="line">			  $seconde = ($header[<span class="string">'mtime'</span>] &amp; <span class="number">0x001F</span>)*<span class="number">2</span>;</div><div class="line">			  $year = (($header[<span class="string">'mdate'</span>] &amp; <span class="number">0xFE00</span>) &gt;&gt; <span class="number">9</span>) + <span class="number">1980</span>;</div><div class="line">			  $month = ($header[<span class="string">'mdate'</span>] &amp; <span class="number">0x01E0</span>) &gt;&gt; <span class="number">5</span>;</div><div class="line">			  $day = $header[<span class="string">'mdate'</span>] &amp; <span class="number">0x001F</span>;</div><div class="line">			  $header[<span class="string">'mtime'</span>] = mktime($hour, $minute, $seconde, $month, $day, $year);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">			  $header[<span class="string">'mtime'</span>] = time();</div><div class="line">			&#125;</div><div class="line">			$header[<span class="string">'stored_filename'</span>] = $header[<span class="string">'filename'</span>];</div><div class="line">			$header[<span class="string">'status'</span>] = <span class="string">'ok'</span>;</div><div class="line">			<span class="keyword">if</span> (substr($header[<span class="string">'filename'</span>], <span class="number">-1</span>) == <span class="string">'/'</span>)</div><div class="line">			  $header[<span class="string">'external'</span>] = <span class="number">0x41FF0010</span>;</div><div class="line">			<span class="keyword">return</span> $header;</div><div class="line">		 &#125;</div><div class="line"></div><div class="line">		 <span class="function"><span class="keyword">function</span> <span class="title">ReadCentralDir</span><span class="params">($zip,$zip_name)</span></span>&#123;</div><div class="line">			$size = filesize($zip_name);</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($size &lt; <span class="number">277</span>) $maximum_size = $size;</div><div class="line">			<span class="keyword">else</span> $maximum_size=<span class="number">277</span>;</div><div class="line"></div><div class="line">			@fseek($zip, $size-$maximum_size);</div><div class="line">			$pos = ftell($zip); $bytes = <span class="number">0x00000000</span>;</div><div class="line"></div><div class="line">			<span class="keyword">while</span> ($pos &lt; $size)&#123;</div><div class="line">				$byte = @fread($zip, <span class="number">1</span>); $bytes=($bytes &lt;&lt; <span class="number">8</span>) | ord($byte);</div><div class="line">				<span class="keyword">if</span> ($bytes == <span class="number">0x504b0506</span> <span class="keyword">or</span> $bytes == <span class="number">0x2e706870504b0506</span>)&#123; $pos++;<span class="keyword">break</span>;&#125; $pos++;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			$fdata=fread($zip,<span class="number">18</span>);</div><div class="line"></div><div class="line">			$data=@unpack(<span class="string">'vdisk/vdisk_start/vdisk_entries/ventries/Vsize/Voffset/vcomment_size'</span>,$fdata);</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($data[<span class="string">'comment_size'</span>] != <span class="number">0</span>) $centd[<span class="string">'comment'</span>] = fread($zip, $data[<span class="string">'comment_size'</span>]);</div><div class="line">			<span class="keyword">else</span> $centd[<span class="string">'comment'</span>] = <span class="string">''</span>; $centd[<span class="string">'entries'</span>] = $data[<span class="string">'entries'</span>];</div><div class="line">			$centd[<span class="string">'disk_entries'</span>] = $data[<span class="string">'disk_entries'</span>];</div><div class="line">			$centd[<span class="string">'offset'</span>] = $data[<span class="string">'offset'</span>];$centd[<span class="string">'disk_start'</span>] = $data[<span class="string">'disk_start'</span>];</div><div class="line">			$centd[<span class="string">'size'</span>] = $data[<span class="string">'size'</span>];  $centd[<span class="string">'disk'</span>] = $data[<span class="string">'disk'</span>];</div><div class="line">			<span class="keyword">return</span> $centd;</div><div class="line">		  &#125;</div><div class="line"></div><div class="line">		 <span class="function"><span class="keyword">function</span> <span class="title">ExtractFile</span><span class="params">($header,$to,$zip)</span></span>&#123;</div><div class="line">			$header = <span class="keyword">$this</span>-&gt;readfileheader($zip);</div><div class="line"></div><div class="line">			<span class="keyword">if</span>(substr($to,<span class="number">-1</span>)!=<span class="string">"/"</span>) $to.=<span class="string">"/"</span>;</div><div class="line">			<span class="keyword">if</span>($to==<span class="string">'./'</span>) $to = <span class="string">''</span>;	</div><div class="line">			$pth = explode(<span class="string">"/"</span>,$to.$header[<span class="string">'filename'</span>]);</div><div class="line">			$mydir = <span class="string">''</span>;</div><div class="line">			<span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;count($pth)<span class="number">-1</span>;$i++)&#123;</div><div class="line">				<span class="keyword">if</span>(!$pth[$i]) <span class="keyword">continue</span>;</div><div class="line">				$mydir .= $pth[$i].<span class="string">"/"</span>;</div><div class="line">				<span class="keyword">if</span>((!is_dir($mydir) &amp;&amp; @mkdir($mydir,<span class="number">0777</span>)) || (($mydir==$to.$header[<span class="string">'filename'</span>] || ($mydir==$to &amp;&amp; <span class="keyword">$this</span>-&gt;total_folders==<span class="number">0</span>)) &amp;&amp; is_dir($mydir)) )&#123;</div><div class="line">					@chmod($mydir,<span class="number">0777</span>);</div><div class="line">					<span class="keyword">$this</span>-&gt;total_folders ++;</div><div class="line">					<span class="keyword">echo</span> <span class="string">"&lt;br /&gt;&lt;input name='dfile[]' type='checkbox' value='$mydir' checked&gt; &lt;a href='$mydir' target='_blank'&gt;目录: $mydir&lt;/a&gt;</span></div><div class="line">		";</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">if</span>(strrchr($header[<span class="string">'filename'</span>],<span class="string">'/'</span>)==<span class="string">'/'</span>) <span class="keyword">return</span>;	</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (!($header[<span class="string">'external'</span>]==<span class="number">0x41FF0010</span>)&amp;&amp;!($header[<span class="string">'external'</span>]==<span class="number">16</span>))&#123;</div><div class="line">				<span class="keyword">if</span> ($header[<span class="string">'compression'</span>]==<span class="number">0</span>)&#123;</div><div class="line">					$fp = @fopen($to.$header[<span class="string">'filename'</span>], <span class="string">'wb'</span>);</div><div class="line">					<span class="keyword">if</span>(!$fp) <span class="keyword">return</span>(<span class="number">-1</span>);</div><div class="line">					$size = $header[<span class="string">'compressed_size'</span>];</div><div class="line"></div><div class="line">					<span class="keyword">while</span> ($size != <span class="number">0</span>)&#123;</div><div class="line">						$read_size = ($size &lt; <span class="number">2048</span> ? $size : <span class="number">2048</span>);</div><div class="line">						$buffer = fread($zip, $read_size);</div><div class="line">						$binary_data = pack(<span class="string">'a'</span>.$read_size, $buffer);</div><div class="line">						@fwrite($fp, $binary_data, $read_size);</div><div class="line">						$size -= $read_size;</div><div class="line">					&#125;</div><div class="line">					fclose($fp);</div><div class="line">					touch($to.$header[<span class="string">'filename'</span>], $header[<span class="string">'mtime'</span>]);</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					$fp = @fopen($to.$header[<span class="string">'filename'</span>].<span class="string">'.gz'</span>,<span class="string">'wb'</span>);</div><div class="line">					<span class="keyword">if</span>(!$fp) <span class="keyword">return</span>(<span class="number">-1</span>);</div><div class="line">					$binary_data = pack(<span class="string">'va1a1Va1a1'</span>, <span class="number">0x8b1f</span>, Chr($header[<span class="string">'compression'</span>]),</div><div class="line">					Chr(<span class="number">0x00</span>), time(), Chr(<span class="number">0x00</span>), Chr(<span class="number">3</span>));</div><div class="line"></div><div class="line">					fwrite($fp, $binary_data, <span class="number">10</span>);</div><div class="line">					$size = $header[<span class="string">'compressed_size'</span>];</div><div class="line"></div><div class="line">					<span class="keyword">while</span> ($size != <span class="number">0</span>)&#123;</div><div class="line">						$read_size = ($size &lt; <span class="number">1024</span> ? $size : <span class="number">1024</span>);</div><div class="line">						$buffer = fread($zip, $read_size);</div><div class="line">						$binary_data = pack(<span class="string">'a'</span>.$read_size, $buffer);</div><div class="line">						@fwrite($fp, $binary_data, $read_size);</div><div class="line">						$size -= $read_size;</div><div class="line">					&#125;</div><div class="line"></div><div class="line">					$binary_data = pack(<span class="string">'VV'</span>, $header[<span class="string">'crc'</span>], $header[<span class="string">'size'</span>]);</div><div class="line">					fwrite($fp, $binary_data,<span class="number">8</span>); fclose($fp);</div><div class="line"></div><div class="line">					$gzp = @gzopen($to.$header[<span class="string">'filename'</span>].<span class="string">'.gz'</span>,<span class="string">'rb'</span>) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">"Cette archive est compress閑"</span>);</div><div class="line">					<span class="keyword">if</span>(!$gzp) <span class="keyword">return</span>(<span class="number">-2</span>);</div><div class="line">					$fp = @fopen($to.$header[<span class="string">'filename'</span>],<span class="string">'wb'</span>);</div><div class="line">					<span class="keyword">if</span>(!$fp) <span class="keyword">return</span>(<span class="number">-1</span>);</div><div class="line">					$size = $header[<span class="string">'size'</span>];</div><div class="line"></div><div class="line">					<span class="keyword">while</span> ($size != <span class="number">0</span>)&#123;</div><div class="line">						$read_size = ($size &lt; <span class="number">2048</span> ? $size : <span class="number">2048</span>);</div><div class="line">						$buffer = gzread($gzp, $read_size);</div><div class="line">						$binary_data = pack(<span class="string">'a'</span>.$read_size, $buffer);</div><div class="line">						@fwrite($fp, $binary_data, $read_size);</div><div class="line">						$size -= $read_size;</div><div class="line">					&#125;</div><div class="line">					fclose($fp); gzclose($gzp);</div><div class="line"></div><div class="line">					touch($to.$header[<span class="string">'filename'</span>], $header[<span class="string">'mtime'</span>]);</div><div class="line">					@unlink($to.$header[<span class="string">'filename'</span>].<span class="string">'.gz'</span>);</div><div class="line"></div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">$this</span>-&gt;total_files ++;</div><div class="line">			<span class="keyword">echo</span> <span class="string">"&lt;br /&gt;&lt;input name='dfile[]' type='checkbox' value='$to$header[filename]' checked&gt; &lt;a href='$to$header[filename]' target='_blank'&gt;文件: $to$header[filename]&lt;/a&gt;</span></div><div class="line">		";</div><div class="line"></div><div class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		 &#125;</div><div class="line"></div><div class="line">		<span class="comment">// end class</span></div><div class="line">		&#125;</div><div class="line"></div><div class="line">			set_time_limit(<span class="number">0</span>);</div><div class="line"></div><div class="line">			<span class="keyword">if</span> ($_POST[<span class="string">'password'</span>] != $password) <span class="keyword">die</span>(<span class="string">"输入的密码不正确，请重新输入。"</span>);</div><div class="line">			<span class="keyword">if</span>(!$_POST[<span class="string">"todir"</span>]) $_POST[<span class="string">"todir"</span>] = <span class="string">"."</span>;</div><div class="line">			$z = <span class="keyword">new</span> Zip;</div><div class="line">			$have_zip_file = <span class="number">0</span>;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">start_unzip</span><span class="params">($tmp_name,$new_name,$checked)</span></span>&#123;</div><div class="line">				<span class="keyword">global</span> $_POST,$z,$have_zip_file;</div><div class="line">				$upfile = <span class="keyword">array</span>(<span class="string">"tmp_name"</span>=&gt;$tmp_name,<span class="string">"name"</span>=&gt;$new_name);</div><div class="line">				<span class="keyword">if</span>(is_file($upfile[tmp_name]))&#123;</div><div class="line">					$have_zip_file = <span class="number">1</span>;</div><div class="line">					<span class="keyword">echo</span> <span class="string">"</span></div><div class="line">		正在解压: &lt;br /&gt;&lt;input name='dfile[]' type='checkbox' value='$upfile[name]' ".($checked?<span class="string">"checked"</span>:<span class="string">""</span>).<span class="string">"&gt; $upfile[name]</span></div><div class="line"></div><div class="line">		";</div><div class="line">					<span class="keyword">if</span>(preg_match(<span class="string">'/\.zip$/mis'</span>,$upfile[name]))&#123;</div><div class="line">						$result=$z-&gt;Extract($upfile[tmp_name],$_POST[<span class="string">"todir"</span>]);</div><div class="line">						<span class="keyword">if</span>($result==<span class="number">-1</span>)&#123;</div><div class="line">							<span class="keyword">echo</span> <span class="string">"</span></div><div class="line">		文件 $upfile[name] 错误.</div><div class="line">		";</div><div class="line">						&#125;</div><div class="line">						<span class="keyword">echo</span> <span class="string">"</span></div><div class="line">		&lt;br /&gt;完成,共建立 $z-&gt;total_folders 个目录,$z-&gt;total_files 个文件.</div><div class="line"></div><div class="line">		";</div><div class="line">					&#125;<span class="keyword">else</span>&#123;</div><div class="line">						<span class="keyword">echo</span> <span class="string">"</span></div><div class="line">		$upfile[name] 不是 zip 文件.</div><div class="line"></div><div class="line">		";			</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">if</span>(realpath($upfile[name])!=realpath($upfile[tmp_name]))&#123;</div><div class="line">						@unlink($upfile[name]);</div><div class="line">						rename($upfile[tmp_name],$upfile[name]);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			clearstatcache();</div><div class="line"></div><div class="line">			start_unzip($_POST[<span class="string">"zipfile"</span>],$_POST[<span class="string">"zipfile"</span>],<span class="number">0</span>);</div><div class="line">			start_unzip($_FILES[<span class="string">"upfile"</span>][tmp_name],$_FILES[<span class="string">"upfile"</span>][name],<span class="number">1</span>);</div><div class="line"></div><div class="line">			<span class="keyword">if</span>(!$have_zip_file)&#123;</div><div class="line">				<span class="keyword">echo</span> <span class="string">"</span></div><div class="line">		请选择或上传文件.</div><div class="line">		";</div><div class="line">			&#125;</div><div class="line">		<span class="meta">?&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">id</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"&lt;?=$_POST['password'];?&gt;"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"myaction"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">id</span>=<span class="string">"myaction"</span> <span class="attr">value</span>=<span class="string">"dodelete"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"按钮"</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"返回"</span> <span class="attr">onClick</span>=<span class="string">"window.location='&lt;?=$_SERVER[PHP_SELF];?&gt;';"</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">'button'</span> <span class="attr">value</span>=<span class="string">'反选'</span> <span class="attr">onclick</span>=<span class="string">'selrev();'</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">'submit'</span> <span class="attr">onclick</span>=<span class="string">'return confirm("删除选定文件?");'</span> <span class="attr">value</span>=<span class="string">'删除选定'</span>&gt;</span></div><div class="line"></div><div class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">'javascript'</span>&gt;</span><span class="javascript"></span></div><div class="line">		<span class="function"><span class="keyword">function</span> <span class="title">selrev</span>(<span class="params"></span>) </span>&#123;</div><div class="line">			<span class="keyword">with</span>(<span class="built_in">document</span>.myform) &#123;</div><div class="line">				<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;elements.length;i++) &#123;</div><div class="line">					thiselm = elements[i];</div><div class="line">					<span class="keyword">if</span>(thiselm.name.match(<span class="regexp">/dfile\[]/</span>))	thiselm.checked = !thiselm.checked;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		alert(<span class="string">'完成.'</span>);</div><div class="line">		<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">		<span class="php"><span class="meta">&lt;?</span></span></div><div class="line"></div><div class="line">		<span class="keyword">elseif</span>($_REQUEST[<span class="string">"myaction"</span>]==<span class="string">"dodelete"</span>):</div><div class="line">			set_time_limit(<span class="number">0</span>);</div><div class="line">			<span class="keyword">if</span> ($_POST[<span class="string">'password'</span>] != $password) <span class="keyword">die</span>(<span class="string">"输入的密码不正确，请重新输入。"</span>);</div><div class="line"></div><div class="line">			$dfile = $_POST[<span class="string">"dfile"</span>]; </div><div class="line">			<span class="keyword">echo</span> <span class="string">"正在删除文件...</span></div><div class="line"></div><div class="line">		";</div><div class="line">			<span class="keyword">if</span>(is_array($dfile))&#123;</div><div class="line">				<span class="keyword">for</span>($i=count($dfile)<span class="number">-1</span>;$i&gt;=<span class="number">0</span>;$i--)&#123;</div><div class="line">					<span class="keyword">if</span>(is_file($dfile[$i]))&#123;</div><div class="line">						<span class="keyword">if</span>(@unlink($dfile[$i]))&#123;</div><div class="line">							<span class="keyword">echo</span> <span class="string">"已删除文件: $dfile[$i]</span></div><div class="line">		";</div><div class="line">						&#125;<span class="keyword">else</span>&#123;</div><div class="line">							<span class="keyword">echo</span> <span class="string">"删除文件失败: $dfile[$i]</span></div><div class="line">		";</div><div class="line">						&#125;</div><div class="line">					&#125;<span class="keyword">else</span>&#123;</div><div class="line">						<span class="keyword">if</span>(@rmdir($dfile[$i]))&#123;</div><div class="line">							<span class="keyword">echo</span> <span class="string">"已删除目录: $dfile[$i]</span></div><div class="line">		";</div><div class="line">						&#125;<span class="keyword">else</span>&#123;</div><div class="line">							<span class="keyword">echo</span> <span class="string">"删除目录失败: $dfile[$i]</span></div><div class="line">		";</div><div class="line">						&#125;				</div><div class="line">					&#125;</div><div class="line"></div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">echo</span> <span class="string">"</span></div><div class="line">		完成.</div><div class="line"></div><div class="line">		&lt;input type='button' value='返回' onclick=\"window.location='$_SERVER[PHP_SELF]';\"&gt;</div><div class="line"></div><div class="line">				 &lt;script language='javascript'&gt;('完成.');&lt;/script&gt;";</div><div class="line"></div><div class="line">		<span class="keyword">endif</span>;</div><div class="line"></div><div class="line">		<span class="meta">?&gt;</span></div><div class="line">		  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"footer"</span>&gt;</span></div><div class="line">    	<span class="tag">&lt;<span class="name">p</span>&gt;</span>&amp;copy; 2011 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.eincy.com"</span>&gt;</span>EinCy<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"eincy"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/06/20/web-js-dnd/" itemprop="url">
+                  js拖动
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-06-20T18:09:17+08:00" content="2012-06-20">
+              2012-06-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/06/20/web-js-dnd/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/20/web-js-dnd/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"&lt;a href="</span><span class="attr">http:</span>//<span class="attr">www.w3.org</span>/<span class="attr">1999</span>/<span class="attr">xhtml</span>"&gt;</span>http://www.w3.org/1999/xhtml<span class="tag">&lt;/<span class="name">a</span>&gt;</span>"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">javascript</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line"><span class="keyword">var</span> intX;</div><div class="line"></div><div class="line"><span class="keyword">var</span> intY;</div><div class="line"></div><div class="line"><span class="keyword">var</span> blnDrag = <span class="literal">false</span>; <span class="comment">//鼠标是否已经按下</span></div><div class="line"></div><div class="line"><span class="comment">//鼠标按下</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MouseDown</span>(<span class="params">event,id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//鼠标按下</span></div><div class="line"></div><div class="line">blnDrag = <span class="literal">true</span>;</div><div class="line"></div><div class="line">intX = event.clientX - GetDiv(id).style.pixelLeft;</div><div class="line"></div><div class="line">intY = event.clientY - GetDiv(id).style.pixelTop;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//鼠标拖动</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">DragDiv</span>(<span class="params">event,id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//判断鼠标是否已经按下</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (!blnDrag) &#123;</div><div class="line"></div><div class="line"><span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line"></div><div class="line">GetDiv(id).style.pixelLeft = event.clientX - intX;</div><div class="line"></div><div class="line">GetDiv(id).style.pixelTop = event.clientY - intY;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//鼠标松开时</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mouseUp</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//鼠标没有按下</span></div><div class="line"></div><div class="line">blnDrag = <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//得到DIV</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">GetDiv</span>(<span class="params">id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">return</span> <span class="built_in">document</span>.getElementById(id);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span> &gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"form1"</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span> <span class="attr">style</span>=<span class="string">"CURSOR: move; POSITION: absolute;  WIDTH: 140px; HEIGHT: 112px; background-color:Red"</span>     <span class="attr">onmousemove</span>=<span class="string">"DragDiv(event,this.id)"</span>     <span class="attr">onmousedown</span>=<span class="string">"MouseDown(event,this.id)"</span>     <span class="attr">onmouseup</span>=<span class="string">"mouseUp()"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/06/20/web-js-lightbox/" itemprop="url">
                   全屏屏蔽、自动居中的lightBox
                 </a>
@@ -1159,901 +1850,11 @@ wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloa
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/06/04/web-get-swf-object-in-firefox/" itemprop="url">
-                  在Firefox中如何获取网页里的SWF对象
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-06-04T18:09:17+08:00" content="2012-06-04">
-              2012-06-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/06/04/web-get-swf-object-in-firefox/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/04/web-get-swf-object-in-firefox/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我们经常会碰到flash和网页中的js脚本交互的的情况，一般的flash中使用ExternalInterface就可以让as脚本和html容器中的js脚本互相调用。但由于不同浏览器对DOM解析不同，导致有时候无法获取网页中的SWF对象。
-下面是网页中插入flash的代码，应该再熟悉不过了：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">classid</span>=<span class="string">"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"</span></span></div><div class="line"> <span class="attr">codebase</span>=<span class="string">"http://download.macromedia.com/pub/shockwave/cabs/</span></div><div class="line"> flash/swflash.cab#version=7,0,19,0" <span class="attr">name</span>=<span class="string">"flashrek"</span> <span class="attr">width</span>=<span class="string">"285"</span> <span class="attr">height</span>=<span class="string">"200"</span> <span class="attr">id</span>=<span class="string">"flashrek"</span>&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"movie"</span> <span class="attr">value</span>=<span class="string">"flashrek.swf"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"quality"</span> <span class="attr">value</span>=<span class="string">"high"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">embed</span> <span class="attr">src</span>=<span class="string">"flashrek.swf"</span> <span class="attr">width</span>=<span class="string">"285"</span> <span class="attr">height</span>=<span class="string">"200"</span> <span class="attr">quality</span>=<span class="string">"high"</span></span></div><div class="line"> <span class="attr">pluginspage</span>=<span class="string">http://www.macromedia.com/go/getflashplayer</span> <span class="attr">type</span>=<span class="string">"application/x-shockwave-flash"</span>&gt;<span class="tag">&lt;/<span class="name">embed</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>如果用document.getElementById方法来获取flash对象的话，IE中正常而firefox中却不行。这主要是firefox与IE解析DOM的差异导致的，下面给出一种解决方法，同时满足不同浏览器的需求：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSWF</span>(<span class="params">name</span>)</span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">var</span> e=<span class="built_in">document</span>.getElementById(name);</div><div class="line"></div><div class="line"><span class="keyword">return</span> (navigator.appName.indexOf(<span class="string">"Microsoft"</span>) != <span class="number">-1</span>)?e:e.</div><div class="line"> getElementsByTagName(<span class="string">"embed"</span>)[<span class="number">0</span>];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>使用方法：getSWF(“flashrek”)。其中的参数是插入时设置的flash的ID。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/06/04/java-jsoup-guide/" itemprop="url">
-                  使用 jsoup 对 HTML 文档进行解析和操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-06-04T14:02:56+08:00" content="2012-06-04">
-              2012-06-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/06/04/java-jsoup-guide/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/04/java-jsoup-guide/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="jsoup-简介"><a class="header-anchor" href="#jsoup-简介"> </a>jsoup 简介</h1>
-<p>jsoup 是一款 Java 的 HTML 解析器，可直接解析某个 URL 地址、HTML 文本内容。它提供了一套非常省力的 API，可通过 DOM，CSS 以及类似于 jQuery 的操作方法来取出和操作数据。
-jsoup 的主要功能如下：</p>
-<ol>
-<li>从一个 URL，文件或字符串中解析 HTML；</li>
-<li>使用 DOM 或 CSS 选择器来查找、取出数据；</li>
-<li>可操作 HTML 元素、属性、文本；
-jsoup 是基于 MIT 协议发布的，可放心使用于商业项目。
-jsoup 的主要类层次结构如图 1 所示：</li>
-</ol>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/27/jsoup1.jpg" alt="图1 jsoup 结构图"></p>
-<p>接下来我们专门针对几种常见的应用场景举例说明 jsoup 是如何优雅的进行 HTML 文档处理的。</p>
-<h1 id="文档输入"><a class="header-anchor" href="#文档输入"> </a>文档输入</h1>
-<p>jsoup 可以从包括字符串、URL 地址以及本地文件来加载 HTML 文档，并生成 Document 对象实例。
-下面是相关代码：</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 直接从字符串中输入 HTML 文档</span></div><div class="line"> <span class="keyword">String</span> html = <span class="string">"&lt;html&gt;&lt;head&gt;&lt;title&gt; 开源中国社区 &lt;/title&gt;&lt;/head&gt;"</span></div><div class="line">  + <span class="string">"&lt;body&gt;&lt;p&gt; 这里是 jsoup 项目的相关文章 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"</span>; </div><div class="line"> Document doc = Jsoup.parse(html); </div><div class="line"></div><div class="line"> <span class="comment">// 从 URL 直接加载 HTML 文档</span></div><div class="line"> Document doc = Jsoup.<span class="built_in">connect</span>(<span class="string">"http://www.oschina.net/"</span>).<span class="built_in">get</span>(); </div><div class="line"> <span class="keyword">String</span> title = doc.title(); </div><div class="line"></div><div class="line"> Document doc = Jsoup.<span class="built_in">connect</span>(<span class="string">"http://www.oschina.net/"</span>) </div><div class="line">  .data(<span class="string">"query"</span>, <span class="string">"Java"</span>)   <span class="comment">// 请求参数</span></div><div class="line">  .userAgent(<span class="string">"I ’ m jsoup"</span>) <span class="comment">// 设置 User-Agent </span></div><div class="line">  .cookie(<span class="string">"auth"</span>, <span class="string">"token"</span>) <span class="comment">// 设置 cookie </span></div><div class="line">  .timeout(<span class="number">3000</span>)           <span class="comment">// 设置连接超时时间</span></div><div class="line">  .post();                 <span class="comment">// 使用 POST 方法访问 URL </span></div><div class="line"></div><div class="line"> <span class="comment">// 从文件中加载 HTML 文档</span></div><div class="line"> <span class="built_in">File</span> input = <span class="keyword">new</span> <span class="built_in">File</span>(<span class="string">"D:/test.html"</span>); </div><div class="line"> Document doc = Jsoup.parse(input,<span class="string">"UTF-8"</span>,<span class="string">"http://www.oschina.net/"</span>);</div></pre></td></tr></table></figure>
-<p>请大家注意最后一种 HTML 文档输入方式中的 parse 的第三个参数，为什么需要在这里指定一个网址呢（虽然可以不指定，如第一种方法）？因为 HTML 文档中会有很多例如链接、图片以及所引用的外部脚本、css 文件等，而第三个名为 baseURL 的参数的意思就是当 HTML 文档使用相对路径方式引用外部文件时，jsoup 会自动为这些 URL 加上一个前缀，也就是这个 baseURL。
-例如<code>&lt;a href=/project&gt; 开源软件 &lt;/a&gt;</code>会被转换成<code>&lt;a href=http://www.oschina.net/project&gt; 开源软件 &lt;/a&gt;</code>。</p>
-<h1 id="解析并提取-html-元素"><a class="header-anchor" href="#解析并提取-html-元素"> </a>解析并提取 HTML 元素</h1>
-<p>这部分涉及一个 HTML 解析器最基本的功能，但 jsoup 使用一种有别于其他开源项目的方式——选择器，我们将在最后一部分详细介绍 jsoup 选择器，本节中你将看到 jsoup 是如何用最简单的代码实现。
-不过 jsoup 也提供了传统的 DOM 方式的元素解析，看看下面的代码：</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">File input = new File(<span class="string">"D:/test.html"</span>)<span class="comment">; </span></div><div class="line"> Document doc = <span class="keyword">Jsoup.parse(input, </span><span class="string">"UTF-8"</span>, <span class="string">"http://www.oschina.net/"</span>)<span class="comment">; </span></div><div class="line"></div><div class="line"> Element content = doc.getElementById(<span class="string">"content"</span>)<span class="comment">; </span></div><div class="line"> Elements links = content.getElementsByTag(<span class="string">"a"</span>)<span class="comment">; </span></div><div class="line"> for (Element link : links) &#123; </div><div class="line">  String linkHref = link.attr(<span class="string">"href"</span>)<span class="comment">; </span></div><div class="line">  String linkText = link<span class="meta">.text</span>()<span class="comment">; </span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<p>你可能会觉得 jsoup 的方法似曾相识，没错，像 getElementById 和 getElementsByTag 方法跟 JavaScript 的方法名称是一样的，功能也完全一致。你可以根据节点名称或者是 HTML 元素的 id 来获取对应的元素或者元素列表。
-与 htmlparser 项目不同的是，jsoup 并没有为 HTML 元素定义一个对应的类，一般一个 HTML 元素的组成部分包括：节点名、属性和文本，jsoup 提供简单的方法供你自己检索这些数据，这也是 jsoup 保持瘦身的原因。
-而在元素检索方面，jsoup 的选择器简直无所不能，</p>
-<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">File input = <span class="keyword">new</span> File(<span class="string">"D:\test.html"</span>); </div><div class="line"> Document <span class="meta">doc</span> = Jsoup.parse(input,<span class="string">"UTF-8"</span>,<span class="string">"http://www.oschina.net/"</span>); </div><div class="line"></div><div class="line"> Elements links = <span class="meta">doc</span>.select(<span class="string">"a[href]"</span>); <span class="comment">// 具有 href 属性的链接</span></div><div class="line"> Elements pngs = <span class="meta">doc</span>.select(<span class="string">"img[src$=.png]"</span>);<span class="comment">// 所有引用 png 图片的元素</span></div><div class="line"></div><div class="line"></div><div class="line"> Element masthead = <span class="meta">doc</span>.select(<span class="string">"div.masthead"</span>).first(); </div><div class="line"> <span class="comment">// 找出定义了 class=masthead 的元素</span></div><div class="line"></div><div class="line"> Elements resultLinks = <span class="meta">doc</span>.select(<span class="string">"h3.r &gt; a"</span>); <span class="comment">// direct a after h3</span></div></pre></td></tr></table></figure>
-<p>这是 jsoup 真正让我折服的地方，jsoup 使用跟 jQuery 一模一样的选择器对元素进行检索，以上的检索方法如果换成是其他的 HTML 解释器，至少都需要很多行代码，而 jsoup 只需要一行代码即可完成。
-jsoup 的选择器还支持表达式功能，我们将在最后一节介绍这个超强的选择器。</p>
-<p>修改数据</p>
-<p>在解析文档的同时，我们可能会需要对文档中的某些元素进行修改，例如我们可以为文档中的所有图片增加可点击链接、修改链接地址或者是修改文本等。
-下面是一些简单的例子：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"div.comments a"</span>)<span class="selector-class">.attr</span>(<span class="string">"rel"</span>, <span class="string">"nofollow"</span>); </div><div class="line"> <span class="comment">// 为所有链接增加 rel=nofollow 属性</span></div><div class="line"> <span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"div.comments a"</span>)<span class="selector-class">.addClass</span>(<span class="string">"mylinkclass"</span>); </div><div class="line"> <span class="comment">// 为所有链接增加 class=mylinkclass 属性</span></div><div class="line"> <span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"img"</span>)<span class="selector-class">.removeAttr</span>(<span class="string">"onclick"</span>); <span class="comment">// 删除所有图片的 onclick 属性</span></div><div class="line"> <span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"input[type=text]"</span>)<span class="selector-class">.val</span>(<span class="string">""</span>); <span class="comment">// 清空所有文本输入框中的文本</span></div></pre></td></tr></table></figure>
-<p>道理很简单，你只需要利用 jsoup 的选择器找出元素，然后就可以通过以上的方法来进行修改，除了无法修改标签名外（可以删除后再插入新的元素），包括元素的属性和文本都可以修改。
-修改完直接调用 Element(s) 的 html() 方法就可以获取修改完的 HTML 文档。</p>
-<h1 id="html-文档清理"><a class="header-anchor" href="#html-文档清理"> </a>HTML 文档清理</h1>
-<p>jsoup 在提供强大的 API 同时，人性化方面也做得非常好。在做网站的时候，经常会提供用户评论的功能。有些用户比较淘气，会搞一些脚本到评论内容中，而这些脚本可能会破坏整个页面的行为，更严重的是获取一些机要信息，例如 XSS 跨站点攻击之类的。
-jsoup 对这方面的支持非常强大，使用非常简单。看看下面这段代码：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">String unsafe = "<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'http://www.oschina.net/'</span> <span class="attr">onclick</span>=<span class="string">'stealCookies()'</span>&gt;</span> </div><div class="line"> 开源中国社区 <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span>"; </div><div class="line"> String safe = Jsoup.clean(unsafe, Whitelist.basic()); </div><div class="line"> // 输出 : </div><div class="line"> // <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.oschina.net/"</span> <span class="attr">rel</span>=<span class="string">"nofollow"</span>&gt;</span> 开源中国社区 <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>jsoup 使用一个 Whitelist 类用来对 HTML 文档进行过滤，该类提供几个常用方法：</p>
-<table>
-<thead>
-<tr>
-<th>方法名</th>
-<th>简介</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>none()</td>
-<td>只允许包含文本信息</td>
-</tr>
-<tr>
-<td>basic()</td>
-<td>允许的标签包括：a, b, blockquote, br, cite, code, dd, dl, dt, em, i, li, ol, p, pre, q, small, strike, strong, sub, sup, u, ul, 以及合适的属性</td>
-</tr>
-<tr>
-<td>simpleText()</td>
-<td>只允许 b, em, i, strong, u 这些标签</td>
-</tr>
-<tr>
-<td>basicWithImages()</td>
-<td>在 basic() 的基础上增加了图片</td>
-</tr>
-<tr>
-<td>relaxed()</td>
-<td>这个过滤器允许的标签最多，包括：a, b, blockquote, br, caption, cite, code, col, colgroup, dd, dl, dt, em, h1, h2, h3, h4, h5, h6, i, img, li, ol, p, pre, q, small, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, u, ul</td>
-</tr>
-</tbody>
-</table>
-<p>如果这五个过滤器都无法满足你的要求呢，例如你允许用户插入 flash 动画，没关系，Whitelist 提供扩展功能，例如 whitelist.addTags(“embed”,“object”,“param”,“span”,“div”); 也可调用 addAttributes 为某些元素增加属性。</p>
-<h1 id="jsoup-的过人之处-选择器"><a class="header-anchor" href="#jsoup-的过人之处-选择器"> </a>jsoup 的过人之处——选择器</h1>
-<p>前面我们已经简单的介绍了 jsoup 是如何使用选择器来对元素进行检索的。本节我们把重点放在选择器本身强大的语法上。下表是 jsoup 选择器的所有语法详细列表。</p>
-<p>基本用法</p>
-<table>
-<thead>
-<tr>
-<th>语法</th>
-<th>简介</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>tagname</td>
-<td>使用标签名来定位，例如 a</td>
-</tr>
-<tr>
-<td>ns¦tag</td>
-<td>使用命名空间的标签定位，例如 fb:name 来查找 &lt;fb:name&gt; 元素</td>
-</tr>
-<tr>
-<td>#id</td>
-<td>使用元素 id 定位，例如 #logo</td>
-</tr>
-<tr>
-<td>.class</td>
-<td>使用元素的 class 属性定位，例如 .head</td>
-</tr>
-<tr>
-<td>[attribute]</td>
-<td>使用元素的属性进行定位，例如 [href] 表示检索具有 href 属性的所有元素</td>
-</tr>
-<tr>
-<td>[^attr]</td>
-<td>使用元素的属性名前缀进行定位，例如 [^data-] 用来查找 HTML5 的 dataset 属性</td>
-</tr>
-<tr>
-<td>[attr=value]</td>
-<td>使用属性值进行定位，例如 [width=500] 定位所有 width 属性值为 500 的元素</td>
-</tr>
-<tr>
-<td>[attr^=value], [attr$=value], [attr*=value]</td>
-<td>这三个语法分别代表，属性以 value 开头、结尾以及包含</td>
-</tr>
-<tr>
-<td>[attr~=regex]</td>
-<td>使用正则表达式进行属性值的过滤，例如 img[src~=(?i).(png¦jpe?g)]</td>
-</tr>
-<tr>
-<td>*</td>
-<td>定位所有元素</td>
-</tr>
-</tbody>
-</table>
-<p>组合用法</p>
-<table>
-<thead>
-<tr>
-<th>语法</th>
-<th>简介</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>el#id</td>
-<td>定位 id 值某个元素，例如 <code>a#logo</code> -&gt; <code>&lt;a id=logo href= … &gt;</code></td>
-</tr>
-<tr>
-<td>el.class</td>
-<td>定位 class 为指定值的元素，例如 <code>div.head</code> -&gt; <code>&lt;div class=head&gt;xxxx&lt;/div&gt;</code></td>
-</tr>
-<tr>
-<td>el[attr]</td>
-<td>定位所有定义了某属性的元素，例如 <code>a[href]</code></td>
-</tr>
-<tr>
-<td>以上三个任意组合</td>
-<td>例如 a[href]#logo 、a[name].outerlink</td>
-</tr>
-<tr>
-<td>ancestor child</td>
-<td>这五种都是元素之间组合关系的选择器语法，其中包括父子关系、合并关系和层次关系。</td>
-</tr>
-<tr>
-<td>parent &gt; child</td>
-<td></td>
-</tr>
-<tr>
-<td>siblingA + siblingB</td>
-<td></td>
-</tr>
-<tr>
-<td>siblingA ~ siblingX</td>
-<td></td>
-</tr>
-<tr>
-<td>el, el, el</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>除了一些基本的语法以及这些语法进行组合外，jsoup 还支持使用表达式进行元素过滤选择。下面是 jsoup 支持的所有表达式一览表：</p>
-<p>表达式：</p>
-<table>
-<thead>
-<tr>
-<th>语法</th>
-<th>简介</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>:lt(n)</td>
-<td>例如 td:lt(3) 表示 小于三列</td>
-</tr>
-<tr>
-<td>:gt(n)</td>
-<td>div p:gt(2) 表示 div 中包含 2 个以上的 p</td>
-</tr>
-<tr>
-<td>:eq(n)</td>
-<td>form input:eq(1) 表示只包含一个 input 的表单</td>
-</tr>
-<tr>
-<td>:has(seletor)</td>
-<td>div:has§ 表示包含了 p 元素的 div</td>
-</tr>
-<tr>
-<td>:not(selector)</td>
-<td>div:not(.logo) 表示不包含 class=logo 元素的所有 div 列表</td>
-</tr>
-<tr>
-<td>:contains(text)</td>
-<td>包含某文本的元素，不区分大小写，例如 p:contains(oschina)</td>
-</tr>
-<tr>
-<td>:containsOwn(text)</td>
-<td>文本信息完全等于指定条件的过滤</td>
-</tr>
-<tr>
-<td>:matches(regex)</td>
-<td>使用正则表达式进行文本过滤：div:matches((?i)login)</td>
-</tr>
-<tr>
-<td>:matchesOwn(regex)</td>
-<td>使用正则表达式找到自身的文本</td>
-</tr>
-</tbody>
-</table>
-<h1 id="总结"><a class="header-anchor" href="#总结"> </a>总结</h1>
-<p>jsoup 的基本功能到这里就介绍完毕，但由于 jsoup 良好的可扩展性 API 设计，你可以通过选择器的定义来开发出非常强大的 HTML 解析功能。再加上 jsoup 项目本身的开发也非常活跃，因此如果你正在使用 Java ，需要对 HTML 进行处理，不妨试试。</p>
-<h1 id="参考资料"><a class="header-anchor" href="#参考资料"> </a>参考资料</h1>
-<p>jsoup 官方网站：<a href="http://jsoup.org" target="_blank" rel="external">http://jsoup.org</a>
-开源中国社区上 jsoup 的一些代码片段：<a href="http://www.oschina.net/code/list_by_project?id=12689" target="_blank" rel="external">http://www.oschina.net/code/list_by_project?id=12689</a>
-Htmlparser 项目介绍：<a href="http://www.oschina.net/p/htmlparser" target="_blank" rel="external">http://www.oschina.net/p/htmlparser</a>
-jQuery 项目介绍：<a href="http://www.oschina.net/p/jquery" target="_blank" rel="external">http://www.oschina.net/p/jquery</a>
-更多开源项目的介绍来自开源中国社区：<a href="http://www.oschina.net" target="_blank" rel="external">http://www.oschina.net</a>
-<a href="http://www.ibm.com/developerworks/cn/java/" target="_blank" rel="external">developerWorks Java 技术专区</a>： 这里有数百篇关于 Java 编程每个方面的文章。
-查看 <a href="http://www.ibm.com/developerworks/cn/web/lp/html5/" target="_blank" rel="external">HTML5 专题</a>，了解更多和 HTML5 相关的知识和动向。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/06/04/web-css3-transition/" itemprop="url">
-                  Css3 transition动画效果
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-06-04T09:44:56+08:00" content="2012-06-04">
-              2012-06-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/06/04/web-css3-transition/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/04/web-css3-transition/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>曾经也尝试过css3的一些新属性，比如圆角、多边框、文字投影、边框阴影，在很大程度上加快了前端开发的速度（—_—如果不考虑IE的话），今天见到了一个新东东，transition，试了一下，太强大了，几行简单的css，就实现了酷炫的动画效果，真是cool！关于transition的更多，请点击http://www.w3.org/TR/css3-transitions/</p>
-<ol>
-<li>先看圆角、阴影（Border-radius）
-Border-radius：Apx Bpx Cpx Dpx;分别是左上角，右上角，右下角，左下角的圆角半径！
-Border-shadow: <length> <length> <length> <length> || <color>;分别代表阴影水平偏移值（可取正负值）；阴影垂直偏移值（可取正负值）；阴影模糊值；阴影颜色
-例子：（圆角，阴影）</color></length></length></length></length></li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">title</span>&gt;</span>css3圆角，阴影<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">   <span class="selector-tag">body</span>&#123;<span class="attribute">background-color</span>:<span class="number">#E9E9E9</span>;&#125;</div><div class="line">		<span class="selector-class">.div2</span>&#123;<span class="attribute">width</span>:<span class="number">100px</span>;<span class="attribute">height</span>:<span class="number">100px</span>;<span class="attribute">border</span>:<span class="number">1px</span> solid red;<span class="attribute">border-radius</span>:<span class="number">2px</span> <span class="number">4px</span> <span class="number">6px</span> <span class="number">20px</span>;</div><div class="line">		<span class="attribute">-moz-border-radius</span>: <span class="number">2px</span> <span class="number">4px</span> <span class="number">6px</span> <span class="number">20px</span>;<span class="attribute">-khtml-border-radius</span>: <span class="number">2px</span> <span class="number">4px</span> <span class="number">6px</span> <span class="number">20px</span>;<span class="attribute">-webkit-border-radius</span>: <span class="number">2px</span> <span class="number">4px</span> <span class="number">6px</span> <span class="number">20px</span>;</div><div class="line">		<span class="comment">/*border-radius：四个参数分别为四个角的圆角度数*/</span></div><div class="line">		<span class="attribute">-webkit-box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">6px</span> <span class="number">#999</span>;<span class="attribute">-moz-box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">6px</span> <span class="number">#999</span>;</div><div class="line">		<span class="comment">/*box-shadow：四个参数:阴影水平偏移量｛可取正负值｝，阴影垂直偏移量（可取正负值）；阴影模糊值；阴影颜色*/</span></div><div class="line">		<span class="attribute">text-shadow</span>:<span class="number">5px</span> <span class="number">2px</span> <span class="number">6px</span> <span class="number">#000</span>;</div><div class="line">		<span class="attribute">text-overflow</span>:ellipsis;</div><div class="line">		&#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>不同的圆角<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<ol start="2">
-<li>下面就一步一步实现图片墙动画效果，这里说明一下，对于此transition，IE浏览器可以直接放弃了，firefox虽然平时挺那个的，这里貌似也靠边站了，这个效果最好的浏览器是chrome，safari4，也就是webkit，firefox3.5勉强凑合，有盒阴影和旋转效果，但是没有动画！
-先看例子：(css3倾斜的图片)</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">title</span>&gt;</span> transition动画效果<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">   <span class="selector-tag">body</span>&#123;<span class="attribute">background-color</span>:<span class="number">#E9E9E9</span>;&#125;</div><div class="line">		<span class="selector-class">.div3</span>&#123;<span class="attribute">border</span>:<span class="number">1px</span> solid <span class="number">#bfbfbf</span>;<span class="attribute">padding</span>:<span class="number">2px</span>;<span class="attribute">width</span>:<span class="number">120px</span>;<span class="attribute">height</span>:<span class="number">120px</span>;<span class="attribute">margin</span>:<span class="number">50px</span>;<span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(10deg); <span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(10deg); <span class="attribute">transform</span>:<span class="built_in">rotate</span>(10deg);<span class="attribute">-webkit-box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>; <span class="attribute">-moz-box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>; <span class="attribute">box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>; &#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://www.qdway.com/wp-content/uploads/2011/12/aab.jpg"</span> <span class="attr">title</span>=<span class="string">"头像"</span> <span class="attr">alt</span>=<span class="string">"头像"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>主要运用到的代码是：</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-webkit-<span class="attribute">transform</span>:rotate(<span class="number">10deg</span>); -moz-<span class="attribute">transform</span>:rotate(<span class="number">10deg</span>); <span class="attribute">transform</span>:rotate(<span class="number">10deg</span>);-webkit-<span class="attribute">box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>; -moz-<span class="attribute">box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>; <span class="attribute">box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>;</div></pre></td></tr></table></figure>
-<p>首先应该知道的是webkit表示webkit核心的浏览器，是其私有属性，作用于chrome和Safari浏览器，moz是Firefox浏览器的私有属性。
-transform中文意思转换，含有多个属性值，其中rotate表示旋转，其他一些属性如scale-尺寸放大缩小（本文将会用到），skew表示倾斜角度，translate表移动距离。例如，本例中，rotate(10deg)表示顺时针旋转10度，如果要逆时针旋转，使用负值就可以了。
-box-shadow表示盒阴影，其有四个参数，第一个参数表示水平偏移，例如2px表示投影右偏移2像素，第二个参数表示垂直偏移，2px表示投影向下偏移2像素，第三个参数表示模糊的大小，第四个参数为rgba颜色值</p>
-<ol start="3">
-<li>使用transition给单个图片添加悬停动画
-有别于上面基础效果CSS代码，这里需要添加一个transition的样式，告诉浏览器，这里要有动画效果。先看一下此相关的CSS代码：</li>
-</ol>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.div3</span>&#123;<span class="attribute">border</span>:<span class="number">1px</span> solid red;<span class="attribute">width</span>:<span class="number">150px</span>;<span class="attribute">height</span>:<span class="number">150px</span>;<span class="attribute">margin</span>:<span class="number">50px</span>;<span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(10deg); <span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(10deg); <span class="attribute">transform</span>:<span class="built_in">rotate</span>(10deg);<span class="attribute">-webkit-box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>; <span class="attribute">-moz-box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>; <span class="attribute">box-shadow</span>:<span class="number">5px</span> <span class="number">3px</span> <span class="number">3px</span> <span class="number">#999</span>;<span class="attribute">-webkit-transition</span>:all <span class="number">0.5s</span> ease-in;&#125;</div><div class="line"><span class="selector-class">.div3</span><span class="selector-pseudo">:hover</span>&#123;<span class="attribute">border-color</span>:<span class="number">#9a9a9a</span>; <span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(-50deg); <span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(-50deg); <span class="attribute">transform</span>:<span class="built_in">rotate</span>(-50deg);&#125;</div></pre></td></tr></table></figure>
-<p>代码部分最关键的就是：<code>-webkit-transition:all 0.5s ease-in</code>;目前而言，transition仅webkit核心的浏览器支持，所以此效果仅在chrome或是Safari下有。
-transiton属性有这几个值：</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">transition-<span class="keyword">property</span><span class="title"> </span>:* //指定过渡的性质，比如transition-<span class="keyword">property</span><span class="title"></span>:backgrond 就是只指定backgound参与这个过渡</div><div class="line">transition-duration:*//指定这个过渡的持续时间</div><div class="line">transition-delay:* //延迟过渡时间</div><div class="line">transition-timing-function:*//指定过渡类型，有ease | linear | ease-<span class="keyword">in</span> | ease-out | ease-<span class="keyword">in</span>-out | cubic-bezier</div></pre></td></tr></table></figure>
-<p>熟悉flash显示与动画编程的应该知道，这里的过渡类型的含义与flash中缓动类型（远不及flash丰富）是一致的：</p>
-<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">linear <span class="comment">//线性过度</span></div><div class="line">ease-<span class="keyword">in</span> <span class="comment">//由慢到快</span></div><div class="line">ease-<span class="keyword">out</span> <span class="comment">//由快到慢</span></div><div class="line">ease-<span class="keyword">in</span>-<span class="keyword">out</span> <span class="comment">//由慢到快在到慢</span></div></pre></td></tr></table></figure>
-<p>额外的些知识：timing-funciton的几种过度类型都是基于cubic-bezier的某些特定数值。比如ease-in-out的类型它也可以写成cubic-bezier(0.42, 0, 0.58, 1.0)。
-transition还支持CSS伪类。
-所以，-webkit-transition:all 0.5s ease-in表示的意思就是所有的属性都执行过渡效果，像角度啊，投影大小，边框色或是下面要讲到的比例啦等，执行时间为0.5秒，过渡动画类型为先慢后快。
-单张图片的旋转拉近动画效果
-鼠标经过图片，图片不仅旋转，而且图片的投影拉长，图片比例变大，于是形成了图片从墙面上浮起来的炫酷效果。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.div4</span>&#123;<span class="attribute">width</span>:<span class="number">130px</span>;<span class="attribute">height</span>:<span class="number">130px</span>;<span class="attribute">padding</span>:<span class="number">5px</span>;<span class="attribute">margin</span>:<span class="number">40px</span>;<span class="attribute">border</span>:<span class="number">1px</span> solid <span class="number">#bfbfbf</span>;</div><div class="line"><span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(10deg);</div><div class="line"><span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(10deg);</div><div class="line"><span class="attribute">transform</span>:<span class="built_in">rotate</span>(10deg);</div><div class="line"><span class="attribute">-webkit-box-shadow</span>:<span class="number">2px</span> <span class="number">2px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(135, 139, 144, 0.4);</div><div class="line"><span class="attribute">-moz-box-shadow</span>:<span class="number">2px</span> <span class="number">2px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(135, 139, 144, 0.4); </div><div class="line"><span class="attribute">box-shadow</span>:<span class="number">2px</span> <span class="number">2px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(135, 139, 144, 0.4);</div><div class="line"><span class="attribute">-webkit-transition</span>:all <span class="number">0.5s</span> ease-in;</div><div class="line">    &#125;</div><div class="line"><span class="selector-class">.div4</span><span class="selector-pseudo">:hover</span>&#123;</div><div class="line"><span class="attribute">border-color</span>:<span class="number">#9a9a9a</span>;</div><div class="line"><span class="attribute">-webkit-box-shadow</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">20px</span> <span class="built_in">rgba</span>(50, 50, 50, 0.4);</div><div class="line"><span class="attribute">-moz-box-shadow</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">20px</span> <span class="built_in">rgba</span>(50, 50, 50, 0.4); </div><div class="line"><span class="attribute">box-shadow</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">20px</span> <span class="built_in">rgba</span>(50, 50, 50, 0.4);</div><div class="line"><span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(0deg) <span class="built_in">scale</span>(1.05);</div><div class="line"><span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(0deg) <span class="built_in">scale</span>(1.05); </div><div class="line"><span class="attribute">transform</span>:<span class="built_in">rotate</span>(0deg) <span class="built_in">scale</span>(1.05);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>对比三和五部分的CSS代码，您会发现，这里的CSS的hover部分发生了些变化，首先增加的盒阴影样式，box-shadow:15px 15px 20px rgba(50, 50, 50, 0.4);加大了投影的偏移，以及模糊的大小，同时投影的颜色也加深了。另外就是transform:rotate(0deg) scale(1.05);增加了scale属性，scale(1.05)表示1.05倍于原来的尺寸显示。而这些变化在webkit核心的浏览器下都是动画显示的，于是就有了图片的拉伸悬浮效果。
-————————————————-华丽丽的昏割线————————————————-
-例子：（Css3 transition动画效果，建议使用chrome，safari4浏览器观看）</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">title</span>&gt;</span>Css3 transition动画效果<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span></div><div class="line">   <span class="selector-tag">body</span>&#123;<span class="attribute">background-color</span>:<span class="number">#E9E9E9</span>;&#125;</div><div class="line">		<span class="selector-class">.div4</span>&#123;<span class="attribute">padding</span>:<span class="number">2px</span>;<span class="attribute">width</span>:<span class="number">120px</span>;<span class="attribute">height</span>:<span class="number">120px</span>;<span class="attribute">margin</span>:<span class="number">40px</span>;<span class="attribute">border</span>:<span class="number">1px</span> solid <span class="number">#bfbfbf</span>;</div><div class="line">		<span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(10deg);<span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(10deg); <span class="attribute">transform</span>:<span class="built_in">rotate</span>(10deg);</div><div class="line">		<span class="attribute">-webkit-box-shadow</span>:<span class="number">2px</span> <span class="number">2px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(135, 139, 144, 0.4); <span class="attribute">-moz-box-shadow</span>:<span class="number">2px</span> <span class="number">2px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(135, 139, 144, 0.4); <span class="attribute">box-shadow</span>:<span class="number">2px</span> <span class="number">2px</span> <span class="number">3px</span> <span class="built_in">rgba</span>(135, 139, 144, 0.4);</div><div class="line">    <span class="attribute">-webkit-transition</span>:all <span class="number">0.5s</span> ease-in;</div><div class="line">		&#125;</div><div class="line">		<span class="selector-class">.div4</span><span class="selector-pseudo">:hover</span>&#123;</div><div class="line">    <span class="attribute">border-color</span>:<span class="number">#9a9a9a</span>;</div><div class="line">    <span class="attribute">-webkit-box-shadow</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">20px</span> <span class="built_in">rgba</span>(50, 50, 50, 0.4); <span class="attribute">-moz-box-shadow</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">20px</span> <span class="built_in">rgba</span>(50, 50, 50, 0.4); <span class="attribute">box-shadow</span>:<span class="number">15px</span> <span class="number">15px</span> <span class="number">20px</span> <span class="built_in">rgba</span>(50, 50, 50, 0.4);</div><div class="line">    <span class="attribute">-webkit-transform</span>:<span class="built_in">rotate</span>(0deg) <span class="built_in">scale</span>(1.05); <span class="attribute">-moz-transform</span>:<span class="built_in">rotate</span>(0deg) <span class="built_in">scale</span>(1.05); <span class="attribute">transform</span>:<span class="built_in">rotate</span>(0deg) <span class="built_in">scale</span>(1.05);</div><div class="line">&#125;</div><div class="line">	<span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://www.qdway.com/wp-content/uploads/2011/12/aab.jpg"</span> <span class="attr">title</span>=<span class="string">"头像"</span> <span class="attr">alt</span>=<span class="string">"头像"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/06/04/java-qrcode/" itemprop="url">
-                  Java实现二维码QRCode的编码和解码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-06-04T09:34:28+08:00" content="2012-06-04">
-              2012-06-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/06/04/java-qrcode/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/04/java-qrcode/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>涉及到的一些主要类库，方便大家下载：
-编码lib：Qrcode_swetake.jar   （官网介绍– <a href="http://www.swetake.com/qr/index-e.html%EF%BC%89" target="_blank" rel="external">http://www.swetake.com/qr/index-e.html）</a>
-解码lib：qrcode.jar                 （官网介绍– <a href="http://sourceforge.jp/projects/qrcode/%EF%BC%89" target="_blank" rel="external">http://sourceforge.jp/projects/qrcode/）</a></p>
-<ol>
-<li>编码：
-QRCodeEncoderHandler.java</li>
-</ol>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div></pre></td><td class="code"><pre><div class="line">package michael.qrcode;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.Color;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.Graphics2D;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.<span class="built_in">image</span>.BufferedImage;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="built_in">File</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.swetake.util.Qrcode;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* 二维码生成器</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> QRCodeEncoderHandler &#123;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* 生成二维码(QRCode)图片</div><div class="line"></div><div class="line">* @param content</div><div class="line"></div><div class="line">* @param imgPath</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> encoderQRCode(<span class="keyword">String</span> content, <span class="keyword">String</span> imgPath) &#123;</div><div class="line"></div><div class="line"><span class="built_in">try</span> &#123;</div><div class="line"></div><div class="line">Qrcode qrcodeHandler = <span class="keyword">new</span> Qrcode();</div><div class="line"></div><div class="line">qrcodeHandler.setQrcodeErrorCorrect(<span class="string">'M'</span>);</div><div class="line"></div><div class="line">qrcodeHandler.setQrcodeEncodeMode(<span class="string">'B'</span>);</div><div class="line"></div><div class="line">qrcodeHandler.setQrcodeVersion(<span class="number">7</span>);</div><div class="line"></div><div class="line">System.out.<span class="built_in">println</span>(content);</div><div class="line"></div><div class="line"><span class="keyword">byte</span>[] contentBytes = content.getBytes(<span class="string">"gb2312"</span>);</div><div class="line"></div><div class="line">BufferedImage bufImg = <span class="keyword">new</span> BufferedImage(<span class="number">140</span>, <span class="number">140</span>,</div><div class="line"></div><div class="line">BufferedImage.TYPE_INT_RGB);</div><div class="line"></div><div class="line">Graphics2D gs = bufImg.createGraphics();</div><div class="line"></div><div class="line">gs.setBackground(Color.WHITE);</div><div class="line"></div><div class="line">gs.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">140</span>, <span class="number">140</span>);</div><div class="line"></div><div class="line"><span class="comment">// 设定图像颜色&gt; BLACK</span></div><div class="line"></div><div class="line">gs.setColor(Color.BLACK);</div><div class="line"></div><div class="line"><span class="comment">// 设置偏移量 不设置可能导致解析出错</span></div><div class="line"></div><div class="line"><span class="keyword">int</span> pixoff = <span class="number">2</span>;</div><div class="line"></div><div class="line"><span class="comment">// 输出内容&gt; 二维码</span></div><div class="line"></div><div class="line"><span class="built_in">if</span> (contentBytes.length &gt; <span class="number">0</span> &amp;&amp; contentBytes.length &lt; <span class="number">120</span>) &#123;</div><div class="line"></div><div class="line"><span class="keyword">boolean</span>[][] codeOut = qrcodeHandler.calQrcode(contentBytes);</div><div class="line"></div><div class="line"><span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; codeOut.length; i++) &#123;</div><div class="line"></div><div class="line"><span class="built_in">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; codeOut.length; j++) &#123;</div><div class="line"></div><div class="line"><span class="built_in">if</span> (codeOut[j][i]) &#123;</div><div class="line"></div><div class="line">gs.fillRect(j * <span class="number">3</span> + pixoff, i * <span class="number">3</span> + pixoff, <span class="number">3</span>, <span class="number">3</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125; <span class="built_in">else</span> &#123;</div><div class="line"></div><div class="line">System.err.<span class="built_in">println</span>(<span class="string">"QRCode content bytes length = "</span></div><div class="line"></div><div class="line">+ contentBytes.length + <span class="string">" not in [ 0,120 ]. "</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">gs.dispose();</div><div class="line"></div><div class="line">bufImg.<span class="built_in">flush</span>();</div><div class="line"></div><div class="line"><span class="built_in">File</span> imgFile = <span class="keyword">new</span> <span class="built_in">File</span>(imgPath);</div><div class="line"></div><div class="line"><span class="comment">// 生成二维码QRCode图片</span></div><div class="line"></div><div class="line">ImageIO.<span class="built_in">write</span>(bufImg, <span class="string">"png"</span>, imgFile);</div><div class="line"></div><div class="line">&#125; <span class="built_in">catch</span> (Exception e) &#123;</div><div class="line"></div><div class="line">e.printStackTrace();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* @param args the command line arguments</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</div><div class="line"></div><div class="line"><span class="keyword">String</span> imgPath = <span class="string">"D:/test/twocode/Michael_QRCode.png"</span>;</div><div class="line"></div><div class="line"><span class="keyword">String</span> content = <span class="string">"Hello 大大、小小,welcome to QRCode!"</span></div><div class="line"></div><div class="line">+ <span class="string">"nMyblog [ http://sjsky.iteye.com ]"</span></div><div class="line"></div><div class="line">+ <span class="string">"nEMail [ sjsky007@gmail.com ]"</span> + <span class="string">"nTwitter [ @suncto ]"</span>;</div><div class="line"></div><div class="line">QRCodeEncoderHandler handler = <span class="keyword">new</span> QRCodeEncoderHandler();</div><div class="line"></div><div class="line">handler.encoderQRCode(content, imgPath);</div><div class="line"></div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"encoder QRcode success"</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol start="2">
-<li>解码：
-QRCodeDecoderHandler.java</li>
-</ol>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> michael.qrcode;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> jp.sourceforge.qrcode.QRCodeDecoder;</div><div class="line"></div><div class="line"><span class="keyword">import</span> jp.sourceforge.qrcode.data.QRCodeImage;</div><div class="line"></div><div class="line"><span class="keyword">import</span> jp.sourceforge.qrcode.exception.DecodingFailedException;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* <span class="doctag">@blog</span> http://sjsky.iteye.com</div><div class="line"></div><div class="line">* <span class="doctag">@author</span> Michael</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QRCodeDecoderHandler</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* 解码二维码</div><div class="line"></div><div class="line">* <span class="doctag">@param</span> imgPath</div><div class="line"></div><div class="line">* <span class="doctag">@return</span> String</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function">String <span class="title">decoderQRCode</span><span class="params">(String imgPath)</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// QRCode 二维码图片的文件</span></div><div class="line"></div><div class="line">File imageFile = <span class="keyword">new</span> File(imgPath);</div><div class="line"></div><div class="line"></div><div class="line">BufferedImage bufImg = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">String decodedData = <span class="keyword">null</span>;</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">bufImg = ImageIO.read(imageFile);</div><div class="line"></div><div class="line"></div><div class="line">QRCodeDecoder decoder = <span class="keyword">new</span> QRCodeDecoder();</div><div class="line"></div><div class="line">decodedData = <span class="keyword">new</span> String(decoder.decode(<span class="keyword">new</span> J2SEImage(bufImg)));</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// try &#123;</span></div><div class="line"></div><div class="line"><span class="comment">// System.out.println(new String(decodedData.getBytes("gb2312"),</span></div><div class="line"></div><div class="line"><span class="comment">// "gb2312"));</span></div><div class="line"></div><div class="line"><span class="comment">// &#125; catch (Exception e) &#123;</span></div><div class="line"></div><div class="line"><span class="comment">// // <span class="doctag">TODO:</span> handle exception</span></div><div class="line"></div><div class="line"><span class="comment">// &#125;</span></div><div class="line"></div><div class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line"></div><div class="line">System.out.println(<span class="string">"Error: "</span> + e.getMessage());</div><div class="line"></div><div class="line">e.printStackTrace();</div><div class="line"></div><div class="line">&#125; <span class="keyword">catch</span> (DecodingFailedException dfe) &#123;</div><div class="line"></div><div class="line">System.out.println(<span class="string">"Error: "</span> + dfe.getMessage());</div><div class="line"></div><div class="line">dfe.printStackTrace();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">return</span> decodedData;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* <span class="doctag">@param</span> args the command line arguments</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">QRCodeDecoderHandler <span class="keyword">handler</span> = <span class="keyword">new</span> QRCodeDecoderHandler();</div><div class="line"></div><div class="line">String imgPath = <span class="string">"d:/test/twocode/Michael_QRCode.png"</span>;</div><div class="line"></div><div class="line">String decoderContent = <span class="keyword">handler</span>.decoderQRCode(imgPath);</div><div class="line"></div><div class="line">System.out.println(<span class="string">"解析结果如下："</span>);</div><div class="line"></div><div class="line">System.out.println(decoderContent);</div><div class="line"></div><div class="line">System.out.println(<span class="string">"========decoder success!!!"</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">J2SEImage</span> <span class="keyword">implements</span> <span class="title">QRCodeImage</span> </span>&#123;</div><div class="line"></div><div class="line">BufferedImage bufImg;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">J2SEImage</span><span class="params">(BufferedImage bufImg)</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">this</span>.bufImg = bufImg;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getWidth</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">return</span> bufImg.<span class="title">getWidth</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getHeight</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">return</span> bufImg.<span class="title">getHeight</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getPixel</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">return</span> bufImg.<span class="title">getRGB</span><span class="params">(x, y)</span></span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行结果如下（解码出的内容和之前输入的内容一致 ）：
-解析结果如下：</p>
-<blockquote>
-<p>Hello 大大、小小,welcome to QRCode!
-Myblog [ <a href="http://sjsky.iteye.com" target="_blank" rel="external">http://sjsky.iteye.com</a> ]
-EMail [ <a href="mailto:sjsky007@gmail.com" target="_blank" rel="external">sjsky007@gmail.com</a> ]
-Twitter [ @suncto ]
-========decoder success!!!</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/06/02/web-jquery-animate/" itemprop="url">
-                  jquery 渐变效果
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-06-02T13:55:37+08:00" content="2012-06-02">
-              2012-06-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/06/02/web-jquery-animate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/02/web-jquery-animate/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"jquery.js"</span>&gt;&lt;/script&gt;</div><div class="line"> <span class="symbol">&lt;script&gt;</span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">show</span><span class="params">()</span>&#123;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;</div><div class="line"> lef<span class="variable">t:200</span>,</div><div class="line"> top:<span class="number">150</span>,</div><div class="line"> heigh<span class="variable">t:400</span>,</div><div class="line"> width:<span class="number">600</span>,</div><div class="line"> opacity:<span class="number">1</span></div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);</span></div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">hide</span><span class="params">()</span>&#123;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;</div><div class="line"> lef<span class="variable">t:0</span>,</div><div class="line"> top:<span class="number">0</span>,</div><div class="line"> heigh<span class="variable">t:0</span>,</div><div class="line"> width:<span class="number">0</span>,</div><div class="line"> opacity:<span class="number">0</span></div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);</span></div><div class="line"> &#125;</div><div class="line"> &lt;/script&gt;</div><div class="line"> &lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">"button"</span> onclick=<span class="string">"show()"</span> value=<span class="string">"show"</span>/&gt;</div><div class="line"> &lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">"button"</span> onclick=<span class="string">"hide()"</span> value=<span class="string">"hide"</span>/&gt;</div><div class="line"> &lt;div id=<span class="string">"pop"</span> style=<span class="string">"display:block;width:600px ;height:400px;position:absolute;left:200px;top:150px;border:0px solid red;background:blue;z-index:-1;color:#FFFFFF"</span>&gt;</div><div class="line"> <span class="symbol">&lt;h3&gt;</span><span class="keyword">a</span> demo of jquery animate&lt;/h3&gt;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">show</span><span class="params">()</span>&#123;&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> lef<span class="variable">t:200</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> top:<span class="number">200</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> heigh<span class="variable">t:400</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> width:<span class="number">600</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> opacity:<span class="number">1</span>&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> &#125;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">hide</span><span class="params">()</span>&#123;&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> lef<span class="variable">t:0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> top:<span class="number">0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> heigh<span class="variable">t:0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> width:<span class="number">0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> opacity:<span class="number">0</span>&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> &#125;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &lt;/div&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2094,7 +1895,7 @@ Twitter [ @suncto ]
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">188</span>
+              <span class="site-state-item-count">193</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2102,7 +1903,7 @@ Twitter [ @suncto ]
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2111,7 +1912,7 @@ Twitter [ @suncto ]
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">143</span>
+                <span class="site-state-item-count">144</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
