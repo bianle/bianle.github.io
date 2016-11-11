@@ -711,7 +711,15 @@
 <li>
 <p>p.getTotalPerformancePay().equals(BigDecimal.ZERO)</p>
 </li>
+<li>
+<p>注意运算符的优先级</p>
+</li>
 </ul>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.setMsg(<span class="string">"未查询到商品价格信息："</span> + rst == <span class="keyword">null</span> ? <span class="keyword">null</span> : rst.getErrorMessage());</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Condition ‘“未查询到商品价格信息：” + rst == null’ is always ‘false’</p>
+</blockquote>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.setMsg(<span class="string">"未查询到商品价格信息："</span> + (rst == <span class="keyword">null</span> ? <span class="keyword">null</span> : rst.getErrorMessage()));</div></pre></td></tr></table></figure>
 
           
         
