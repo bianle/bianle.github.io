@@ -301,6 +301,126 @@
             
               
                 
+                <a class="post-title-link" href="/2013/02/04/web-flex-music-player/" itemprop="url">
+                  web-flex-music-player
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-04T18:09:17+08:00" content="2013-02-04">
+              2013-02-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/04/web-flex-music-player/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/04/web-flex-music-player/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">
                   IE中样式表、选择符的数量限制记录
                 </a>
@@ -520,6 +640,140 @@ Some folks have wondered about the math that underlies these numbers. The root o
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">
+                  Flex-代码格式化eclipse插件:Flex Formatter
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-flex-formmater/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
+<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
+<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
+<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
+<ol>
+<li>Start up FlexBuilder / FlashBuilder.</li>
+<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
+<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
+<li>Click ‘New Remote Site…’</li>
+<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
+<li>Click OK</li>
+<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
+<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
+</ol>
+<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
 
           
         
@@ -1460,347 +1714,6 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/linux-vm-rhl/" itemprop="url">
-                  VMWare虚拟机下安装RedHat Enterprise Linux 5 网络配置过程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T21:26:00+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/linux-vm-rhl/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/linux-vm-rhl/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程
-<a href="http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx" target="_blank" rel="external">http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx</a>
-1.网上邻居-属性-可以看到在你安装好 VM虚拟机后又多了两个网络连接
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl1.png" alt="rhl">
-(vmnet1是host-only，也就是说，选择用vmnet1的话就相当于VMware给你提供了一个虚拟交换机，仅将虚拟机和真实系统连上了，虚拟机可以与真实系统相互共享文件，但是虚拟机无法访问外部互联网，而vmnet8是NAT，就是网络地址转换，相当于给你一个虚拟交换机，将虚拟机和真实系统连上去了，同时这台虚拟交换机又和外部互联网相连，这样虚拟机和真是系统可以相互共享，同时又都能访问外部互联网，而且虚拟机是借用真实系统的IP上网的，不会受到IP-MAC绑定的限制。)
-右键VMnet8-属性-tcp/ip协议
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl2.png" alt="rhl">
--双击打开 -勾选使用下面的IP地址，
-把IP地址改为192.168.132(这个自己随便设1-224内的数字）.1 /255.255.255.0 网关以及DNS不用设置，点确定。
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl3.png" alt="rhl">
-2.打开vm虚拟机，点左上方的编辑-虚拟网络设置-nat
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl4.png" alt="rhl">
-edit—&gt;virtual network editor
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl5.png" alt="rhl">
-NAT Settings
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl6.png" alt="rhl">
-OK
-虚拟机的DNS就是这里的网关IP地址192.168.132.2,这个vmnet8相当于局域网里的网关。
-3.编辑-虚拟网络设置-主机虚拟网络映射,在vmnet0下拉框勾选自己的网卡，其余的一般默认即可。
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl7.png" alt="rhl">
-4.回到win主机,开始-运行-CMD,打开DOS，输入命令ipconfig/all，可以看到相关的IP配置
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl8.png" alt="rhl">
-5.进入VM虚拟机中的linux系统，主菜单-系统设置-网络-勾选下面的设备eth0-进入以太网设备编辑状态
-system —-&gt;administration—–&gt;network
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl9.png" alt="rhl">
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl10.png" alt="rhl">
-设置完成保存后 主菜单-系统工具-终端 打开后输入：service network restart (重启网络命令)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/system-windows-reg/" itemprop="url">
-                  使用reg文件修改注册表
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T20:53:00+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/system-windows-reg/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/system-windows-reg/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>REG文件实际上是一种注册表脚本文件，双击REG文件即可将其中的数据导入到注册表中。利用REG文件我们可以直接对注册表进行任何修改操作，它对注册表的操作可以不受注册表编辑器被禁用的限制，因此功能更为强大、灵活，另外，由于REG文件可以用任何文本文件编辑工具(例如记事本)进行修改，因此通过它对注册表数据进行修改后，如果发生错误，还可以通过改回REG文件中的数据后再导入，从而实现恢复操作，因此它又较之直接用注册表编辑器修改更安全，所以熟练掌握REG文件的运用，有时可以起到事半功倍、意想不到的效果。
-创建REG文件
-REG文件的创建是非常简单的，可以通过任何一个文本文件编辑工具来实现。我们就以创建一个可以解除注册表禁用限制的REG文件restore.reg为例来介绍一下具体过程。
-打开记事本，在记事本文件中输入以下内容：
-REGEDIT4 空一行
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System]“DisableRegistryTools”=dword : 00000000
-保存此文件，在打开的“另存为”对话框中选择好保存路径，再单击“保存类型”中的下拉箭头选择“所有文件”(一定要选择此步，不然保存后的文件会自动加上TXT的扩展名)，然后在“文件名”中输入“restore.reg”后按“保存”按钮。以后你就可以通过双击这个restore.reg来直接解除禁用注册表的限制。
-对REG文件进行修改
-综述
-我们在利用REG文件对注册表进行操作时，要操作的对象有两种：一种是对主键进行操作，一种是对主键下的键值项目进行操作。对主键的操作有添加、删除两种，而对键值项目的操作则分为添加、修改和删除三种。下面我们就一个一个来实现。
-对主键的操作
-(1)添加主键
-要想利用REG文件在注册表中添加一个主键是非常方便的，只需要在文件体部分直接以“[ ]”的形式写上要添加的主键路径即可。
-例如：在HKEY_LOCAL_MACHINE\Software主键下添加一个名称为“软件工作室”的主键，内容如下：
-REGEDIT4
-空一行
-[HKEY_LOCAL_MACHINE\Software\软件工作室]
-(2)删除主键
-要用REG文件在注册表中删除一个主键，在文件体部分“[ ]”括起来的主键路径前面加上一个“-”符号即可，删除主键操作将会一并删除该主键下的所有子键及其键值项目，所以这是个比较危险的命令，使用要十分注意。例如要删除我们刚才添加的那个主键，内容如下：
-REGEDIT4
-空一行
-[-HKEY_LOCAL_MACHINE\Software\软件工作室]
-对键值项目的操作
-(1)添加键值项目
-添加键值项目的操作如同注册表编辑器中的“新建”命令，一般来说，键值的数据类型分为三种：字符串值、二进制值和DWORD值。在REG文件中我们也要设置添加的键值项目的数据类型，如果要添加字符串值，则“=”号后边要用英文的双引号引住数据；如果添加的为DWORD类型值，“=”号后边的格式为“dword:数据”；如果添加的为二进制值，“=”号后边 则为“hex:数据”。要设置默认值的键值数据时，“=”号前边的键值名称应为“@”符号，并且没有双引号。
-例如我们要在“HKEY_LOCAL_MACHINE\Software\软件工作室”主键下设置默认键值为“工作室”，并分别添加“姓名”键值项目(字符串值)、“年龄”键值项目(二进制值)、“婚否”键值项目(DWORD值)。相应的REG文件内容如下：
-REGEDIT4
-空一行
-[HKEY_LOCAL_MACHINE\Software\软件工作室]
-@=“工作室”
-“姓名”=“徐徐徐”
-“年龄”=hex:23
-&quot;婚否&quot;=dword:00000000
-在添加键值项目时，如果该键值所在的主键路径不存在的话，在添加键值项目的同时会自动新建该主键。另外在添加字符串值的键值项目时还有一点值得注意的地方，当这个字符串值是包括文件路径的字符串值时，路径分隔符应用“\”双斜杠表示，以示和注册表中的主键路径分隔符区别开来。例如我们要在注册中“HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run”主键下的启动组中添加位于“C:\PROGRAM FILES\BOOBSOFT\屏幕保护控制器”目录下的一个应用程序“屏幕保护控制器.exe”的启动键值项目，REG文件内容如下：
-REGEDIT4
-空一行
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run]
-“scr”=“C:\PROGRAM ILES\BOOBSOFT\屏幕保护控制器\屏幕保护控制器.exe”
-(2)修改键值项目
-其实修改和添加很类似，对于已经存在的键值项目，我们要修改其数据时，只需要将正确的数据赋予对应的键值项目即可，新的数据会自动覆盖错误的旧数据，例如，当某些恶意网页修改了你的IE标题栏文字，在标题栏中总是显示那个网站的广告文字，很讨厌，我们知道修改IE标题栏文字是通过“HKEY_CURRENT_USER\Software<br>
-Microsoft\Internet Explorer\Main”主键下的“Window Title”键值的数据进行设置的，那么我们就可以通过REG文件改回默认的IE标题栏文字。
-REGEDIT4
-空一行
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
-“Window Title”=&quot;&quot;
-(3)删除键值项目
-用REG文件删除键值项目也是很方便的，和删除主键相类似，也是通过“=”号实现的，不过这次不是加在前面，而是把“-”符号放在键值项目的等号后面。例如一些恶意网页在修改IE标题栏等设置的同时，还修改了开始菜单相关的键值项目数据，使得开始菜单中的“运行”、“查找”、“关闭”等命令都不见了，导入下面的这个REG文件删除相应的键值项目后就可以找回开始菜单中的这些命令了。
-REGEDIT4
-空一行
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-“NoRun”=-(解除“运行”命令)
-“NoClose”=-(找回“关闭系统”命令)
-“NoFind”=-(找回“查找”命令)
-将REG文件中的数据导入到注册表中
-导入信息
-我们双击REG文件时，系统会首先提示“确实要把XXX.REG内的信息添加到注册表吗？”的询问对话框，单击“是”按钮，系统就会按照REG文件中所描述的操作对注册表进行修改，完成以后并会给出提示“XXX.REG中的信息已经成功输入注册表”，把REG文件中的信息导入注册表的操作称为“合并”。
-修改默认值
-在REG文件上单击鼠标右键，有三个命令是关于REG文件的：合并、Print、编辑，以粗体显示的就是“合并”操作，这也是默认的打开方式，也就是双击时执行的操作。如果你不想让双击REG文件时执行“合并”的操作，你可以更改它的默认打开方式为“编辑”。打开资源管理器，单击“工具”菜单中的“文件夹选项”命令，在打开的对话框中单击“文件类型”标签，然后在“已注册的文件类型”列表中找到并选中“注册表项目”，从下面的“打开方式”我们也可以看出：原来REG文件默认的“合并”操作关联的是注册表编辑器Regedit呀!接下来点击“编辑”按钮，打开“编辑文件类型”对话框，然后选择“操作”列表中的“编辑”，再点击“设为默认值”按钮即可，以后双击REG文件时就会用记事本来打开进行编辑。
-在这里笔者顺便告诉大家一个独门绝技，如果你希望REG文件在导入时没有任何提示，你可以在图4所示的对话框中选中“合并”，然后单击“编辑”按钮，在弹出对话框的命令行中输入“regedit.exe /s “%1””即可，这是使用了注册表编辑器Regedit的一个被称为安静导入模式的隐藏参数“/S”，在导入REG文件时如果加上“/S”参数，系统就不会再弹出任何提示对话框而直接导入了。
-解除禁用
-有时在某些电脑中设置了禁用注册表编辑器后，为了防止一些电脑高手使用REG文件，来解除对注册表编辑器的限制，会让REG文件的默认打开程序设置为其他无关程序，当然这时可以通过修改“文件夹选项”中的相关设置改回来，但还有一种更绝的办法可以使REG文件不能用系统默认的方式打开。
-运行注册表编辑器，将“HKEY_CLASSES_ROOT.reg”下的默认值改为“txtfile”，这时REG文件的打开方式都指向了TXT文本文件。这样更改后不知道的人即使修改“文件夹类型”中的“注册表项目”设置也无法改回来，当然这时系统也已经禁用了注册表编辑器，你是无法通过注册表编辑器修改了。但经过笔者的研究发现还有一种方法可以破解这种禁用REG文件。我们可以在编辑好的REG文件上按住“Shift”键的同时单击鼠标右键，这时系统会让你重新选择打开方式，从中选取用注册表编辑器Regedit打开就可以将REG文件导入注册表.
-REG文件格式
-(1)Windows 95/98/ME/NT 4.0第一行必须是“REGEDIT4”。Windows 2000/XP/Vista是“Windows Registry Editor Version 5.00&quot;。
-(2)第一行后必须空一行。条与条之间最好也空一行。每行前不能留空格。
-(3)注册表信息头尾用“[”与“]”包起来；
-(4)&quot; “内就是字符串内容；“DWORD”为“0”就是用“dword:00000000”表示。
-(5)如果有两个以上的注册表信息，信息与信息之间就需要有空行隔开。
-(6)如果要删除某个注册表信息该怎么办？很简单，在注册表信息前面加上“-”（减）号。
-REG文件规则
-字符串值S表示: “字符串”=”&quot;
-二进制值B表示: “二进制”=hex:
-DWORD（32-位）值D表示: “DWORD（32-位）”=dword:00000000
-DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00,00
-多字符串值M表示: “多字符串”=hex(7):00,00
-可扩充字符串值E表示： “可扩充字符串”=hex(2):00,00</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1846,7 +1759,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">196</span>
+              <span class="site-state-item-count">198</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
