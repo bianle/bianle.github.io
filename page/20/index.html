@@ -301,6 +301,147 @@
             
               
                 
+                <a class="post-title-link" href="/2012/06/04/java-qrcode/" itemprop="url">
+                  Java实现二维码QRCode的编码和解码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-06-04T09:34:28+08:00" content="2012-06-04">
+              2012-06-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/06/04/java-qrcode/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/04/java-qrcode/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>涉及到的一些主要类库，方便大家下载：
+编码lib：Qrcode_swetake.jar   （官网介绍– <a href="http://www.swetake.com/qr/index-e.html%EF%BC%89" target="_blank" rel="external">http://www.swetake.com/qr/index-e.html）</a>
+解码lib：qrcode.jar                 （官网介绍– <a href="http://sourceforge.jp/projects/qrcode/%EF%BC%89" target="_blank" rel="external">http://sourceforge.jp/projects/qrcode/）</a></p>
+<ol>
+<li>编码：
+QRCodeEncoderHandler.java</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div></pre></td><td class="code"><pre><div class="line">package michael.qrcode;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.Color;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.Graphics2D;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.<span class="built_in">image</span>.BufferedImage;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="built_in">File</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.swetake.util.Qrcode;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* 二维码生成器</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> QRCodeEncoderHandler &#123;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* 生成二维码(QRCode)图片</div><div class="line"></div><div class="line">* @param content</div><div class="line"></div><div class="line">* @param imgPath</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> encoderQRCode(<span class="keyword">String</span> content, <span class="keyword">String</span> imgPath) &#123;</div><div class="line"></div><div class="line"><span class="built_in">try</span> &#123;</div><div class="line"></div><div class="line">Qrcode qrcodeHandler = <span class="keyword">new</span> Qrcode();</div><div class="line"></div><div class="line">qrcodeHandler.setQrcodeErrorCorrect(<span class="string">'M'</span>);</div><div class="line"></div><div class="line">qrcodeHandler.setQrcodeEncodeMode(<span class="string">'B'</span>);</div><div class="line"></div><div class="line">qrcodeHandler.setQrcodeVersion(<span class="number">7</span>);</div><div class="line"></div><div class="line">System.out.<span class="built_in">println</span>(content);</div><div class="line"></div><div class="line"><span class="keyword">byte</span>[] contentBytes = content.getBytes(<span class="string">"gb2312"</span>);</div><div class="line"></div><div class="line">BufferedImage bufImg = <span class="keyword">new</span> BufferedImage(<span class="number">140</span>, <span class="number">140</span>,</div><div class="line"></div><div class="line">BufferedImage.TYPE_INT_RGB);</div><div class="line"></div><div class="line">Graphics2D gs = bufImg.createGraphics();</div><div class="line"></div><div class="line">gs.setBackground(Color.WHITE);</div><div class="line"></div><div class="line">gs.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">140</span>, <span class="number">140</span>);</div><div class="line"></div><div class="line"><span class="comment">// 设定图像颜色&gt; BLACK</span></div><div class="line"></div><div class="line">gs.setColor(Color.BLACK);</div><div class="line"></div><div class="line"><span class="comment">// 设置偏移量 不设置可能导致解析出错</span></div><div class="line"></div><div class="line"><span class="keyword">int</span> pixoff = <span class="number">2</span>;</div><div class="line"></div><div class="line"><span class="comment">// 输出内容&gt; 二维码</span></div><div class="line"></div><div class="line"><span class="built_in">if</span> (contentBytes.length &gt; <span class="number">0</span> &amp;&amp; contentBytes.length &lt; <span class="number">120</span>) &#123;</div><div class="line"></div><div class="line"><span class="keyword">boolean</span>[][] codeOut = qrcodeHandler.calQrcode(contentBytes);</div><div class="line"></div><div class="line"><span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; codeOut.length; i++) &#123;</div><div class="line"></div><div class="line"><span class="built_in">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; codeOut.length; j++) &#123;</div><div class="line"></div><div class="line"><span class="built_in">if</span> (codeOut[j][i]) &#123;</div><div class="line"></div><div class="line">gs.fillRect(j * <span class="number">3</span> + pixoff, i * <span class="number">3</span> + pixoff, <span class="number">3</span>, <span class="number">3</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125; <span class="built_in">else</span> &#123;</div><div class="line"></div><div class="line">System.err.<span class="built_in">println</span>(<span class="string">"QRCode content bytes length = "</span></div><div class="line"></div><div class="line">+ contentBytes.length + <span class="string">" not in [ 0,120 ]. "</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">gs.dispose();</div><div class="line"></div><div class="line">bufImg.<span class="built_in">flush</span>();</div><div class="line"></div><div class="line"><span class="built_in">File</span> imgFile = <span class="keyword">new</span> <span class="built_in">File</span>(imgPath);</div><div class="line"></div><div class="line"><span class="comment">// 生成二维码QRCode图片</span></div><div class="line"></div><div class="line">ImageIO.<span class="built_in">write</span>(bufImg, <span class="string">"png"</span>, imgFile);</div><div class="line"></div><div class="line">&#125; <span class="built_in">catch</span> (Exception e) &#123;</div><div class="line"></div><div class="line">e.printStackTrace();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* @param args the command line arguments</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args) &#123;</div><div class="line"></div><div class="line"><span class="keyword">String</span> imgPath = <span class="string">"D:/test/twocode/Michael_QRCode.png"</span>;</div><div class="line"></div><div class="line"><span class="keyword">String</span> content = <span class="string">"Hello 大大、小小,welcome to QRCode!"</span></div><div class="line"></div><div class="line">+ <span class="string">"nMyblog [ http://sjsky.iteye.com ]"</span></div><div class="line"></div><div class="line">+ <span class="string">"nEMail [ sjsky007@gmail.com ]"</span> + <span class="string">"nTwitter [ @suncto ]"</span>;</div><div class="line"></div><div class="line">QRCodeEncoderHandler handler = <span class="keyword">new</span> QRCodeEncoderHandler();</div><div class="line"></div><div class="line">handler.encoderQRCode(content, imgPath);</div><div class="line"></div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"encoder QRcode success"</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>解码：
+QRCodeDecoderHandler.java</li>
+</ol>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> michael.qrcode;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> jp.sourceforge.qrcode.QRCodeDecoder;</div><div class="line"></div><div class="line"><span class="keyword">import</span> jp.sourceforge.qrcode.data.QRCodeImage;</div><div class="line"></div><div class="line"><span class="keyword">import</span> jp.sourceforge.qrcode.exception.DecodingFailedException;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* <span class="doctag">@blog</span> http://sjsky.iteye.com</div><div class="line"></div><div class="line">* <span class="doctag">@author</span> Michael</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QRCodeDecoderHandler</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* 解码二维码</div><div class="line"></div><div class="line">* <span class="doctag">@param</span> imgPath</div><div class="line"></div><div class="line">* <span class="doctag">@return</span> String</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function">String <span class="title">decoderQRCode</span><span class="params">(String imgPath)</span> </span>&#123;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// QRCode 二维码图片的文件</span></div><div class="line"></div><div class="line">File imageFile = <span class="keyword">new</span> File(imgPath);</div><div class="line"></div><div class="line"></div><div class="line">BufferedImage bufImg = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">String decodedData = <span class="keyword">null</span>;</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">bufImg = ImageIO.read(imageFile);</div><div class="line"></div><div class="line"></div><div class="line">QRCodeDecoder decoder = <span class="keyword">new</span> QRCodeDecoder();</div><div class="line"></div><div class="line">decodedData = <span class="keyword">new</span> String(decoder.decode(<span class="keyword">new</span> J2SEImage(bufImg)));</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// try &#123;</span></div><div class="line"></div><div class="line"><span class="comment">// System.out.println(new String(decodedData.getBytes("gb2312"),</span></div><div class="line"></div><div class="line"><span class="comment">// "gb2312"));</span></div><div class="line"></div><div class="line"><span class="comment">// &#125; catch (Exception e) &#123;</span></div><div class="line"></div><div class="line"><span class="comment">// // <span class="doctag">TODO:</span> handle exception</span></div><div class="line"></div><div class="line"><span class="comment">// &#125;</span></div><div class="line"></div><div class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line"></div><div class="line">System.out.println(<span class="string">"Error: "</span> + e.getMessage());</div><div class="line"></div><div class="line">e.printStackTrace();</div><div class="line"></div><div class="line">&#125; <span class="keyword">catch</span> (DecodingFailedException dfe) &#123;</div><div class="line"></div><div class="line">System.out.println(<span class="string">"Error: "</span> + dfe.getMessage());</div><div class="line"></div><div class="line">dfe.printStackTrace();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">return</span> decodedData;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"></div><div class="line">* <span class="doctag">@param</span> args the command line arguments</div><div class="line"></div><div class="line">*/</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">QRCodeDecoderHandler <span class="keyword">handler</span> = <span class="keyword">new</span> QRCodeDecoderHandler();</div><div class="line"></div><div class="line">String imgPath = <span class="string">"d:/test/twocode/Michael_QRCode.png"</span>;</div><div class="line"></div><div class="line">String decoderContent = <span class="keyword">handler</span>.decoderQRCode(imgPath);</div><div class="line"></div><div class="line">System.out.println(<span class="string">"解析结果如下："</span>);</div><div class="line"></div><div class="line">System.out.println(decoderContent);</div><div class="line"></div><div class="line">System.out.println(<span class="string">"========decoder success!!!"</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">J2SEImage</span> <span class="keyword">implements</span> <span class="title">QRCodeImage</span> </span>&#123;</div><div class="line"></div><div class="line">BufferedImage bufImg;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">J2SEImage</span><span class="params">(BufferedImage bufImg)</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">this</span>.bufImg = bufImg;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getWidth</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">return</span> bufImg.<span class="title">getWidth</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getHeight</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">return</span> bufImg.<span class="title">getHeight</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getPixel</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">return</span> bufImg.<span class="title">getRGB</span><span class="params">(x, y)</span></span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果如下（解码出的内容和之前输入的内容一致 ）：
+解析结果如下：</p>
+<blockquote>
+<p>Hello 大大、小小,welcome to QRCode!
+Myblog [ <a href="http://sjsky.iteye.com" target="_blank" rel="external">http://sjsky.iteye.com</a> ]
+EMail [ <a href="mailto:sjsky007@gmail.com" target="_blank" rel="external">sjsky007@gmail.com</a> ]
+Twitter [ @suncto ]
+========decoder success!!!</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/06/02/web-jquery-animate/" itemprop="url">
                   jquery 渐变效果
                 </a>
@@ -1118,154 +1259,6 @@
             
               
                 
-                <a class="post-title-link" href="/2012/01/10/skill-hide-file-in-picture/" itemprop="url">
-                  将文件藏到图片
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-01-10T18:09:17+08:00" content="2012-01-10">
-              2012-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">技巧</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/01/10/skill-hide-file-in-picture/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/skill-hide-file-in-picture/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>有些论坛对低权限用户是不开放附件上传功能的，但可能开放图片上传功能，我们可以把我们要上传的非图片文件“隐藏”到图片中，特洛伊木马的方式达到这种目的，当然这不是解决这种问题的唯一方法，你如果愿意也可以贴个外链链到网盘前提是你有你的网盘你 的网盘支持分享下载链接。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy /<span class="selector-tag">b</span> abc.jpg+abc<span class="selector-class">.rar</span> abc.jpg</div></pre></td></tr></table></figure>
-<blockquote>
-<p>COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
-[+ source [/A | /B] [+ …]] [destination [/A | /B]]</p>
-</blockquote>
-<blockquote>
-<p>source 指定要复制的文件。
-/A 表示一个 ASCII 文本文件。
-/B 表示一个二进位文件。
-/D 允许解密要创建的目标文件
-destination 为新文件指定目录和/或文件名。
-/V 验证新文件写入是否正确。
-/N 复制带有非 8dot3 名称的文件时，
-尽可能使用短文件名。
-/Y 不使用确认是否要覆盖现有目标文件
-的提示。
-/-Y 使用确认是否要覆盖现有目标文件
-的提示。
-/Z 用可重新启动模式复制已联网的文件。
-/L 如果源是符号链接，请将链接复制
-到目标而不是源链接指向的实际文件。</p>
-</blockquote>
-<blockquote>
-<p>命令行开关 /Y 可以在 COPYCMD 环境变量中预先设定。
-这可能会被命令行上的 /-Y 替代。除非 COPY
-命令是在一个批处理脚本中执行的，默认值应为
-在覆盖时进行提示。</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/01/10/web-js-get-string-real-length/" itemprop="url">
                   js获取String的实际长度
                 </a>
@@ -1575,6 +1568,154 @@ destination 为新文件指定目录和/或文件名。
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/01/10/skill-hide-file-in-picture/" itemprop="url">
+                  将文件藏到图片
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-01-10T18:09:17+08:00" content="2012-01-10">
+              2012-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">技巧</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/01/10/skill-hide-file-in-picture/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/skill-hide-file-in-picture/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>有些论坛对低权限用户是不开放附件上传功能的，但可能开放图片上传功能，我们可以把我们要上传的非图片文件“隐藏”到图片中，特洛伊木马的方式达到这种目的，当然这不是解决这种问题的唯一方法，你如果愿意也可以贴个外链链到网盘前提是你有你的网盘你 的网盘支持分享下载链接。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy /<span class="selector-tag">b</span> abc.jpg+abc<span class="selector-class">.rar</span> abc.jpg</div></pre></td></tr></table></figure>
+<blockquote>
+<p>COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
+[+ source [/A | /B] [+ …]] [destination [/A | /B]]</p>
+</blockquote>
+<blockquote>
+<p>source 指定要复制的文件。
+/A 表示一个 ASCII 文本文件。
+/B 表示一个二进位文件。
+/D 允许解密要创建的目标文件
+destination 为新文件指定目录和/或文件名。
+/V 验证新文件写入是否正确。
+/N 复制带有非 8dot3 名称的文件时，
+尽可能使用短文件名。
+/Y 不使用确认是否要覆盖现有目标文件
+的提示。
+/-Y 使用确认是否要覆盖现有目标文件
+的提示。
+/Z 用可重新启动模式复制已联网的文件。
+/L 如果源是符号链接，请将链接复制
+到目标而不是源链接指向的实际文件。</p>
+</blockquote>
+<blockquote>
+<p>命令行开关 /Y 可以在 COPYCMD 环境变量中预先设定。
+这可能会被命令行上的 /-Y 替代。除非 COPY
+命令是在一个批处理脚本中执行的，默认值应为
+在覆盖时进行提示。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1620,7 +1761,7 @@ destination 为新文件指定目录和/或文件名。
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">199</span>
+              <span class="site-state-item-count">200</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
