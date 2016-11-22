@@ -7,7 +7,7 @@
 
 <html class="theme-next mist use-motion">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -115,7 +115,7 @@
   <link rel="canonical" href="http://2le.me/page/17/"/>
 
 
-  <title> BianLe's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> BianLe's Blog </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -124,7 +124,7 @@
 
 
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+  <script type="text/javascript">
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
@@ -301,8 +301,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/07/12/java-cloud-server-for-java/" itemprop="url">
-                  推荐6个可用于托管Java应用的云计算平台
+                <a class="post-title-link" href="/2012/08/16/web-disable-backspace/" itemprop="url">
+                  js禁用只读文本框获得焦点时的回格键
                 </a>
               
             
@@ -315,8 +315,249 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
-              2012-07-12
+            <time itemprop="dateCreated" datetime="2012-08-16T18:09:17+08:00" content="2012-08-16">
+              2012-08-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/16/web-disable-backspace/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/16/web-disable-backspace/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>只读的文本框,当鼠标焦点在文本框里面的时候按回退键(backSpace),会退回到前一个页面,将以下的脚本放入页面中即可。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;script&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">document.documentElement.onkeydown = function(evt)&#123;</div><div class="line">  </div><div class="line">var b = !!evt, oEvent = evt || window.event;</div><div class="line"></div><div class="line">  </div><div class="line">if (oEvent.keyCode == <span class="number">8</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">var <span class="keyword">node</span> <span class="title">= b</span> ? oEvent.target : oEvent.srcElement;</div><div class="line"></div><div class="line">  </div><div class="line">var reg = /^(input|textarea)$/i, regType = /^(text|textarea)$/i;</div><div class="line"></div><div class="line">  </div><div class="line">if (!reg.test(<span class="keyword">node</span>.<span class="title">nodeName</span>) || !regType.test(<span class="keyword">node</span>.<span class="title">type</span>) || <span class="keyword">node</span>.<span class="title">readOnly</span> || <span class="keyword">node</span>.<span class="title">disabled</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">if (b)</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.stopPropagation();</div><div class="line"></div><div class="line">  </div><div class="line">&#125; </div><div class="line"></div><div class="line">  </div><div class="line">else</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.cancelBubble = <span class="literal">true</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.keyCode = <span class="number">0</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.returnValue = <span class="literal">false</span>;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/script&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/16/web-print-iframe/" itemprop="url">
+                  打印iframe内容
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-16T18:09:17+08:00" content="2012-08-16">
+              2012-08-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/16/web-print-iframe/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/16/web-print-iframe/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>iframe要先获得焦点，window.focus()</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/10/java-cannot-simultaneously-fetch-multiple-bags/" itemprop="url">
+                  “cannot simultaneously fetch multiple bags”的解决方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-10T18:09:17+08:00" content="2012-08-10">
+              2012-08-10
             </time>
           </span>
 
@@ -345,8 +586,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/12/java-cloud-server-for-java/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/java-cloud-server-for-java/" itemprop="commentsCount"></span>
+                <a href="/2012/08/10/java-cannot-simultaneously-fetch-multiple-bags/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/10/java-cannot-simultaneously-fetch-multiple-bags/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -371,27 +612,331 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文列举国外一些支持Java应用托管的云计算平台列表。</p>
-<ol>
-<li>Google App Engine (GAE)
-6 个可用于托管 Java 应用的云计算平台
-这个云服务平台已经提供很长时间了，我在上面运行了两个 Web 应用 (timethetask 和 twikural) ，已经运行一年多了，没碰到任何问题。不过如果你打算将应用部署到GAE上你需要修改你的设计策略来适应 GAE 平台。</li>
-<li>Amazon Web Services / Elastic Computing Cloud (EC2)
-6 个可用于托管 Java 应用的云计算平台
-这不是一个平台，因为你无需SDK来开发 Java 应用，该平台为你提供你可完全控制的机器，这些机器可以预装好Java环境。</li>
-<li>Windows Azure – Java
-6 个可用于托管 Java 应用的云计算平台
-Windows Azure for Java开发套件，使Java开发人员可以利用微软云计算服务平台的优势，在云端整合各种应用，用Java语言与云端链接。</li>
-<li>Jelastic
-6 个可用于托管 Java 应用的云计算平台
-Jelastic平台最大的优点是你不需要学习它的任何API，只需要上传你的Web应用，Jelactic就可自动帮你部署和运行。</li>
-<li>Heroku
-6 个可用于托管 Java 应用的云计算平台
-详情可阅读这篇文章: Heroku runs Java.</li>
-<li>OpenShift by Red Hat
-6 个可用于托管 Java 应用的云计算平台
-这是针对企业的平台，个人还无法使用，据说使用它非常之简单，有用过的朋友可以分享一下。</li>
-</ol>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@OneToMany(mappedBy = <span class="meta-string">"customer"</span>,cascade = &#123;CascadeType.ALL&#125;,fetch = FetchType.LAZY)</span></div><div class="line"><span class="keyword">private</span> Collection&lt;CartItem&gt; cartItems;</div><div class="line"></div><div class="line"><span class="meta">@OneToMany(mappedBy = <span class="meta-string">"customer"</span>,cascade = &#123;CascadeType.ALL&#125;,fetch = FetchType.EAGER)</span></div><div class="line"><span class="keyword">private</span> Collection&lt;BookOrder&gt; orders ;</div></pre></td></tr></table></figure>
+<p>在用JPA进行注释时，如果一个实体里要映射多个集合实体时，我们不能把两个集合的的FetchType设置为EAGER,此时只能设置为LAZY,否则会报：cannot simultaneously fetch multiple bags。或者我们也可以借助:@IndexColumn</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/20/web-html5canvas/" itemprop="url">
+                  HTML5 jQuery 绘图插件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-20T18:09:17+08:00" content="2012-07-20">
+              2012-07-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/20/web-html5canvas/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/20/web-html5canvas/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Websanova Paint是一个利用HTML5画布(canvas)技术的jQuery插件。它能够让你自由的在画板区域使用各种颜色画出任意的形状，还能够涂改。它能让你设定所画形状的边框，然后用颜色填充。你还能调整画笔的粗细。它的一个最有趣的功能是能让你把画好的作品保存成图片，日后你还能载入这个图片进行二次修改，但有个限制，图片只支持PNG格式的。下面是演示：</p>
+<p>这个jQuery插件的下载地址是：<a href="http://github.com/websanova/wPaint/downloads" target="_blank" rel="external">http://github.com/websanova/wPaint/downloads</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/19/linux-28-linux-commands/" itemprop="url">
+                  28个Unix/Linux的命令行神器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-19T18:09:17+08:00" content="2012-07-19">
+              2012-07-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/19/linux-28-linux-commands/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/19/linux-28-linux-commands/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>下面是Kristóf Kovács收集的28个Unix/Linux下的28个命令行下的工具（原文链接），有一些是大家熟悉的，有一些是非常有用的，有一些是不为人知的。这些工具都非常不错，希望每个人都知道。本篇文章还在Hacker News上被讨论，你可以过去看看。
+dstat &amp; sar
+iostat, vmstat, ifstat 三合一的工具，用来查看系统性能。
+官方网站：<a href="http://dag.wieers.com/rpm/packages/dstat/" target="_blank" rel="external">http://dag.wieers.com/rpm/packages/dstat/</a>
+你可以这样使用：
+alias dstat=’dstat -cdlmnpsy’</p>
+<p>slurm
+查看网络流量的一个工具
+官方网站：Simple Linux Utility for Resource Management</p>
+<p>vim &amp; emacs
+真正程序员的代码编辑器。</p>
+<p>screen, dtach, tmux, byobu
+你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。
+screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。请参看IBM DeveloperWorks的这篇文章《使用 screen 管理你的远程会话》</p>
+<p>dtach 是用来模拟screen的detach的功能的小工具，其可以让你随意地attach到各种会话上 。下图为dtach+dvtm的样子。</p>
+<p>tmux是一个优秀的终端复用软件，类似GNU Screen，但来自于OpenBSD，采用BSD授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机；当然其功能远不止于此。与screen相比的优点：可以横向和纵向分割窗口，且窗格可以自由移动和调整大小。可在多个缓冲区进行复制和粘贴，支持跨窗口搜索；非正常断线后不需重新detach；……  有人说——与tmux相比，screen简直弱爆了。</p>
+<p>byobu是Ubuntu开发的，在Screen的基础上进行包装，使其更加易用的一个工具。最新的Byobu，已经是基于Tmux作为后端了。可通过“byobu-tmux”这个命令行前端来接受各种与tmux一模一样的参数来控制它。Byobu的细节做的非常好，效果图如下：</p>
+<p>multitail
+multiTail是个用来实现同时监控多个文档、类似tail命令的功能的软件。他和tail的区别就是他会在控制台中打开多个窗口，这样使同时监控多个日志文档成为可能。他还可以看log文件的统计，合并log文件，过滤log文件，分屏，……。
+官网：<a href="http://www.vanheusden.com/multitail/" target="_blank" rel="external">http://www.vanheusden.com/multitail/</a></p>
+<p>tpp
+终端下的PPT，要是在某某大会上用这个演示PPT，就太TMD的Geek了。
+官网：<a href="http://www.ngolde.de/tpp.html" target="_blank" rel="external">http://www.ngolde.de/tpp.html</a></p>
+<p>xargs &amp; parallel
+Executes tasks from input (even multithread).
+xargs 是一个比较古老的命令，有简单的并行功能，这个不说了。对于GNU parallel(online manpage)来说，它不仅能够处理本机上多执行绪，还能分散至远端电脑协助处理。而使用GNU parallel前，要先确定本机有安装GNU parallel/ssh/rsync，远端电脑也要安装ssh。</p>
+<p>duplicity &amp; rsyncrypto
+duplicity是使用rsync算法加密的高效率备份软件，Duplicity支持目录加密生产和格式上传到远程或本地文件服务器。
+rsyncrypto 就是 rsync + encryption。
+Encrypting backup tools.</p>
+<p>nethack &amp; slash’em
+netHack（Wiki），20年历史的古老电脑游戏。没有声音，没有漂亮的界面，不过这个游戏真的很有意思。网上有个家伙说：如果你一生只做一件事情，那么玩NetHack。这句话很惹眼，但也让人觉得这个游戏很复杂不容易上手。其实，这个游戏很虽然很复杂，却容易上手。虽然玩通关很难，但上手很容易。NetHack上有许多复杂的规则，”the DevTeam thinks of everything”（开发团队想到了所有的事情)。各种各样的怪物，各种各样的武器….，有许多spoilers文件来说明其规则。除了每次开始随机生成的地图，每次玩游戏，你也都会碰到奇怪的事情: 因为喝了一种药水，变成了机器人;因为踢坏了商店的门被要求高价赔偿;你的狗为你偷来了商店的东西…… 这有点象人生，你不能完全了解这个世界，但你仍然可以选择自己的面对方式。
+网上有许多文章所这是最好的电脑游戏或最好的电脑游戏之一。也许是因为它开放的源代码让人赞赏，古老的历史让人宽容，复杂的规则让人敬畏。虽然它不是当前流行的游戏，但它比任何一个当前流行的游戏都更有可能再经受20年的考验。
+Slash’EM 也是一个基于NetHack的经典游戏。</p>
+<p>lftp
+利用lftp命令行ftp工具进行网站数据的增量备份，镜像，就像使用rsync一样。</p>
+<p>ack
+ack是一个perl脚本，是grep的一个可选替换品。其可以对匹配字符有高亮显示。是为程序员专门设计的，默认递归搜索，省提供多种文件类型供选。</p>
+<p>calcurse &amp; remind + wyrd
+calcurse是一个命令行下的日历和日程软件。remind + wyrd也很类似。关于日历，我不得不提一个Linux的Cycle日历，也是一个神器，呵呵。</p>
+<p>newsbeuter &amp; rsstail
+newsbeuter 和 rsstail 是命令行下RSS的阅读工具。</p>
+<p>powertop
+做个环保的程序员，看看自己的电脑里哪些程序费电。powerTOP 是一个让 Intel 平台的笔记本电脑节省电源的 Linux 工具。此工具由 Intel 公司发布。它可以帮助用户找出那些耗电量大的程序，通过修复或者关闭那些应用程序或进程，从而为用户节省电源。</p>
+<p>htop &amp; iotop
+htop 和 iotop用来查看进程，内存和IO负载。</p>
+<p>ttyrec &amp; ipbt
+ttyrec是一个 tty 控制台录制程序，其所录制的数据文件可以使用与之配套的 ttyplay 播放。不管是你在 tty 中的各种操作，还是在 tty 中耳熟能详的软件，都可进行录制。
+ipbt是一个用来回放 ttyrec 所录制的控制台输入过程的工具。
+与此类似的还有Shelr和termrec</p>
+<p>rsync
+通过SSH进行文件同步的经典工具</p>
+<p>mtr
+MTR – traceroute 2.0，其是把 traceroute 和 ping 集成在一块的一个小工具 用于诊断网络。</p>
+<p>socat &amp; netpipes
+socat是一个多功能的网络工具，名字来由是” Socket CAT”，可以看作是netcat的N倍加强版。
+netpipes 和socat一样，主要是用来在命令行来进行socket操作的命令，这样你就可以在Shell脚本下行进socket网络通讯了。</p>
+<p>iftop &amp; iptraf
+iftop和iptraf可以用来查看当前网络链接的一些流量情况。</p>
+<p>siege &amp; tsung
+siege是一个压力测试和评测工具，设计用于WEB开发这评估应用在压力下的承受能力：可以根据配置对一个WEB站点进行多用户的并发访问，记录每个用户所有请求过程的相应时间，并在一定数量的并发访问下重复进行。
+Tsung是一个压力测试工具，可以测试包括HTTP, WebDAV, PostgreSQL, MySQL, LDAP, and XMPP/Jabber等服务器。针对 HTTP 测试，Tsung 支持 HTTP 1.0/1.1 ，包含一个代理模式的会话记录、支持 GET、POST 和 PUT 以及 DELETE 方法，支持 Cookie 和基本的 WWW 认证，同时还支持 SSL。</p>
+<p>ledger
+ledger 是一个命令行下记帐的小工具。</p>
+<p>taskwarrior
+taskWarrior 是一个基于命令行的 TODO 列表管理工具。主要功能包括：标签、彩色表格输出、报表和图形、大量的命令、底层API、多用户文件锁等功能。</p>
+<p>下图是TaskWarrior 2.0的界面：</p>
+<p>curl
+cURL是一个利用URL语法在命令行下工作的文件传输工具，1997年首次发行。它支持文件上传和下载，所以是综合传输工具，但按传统，习惯称cURL为下载工具。cURL还包含了用于程序开发的libcurl。cURL支援的通訊協定有FTP、FTPS、HTTP、HTTPS、TFTP、SFTP、Gopher、SCP、Telnet、DICT、FILE、LDAP、LDAPS、IMAP、POP3、SMTP和RTSP。</p>
+<p>rtorrent &amp; aria2
+rTorrent 是一个非常简洁、优秀、非常轻量的BT客户端. 它使用了 ncurses 库以 C++ 编写, 因此它完全基于文本并在终端中运行. 将 rTorrent 用在安装有 GNU Screen 和 Secure Shell 的低端系统上作为远程的 BT 客户端是非常理想的。
+aria2 是 Linux 下一个不错的高速下载工具。由于它具有分段下载引擎，所以支持从多个地址或者从一个地址的多个连接来下载同一个文件。这样自然就大大加快了文件的下载速度。aria2 也具有断点续传功能，这使你随时能够恢复已经中断的文件下载。除了支持一般的 http(s) 和 ftp 协议外，aria2 还支持 BitTorrent 协议。这意味着，你也可以使用 aria2 来下载 torrent 文件。</p>
+<p>ttytter &amp; earthquake
+TTYtter 是一个Perl写的命令行上发Twitter的工具，可以进行所有其他平台客户端能进行的事情，当然，支持中文。脚本控、CLI控、终端控、Perl控的最愛。
+Earthquake也是一个命令行上的Twitter客户端。</p>
+<p>vifm &amp; ranger
+Vifm 基于ncurses的文件管理器，DOS风格，用键盘操作。</p>
+<p>Ranger用 Python 完成，默认为使用 Vim 风格的按键绑定，比如 hjkl（上下左右），dd（剪切），yy（复制）等等。功能很全，扩展/可配置性也非常不错。类似MacOS X下Finder（文件管理器）的多列文件管理方式。支持多标签页。实时预览文本文件和目录。</p>
+<p>cowsay &amp; sl
+cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己搜一搜。</p>
+<p>sl是什么？ls？呵呵，你会经常把ls 打成sl吗？如果是的话，这个东西可以让你娱乐一下，你会看到一辆火车呼啸而过~~，相当拉风。你可以使用sudo apt-get install sl 安装。</p>
+<p>最后，再介绍一个命令中linuxlogo，你可以使用 sudo apt-get install linuxlogo来安装，然后，就可以使用linuxlogo -L来看一下各种Linux的logo。</p>
+<p>本文来自：酷壳</p>
 
           
         
@@ -511,7 +1056,7 @@ Jelastic平台最大的优点是你不需要学习它的任何API，只需要上
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>这里给大家推荐一个Vim配置工具，本工具由fisadev个人开发，并且遵循GPL开源协议，所以你可以放心地使用它！因为这是作者个人使用，所以设置都是按照作者自己的习惯来的，如有不适应，你可以自己修改源代码。废话不多说，先看预览图：</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>这里给大家推荐一个Vim配置工具，本工具由fisadev个人开发，并且遵循GPL开源协议，所以你可以放心地使用它！因为这是作者个人使用，所以设置都是按照作者自己的习惯来的，如有不适应，你可以自己修改源代码。废话不多说，先看预览图：</p>
 <p>智能的自动提示</p>
 <p>右侧是“类浏览器 ”</p>
 <p>代码错误检查</p>
@@ -601,8 +1146,8 @@ sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
             
               
                 
-                <a class="post-title-link" href="/2012/07/11/web-div-transparent/" itemprop="url">
-                  DIV背景半透明，DIV中的字不半透明
+                <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">
+                  JS返回顶部
                 </a>
               
             
@@ -615,8 +1160,8 @@ sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-11T18:09:17+08:00" content="2012-07-11">
-              2012-07-11
+            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
+              2012-07-12
             </time>
           </span>
 
@@ -645,8 +1190,8 @@ sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/11/web-div-transparent/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/11/web-div-transparent/" itemprop="commentsCount"></span>
+                <a href="/2012/07/12/web-js-totop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/web-js-totop/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -671,7 +1216,33 @@ sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600;"</span>&gt;</span></div><div class="line">  </div><div class="line">     <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"color:yellow"</span>&gt;</span>图层背景半透明，字体颜色也半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"></div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600"</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"position:relative;color:yellow"</span>&gt;</span>图层背景半透明，字体颜色不半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>本文介绍三款简单的返回页面顶部代码，可以使用简单的HTML锚标记，也可使用Javascript Scroll函数动态返回，其它的还有悬浮脚本等有点复杂了，本文不再介绍，大家根据自己需要选择其中的一种即可，总之简约最美的，能减少代码就减少代码，能不调用的就别调用，要不是天缘博客的文章都是牛长也不会添加这个功能。
+一、使用锚标记返回页面顶部
+使用HTML锚标记最简单，就是看起来有点不好看，点击后会在地址栏显示这个锚标记，其它的倒没什么。
+页面顶部放置：
+<a name="top" id="top"></a>
+放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
+页面底部放置：
+<a href="#top" target="_self">返回顶部</a>
+二、使用Javascript Scroll函数返回顶部
+scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
+方式1：
+1<a href="javascript:scroll(0,0)" target="_blank" rel="external">返回顶部</a>
+scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
+方式2：
+本方式是渐进式返回顶部，要好看一些，代码如下：
+1functionpageScroll() { 2window.scrollBy(0,-10); 3scrolldelay = setTimeout(‘pageScroll()’,100); 4} 56<a href="pageScroll();">返回顶部</a>
+这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
+1if(document.documentElement.scrollTop==0) clearTimeout(scrolldelay);三、使用Onload加上scroll功能实现动态返回顶部
+1、首先在网页BODY标签结束之前加上：</body></p>
+<div id="gotop">返回顶部</div>
+2、再调用以下JS脚本部分（本脚本非天缘原创，早前来源于Z-BLOG官方论坛上收集，源包未带作者链接，如果原作者看到敬请留言添加）：
+01BackTop=function(btnId){ 02 varbtn=document.getElementById(btnId); 03 vard=document.documentElement; 04 window.onscroll=set; 05 btn.onclick=function(){ 06 btn.style.display="none"; 07 window.onscroll=null; 08 this.timer=setInterval(function(){ 09 d.scrollTop-=Math.ceil(d.scrollTop*0.1); 10 if(d.scrollTop==0) clearInterval(btn.timer,window.onscroll=set); 11 },10); 12 }; 13 functionset(){btn.style.display=d.scrollTop?’block':"none"} 14}; 15BackTop(‘gotop’);
+对Z-BLOG而言，可以放到$(document).ready(function(){….函数中，也可以独立存成一个js文件，比如gotop.js，再通过：
+<script src="/js/gotop.js" type="text/javascript"></script>
+来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设路径为JS，其它位置请自行修改。
+补充：
+上述返回顶部代码都是文字式样的，也可以把文字更换为漂亮一点的图标，另外还有悬浮状的返回顶部代码（就是页面滚动时，返回顶部图标也会跟着跑的那种），需要使用到层等，搞的有点复杂了，本文暂不列出。
 
           
         
@@ -721,8 +1292,8 @@ sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
             
               
                 
-                <a class="post-title-link" href="/2012/07/11/java-jdk-and-jre/" itemprop="url">
-                  jdk与jre的区别
+                <a class="post-title-link" href="/2012/07/12/php-web-robot/" itemprop="url">
+                  WP Robot 3.31版本破解方法
                 </a>
               
             
@@ -735,139 +1306,8 @@ sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-11T18:09:17+08:00" content="2012-07-11">
-              2012-07-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/11/java-jdk-and-jre/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/11/java-jdk-and-jre/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
-JDK就是Java Development Kit.简单的说JDK是面向开发人员使用的SDK，它提供了Java的开发环境和运行环境。SDK是Software Development Kit 一般指软件开发包，可以包括函数库、编译程序等。
-JRE是Java Runtime Enviroment是指Java的运行环境，是面向Java程序的使用者，而不是开发者。
-如果安装了JDK，会发同你的电脑有两套JRE，一套位于 \jre 另外一套位于 C:\Program Files\Java\jre1.5.0_15 目录下，后面这套比前面那套少了Server端的Java虚拟机，不过直接将前面那套的Server端Java虚拟机复制过来就行了。而且在安装JDK可以选择是否安装这个位于 C:\Program Files\Java 目录下的JRE。如果你只安装JRE，而不是JDK，那么只会在 C:\Program Files\Java 目录下安装唯一的一套JRE。
-JRE的地位就象一台PC机一样，我们写好的Win32应用程序需要操作系统帮我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。所以当你装完JDK后，如果分别在硬盘上的两个不同地方安装了两套JRE，那么你可以想象你的电脑有两台虚拟的Java PC机，都具有运行Java程序的功能。所以我们可以说，只要你的电脑安装了JRE，就可以正确运行Java应用程序。
-1、为什么Sun要让JDK安装两套相同的JRE？
-这是因为JDK里面有很多用Java所编写的开发工具（如javac.exe、jar.exe等），而且都放置在 \lib\tools.jar 里。从下面例子可以看出，先将tools.jar改名为tools1.jar，然后运行javac.exe，显示如下结果： Exception in thread “main” java.lang.NoClassDefFoundError: com/sun/tools/javac /Main 这个意思是说，你输入javac.exe与输入 java -cp c:\jdk\lib\tools.jar com.sun.tools.javac.Main 是一样的，会得到相同的结果。从这里我们可以证明javac.exe只是一个包装器（Wrapper），而制作的目的是为了让开发者免于输入太长的指命。而且可以发现\lib目录下的程序都很小，不大于2 9K，从这里我们可以得出一个结论。就是JDK里的工具几乎是用Java所编写，所以也是Java应用程序，因此要使用JDK所附的工具来开发Java程序，也必须要自行附一套JRE才行，所以位于C:\Program Files\Java目录下的那套JRE就是用来运行一般Java程序用的。
-2、如果一台电脑安装两套以上的JRE，谁来决定呢？
-这个重大任务就落在java.exe身上。Java.exe的工作就是找到合适的JRE来运行Java程序。 Java.exe依照底下的顺序来查找JRE：自己的目录下有没有JRE；父目录有没有JRE；查询注册表： [HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment] 所以java.exe的运行结果与你的电脑里面哪个JRE被执行有很大的关系。
-ADD：
-1.JVM — java virtual machineJVM就是我们常说的java虚拟机，它是整个java实现跨平台的最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可以在虚拟机上执行，也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。2.JRE — java runtime environmentJRE是指java运行环境。光有JVM还不能成class的执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。在JDK的安装目录里你可以找到jre目录，里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。所以，在你写完java程序编译成.class之后，你可以把这个.class文件和jre一起打包发给朋友，这样你的朋友就可以运行你写程序了。（jre里有运行.class的java.exe）3.JDK — java development kitJDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？让我们看一下JDK的安装目录。在目录下面有六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的是以下四个文件夹：bin、include、lib、 jre。现在我们可以看出这样一个关系，JDK包含JRE，而JRE包含JVM。bin:最主要的是编译器(javac.exe)include:java和JVM交互用的头文件lib：类库jre:java运行环境（注意：这里的bin、lib文件夹和jre里的bin、lib是不同的）总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。
-eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自带的，所以在安装时你会发现他们只要求你选中jre路径就ok了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/10/php-gravatar/" itemprop="url">
-                  玩转你的Gravatar全球通用头像
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-10T18:09:17+08:00" content="2012-07-10">
-              2012-07-10
+            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
+              2012-07-12
             </time>
           </span>
 
@@ -896,8 +1336,8 @@ eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/10/php-gravatar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/10/php-gravatar/" itemprop="commentsCount"></span>
+                <a href="/2012/07/12/php-web-robot/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/php-web-robot/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -922,504 +1362,48 @@ eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>如果你在人家博客留言时使用邮箱，而没有显示一个比较个性的头像的话，那么我们完全可以说，你已经OUT了。
-先来普及一下Gravatar全球通用头像：
-Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target="_blank" rel="external">http://www.gravatar.com</a> 推出的一项服务，意为“全球通用头像”。如果在Gravatar的服务器上放置了你自己的头像，那么在任何支持Gravatar的blog或者留言本上留言时，只要提供你与这个头像关联的email地址，就能够显示出你的Gravatar头像来。
-那么Gravatar全球通用头像如何申请呢，下面上教程。
-打开 <a href="http://en.gravatar.com" target="_blank" rel="external">http://en.gravatar.com</a>，点击左上角菜单里的Sign Up。
-然后会进入一个页面，需要你输入Email地址，输入后，会向你的邮箱里发一封确认信。
-进入你的邮箱，从Gravatar发出的信件打开一个确认链接。
-打开后，输入用户名和密码，注意，名字不能大写，而且不能跟别人注册的名字重复，否则无法注册成功的。
-注册好了登陆进去，点击“add a new image”；然后选择上传图片，一般都是从电脑中上传（My computer’s hard drive）。
-上传并裁剪，这个地方很灵活，头像选择框是可以伸缩的，效果可以在右侧看到。
-头像上传后，图片要分级的，选择你上传的图片的级数，一般的，如果你上传的图片不太恶劣的话，就选G级，也就是大众都可以看的。
-等待审核，可能需要几分钟短暂审核一下，一般选择了G，而你的图片没什么特别的，很快就通过。一般遇上慢的情况也就10分钟左右。
-到支持Gravatar头像功能的网站，输入申请头像时的邮箱发表评论试试吧，要想改头像的话只需要到http://en.gravatar.com网站里登陆后修改即可。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/06/system-remotedesktop-port/" itemprop="url">
-                  修改远程桌面服务的默认端口
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/system-remotedesktop-port/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/system-remotedesktop-port/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
-第一步：在远程计算机（即被访问的计算机）上通过任务栏的“开始-&gt;运行-&gt;输入regedit”，打开注册表编辑器。
-第二步：在注册表中找到Hkey_local_machine\system\currentcontrolset\control\terminal server\wds\repwd\tds\tcp，将其下的portnumber值从3389修改为80，注意10进制和16进制数字的区别。
-第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
-control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修改为80，同样注意10进制和16进制数字的区别。全部修改后重新启动计算机就完成了被访问计算机上的设置。
-第四步：这样我们就可以在网络中任意一台安装了远程桌面登录器的计算机上连接刚刚设置的计算机了，使用的端口是80端口。值得注意的是在输入被访问计算机IP地址时需要使用类似ip:80的形式。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/06/system-dr-com/" itemprop="url">
-                  校园网使用Dr.com上网
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/system-dr-com/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/system-dr-com/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多校园都是使用上网客户端验证的，其中，drcom是比较常见的一种。
-对于初学者来说硬盘安装ubuntu8.04使用drcom上网验证确实是比较痛苦的。
-我当初就是深受其害的一员，这里分享下我使用drcom的一些经验。
-以下是以ubuntu8.04下安装drcom-1.4.4为列
-PS:这个编译安装过程，其实可以全程用命令进行，
-当然，如果要使用下列命令，你需要要足够的经验。</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom ##挂载iso
-sudo apt-cdrom -m -d /cdrom add ##添加cdrom为源
-sudo apt-get update ##刷新列表
-sudo apt-get install build-essential ##安装编译环境
-tar -xzf drcom-1.4.5.tar.gz ##解压命令
-cd drcom-1.4.5
-make
-sudo make install #编译安装
-ifconfig ##查看链接信息
-sudo gedit /etc/drcom.conf
-sudo drcomd
-drcomc login ##登入
-drcomc logout ##登出
-如果你想了解更详细的操作，请请看下文
-首先，我们当然要下载个linux下的drcom源代码，在这里可以下载最新版本的drcom点击进入下载页面</p>
-<p>不建议在windows下解压drcom-1.4.5.tar.gz，最好回到ubuntu解压，以防出错。
-然後就要安装drcom了，但是安装drcom需要编译工具，ubuntuliveCD默认又是不安装的。</p>
-<p>很多人就难倒在这里了，其实，这个编译工具是ISO里面自带的。如果你有CD，直接插上CD就可以使用命令：
-sudo aptitude install build-essential</p>
-<p>安装编译环境。</p>
-<p>如果你是硬盘安装，又没有CDRom的话，可以挂载iso</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom</p>
-<p>其中&quot;ubuntu-*.iso”是你下载的镜像位置，你可以用拖动的方法来拉到终端里都可以。
-挂载好镜像後，要在系统管理-软件源，</p>
-<p>那里把下面的CDrom打上勾，
-clip_image002
-然後close，重新加载源。
-clip_image003
-这时提示找不到源，
-clip_image004
-这个可以不用理，因为你没有上网，不能加载网上的源，能加载cdrom就行。
-或者 使用命令加载和更新：
-sudo apt-cdrom -m -d /cdrom add &amp;&amp; sudo apt-get update
-这样就可以顺利用命令安装编译环境
-sudo apt-get install build-essential
-或者，你可以选择在新立得里查找安装</p>
-<p>clip_image005
-clip_image006
-clip_image007
-编译环境安装完毕，接着就可以把你下载的drcom源代码解压，</p>
-<p>解压方法有很多种，可以图形，可以命令，不过个人偏好把下载的drcom-1.4.4.tar.gz放在桌面，右键解压到此处。
-clip_image008
-clip_image009
-解压完毕後，cd进你解压的目录编译安装
-clip_image010
-make
-sudo make install
-clip_image011
-安装完毕後，就需要编辑/etc/drcom.conf填写你的上网信息。
-clip_image012
-sudo gedit /etc/drcom.conf
-clip_image013
-clip_image014
-clip_image015
-clip_image016
-username=myusername ##填入你登陆的帐号
-password=mypassword ##填入你的密码
-device=eth0 ##指明通往外网的网卡的名字。
-except= ##用“网络地址/网络掩码”的形式列出内网的地址。(不是内网地址就删除)
-dnsp= ##你的首要DNS
-dnss= ##你的次要DNS，如果没有的话，请和首要DNS填的一样
-dhcp= ##你的DHCP服务器，一般不填
-hostip=
-servip=192.168.252.1 ##你的登陆IP，就是在XP下填写登陆服务器那个IP，一般是没有登陆时自动转向的那个页面，就是那个web登陆页面。
-hostport=
-servport=
-hostname=
-winver=
-winbuild=
-servicepack=
-autologout=0
-里面除了帐号密码，其他信息都可以在右上角网卡信息那里看到。</p>
-<p>关于&quot;servip=“地址说明可以参考下面图片，就是网页登录的那个地址IP
-如，下图就要填servip=10.254.200.252
-clip_image017
-感谢xu_connery提供图片
-特别注意的是从1.4.0开始，”/etc/drcom.con&quot;里增加了&quot;device=&quot;和&quot;except=&quot;两项,取消&quot;mac&quot;和&quot;nic&quot;两项。
-配置好帐号信息後，记得保存。
-这样就可以立刻上网了。</p>
-<p>连接命令：
-sudo drcomd ##启动drcom
-drcomc login ##登录
-由于我是用虚拟机截图，以上命令成功应该显示
-Login succeeded
-登出命令：
-drcomc logout
-Logout succeeded</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">
-                  十大bt问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/生活/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/life-bt-question-top10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/life-bt-question-top10/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
-<li>
-<p>企鹅肉问题：
-一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
-</li>
-<li>
-<p>跳火车问题：
-一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
-</li>
-<li>
-<p>水草问题：
-有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
-</li>
-<li>
-<p>葬礼故事的问题：
-有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
-</li>
-<li>
-<p>半根火柴问题：
-有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
-</li>
-<li>
-<p>满地木屑问题：
-马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
-</li>
-<li>
-<p>夜半敲门问题：
-一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
-</li>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>首先，介绍一下WP Robot ：
+WP Robot 是一款支持wordpressBlog系统的插件，最受欢迎的自动Blog程序,强大且使用容易。 你可以根据关键词自动生成Blog任何目标文章。
+完美的自动采集发布功能，结合最人性化的功能设置，是你建站群，做外贸，做网赚，SEO优化的必不可少的利器。
+支持根据keywords关键词内容采集，支持RSS内容采集。
+WP Robot 的特点</p>
+<ul>
+<li>创建任何你所希望内容的文章发布到你的WordPress Blog上。</li>
+<li>支持多关键词搜索，基本版支持20个关键词，高级版支持50个关键词，还有无限制版可选（当然指的是正版）。</li>
+<li>在任何不同的分类中创建文章，比如不同的分类使用不同的关键词。</li>
+<li>自定义两片文章的发布时间间隔，比如你发表“iPhone4”这个关键词，每3天或者每小时发布一篇等等。</li>
+<li>精确地控制文章内容生成，通过关键词搭配创建不同的任务，避免重复文章出现(论坛里有检查WPBlog内文章重复的插件下载的）。</li>
+<li>自动获取文章 tags， Tags是 WordPress 比较有好的功能之一，访客可以通过一些Tags检索含有相同标签的文章。</li>
+<li>很多的自定义选项，你可以选择是否直接发布或者存为草稿等等 。
+目前支持20个采集源：
+自动采集发布Articles文章（<a href="http://Articlesbase.com" target="_blank" rel="external">Articlesbase.com</a>）
+自动采集发布eBay产品
+自动采集发布Yahoo answer
+自动采集发布Youtube视频
+自动采集发布Flickr图片采集
+自动采集发布Yahoo News
+自动采集发布RSS
+自动采集发布Twitter微博
+还有CB,CJ,LS,SAS
+……
+WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要169美元。
+———————————————————————————————————————————–</li>
+</ul>
+<p>wordpress采集插件WP robot 破解版3.1 与 3.2版本。</p>
+<ol>
+<li>Install WPRobot 3.2 Nulled</li>
+<li>When asked for email enter any email</li>
+<li>Setup plugin how you want it.</li>
+<li>Deactivate and delete WPRobot 3.2 from your wordpress</li>
+<li>Install WPRobot 3.3</li>
+<li>Activate and setup any additional modules you need to.</li>
+<li>Enjoy!
+翻译：
+01、先上传WPRobot_3.2破解版到空间，进入WP网站后台，启用插件，然后随便输入一个email激活；
+02、再在后台禁用或删除WPRobot_3.2破解版，然后在再上传WPRobot_3.31破解版；
+03、最后激活WPRobot_3.31破解版就可用了。
+下载地址：（压缩包内两个版本已经包含）
+<a href="http://115.com/file/dpu4vdlt" target="_blank" rel="external">http://115.com/file/dpu4vdlt</a></li>
 </ol>
 
           
@@ -1470,8 +1454,8 @@ Logout succeeded</p>
             
               
                 
-                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">
-                  在命令行里看电影
+                <a class="post-title-link" href="/2012/07/12/java-cloud-server-for-java/" itemprop="url">
+                  推荐6个可用于托管Java应用的云计算平台
                 </a>
               
             
@@ -1484,8 +1468,8 @@ Logout succeeded</p>
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
+            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
+              2012-07-12
             </time>
           </span>
 
@@ -1498,8 +1482,8 @@ Logout succeeded</p>
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -1514,8 +1498,8 @@ Logout succeeded</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/06/linux-cmd-movie/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/linux-cmd-movie/" itemprop="commentsCount"></span>
+                <a href="/2012/07/12/java-cloud-server-for-java/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/java-cloud-server-for-java/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1540,7 +1524,27 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>本文列举国外一些支持Java应用托管的云计算平台列表。</p>
+<ol>
+<li>Google App Engine (GAE)
+6 个可用于托管 Java 应用的云计算平台
+这个云服务平台已经提供很长时间了，我在上面运行了两个 Web 应用 (timethetask 和 twikural) ，已经运行一年多了，没碰到任何问题。不过如果你打算将应用部署到GAE上你需要修改你的设计策略来适应 GAE 平台。</li>
+<li>Amazon Web Services / Elastic Computing Cloud (EC2)
+6 个可用于托管 Java 应用的云计算平台
+这不是一个平台，因为你无需SDK来开发 Java 应用，该平台为你提供你可完全控制的机器，这些机器可以预装好Java环境。</li>
+<li>Windows Azure – Java
+6 个可用于托管 Java 应用的云计算平台
+Windows Azure for Java开发套件，使Java开发人员可以利用微软云计算服务平台的优势，在云端整合各种应用，用Java语言与云端链接。</li>
+<li>Jelastic
+6 个可用于托管 Java 应用的云计算平台
+Jelastic平台最大的优点是你不需要学习它的任何API，只需要上传你的Web应用，Jelactic就可自动帮你部署和运行。</li>
+<li>Heroku
+6 个可用于托管 Java 应用的云计算平台
+详情可阅读这篇文章: Heroku runs Java.</li>
+<li>OpenShift by Red Hat
+6 个可用于托管 Java 应用的云计算平台
+这是针对企业的平台，个人还无法使用，据说使用它非常之简单，有用过的朋友可以分享一下。</li>
+</ol>
 
           
         
@@ -1590,8 +1594,8 @@ Logout succeeded</p>
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/web-input-jump/" itemprop="url">
-                  web-input-jump
+                <a class="post-title-link" href="/2012/07/12/web-chrome-debug/" itemprop="url">
+                  Chrome开发工具支持远程调试
                 </a>
               
             
@@ -1604,8 +1608,8 @@ Logout succeeded</p>
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
-              2012-07-04
+            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
+              2012-07-12
             </time>
           </span>
 
@@ -1634,8 +1638,8 @@ Logout succeeded</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/04/web-input-jump/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-input-jump/" itemprop="commentsCount"></span>
+                <a href="/2012/07/12/web-chrome-debug/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/web-chrome-debug/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1660,8 +1664,12 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">script</span>   <span class="attr">language</span>=<span class="string">JavaScript</span>&gt;</span><span class="javascript">  </span></div><div class="line">  <span class="function"><span class="keyword">function</span>   <span class="title">toNext</span>(<span class="params">obj,str</span>)</span>&#123;      </div><div class="line">    <span class="keyword">if</span>(obj.value.length==str&amp;&amp;obj.nextSibling.nextSibling.type==<span class="string">"text"</span>)  </div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).select() </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> c=<span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>); </div><div class="line">    carray=c.split(<span class="string">" "</span>);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes1"</span>).value=carray[<span class="number">0</span>];</div><div class="line">    alert(carray[<span class="number">0</span>]);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).value=carray[<span class="number">1</span>];</div><div class="line">    <span class="built_in">window</span>.clipboardData.clearData();</div><div class="line">  &#125;  </div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes1"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span> <span class="attr">onbeforepaste</span>=<span class="string">"abc()"</span>&gt;</span>SN1  </div><div class="line">  —  </div><div class="line">      <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes2"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span>&gt;</span>SN2</div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Google Chrome开发工具（简称 DevTools）前端界面是作为HTML + CSS + JavaScript的web应用实现的。它采用序列化的信息通道与被审查页面通讯。开发团队建立这个序列化异步交互通道是为了将DevTools前端移出被审查页面的进程。但实现了才发现，甚至能将DevTools前端移出浏览器运行。下面是尝试远程调试的步骤：</p>
+<p>1.使用远程调试命令行开关运行要远程调试的 Chrome 实例：chrome.exe --remote-debugging-port=9222 --user-data-dir=remote-profile。远程会话必须使用不同的 Chrome 实例，所以运行时要加 --user-data-dir 参数。</p>
+<p>2.转到要调试的页面。</p>
+<p>3.现在运行正常的 (客户端) Chrome 实例并转到 <a href="http://localhost:9222" target="_blank" rel="external">http://localhost:9222</a> 那里。</p>
+<p>您将能看到一些链接，指向相应页面的远程调试会话。点击即可开始远程调试Chrome页面：</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2012/07/12/chrome1.png" alt="chrome"></p>
 
           
         
@@ -1735,7 +1743,7 @@ Logout succeeded</p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">209</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1743,7 +1751,7 @@ Logout succeeded</p>
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1752,7 +1760,7 @@ Logout succeeded</p>
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">147</span>
+                <span class="site-state-item-count">150</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2120,24 +2128,7 @@ Logout succeeded</p>
     $('.popup').click(function(e){
       e.stopPropagation();
     });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script>
 
 
   
