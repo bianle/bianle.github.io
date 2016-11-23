@@ -301,8 +301,8 @@
             
               
                 
-                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">
-                  在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
+                <a class="post-title-link" href="/2013/01/07/java-hibernate-could-not-initialize-proxy/" itemprop="url">
+                  could not initialize proxy – no Session
                 </a>
               
             
@@ -315,8 +315,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
+            <time itemprop="dateCreated" datetime="2013-01-07T18:09:17+08:00" content="2013-01-07">
+              2013-01-07
             </time>
           </span>
 
@@ -329,8 +329,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -345,8 +345,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentsCount"></span>
+                <a href="/2013/01/07/java-hibernate-could-not-initialize-proxy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/07/java-hibernate-could-not-initialize-proxy/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -371,24 +371,100 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
-<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
-<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
-<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
-<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
-<p>使用示例：</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
-<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
-<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在<code>&lt;many-to-on&gt;</code>中这错误很常见，字面意义就是不能被初始化，因为<code>session</code>已经关闭了。
+简单理解就是因为，你使用了<code>lazy=true</code>，这样hibernate在从数据库中调数据的时候是不会把关联的对象查出来的，而是保存一个获取值得方法，在你使用getXXX()调用的时候，hiberante会利用这个保存的方法去从数据库中取数据。而往往我们在jsp页面中使用getXXX()准备展示数据的时候，session早已经在dao中就关闭了，我们该如何解决这种异常呢？
+简单的说有三种：</p>
 <ol>
-<li>
-<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
-</li>
-<li>
-<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
-</li>
+<li>把lazy设成false,最简单。</li>
+<li>我没试过，但听说过</li>
 </ol>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
+<p>在web.xml中加入</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="attribute">filter</span>&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-class&gt; </div><div class="line">     org<span class="selector-class">.springframework</span><span class="selector-class">.orm</span><span class="selector-class">.hibernate3</span><span class="selector-class">.support</span><span class="selector-class">.OpenSessionInViewFilter</span> </div><div class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>&gt; </div><div class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>我用的方法，也是我认为比较不错的方法，灵活性更好。用left join fetch或inner join fetch语法。
+例如：from Item i left join fetch i.parentItem ii
+解释一下Item表是一个自关联的表，它的关联关系在hbm.xml中配置好了。
+如下：</li>
+</ol>
+<p>程序代码</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;many-<span class="keyword">to</span>-one <span class="built_in">name</span>=<span class="string">"parentItem"</span> lazy=<span class="string">"false"</span> fetch=<span class="string">"join"</span> <span class="built_in">class</span>=<span class="string">"cn.sports.matchs.model.Item"</span>&gt; </div><div class="line">             &lt;column <span class="built_in">name</span>=<span class="string">"PARENT_ID"</span>&gt;&lt;/column&gt; </div><div class="line">&lt;/many-<span class="keyword">to</span>-one&gt;</div></pre></td></tr></table></figure>
+<p>在Item类中</p>
+<p>程序代码</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private Item parentItem<span class="comment">;</span></div></pre></td></tr></table></figure>
+<p>关于lazy机制：
+延迟初始化错误是运用Hibernate开发项目时最常见的错误。如果对一个类或者集合配置了延迟检索策略，那么必须当代理类实例或代理集合处于持久化状态（即处于Session范围内）时，才能初始化它。如果在游离状态时才初始化它，就会产生延迟初始化错误。</p>
+<p>下面把Customer.hbm.xml文件的<class>元素的lazy属性设为true，表示使用延迟检索策略：</class></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="built_in">class</span> <span class="built_in">name</span>=<span class="string">"mypack.Customer"</span> table=<span class="string">"CUSTOMERS"</span> lazy=<span class="string">"true"</span>&gt;</div></pre></td></tr></table></figure>
+<p>当执行Session的load()方法时，Hibernate不会立即执行查询CUSTOMERS表的select语句，仅仅返回Customer类的代理类的实例，这个代理类具由以下特征：
+（1）由Hibernate在运行时动态生成，它扩展了Customer类，因此它继承了Customer类的所有属性和方法，但它的实现对于应用程序是透明的。
+（2）当Hibernate创建Customer代理类实例时，仅仅初始化了它的OID属性，其他属性都为null，因此这个代理类实例占用的内存很少。
+（3）当应用程序第一次访问Customer代理类实例时（例如调用customer.getXXX()或customer.setXXX()方法）， Hibernate会初始化代理类实例，在初始化过程中执行select语句，真正从数据库中加载Customer对象的所有数据。但有个例外，那就是当应用程序访问Customer代理类实例的getId()方法时，Hibernate不会初始化代理类实例，因为在创建代理类实例时OID就存在了，不必到数据库中去查询。
+提示：Hibernate采用CGLIB工具来生成持久化类的代理类。CGLIB是一个功能强大的Java字节码生成工具，它能够在程序运行时动态生成扩展 Java类或者实现Java接口的代理类。关于CGLIB的更多知识，请参考：<a href="http://cglib.sourceforge.net/%E3%80%82" target="_blank" rel="external">http://cglib.sourceforge.net/。</a>
+以下代码先通过Session的load()方法加载Customer对象，然后访问它的name属性：</p>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>(); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>();</div></pre></td></tr></table></figure>
+<p>在运行session.load()方法时Hibernate不执行任何select语句，仅仅返回Customer类的代理类的实例，它的OID为1，这是由load()方法的第二个参数指定的。当应用程序调用customer.getName()方法时，Hibernate会初始化Customer代理类实例，从数据库中加载Customer对象的数据，执行以下select语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> CUSTOMERS <span class="keyword">where</span> <span class="keyword">ID</span>=<span class="number">1</span>; </div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> orDERS <span class="keyword">where</span> CUSTOMER_ID=<span class="number">1</span>;</div></pre></td></tr></table></figure>
+<p>当<class>元素的lazy属性为true，会影响Session的load()方法的各种运行时行为，下面举例说明。
+1．如果加载的Customer对象在数据库中不存在，Session的load()方法不会抛出异常，只有当运行customer.getName()方法时才会抛出以下异常：</class></p>
+<blockquote>
+<p>ERROR LazyInitializer:63 -Exception initializing proxy
+net.sf.hibernate.ObjectNotFoundException: No row with thegiven identifier exists: 1, of class:
+mypack.Customer
+2．如果在整个Session范围内，应用程序没有访问过Customer对象，那么Customer代理类的实例一直不会被初始化，Hibernate不会执行任何select语句。以下代码试图在关闭Session后访问Customer游离对象：</p>
+</blockquote>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
+<p>由于引用变量customer引用的Customer代理类的实例在Session范围内始终没有被初始化，因此在执行customer.getName()方法时，Hibernate会抛出以下异常：
+ERROR LazyInitializer:63 -Exception initializing proxy
+net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed
+由此可见，Customer代理类的实例只有在当前Session范围内才能被初始化。</p>
+<p>3．net.sf.hibernate.Hibernate类的initialize()静态方法用于在Session范围内显式初始化代理类实例，isInitialized()方法用于判断代理类实例是否已经被初始化。例如：</p>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">if</span>(!<span class="type">Hibernate</span>.isInitialized(customer)) </div><div class="line"><span class="title">Hibernate</span>.<span class="title">initialize</span>(customer); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
+<p>以上代码在Session范围内通过Hibernate类的initialize()方法显式初始化了Customer代理类实例，因此当Session关闭后，可以正常访问Customer游离对象。</p>
+<p>4．当应用程序访问代理类实例的getId()方法时，不会触发Hibernate初始化代理类实例的行为，例如：</p>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">customer</span>.<span class="title">getId</span>(); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
+<p>当应用程序访问customer.getId()方法时，该方法直接返回Customer代理类实例的OID值，无需查询数据库。由于引用变量 customer始终引用的是没有被初始化的Customer代理类实例，因此当Session关闭后再执行customer.getName()方法， Hibernate会抛出以下异常：</p>
+<blockquote>
+<p>ERROR LazyInitializer:63 -Exception initializing proxy
+net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed</p>
+</blockquote>
+<p>解决方法：
+由于hibernate采用了lazy=true,这样当你用hibernate查询时,返回实际为利用cglib增强的代理类,但其并没有实际填充;当你在前端,利用它来取值(getXXX)时,这时Hibernate才会到数据库执行查询,并填充对象,但此时如果和这个代理类相关的session已关闭掉,就会产生种错误.
+在做一对多时，有时会出现&quot;could not initialize proxy – clothe owning Session was sed,这个好像是hibernate的缓存问题.问题解决:需要在<many-to-one>里设置lazy=“false”. 但有可能会引发另一个异常叫
+failed to lazily initialize a collection of role: XXXXXXXX, no session or session was closed
+解决方法:在web.xml中加入</many-to-one></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="attribute">filter</span>&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-class&gt; </div><div class="line">     org<span class="selector-class">.springframework</span><span class="selector-class">.orm</span><span class="selector-class">.hibernate3</span><span class="selector-class">.support</span><span class="selector-class">.OpenSessionInViewFilter</span> </div><div class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </div><div class="line">&lt;/<span class="attribute">filter</span> &gt; </div><div class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</div></pre></td></tr></table></figure>
+<p>就可以了;</p>
+<p>参考了:
+Hibernate与延迟加载：
+Hibernate对象关系映射提供延迟的与非延迟的对象初始化。非延迟加载在读取一个对象的时候会将与这个对象所有相关的其他对象一起读取出来。这有时会导致成百的（如果不是成千的话）select语句在读取对象的时候执行。这个问题有时出现在使用双向关系的时候，经常会导致整个数据库都在初始化的阶段被读出来了。当然，你可以不厌其烦地检查每一个对象与其他对象的关系，并把那些最昂贵的删除，但是到最后，我们可能会因此失去了本想在ORM工具中获得的便利。
+一个明显的解决方法是使用Hibernate提供的延迟加载机制。这种初始化策略只在一个对象调用它的一对多或多对多关系时才将关系对象读取出来。这个过程对开发者来说是透明的，而且只进行了很少的数据库操作请求，因此会得到比较明显的性能提升。这项技术的一个缺陷是延迟加载技术要求一个Hibernate会话要在对象使用的时候一直开着。这会成为通过使用DAO模式将持久层抽象出来时的一个主要问题。为了将持久化机制完全地抽象出来，所有的数据库逻辑，包括打开或关闭会话，都不能在应用层出现。最常见的是，一些实现了简单接口的DAO实现类将数据库逻辑完全封装起来了。一种快速但是笨拙的解决方法是放弃DAO模式，将数据库连接逻辑加到应用层中来。这可能对一些小的应用程序有效，但是在大的系统中，这是一个严重的设计缺陷，妨碍了系统的可扩展性。
+在Web层进行延迟加载
+幸运的是，Spring框架为Hibernate延迟加载与DAO模式的整合提供了一种方便的解决方法。对那些不熟悉Spring与Hibernate集成使用的人，我不会在这里讨论过多的细节，但是我建议你去了解Hibernate与Spring集成的数据访问。以一个Web应用为例，Spring提供了OpenSessionInViewFilter和OpenSessionInViewInterceptor。我们可以随意选择一个类来实现相同的功能。两种方法唯一的不同就在于interceptor在Spring容器中运行并被配置在web应用的上下文中，而Filter在Spring之前运行并被配置在web.xml中。不管用哪个，他们都在请求将当前会话与当前（数据库）线程绑定时打开Hibernate会话。一旦已绑定到线程，这个打开了的Hibernate会话可以在DAO实现类中透明地使用。这个会话会为延迟加载数据库中值对象的视图保持打开状态。一旦这个逻辑视图完成了，Hibernate会话会在Filter的doFilter方法或者Interceptor的postHandle方法中被关闭。下面是每个组件的配置示例：
+Interceptor的配置:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=<span class="string">"openSessionInViewInterceptor"</span> </div><div class="line"><span class="class"><span class="keyword">class</span></span>=<span class="string">"org.springframework.orm.hibernate.support.OpenSessionInViewInterceptor"</span>&gt; </div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"sessionFactory"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line">&lt;<span class="regexp">/beans&gt;</span></div></pre></td></tr></table></figure>
+<p>Filter的配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hibernateFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-class</span>&gt;</span> </div><div class="line">org.springframework.orm.hibernate.support.OpenSessionInViewFilter </div><div class="line"><span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hibernateFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*. spring <span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>实现Hibernate的Dao接口来使用打开的会话是很容易的。事实上，如果你已经使用了Spring框架来实现你的Hibernate Dao,很可能你不需要改变任何东西。方便的HibernateTemplate公用组件使访问数据库变成小菜一碟，而DAO接口只有通过这个组件才可以访问到数据库。下面是一个示例的DAO：</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> HibernateProductDAO <span class="keyword">extends</span> HibernateDaoSupport implements ProductDAO &#123;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="built_in">Product</span> getProduct(<span class="keyword">Integer</span> productId) &#123; </div><div class="line">       <span class="keyword">return</span> (<span class="built_in">Product</span>)getHibernateTemplate().load(<span class="built_in">Product</span>.<span class="keyword">class</span>, productId); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">Integer</span> saveProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </div><div class="line">       <span class="keyword">return</span> (<span class="keyword">Integer</span>) getHibernateTemplate().<span class="keyword">save</span>(<span class="built_in">product</span>); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> void updateProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </div><div class="line">       getHibernateTemplate().update(<span class="built_in">product</span>); </div><div class="line">&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在业务逻辑层中使用延迟加载
+即使在视图外面，Spring框架也通过使用AOP 拦截器 HibernateInterceptor来使得延迟加载变得很容易实现。这个Hibernate 拦截器透明地将调用配置在Spring应用程序上下文中的业务对象中方法的请求拦截下来，在调用方法之前打开一个Hibernate会话，然后在方法执行完之后将会话关闭。让我们来看一个简单的例子，假设我们有一个接口BussinessObject：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span>     <span class="keyword">interface</span>     <span class="title">BusinessObject</span>     &#123; </div><div class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span>(<span class="params"></span>)</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>类BusinessObjectImpl实现了BusinessObject接口:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span>     <span class="class"><span class="keyword">class</span>     <span class="title">BusinessObjectImpl</span>     <span class="keyword">implements</span>     <span class="title">BusinessObject</span>     </span>&#123; </div><div class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span><span class="params">()</span>     </span>&#123; </div><div class="line"><span class="comment">//     lots of logic that calls </span></div><div class="line"><span class="comment">//     DAO classes Which access </span></div><div class="line"><span class="comment">//     data objects lazily  </span></div><div class="line">&#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过在Spring应用程序上下文中的一些配置，我们可以让将调用BusinessObject的方法拦截下来，再令它的方法支持延迟加载。看看下面的一个程序片段：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"hibernateInterceptor"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate.HibernateInterceptor"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"sessionFactory"</span>/&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"businessObjectTarget"</span> <span class="attr">class</span>=<span class="string">"com.acompany.BusinessObjectImpl"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"someDAO"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"someDAO"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"businessObject"</span> <span class="attr">class</span>=<span class="string">"org.springframework.aop.framework.ProxyFactoryBean"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"target"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"businessObjectTarget"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"proxyInterfaces"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>com.acompany.BusinessObject<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"interceptorNames"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">list</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>hibernateInterceptor<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">list</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当businessObject被调用的时候，HibernateInterceptor打开一个Hibernate会话，并将调用请求传递给BusinessObjectImpl对象。当BusinessObjectImpl执行完成后，HibernateInterceptor透明地关闭了会话。应用层的代码不用了解任何持久层逻辑，还是实现了延迟加载。
+在单元测试中测试延迟加载
+最后，我们需要用J-Unit来测试我们的延迟加载程序。我们可以轻易地通过重写TestCase类中的setUp和tearDown方法来实现这个要求。我比较喜欢用这个方便的抽象类作为我所有测试类的基类。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLazyTestCase</span> <span class="keyword">extends</span> <span class="title">TestCase</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="type">SessionFactory</span> sessionFactory; </div><div class="line"><span class="keyword">private</span> <span class="type">Session</span> session;</div><div class="line"></div><div class="line">public void setUp() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </div><div class="line"><span class="keyword">super</span>.setUp(); </div><div class="line"><span class="type">SessionFactory</span> sessionFactory = (<span class="type">SessionFactory</span>) getBean(<span class="string">"sessionFactory"</span>); </div><div class="line">session = <span class="type">SessionFactoryUtils</span>.getSession(sessionFactory, <span class="literal">true</span>); </div><div class="line"><span class="type">Session</span> s = sessionFactory.openSession(); </div><div class="line"><span class="type">TransactionSynchronizationManager</span>.bindResource(sessionFactory, <span class="keyword">new</span> <span class="type">SessionHolder</span>(s));</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">protected</span> <span class="type">Object</span> getBean(<span class="type">String</span> beanName) &#123; </div><div class="line"><span class="comment">//Code to get objects from Spring application context </span></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void tearDown() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </div><div class="line"><span class="keyword">super</span>.tearDown(); </div><div class="line"><span class="type">SessionHolder</span> holder = (<span class="type">SessionHolder</span>) <span class="type">TransactionSynchronizationManager</span>.getResource(sessionFactory); </div><div class="line"><span class="type">Session</span> s = holder.getSession(); </div><div class="line">s.flush(); </div><div class="line"><span class="type">TransactionSynchronizationManager</span>.unbindResource(sessionFactory); </div><div class="line"><span class="type">SessionFactoryUtils</span>.closeSessionIfNecessary(s, sessionFactory); </div><div class="line">&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们首先说利用lazy=false来解决问题，这种方法是很好用，但是在实际的过程并不实用，如果你某个对象关联好几个甚至十几个自对象，那么每次加载一个的话要执行很多HQL语句，可想而知这个效率问题啦，特别是在使用列表的时候。所以不实用，而在上述所说的“在业务逻辑层中使用延迟加载” 也是这种情况吧。
+很多使用WEB的朋友都喜欢利用openSessionView来加载这个问题。不错我也喜欢用，简单方便。但是说几种情况：</p>
+<ol>
+<li>在quartz中总不能使用openSessionView模式吧</li>
+<li>在spring后拦截的过程中，如果取拦截对象中的子对象利用openSessionView也不行
+还有很多情况是不能用的，那么怎么解决呢。有人说那就lazy=False吧，你想在单纯的解决一个quartz的时候调整整个WEB工程的加载好像不合适吧。
+那怎么办呢，我觉得这个时候就可以考虑利用SQL语句使用这个重新加载一遍这个代理类，这样在想调用的时候才手动加载比较合适和方便吧，但是估计要多几行代码，好好考虑</li>
+</ol>
 
           
         
@@ -438,8 +514,8 @@
             
               
                 
-                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">
-                  ��װUbuntu���Ҳ���windows sudo update-grub
+                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-ssh-server/" itemprop="url">
+                  ubuntu开启ssh服务
                 </a>
               
             
@@ -452,7 +528,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+            <time itemprop="dateCreated" datetime="2013-01-05T20:56:00+08:00" content="2013-01-05">
               2013-01-05
             </time>
           </span>
@@ -482,8 +558,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-ubuntu-update-grub/" itemprop="commentsCount"></span>
+                <a href="/2013/01/05/linux-ubuntu-ssh-server/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-ubuntu-ssh-server/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -508,20 +584,158 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>���Ѿ���Ubuntu 9.10��ͨ���ն�sudo update-grub�����ˣ���������һ����������XP��Windows 7����������һλ���ĵ����ѵ����İ����£����������������飬������֮��Ч�Ľ���������</p>
-<p>ԭ���ǲ�����Ӳ�̰�װ��ʽ��װUbuntu�󣬰��Ǹ���������grldr�ƻ���</p>
-<p>�޸�Ubuntu 9.10����/boot/grub/grub.cfg�ļ���Windows 7������ѡ�����ֱ�Ӹ���������������Windows 7ѡ���ɡ�</p>
-<p>menuentry “Windows 7” {
-insmod ntfs
-set root=(hd0,1)
-drivemap -s (hd0) ${root}</p>
-<p>chainloader +1
-}</p>
-<p>����Ӧ�þͿ��Խ���grub4dos �Ĳ˵���Ȼ���� C ����GRUB��DOS״̬ ����grub&gt;��ʾ�����������������������޸���������grldr����</p>
-<p>grub&gt;root (hd0,0)
-grub&gt;chainloader /bootmgr
-grub&gt;boot</p>
-<p>����Windows 7��Ҫ���¼���Windows 7��Ȼ������ʽ�ָ���Ubuntu 9.10��Windows 7��˫ϵͳ�����˵��ˣ�����XP����Windows 7�������˵����ģ�һ�������ˡ�������</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：
+sudo apt-get install openssh-server
+Ubuntu缺省安装了openssh-client,所以在这里就不安装了，如果你的系统没有安装的话，再用apt-get安装上即可。
+然后确认sshserver是否启动了：
+ps -e |grep ssh
+如果只有ssh-agent那ssh-server还没有启动，需要/etc/init.d/ssh start，如果看到sshd那说明ssh-server已经启动了。
+ssh-server配置文件位于/ etc/ssh/sshd_config，在这里可以定义SSH的服务端口，默认端口是22，你可以自己定义成其他端口号，如222。然后重启SSH服务：
+sudo /etc/init.d/ssh resar
+ssh连接：ssh <a href="mailto:xjtu129@202.117.15.165" target="_blank" rel="external">xjtu129@202.117.15.165</a>
+————————————————-</p>
+<ol>
+<li>首先在服务器上安装ssh的服务器端。
+$ sudo aptitude install openssh-server</li>
+<li>启动ssh-server。
+$ /etc/init.d/ssh restart</li>
+<li>确认ssh-server已经正常工作。
+$ netstat -tlp
+tcp6 0 0 *:ssh <em>:</em> LISTEN –
+看到上面这一行输出说明ssh-server已经在运行了。</li>
+<li>在客户端通过ssh登录服务器。假设服务器的IP地址是192.168.0.103，登录的用户名是hyx。
+$ ssh -l hyx 192.168.0.103
+接下来会提示输入密码，然后就能成功登录到服务器上了</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">
+                  httpclient����xml�ַ��������ͣ�
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/05/java-httpclient-xml/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/java-httpclient-xml/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// �½ӵ�һ����Ŀ�ӿڣ���Ҫ��xml�������Ҳ�������post��ʽ������ѡ�����ַ�ʽ��������ƴ��xml�ַ���</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//������xml�ļ�����������д </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// ������ַ</span></div><div class="line"></div><div class="line">        <span class="comment">// ��������������ֱ�Ӵ��ļ��ж�ȡ </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// ��������xml�ַ���</span></div><div class="line"></div><div class="line">        <span class="comment">// ָ���������ݵ����� </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// ���� HttpClient ��ʵ�� </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// ����200Ϊ�ɹ� </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// ���ص����� </span></div><div class="line">            post.releaseConnection();<span class="comment">// �ͷ����� </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ���Ͼ��Ƿ��������Ĵ��룬�Է����յ����ݿ���ֱ�ӽ�����xml</span></div><div class="line"></div><div class="line">    <span class="comment">// ��ȡxml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>��Ҫjar����</p>
+<ol>
+<li>
+<p>jdom.jar</p>
+</li>
+<li>
+<p>commons-httpclient.jar</p>
+</li>
+</ol>
 
           
         
@@ -641,7 +855,7 @@ grub&gt;boot</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>This is the window that comes up when you run the program, just a little motivator so you can see what��s in the end of the tunnel.</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>This is the window that comes up when you run the program, just a little motivator so you can see what��s in the end of the tunnel.</p>
 <p>Note to get the maximum out of this tutorial it is recommended that you have a basic grasp on how HTTP works. If the little man inside your head says what tha H is HTTP, you should go to the bottom and check some of the pointers. There you will find some nice text to explain the basic concept.</p>
 <p>Let��s get started!
 When making a program nowadays the first thing you should think about is the GUI (graphical user interface). If the program dosen��t look fancy, you can just press all the cancel buttons on the project. Ok that was meant as a joke, but there is some truth in it. People tend to judge a program a lot on its look, even though the real coding job is in making the stuff that goes on behind the scenes.</p>
@@ -1039,135 +1253,6 @@ Apache the best and most widely used web server on the Internet today, check it 
             
               
                 
-                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">
-                  httpclient����xml�ַ��������ͣ�
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/05/java-httpclient-xml/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/java-httpclient-xml/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// �½ӵ�һ����Ŀ�ӿڣ���Ҫ��xml�������Ҳ�������post��ʽ������ѡ�����ַ�ʽ��������ƴ��xml�ַ���</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//������xml�ļ�����������д </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// ������ַ</span></div><div class="line"></div><div class="line">        <span class="comment">// ��������������ֱ�Ӵ��ļ��ж�ȡ </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// ��������xml�ַ���</span></div><div class="line"></div><div class="line">        <span class="comment">// ָ���������ݵ����� </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// ���� HttpClient ��ʵ�� </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// ����200Ϊ�ɹ� </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// ���ص����� </span></div><div class="line">            post.releaseConnection();<span class="comment">// �ͷ����� </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// ���Ͼ��Ƿ��������Ĵ��룬�Է����յ����ݿ���ֱ�ӽ�����xml</span></div><div class="line"></div><div class="line">    <span class="comment">// ��ȡxml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>��Ҫjar����</p>
-<ol>
-<li>
-<p>jdom.jar</p>
-</li>
-<li>
-<p>commons-httpclient.jar</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2013/01/05/software-editplus/" itemprop="url">
                   使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)
                 </a>
@@ -1238,7 +1323,7 @@ Apache the best and most widely used web server on the Internet today, check it 
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>除了windows操作系统，EditPlus可以说是我最经常使用的软件了。无论是编写xhtml页面，还是css、js文件，甚至随笔记记这样的事情，我都会使用EditPlus（现在使用的是EditPlus2.31英文版），感觉它不仅功能强大，更难得的是：绿色、轻量级、启动速度快、稳定性高……反正，我个人是爱死她了！</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>除了windows操作系统，EditPlus可以说是我最经常使用的软件了。无论是编写xhtml页面，还是css、js文件，甚至随笔记记这样的事情，我都会使用EditPlus（现在使用的是EditPlus2.31英文版），感觉它不仅功能强大，更难得的是：绿色、轻量级、启动速度快、稳定性高……反正，我个人是爱死她了！</p>
 <p>在使用中，我个人也总结了一些使用经验。可能作为高手的你，看来只是“相当肤浅”，但是没有关系，因为我相信，只要把知识共享出来，总能帮助到一些还在进步中的朋友。下面就让我们来开始配置出符合你自己使用习惯的EditPlus吧！</p>
 <p>2008-05-08补充：同时推荐大家阅读这篇《“阿一web标准学堂”选修课：EditPlus高级使用技巧（附视频、课件、代码下载）》，有视频哦。</p>
 <p>一边阅读，一边动手吧！</p>
@@ -1578,7 +1663,7 @@ EditPlus模板下载</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
 <p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
 <p>假如我们需要确定谁占用了我们的9050端口</p>
 <p>1、Windows平台
@@ -1636,8 +1721,8 @@ EditPlus模板下载</p>
             
               
                 
-                <a class="post-title-link" href="/2012/12/27/web-js-change-css/" itemprop="url">
-                  JS来改变CSS样式
+                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">
+                  ��װUbuntu���Ҳ���windows sudo update-grub
                 </a>
               
             
@@ -1650,8 +1735,8 @@ EditPlus模板下载</p>
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-12-27T18:09:17+08:00" content="2012-12-27">
-              2012-12-27
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
             </time>
           </span>
 
@@ -1664,8 +1749,8 @@ EditPlus模板下载</p>
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -1680,8 +1765,8 @@ EditPlus模板下载</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/27/web-js-change-css/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/27/web-js-change-css/" itemprop="commentsCount"></span>
+                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-ubuntu-update-grub/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1706,77 +1791,20 @@ EditPlus模板下载</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>document.getElementById(“xx”).style.xxx中的所有属性是什么</p>
-<p>盒子标签和属性对照
-CSS语法（不区分大小写）|JavaScript语法（区分大小写）
-border| border
-border-bottom| borderBottom
-border-bottom-color|borderBottomColor
-border-bottom-style|borderBottomStyle
-border-bottom-width|borderBottomWidth
-border-color|borderColor
-border-left|	borderLeft
-border-left-color|	borderLeftColor
-border-left-style|	borderLeftStyle
-border-left-width|	borderLeftWidth
-border-right|	borderRight
-border-right-color|	borderRightColor
-border-right-style|	borderRightStyle
-border-right-width|	borderRightWidth
-border-style|	borderStyle
-border-top|	borderTop
-border-top-color|	borderTopColor
-border-top-style|	borderTopStyle
-border-top-width|	borderTopWidth
-border-width|	borderWidth
-clear|	clear
-float|	floatStyle
-margin|	margin
-margin-bottom|	marginBottom
-margin-left|	marginLeft
-margin-right|	marginRight
-margin-top|	marginTop
-padding|	padding
-padding-bottom|	paddingBottom
-padding-left|	paddingLeft
-padding-right|	paddingRight
-padding-top|	paddingTop
-颜色和背景标签和属性对照
-CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
-background|	background
-background-attachment|	backgroundAttachment
-background-color|	backgroundColor
-background-image|	backgroundImage
-background-position|	backgroundPosition
-background-repeat|	backgroundRepeat
-color|	color</p>
-<p>样式标签和属性对照
-CSS语法（不区分大小写）	JavaScript 语法（区分大小写）
-display|	display
-list-style-type|	listStyleType
-list-style-image|	listStyleImage
-list-style-position|	listStylePosition
-list-style|	listStyle
-white-space|	whiteSpace</p>
-<p>文字样式标签和属性对照
-CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
-font	font
-font-family	fontFamily
-font-size	fontSize
-font-style	fontStyle
-font-variant	fontVariant
-font-weight	fontWeight</p>
-<p>文本标签和属性对照
-CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
-letter-spacing|	letterSpacing
-line-break|	lineBreak
-line-height|	lineHeight
-text-align|	textAlign
-text-decoration|	textDecoration
-text-indent|	textIndent
-text-justify|	textJustify
-text-transform|	textTransform
-vertical-align|	xverticalAlign</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>���Ѿ���Ubuntu 9.10��ͨ���ն�sudo update-grub�����ˣ���������һ����������XP��Windows 7����������һλ���ĵ����ѵ����İ����£����������������飬������֮��Ч�Ľ���������</p>
+<p>ԭ���ǲ�����Ӳ�̰�װ��ʽ��װUbuntu�󣬰��Ǹ���������grldr�ƻ���</p>
+<p>�޸�Ubuntu 9.10����/boot/grub/grub.cfg�ļ���Windows 7������ѡ�����ֱ�Ӹ���������������Windows 7ѡ���ɡ�</p>
+<p>menuentry “Windows 7” {
+insmod ntfs
+set root=(hd0,1)
+drivemap -s (hd0) ${root}</p>
+<p>chainloader +1
+}</p>
+<p>����Ӧ�þͿ��Խ���grub4dos �Ĳ˵���Ȼ���� C ����GRUB��DOS״̬ ����grub&gt;��ʾ�����������������������޸���������grldr����</p>
+<p>grub&gt;root (hd0,0)
+grub&gt;chainloader /bootmgr
+grub&gt;boot</p>
+<p>����Windows 7��Ҫ���¼���Windows 7��Ȼ������ʽ�ָ���Ubuntu 9.10��Windows 7��˫ϵͳ�����˵��ˣ�����XP����Windows 7�������˵����ģ�һ�������ˡ�������</p>
 
           
         
@@ -1826,8 +1854,8 @@ vertical-align|	xverticalAlign</p>
             
               
                 
-                <a class="post-title-link" href="/2012/12/27/db-sqlserver-autogen-id/" itemprop="url">
-                  SQL清空数据后自增ID重新设置为1的方法
+                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">
+                  在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
                 </a>
               
             
@@ -1840,8 +1868,8 @@ vertical-align|	xverticalAlign</p>
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-12-27T18:09:17+08:00" content="2012-12-27">
-              2012-12-27
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
             </time>
           </span>
 
@@ -1870,8 +1898,8 @@ vertical-align|	xverticalAlign</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/27/db-sqlserver-autogen-id/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/27/db-sqlserver-autogen-id/" itemprop="commentsCount"></span>
+                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1896,11 +1924,144 @@ vertical-align|	xverticalAlign</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在SQLSERVER 2000中ID字段怎样在数据库中设为自动编号，sql语句该怎么写？</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> [<span class="keyword">test</span>] ( </div><div class="line">[<span class="keyword">id</span>] [<span class="built_in">int</span>] <span class="keyword">IDENTITY</span> (<span class="number">1</span>, <span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> , </div><div class="line">) <span class="keyword">ON</span> [PRIMARY] TEXTIMAGE_ON [PRIMARY] </div><div class="line"><span class="keyword">GO</span></div></pre></td></tr></table></figure>
-<p>怎样清除数据后,可以把ID再从1开始计算呢?</p>
-<p>如把数据表users中的自增ID改成从1开始的记录</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">DBCC</span> <span class="selector-tag">CHECKIDENT</span> (‘users’, RESEED,<span class="number">1</span>)</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
+<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
+<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
+<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
+<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
+<p>使用示例：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
+<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
+<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
+<ol>
+<li>
+<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
+</li>
+<li>
+<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
+</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/12/27/web-frameset-fixed/" itemprop="url">
+                  frameset固定宽度并且居中显示
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-27T18:09:17+08:00" content="2012-12-27">
+              2012-12-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/12/27/web-frameset-fixed/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/27/web-frameset-fixed/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">其实就再套了一个框架，多了红色部分的代码而已；这样就可以使得框架居中了……..</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">"*,1024,*"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"130,*,40"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"top.html"</span> <span class="attr">name</span>=<span class="string">"topFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"topFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"center.html"</span> <span class="attr">name</span>=<span class="string">"mainFrame"</span> <span class="attr">id</span>=<span class="string">"mainFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"bottom.html"</span> <span class="attr">name</span>=<span class="string">"bottomFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"bottomFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -2020,7 +2181,7 @@ vertical-align|	xverticalAlign</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>每次在eclipse中保存Flex源文件是就弹出报错框“The attribute value type is com.adobe.flexbuilder.project.compiler.internal.ProblemManager and expected is one of java.lang.String, Boolean, Integer”，原来是ProblemManager补丁没打上。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>每次在eclipse中保存Flex源文件是就弹出报错框“The attribute value type is com.adobe.flexbuilder.project.compiler.internal.ProblemManager and expected is one of java.lang.String, Boolean, Integer”，原来是ProblemManager补丁没打上。</p>
 <p>解决办法：</p>
 <ol>
 <li>
@@ -2067,187 +2228,11 @@ vertical-align|	xverticalAlign</p>
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/12/27/db-db2-backup/" itemprop="url">
-                  DB2备份表和删除表
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-12-27T18:09:17+08:00" content="2012-12-27">
-              2012-12-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/12/27/db-db2-backup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/27/db-db2-backup/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>DB2跟ORACLE还是挺大的区别的.习惯了用ORACLE.用起DB2,觉得简直不可理喻.但是,实际上.DB2是很强大的.不过.这些可不是我要讨论的问题.现在.来看看DB2下ORACLE的一些命令如何实现.</p>
-<ol>
-<li>DB2下<code>CREATE TABLE TableName AS</code></li>
-</ol>
-<p>前几天.用DB2,有一批数据.想创建数据的备份表.习惯性的用上了CREATE TABLE AS.</p>
-<p>提示：</p>
-<blockquote>
-<p>DB21034E The command was processed as an SQL statement because it was not a
-valid Command Line Processor command. During SQL processing it returned:
-SQL0104N An unexpected token “create table kf2.tbl as” was found following
-“BEGIN-OF-STATEMENT”. Expected tokens may include: “<space>”.
-SQLSTATE=42601</space></p>
-</blockquote>
-<p>一看傻眼了.马上找资料.花了不少时间.才发现.DB2不可以这样操作…郁闷到了.不过.可以用以下的方法:</p>
-<p>先建表,再插数据.</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> TableName <span class="keyword">as</span> (<span class="keyword">select</span> * <span class="keyword">from</span> TblName) definition <span class="keyword">only</span>;</div></pre></td></tr></table></figure>
-<p>（或者：<code>create table A like B;</code>）</p>
-<p>按原表的字段建个表.还好不用去查表的字段再慢慢敲建表的SQL…</p>
-<p>然后.插数据就简单了.</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> TableName <span class="keyword">select</span> * <span class="keyword">from</span> TblName;</div></pre></td></tr></table></figure>
-<p>用惯了CREATE TABLE AS的友友们是不是觉得很不爽啊?没办法…这是DB2…</p>
-<ol start="2">
-<li>DB2下的<code>TRUNCATE TABLE</code></li>
-</ol>
-<p>今天对一个临时表插完数据后才发现.数据插错了-。-要清表.习惯性的动作又来了.TRUNCATE TABLE.嗯.不用想了.又失败了.咋办捏.因为是省电信级别的用户数据.动不动就几百万的.DELETE FROM TABLE?我死你看…好吧…又是浪费大脑细胞的SEARCH IN BAIDU…最后发现.竟然是用IMPORT来代替了…</p>
-<p>这方法简单了.</p>
-<p><code>VI NULL.DAT</code></p>
-<p>不用添加数据.直接保存,退出</p>
-<p>然后执行</p>
-<p><code>db2 &quot;import from NULL.DAT of del replace into TABLENAME&quot;</code>
-出现了:</p>
-<blockquote>
-<p>SQL3109N The utility is beginning to load data from file “NULL.DAT”.</p>
-</blockquote>
-<blockquote>
-<p>SQL3110N The utility has completed processing. “0″ rows were read from the
-input file.</p>
-</blockquote>
-<blockquote>
-<p>SQL3221W …Begin COMMIT WORK. Input Record Count = “0″.</p>
-</blockquote>
-<blockquote>
-<p>SQL3222W …COMMIT of any database changes was successful.</p>
-</blockquote>
-<blockquote>
-<p>SQL3149N “0″ rows were processed from the input file. “0″ rows were
-successfully inserted into the table. “0″ rows were rejected.</p>
-</blockquote>
-<blockquote>
-<p>Number of rows read = 0
-Number of rows skipped = 0
-Number of rows inserted = 0
-Number of rows updated = 0
-Number of rows rejected = 0
-Number of rows committed = 0</p>
-</blockquote>
-<p>OK.完成了TRUNCATE TABLE的功能.虽然麻烦了点.总比你DELETE FROM TABLE快多了吧.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2288,7 +2273,7 @@ Number of rows committed = 0</p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">209</span>
+              <span class="site-state-item-count">211</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2296,7 +2281,7 @@ Number of rows committed = 0</p>
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-count">45</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2305,7 +2290,7 @@ Number of rows committed = 0</p>
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">150</span>
+                <span class="site-state-item-count">153</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
