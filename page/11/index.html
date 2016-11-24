@@ -301,6 +301,126 @@
             
               
                 
+                <a class="post-title-link" href="/2014/03/25/db-oracle-trunc/" itemprop="url">
+                  Oracle trunc()函数的用法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-03-25T15:25:59+08:00" content="2014-03-25">
+              2014-03-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/03/25/db-oracle-trunc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/db-oracle-trunc/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**************日期********************/</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>  今天的日期为<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mm’)   <span class="keyword">from</span>   dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-1</span>    返回当月第一天. </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>       返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’dd’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>    返回当前年月日 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yyyy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>   返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’d’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-13</span> (星期天)返回当前星期的第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘hh’) <span class="keyword">from</span> dual   –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span>   当前时间为<span class="number">14</span>:<span class="number">41</span>   </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mi’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">41</span>:<span class="number">00</span>   TRUNC()函数没有秒的精确 </div><div class="line"><span class="comment">/***************数字********************/</span> </div><div class="line"><span class="comment">/* </span></div><div class="line">TRUNC（number,num_digits） </div><div class="line">Number 需要截尾取整的数字。 </div><div class="line">Num_digits 用于指定取整精度的数字。Num_digits 的默认值为 0。 </div><div class="line">TRUNC()函数截取时不进行四舍五入 </div><div class="line">*/ </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">0</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123.4</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-4</span>) <span class="keyword">from</span> dual –<span class="number">0</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">4</span>) <span class="keyword">from</span> dual  –<span class="number">123.458</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>) <span class="keyword">from</span> dual  –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/03/25/linux-rh-unstall-java1-4/" itemprop="url">
                   linux(red hat 5)卸载自带java1.4
                 </a>
@@ -1673,143 +1793,6 @@ Some folks have wondered about the math that underlies these numbers. The root o
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/01/java-swt-swing-awt/" itemprop="url">
-                  SWT,Swing,AWT及最小公分母问题（LCD）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-01T18:09:17+08:00" content="2013-02-01">
-              2013-02-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/01/java-swt-swing-awt/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/01/java-swt-swing-awt/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/02/01/lcd1.gif" alt="lcd"></p>
-<p>图里有三个不同的集合，分别代表不同的操作系统，LCD其实指的就是它们三个的交集了，很明显最大公分母就是指它们三的并集喽！</p>
-<p>明白LCD， 最大公分母， 我们再分别看看AWT，SWT，SWING。</p>
-<ol>
-<li>AWT：</li>
-</ol>
-<p>AWT的组件（component）遵循LCD的原则，所以AWT只有所有系统里常用的组件。所以你在AWT里找不到高级的组件如树（tree），因为它在别的系统里没有。对于一些特性AWT也是一样遵循LCD原则。它只支持那些在所有系统里都有的特性。比如：AWT的button里无法加入图像，是因为Motif系统里不支持这个特性。正因为AWT的组件及特性对各系统的很差支持，AWT吸引了很少的用户而被SUN停掉了，它的存在只是为了向后的兼容，并为Swing提供支持。</p>
-<p>最小公分母问题（LCD）：</p>
-<p>读完以上片断大家知道什么是LCD问题了吧！<em>：）</em></p>
-<ol start="2">
-<li>SWT：</li>
-</ol>
-<p>SWT按最大公分母原则建立，及对所有系统里的组件及特性都支持，它的设计想法是如果这个组件在这个系统里存在的话，那么就用java代码对它进行封装并通过JNI调用。如果这个组件不存在那么就模拟生成及通过在SWT的composite上进行画操作。</p>
-<ol start="3">
-<li>Swing:</li>
-</ol>
-<p>不用说，也是按最大公分母，可是在效率上表现不怎么样，可能以后会有改变。因为它也是基于AWT容器的，所以无法实现透明窗体等效果。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1855,7 +1838,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-count">212</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1872,7 +1855,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">153</span>
+                <span class="site-state-item-count">154</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

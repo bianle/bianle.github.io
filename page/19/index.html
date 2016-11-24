@@ -422,8 +422,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">
-                  java实现http文件下载
+                <a class="post-title-link" href="/2012/07/04/web-html-disable-copy/" itemprop="url">
+                  网页防止复制
                 </a>
               
             
@@ -450,8 +450,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -466,8 +466,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-http-download/" itemprop="commentsCount"></span>
+                <a href="/2012/07/04/web-html-disable-copy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-html-disable-copy/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -492,35 +492,9 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
-了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
-分了几百甚至上千上万，那简直是个灾难。
-　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
-如此，我们就可以用程序来完成这个资源的完全下载。
-　　1. 基础知识
-　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
-Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
-　　步骤1:客户端发起连接请求一个URL
-　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
-　　步骤3:客户端接收输入流，将流中的内容存到文件
-　　2. 网络连接的建立
-　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
-存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
-<ol start="3">
-<li>代理的访问
-　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
-，访问的JAVA代码如下:</li>
-</ol>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
-<ol start="4">
-<li>网络资源的保存
-　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
-流中的所以内容，并将其保存在文件中。示例代码:</li>
-</ol>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
-<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在body标签内加上一段代码，禁用右键菜单</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="selector-tag">body</span> oncontextmenu=<span class="string">"return false"</span></div><div class="line">onselectstart=<span class="string">"return false"</span></div><div class="line">ondragstart=<span class="string">"return false"</span></div><div class="line">onbeforecopy=<span class="string">"return false"</span></div><div class="line">oncopy=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>() </div><div class="line">onselect=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>()&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input <span class="attr">type="text"</span> <span class="attr">id="username"</span> <span class="attr">name="username"</span> <span class="attr">value="禁止复制"</span> <span class="attr">onpaste="return</span> <span class="literal">false</span><span class="string">" oncontextmenu="</span>return <span class="literal">false</span><span class="string">" oncopy="</span>return <span class="literal">false</span><span class="string">" oncut="</span>return <span class="literal">false</span><span class="string">" &gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -811,266 +785,6 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/java-jdbc-demo/" itemprop="url">
-                  jdbc连接demo
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
-              2012-07-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/04/java-jdbc-demo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-jdbc-demo/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>jdbc连接参数</p>
-<blockquote>
-<p>oracle
-driver=&quot;oracle.jdbc.driver.OracleDriver&quot;
-url=&quot;jdbc:oracle:thin:@localhost:1521:数据库名&quot;
-sqlserver
-driver=&quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;
-url=&quot;jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=数据库名&quot;
-mysql
-driver=&quot;com.mysql.jdbc.Driver&quot;
-url=&quot;jdbc:mysql://localhost/数据库名?[后接参数]&quot;
-db2
-driver=&quot;com.ibm.db2.jdbc.app.DB2Driver&quot;
-url=&quot;jdbc:db2://localhost:5000/数据库名&quot;
-sybase
-driver=&quot;com.sybase.jdbc.SybDriver&quot;
-url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
-</blockquote>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/04/web-html-disable-copy/" itemprop="url">
-                  网页防止复制
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
-              2012-07-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/04/web-html-disable-copy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-html-disable-copy/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在body标签内加上一段代码，禁用右键菜单</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="selector-tag">body</span> oncontextmenu=<span class="string">"return false"</span></div><div class="line">onselectstart=<span class="string">"return false"</span></div><div class="line">ondragstart=<span class="string">"return false"</span></div><div class="line">onbeforecopy=<span class="string">"return false"</span></div><div class="line">oncopy=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>() </div><div class="line">onselect=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>()&gt;</div></pre></td></tr></table></figure>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input <span class="attr">type="text"</span> <span class="attr">id="username"</span> <span class="attr">name="username"</span> <span class="attr">value="禁止复制"</span> <span class="attr">onpaste="return</span> <span class="literal">false</span><span class="string">" oncontextmenu="</span>return <span class="literal">false</span><span class="string">" oncopy="</span>return <span class="literal">false</span><span class="string">" oncut="</span>return <span class="literal">false</span><span class="string">" &gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/07/04/game-dnf/" itemprop="url">
                   我看了很感人
                 </a>
@@ -1190,6 +904,292 @@ url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
 只是傻子不知道一直陪在他身边的是女孩… ­
 也许若干年后.傻子回忆过往.想起女孩…会明白至尊宝对紫霞仙子说过的那段话： ­
 曾经有一份真诚的爱情摆在我面前，我没有珍惜，等失去的时候，才后悔莫及。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">
+                  java实现http文件下载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-http-download/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
+了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
+分了几百甚至上千上万，那简直是个灾难。
+　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
+如此，我们就可以用程序来完成这个资源的完全下载。
+　　1. 基础知识
+　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
+Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
+　　步骤1:客户端发起连接请求一个URL
+　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
+　　步骤3:客户端接收输入流，将流中的内容存到文件
+　　2. 网络连接的建立
+　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
+存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>代理的访问
+　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
+，访问的JAVA代码如下:</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>网络资源的保存
+　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
+流中的所以内容，并将其保存在文件中。示例代码:</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/04/java-jdbc-demo/" itemprop="url">
+                  jdbc连接demo
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/java-jdbc-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-jdbc-demo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>jdbc连接参数</p>
+<blockquote>
+<p>oracle
+driver=&quot;oracle.jdbc.driver.OracleDriver&quot;
+url=&quot;jdbc:oracle:thin:@localhost:1521:数据库名&quot;
+sqlserver
+driver=&quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;
+url=&quot;jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=数据库名&quot;
+mysql
+driver=&quot;com.mysql.jdbc.Driver&quot;
+url=&quot;jdbc:mysql://localhost/数据库名?[后接参数]&quot;
+db2
+driver=&quot;com.ibm.db2.jdbc.app.DB2Driver&quot;
+url=&quot;jdbc:db2://localhost:5000/数据库名&quot;
+sybase
+driver=&quot;com.sybase.jdbc.SybDriver&quot;
+url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
+</blockquote>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1516,8 +1516,8 @@ me@tipfoo:~$ su</p>
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/linux-nano-vim-vi/" itemprop="url">
-                  文本编辑器：nano vim/vi
+                <a class="post-title-link" href="/2012/07/04/web-input-jump/" itemprop="url">
+                  web-input-jump
                 </a>
               
             
@@ -1530,7 +1530,7 @@ me@tipfoo:~$ su</p>
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T17:30:33+08:00" content="2012-07-04">
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
               2012-07-04
             </time>
           </span>
@@ -1544,8 +1544,8 @@ me@tipfoo:~$ su</p>
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -1560,8 +1560,8 @@ me@tipfoo:~$ su</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/04/linux-nano-vim-vi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/linux-nano-vim-vi/" itemprop="commentsCount"></span>
+                <a href="/2012/07/04/web-input-jump/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-input-jump/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1586,68 +1586,8 @@ me@tipfoo:~$ su</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>1.Nano是一个简单的没有花梢及华丽效果的文本编辑器。Nano在做简单文本文件编辑时相当不错,可以满足一些基本操作.
-直接在命令行模式下输入nano 文件名，就可以对文件进行简单的编辑。
-文件编辑中常用快捷键：ctrl+X 离开nano软件，若有修改过的文件会提示是否保存；
-ctrl+O 保存文件； Ctrl+W 查询字符串；
-ctrl +C 说明目前光标所在处的行数和列数等信息；
-ctrl+ _ 可以直接输入行号，让光标快速移到该行；
-<a href="http://2.vi" target="_blank" rel="external">2.vi</a> ：vi编辑器是所有Unix及Linux系统下标准的编辑器 ，功能强大，vim可视作vi的高级版本。
-1） vi可以分为三种模式：命令行模式，输入模式，末行模式。
-命令行模式—&gt;输入模式： i，a，A,o，O，c，C，r，R均可从命令行切换到输入行；
-i:在当前光标所在处插入； a：当前光标所在行的后面插入； A：当前光标所在行行尾插入；
-o:在当前光标所在处的下一行插入新的一行； O:在当前光标所在处的上一行插入新的一行；
-c:先删除在载入新的一行； C:删除光标所在一行在插入；
-r:替换光标所在那一个字符一次； R:一直替换光标所在处的文字；
-输入模式—&gt;命令行模式：Esc
-命令行模式—&gt;末行模式：：
-末行模式-—&gt;命令行模式：Esc
-2） 光标移动： h(&lt;—) 左移光标一个字符 ；
-l（—&gt;） 右移光标一个字符 ；
-k(↑) 光标上移一行 ;
-j (↓) 光标下移一行
-「ctrl」+「b」：屏幕往”后”移动一页。
-「ctrl」+「f」：屏幕往”前”移动一页。
-「ctrl」+「u」：屏幕往”后”移动半页。
-「ctrl」+「d」：屏幕往”前”移动半页
-3)行内移动：^ 移动到非空白行的行首
-0 绝对位置的行首
-$移动到行尾
-4）以单词为单位移动：
-w：一次移动一个单词，到下一个单词的词尾
-b：移到当前单词词首（向回跳）
-e：跳到词尾
-5）行间移动：
-n(数字）G ：n数值为几，就移到这个文件的第几行；当n=1时，相当于gg的功能，移到该文件的第一行；
-G：移到这个文件的最后一行；
-6）删除命令：
-x：向后删除一个字符，使用del键同样功能；
-X:向后删除一个字符；
-nx：连续向后删除n个字符；
-dd：删除光标所在的那一整行；
-ndd：删除光标所在的向下n行；
-d1G：删除光标所在到第一行的所有数据；
-dG：删除从光标所在到最后易方达额所有数据；
-7）复制，粘贴
-yy：复制光标所在的那一整行；
-nyy：复制光标所在的向下n行；
-y0：复制光标所在的那一个字符到该行行首的所有数据；
-y$:复制光标所在的那一个字符到该行行尾的所有数据；
-p：将已经复制的数据在光标的下一行粘贴；
-P：粘在光标的上一行；
-8）查找，替换
-/word:向下查找一个名称为word的字符串；
-？word：向上查找一个名称为word的字符串；
-：n1，n2 s/word1/word2/g ：在n1与n2行之间寻找一个word1的字符串，并将其替换为word2
-：1，$ s/word1/word2/g:从第一行到最后一行查找word1字符串，并将其替换为word2
-9）文件的保存与退出：
-w：在冒号输入字母「w」就可以将文件保存起来；
-q：退出；
-q!:强制退出；
-wq ：保存退出；
-wq！：强制保存退出
-10）显示行号：在末行模式输入：set nu
-取消行号：在末行模式输入：set nonu</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">script</span>   <span class="attr">language</span>=<span class="string">JavaScript</span>&gt;</span><span class="javascript">  </span></div><div class="line">  <span class="function"><span class="keyword">function</span>   <span class="title">toNext</span>(<span class="params">obj,str</span>)</span>&#123;      </div><div class="line">    <span class="keyword">if</span>(obj.value.length==str&amp;&amp;obj.nextSibling.nextSibling.type==<span class="string">"text"</span>)  </div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).select() </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> c=<span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>); </div><div class="line">    carray=c.split(<span class="string">" "</span>);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes1"</span>).value=carray[<span class="number">0</span>];</div><div class="line">    alert(carray[<span class="number">0</span>]);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).value=carray[<span class="number">1</span>];</div><div class="line">    <span class="built_in">window</span>.clipboardData.clearData();</div><div class="line">  &#125;  </div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes1"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span> <span class="attr">onbeforepaste</span>=<span class="string">"abc()"</span>&gt;</span>SN1  </div><div class="line">  —  </div><div class="line">      <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes2"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span>&gt;</span>SN2</div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1721,7 +1661,7 @@ wq！：强制保存退出
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-count">212</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1738,7 +1678,7 @@ wq！：强制保存退出
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">153</span>
+                <span class="site-state-item-count">154</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
