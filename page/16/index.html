@@ -301,6 +301,126 @@
             
               
                 
+                <a class="post-title-link" href="/2012/12/10/web-jquery-selector/" itemprop="url">
+                  jquery多选选择器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-10T18:09:17+08:00" content="2012-12-10">
+              2012-12-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/12/10/web-jquery-selector/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/10/web-jquery-selector/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line">		(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="comment">//选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> sel = $(<span class="string">"#div"</span>+name);</div><div class="line">				sel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).hide();</div><div class="line">				$(<span class="string">"#a2"</span>+name).show();</div><div class="line">				$(<span class="string">"#selected"</span>).append(sel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//取消选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doUnSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> unSel = $(<span class="string">"#div"</span>+name);</div><div class="line">				unSel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).show();</div><div class="line">				$(<span class="string">"#a2"</span>+name).hide();</div><div class="line">				$(<span class="string">"#unselected"</span>).append(unSel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//获得选中项</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">getSelectVals</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> selDiv = $(<span class="string">"#selected"</span>);</div><div class="line">				<span class="keyword">var</span> ids = <span class="string">""</span>;</div><div class="line">				$(<span class="string">"div"</span>,selDiv).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">					ids+=$(<span class="keyword">this</span>).attr(<span class="string">"name"</span>)+<span class="string">","</span>;</div><div class="line">				&#125;);</div><div class="line"></div><div class="line">				alert(<span class="string">"选中"</span>+ids);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">hoverIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#E7EFFC"</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">outIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">			&#125;</div><div class="line">			$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">				<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">					<span class="keyword">var</span> v = <span class="string">"00"</span>+i;</div><div class="line">					<span class="keyword">var</span> n = <span class="string">"北京"</span>+i;</div><div class="line">					<span class="keyword">var</span> div = $(<span class="string">"&lt;div&gt;&lt;/div&gt;"</span>);</div><div class="line">					div.attr(<span class="string">"id"</span>,<span class="string">"div"</span>+v);</div><div class="line">					div.attr(<span class="string">"name"</span>,v)</div><div class="line">					<span class="keyword">var</span> a1 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a1.attr(<span class="string">"id"</span>,<span class="string">"a1"</span>+v);</div><div class="line">					a1.attr(<span class="string">"name"</span>,v);</div><div class="line">					a1.html(<span class="string">"&lt;img src='add.png' /&gt;"</span>);</div><div class="line">					a1.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a2 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a2.attr(<span class="string">"id"</span>,<span class="string">"a2"</span>+v);</div><div class="line">					a2.attr(<span class="string">"name"</span>,v);</div><div class="line">					a2.html(<span class="string">"&lt;img src='delete.png' /&gt;"</span>);</div><div class="line">					a2.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"display"</span>:<span class="string">"none"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a0 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a0.html(n);</div><div class="line">					a0.css(&#123;<span class="string">"width"</span>:<span class="string">"120px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>&#125;);</div><div class="line">					div.append(a0);</div><div class="line">					div.append(a1);</div><div class="line">					div.append(a2);</div><div class="line">					div.css(&#123;<span class="string">"padding"</span>:<span class="string">"3"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"margin"</span>:<span class="string">"0"</span>&#125;);</div><div class="line">					div.mouseover(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						hoverIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					div.mouseout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						outIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					$(<span class="string">"#unselected"</span>).append(div);</div><div class="line">					a1.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					a2.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doUnSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line"></div><div class="line">				&#125;</div><div class="line"></div><div class="line">				$(<span class="string">"#selBtn"</span>).bind(<span class="string">"click"</span>,getSelectVals);</div><div class="line"></div><div class="line">			&#125;);</div><div class="line">		&#125;)(jQuery)</div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">HEAD</span>&gt;</span></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">BODY</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TABLE</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>已选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>未选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"selected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span>	</div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"unselected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"selBtn"</span> <span class="attr">value</span>=<span class="string">"保存"</span> /&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TABLE</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">BODY</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">HTML</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/12/06/java-tomcat-ssl/" itemprop="url">
                   TOMCAT-SSL双向认证-配置实例
                 </a>
@@ -412,155 +532,6 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">login-config</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">auth-method</span>&gt;</span>CLIENT-CERT<span class="tag">&lt;/<span class="name">auth-method</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">realm-name</span>&gt;</span>Client Cert Users-only Area<span class="tag">&lt;/<span class="name">realm-name</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">login-config</span>&gt;</span> </div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">security-constraint</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">web-resource-collection</span> &gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">web-resource-name</span> &gt;</span>SSL<span class="tag">&lt;/<span class="name">web-resource-name</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">web-resource-collection</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">transport-guarantee</span>&gt;</span>CONFIDENTIAL<span class="tag">&lt;/<span class="name">transport-guarantee</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">security-constraint</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>你会发现，即使使用 http://….:8080 来访问你的应用程序，它也会重定向为 https://….8443 访问，也就是说，你的应用已经强制使用SSL安全访问层</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/12/05/java-gwt-new-window/" itemprop="url">
-                  gwt新窗口打开url设置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-12-05T18:09:17+08:00" content="2012-12-05">
-              2012-12-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/12/05/java-gwt-new-window/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-gwt-new-window/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
-在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
-由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
-但是在ie下此问题就浮出水面了。
-原始代码是类似这个样子的：
-Window.open(newURL, “_blank”, null);
-就是null参数控制新窗口为模态的，改为下面的样子就没有问题了
-Window.open(newURL, “_blank”, “”);
-参考一下open方法的文档就什么都明白了</p>
-<blockquote>
-<p>void com.google.gwt.user.client.Window.open(String url, String name, String features)
-Opens a new browser window. The “name” and “features” arguments are specified here.
-Parameters:
-url the URL that the new window will display
-name the name of the window (e.g. “_blank”)
-features the features to be enabled/disabled on this window</p>
-</blockquote>
-<p>window.open (‘page.html’, ‘newwindow’, ‘height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no’)</p>
-<p>window.open 弹出新窗口的命令；
-‘page.html’ 弹出窗口的文件名；
-‘newwindow’ 弹出窗口的名字（不是文件名），非必须，可用空”代替；
-height=100 窗口高度；
-width=400 窗口宽度；
-top=0 窗口距离屏幕上方的象素值；
-left=0 窗口距离屏幕左侧的象素值；
-toolbar=no 是否显示工具栏，yes为显示；
-menubar，scrollbars 表示菜单栏和滚动栏。
-resizable=no 是否允许改变窗口大小，yes为允许；
-location=no 是否显示地址栏，yes为允许；
-status=no 是否显示状态栏内的信息，yes为允许；</p>
 
           
         
@@ -764,8 +735,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
               
                 
-                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">
-                  ext中文传参乱码
+                <a class="post-title-link" href="/2012/12/05/java-gwt-new-window/" itemprop="url">
+                  gwt新窗口打开url设置
                 </a>
               
             
@@ -792,8 +763,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -808,8 +779,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/web-extjs-encodeuri/" itemprop="commentsCount"></span>
+                <a href="/2012/12/05/java-gwt-new-window/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-gwt-new-window/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -834,7 +805,159 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
+在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
+由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
+但是在ie下此问题就浮出水面了。
+原始代码是类似这个样子的：
+Window.open(newURL, “_blank”, null);
+就是null参数控制新窗口为模态的，改为下面的样子就没有问题了
+Window.open(newURL, “_blank”, “”);
+参考一下open方法的文档就什么都明白了</p>
+<blockquote>
+<p>void com.google.gwt.user.client.Window.open(String url, String name, String features)
+Opens a new browser window. The “name” and “features” arguments are specified here.
+Parameters:
+url the URL that the new window will display
+name the name of the window (e.g. “_blank”)
+features the features to be enabled/disabled on this window</p>
+</blockquote>
+<p>window.open (‘page.html’, ‘newwindow’, ‘height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no’)</p>
+<p>window.open 弹出新窗口的命令；
+‘page.html’ 弹出窗口的文件名；
+‘newwindow’ 弹出窗口的名字（不是文件名），非必须，可用空”代替；
+height=100 窗口高度；
+width=400 窗口宽度；
+top=0 窗口距离屏幕上方的象素值；
+left=0 窗口距离屏幕左侧的象素值；
+toolbar=no 是否显示工具栏，yes为显示；
+menubar，scrollbars 表示菜单栏和滚动栏。
+resizable=no 是否允许改变窗口大小，yes为允许；
+location=no 是否显示地址栏，yes为允许；
+status=no 是否显示状态栏内的信息，yes为允许；</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/12/05/system-ie-icon-disapear/" itemprop="url">
+                  桌面IE图标不见了
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-05T18:09:17+08:00" content="2012-12-05">
+              2012-12-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/12/05/system-ie-icon-disapear/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/system-ie-icon-disapear/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
+Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
+”，不含引号，
+然后直接将其文件夹拉到桌面或复制剪切都行。</p>
 
           
         
@@ -1061,8 +1184,8 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
             
               
                 
-                <a class="post-title-link" href="/2012/12/05/system-ie-icon-disapear/" itemprop="url">
-                  桌面IE图标不见了
+                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">
+                  ext中文传参乱码
                 </a>
               
             
@@ -1089,8 +1212,8 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -1105,8 +1228,8 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/05/system-ie-icon-disapear/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/system-ie-icon-disapear/" itemprop="commentsCount"></span>
+                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/web-extjs-encodeuri/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1131,10 +1254,7 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
-Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
-”，不含引号，
-然后直接将其文件夹拉到桌面或复制剪切都行。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -1305,285 +1425,6 @@ Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
             
               
                 
-                <a class="post-title-link" href="/2012/10/16/web-js-page-size/" itemprop="url">
-                  JavaScript获取网页高度宽度
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-10-16T18:09:17+08:00" content="2012-10-16">
-              2012-10-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/10/16/web-js-page-size/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-js-page-size/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/10/16/web-jquery/" itemprop="url">
-                  Jquery的$命名冲突
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-10-16T18:09:17+08:00" content="2012-10-16">
-              2012-10-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/10/16/web-jquery/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-jquery/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在Jquery中，$是JQuery的别名，所有使用$的地方也都可以使用JQuery来替换，如$(‘#msg’)等同于JQuery(‘#msg’)的写法。然而，当我们引入多个js库后，在另外一个js库中也定义了$符号的话，那么我们在使用$符号时就发生了冲突。下面以引入两个库文件jquery.js和prototype.js为例来进行说明。
-第一种情况：jquery.js在prototype.js之后进行引入,如：</p>
-<script src="prototype.js" type="text/javascript"><script src="jquery.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$永远代表的是jquery中定义的$符号，也可以写成JQuery(‘#msg’).hide();如果想要使用prototype.js中定义的$,我们在后面再介绍。
-第二种情况：jquery.js在prototype.js之前进行引入,如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$此时代表的prototype.js中定义的$符号，如果我们想要调用jquery.js中的工厂选择函数功能的话，只能用全称写法JQuery(‘#msg’).hide().
-下面先介绍在第一种引入js库文件顺序的情况下，如何正确的使用不同的js库中定义的$符号。
-一.使用JQuery.noConflict()
-该方法的作用就是让Jquery放弃对$的所有权，将$的控制权交还给prototype.js,因为jquery.js是后引入的，所以最后拥有$控制权的是jquery。它的返回值是JQuery。当在代码中调用了该 方法以后，我们就不可以使用$来调用jquery的方法了，此时$就代表在prototype.js库中定义的$了。如下：
-JQuery.noConflict(); //此处不可以再写成$('#msg').hide(),此时的$代表prototype.js中定义的$符号。 
-JQuey('#msg').hide(); 
- 
-自此以后$就代表prototype.js中定义的$,jquery.js中的$无法再使用,只能使用jquery.js中$的全称JQuery了。
-二.自定义JQuery的别名 
-如果觉得第一种方法中使用了JQuery.noConflict()方法以后,只能使用JQuery全称比较麻烦的话，我们还可以为JQuery重定义别名。如下：
-var $j=JQuery.noConflict(); $j('#msg').hide();//此处$j就代表JQuery 
- 
-自此以后$就代表prototype.js中定义的$,jquey.js中的$无法再使用,只能使用$j来作为jquey.js中JQuery的别名了。
-三.使用语句块，在语句块中仍然使用jquery.js中定义的$，如下：
-JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此时在整个ready事件的方法中使用的$都是jquery.js中定义的$. 
-});
- 
- 
-或者使用如下语句块：
-(function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery)
- 
-如果在第二种引入js库文件顺序的情况下,如何使用jquery.js中的$,我们还是可以使用上面介绍的语句块的方法，如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery) </script>
-<p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">
                   java socket小demo
                 </a>
@@ -1683,6 +1524,126 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/10/16/web-js-page-size/" itemprop="url">
+                  JavaScript获取网页高度宽度
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-10-16T18:09:17+08:00" content="2012-10-16">
+              2012-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/10/16/web-js-page-size/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-js-page-size/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1728,7 +1689,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">212</span>
+              <span class="site-state-item-count">213</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
