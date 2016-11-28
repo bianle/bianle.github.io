@@ -301,6 +301,187 @@
             
               
                 
+                <a class="post-title-link" href="/2015/12/28/centos-vpn/" itemprop="url">
+                  centos-vpn
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-12-28T11:52:00+08:00" content="2015-12-28">
+              2015-12-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/28/centos-vpn/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/28/centos-vpn/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装ppp和pptp"><a class="header-anchor" href="#安装ppp和pptp"> </a>安装ppp和pptp</h2>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install ppp pptp pptp-<span class="built_in">setup</span></div></pre></td></tr></table></figure>
+<h2 id="配置pptp"><a class="header-anchor" href="#配置pptp"> </a>配置pptp</h2>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">pptpsetup</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="comment">wjvpn</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">server</span> <span class="comment">192</span><span class="string">.</span><span class="comment">200</span><span class="string">.</span><span class="comment">194</span><span class="string">.</span><span class="comment">142</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">bianle</span></div></pre></td></tr></table></figure>
+<p><code>wjvpn</code>为自定义连接名<br>
+<code>bianle</code>为vpn用户名<br>
+<code>192.200.194.142</code>为vpn服务器地址<br>
+执行命令系统会提示输入vpn的密码</p>
+<h2 id="编辑-etc-ppp-peers-wjvpn"><a class="header-anchor" href="#编辑-etc-ppp-peers-wjvpn"> </a>编辑<code>/etc/ppp/peers/wjvpn</code></h2>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim  <span class="regexp">/etc/</span>ppp<span class="regexp">/peers/</span>wjvpn</div></pre></td></tr></table></figure>
+<p>改为:</p>
+<blockquote>
+<p># written by pptpsetup<br>
+pty &quot;pptp 192.200.194.142 --nolaunchpppd&quot;<br>
+lock<br>
+#noauth<br>
+nobsdcomp<br>
+nodeflate<br>
+name bianle<br>
+remotename wjvpn<br>
+ipparam wjvpn2<br>
+require-mppe-128<br>
+refuse-pap<br>
+refuse-chap<br>
+refuse-eap<br>
+refuse-mschap</p>
+</blockquote>
+<h2 id="编辑chap-secrets"><a class="header-anchor" href="#编辑chap-secrets"> </a>编辑<code>chap-secrets</code></h2>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim <span class="regexp">/etc/</span>ppp<span class="regexp">/chap-secrets</span></div></pre></td></tr></table></figure>
+<p>改为:</p>
+<blockquote>
+<p># Secrets for authentication using CHAP<br>
+# client        server  secret                  IP addresses</p>
+</blockquote>
+<blockquote>
+<p># added by pptpsetup for wjvpn
+bianle wjvpn “xxxxx” *</p>
+</blockquote>
+<h2 id="把pon和poff命令拷贝-或者链接-到系统path目录"><a class="header-anchor" href="#把pon和poff命令拷贝-或者链接-到系统path目录"> </a>把<code>pon</code>和<code>poff</code>命令拷贝(或者链接)到系统path目录</h2>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>pon <span class="regexp">/usr/</span>sbin/</div><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>poff <span class="regexp">/usr/</span>sbin/</div><div class="line">chmod +x <span class="regexp">/usr/</span>sbin<span class="regexp">/pon /</span>usr<span class="regexp">/sbin/</span>poff</div></pre></td></tr></table></figure>
+<h2 id="拨号"><a class="header-anchor" href="#拨号"> </a>拨号</h2>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">pon wjvpn</span></div></pre></td></tr></table></figure>
+<h2 id="查看是否连接"><a class="header-anchor" href="#查看是否连接"> </a>查看是否连接</h2>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ifconfig</span></div></pre></td></tr></table></figure>
+<p>正常情况话会提示如下信息:</p>
+<blockquote>
+<p>ppp0: flags=4305&lt;UP,POINTOPOINT,RUNNING,NOARP,MULTICAST&gt;  mtu 1456<br>
+inet 172.16.21.77  netmask 255.255.255.255  destination 172.16.20.208<br>
+ppp  txqueuelen 3  (Point-to-Point Protocol)<br>
+RX packets 9  bytes 106 (106.0 B)<br>
+RX errors 0  dropped 0  overruns 0  frame 0<br>
+TX packets 7  bytes 82 (82.0 B)<br>
+TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</p>
+</blockquote>
+<h2 id="断开连接"><a class="header-anchor" href="#断开连接"> </a>断开连接</h2>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">poff wjvpn</span></div></pre></td></tr></table></figure>
+<h2 id="调试模式"><a class="header-anchor" href="#调试模式"> </a>调试模式</h2>
+<p><s>vi /etc/ppp/options.pptpd</s></p>
+<p><code>/var/log/message</code>查看日志</p>
+<h2 id="添加路由"><a class="header-anchor" href="#添加路由"> </a>添加路由</h2>
+<p>添加路由后才能用ppp上网</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo route <span class="keyword">add</span> <span class="keyword">default</span> dev ppp0</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/12/14/ghost-blog-hosted-by-openshift/" itemprop="url">
                   在openshift上搭建ghost博客系统
                 </a>
@@ -1963,149 +2144,6 @@ c^d / n = k … … m    m就是明文编码，不关心k</p>
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/16/hexo-math/" itemprop="url">
-                  hexo-math
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-16T11:16:25+08:00" content="2015-11-16">
-              2015-11-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nodejs/" itemprop="url" rel="index">
-                    <span itemprop="name">nodejs</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/16/hexo-math/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/hexo-math/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ul>
-<li>MathJax inline:</li>
-</ul>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Simple inline <span class="variable">$a</span>=b+c<span class="variable">$.</span></div></pre></td></tr></table></figure>
-<p>Simple inline $a=b+c$.</p>
-<ul>
-<li>MathJax Block:</li>
-</ul>
-<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$$<span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial u&#125;&#123;<span class="symbol">\p</span>artial t&#125;</div><div class="line">= h^2 <span class="symbol">\l</span>eft( <span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial^2 u&#125;&#123;<span class="symbol">\p</span>artial x^2&#125; +</div><div class="line"><span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial^2 u&#125;&#123;<span class="symbol">\p</span>artial y^2&#125; +</div><div class="line"><span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial^2 u&#125;&#123;<span class="symbol">\p</span>artial z^2&#125;<span class="symbol">\r</span>ight)$$</div></pre></td></tr></table></figure>
-<p>$$\frac{\partial u}{\partial t}
-= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
-\frac{\partial^2 u}{\partial y^2} +
-\frac{\partial^2 u}{\partial z^2}\right)$$</p>
-<ul>
-<li>Tag:</li>
-</ul>
-<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">This equation &#123;<span class="variable">% math %</span>&#125;<span class="symbol">\c</span>os 2<span class="symbol">\t</span>heta = <span class="symbol">\c</span>os^2 <span class="symbol">\t</span>heta - <span class="symbol">\s</span>in^2 <span class="symbol">\t</span>heta =  2 <span class="symbol">\c</span>os^2 <span class="symbol">\t</span>heta - 1 &#123;<span class="variable">% endmath %</span>&#125; is inline.</div></pre></td></tr></table></figure>
-<p>This equation <span>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1$</span><!-- Has MathJax --> is inline.</p>
-<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="comment">% math %&#125;</span></div><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;aligned&#125;</span></span></div><div class="line"><span class="tag">\<span class="name">dot</span><span class="string">&#123;x&#125;</span></span> &amp; = <span class="tag">\<span class="name">sigma</span></span>(y-x) <span class="tag">\<span class="name">\</span></span></div><div class="line"><span class="tag">\<span class="name">dot</span><span class="string">&#123;y&#125;</span></span> &amp; = <span class="tag">\<span class="name">rho</span></span> x - y - xz <span class="tag">\<span class="name">\</span></span></div><div class="line"><span class="tag">\<span class="name">dot</span><span class="string">&#123;z&#125;</span></span> &amp; = -<span class="tag">\<span class="name">beta</span></span> z + xy</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;aligned&#125;</span></span></div><div class="line">&#123;<span class="comment">% endmath %&#125;</span></div></pre></td></tr></table></figure>
-<span>$$\begin{aligned}
-\dot{x} &amp; = \sigma(y-x) \\
-\dot{y} &amp; = \rho x - y - xz \\
-\dot{z} &amp; = -\beta z + xy
-\end{aligned}$$</span><!-- Has MathJax -->
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2151,7 +2189,7 @@ c^d / n = k … … m    m就是明文编码，不关心k</p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">213</span>
+              <span class="site-state-item-count">214</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2159,7 +2197,7 @@ c^d / n = k … … m    m就是明文编码，不关心k</p>
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
