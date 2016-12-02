@@ -301,6 +301,137 @@
             
               
                 
+                <a class="post-title-link" href="/2012/07/11/java-jdk-and-jre/" itemprop="url">
+                  jdk与jre的区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-11T18:09:17+08:00" content="2012-07-11">
+              2012-07-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/11/java-jdk-and-jre/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/11/java-jdk-and-jre/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
+JDK就是Java Development Kit.简单的说JDK是面向开发人员使用的SDK，它提供了Java的开发环境和运行环境。SDK是Software Development Kit 一般指软件开发包，可以包括函数库、编译程序等。
+JRE是Java Runtime Enviroment是指Java的运行环境，是面向Java程序的使用者，而不是开发者。
+如果安装了JDK，会发同你的电脑有两套JRE，一套位于 \jre 另外一套位于 C:\Program Files\Java\jre1.5.0_15 目录下，后面这套比前面那套少了Server端的Java虚拟机，不过直接将前面那套的Server端Java虚拟机复制过来就行了。而且在安装JDK可以选择是否安装这个位于 C:\Program Files\Java 目录下的JRE。如果你只安装JRE，而不是JDK，那么只会在 C:\Program Files\Java 目录下安装唯一的一套JRE。
+JRE的地位就象一台PC机一样，我们写好的Win32应用程序需要操作系统帮我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。所以当你装完JDK后，如果分别在硬盘上的两个不同地方安装了两套JRE，那么你可以想象你的电脑有两台虚拟的Java PC机，都具有运行Java程序的功能。所以我们可以说，只要你的电脑安装了JRE，就可以正确运行Java应用程序。
+1、为什么Sun要让JDK安装两套相同的JRE？
+这是因为JDK里面有很多用Java所编写的开发工具（如javac.exe、jar.exe等），而且都放置在 \lib\tools.jar 里。从下面例子可以看出，先将tools.jar改名为tools1.jar，然后运行javac.exe，显示如下结果： Exception in thread “main” java.lang.NoClassDefFoundError: com/sun/tools/javac /Main 这个意思是说，你输入javac.exe与输入 java -cp c:\jdk\lib\tools.jar com.sun.tools.javac.Main 是一样的，会得到相同的结果。从这里我们可以证明javac.exe只是一个包装器（Wrapper），而制作的目的是为了让开发者免于输入太长的指命。而且可以发现\lib目录下的程序都很小，不大于2 9K，从这里我们可以得出一个结论。就是JDK里的工具几乎是用Java所编写，所以也是Java应用程序，因此要使用JDK所附的工具来开发Java程序，也必须要自行附一套JRE才行，所以位于C:\Program Files\Java目录下的那套JRE就是用来运行一般Java程序用的。
+2、如果一台电脑安装两套以上的JRE，谁来决定呢？
+这个重大任务就落在java.exe身上。Java.exe的工作就是找到合适的JRE来运行Java程序。 Java.exe依照底下的顺序来查找JRE：自己的目录下有没有JRE；父目录有没有JRE；查询注册表： [HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment] 所以java.exe的运行结果与你的电脑里面哪个JRE被执行有很大的关系。
+ADD：
+1.JVM — java virtual machineJVM就是我们常说的java虚拟机，它是整个java实现跨平台的最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可以在虚拟机上执行，也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。2.JRE — java runtime environmentJRE是指java运行环境。光有JVM还不能成class的执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。在JDK的安装目录里你可以找到jre目录，里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。所以，在你写完java程序编译成.class之后，你可以把这个.class文件和jre一起打包发给朋友，这样你的朋友就可以运行你写程序了。（jre里有运行.class的java.exe）3.JDK — java development kitJDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？让我们看一下JDK的安装目录。在目录下面有六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的是以下四个文件夹：bin、include、lib、 jre。现在我们可以看出这样一个关系，JDK包含JRE，而JRE包含JVM。bin:最主要的是编译器(javac.exe)include:java和JVM交互用的头文件lib：类库jre:java运行环境（注意：这里的bin、lib文件夹和jre里的bin、lib是不同的）总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。
+eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自带的，所以在安装时你会发现他们只要求你选中jre路径就ok了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/07/10/php-gravatar/" itemprop="url">
                   玩转你的Gravatar全球通用头像
                 </a>
@@ -433,6 +564,126 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
             
               
                 
+                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">
+                  在命令行里看电影
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
+              2012-07-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/06/linux-cmd-movie/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/linux-cmd-movie/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/07/06/system-remotedesktop-port/" itemprop="url">
                   修改远程桌面服务的默认端口
                 </a>
@@ -509,6 +760,155 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
 第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
 control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修改为80，同样注意10进制和16进制数字的区别。全部修改后重新启动计算机就完成了被访问计算机上的设置。
 第四步：这样我们就可以在网络中任意一台安装了远程桌面登录器的计算机上连接刚刚设置的计算机了，使用的端口是80端口。值得注意的是在输入被访问计算机IP地址时需要使用类似ip:80的形式。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">
+                  十大bt问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
+              2012-07-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/生活/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/06/life-bt-question-top10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/life-bt-question-top10/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>
+<p>企鹅肉问题：
+一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
+</li>
+<li>
+<p>跳火车问题：
+一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
+</li>
+<li>
+<p>水草问题：
+有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
+</li>
+<li>
+<p>葬礼故事的问题：
+有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
+</li>
+<li>
+<p>半根火柴问题：
+有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
+</li>
+<li>
+<p>满地木屑问题：
+马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
+</li>
+<li>
+<p>夜半敲门问题：
+一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
+</li>
+</ol>
 
           
         
@@ -770,277 +1170,8 @@ Logout succeeded</p>
             
               
                 
-                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">
-                  十大bt问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/生活/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/life-bt-question-top10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/life-bt-question-top10/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
-<li>
-<p>企鹅肉问题：
-一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
-</li>
-<li>
-<p>跳火车问题：
-一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
-</li>
-<li>
-<p>水草问题：
-有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
-</li>
-<li>
-<p>葬礼故事的问题：
-有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
-</li>
-<li>
-<p>半根火柴问题：
-有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
-</li>
-<li>
-<p>满地木屑问题：
-马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
-</li>
-<li>
-<p>夜半敲门问题：
-一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">
-                  在命令行里看电影
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/linux-cmd-movie/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/linux-cmd-movie/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/04/web-gxt-desktop/" itemprop="url">
-                  gxt desktop
+                <a class="post-title-link" href="/2012/07/04/java-jdbc-demo/" itemprop="url">
+                  jdbc连接demo
                 </a>
               
             
@@ -1083,8 +1214,8 @@ Logout succeeded</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/04/web-gxt-desktop/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-gxt-desktop/" itemprop="commentsCount"></span>
+                <a href="/2012/07/04/java-jdbc-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-jdbc-demo/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1109,251 +1240,25 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div><div class="line">390</div><div class="line">391</div><div class="line">392</div><div class="line">393</div><div class="line">394</div><div class="line">395</div><div class="line">396</div><div class="line">397</div><div class="line">398</div><div class="line">399</div><div class="line">400</div><div class="line">401</div><div class="line">402</div><div class="line">403</div><div class="line">404</div><div class="line">405</div><div class="line">406</div><div class="line">407</div><div class="line">408</div><div class="line">409</div><div class="line">410</div><div class="line">411</div><div class="line">412</div><div class="line">413</div><div class="line">414</div><div class="line">415</div><div class="line">416</div><div class="line">417</div><div class="line">418</div><div class="line">419</div><div class="line">420</div><div class="line">421</div><div class="line">422</div><div class="line">423</div><div class="line">424</div><div class="line">425</div><div class="line">426</div><div class="line">427</div><div class="line">428</div><div class="line">429</div><div class="line">430</div><div class="line">431</div><div class="line">432</div><div class="line">433</div><div class="line">434</div><div class="line">435</div><div class="line">436</div><div class="line">437</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * Ext GWT - Ext for GWT</div><div class="line"> * Copyright(c) 2007-2009, Ext JS, LLC.</div><div class="line"> * licensing@extjs.com</div><div class="line"> *</div><div class="line"> * http://extjs.com/license</div><div class="line"> */</div><div class="line">package com.google.gwt.sample.hello.client;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.<span class="built_in">Date</span>;</div><div class="line"><span class="keyword">import</span> java.util.<span class="built_in">List</span>;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.Desktop;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.Shortcut;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.StartMenu;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.TaskBar;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.Style.Scroll;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.BaseModel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.BaseModelData;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.ModelData;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.ModelIconProvider;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.event.ComponentEvent;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.event.MenuEvent;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.event.SelectionListener;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.store.GroupingStore;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.store.TreeStore;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.util.IconHelper;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.ContentPanel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.Info;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.TabItem;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.TabPanel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.Window;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.button.Button;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.button.ToolButton;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.ColumnConfig;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.ColumnModel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.Grid;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.GridGroupRenderer;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.GroupColumnData;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.GroupingView;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.layout.AccordionLayout;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.layout.FitLayout;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.menu.Menu;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.menu.MenuItem;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.toolbar.ToolBar;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.treepanel.TreePanel;</div><div class="line"><span class="keyword">import</span> com.google.gwt.core.client.EntryPoint;</div><div class="line"><span class="keyword">import</span> com.google.gwt.i18n.client.DateTimeFormat;</div><div class="line"><span class="keyword">import</span> com.google.gwt.i18n.client.NumberFormat;</div><div class="line"><span class="keyword">import</span> com.google.gwt.user.client.ui.AbstractImagePrototype;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class Hello implements EntryPoint &#123;</div><div class="line">	<span class="keyword">private</span> Desktop desktop = <span class="literal">new</span> Desktop();</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="literal">void</span> itemSelected(ComponentEvent ce) &#123;</div><div class="line">		Window w;</div><div class="line">		<span class="keyword">if</span> (ce instanceof MenuEvent) &#123;</div><div class="line">			MenuEvent me = (MenuEvent) ce;</div><div class="line">			w = me.getItem().getData(<span class="string">"window"</span>);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			w = ce.getComponent().getData(<span class="string">"window"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!desktop.getWindows().contains(w)) &#123;</div><div class="line">			desktop.addWindow(w);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (w != <span class="built_in">null</span> &amp;&amp; !w.isVisible()) &#123;</div><div class="line">			w.show();</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			w.toFront();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="literal">void</span> onModuleLoad() &#123;</div><div class="line">		SelectionListener&lt;MenuEvent&gt; menuListener = <span class="literal">new</span> SelectionListener&lt;MenuEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(MenuEvent me) &#123;</div><div class="line">				itemSelected(me);</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		SelectionListener&lt;ComponentEvent&gt; shortcutListener = <span class="literal">new</span> SelectionListener&lt;ComponentEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(ComponentEvent ce) &#123;</div><div class="line">				itemSelected(ce);</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		Window gridWindow = createGridWindow();</div><div class="line">		Window accordionWindow = createAccordionWindow();</div><div class="line">		Shortcut s1 = <span class="literal">new</span> Shortcut();</div><div class="line">		s1.setText(<span class="string">"Grid Window"</span>);</div><div class="line">		s1.setId(<span class="string">"grid-win-shortcut"</span>);</div><div class="line">		s1.setData(<span class="string">"window"</span>, gridWindow);</div><div class="line">		s1.addSelectionListener(shortcutListener);</div><div class="line">		desktop.addShortcut(s1);</div><div class="line">		Shortcut s2 = <span class="literal">new</span> Shortcut();</div><div class="line">		s2.setText(<span class="string">"Accordion Window"</span>);</div><div class="line">		s2.setId(<span class="string">"acc-win-shortcut"</span>);</div><div class="line">		s2.setData(<span class="string">"window"</span>, accordionWindow);</div><div class="line">		s2.addSelectionListener(shortcutListener);</div><div class="line">		desktop.addShortcut(s2);</div><div class="line">		TaskBar taskBar = desktop.getTaskBar();</div><div class="line">		StartMenu menu = taskBar.getStartMenu();</div><div class="line">		menu.setHeading(<span class="string">"Darrell Meyer"</span>);</div><div class="line">		menu.setIconStyle(<span class="string">"user"</span>);</div><div class="line">		MenuItem menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Grid Window"</span>);</div><div class="line">		menuItem.setData(<span class="string">"window"</span>, gridWindow);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"icon-grid"</span>));</div><div class="line">		menuItem.addSelectionListener(menuListener);</div><div class="line">		menu.add(menuItem);</div><div class="line">		menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Tab Window"</span>);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"tabs"</span>));</div><div class="line">		menuItem.addSelectionListener(menuListener);</div><div class="line">		menuItem.setData(<span class="string">"window"</span>, createTabWindow());</div><div class="line">		menu.add(menuItem);</div><div class="line">		menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Accordion Window"</span>);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"accordion"</span>));</div><div class="line">		menuItem.addSelectionListener(menuListener);</div><div class="line">		menuItem.setData(<span class="string">"window"</span>, accordionWindow);</div><div class="line">		menu.add(menuItem);</div><div class="line">		menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Bogus Submenu"</span>);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"bogus"</span>));</div><div class="line">		Menu sub = <span class="literal">new</span> Menu();</div><div class="line">		for (int i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</div><div class="line">			MenuItem item = <span class="literal">new</span> MenuItem(<span class="string">"Bogus Window "</span> + (i + <span class="number">1</span>));</div><div class="line">			item.setData(<span class="string">"window"</span>, createBogusWindow(i));</div><div class="line">			item.addSelectionListener(menuListener);</div><div class="line">			sub.add(item);</div><div class="line">		&#125;</div><div class="line">		menuItem.setSubMenu(sub);</div><div class="line">		menu.add(menuItem);</div><div class="line">		<span class="comment">// tools</span></div><div class="line">		MenuItem tool = <span class="literal">new</span> MenuItem(<span class="string">"Settings"</span>);</div><div class="line">		tool.setIcon(IconHelper.createStyle(<span class="string">"settings"</span>));</div><div class="line">		tool.addSelectionListener(<span class="literal">new</span> SelectionListener&lt;MenuEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(MenuEvent ce) &#123;</div><div class="line">				Info.display(<span class="string">"Event"</span>, <span class="string">"The 'Settings' tool was clicked"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		menu.addTool(tool);</div><div class="line">		menu.addToolSeperator();</div><div class="line">		tool = <span class="literal">new</span> MenuItem(<span class="string">"Logout"</span>);</div><div class="line">		tool.setIcon(IconHelper.createStyle(<span class="string">"logout"</span>));</div><div class="line">		tool.addSelectionListener(<span class="literal">new</span> SelectionListener&lt;MenuEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(MenuEvent ce) &#123;</div><div class="line">				Info.display(<span class="string">"Event"</span>, <span class="string">"The 'Logout' tool was clicked"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		menu.addTool(tool);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createAccordionWindow() &#123;</div><div class="line">		final Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"accordion"</span>));</div><div class="line">		w.setHeading(<span class="string">"Accordion Window"</span>);</div><div class="line">		w.setWidth(<span class="number">200</span>);</div><div class="line">		w.setHeight(<span class="number">350</span>);</div><div class="line">		ToolBar toolBar = <span class="literal">new</span> ToolBar();</div><div class="line">		Button item = <span class="literal">new</span> Button();</div><div class="line">		item.setIcon(IconHelper.createStyle(<span class="string">"icon-connect"</span>));</div><div class="line">		toolBar.add(item);</div><div class="line">		toolBar.add(<span class="literal">new</span> SeparatorToolItem());</div><div class="line">		w.setTopComponent(toolBar);</div><div class="line">		item = <span class="literal">new</span> Button();</div><div class="line">		item.setIcon(IconHelper.createStyle(<span class="string">"icon-user-add"</span>));</div><div class="line">		toolBar.add(item);</div><div class="line">		item = <span class="literal">new</span> Button();</div><div class="line">		item.setIcon(IconHelper.createStyle(<span class="string">"icon-user-delete"</span>));</div><div class="line">		toolBar.add(item);</div><div class="line">		w.setLayout(<span class="literal">new</span> AccordionLayout());</div><div class="line">		ContentPanel cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"Online Users"</span>);</div><div class="line">		cp.setScrollMode(Scroll.AUTO);</div><div class="line">		cp.getHeader().addTool(<span class="literal">new</span> ToolButton(<span class="string">"x-tool-refresh"</span>));</div><div class="line">		w.add(cp);</div><div class="line">		TreeStore&lt;ModelData&gt; store = <span class="literal">new</span> TreeStore&lt;ModelData&gt;();</div><div class="line">		TreePanel&lt;ModelData&gt; tree = <span class="literal">new</span> TreePanel&lt;ModelData&gt;(store);</div><div class="line">		tree.setIconProvider(<span class="literal">new</span> ModelIconProvider&lt;ModelData&gt;() &#123;</div><div class="line">			<span class="keyword">public</span> AbstractImagePrototype getIcon(ModelData model) &#123;</div><div class="line">				<span class="keyword">if</span> (model.get(<span class="string">"icon"</span>) != <span class="built_in">null</span>) &#123;</div><div class="line">					<span class="keyword">return</span> IconHelper.createStyle((<span class="built_in">String</span>) model.get(<span class="string">"icon"</span>));</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">return</span> <span class="built_in">null</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		tree.setDisplayProperty(<span class="string">"name"</span>);</div><div class="line">		ModelData m = newItem(<span class="string">"Family"</span>, <span class="built_in">null</span>);</div><div class="line">		store.add(m, <span class="literal">false</span>);</div><div class="line">		tree.setExpanded(m, <span class="literal">true</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Darrell"</span>, <span class="string">"user"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Maro"</span>, <span class="string">"user-girl"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Lia"</span>, <span class="string">"user-kid"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Alec"</span>, <span class="string">"user-kid"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Andrew"</span>, <span class="string">"user-kid"</span>), <span class="literal">false</span>);</div><div class="line">		m = newItem(<span class="string">"Friends"</span>, <span class="built_in">null</span>);</div><div class="line">		store.add(m, <span class="literal">false</span>);</div><div class="line">		tree.setExpanded(m, <span class="literal">true</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Bob"</span>, <span class="string">"user"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Mary"</span>, <span class="string">"user-girl"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Sally"</span>, <span class="string">"user-girl"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Jack"</span>, <span class="string">"user"</span>), <span class="literal">false</span>);</div><div class="line">		cp.add(tree);</div><div class="line">		cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"Settings"</span>);</div><div class="line">		cp.setBodyStyleName(<span class="string">"pad-text"</span>);</div><div class="line">		cp.addText(<span class="string">"DUMMY_TEXT_SHORT"</span>);</div><div class="line">		w.add(cp);</div><div class="line">		cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"Stuff"</span>);</div><div class="line">		cp.setBodyStyleName(<span class="string">"pad-text"</span>);</div><div class="line">		cp.addText(<span class="string">"DUMMY_TEXT_SHORT"</span>);</div><div class="line">		w.add(cp);</div><div class="line">		cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"More Stuff"</span>);</div><div class="line">		cp.setBodyStyleName(<span class="string">"pad-text"</span>);</div><div class="line">		cp.addText(<span class="string">"DUMMY_TEXT_SHORT"</span>);</div><div class="line">		w.add(cp);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createGridWindow() &#123;</div><div class="line">		Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"icon-grid"</span>));</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setHeading(<span class="string">"Grid Window"</span>);</div><div class="line">		w.setSize(<span class="number">500</span>, <span class="number">400</span>);</div><div class="line">		w.setLayout(<span class="literal">new</span> FitLayout());</div><div class="line">		GroupingStore&lt;Stock&gt; store = <span class="literal">new</span> GroupingStore&lt;Stock&gt;();</div><div class="line">		store.add(getCompanies());</div><div class="line">		store.groupBy(<span class="string">"industry"</span>);</div><div class="line">		ColumnConfig company = <span class="literal">new</span> ColumnConfig(<span class="string">"name"</span>, <span class="string">"Company"</span>, <span class="number">60</span>);</div><div class="line">		ColumnConfig price = <span class="literal">new</span> ColumnConfig(<span class="string">"open"</span>, <span class="string">"Price"</span>, <span class="number">20</span>);</div><div class="line">		price.setNumberFormat(NumberFormat.getCurrencyFormat());</div><div class="line">		ColumnConfig change = <span class="literal">new</span> ColumnConfig(<span class="string">"change"</span>, <span class="string">"Change"</span>, <span class="number">20</span>);</div><div class="line">		ColumnConfig industry = <span class="literal">new</span> ColumnConfig(<span class="string">"industry"</span>, <span class="string">"Industry"</span>, <span class="number">20</span>);</div><div class="line">		ColumnConfig last = <span class="literal">new</span> ColumnConfig(<span class="string">"date"</span>, <span class="string">"Last Updated"</span>, <span class="number">20</span>);</div><div class="line">		last.setDateTimeFormat(DateTimeFormat.getFormat(<span class="string">"MM/dd/y"</span>));</div><div class="line">		<span class="built_in">List</span>&lt;ColumnConfig&gt; config = <span class="literal">new</span> ArrayList&lt;ColumnConfig&gt;();</div><div class="line">		config.add(company);</div><div class="line">		config.add(price);</div><div class="line">		config.add(change);</div><div class="line">		config.add(industry);</div><div class="line">		config.add(last);</div><div class="line">		final ColumnModel cm = <span class="literal">new</span> ColumnModel(config);</div><div class="line">		GroupingView view = <span class="literal">new</span> GroupingView();</div><div class="line">		view.setForceFit(<span class="literal">true</span>);</div><div class="line">		view.setGroupRenderer(<span class="literal">new</span> GridGroupRenderer() &#123;</div><div class="line">			<span class="keyword">public</span> <span class="built_in">String</span> render(GroupColumnData <span class="built_in">data</span>) &#123;</div><div class="line">				<span class="built_in">String</span> f = cm.getColumnById(<span class="built_in">data</span>.field).getHeader();</div><div class="line">				<span class="built_in">String</span> l = <span class="built_in">data</span>.models.size() == <span class="number">1</span> ? <span class="string">"Item"</span> : <span class="string">"Items"</span>;</div><div class="line">				<span class="keyword">return</span> f + <span class="string">": "</span> + <span class="built_in">data</span>.<span class="keyword">group</span> + <span class="string">" ("</span> + <span class="built_in">data</span>.models.size() + <span class="string">" "</span></div><div class="line">						+ l + <span class="string">")"</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		Grid&lt;Stock&gt; grid = <span class="literal">new</span> Grid&lt;Stock&gt;(store, cm);</div><div class="line">		grid.setView(view);</div><div class="line">		grid.setBorders(<span class="literal">true</span>);</div><div class="line">		w.add(grid);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createTabWindow() &#123;</div><div class="line">		Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setSize(<span class="number">740</span>, <span class="number">480</span>);</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"tabs"</span>));</div><div class="line">		w.setHeading(<span class="string">"Tab Window"</span>);</div><div class="line">		w.setLayout(<span class="literal">new</span> FitLayout());</div><div class="line">		TabPanel panel = <span class="literal">new</span> TabPanel();</div><div class="line">		for (int i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</div><div class="line">			TabItem item = <span class="literal">new</span> TabItem(<span class="string">"Tab Item "</span> + (i + <span class="number">1</span>));</div><div class="line">			item.addText(<span class="string">"Something useful would be here"</span>);</div><div class="line">			panel.add(item);</div><div class="line">		&#125;</div><div class="line">		w.add(panel);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createBogusWindow(int index) &#123;</div><div class="line">		Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"bogus"</span>));</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setHeading(<span class="string">"Bogus Window "</span> + ++index);</div><div class="line">		w.setSize(<span class="number">400</span>, <span class="number">300</span>);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> ModelData newItem(<span class="built_in">String</span> text, <span class="built_in">String</span> iconStyle) &#123;</div><div class="line">		ModelData m = <span class="literal">new</span> BaseModelData();</div><div class="line">		m.<span class="built_in">set</span>(<span class="string">"name"</span>, text);</div><div class="line">		m.<span class="built_in">set</span>(<span class="string">"icon"</span>, iconStyle);</div><div class="line">		<span class="keyword">return</span> m;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> static <span class="built_in">List</span>&lt;Stock&gt; getCompanies() &#123;</div><div class="line">		DateTimeFormat f = DateTimeFormat.getFormat(<span class="string">"M/d h:mma"</span>);</div><div class="line">		<span class="built_in">List</span>&lt;Stock&gt; stocks = <span class="literal">new</span> ArrayList&lt;Stock&gt;();</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"3m Co"</span>, <span class="number">71.72</span>, <span class="number">0.02</span>, <span class="number">0.03</span>,</div><div class="line">				f.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Alcoa Inc"</span>, <span class="number">29.01</span>, <span class="number">0.42</span>, <span class="number">1.47</span>, f</div><div class="line">				.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Altria Group Inc"</span>, <span class="number">83.81</span>, <span class="number">0.28</span>, <span class="number">0.34</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"American Express Company"</span>, <span class="number">52.55</span>, <span class="number">0.01</span>, <span class="number">0.02</span>, f</div><div class="line">				.parse(<span class="string">"4/8 12:00am"</span>), <span class="string">"Finance"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"American International Group, Inc."</span>, <span class="number">64.13</span>, <span class="number">0.31</span>,</div><div class="line">				<span class="number">0.49</span>, f.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Services"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"AT&amp;T Inc."</span>, <span class="number">31.61</span>, <span class="number">-0.48</span>, <span class="number">-1.54</span>, f</div><div class="line">				.parse(<span class="string">"4/8 12:00am"</span>), <span class="string">"Services"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Boeing Co."</span>, <span class="number">75.43</span>, <span class="number">0.53</span>, <span class="number">0.71</span>, f</div><div class="line">				.parse(<span class="string">"4/8 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Caterpillar Inc."</span>, <span class="number">67.27</span>, <span class="number">0.92</span>, <span class="number">1.39</span>, f</div><div class="line">				.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Services"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Citigroup, Inc."</span>, <span class="number">49.37</span>, <span class="number">0.02</span>, <span class="number">0.04</span>, f</div><div class="line">				.parse(<span class="string">"4/4 12:00am"</span>), <span class="string">"Finance"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"E.I. du Pont de Nemours and Company"</span>, <span class="number">40.48</span>,</div><div class="line">				<span class="number">0.51</span>, <span class="number">1.28</span>, f.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Exxon Mobil Corp"</span>, <span class="number">68.1</span>, <span class="number">-0.43</span>, <span class="number">-0.64</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"General Electric Company"</span>, <span class="number">34.14</span>, <span class="number">-0.08</span>, <span class="number">-0.23</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"General Motors Corporation"</span>, <span class="number">30.27</span>, <span class="number">1.09</span>, <span class="number">3.74</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Automotive"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Hewlett-Packard Co."</span>, <span class="number">36.53</span>, <span class="number">-0.03</span>, <span class="number">-0.08</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Computer"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Honeywell Intl Inc"</span>, <span class="number">38.77</span>, <span class="number">0.05</span>, <span class="number">0.13</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Intel Corporation"</span>, <span class="number">19.88</span>, <span class="number">0.31</span>, <span class="number">1.58</span>, f</div><div class="line">				.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Computer"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"International Business Machines"</span>, <span class="number">81.41</span>, <span class="number">0.44</span>,</div><div class="line">				<span class="number">0.54</span>, f.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Computer"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Johnson &amp; Johnson"</span>, <span class="number">64.72</span>, <span class="number">0.06</span>, <span class="number">0.09</span>, f</div><div class="line">				.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Medical"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"JP Morgan &amp; Chase &amp; Co"</span>, <span class="number">45.73</span>, <span class="number">0.07</span>, <span class="number">0.15</span>, f</div><div class="line">				.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Finance"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"McDonald/"</span>s Corporation<span class="string">", 36.76, 0.86, 2.40, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">2</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Food<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Merck &amp; Co., Inc.<span class="string">", 40.96, 0.41, 1.01, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">2</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Medical<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Microsoft Corporation<span class="string">", 25.84, 0.14, 0.54, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">2</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Computer<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Pfizer Inc<span class="string">", 27.96, 0.4, 1.45, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">8</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Services<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("The Coca<span class="params">-Cola</span> Company<span class="string">", 45.07, 0.26, 0.58, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Food<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("The Home Depot, Inc.<span class="string">", 34.64, 0.35, 1.02, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">8</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Retail<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("The Procter &amp; Gamble Company<span class="string">", 61.91, 0.01, 0.02,</span></div><div class="line">				f.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Manufacturing<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("United Technologies Corporation<span class="string">", 63.26, 0.55,</span></div><div class="line">				0.88, f.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Computer<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Verizon Communications<span class="string">", 35.57, 0.39, 1.11, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">3</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Services<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Wal<span class="params">-Mart</span> Stores, Inc.<span class="string">", 45.45, 0.73, 1.63, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">3</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Retail<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Walt Disney Company (The) (Holding Company)<span class="string">",</span></div><div class="line">				29.89, 0.24, 0.81, f.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Services<span class="string">"));</span></div><div class="line">		return stocks;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Stock extends BaseModel &#123;</div><div class="line">	public Stock() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Stock(String name, String symbol, double open, double last) &#123;</div><div class="line">		set("name<span class="string">", name);</span></div><div class="line">		set("symbol<span class="string">", symbol);</span></div><div class="line">		set("open<span class="string">", open);</span></div><div class="line">		set("last<span class="string">", last);</span></div><div class="line">		set("<span class="built_in">date</span><span class="string">", new Date());</span></div><div class="line">		set("change<span class="string">", last - open);</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Stock(String name, double open, double change, double pctChange,</div><div class="line">			Date date, String industry) &#123;</div><div class="line">		set("name<span class="string">", name);</span></div><div class="line">		set("open<span class="string">", open);</span></div><div class="line">		set("change<span class="string">", change);</span></div><div class="line">		set("percentChange<span class="string">", pctChange);</span></div><div class="line">		set("<span class="built_in">date</span><span class="string">", date);</span></div><div class="line">		set("industry<span class="string">", industry);</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getIndustry() &#123;</div><div class="line">		return get("industry<span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setIndustry(String industry) &#123;</div><div class="line">		set("industry<span class="string">", industry);</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Date getLastTrans() &#123;</div><div class="line">		return (Date) get("<span class="built_in">date</span><span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getName() &#123;</div><div class="line">		return (String) get("name<span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getSymbol() &#123;</div><div class="line">		return (String) get("symbol<span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getOpen() &#123;</div><div class="line">		Double open = (Double) get("open<span class="string">");</span></div><div class="line">		return open.doubleValue();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getLast() &#123;</div><div class="line">		Double open = (Double) get("last<span class="string">");</span></div><div class="line">		return open.doubleValue();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getChange() &#123;</div><div class="line">		return getLast() - getOpen();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getPercentChange() &#123;</div><div class="line">		return getChange() / getOpen();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String toString() &#123;</div><div class="line">		return getName();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>gxt环境搭建参考http://wenku.baidu.com/view/29dfff030740be1e650e9ae5.html</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/04/web-input-jump/" itemprop="url">
-                  web-input-jump
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
-              2012-07-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/04/web-input-jump/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-input-jump/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">script</span>   <span class="attr">language</span>=<span class="string">JavaScript</span>&gt;</span><span class="javascript">  </span></div><div class="line">  <span class="function"><span class="keyword">function</span>   <span class="title">toNext</span>(<span class="params">obj,str</span>)</span>&#123;      </div><div class="line">    <span class="keyword">if</span>(obj.value.length==str&amp;&amp;obj.nextSibling.nextSibling.type==<span class="string">"text"</span>)  </div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).select() </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> c=<span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>); </div><div class="line">    carray=c.split(<span class="string">" "</span>);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes1"</span>).value=carray[<span class="number">0</span>];</div><div class="line">    alert(carray[<span class="number">0</span>]);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).value=carray[<span class="number">1</span>];</div><div class="line">    <span class="built_in">window</span>.clipboardData.clearData();</div><div class="line">  &#125;  </div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes1"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span> <span class="attr">onbeforepaste</span>=<span class="string">"abc()"</span>&gt;</span>SN1  </div><div class="line">  —  </div><div class="line">      <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes2"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span>&gt;</span>SN2</div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/04/web-html-disable-copy/" itemprop="url">
-                  网页防止复制
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
-              2012-07-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/04/web-html-disable-copy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-html-disable-copy/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在body标签内加上一段代码，禁用右键菜单</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="selector-tag">body</span> oncontextmenu=<span class="string">"return false"</span></div><div class="line">onselectstart=<span class="string">"return false"</span></div><div class="line">ondragstart=<span class="string">"return false"</span></div><div class="line">onbeforecopy=<span class="string">"return false"</span></div><div class="line">oncopy=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>() </div><div class="line">onselect=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>()&gt;</div></pre></td></tr></table></figure>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;input <span class="attr">type="text"</span> <span class="attr">id="username"</span> <span class="attr">name="username"</span> <span class="attr">value="禁止复制"</span> <span class="attr">onpaste="return</span> <span class="literal">false</span><span class="string">" oncontextmenu="</span>return <span class="literal">false</span><span class="string">" oncopy="</span>return <span class="literal">false</span><span class="string">" oncut="</span>return <span class="literal">false</span><span class="string">" &gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>jdbc连接参数</p>
+<blockquote>
+<p>oracle
+driver=&quot;oracle.jdbc.driver.OracleDriver&quot;
+url=&quot;jdbc:oracle:thin:@localhost:1521:数据库名&quot;
+sqlserver
+driver=&quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;
+url=&quot;jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=数据库名&quot;
+mysql
+driver=&quot;com.mysql.jdbc.Driver&quot;
+url=&quot;jdbc:mysql://localhost/数据库名?[后接参数]&quot;
+db2
+driver=&quot;com.ibm.db2.jdbc.app.DB2Driver&quot;
+url=&quot;jdbc:db2://localhost:5000/数据库名&quot;
+sybase
+driver=&quot;com.sybase.jdbc.SybDriver&quot;
+url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
+</blockquote>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1523,8 +1428,156 @@ Logout succeeded</p>
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/web-ajax-cache/" itemprop="url">
-                  ajax调用第一次成功,以后均失败解决办法
+                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">
+                  java实现http文件下载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-http-download/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
+了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
+分了几百甚至上千上万，那简直是个灾难。
+　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
+如此，我们就可以用程序来完成这个资源的完全下载。
+　　1. 基础知识
+　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
+Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
+　　步骤1:客户端发起连接请求一个URL
+　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
+　　步骤3:客户端接收输入流，将流中的内容存到文件
+　　2. 网络连接的建立
+　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
+存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>代理的访问
+　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
+，访问的JAVA代码如下:</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>网络资源的保存
+　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
+流中的所以内容，并将其保存在文件中。示例代码:</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/04/web-input-jump/" itemprop="url">
+                  web-input-jump
                 </a>
               
             
@@ -1567,8 +1620,8 @@ Logout succeeded</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/04/web-ajax-cache/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-ajax-cache/" itemprop="commentsCount"></span>
+                <a href="/2012/07/04/web-input-jump/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-input-jump/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1593,8 +1646,8 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>IE内核的浏览器会自动缓存异步通信处理结果，第一次ajax请求已经被高速缓存，若第二次点击(请求)，IE浏览器会认为这是同一个请求，由于第一次请求已经得到了响应，因此不会再响应第二次、第三次…的请求。
-解决办法：保证每次异步请求的url地址都不相同，即唯一标识每一次请求。具体的解决方案可以在url添加一个参数，参数的值=<code>new Data().getTime()</code>. 即可达到目的。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">script</span>   <span class="attr">language</span>=<span class="string">JavaScript</span>&gt;</span><span class="javascript">  </span></div><div class="line">  <span class="function"><span class="keyword">function</span>   <span class="title">toNext</span>(<span class="params">obj,str</span>)</span>&#123;      </div><div class="line">    <span class="keyword">if</span>(obj.value.length==str&amp;&amp;obj.nextSibling.nextSibling.type==<span class="string">"text"</span>)  </div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).select() </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> c=<span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>); </div><div class="line">    carray=c.split(<span class="string">" "</span>);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes1"</span>).value=carray[<span class="number">0</span>];</div><div class="line">    alert(carray[<span class="number">0</span>]);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).value=carray[<span class="number">1</span>];</div><div class="line">    <span class="built_in">window</span>.clipboardData.clearData();</div><div class="line">  &#125;  </div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes1"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span> <span class="attr">onbeforepaste</span>=<span class="string">"abc()"</span>&gt;</span>SN1  </div><div class="line">  —  </div><div class="line">      <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes2"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span>&gt;</span>SN2</div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1668,7 +1721,7 @@ Logout succeeded</p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">217</span>
+              <span class="site-state-item-count">218</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
