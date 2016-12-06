@@ -371,7 +371,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="快速排序"><a class="header-anchor" href="#快速排序"> </a>快速排序</h1>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="快速排序"><a class="header-anchor" href="#快速排序"> </a>快速排序</h1>
 <h2 id="介绍："><a class="header-anchor" href="#介绍："> </a>介绍：</h2>
 <p>快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要Ο(n log n)次比较。在最坏状况下则需要Ο(n2)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他Ο(n log n) 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来，且在大部分真实世界的数据，可以决定设计的选择，减少所需时间的二次方项之可能性。</p>
 <h2 id="步骤："><a class="header-anchor" href="#步骤："> </a>步骤：</h2>
@@ -602,440 +602,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">
-                  python 小写转大写
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/python-caps-util/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/python-caps-util/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">
-                  Flex-代码格式化eclipse插件:Flex Formatter
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-flex-formmater/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
-<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
-<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
-<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
-<ol>
-<li>Start up FlexBuilder / FlashBuilder.</li>
-<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
-<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
-<li>Click ‘New Remote Site…’</li>
-<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
-<li>Click OK</li>
-<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
-<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
-</ol>
-<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/03/web-num-reg/" itemprop="url">
-                  数字正则
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/web-num-reg/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-num-reg/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
-验证n位的数字：^d{n}$
-验证至少n位数字：^d{n,}$
-验证m-n位的数字：^d{m,n}$
-验证零和非零开头的数字：^(0|[1-9][0-9]</em>)$
-验证有两位小数的正实数：<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>+(.[0-9]{2})?$
-验证有1-3位小数的正实数：<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+(.[0-9]{1,3})?$
-验证非零的正整数：^+?[1-9][0-9]<em>$
-验证非零的负整数：^-[1-9][0-9]</em>$
-验证非负整数（正整数 + 0） ^d+$
-验证非正整数（负整数 + 0） ^((-d+)|(0+))$
-验证长度为3的字符：^.{3}$
-验证由26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>+$
-验证由26个大写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>+$
-验证由26个小写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>+$
-验证由数字和26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>+$
-验证由数字、26个英文字母或者下划线组成的字符串：^w+$
-验证用户密码:<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
-验证是否含有 ^%&amp;’,;=?$&quot; 等字符：[^%&amp;’,;=?$x22]+
-验证汉字：<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>,{0,}$
-验证Email地址：^w+[-+.]w+)<em>@w+([-.]w+)</em>.w+([-.]w+)<em>$
-验证InternetURL：^http://([w-]+.)+[w-]+(/[w-./?%&amp;=]</em>)?$ ；<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>+://(w+(-w+)<em>)(.(w+(-w+)</em>))<em>(?S</em>)?$
-验证电话号码：^((d{3,4})|d{3,4}-)?d{7,8}$：–正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
-验证身份证号（15位或18位数字）：^d{15}|d{}18$
-验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
-验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
-整数：^-?d+$
-非负浮点数（正浮点数 + 0）：^d+(.d+)?$
-正浮点数 ^(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>))$
-非正浮点数（负浮点数 + 0） ^((-d+(.d+)?)|(0+(.0+)?))$
-负浮点数 ^(-(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>)))$
-浮点数 ^(-?d+)(.d+)?</p>
-<p>验证货币格式 <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>{1,3}(,[0-9]{3})*(.[0-9]{2})?$  –正确格式为123,456.00</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>0-9 <a href="#fnref1" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>0-9 <a href="#fnref2" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>0-9 <a href="#fnref3" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>A-Za-z <a href="#fnref4" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>A-Z <a href="#fnref5" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>a-z <a href="#fnref6" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>A-Za-z0-9 <a href="#fnref7" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>a-zA-Z <a href="#fnref8" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>u4e00-u9fa5 <a href="#fnref9" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>a-zA-z <a href="#fnref10" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>0-9 <a href="#fnref11" class="footnote-backref">↩</a></p>
-</li>
-</ol>
-</section>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -1155,7 +722,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
 <a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
 <blockquote>
 <p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
@@ -1184,6 +751,439 @@ Some folks have wondered about the math that underlies these numbers. The root o
 <li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
 </ul>
 </blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/web-num-reg/" itemprop="url">
+                  数字正则
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/web-num-reg/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-num-reg/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
+验证n位的数字：^d{n}$
+验证至少n位数字：^d{n,}$
+验证m-n位的数字：^d{m,n}$
+验证零和非零开头的数字：^(0|[1-9][0-9]</em>)$
+验证有两位小数的正实数：<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>+(.[0-9]{2})?$
+验证有1-3位小数的正实数：<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+(.[0-9]{1,3})?$
+验证非零的正整数：^+?[1-9][0-9]<em>$
+验证非零的负整数：^-[1-9][0-9]</em>$
+验证非负整数（正整数 + 0） ^d+$
+验证非正整数（负整数 + 0） ^((-d+)|(0+))$
+验证长度为3的字符：^.{3}$
+验证由26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>+$
+验证由26个大写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>+$
+验证由26个小写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>+$
+验证由数字和26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>+$
+验证由数字、26个英文字母或者下划线组成的字符串：^w+$
+验证用户密码:<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
+验证是否含有 ^%&amp;’,;=?$&quot; 等字符：[^%&amp;’,;=?$x22]+
+验证汉字：<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>,{0,}$
+验证Email地址：^w+[-+.]w+)<em>@w+([-.]w+)</em>.w+([-.]w+)<em>$
+验证InternetURL：^http://([w-]+.)+[w-]+(/[w-./?%&amp;=]</em>)?$ ；<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>+://(w+(-w+)<em>)(.(w+(-w+)</em>))<em>(?S</em>)?$
+验证电话号码：^((d{3,4})|d{3,4}-)?d{7,8}$：–正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
+验证身份证号（15位或18位数字）：^d{15}|d{}18$
+验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
+验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
+整数：^-?d+$
+非负浮点数（正浮点数 + 0）：^d+(.d+)?$
+正浮点数 ^(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>))$
+非正浮点数（负浮点数 + 0） ^((-d+(.d+)?)|(0+(.0+)?))$
+负浮点数 ^(-(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>)))$
+浮点数 ^(-?d+)(.d+)?</p>
+<p>验证货币格式 <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>{1,3}(,[0-9]{3})*(.[0-9]{2})?$  –正确格式为123,456.00</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>0-9 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>0-9 <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>0-9 <a href="#fnref3" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>A-Za-z <a href="#fnref4" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>A-Z <a href="#fnref5" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>a-z <a href="#fnref6" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>A-Za-z0-9 <a href="#fnref7" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>a-zA-Z <a href="#fnref8" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>u4e00-u9fa5 <a href="#fnref9" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>a-zA-z <a href="#fnref10" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>0-9 <a href="#fnref11" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">
+                  Flex-代码格式化eclipse插件:Flex Formatter
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-flex-formmater/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
+<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
+<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
+<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
+<ol>
+<li>Start up FlexBuilder / FlashBuilder.</li>
+<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
+<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
+<li>Click ‘New Remote Site…’</li>
+<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
+<li>Click OK</li>
+<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
+<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
+</ol>
+<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">
+                  python 小写转大写
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/python-caps-util/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/python-caps-util/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
 
           
         
@@ -1303,7 +1303,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><ol>
 <li>MichaelScofield
 头脑。我理解的头脑，应该是智慧+冷静。作为这部戏的主角，导演很慷慨的把两点品质都赋予了Michael，他的智慧和冷静是贯穿始终的，近乎完美。</li>
 <li>LincolnBurrows
@@ -1446,7 +1446,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
 <p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
 <p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
 <p>读取新浪RSS的一个例子，结合Jsf。</p>
@@ -1577,7 +1577,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
 <p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/02/01/lcd1.gif" alt="lcd"></p>
 <p>图里有三个不同的集合，分别代表不同的操作系统，LCD其实指的就是它们三个的交集了，很明显最大公分母就是指它们三的并集喽！</p>
 <p>明白LCD， 最大公分母， 我们再分别看看AWT，SWT，SWING。</p>
@@ -1714,7 +1714,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Tomcat部署Web应用方法总结
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Tomcat部署Web应用方法总结
 在Tomcat中部署Java Web应用程序有两种方式：静态部署和动态部署。
 在下文中$CATALINA_HOME指的是Tomcat根目录。
 一、静态部署
@@ -1968,6 +1968,10 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
               
                 <li class="links-of-blogroll-item">
                   <a href="http://phl.iteye.com" title="猫头哥（朴海林）" target="_blank">猫头哥（朴海林）</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zhaxiancheng" title="zxc" target="_blank">zxc</a>
                 </li>
               
             </ul>
