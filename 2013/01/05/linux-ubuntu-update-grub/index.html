@@ -86,19 +86,22 @@
 
 
 
-<meta name="description" content="���Ѿ���Ubuntu 9.10��ͨ���ն�sudo update-grub�����ˣ���������һ����������XP��Windows 7����������һλ���ĵ����ѵ����İ����£����������������飬������֮��Ч�Ľ���������
-ԭ���ǲ�����Ӳ�̰�װ��ʽ��װUbuntu�󣬰��Ǹ���������grldr">
+<meta name="description" content="我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：
+原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了
+修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复">
 <meta property="og:type" content="article">
-<meta property="og:title" content="��װUbuntu���Ҳ���windows sudo update-grub">
+<meta property="og:title" content="安装Ubuntu后找不到windows sudo update-grub">
 <meta property="og:url" content="http://2le.me/2013/01/05/linux-ubuntu-update-grub/index.html">
 <meta property="og:site_name" content="BianLe's Blog">
-<meta property="og:description" content="���Ѿ���Ubuntu 9.10��ͨ���ն�sudo update-grub�����ˣ���������һ����������XP��Windows 7����������һλ���ĵ����ѵ����İ����£����������������飬������֮��Ч�Ľ���������
-ԭ���ǲ�����Ӳ�̰�װ��ʽ��װUbuntu�󣬰��Ǹ���������grldr">
-<meta property="og:updated_time" content="2016-10-13T03:10:24.000Z">
+<meta property="og:description" content="我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：
+原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了
+修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复">
+<meta property="og:updated_time" content="2016-12-06T06:41:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="��װUbuntu���Ҳ���windows sudo update-grub">
-<meta name="twitter:description" content="���Ѿ���Ubuntu 9.10��ͨ���ն�sudo update-grub�����ˣ���������һ����������XP��Windows 7����������һλ���ĵ����ѵ����İ����£����������������飬������֮��Ч�Ľ���������
-ԭ���ǲ�����Ӳ�̰�װ��ʽ��װUbuntu�󣬰��Ǹ���������grldr">
+<meta name="twitter:title" content="安装Ubuntu后找不到windows sudo update-grub">
+<meta name="twitter:description" content="我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：
+原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了
+修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复">
 
 
 
@@ -122,7 +125,7 @@
   <link rel="canonical" href="http://2le.me/2013/01/05/linux-ubuntu-update-grub/"/>
 
 
-  <title> ��װUbuntu���Ҳ���windows sudo update-grub | BianLe's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 安装Ubuntu后找不到windows sudo update-grub | BianLe's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -305,7 +308,7 @@
             
             
               
-                ��װUbuntu���Ҳ���windows sudo update-grub
+                安装Ubuntu后找不到windows sudo update-grub
               
             
           </h1>
@@ -371,20 +374,20 @@
       
 
       
-        <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>���Ѿ���Ubuntu 9.10��ͨ���ն�sudo update-grub�����ˣ���������һ����������XP��Windows 7����������һλ���ĵ����ѵ����İ����£����������������飬������֮��Ч�Ľ���������</p>
-<p>ԭ���ǲ�����Ӳ�̰�װ��ʽ��װUbuntu�󣬰��Ǹ���������grldr�ƻ���</p>
-<p>�޸�Ubuntu 9.10����/boot/grub/grub.cfg�ļ���Windows 7������ѡ�����ֱ�Ӹ���������������Windows 7ѡ���ɡ�</p>
+        <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
+<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
+<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
 <p>menuentry “Windows 7” {
 insmod ntfs
 set root=(hd0,1)
 drivemap -s (hd0) ${root}</p>
 <p>chainloader +1
 }</p>
-<p>����Ӧ�þͿ��Խ���grub4dos �Ĳ˵���Ȼ���� C ����GRUB��DOS״̬ ����grub&gt;��ʾ�����������������������޸���������grldr����</p>
+<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
 <p>grub&gt;root (hd0,0)
 grub&gt;chainloader /bootmgr
 grub&gt;boot</p>
-<p>����Windows 7��Ҫ���¼���Windows 7��Ȼ������ʽ�ָ���Ubuntu 9.10��Windows 7��˫ϵͳ�����˵��ˣ�����XP����Windows 7�������˵����ģ�һ�������ˡ�������</p>
+<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
 
       
     </div>
@@ -439,16 +442,16 @@ grub&gt;boot</p>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/01/05/db-sqlserver-return-autogen-id/" rel="next" title="在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例">
-                <i class="fa fa-chevron-left"></i> 在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
+              <a href="/2013/01/05/java-httpclient-xml/" rel="next" title="httpclient发送xml字符串（推送）">
+                <i class="fa fa-chevron-left"></i> httpclient发送xml字符串（推送）
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2013/01/05/software-editplus/" rel="prev" title="使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)">
-                使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载) <i class="fa fa-chevron-right"></i>
+              <a href="/2013/01/05/java-simple-web-server/" rel="prev" title="Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files.">
+                Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files. <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -499,7 +502,7 @@ grub&gt;boot</p>
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2013/01/05/linux-ubuntu-update-grub/"
-           data-title="��װUbuntu���Ҳ���windows sudo update-grub" data-url="http://2le.me/2013/01/05/linux-ubuntu-update-grub/">
+           data-title="安装Ubuntu后找不到windows sudo update-grub" data-url="http://2le.me/2013/01/05/linux-ubuntu-update-grub/">
       </div>
     
   </div>
@@ -544,7 +547,7 @@ grub&gt;boot</p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">219</span>
+              <span class="site-state-item-count">220</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
