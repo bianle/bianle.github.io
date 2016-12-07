@@ -7,7 +7,7 @@
 
 <html class="theme-next mist use-motion">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -55,7 +55,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.proxy.ustclug.org/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -115,7 +115,7 @@
   <link rel="canonical" href="http://2le.me/page/18/"/>
 
 
-  <title> BianLe's Blog </title>
+  <title> BianLe's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -124,7 +124,7 @@
 
 
 
-  <script type="text/javascript">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
@@ -301,8 +301,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/10/16/web-jquery/" itemprop="url">
-                  Jquery的$命名冲突
+                <a class="post-title-link" href="/2012/10/16/web-js-page-size/" itemprop="url">
+                  JavaScript获取网页高度宽度
                 </a>
               
             
@@ -345,8 +345,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/10/16/web-jquery/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-jquery/" itemprop="commentsCount"></span>
+                <a href="/2012/10/16/web-js-page-size/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-js-page-size/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -371,46 +371,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在Jquery中，$是JQuery的别名，所有使用$的地方也都可以使用JQuery来替换，如$(‘#msg’)等同于JQuery(‘#msg’)的写法。然而，当我们引入多个js库后，在另外一个js库中也定义了$符号的话，那么我们在使用$符号时就发生了冲突。下面以引入两个库文件jquery.js和prototype.js为例来进行说明。
-第一种情况：jquery.js在prototype.js之后进行引入,如：</p>
-<script src="prototype.js" type="text/javascript"><script src="jquery.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$永远代表的是jquery中定义的$符号，也可以写成JQuery(‘#msg’).hide();如果想要使用prototype.js中定义的$,我们在后面再介绍。
-第二种情况：jquery.js在prototype.js之前进行引入,如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$此时代表的prototype.js中定义的$符号，如果我们想要调用jquery.js中的工厂选择函数功能的话，只能用全称写法JQuery(‘#msg’).hide().
-下面先介绍在第一种引入js库文件顺序的情况下，如何正确的使用不同的js库中定义的$符号。
-一.使用JQuery.noConflict()
-该方法的作用就是让Jquery放弃对$的所有权，将$的控制权交还给prototype.js,因为jquery.js是后引入的，所以最后拥有$控制权的是jquery。它的返回值是JQuery。当在代码中调用了该 方法以后，我们就不可以使用$来调用jquery的方法了，此时$就代表在prototype.js库中定义的$了。如下：
-JQuery.noConflict(); //此处不可以再写成$('#msg').hide(),此时的$代表prototype.js中定义的$符号。 
-JQuey('#msg').hide(); 
- 
-自此以后$就代表prototype.js中定义的$,jquery.js中的$无法再使用,只能使用jquery.js中$的全称JQuery了。
-二.自定义JQuery的别名 
-如果觉得第一种方法中使用了JQuery.noConflict()方法以后,只能使用JQuery全称比较麻烦的话，我们还可以为JQuery重定义别名。如下：
-var $j=JQuery.noConflict(); $j('#msg').hide();//此处$j就代表JQuery 
- 
-自此以后$就代表prototype.js中定义的$,jquey.js中的$无法再使用,只能使用$j来作为jquey.js中JQuery的别名了。
-三.使用语句块，在语句块中仍然使用jquery.js中定义的$，如下：
-JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此时在整个ready事件的方法中使用的$都是jquery.js中定义的$. 
-});
- 
- 
-或者使用如下语句块：
-(function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery)
- 
-如果在第二种引入js库文件顺序的情况下,如何使用jquery.js中的$,我们还是可以使用上面介绍的语句块的方法，如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery) </script>
-<p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1515,8 +1476,8 @@ cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己�
             
               
                 
-                <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">
-                  JS返回顶部
+                <a class="post-title-link" href="/2012/07/12/web-chrome-debug/" itemprop="url">
+                  Chrome开发工具支持远程调试
                 </a>
               
             
@@ -1559,8 +1520,8 @@ cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/12/web-js-totop/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/web-js-totop/" itemprop="commentsCount"></span>
+                <a href="/2012/07/12/web-chrome-debug/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/web-chrome-debug/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1585,33 +1546,12 @@ cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文介绍三款简单的返回页面顶部代码，可以使用简单的HTML锚标记，也可使用Javascript Scroll函数动态返回，其它的还有悬浮脚本等有点复杂了，本文不再介绍，大家根据自己需要选择其中的一种即可，总之简约最美的，能减少代码就减少代码，能不调用的就别调用，要不是天缘博客的文章都是牛长也不会添加这个功能。
-一、使用锚标记返回页面顶部
-使用HTML锚标记最简单，就是看起来有点不好看，点击后会在地址栏显示这个锚标记，其它的倒没什么。
-页面顶部放置：
-<a name="top" id="top"></a>
-放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
-页面底部放置：
-<a href="#top" target="_self">返回顶部</a>
-二、使用Javascript Scroll函数返回顶部
-scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
-方式1：
-1<a href="javascript:scroll(0,0)" target="_blank" rel="external">返回顶部</a>
-scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
-方式2：
-本方式是渐进式返回顶部，要好看一些，代码如下：
-1functionpageScroll() { 2window.scrollBy(0,-10); 3scrolldelay = setTimeout(‘pageScroll()’,100); 4} 56<a href="pageScroll();">返回顶部</a>
-这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
-1if(document.documentElement.scrollTop==0) clearTimeout(scrolldelay);三、使用Onload加上scroll功能实现动态返回顶部
-1、首先在网页BODY标签结束之前加上：</body></p>
-<div id="gotop">返回顶部</div>
-2、再调用以下JS脚本部分（本脚本非天缘原创，早前来源于Z-BLOG官方论坛上收集，源包未带作者链接，如果原作者看到敬请留言添加）：
-01BackTop=function(btnId){ 02 varbtn=document.getElementById(btnId); 03 vard=document.documentElement; 04 window.onscroll=set; 05 btn.onclick=function(){ 06 btn.style.display="none"; 07 window.onscroll=null; 08 this.timer=setInterval(function(){ 09 d.scrollTop-=Math.ceil(d.scrollTop*0.1); 10 if(d.scrollTop==0) clearInterval(btn.timer,window.onscroll=set); 11 },10); 12 }; 13 functionset(){btn.style.display=d.scrollTop?’block':"none"} 14}; 15BackTop(‘gotop’);
-对Z-BLOG而言，可以放到$(document).ready(function(){….函数中，也可以独立存成一个js文件，比如gotop.js，再通过：
-<script src="/js/gotop.js" type="text/javascript"></script>
-来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设路径为JS，其它位置请自行修改。
-补充：
-上述返回顶部代码都是文字式样的，也可以把文字更换为漂亮一点的图标，另外还有悬浮状的返回顶部代码（就是页面滚动时，返回顶部图标也会跟着跑的那种），需要使用到层等，搞的有点复杂了，本文暂不列出。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Google Chrome开发工具（简称 DevTools）前端界面是作为HTML + CSS + JavaScript的web应用实现的。它采用序列化的信息通道与被审查页面通讯。开发团队建立这个序列化异步交互通道是为了将DevTools前端移出被审查页面的进程。但实现了才发现，甚至能将DevTools前端移出浏览器运行。下面是尝试远程调试的步骤：</p>
+<p>1.使用远程调试命令行开关运行要远程调试的 Chrome 实例：chrome.exe --remote-debugging-port=9222 --user-data-dir=remote-profile。远程会话必须使用不同的 Chrome 实例，所以运行时要加 --user-data-dir 参数。</p>
+<p>2.转到要调试的页面。</p>
+<p>3.现在运行正常的 (客户端) Chrome 实例并转到 <a href="http://localhost:9222" target="_blank" rel="external">http://localhost:9222</a> 那里。</p>
+<p>您将能看到一些链接，指向相应页面的远程调试会话。点击即可开始远程调试Chrome页面：</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2012/07/12/chrome1.png" alt="chrome"><span class="image-caption">chrome</span></p>
 
           
         
@@ -2074,7 +2014,24 @@ scroll第一个参数是水平位置，第二个参数是垂直位置，比如�
     $('.popup').click(function(e){
       e.stopPropagation();
     });
-  </script>
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
   
