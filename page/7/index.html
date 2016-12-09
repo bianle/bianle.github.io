@@ -301,266 +301,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/01/maven-shiro-quartz-conflict/" itemprop="url">
-                  shiro和quartz冲突
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-01T21:45:44+08:00" content="2016-11-01">
-              2016-11-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/01/maven-shiro-quartz-conflict/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/01/maven-shiro-quartz-conflict/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
-<p>maven项目中同时配置了shiro和quartz，shiro本身引用了quartz造成jar包冲突</p>
-<h2 id="解决办法"><a class="header-anchor" href="#解决办法"> </a>解决办法</h2>
-<p>排除shiro里的quartz依赖：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.shiro<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>shiro-quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0-incubating<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>quartz<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.quartz-scheduler<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.7.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="http://stackoverflow.com/questions/3821339/shiro-plugin-conflicting-with-quartz-framework-in-grails" target="_blank" rel="external">http://stackoverflow.com/questions/3821339/shiro-plugin-conflicting-with-quartz-framework-in-grails</a></p>
-<h2 id="扩展"><a class="header-anchor" href="#扩展"> </a>扩展</h2>
-<p><a href="http://stamen.iteye.com/blog/2030552" target="_blank" rel="external">Maven类包冲突终极解决小技若干</a></p>
-<blockquote>
-<p>mvn dependency:tree -Dverbose -Dincludes=asm:asm</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/01/java-tips/" itemprop="url">
-                  java小提示
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-01T15:06:33+08:00" content="2016-11-01">
-              2016-11-01
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/01/java-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/01/java-tips/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ul>
-<li>
-<p>非静态方法不要修改静态变量
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/01/20161101151208.png" alt="sonar"><span class="image-caption">sonar</span></p>
-</li>
-<li>
-<p>判断集合不为空isEmpty()</p>
-</li>
-</ul>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attr">productList</span> == null||productList.size()==<span class="number">0</span></div><div class="line"></div><div class="line"><span class="attr">productList</span> == null||productList.isEmpty()</div></pre></td></tr></table></figure>
-<ul>
-<li>
-<p>new BigDecimal(0.1) -&gt; BigDecimal.valueOf(0.1)</p>
-</li>
-<li>
-<p>p.getTotalPerformancePay().equals(BigDecimal.ZERO)</p>
-</li>
-<li>
-<p>注意运算符的优先级</p>
-</li>
-</ul>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.setMsg(<span class="string">"未查询到商品价格信息："</span> + rst == <span class="keyword">null</span> ? <span class="keyword">null</span> : rst.getErrorMessage());</div></pre></td></tr></table></figure>
-<blockquote>
-<p>Condition ‘“未查询到商品价格信息：” + rst == null’ is always ‘false’</p>
-</blockquote>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.setMsg(<span class="string">"未查询到商品价格信息："</span> + (rst == <span class="keyword">null</span> ? <span class="keyword">null</span> : rst.getErrorMessage()));</div></pre></td></tr></table></figure>
-<h2 id="java数组为什么没有泛型"><a class="header-anchor" href="#java数组为什么没有泛型"> </a>java数组为什么没有泛型</h2>
-<p><a href="http://blog.csdn.net/orzlzro/article/details/7017435" target="_blank" rel="external">http://blog.csdn.net/orzlzro/article/details/7017435</a>
-<a href="http://docs.oracle.com/javase/tutorial/extra/generics/fineprint.html" target="_blank" rel="external">http://docs.oracle.com/javase/tutorial/extra/generics/fineprint.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/10/31/securecrt/" itemprop="url">
                   SecureCrt
                 </a>
@@ -901,6 +641,7 @@
 <li>Today-Scripts <a href="https://github.com/SamRothCA/Today-Scripts" target="_blank" rel="external">https://github.com/SamRothCA/Today-Scripts</a></li>
 <li>keycastr 链接: <a href="https://pan.baidu.com/s/1c2gfLYS" target="_blank" rel="external">https://pan.baidu.com/s/1c2gfLYS</a> 密码: bian</li>
 <li>licecap 链接: <a href="https://pan.baidu.com/s/1c2FXQ0K" target="_blank" rel="external">https://pan.baidu.com/s/1c2FXQ0K</a> 密码: bian</li>
+<li>paw (restclient) 链接: <a href="https://pan.baidu.com/s/1qYtUSws" target="_blank" rel="external">https://pan.baidu.com/s/1qYtUSws</a> 密码: bian</li>
 </ul>
 <h2 id="linux"><a class="header-anchor" href="#linux"> </a>linux</h2>
 <h3 id="p2p-v2"><a class="header-anchor" href="#p2p-v2"> </a>p2p</h3>
@@ -1610,6 +1351,275 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/19/mysql-command/" itemprop="url">
+                  mysql命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-19T13:27:34+08:00" content="2016-10-19">
+              2016-10-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/19/mysql-command/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/19/mysql-command/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="mysql-表解锁"><a class="header-anchor" href="#mysql-表解锁"> </a>mysql 表解锁</h2>
+<p>修改一个表的索引，由于表数据量大导致修改操作挂起，表被锁</p>
+<ul>
+<li>查进程<code>SHOW PROCESSLIST</code></li>
+<li>kill掉锁表进程<code>KILL &lt;ID&gt;</code></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/13/idea/" itemprop="url">
+                  idea
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-13T15:02:50+08:00" content="2016-10-13">
+              2016-10-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/13/idea/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/idea/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="idea-license-server"><a class="header-anchor" href="#idea-license-server"> </a>idea license server</h2>
+<p><a href="http://idea.le.im" target="_blank" rel="external">http://idea.le.im</a><br>
+<a href="http://idea.bovod.org" target="_blank" rel="external">http://idea.bovod.org</a></p>
+<h3 id="jrebel-license-server"><a class="header-anchor" href="#jrebel-license-server"> </a>jrebel license server</h3>
+<p><a href="http://idea.qinxi1992.cn/ilanyu" target="_blank" rel="external">http://idea.qinxi1992.cn/ilanyu</a></p>
+<p><a href="http://blog.lanyus.com/archives/174.html" target="_blank" rel="external">IntelliJ IDEA License Server本地搭建教程</a></p>
+<h2 id="idea-sonar"><a class="header-anchor" href="#idea-sonar"> </a>idea sonar</h2>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/01/20161101101443.png" alt="sonar"><span class="image-caption">sonar</span></p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/01/20161101103810.png" alt="sonar"><span class="image-caption">sonar</span></p>
+<h2 id="idea-sonarlint"><a class="header-anchor" href="#idea-sonarlint"> </a>idea sonarLint</h2>
+<p>离线安装<a href="https://pan.baidu.com/s/1jIkBY9C" target="_blank" rel="external">百度云</a></p>
+<h2 id="idea快捷键"><a class="header-anchor" href="#idea快捷键"> </a>idea快捷键</h2>
+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Ctrl</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">shift⇧</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">v</kbd> 打开剪贴板
+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Option⌥</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">c</kbd> 抽取常量
+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Option⌥</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">m</kbd> 抽取方法
+<h2 id="idea插件"><a class="header-anchor" href="#idea插件"> </a>idea插件</h2>
+<h3 id="rainbow"><a class="header-anchor" href="#rainbow"> </a>rainbow</h3>
+<h3 id="acejump"><a class="header-anchor" href="#acejump"> </a>acejump</h3>
+<h2 id="代码格式化"><a class="header-anchor" href="#代码格式化"> </a>代码格式化</h2>
+<p><a href="https://blog.jetbrains.com/idea/2014/01/intellij-idea-13-importing-code-formatter-settings-from-eclipse/" target="_blank" rel="external">https://blog.jetbrains.com/idea/2014/01/intellij-idea-13-importing-code-formatter-settings-from-eclipse/</a></p>
+<h2 id="mac上idea记不住svn密码"><a class="header-anchor" href="#mac上idea记不住svn密码"> </a>mac上idea记不住svn密码</h2>
+<p>方法1. 打开钥匙串选择svn钥匙串访问权限改成所有程序
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/10/20161110115401.png" alt="idea"><span class="image-caption">idea</span></p>
+<p><a href="http://www.oschina.net/question/273712_162220?sort=time" target="_blank" rel="external">http://www.oschina.net/question/273712_162220?sort=time</a></p>
+<p>方法2. 重装idea <a href="http://stackoverflow.com/questions/13585631/intellij-wont-save-svn-authentication-information" target="_blank" rel="external">http://stackoverflow.com/questions/13585631/intellij-wont-save-svn-authentication-information</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1655,7 +1665,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">224</span>
+              <span class="site-state-item-count">222</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1663,7 +1673,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1672,7 +1682,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">157</span>
+                <span class="site-state-item-count">156</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
