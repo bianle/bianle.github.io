@@ -301,8 +301,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">
-                  查询本月天数
+                <a class="post-title-link" href="/2014/03/25/db-oracle-sql/" itemprop="url">
+                  oracle sql整理
                 </a>
               
             
@@ -345,8 +345,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/03/25/db-oracle-get-month-days/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/db-oracle-get-month-days/" itemprop="commentsCount"></span>
+                <a href="/2014/03/25/db-oracle-sql/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/db-oracle-sql/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -371,7 +371,13 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="oracle-分页查询"><a class="header-anchor" href="#oracle-分页查询"> </a>oracle 分页查询</h1>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ( <span class="keyword">SELECT</span> A.*, <span class="keyword">ROWNUM</span> RN <span class="keyword">FROM</span> ([<span class="keyword">sql</span>语句]) A <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= [lineSize*currentPage] ) <span class="keyword">WHERE</span> RN &gt;=[((currentPage<span class="number">-1</span>)*lineSize+<span class="number">1</span>)];</div></pre></td></tr></table></figure>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line"><span class="keyword">WITH</span> t <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ‘remoteAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,protocol:HTTP/<span class="number">1.1</span>,localAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,mac:<span class="number">44</span>-<span class="number">37</span>-E6-<span class="number">86</span>-C4-<span class="number">6</span>A,Cookie:%<span class="number">2</span>Fclient6%<span class="number">2</span>F=<span class="number">1361081051064</span>;logoin=<span class="number">1361081051064</span>;’ id</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> dual),</div><div class="line"></div><div class="line">        t1 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> REPLACE(id, ‘logoin=’, ‘logoin:’) id1 <span class="keyword">FROM</span> t),</div><div class="line"></div><div class="line">        t2 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ’<span class="number">1</span>′ num0,</div><div class="line"></div><div class="line">                 rownum num1,</div><div class="line"></div><div class="line">                 regexp_substr(id1, ‘[^,|;|:]+’, <span class="number">1</span>, LEVEL) t1a</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> t1</div><div class="line"></div><div class="line">          CONNECT <span class="keyword">BY</span> LEVEL &lt;= regexp_count(id1, ‘,’) + regexp_count(id1, ‘;’) +</div><div class="line"></div><div class="line">                     regexp_count(id1, ‘:’))</div><div class="line"></div><div class="line">        <span class="keyword">SELECT</span> *</div><div class="line"></div><div class="line">          <span class="keyword">FROM</span> t2 pivot(MAX(t1a) <span class="keyword">FOR</span> num1 <span class="keyword">IN</span>(</div><div class="line"></div><div class="line">                                             </div><div class="line">                                             <span class="number">2</span> remoteaddr,</div><div class="line"></div><div class="line">                                             <span class="number">4</span> protocol,</div><div class="line"></div><div class="line">                                             <span class="number">6</span> localaddr,</div><div class="line"></div><div class="line">                                             <span class="number">8</span> mac,</div><div class="line"></div><div class="line">                                             <span class="number">10</span> cookie,</div><div class="line"></div><div class="line"><span class="number">12</span> logoin))</div></pre></td></tr></table></figure>
+<h1 id="oracle-正则表达式"><a class="header-anchor" href="#oracle-正则表达式"> </a>oracle 正则表达式</h1>
+<p>关键字<code>REGEXP_SUBSTR</code></p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><div class="line">SELECT REGEXP_SUBSTR(‘在#<span class="number">12</span>d’, ‘#<span class="string">[[:digit:]]</span>+’) FROM DUAL</div></pre></td></tr></table></figure>
+<p>参考：<a href="http://www.jb51.net/article/31227.htm" target="_blank" rel="external">http://www.jb51.net/article/31227.htm</a></p>
 
           
         
@@ -491,7 +497,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**************日期********************/</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>  今天的日期为<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mm’)   <span class="keyword">from</span>   dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-1</span>    返回当月第一天. </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>       返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’dd’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>    返回当前年月日 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yyyy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>   返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’d’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-13</span> (星期天)返回当前星期的第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘hh’) <span class="keyword">from</span> dual   –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span>   当前时间为<span class="number">14</span>:<span class="number">41</span>   </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mi’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">41</span>:<span class="number">00</span>   TRUNC()函数没有秒的精确 </div><div class="line"><span class="comment">/***************数字********************/</span> </div><div class="line"><span class="comment">/* </span></div><div class="line">TRUNC（number,num_digits） </div><div class="line">Number 需要截尾取整的数字。 </div><div class="line">Num_digits 用于指定取整精度的数字。Num_digits 的默认值为 0。 </div><div class="line">TRUNC()函数截取时不进行四舍五入 </div><div class="line">*/ </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">0</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123.4</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-4</span>) <span class="keyword">from</span> dual –<span class="number">0</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">4</span>) <span class="keyword">from</span> dual  –<span class="number">123.458</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>) <span class="keyword">from</span> dual  –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**************日期********************/</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>  今天的日期为<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mm’)   <span class="keyword">from</span>   dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-1</span>    返回当月第一天. </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>       返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’dd’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>    返回当前年月日 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yyyy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>   返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’d’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-13</span> (星期天)返回当前星期的第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘hh’) <span class="keyword">from</span> dual   –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span>   当前时间为<span class="number">14</span>:<span class="number">41</span>   </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mi’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">41</span>:<span class="number">00</span>   TRUNC()函数没有秒的精确 </div><div class="line"><span class="comment">/***************数字********************/</span> </div><div class="line"><span class="comment">/* </span></div><div class="line">TRUNC（number,num_digits） </div><div class="line">Number 需要截尾取整的数字。 </div><div class="line">Num_digits 用于指定取整精度的数字。Num_digits 的默认值为 0。 </div><div class="line">TRUNC()函数截取时不进行四舍五入 </div><div class="line">*/ </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">0</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123.4</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-4</span>) <span class="keyword">from</span> dual –<span class="number">0</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">4</span>) <span class="keyword">from</span> dual  –<span class="number">123.458</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>) <span class="keyword">from</span> dual  –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1160,306 +1166,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/03/web-num-reg/" itemprop="url">
-                  数字正则
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/web-num-reg/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-num-reg/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
-验证n位的数字：^d{n}$
-验证至少n位数字：^d{n,}$
-验证m-n位的数字：^d{m,n}$
-验证零和非零开头的数字：^(0|[1-9][0-9]</em>)$
-验证有两位小数的正实数：<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>+(.[0-9]{2})?$
-验证有1-3位小数的正实数：<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+(.[0-9]{1,3})?$
-验证非零的正整数：^+?[1-9][0-9]<em>$
-验证非零的负整数：^-[1-9][0-9]</em>$
-验证非负整数（正整数 + 0） ^d+$
-验证非正整数（负整数 + 0） ^((-d+)|(0+))$
-验证长度为3的字符：^.{3}$
-验证由26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>+$
-验证由26个大写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>+$
-验证由26个小写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>+$
-验证由数字和26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>+$
-验证由数字、26个英文字母或者下划线组成的字符串：^w+$
-验证用户密码:<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
-验证是否含有 ^%&amp;’,;=?$&quot; 等字符：[^%&amp;’,;=?$x22]+
-验证汉字：<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>,{0,}$
-验证Email地址：^w+[-+.]w+)<em>@w+([-.]w+)</em>.w+([-.]w+)<em>$
-验证InternetURL：^http://([w-]+.)+[w-]+(/[w-./?%&amp;=]</em>)?$ ；<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>+://(w+(-w+)<em>)(.(w+(-w+)</em>))<em>(?S</em>)?$
-验证电话号码：^((d{3,4})|d{3,4}-)?d{7,8}$：–正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
-验证身份证号（15位或18位数字）：^d{15}|d{}18$
-验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
-验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
-整数：^-?d+$
-非负浮点数（正浮点数 + 0）：^d+(.d+)?$
-正浮点数 ^(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>))$
-非正浮点数（负浮点数 + 0） ^((-d+(.d+)?)|(0+(.0+)?))$
-负浮点数 ^(-(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>)))$
-浮点数 ^(-?d+)(.d+)?</p>
-<p>验证货币格式 <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>{1,3}(,[0-9]{3})*(.[0-9]{2})?$  –正确格式为123,456.00</p>
-<hr class="footnotes-sep">
-<section class="footnotes">
-<ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>0-9 <a href="#fnref1" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn2" class="footnote-item"><p>0-9 <a href="#fnref2" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>0-9 <a href="#fnref3" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>A-Za-z <a href="#fnref4" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>A-Z <a href="#fnref5" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn6" class="footnote-item"><p>a-z <a href="#fnref6" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn7" class="footnote-item"><p>A-Za-z0-9 <a href="#fnref7" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn8" class="footnote-item"><p>a-zA-Z <a href="#fnref8" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn9" class="footnote-item"><p>u4e00-u9fa5 <a href="#fnref9" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn10" class="footnote-item"><p>a-zA-z <a href="#fnref10" class="footnote-backref">↩</a></p>
-</li>
-<li id="fn11" class="footnote-item"><p>0-9 <a href="#fnref11" class="footnote-backref">↩</a></p>
-</li>
-</ol>
-</section>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">
-                  python 小写转大写
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
-              2013-02-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/03/python-caps-util/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/python-caps-util/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -1742,6 +1449,305 @@ Some folks have wondered about the math that underlies these numbers. The root o
 <li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
 </ol>
 <p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">
+                  python 小写转大写
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/python-caps-util/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/python-caps-util/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/02/03/web-num-reg/" itemprop="url">
+                  数字正则
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-02-03T18:09:17+08:00" content="2013-02-03">
+              2013-02-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/02/03/web-num-reg/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/03/web-num-reg/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
+验证n位的数字：^d{n}$
+验证至少n位数字：^d{n,}$
+验证m-n位的数字：^d{m,n}$
+验证零和非零开头的数字：^(0|[1-9][0-9]</em>)$
+验证有两位小数的正实数：<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>+(.[0-9]{2})?$
+验证有1-3位小数的正实数：<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+(.[0-9]{1,3})?$
+验证非零的正整数：^+?[1-9][0-9]<em>$
+验证非零的负整数：^-[1-9][0-9]</em>$
+验证非负整数（正整数 + 0） ^d+$
+验证非正整数（负整数 + 0） ^((-d+)|(0+))$
+验证长度为3的字符：^.{3}$
+验证由26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>+$
+验证由26个大写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>+$
+验证由26个小写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>+$
+验证由数字和26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>+$
+验证由数字、26个英文字母或者下划线组成的字符串：^w+$
+验证用户密码:<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
+验证是否含有 ^%&amp;’,;=?$&quot; 等字符：[^%&amp;’,;=?$x22]+
+验证汉字：<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>,{0,}$
+验证Email地址：^w+[-+.]w+)<em>@w+([-.]w+)</em>.w+([-.]w+)<em>$
+验证InternetURL：^http://([w-]+.)+[w-]+(/[w-./?%&amp;=]</em>)?$ ；<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>+://(w+(-w+)<em>)(.(w+(-w+)</em>))<em>(?S</em>)?$
+验证电话号码：^((d{3,4})|d{3,4}-)?d{7,8}$：–正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
+验证身份证号（15位或18位数字）：^d{15}|d{}18$
+验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
+验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
+整数：^-?d+$
+非负浮点数（正浮点数 + 0）：^d+(.d+)?$
+正浮点数 ^(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>))$
+非正浮点数（负浮点数 + 0） ^((-d+(.d+)?)|(0+(.0+)?))$
+负浮点数 ^(-(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>)))$
+浮点数 ^(-?d+)(.d+)?</p>
+<p>验证货币格式 <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>{1,3}(,[0-9]{3})*(.[0-9]{2})?$  –正确格式为123,456.00</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>0-9 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>0-9 <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>0-9 <a href="#fnref3" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>A-Za-z <a href="#fnref4" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>A-Z <a href="#fnref5" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>a-z <a href="#fnref6" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>A-Za-z0-9 <a href="#fnref7" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>a-zA-Z <a href="#fnref8" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>u4e00-u9fa5 <a href="#fnref9" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>a-zA-z <a href="#fnref10" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>0-9 <a href="#fnref11" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
 
           
         
