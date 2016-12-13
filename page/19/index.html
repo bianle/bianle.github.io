@@ -73,7 +73,7 @@
   
     
     
-    <link href="//fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Pacifico:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -297,6 +297,291 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/12/linux-vim-plugin/" itemprop="url">
+                  Vim插件：增加模糊查找和智能补全功能
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
+              2012-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/12/linux-vim-plugin/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/linux-vim-plugin/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>这里给大家推荐一个Vim配置工具，本工具由fisadev个人开发，并且遵循GPL开源协议，所以你可以放心地使用它！因为这是作者个人使用，所以设置都是按照作者自己的习惯来的，如有不适应，你可以自己修改源代码。废话不多说，先看预览图：</p>
+<p>智能的自动提示</p>
+<p>右侧是“类浏览器 ”</p>
+<p>代码错误检查</p>
+<p>代码模糊匹配
+这里推荐使用Vundle管理插件，安装和卸载插件都非常简单！插件的安装位置在 .Vim/bundle/。更多信息点击<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="external">这里</a>。
+智能的自动填充功能。可以自动填充模块名、实例方法和属性，有时还会提示使用过的文本（比如常用命名）。
+模糊文件和代码查找功能
+,e = 打开文件（就像:e一样）但是增加了递归查询和模糊匹配。例如：如果你输入“mopy”，它匹配到一个分目录下的“<a href="http://models.py" target="_blank" rel="external">models.py</a>”文件，你可以直接使用Ctrl+T打开文件。
+,g = 模糊服务查找 （类、方法、变量、函数，以及等等……）例如：如果你输入“usr”，它可以找到当前文件里的User类定义。
+,f = 模糊文本查找，并且打开文件。 例如：如果你输入“ctm=6”，它能匹配到“current_time = 16”。
+,d = 和 ,g相同 (symbol finder) 但是搜索的是指针下的单词 (sort of “fuzzy go to definition”)。
+,E = 和 ,e相同 (file finder)不过搜索的是光标下的文件 (sort of “fuzzy go to file”)。
+类/模块浏览器。类/模块浏览器里列出了类、函数、方法以及类似文件，敲回车键就可以导航过去。使用F4切换它的状态。
+F2挂起任务浏览器。这会从读取当前文件开始，并且搜索“TODO”和“FIXME”等注释，然后在列表里显示。导航方法和类浏览器类似。
+使用Pyflakes对Python代码进行错误检查。它可以检测出代码里未使用的变量和引用，以及语法错误等等。
+在当前Python文件上运行PEP8验证器，输入“,8” ，就会显示Pyflakes检测出来的Python错误。
+它同时还是一个相当优秀的Python和PHP调试器。这里有一个小教程，我增加了几个键盘快捷键方便使用（这只有在调试器启动后才可以使用）。
+F5 = 单步执行（step over）
+F6 = 插入（step into）
+F7 = 跳出（step out）
+F8 = 执行到断点处停止
+F9 = 设置断点
+F10 = 在表达式窗口计算表达式结果
+F11 = go down on the stack
+F12 = go up on the stack
+推荐你看看视频教程，在这里我无法给出所有用法举例。
+安装步骤
+首先你需要Vim Python编译支持，并且保证安装目录下没有.Vim文件夹。（你可以运行Vim –version | grep +Python来检查你的Vim是否支持Python。）
+软件依赖：</p>
+<p>sudo apt-get install exuberant-ctags git
+sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
+如果你没有安装pip，可以在<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="external">这里</a>下载。
+配置好安装文件
+把下载的.Vimrc文件放到Linux home文件夹下。
+例如我的用户名是fisa，那就把它放到/home/fisa/目录下。
+打开Vim
+在终端打开Vim，它将会自动安装插件到.Vim/bundle目录下。你所需要做的就是等待安装完成，然后就会看到崭新的闪亮的Vim！
+可选：
+如果你喜欢，可以查看<a href="https://github.com/fisadev/fisa-Vim-config/blob/master/README.rst" target="_blank" rel="external">README</a>文件结尾的使用指南。
+项目<a href="https://github.com/fisadev/fisa-Vim-config" target="_blank" rel="external">GitHub地址</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/12/web-chrome-debug/" itemprop="url">
+                  Chrome开发工具支持远程调试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
+              2012-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/12/web-chrome-debug/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/web-chrome-debug/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Google Chrome开发工具（简称 DevTools）前端界面是作为HTML + CSS + JavaScript的web应用实现的。它采用序列化的信息通道与被审查页面通讯。开发团队建立这个序列化异步交互通道是为了将DevTools前端移出被审查页面的进程。但实现了才发现，甚至能将DevTools前端移出浏览器运行。下面是尝试远程调试的步骤：</p>
+<p>1.使用远程调试命令行开关运行要远程调试的 Chrome 实例：chrome.exe --remote-debugging-port=9222 --user-data-dir=remote-profile。远程会话必须使用不同的 Chrome 实例，所以运行时要加 --user-data-dir 参数。</p>
+<p>2.转到要调试的页面。</p>
+<p>3.现在运行正常的 (客户端) Chrome 实例并转到 <a href="http://localhost:9222" target="_blank" rel="external">http://localhost:9222</a> 那里。</p>
+<p>您将能看到一些链接，指向相应页面的远程调试会话。点击即可开始远程调试Chrome页面：</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2012/07/12/chrome1.png" alt="chrome"><span class="image-caption">chrome</span></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -627,8 +912,8 @@ scroll第一个参数是水平位置，第二个参数是垂直位置，比如�
             
               
                 
-                <a class="post-title-link" href="/2012/07/12/java-cloud-server-for-java/" itemprop="url">
-                  推荐6个可用于托管Java应用的云计算平台
+                <a class="post-title-link" href="/2012/07/11/java-jdk-and-jre/" itemprop="url">
+                  jdk与jre的区别
                 </a>
               
             
@@ -641,8 +926,8 @@ scroll第一个参数是水平位置，第二个参数是垂直位置，比如�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
-              2012-07-12
+            <time itemprop="dateCreated" datetime="2012-07-11T18:09:17+08:00" content="2012-07-11">
+              2012-07-11
             </time>
           </span>
 
@@ -671,8 +956,8 @@ scroll第一个参数是水平位置，第二个参数是垂直位置，比如�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/12/java-cloud-server-for-java/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/java-cloud-server-for-java/" itemprop="commentsCount"></span>
+                <a href="/2012/07/11/java-jdk-and-jre/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/11/java-jdk-and-jre/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -697,187 +982,18 @@ scroll第一个参数是水平位置，第二个参数是垂直位置，比如�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文列举国外一些支持Java应用托管的云计算平台列表。</p>
-<ol>
-<li>Google App Engine (GAE)
-6 个可用于托管 Java 应用的云计算平台
-这个云服务平台已经提供很长时间了，我在上面运行了两个 Web 应用 (timethetask 和 twikural) ，已经运行一年多了，没碰到任何问题。不过如果你打算将应用部署到GAE上你需要修改你的设计策略来适应 GAE 平台。</li>
-<li>Amazon Web Services / Elastic Computing Cloud (EC2)
-6 个可用于托管 Java 应用的云计算平台
-这不是一个平台，因为你无需SDK来开发 Java 应用，该平台为你提供你可完全控制的机器，这些机器可以预装好Java环境。</li>
-<li>Windows Azure – Java
-6 个可用于托管 Java 应用的云计算平台
-Windows Azure for Java开发套件，使Java开发人员可以利用微软云计算服务平台的优势，在云端整合各种应用，用Java语言与云端链接。</li>
-<li>Jelastic
-6 个可用于托管 Java 应用的云计算平台
-Jelastic平台最大的优点是你不需要学习它的任何API，只需要上传你的Web应用，Jelactic就可自动帮你部署和运行。</li>
-<li>Heroku
-6 个可用于托管 Java 应用的云计算平台
-详情可阅读这篇文章: Heroku runs Java.</li>
-<li>OpenShift by Red Hat
-6 个可用于托管 Java 应用的云计算平台
-这是针对企业的平台，个人还无法使用，据说使用它非常之简单，有用过的朋友可以分享一下。</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/12/linux-vim-plugin/" itemprop="url">
-                  Vim插件：增加模糊查找和智能补全功能
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
-              2012-07-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/12/linux-vim-plugin/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/linux-vim-plugin/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>这里给大家推荐一个Vim配置工具，本工具由fisadev个人开发，并且遵循GPL开源协议，所以你可以放心地使用它！因为这是作者个人使用，所以设置都是按照作者自己的习惯来的，如有不适应，你可以自己修改源代码。废话不多说，先看预览图：</p>
-<p>智能的自动提示</p>
-<p>右侧是“类浏览器 ”</p>
-<p>代码错误检查</p>
-<p>代码模糊匹配
-这里推荐使用Vundle管理插件，安装和卸载插件都非常简单！插件的安装位置在 .Vim/bundle/。更多信息点击<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="external">这里</a>。
-智能的自动填充功能。可以自动填充模块名、实例方法和属性，有时还会提示使用过的文本（比如常用命名）。
-模糊文件和代码查找功能
-,e = 打开文件（就像:e一样）但是增加了递归查询和模糊匹配。例如：如果你输入“mopy”，它匹配到一个分目录下的“<a href="http://models.py" target="_blank" rel="external">models.py</a>”文件，你可以直接使用Ctrl+T打开文件。
-,g = 模糊服务查找 （类、方法、变量、函数，以及等等……）例如：如果你输入“usr”，它可以找到当前文件里的User类定义。
-,f = 模糊文本查找，并且打开文件。 例如：如果你输入“ctm=6”，它能匹配到“current_time = 16”。
-,d = 和 ,g相同 (symbol finder) 但是搜索的是指针下的单词 (sort of “fuzzy go to definition”)。
-,E = 和 ,e相同 (file finder)不过搜索的是光标下的文件 (sort of “fuzzy go to file”)。
-类/模块浏览器。类/模块浏览器里列出了类、函数、方法以及类似文件，敲回车键就可以导航过去。使用F4切换它的状态。
-F2挂起任务浏览器。这会从读取当前文件开始，并且搜索“TODO”和“FIXME”等注释，然后在列表里显示。导航方法和类浏览器类似。
-使用Pyflakes对Python代码进行错误检查。它可以检测出代码里未使用的变量和引用，以及语法错误等等。
-在当前Python文件上运行PEP8验证器，输入“,8” ，就会显示Pyflakes检测出来的Python错误。
-它同时还是一个相当优秀的Python和PHP调试器。这里有一个小教程，我增加了几个键盘快捷键方便使用（这只有在调试器启动后才可以使用）。
-F5 = 单步执行（step over）
-F6 = 插入（step into）
-F7 = 跳出（step out）
-F8 = 执行到断点处停止
-F9 = 设置断点
-F10 = 在表达式窗口计算表达式结果
-F11 = go down on the stack
-F12 = go up on the stack
-推荐你看看视频教程，在这里我无法给出所有用法举例。
-安装步骤
-首先你需要Vim Python编译支持，并且保证安装目录下没有.Vim文件夹。（你可以运行Vim –version | grep +Python来检查你的Vim是否支持Python。）
-软件依赖：</p>
-<p>sudo apt-get install exuberant-ctags git
-sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
-如果你没有安装pip，可以在<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="external">这里</a>下载。
-配置好安装文件
-把下载的.Vimrc文件放到Linux home文件夹下。
-例如我的用户名是fisa，那就把它放到/home/fisa/目录下。
-打开Vim
-在终端打开Vim，它将会自动安装插件到.Vim/bundle目录下。你所需要做的就是等待安装完成，然后就会看到崭新的闪亮的Vim！
-可选：
-如果你喜欢，可以查看<a href="https://github.com/fisadev/fisa-Vim-config/blob/master/README.rst" target="_blank" rel="external">README</a>文件结尾的使用指南。
-项目<a href="https://github.com/fisadev/fisa-Vim-config" target="_blank" rel="external">GitHub地址</a></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
+JDK就是Java Development Kit.简单的说JDK是面向开发人员使用的SDK，它提供了Java的开发环境和运行环境。SDK是Software Development Kit 一般指软件开发包，可以包括函数库、编译程序等。
+JRE是Java Runtime Enviroment是指Java的运行环境，是面向Java程序的使用者，而不是开发者。
+如果安装了JDK，会发同你的电脑有两套JRE，一套位于 \jre 另外一套位于 C:\Program Files\Java\jre1.5.0_15 目录下，后面这套比前面那套少了Server端的Java虚拟机，不过直接将前面那套的Server端Java虚拟机复制过来就行了。而且在安装JDK可以选择是否安装这个位于 C:\Program Files\Java 目录下的JRE。如果你只安装JRE，而不是JDK，那么只会在 C:\Program Files\Java 目录下安装唯一的一套JRE。
+JRE的地位就象一台PC机一样，我们写好的Win32应用程序需要操作系统帮我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。所以当你装完JDK后，如果分别在硬盘上的两个不同地方安装了两套JRE，那么你可以想象你的电脑有两台虚拟的Java PC机，都具有运行Java程序的功能。所以我们可以说，只要你的电脑安装了JRE，就可以正确运行Java应用程序。
+1、为什么Sun要让JDK安装两套相同的JRE？
+这是因为JDK里面有很多用Java所编写的开发工具（如javac.exe、jar.exe等），而且都放置在 \lib\tools.jar 里。从下面例子可以看出，先将tools.jar改名为tools1.jar，然后运行javac.exe，显示如下结果： Exception in thread “main” java.lang.NoClassDefFoundError: com/sun/tools/javac /Main 这个意思是说，你输入javac.exe与输入 java -cp c:\jdk\lib\tools.jar com.sun.tools.javac.Main 是一样的，会得到相同的结果。从这里我们可以证明javac.exe只是一个包装器（Wrapper），而制作的目的是为了让开发者免于输入太长的指命。而且可以发现\lib目录下的程序都很小，不大于2 9K，从这里我们可以得出一个结论。就是JDK里的工具几乎是用Java所编写，所以也是Java应用程序，因此要使用JDK所附的工具来开发Java程序，也必须要自行附一套JRE才行，所以位于C:\Program Files\Java目录下的那套JRE就是用来运行一般Java程序用的。
+2、如果一台电脑安装两套以上的JRE，谁来决定呢？
+这个重大任务就落在java.exe身上。Java.exe的工作就是找到合适的JRE来运行Java程序。 Java.exe依照底下的顺序来查找JRE：自己的目录下有没有JRE；父目录有没有JRE；查询注册表： [HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment] 所以java.exe的运行结果与你的电脑里面哪个JRE被执行有很大的关系。
+ADD：
+1.JVM — java virtual machineJVM就是我们常说的java虚拟机，它是整个java实现跨平台的最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可以在虚拟机上执行，也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。2.JRE — java runtime environmentJRE是指java运行环境。光有JVM还不能成class的执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。在JDK的安装目录里你可以找到jre目录，里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。所以，在你写完java程序编译成.class之后，你可以把这个.class文件和jre一起打包发给朋友，这样你的朋友就可以运行你写程序了。（jre里有运行.class的java.exe）3.JDK — java development kitJDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？让我们看一下JDK的安装目录。在目录下面有六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的是以下四个文件夹：bin、include、lib、 jre。现在我们可以看出这样一个关系，JDK包含JRE，而JRE包含JVM。bin:最主要的是编译器(javac.exe)include:java和JVM交互用的头文件lib：类库jre:java运行环境（注意：这里的bin、lib文件夹和jre里的bin、lib是不同的）总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。
+eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自带的，所以在安装时你会发现他们只要求你选中jre路径就ok了。</p>
 
           
         
@@ -998,137 +1114,6 @@ sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600;"</span>&gt;</span></div><div class="line">  </div><div class="line">     <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"color:yellow"</span>&gt;</span>图层背景半透明，字体颜色也半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"></div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600"</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"position:relative;color:yellow"</span>&gt;</span>图层背景半透明，字体颜色不半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/11/java-jdk-and-jre/" itemprop="url">
-                  jdk与jre的区别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-11T18:09:17+08:00" content="2012-07-11">
-              2012-07-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/11/java-jdk-and-jre/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/11/java-jdk-and-jre/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
-JDK就是Java Development Kit.简单的说JDK是面向开发人员使用的SDK，它提供了Java的开发环境和运行环境。SDK是Software Development Kit 一般指软件开发包，可以包括函数库、编译程序等。
-JRE是Java Runtime Enviroment是指Java的运行环境，是面向Java程序的使用者，而不是开发者。
-如果安装了JDK，会发同你的电脑有两套JRE，一套位于 \jre 另外一套位于 C:\Program Files\Java\jre1.5.0_15 目录下，后面这套比前面那套少了Server端的Java虚拟机，不过直接将前面那套的Server端Java虚拟机复制过来就行了。而且在安装JDK可以选择是否安装这个位于 C:\Program Files\Java 目录下的JRE。如果你只安装JRE，而不是JDK，那么只会在 C:\Program Files\Java 目录下安装唯一的一套JRE。
-JRE的地位就象一台PC机一样，我们写好的Win32应用程序需要操作系统帮我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。所以当你装完JDK后，如果分别在硬盘上的两个不同地方安装了两套JRE，那么你可以想象你的电脑有两台虚拟的Java PC机，都具有运行Java程序的功能。所以我们可以说，只要你的电脑安装了JRE，就可以正确运行Java应用程序。
-1、为什么Sun要让JDK安装两套相同的JRE？
-这是因为JDK里面有很多用Java所编写的开发工具（如javac.exe、jar.exe等），而且都放置在 \lib\tools.jar 里。从下面例子可以看出，先将tools.jar改名为tools1.jar，然后运行javac.exe，显示如下结果： Exception in thread “main” java.lang.NoClassDefFoundError: com/sun/tools/javac /Main 这个意思是说，你输入javac.exe与输入 java -cp c:\jdk\lib\tools.jar com.sun.tools.javac.Main 是一样的，会得到相同的结果。从这里我们可以证明javac.exe只是一个包装器（Wrapper），而制作的目的是为了让开发者免于输入太长的指命。而且可以发现\lib目录下的程序都很小，不大于2 9K，从这里我们可以得出一个结论。就是JDK里的工具几乎是用Java所编写，所以也是Java应用程序，因此要使用JDK所附的工具来开发Java程序，也必须要自行附一套JRE才行，所以位于C:\Program Files\Java目录下的那套JRE就是用来运行一般Java程序用的。
-2、如果一台电脑安装两套以上的JRE，谁来决定呢？
-这个重大任务就落在java.exe身上。Java.exe的工作就是找到合适的JRE来运行Java程序。 Java.exe依照底下的顺序来查找JRE：自己的目录下有没有JRE；父目录有没有JRE；查询注册表： [HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment] 所以java.exe的运行结果与你的电脑里面哪个JRE被执行有很大的关系。
-ADD：
-1.JVM — java virtual machineJVM就是我们常说的java虚拟机，它是整个java实现跨平台的最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可以在虚拟机上执行，也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。2.JRE — java runtime environmentJRE是指java运行环境。光有JVM还不能成class的执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。在JDK的安装目录里你可以找到jre目录，里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。所以，在你写完java程序编译成.class之后，你可以把这个.class文件和jre一起打包发给朋友，这样你的朋友就可以运行你写程序了。（jre里有运行.class的java.exe）3.JDK — java development kitJDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？让我们看一下JDK的安装目录。在目录下面有六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的是以下四个文件夹：bin、include、lib、 jre。现在我们可以看出这样一个关系，JDK包含JRE，而JRE包含JVM。bin:最主要的是编译器(javac.exe)include:java和JVM交互用的头文件lib：类库jre:java运行环境（注意：这里的bin、lib文件夹和jre里的bin、lib是不同的）总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。
-eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自带的，所以在安装时你会发现他们只要求你选中jre路径就ok了。</p>
 
           
         
@@ -1522,131 +1507,6 @@ Logout succeeded</p>
             
               
                 
-                <a class="post-title-link" href="/2012/07/06/system-remotedesktop-port/" itemprop="url">
-                  修改远程桌面服务的默认端口
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/system-remotedesktop-port/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/system-remotedesktop-port/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
-第一步：在远程计算机（即被访问的计算机）上通过任务栏的“开始-&gt;运行-&gt;输入regedit”，打开注册表编辑器。
-第二步：在注册表中找到Hkey_local_machine\system\currentcontrolset\control\terminal server\wds\repwd\tds\tcp，将其下的portnumber值从3389修改为80，注意10进制和16进制数字的区别。
-第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
-control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修改为80，同样注意10进制和16进制数字的区别。全部修改后重新启动计算机就完成了被访问计算机上的设置。
-第四步：这样我们就可以在网络中任意一台安装了远程桌面登录器的计算机上连接刚刚设置的计算机了，使用的端口是80端口。值得注意的是在输入被访问计算机IP地址时需要使用类似ip:80的形式。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">
                   在命令行里看电影
                 </a>
@@ -1718,6 +1578,155 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">
+                  十大bt问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
+              2012-07-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/生活/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/06/life-bt-question-top10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/life-bt-question-top10/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>
+<p>企鹅肉问题：
+一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
+</li>
+<li>
+<p>跳火车问题：
+一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
+</li>
+<li>
+<p>水草问题：
+有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
+</li>
+<li>
+<p>葬礼故事的问题：
+有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
+</li>
+<li>
+<p>半根火柴问题：
+有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
+</li>
+<li>
+<p>满地木屑问题：
+马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
+</li>
+<li>
+<p>夜半敲门问题：
+一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
+</li>
+</ol>
 
           
         
