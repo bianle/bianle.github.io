@@ -7,7 +7,7 @@
 
 <html class="theme-next mist use-motion">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -133,7 +133,7 @@
   <link rel="canonical" href="http://2le.me/page/15/"/>
 
 
-  <title> Bianle's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Bianle's Blog </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -142,7 +142,7 @@
 
 
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+  <script type="text/javascript">
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
@@ -498,213 +498,6 @@ Hex key就是密码 6161613132 成功了！</p>
             
               
                 
-                <a class="post-title-link" href="/2013/01/07/system-ie-toolbar-plugin/" itemprop="url">
-                  IE工具栏上添加自己的按钮
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-07T18:09:17+08:00" content="2013-01-07">
-              2013-01-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/07/system-ie-toolbar-plugin/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/07/system-ie-toolbar-plugin/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="问题提出"><a class="header-anchor" href="#问题提出"> </a>问题提出</h1>
-<p>金山词霸、网络蚂蚁等软件安装后会向IE的工具条添加自己的按钮。按下按钮后还会作出相应的动作，这种功能是如何实现的呢？读完本文，您也可以将自己应用程序的按钮添加到IE的工具条中。</p>
-<h1 id="基本原理"><a class="header-anchor" href="#基本原理"> </a>基本原理</h1>
-<p>从IE5开始便允许我们向工具栏添加自己的按钮，其本质就是修改注册表，添加创建此按钮所需的信息。</p>
-<h1 id="实现步骤"><a class="header-anchor" href="#实现步骤"> </a>实现步骤</h1>
-<ol>
-<li>创建此按钮的GUID(globally unique identifier)
-你可以通过<code>Visual Studio</code>中的<code>Guidgen.exe</code>来产生GUID。
-例如我生成的GUID是<code>{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}</code>
-以下的例子中我都使用这个GUID来作说明。</li>
-<li>创建子键HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Extensions{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}</li>
-<li>在此子键下创建如下字串值。
-（1）CLSID
-这是IE的CLSID，其值必须为{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}
-（2）Default Visible
-指明此按钮默认状态下是否可见，Yes表示可见,No为不可见
-（3）ButtonText
-按钮文字
-（4）Icon
-默认状态下的图标全路径，例如c:\vckbase.ico。也可以是EXE文件中包含的图标，例如：C:\PROGRA~1\NETANTS\NetAnts.exe,1000
-（5）HotIcon
-鼠标移到按钮上时的图标全路径
-如下子键为按下按钮后需要执行的相应动作：可以是COM对象、浏览条Explorer Bar、脚本Script、可执行文件。
-下面我们逐个进行介绍。
-①COM对象
-你需要建立名为ClsidExtension的字串值，其值应该为此COM对象的GUID
-例如金山词霸就使用ClsidExtension来调用自己的COM对象。
-②浏览条Explorer Bar
-所谓浏览条就是类似我们按下往IE历史按钮后打开的历史记录列表，其本质好比MFC中的CReBar对象。 浏览条也可以自己制作，
-因为超出了本文的范围，暂不作讲解。
-为了在按下按钮后打开一个浏览条，你需要建立名为BandCLSID的字串值，其值为浏览条的CLSID
-③脚本Script
-按下按钮后执行的脚本，例如：&quot;%SystemRoot%\web\related.htm&quot;
-你可以在这个HTML文件里面加上脚本来得到IE当前的许多信息，需要注意的是假如你想通过Script打开非脚本的HTML文件是不可行的。
-请参考如下NetAnts取得当前页所有链接的脚本代码</li>
-</ol>
-<script language="VBScript"> 
-－－On Error Resume Next 
-－－set NetAntsApi = CreateObject( "NetAnts.API" ) 
-－－if err<>0 then 
-－－ －－Alert("NetAnts not properly installed on this PC!") 
-－－else 
-－－ －－set links = external.menuArguments.document.links 
-－－ －－ReDim params(links.length*2) 
-－－ －－params(0)=external.menuArguments.document.Url 
-－－ －－for i = 0 to links.length-1 
-－－ －－ －－params(i*2+1)=links(i).href 
-－－ －－ －－params(i*2+2)=links(i).innerText 
-－－ －－next 
-－－ －－NetAntsApi.AddUrlList params 
-－－end if 
-< /script> 
-我们再看一个比较有用的脚本,这段脚本的作用是得到当前地址，并打开此网址的首页。 
-<script> 
-－－//userURL得到的是当前地址,例如是http://www.vckbase.com/article/controls/index.html 
-－－userURL=external.menuArguments.location.href; 
-－－protocolIndex=userURL.indexOf("://",4); 
-－－serverIndex=userURL.indexOf("/",protocolIndex + 3); 
-－－finalURL=userURL.substring(0,serverIndex); 
-－－external.menuArguments.open(finalURL, "_blank");///打开网址http://www.vckbase.com/ 
-< /script> 
-关于external等对象的具体使用方法请参阅微软的《动态HTML开发参考大全》–人民邮电出版社出版 
-④可执行文件 
-假如我们想让IE在按下按钮后执行一个可执行文件, 你可以增加名为Exec的字串值，其值为此可执行文件的全路径， 
-例如c:\windows\notepad.exe或者是一个网址http://www.vckbase.com/index.html 
-下面我们介绍一个简单的例子。 
-void CIEButtonDlg::OnAdd() 
-{ 
-－－///这是由GUIDGEN产生的GUID：{06926B30-424E-4f1c-8EE3-543CD96573DC} 
-－－CRegKey reg; 
-－－char KeyName[]="Software\\Microsoft\\Internet Explorer\\Extensions\\{06926B30-424E-4f1c-8EE3-543CD96573DC}"; 
-－－TCHAR PathName[MAX_PATH]; 
-－－TCHAR IconPathName[MAX_PATH]; ///正常时的图标全路径 
-－－TCHAR HotIconPathName[MAX_PATH]; ///鼠标覆盖时的图标全路径 
-－－GetModuleFileName(0,PathName,MAX_PATH); ///得到本可执行文件的路径 
-－－strcpy(IconPathName,PathName); 
-－－strcpy(HotIconPathName,PathName); 
-－－strcat(HotIconPathName,",131"); ///131是图标的ID，你可以以资源方式打开EXE文件就可以看到所有资源及其ID 
-－－strcat(IconPathName,",129"); 
-－－reg.Create(HKEY_LOCAL_MACHINE,KeyName); 
-－－reg.SetValue("{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}","CLSID"); 
-－－reg.SetValue("Yes","Default Visible"); 
-－－reg.SetValue("VC知识库","ButtonText"); 
-－－reg.SetValue(IconPathName,"Icon"); 
-－－reg.SetValue(HotIconPathName,"HotIcon"); 
-－－/////假如是执行脚本，可以是reg.SetValue("c:\\test.html","Script"); ///在test.html 存放你的脚本代码
-－－reg.SetValue("http://www.vckbase.com/","Exec");///打开网页 
-}
-</script>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2013/01/07/java-hibernate-could-not-initialize-proxy/" itemprop="url">
                   could not initialize proxy – no Session
                 </a>
@@ -918,6 +711,213 @@ Interceptor的配置:</p>
             
               
                 
+                <a class="post-title-link" href="/2013/01/07/system-ie-toolbar-plugin/" itemprop="url">
+                  IE工具栏上添加自己的按钮
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-07T18:09:17+08:00" content="2013-01-07">
+              2013-01-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/07/system-ie-toolbar-plugin/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/07/system-ie-toolbar-plugin/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="问题提出"><a class="header-anchor" href="#问题提出"> </a>问题提出</h1>
+<p>金山词霸、网络蚂蚁等软件安装后会向IE的工具条添加自己的按钮。按下按钮后还会作出相应的动作，这种功能是如何实现的呢？读完本文，您也可以将自己应用程序的按钮添加到IE的工具条中。</p>
+<h1 id="基本原理"><a class="header-anchor" href="#基本原理"> </a>基本原理</h1>
+<p>从IE5开始便允许我们向工具栏添加自己的按钮，其本质就是修改注册表，添加创建此按钮所需的信息。</p>
+<h1 id="实现步骤"><a class="header-anchor" href="#实现步骤"> </a>实现步骤</h1>
+<ol>
+<li>创建此按钮的GUID(globally unique identifier)
+你可以通过<code>Visual Studio</code>中的<code>Guidgen.exe</code>来产生GUID。
+例如我生成的GUID是<code>{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}</code>
+以下的例子中我都使用这个GUID来作说明。</li>
+<li>创建子键HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Extensions{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}</li>
+<li>在此子键下创建如下字串值。
+（1）CLSID
+这是IE的CLSID，其值必须为{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}
+（2）Default Visible
+指明此按钮默认状态下是否可见，Yes表示可见,No为不可见
+（3）ButtonText
+按钮文字
+（4）Icon
+默认状态下的图标全路径，例如c:\vckbase.ico。也可以是EXE文件中包含的图标，例如：C:\PROGRA~1\NETANTS\NetAnts.exe,1000
+（5）HotIcon
+鼠标移到按钮上时的图标全路径
+如下子键为按下按钮后需要执行的相应动作：可以是COM对象、浏览条Explorer Bar、脚本Script、可执行文件。
+下面我们逐个进行介绍。
+①COM对象
+你需要建立名为ClsidExtension的字串值，其值应该为此COM对象的GUID
+例如金山词霸就使用ClsidExtension来调用自己的COM对象。
+②浏览条Explorer Bar
+所谓浏览条就是类似我们按下往IE历史按钮后打开的历史记录列表，其本质好比MFC中的CReBar对象。 浏览条也可以自己制作，
+因为超出了本文的范围，暂不作讲解。
+为了在按下按钮后打开一个浏览条，你需要建立名为BandCLSID的字串值，其值为浏览条的CLSID
+③脚本Script
+按下按钮后执行的脚本，例如：&quot;%SystemRoot%\web\related.htm&quot;
+你可以在这个HTML文件里面加上脚本来得到IE当前的许多信息，需要注意的是假如你想通过Script打开非脚本的HTML文件是不可行的。
+请参考如下NetAnts取得当前页所有链接的脚本代码</li>
+</ol>
+<script language="VBScript"> 
+－－On Error Resume Next 
+－－set NetAntsApi = CreateObject( "NetAnts.API" ) 
+－－if err<>0 then 
+－－ －－Alert("NetAnts not properly installed on this PC!") 
+－－else 
+－－ －－set links = external.menuArguments.document.links 
+－－ －－ReDim params(links.length*2) 
+－－ －－params(0)=external.menuArguments.document.Url 
+－－ －－for i = 0 to links.length-1 
+－－ －－ －－params(i*2+1)=links(i).href 
+－－ －－ －－params(i*2+2)=links(i).innerText 
+－－ －－next 
+－－ －－NetAntsApi.AddUrlList params 
+－－end if 
+< /script> 
+我们再看一个比较有用的脚本,这段脚本的作用是得到当前地址，并打开此网址的首页。 
+<script> 
+－－//userURL得到的是当前地址,例如是http://www.vckbase.com/article/controls/index.html 
+－－userURL=external.menuArguments.location.href; 
+－－protocolIndex=userURL.indexOf("://",4); 
+－－serverIndex=userURL.indexOf("/",protocolIndex + 3); 
+－－finalURL=userURL.substring(0,serverIndex); 
+－－external.menuArguments.open(finalURL, "_blank");///打开网址http://www.vckbase.com/ 
+< /script> 
+关于external等对象的具体使用方法请参阅微软的《动态HTML开发参考大全》–人民邮电出版社出版 
+④可执行文件 
+假如我们想让IE在按下按钮后执行一个可执行文件, 你可以增加名为Exec的字串值，其值为此可执行文件的全路径， 
+例如c:\windows\notepad.exe或者是一个网址http://www.vckbase.com/index.html 
+下面我们介绍一个简单的例子。 
+void CIEButtonDlg::OnAdd() 
+{ 
+－－///这是由GUIDGEN产生的GUID：{06926B30-424E-4f1c-8EE3-543CD96573DC} 
+－－CRegKey reg; 
+－－char KeyName[]="Software\\Microsoft\\Internet Explorer\\Extensions\\{06926B30-424E-4f1c-8EE3-543CD96573DC}"; 
+－－TCHAR PathName[MAX_PATH]; 
+－－TCHAR IconPathName[MAX_PATH]; ///正常时的图标全路径 
+－－TCHAR HotIconPathName[MAX_PATH]; ///鼠标覆盖时的图标全路径 
+－－GetModuleFileName(0,PathName,MAX_PATH); ///得到本可执行文件的路径 
+－－strcpy(IconPathName,PathName); 
+－－strcpy(HotIconPathName,PathName); 
+－－strcat(HotIconPathName,",131"); ///131是图标的ID，你可以以资源方式打开EXE文件就可以看到所有资源及其ID 
+－－strcat(IconPathName,",129"); 
+－－reg.Create(HKEY_LOCAL_MACHINE,KeyName); 
+－－reg.SetValue("{1FBA04EE-3024-11D2-8F1F-0000F87ABD16}","CLSID"); 
+－－reg.SetValue("Yes","Default Visible"); 
+－－reg.SetValue("VC知识库","ButtonText"); 
+－－reg.SetValue(IconPathName,"Icon"); 
+－－reg.SetValue(HotIconPathName,"HotIcon"); 
+－－/////假如是执行脚本，可以是reg.SetValue("c:\\test.html","Script"); ///在test.html 存放你的脚本代码
+－－reg.SetValue("http://www.vckbase.com/","Exec");///打开网页 
+}
+</script>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/01/05/linux-ubuntu-ssh-server/" itemprop="url">
                   ubuntu开启ssh服务
                 </a>
@@ -1011,6 +1011,134 @@ tcp6 0 0 *:ssh <em>:</em> LISTEN –
 $ ssh -l hyx 192.168.0.103
 接下来会提示输入密码，然后就能成功登录到服务器上了</li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/05/linux-port-view/" itemprop="url">
+                  怎么查看端口占用情况
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/05/linux-port-view/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-port-view/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
+<p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
+<p>假如我们需要确定谁占用了我们的9050端口</p>
+<p>1、Windows平台
+在windows命令行窗口下执行：</p>
+<figure class="highlight x86asm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">C:</span>&gt;netstat -aon|findstr <span class="string">"9050"</span></div><div class="line"></div><div class="line">TCP    <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">9050</span>         <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">0</span>              LISTENING       <span class="number">2016</span></div></pre></td></tr></table></figure>
+<p>看到了吗，端口被进程号为2016的进程占用，继续执行下面命令：</p>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line"><span class="keyword">C</span>:&gt;tasklist|findstr <span class="string">"2016"</span></div><div class="line"></div><div class="line">tor.exe                     <span class="number">2016</span> Console                 <span class="number">0</span>     <span class="number">16</span>,<span class="number">064</span> <span class="keyword">K</span></div></pre></td></tr></table></figure>
+<p>很清楚吧，tor占用了你的端口。</p>
 
           
         
@@ -1528,533 +1656,6 @@ Apache the best and most widely used web server on the Internet today, check it 
             
               
                 
-                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">
-                  在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
-<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
-<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
-<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
-<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
-<p>使用示例：</p>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
-<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
-<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
-<ol>
-<li>
-<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
-</li>
-<li>
-<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
-</li>
-</ol>
-<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/05/linux-port-view/" itemprop="url">
-                  怎么查看端口占用情况
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/05/linux-port-view/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-port-view/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
-<p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
-<p>假如我们需要确定谁占用了我们的9050端口</p>
-<p>1、Windows平台
-在windows命令行窗口下执行：</p>
-<figure class="highlight x86asm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">C:</span>&gt;netstat -aon|findstr <span class="string">"9050"</span></div><div class="line"></div><div class="line">TCP    <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">9050</span>         <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">0</span>              LISTENING       <span class="number">2016</span></div></pre></td></tr></table></figure>
-<p>看到了吗，端口被进程号为2016的进程占用，继续执行下面命令：</p>
-<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line"><span class="keyword">C</span>:&gt;tasklist|findstr <span class="string">"2016"</span></div><div class="line"></div><div class="line">tor.exe                     <span class="number">2016</span> Console                 <span class="number">0</span>     <span class="number">16</span>,<span class="number">064</span> <span class="keyword">K</span></div></pre></td></tr></table></figure>
-<p>很清楚吧，tor占用了你的端口。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">
-                  httpclient发送xml字符串（推送）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/05/java-httpclient-xml/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/java-httpclient-xml/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// 新接的一个项目接口，非要用xml请求，找不到别的post方式，最终选用这种方式，将参数拼成xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//如果是xml文件，可以这样写 </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// 请求地址</span></div><div class="line"></div><div class="line">        <span class="comment">// 设置请求的内容直接从文件中读取 </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// 这里添加xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// 指定请求内容的类型 </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// 创建 HttpClient 的实例 </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// 返回200为成功 </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// 返回的内容 </span></div><div class="line">            post.releaseConnection();<span class="comment">// 释放连接 </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 以上就是发送请求的代码，对方接收到数据可以直接解析成xml</span></div><div class="line"></div><div class="line">    <span class="comment">// 读取xml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>需要jar包：</p>
-<ol>
-<li>
-<p>jdom.jar</p>
-</li>
-<li>
-<p>commons-httpclient.jar</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">
-                  安装Ubuntu后找不到windows sudo update-grub
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-ubuntu-update-grub/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
-<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
-<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
-<p>menuentry “Windows 7” {
-insmod ntfs
-set root=(hd0,1)
-drivemap -s (hd0) ${root}</p>
-<p>chainloader +1
-}</p>
-<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
-<p>grub&gt;root (hd0,0)
-grub&gt;chainloader /bootmgr
-grub&gt;boot</p>
-<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2013/01/05/software-editplus/" itemprop="url">
                   使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)
                 </a>
@@ -2158,24 +1759,7 @@ grub&gt;boot</p>
 <title>简单的XHTML页面</title> 
 </head> 
 <body> 
-^!<!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end --> 
+^! 
 </body> 
 </html>
 <p>显然里面的Keywords和Description，意见title的内容都已经变成我常用的了。还有一点，请大家注意第10行的“^!”标签。这个标签在EditPlus中表示光标所在位置。显然，这里的意思就是：当你用这个模板建立一个新的文件的时候，光标就会自动停留在<body>和</body>之间，从而方便你的直接输入。</p>
@@ -2363,6 +1947,405 @@ EditPlus模板下载</p>
 <p>俺补充一下：html标签，如果要想折叠，必须注意便签内的代码要用tab缩进。
 因为快捷键是使用小键盘的 &quot;+“和”-&quot;所以使用笔记本的会比较郁闷。可以通过设置快捷键达到你的使用习惯。
 设置快捷键的方法：。【Tools】→【Preperences】→ 【Tools】→【KeyBorad】→选择类型为【view】然后在右面列表框中找到展开和收缩。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">
+                  安装Ubuntu后找不到windows sudo update-grub
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-ubuntu-update-grub/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
+<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
+<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
+<p>menuentry “Windows 7” {
+insmod ntfs
+set root=(hd0,1)
+drivemap -s (hd0) ${root}</p>
+<p>chainloader +1
+}</p>
+<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
+<p>grub&gt;root (hd0,0)
+grub&gt;chainloader /bootmgr
+grub&gt;boot</p>
+<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">
+                  httpclient发送xml字符串（推送）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/05/java-httpclient-xml/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/java-httpclient-xml/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// 新接的一个项目接口，非要用xml请求，找不到别的post方式，最终选用这种方式，将参数拼成xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//如果是xml文件，可以这样写 </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// 请求地址</span></div><div class="line"></div><div class="line">        <span class="comment">// 设置请求的内容直接从文件中读取 </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// 这里添加xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// 指定请求内容的类型 </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// 创建 HttpClient 的实例 </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// 返回200为成功 </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// 返回的内容 </span></div><div class="line">            post.releaseConnection();<span class="comment">// 释放连接 </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 以上就是发送请求的代码，对方接收到数据可以直接解析成xml</span></div><div class="line"></div><div class="line">    <span class="comment">// 读取xml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要jar包：</p>
+<ol>
+<li>
+<p>jdom.jar</p>
+</li>
+<li>
+<p>commons-httpclient.jar</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">
+                  在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
+<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
+<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
+<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
+<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
+<p>使用示例：</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
+<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
+<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
+<ol>
+<li>
+<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
+</li>
+<li>
+<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
+</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
 
           
         
