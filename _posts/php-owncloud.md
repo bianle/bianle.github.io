@@ -27,6 +27,16 @@ categories: php
 
 ## 问题
 
+### 依赖缺失
+>Owncloud  Class 'PDO' not found
+```
+yum install php-pdo
+```
+>PHP mb multibyte未安装
+```
+Yum install php-mbstring
+```
+
 - [ ] 配置文件直接参考别人的,直接输入域名访问404,访问地址需要增加/index.php,nginx不熟,待后续解决
 
 

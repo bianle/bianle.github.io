@@ -1,9 +1,6 @@
 title: Math.uuid
-tags:
-  - js
-  - uuid
-categories:
-  - web前端
+tags: js
+categories: web前端
 date: 2014-09-12 15:13:00
 ---
 ```

@@ -1,13 +1,13 @@
-title: °²×°UbuntuºóÕÒ²»µ½windows sudo update-grub
+title: å®‰è£…UbuntuåŽæ‰¾ä¸åˆ°windows sudo update-grub
 tags: [linux,grub]
 categories: linux
 date: 2013-01-05 18:09:17
 ---
-ÎÒÒÑ¾­ÔÚUbuntu 9.10ÀïÍ¨¹ýÖÕ¶Ësudo update-grubÁ½´ÎÁË£¬½á¹û»¹ÊÇÒ»Ñù²»ÄÜÆô¶¯XPºÍWindows 7¡£ÒÔÏÂÊÇÔÚÒ»Î»ºÃÐÄµÄÍøÓÑµÄÈÈÐÄ°ïÖúÏÂ£¬¾­¹ý±¾ÈËÇ×ÉíÊÔÑé£¬¶øÇÒÐÐÖ®ÓÐÐ§µÄ½â¾ö·½·¨£º
+æˆ‘å·²ç»åœ¨Ubuntu 9.10é‡Œé€šè¿‡ç»ˆç«¯sudo update-grubä¸¤æ¬¡äº†ï¼Œç»“æžœè¿˜æ˜¯ä¸€æ ·ä¸èƒ½å¯åŠ¨XPå’ŒWindows 7ã€‚ä»¥ä¸‹æ˜¯åœ¨ä¸€ä½å¥½å¿ƒçš„ç½‘å‹çš„çƒ­å¿ƒå¸®åŠ©ä¸‹ï¼Œç»è¿‡æœ¬äººäº²èº«è¯•éªŒï¼Œè€Œä¸”è¡Œä¹‹æœ‰æ•ˆçš„è§£å†³æ–¹æ³•ï¼š
 
-Ô­ÒòÊÇ²ÉÓÃÁËÓ²ÅÌ°²×°·½Ê½°²×°Ubuntuºó£¬°ÑÄÇ¸öÒýµ¼¹¤¾ßgrldrÆÆ»µÁË
+åŽŸå› æ˜¯é‡‡ç”¨äº†ç¡¬ç›˜å®‰è£…æ–¹å¼å®‰è£…UbuntuåŽï¼ŒæŠŠé‚£ä¸ªå¼•å¯¼å·¥å…·grldrç ´åäº†
 
-ÐÞ¸ÄUbuntu 9.10ÀïµÄ/boot/grub/grub.cfgÎÄ¼þÖÐWindows 7µÄÆô¶¯Ñ¡Ïî£¬»òÕßÖ±½Ó¸´ÖÆÔö¼ÓÒÔÏÂÕâ¸öWindows 7Ñ¡Ïî°É¡£
+ä¿®æ”¹Ubuntu 9.10é‡Œçš„/boot/grub/grub.cfgæ–‡ä»¶ä¸­Windows 7çš„å¯åŠ¨é€‰é¡¹ï¼Œæˆ–è€…ç›´æŽ¥å¤åˆ¶å¢žåŠ ä»¥ä¸‹è¿™ä¸ªWindows 7é€‰é¡¹å§ã€‚
 
 menuentry "Windows 7" { 
 insmod ntfs 
@@ -17,10 +17,10 @@ drivemap -s (hd0) ${root}
 chainloader +1 
 }
 
-Õâ¸öÓ¦¸Ã¾Í¿ÉÒÔ½øÈëgrub4dos µÄ²Ëµ¥£¬È»ºó°´ C ½øÈëGRUBµÄDOS×´Ì¬ £¬ÔÚgrub>ÌáÊ¾·ûÏÂÊäÈëÒÔÏÂÈýÌõÃüÁîÀ´ÐÞ¸´Òýµ¼¹¤¾ßgrldr¼´¿É
+è¿™ä¸ªåº”è¯¥å°±å¯ä»¥è¿›å…¥grub4dos çš„èœå•ï¼Œç„¶åŽæŒ‰ C è¿›å…¥GRUBçš„DOSçŠ¶æ€ ï¼Œåœ¨grub>æç¤ºç¬¦ä¸‹è¾“å…¥ä»¥ä¸‹ä¸‰æ¡å‘½ä»¤æ¥ä¿®å¤å¼•å¯¼å·¥å…·grldrå³å¯
 
 grub>root (hd0,0) 
 grub>chainloader /bootmgr 
 grub>boot
 
-½øÈëWindows 7ºóÒªÖØÐÂ¼¤»îWindows 7£¬È»ºó¾ÍÕýÊ½»Ö¸´ÁËUbuntu 9.10ºÍWindows 7µÄË«ÏµÍ³Æô¶¯²Ëµ¥ÁË£¬ÖÁÓÚXPÊÇÔÚWindows 7µÄÆô¶¯²Ëµ¥ÀïµÄ£¬Ò»ÑùÕý³£ÁË¡£¹þ¹þ£¡
+è¿›å…¥Windows 7åŽè¦é‡æ–°æ¿€æ´»Windows 7ï¼Œç„¶åŽå°±æ­£å¼æ¢å¤äº†Ubuntu 9.10å’ŒWindows 7çš„åŒç³»ç»Ÿå¯åŠ¨èœå•äº†ï¼Œè‡³äºŽXPæ˜¯åœ¨Windows 7çš„å¯åŠ¨èœå•é‡Œçš„ï¼Œä¸€æ ·æ­£å¸¸äº†ã€‚å“ˆå“ˆï¼

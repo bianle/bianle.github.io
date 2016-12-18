@@ -1,10 +1,8 @@
 ---
 title: chrome扩展工具推荐
 date: 2016-10-13 10:28:41
-tags:
-    -工具
-    -chrome扩展
-categories: 开发工具
+tags: [chrome]
+categories: 开发
 ---
 
 

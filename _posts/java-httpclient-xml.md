@@ -1,4 +1,4 @@
-title: httpclient·¢ËÍxml×Ö·û´®£¨ÍÆËÍ£©
+title: httpclientå‘é€xmlå­—ç¬¦ä¸²ï¼ˆæ¨é€ï¼‰
 tags: [httpclient,java]
 categories: java
 date: 2013-01-05 18:09:17
@@ -27,30 +27,30 @@ public class HttpClientDemo {
                 + ""UTF-8"" 
                 + "?><SDRequest><TransactionName>CreateDataFileComplete</TransactionName><IdentityInfo><Code>" 
                 + 1 + "</Code><Description></Description><Timestamp>" 
-                + "20100315140542" + "</Timestamp></IdentityInfo></SDRequest>";// ĞÂ½ÓµÄÒ»¸öÏîÄ¿½Ó¿Ú£¬·ÇÒªÓÃxmlÇëÇó£¬ÕÒ²»µ½±ğµÄpost·½Ê½£¬×îÖÕÑ¡ÓÃÕâÖÖ·½Ê½£¬½«²ÎÊıÆ´³Éxml×Ö·û´®
+                + "20100315140542" + "</Timestamp></IdentityInfo></SDRequest>";// æ–°æ¥çš„ä¸€ä¸ªé¡¹ç›®æ¥å£ï¼Œéè¦ç”¨xmlè¯·æ±‚ï¼Œæ‰¾ä¸åˆ°åˆ«çš„postæ–¹å¼ï¼Œæœ€ç»ˆé€‰ç”¨è¿™ç§æ–¹å¼ï¼Œå°†å‚æ•°æ‹¼æˆxmlå­—ç¬¦ä¸²
 
-        // File input = new File("test.xml");//Èç¹ûÊÇxmlÎÄ¼ş£¬¿ÉÒÔÕâÑùĞ´ 
-        PostMethod post = new PostMethod("http://localhost/site/forXls.do");// ÇëÇóµØÖ·
+        // File input = new File("test.xml");//å¦‚æœæ˜¯xmlæ–‡ä»¶ï¼Œå¯ä»¥è¿™æ ·å†™ 
+        PostMethod post = new PostMethod("http://localhost/site/forXls.do");// è¯·æ±‚åœ°å€
 
-        // ÉèÖÃÇëÇóµÄÄÚÈİÖ±½Ó´ÓÎÄ¼şÖĞ¶ÁÈ¡ 
+        // è®¾ç½®è¯·æ±‚çš„å†…å®¹ç›´æ¥ä»æ–‡ä»¶ä¸­è¯»å– 
         // post.setRequestBody( new FileInputStream(input)); 
         // if (input.length() < Integer.MAX_VALUE) 
         // post.setRequestContentLength(input.length()); 
         // else 
         // post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);
 
-        post.setRequestBody(xml);// ÕâÀïÌí¼Óxml×Ö·û´®
+        post.setRequestBody(xml);// è¿™é‡Œæ·»åŠ xmlå­—ç¬¦ä¸²
 
-        // Ö¸¶¨ÇëÇóÄÚÈİµÄÀàĞÍ 
+        // æŒ‡å®šè¯·æ±‚å†…å®¹çš„ç±»å‹ 
         post.setRequestHeader("Content-type", "text/xml; charset=GBK"); 
-        HttpClient httpclient = new HttpClient();// ´´½¨ HttpClient µÄÊµÀı 
+        HttpClient httpclient = new HttpClient();// åˆ›å»º HttpClient çš„å®ä¾‹ 
         int result; 
         try { 
             result = httpclient.executeMethod(post); 
-            System.out.println("Response status code: " + result);// ·µ»Ø200Îª³É¹¦ 
+            System.out.println("Response status code: " + result);// è¿”å›200ä¸ºæˆåŠŸ 
             System.out.println("Response body: "); 
-            System.out.println(post.getResponseBodyAsString());// ·µ»ØµÄÄÚÈİ 
-            post.releaseConnection();// ÊÍ·ÅÁ¬½Ó 
+            System.out.println(post.getResponseBodyAsString());// è¿”å›çš„å†…å®¹ 
+            post.releaseConnection();// é‡Šæ”¾è¿æ¥ 
         } catch (HttpException e) { 
             // TODO Auto-generated catch block 
             e.printStackTrace(); 
@@ -61,9 +61,9 @@ public class HttpClientDemo {
 
     }
 
-    // ÒÔÉÏ¾ÍÊÇ·¢ËÍÇëÇóµÄ´úÂë£¬¶Ô·½½ÓÊÕµ½Êı¾İ¿ÉÒÔÖ±½Ó½âÎö³Éxml
+    // ä»¥ä¸Šå°±æ˜¯å‘é€è¯·æ±‚çš„ä»£ç ï¼Œå¯¹æ–¹æ¥æ”¶åˆ°æ•°æ®å¯ä»¥ç›´æ¥è§£ææˆxml
 
-    // ¶ÁÈ¡xml 
+    // è¯»å–xml 
     private Document getClientRequestMessage(HttpServletRequest _request) 
             throws UnexpectedException { 
         try { 
@@ -101,7 +101,7 @@ public class HttpClientDemo {
     } 
 }
 ```
-ĞèÒªjar°ü£º
+éœ€è¦jaråŒ…ï¼š
 
 1. jdom.jar
 

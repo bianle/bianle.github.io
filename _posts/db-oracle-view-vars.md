@@ -1,8 +1,6 @@
 title: oracle视图传参数
-tags:
-  - oracle
-categories:
-  - db
+tags: [oracle]
+categories: db
 date: 2014-09-25 15:17:00
 ---
 创建包

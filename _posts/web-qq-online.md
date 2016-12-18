@@ -1,8 +1,6 @@
 title: qq在线状态
-tags:
-  - qq
-categories:
-  - web前端
+tags: qq
+categories: web前端
 date: 2012-12-05 15:37:00
 ---
 http://wp.qq.com/index.html

@@ -105,7 +105,10 @@ ngrok -subdomain dev -config=ngrok.conf 80
 [官方文档](https://github.com/inconshreveable/ngrok/blob/master/docs/SELFHOSTING.md)
 [Sebastian的博客](http://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/)
 [海运博客](http://www.haiyun.me/archives/1012.html)
+[Run Ngrok on Your Own Server Using Self-Signed SSL Certificate](https://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/)
 
+## 它山之石
 
+[ngrok一键安装脚本，适于centos版本服务器](https://www.sunnyos.com/article-show-66.html)
 
 
