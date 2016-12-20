@@ -442,8 +442,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/01/10/skill-hide-file-in-picture/" itemprop="url">
-                  将文件藏到图片
+                <a class="post-title-link" href="/2012/01/10/db-sqlserver-Error-establishing-socket/" itemprop="url">
+                  Error_establishing_socket的解决方法
                 </a>
               
             
@@ -470,8 +470,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技巧/" itemprop="url" rel="index">
-                    <span itemprop="name">技巧</span>
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
                   </a>
                 </span>
 
@@ -486,8 +486,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/01/10/skill-hide-file-in-picture/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/skill-hide-file-in-picture/" itemprop="commentsCount"></span>
+                <a href="/2012/01/10/db-sqlserver-Error-establishing-socket/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/db-sqlserver-Error-establishing-socket/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -512,35 +512,95 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>有些论坛对低权限用户是不开放附件上传功能的，但可能开放图片上传功能，我们可以把我们要上传的非图片文件“隐藏”到图片中，特洛伊木马的方式达到这种目的，当然这不是解决这种问题的唯一方法，你如果愿意也可以贴个外链链到网盘前提是你有你的支持分享下载链接。</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">copy /<span class="selector-tag">b</span> abc.jpg+abc<span class="selector-class">.rar</span> abc.jpg</div></pre></td></tr></table></figure>
-<blockquote>
-<p>COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
-[+ source [/A | /B] [+ …]] [destination [/A | /B]]</p>
-</blockquote>
-<blockquote>
-<p>source 指定要复制的文件。
-/A 表示一个 ASCII 文本文件。
-/B 表示一个二进位文件。
-/D 允许解密要创建的目标文件
-destination 为新文件指定目录和/或文件名。
-/V 验证新文件写入是否正确。
-/N 复制带有非 8dot3 名称的文件时，
-尽可能使用短文件名。
-/Y 不使用确认是否要覆盖现有目标文件
-的提示。
-/-Y 使用确认是否要覆盖现有目标文件
-的提示。
-/Z 用可重新启动模式复制已联网的文件。
-/L 如果源是符号链接，请将链接复制
-到目标而不是源链接指向的实际文件。</p>
-</blockquote>
-<blockquote>
-<p>命令行开关 /Y 可以在 COPYCMD 环境变量中预先设定。
-这可能会被命令行上的 /-Y 替代。除非 COPY
-命令是在一个批处理脚本中执行的，默认值应为
-在覆盖时进行提示。</p>
-</blockquote>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Error establishing socket的解决方法</p>
+<p>如果你在测试连接SQL Server 2000 JDBC连接时出现错误Error establishing socket.请参考如下：</p>
+<p>用 CMD 命令NETSTAT查1433(这是默认的端口,可能被占用,你可以重新设一个新的端口)的端口可是居然没有没有打开,先看看你的服务器有没有打开,如果都大开了那就说明你没有装SQL的sp3或sp4的补丁.</p>
+<p>还有一个方法看你是不是要打补丁,那就是看看你的版本号:</p>
+<p>可以用如下的方式查看MSSQL的版本：</p>
+<p>打开企业管理器-〉工具-〉SQL查询分析器-〉帮助-〉关于</p>
+<p>查看MSSQL的详细版本号</p>
+<p>如果 是 8.00.194 就是还没打补丁</p>
+<p>8.00.760 就是SP3</p>
+<p>8.00.2039 就是SP4</p>
+<p>如果你的版本号是对的,但NETSTAT查1433没有,那可能你的1433端口被占了,换一个端口应该就可以了.</p>
+<p>换端口的方法是:</p>
+<ol>
+<li>
+<p>打开企业管理器，依次在控制台根目录 -&gt;Microsoft SQL Servers-&gt;SQL Server 组，列出一部分数据库服务器。</p>
+</li>
+<li>
+<p>右击我们要连接的数据库服务器，选择属性，在常规选项卡点击网络配置弹出新窗口。</p>
+</li>
+<li>
+<p>在启用的协议区域我们选择 TCP/IP ，点击属性按钮，弹出新窗口。在这个窗口有网络协议默认值设置，一般默认端口是：1433。</p>
+</li>
+</ol>
+<p>另有一篇网上的方法，供参考：</p>
+<p>如运行程序时出现 “Error establishing socket” 错误,则应进行如下调试:</p>
+<ol>
+<li>检查SQL SERVER 是否允许远程访问.具体步骤:</li>
+</ol>
+<ul>
+<li>打开&quot;企业管理器&quot;,打开控制台根目录&gt;SQL Server 组&gt;数据库</li>
+<li>在相应&quot;数据库&quot;上单击右键,选择&quot;属性&quot;</li>
+<li>选择&quot;连接&quot;选项卡,检查&quot;远程服务器连接&quot;下,RPC服务是否选择.</li>
+</ul>
+<ol start="2">
+<li>使用telnet IP地址 1433,系统是否提示连接出错,如系统提示出错</li>
+</ol>
+<p>检查是否防火墙屏蔽了SQL SERVER 或 java IDE 的网络访问端口</p>
+<p>如果是,关闭防火墙,重新启动SQL SERVER和java IDE,进行测试,</p>
+<p>如果系统仍提示上述错误,尝试下列步骤</p>
+<ol start="3">
+<li>检查SQL SERVER 端口号及是否启用了TCP/IP协议,具体步骤:</li>
+</ol>
+<ul>
+<li>
+<p>打开&quot;企业管理器&quot;,打开控制台根目录&gt;SQL Server 组&gt;数据库</p>
+</li>
+<li>
+<p>在相应&quot;数据库&quot;上单击右键,选择&quot;属性&quot;</p>
+</li>
+<li>
+<p>选择&quot;常规&quot;选项卡,点击&quot;网络配置&quot;,如启用的协议中无&quot;TCP/IP协议&quot;将其加入</p>
+</li>
+<li>
+<p>选择&quot;TCP/IP协议&quot;,点击&quot;属性&quot;,检查其端口号是否为1433</p>
+</li>
+<li>
+<p>如端口号为1433将其修改为其它端口号,修改jdbc连接语句,将端口号同样改为新启用的端口号,如jdbc:microsoft:sqlserver://server_name:1400(假设新端口号为 1400)</p>
+</li>
+</ul>
+<p>以下的方法你每种的去试试:</p>
+<ol>
+<li>
+<p>检查一下sql server的connection有没有full.</p>
+</li>
+<li>
+<p>如果是认证的问题.</p>
+</li>
+</ol>
+<p>可到sql enterprice manager-&gt;指定server-&gt;内容-&gt;安全性.</p>
+<p>把验证改为 SQL server 及 windows.</p>
+<ol start="3">
+<li>
+<p>点选属性检查一下port是否正确.</p>
+</li>
+<li>
+<p>执行%MSSQL_HOME%/80/Tools/Binn/SVRNETCN.exe</p>
+</li>
+</ol>
+<p>把TCP/IP启用.</p>
+<ol start="5">
+<li>
+<p>关掉防火墙.</p>
+</li>
+<li>
+<p>把SQL server update到sp3:</p>
+</li>
+</ol>
+<p><a href="http://www.microsoft.com/sql/downloads/2000/sp3.asp" target="_blank" rel="external">http://www.microsoft.com/sql/downloads/2000/sp3.asp</a></p>
+<p>经我验证，一般升级到sp3就好用了！</p>
 
           
         
@@ -712,8 +772,8 @@ destination 为新文件指定目录和/或文件名。
             
               
                 
-                <a class="post-title-link" href="/2012/01/10/db-sqlserver-Error-establishing-socket/" itemprop="url">
-                  Error_establishing_socket的解决方法
+                <a class="post-title-link" href="/2012/01/10/skill-hide-file-in-picture/" itemprop="url">
+                  将文件藏到图片
                 </a>
               
             
@@ -740,8 +800,8 @@ destination 为新文件指定目录和/或文件名。
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
+                  <a href="/categories/技巧/" itemprop="url" rel="index">
+                    <span itemprop="name">技巧</span>
                   </a>
                 </span>
 
@@ -756,8 +816,8 @@ destination 为新文件指定目录和/或文件名。
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/01/10/db-sqlserver-Error-establishing-socket/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/db-sqlserver-Error-establishing-socket/" itemprop="commentsCount"></span>
+                <a href="/2012/01/10/skill-hide-file-in-picture/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/skill-hide-file-in-picture/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -782,95 +842,35 @@ destination 为新文件指定目录和/或文件名。
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Error establishing socket的解决方法</p>
-<p>如果你在测试连接SQL Server 2000 JDBC连接时出现错误Error establishing socket.请参考如下：</p>
-<p>用 CMD 命令NETSTAT查1433(这是默认的端口,可能被占用,你可以重新设一个新的端口)的端口可是居然没有没有打开,先看看你的服务器有没有打开,如果都大开了那就说明你没有装SQL的sp3或sp4的补丁.</p>
-<p>还有一个方法看你是不是要打补丁,那就是看看你的版本号:</p>
-<p>可以用如下的方式查看MSSQL的版本：</p>
-<p>打开企业管理器-〉工具-〉SQL查询分析器-〉帮助-〉关于</p>
-<p>查看MSSQL的详细版本号</p>
-<p>如果 是 8.00.194 就是还没打补丁</p>
-<p>8.00.760 就是SP3</p>
-<p>8.00.2039 就是SP4</p>
-<p>如果你的版本号是对的,但NETSTAT查1433没有,那可能你的1433端口被占了,换一个端口应该就可以了.</p>
-<p>换端口的方法是:</p>
-<ol>
-<li>
-<p>打开企业管理器，依次在控制台根目录 -&gt;Microsoft SQL Servers-&gt;SQL Server 组，列出一部分数据库服务器。</p>
-</li>
-<li>
-<p>右击我们要连接的数据库服务器，选择属性，在常规选项卡点击网络配置弹出新窗口。</p>
-</li>
-<li>
-<p>在启用的协议区域我们选择 TCP/IP ，点击属性按钮，弹出新窗口。在这个窗口有网络协议默认值设置，一般默认端口是：1433。</p>
-</li>
-</ol>
-<p>另有一篇网上的方法，供参考：</p>
-<p>如运行程序时出现 “Error establishing socket” 错误,则应进行如下调试:</p>
-<ol>
-<li>检查SQL SERVER 是否允许远程访问.具体步骤:</li>
-</ol>
-<ul>
-<li>打开&quot;企业管理器&quot;,打开控制台根目录&gt;SQL Server 组&gt;数据库</li>
-<li>在相应&quot;数据库&quot;上单击右键,选择&quot;属性&quot;</li>
-<li>选择&quot;连接&quot;选项卡,检查&quot;远程服务器连接&quot;下,RPC服务是否选择.</li>
-</ul>
-<ol start="2">
-<li>使用telnet IP地址 1433,系统是否提示连接出错,如系统提示出错</li>
-</ol>
-<p>检查是否防火墙屏蔽了SQL SERVER 或 java IDE 的网络访问端口</p>
-<p>如果是,关闭防火墙,重新启动SQL SERVER和java IDE,进行测试,</p>
-<p>如果系统仍提示上述错误,尝试下列步骤</p>
-<ol start="3">
-<li>检查SQL SERVER 端口号及是否启用了TCP/IP协议,具体步骤:</li>
-</ol>
-<ul>
-<li>
-<p>打开&quot;企业管理器&quot;,打开控制台根目录&gt;SQL Server 组&gt;数据库</p>
-</li>
-<li>
-<p>在相应&quot;数据库&quot;上单击右键,选择&quot;属性&quot;</p>
-</li>
-<li>
-<p>选择&quot;常规&quot;选项卡,点击&quot;网络配置&quot;,如启用的协议中无&quot;TCP/IP协议&quot;将其加入</p>
-</li>
-<li>
-<p>选择&quot;TCP/IP协议&quot;,点击&quot;属性&quot;,检查其端口号是否为1433</p>
-</li>
-<li>
-<p>如端口号为1433将其修改为其它端口号,修改jdbc连接语句,将端口号同样改为新启用的端口号,如jdbc:microsoft:sqlserver://server_name:1400(假设新端口号为 1400)</p>
-</li>
-</ul>
-<p>以下的方法你每种的去试试:</p>
-<ol>
-<li>
-<p>检查一下sql server的connection有没有full.</p>
-</li>
-<li>
-<p>如果是认证的问题.</p>
-</li>
-</ol>
-<p>可到sql enterprice manager-&gt;指定server-&gt;内容-&gt;安全性.</p>
-<p>把验证改为 SQL server 及 windows.</p>
-<ol start="3">
-<li>
-<p>点选属性检查一下port是否正确.</p>
-</li>
-<li>
-<p>执行%MSSQL_HOME%/80/Tools/Binn/SVRNETCN.exe</p>
-</li>
-</ol>
-<p>把TCP/IP启用.</p>
-<ol start="5">
-<li>
-<p>关掉防火墙.</p>
-</li>
-<li>
-<p>把SQL server update到sp3:</p>
-</li>
-</ol>
-<p><a href="http://www.microsoft.com/sql/downloads/2000/sp3.asp" target="_blank" rel="external">http://www.microsoft.com/sql/downloads/2000/sp3.asp</a></p>
-<p>经我验证，一般升级到sp3就好用了！</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>有些论坛对低权限用户是不开放附件上传功能的，但可能开放图片上传功能，我们可以把我们要上传的非图片文件“隐藏”到图片中，特洛伊木马的方式达到这种目的，当然这不是解决这种问题的唯一方法，你如果愿意也可以贴个外链链到网盘前提是你有你的支持分享下载链接。</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">copy /<span class="selector-tag">b</span> abc.jpg+abc<span class="selector-class">.rar</span> abc.jpg</div></pre></td></tr></table></figure>
+<blockquote>
+<p>COPY [/D] [/V] [/N] [/Y | /-Y] [/Z] [/L] [/A | /B ] source [/A | /B]
+[+ source [/A | /B] [+ …]] [destination [/A | /B]]</p>
+</blockquote>
+<blockquote>
+<p>source 指定要复制的文件。
+/A 表示一个 ASCII 文本文件。
+/B 表示一个二进位文件。
+/D 允许解密要创建的目标文件
+destination 为新文件指定目录和/或文件名。
+/V 验证新文件写入是否正确。
+/N 复制带有非 8dot3 名称的文件时，
+尽可能使用短文件名。
+/Y 不使用确认是否要覆盖现有目标文件
+的提示。
+/-Y 使用确认是否要覆盖现有目标文件
+的提示。
+/Z 用可重新启动模式复制已联网的文件。
+/L 如果源是符号链接，请将链接复制
+到目标而不是源链接指向的实际文件。</p>
+</blockquote>
+<blockquote>
+<p>命令行开关 /Y 可以在 COPYCMD 环境变量中预先设定。
+这可能会被命令行上的 /-Y 替代。除非 COPY
+命令是在一个批处理脚本中执行的，默认值应为
+在覆盖时进行提示。</p>
+</blockquote>
 
           
         
