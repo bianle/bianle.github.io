@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2016-12-13T03:30:40.000Z</updated>
+  <updated>2016-12-20T03:55:04.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>emacs-mobileorg</title>
+    <link href="http://2le.me/2016/12/20/emacs-mobileorg/"/>
+    <id>http://2le.me/2016/12/20/emacs-mobileorg/</id>
+    <published>2016-12-20T03:01:40.000Z</published>
+    <updated>2016-12-20T03:55:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><blockquote>
+<p>MobileOrg is a FREE (open-source) iPhone and iPod Touch application for storing, searching, viewing and editing your Org-mode files. MobileOrg works offline. Although you may not always be online, you can always access your data. You can even capture notes while offline and sync the next time you have connectivity.
+– 这是官方的介绍，大概意思就是MobileOrg是个很拽的东西，让你在手机上也能玩的起Org，不管你有没有3G，4G信号。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="准备工作"><a class="header-anchor" href="#准备工作"> </a>准备工作</h2>
+<ol>
+<li>一台安装了eamcs的电脑（电脑）</li>
+<li>一部安装了mobileorg的手机（手机）</li>
+<li>电脑和手机同时可以访问的服务器（服务器）</li>
+</ol>
+<h2 id="服务器配置"><a class="header-anchor" href="#服务器配置"> </a>服务器配置</h2>
+<p>登录服务器新建一文件夹用于存放要同步的文件</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> org</div></pre></td></tr></table></figure>
+<h2 id="电脑配置"><a class="header-anchor" href="#电脑配置"> </a>电脑配置</h2>
+<h3 id="emacs配置"><a class="header-anchor" href="#emacs配置"> </a>emacs配置</h3>
+<p>将以下代码添加到emacs的配置文件<code>~/.emacs</code>或者<code>~/.emacs.d/init.el</code></p>
+<figure class="highlight clojure"><table><tr><td class="code"><pre><div class="line"><span class="comment">;; This is just an example.  The way you do it might be</span></div><div class="line"><span class="comment">;; completely different, and that's fine, as long as you wind up</span></div><div class="line"><span class="comment">;; with `org-agenda-files' set usefully.</span></div><div class="line">(<span class="name">setq</span> org-directory <span class="string">"~/Documents/MobileOrg"</span>) <span class="comment">;;org文件的存放路径</span></div><div class="line">(<span class="name">custom-set-variables</span></div><div class="line"> '(<span class="name">org-agenda-files</span> (<span class="name"><span class="builtin-name">quote</span></span> (<span class="string">"~/Documents/MobileOrg/work.org"</span></div><div class="line">                            <span class="string">"~/Documents/MobileOrg/inbox.org"</span></div><div class="line">                            <span class="string">"~/Documents/MobileOrg/hobbies.org"</span></div><div class="line">                            <span class="string">"~/Documents/MobileOrg/people.org"</span></div><div class="line">                            <span class="string">"~/Documents/MobileOrg/private/personal.org"</span>))))</div><div class="line"></div><div class="line">(<span class="name">setq</span> org-mobile-directory <span class="string">"/bl@tunnel.ink:org"</span>) <span class="comment">;;服务器路径，格式： /[用户名@]&lt;服务器&gt;:&lt;电脑的org文件将同步到的目录&gt;。</span></div><div class="line">(<span class="name">setq</span> org-mobile-inbox-for-pull (<span class="name"><span class="builtin-name">concat</span></span> org-directory <span class="string">"/index.org"</span>))<span class="comment">;;手机同步用</span></div></pre></td></tr></table></figure>
+<h3 id="建立相关文件和文件夹"><a class="header-anchor" href="#建立相关文件和文件夹"> </a>建立相关文件和文件夹</h3>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">cd Documents</div><div class="line">touch work<span class="selector-class">.org</span> inbox<span class="selector-class">.org</span> hobbies<span class="selector-class">.org</span> people<span class="selector-class">.org</span> </div><div class="line">mkdir private</div><div class="line">touch private/personal.org</div></pre></td></tr></table></figure>
+<h2 id="手机配置"><a class="header-anchor" href="#手机配置"> </a>手机配置</h2>
+<h3 id="选择ssh"><a class="header-anchor" href="#选择ssh"> </a>选择ssh</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/Screenshot_2016-12-20-11-29-53.png" alt="mobileorg手机配置示意"><span class="image-caption">mobileorg手机配置示意</span></p>
+<h3 id="填写服务器信息"><a class="header-anchor" href="#填写服务器信息"> </a>填写服务器信息</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/Screenshot_2016-12-20-11-30-15.png" alt="mobileorg手机配置示意"><span class="image-caption">mobileorg手机配置示意</span></p>
+<h2 id="开始同步"><a class="header-anchor" href="#开始同步"> </a>开始同步</h2>
+<ol>
+<li>随便写点东西
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/20161220114454.png" alt="电脑写内容展示"><span class="image-caption">电脑写内容展示</span></li>
+<li>
+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">M-x</kbd> org-mobile-push 然后输入密码，emacs会通过scp命令自动将文件传到服务器
+</li>
+<li>手机点击同步按钮（就是右上角那个圈圈）
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/Screenshot_2016-12-20-11-41-38.png" alt="手机同步内容展示"><span class="image-caption">手机同步内容展示</span></li>
+</ol>
+<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
+<p><a href="http://svn.red-bean.com/repos/main/3bits/mobile_org_3bits.txt" target="_blank" rel="external">http://svn.red-bean.com/repos/main/3bits/mobile_org_3bits.txt</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;MobileOrg is a FREE (open-source) iPhone and iPod Touch application for storing, searching, viewing and editing your Org-mode files. MobileOrg works offline. Although you may not always be online, you can always access your data. You can even capture notes while offline and sync the next time you have connectivity.
+– 这是官方的介绍，大概意思就是MobileOrg是个很拽的东西，让你在手机上也能玩的起Org，不管你有没有3G，4G信号。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="emacs" scheme="http://2le.me/categories/emacs/"/>
+    
+    
+      <category term="emacs" scheme="http://2le.me/tags/emacs/"/>
+    
+  </entry>
   
   <entry>
     <title>boot2docker</title>
@@ -754,30 +816,6 @@ Alternatively, you can use the --charset option:</p>
     
     
       <category term="wechat" scheme="http://2le.me/tags/wechat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>springmvc</title>
-    <link href="http://2le.me/2016/11/20/springmvc/"/>
-    <id>http://2le.me/2016/11/20/springmvc/</id>
-    <published>2016-11-20T04:15:56.000Z</published>
-    <updated>2016-11-20T04:16:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="springmvc处理date类型的成员变量方法"><a class="header-anchor" href="#springmvc处理date类型的成员变量方法"> </a>SpringMVC处理Date类型的成员变量方法</h2>
-<p><a href="http://blog.csdn.net/z69183787/article/details/40373565" target="_blank" rel="external">http://blog.csdn.net/z69183787/article/details/40373565</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;springmvc处理date类型的成员变量方法&quot;&gt;&lt;a cla
-    
-    </summary>
-    
-      <category term="java" scheme="http://2le.me/categories/java/"/>
-    
-    
-      <category term="springMVC" scheme="http://2le.me/tags/springMVC/"/>
     
   </entry>
   
