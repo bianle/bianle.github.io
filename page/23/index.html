@@ -319,6 +319,246 @@
             
               
                 
+                <a class="post-title-link" href="/2012/05/29/java-native2ascii/" itemprop="url">
+                  java-native2ascii
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-05-29T16:05:40+08:00" content="2012-05-29">
+              2012-05-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/05/29/java-native2ascii/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/05/29/java-native2ascii/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * native2ascii.exe Java code implementation.</div><div class="line"> * </div><div class="line"> * @author</div><div class="line"> * @version 1.0</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> class Native2Ascii &#123;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * prefix of ascii string of native character</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">String</span> PREFIX = <span class="string">"\u"</span>;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Native to ascii string. It's same as execut native2ascii.exe.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            native string</div><div class="line">	 * @return ascii string</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> native2Ascii(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		<span class="built_in">char</span>[] chars = <span class="built_in">str</span>.toCharArray();</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">		<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; chars.length; i++) &#123;</div><div class="line">			sb.<span class="built_in">append</span>(char2Ascii(chars[i]));</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Native character to ascii string.</div><div class="line">	 * </div><div class="line">	 * @param c</div><div class="line">	 *            native character</div><div class="line">	 * @return ascii string</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">String</span> char2Ascii(<span class="built_in">char</span> c) &#123;</div><div class="line">		<span class="keyword">if</span> (c &gt; <span class="number">255</span>) &#123;</div><div class="line">			StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">			sb.<span class="built_in">append</span>(PREFIX);</div><div class="line">			<span class="built_in">int</span> code = (c &gt;&gt; <span class="number">8</span>);</div><div class="line">			<span class="keyword">String</span> tmp = Integer.toHexString(code);</div><div class="line">			<span class="keyword">if</span> (tmp.length() == <span class="number">1</span>) &#123;</div><div class="line">				sb.<span class="built_in">append</span>(<span class="string">"0"</span>);</div><div class="line">			&#125;</div><div class="line">			sb.<span class="built_in">append</span>(tmp);</div><div class="line">			code = (c &amp; <span class="number">0xFF</span>);</div><div class="line">			tmp = Integer.toHexString(code);</div><div class="line">			<span class="keyword">if</span> (tmp.length() == <span class="number">1</span>) &#123;</div><div class="line">				sb.<span class="built_in">append</span>(<span class="string">"0"</span>);</div><div class="line">			&#125;</div><div class="line">			sb.<span class="built_in">append</span>(tmp);</div><div class="line">			<span class="keyword">return</span> sb.toString();</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> Character.toString(c);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Ascii to native string. It's same as execut native2ascii.exe -reverse.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            ascii string</div><div class="line">	 * @return native string</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> ascii2Native(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">		<span class="built_in">int</span> begin = <span class="number">0</span>;</div><div class="line">		<span class="built_in">int</span> index = <span class="built_in">str</span>.indexOf(PREFIX);</div><div class="line">		<span class="keyword">while</span> (index != <span class="number">-1</span>) &#123;</div><div class="line">			sb.<span class="built_in">append</span>(<span class="built_in">str</span>.substring(begin, index));</div><div class="line">			sb.<span class="built_in">append</span>(ascii2Char(<span class="built_in">str</span>.substring(index, index + <span class="number">6</span>)));</div><div class="line">			begin = index + <span class="number">6</span>;</div><div class="line">			index = <span class="built_in">str</span>.indexOf(PREFIX, begin);</div><div class="line">		&#125;</div><div class="line">		sb.<span class="built_in">append</span>(<span class="built_in">str</span>.substring(begin));</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Ascii to native character.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            ascii string</div><div class="line">	 * @return native character</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">char</span> ascii2Char(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="built_in">str</span>.length() != <span class="number">6</span>) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">					<span class="string">"Ascii string of a native character must be 6 character."</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!PREFIX.equals(<span class="built_in">str</span>.substring(<span class="number">0</span>, <span class="number">2</span>))) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">					<span class="string">"Ascii string of a native character must start with "</span>\u<span class="string">"."</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">String</span> tmp = <span class="built_in">str</span>.substring(<span class="number">2</span>, <span class="number">4</span>);</div><div class="line">		<span class="built_in">int</span> code = Integer.parseInt(tmp, <span class="number">16</span>) &lt;&lt; <span class="number">8</span>;</div><div class="line">		tmp = <span class="built_in">str</span>.substring(<span class="number">4</span>, <span class="number">6</span>);</div><div class="line">		code += Integer.parseInt(tmp, <span class="number">16</span>);</div><div class="line">		<span class="keyword">return</span> (<span class="built_in">char</span>) code;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/03/25/java-log4j/" itemprop="url">
+                  log4j.properties
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-03-25T18:09:17+08:00" content="2012-03-25">
+              2012-03-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/03/25/java-log4j/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/03/25/java-log4j/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">log4j.rootCategory=DEBUG, stdout, R</div><div class="line"></div><div class="line">#Console config </div><div class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div><div class="line"></div><div class="line">#File config </div><div class="line">log4j.appender.R=org.apache.log4j.RollingFileAppender </div><div class="line">log4j.appender.R.File=c:/jmsLog.<span class="keyword">log</span> </div><div class="line">#log4j.appender.R.File=<span class="comment">//oracle/icdc/instance/lib/jmsLog.log </span></div><div class="line">log4j.appender.R.MaxFileSize=<span class="number">100</span>KB </div><div class="line">log4j.appender.R.MaxBackupIndex=<span class="number">0</span> </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/02/01/php-wp-domain/" itemprop="url">
                   WordPress如何更换域名
                 </a>
@@ -1078,7 +1318,7 @@ destination 为新文件指定目录和/或文件名。
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">225</span>
+              <span class="site-state-item-count">227</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
