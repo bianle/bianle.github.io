@@ -702,6 +702,218 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
             
               
                 
+                <a class="post-title-link" href="/2012/07/06/system-dr-com/" itemprop="url">
+                  校园网使用Dr.com上网
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
+              2012-07-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/06/system-dr-com/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/system-dr-com/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多校园都是使用上网客户端验证的，其中，drcom是比较常见的一种。
+对于初学者来说硬盘安装ubuntu8.04使用drcom上网验证确实是比较痛苦的。
+我当初就是深受其害的一员，这里分享下我使用drcom的一些经验。
+以下是以ubuntu8.04下安装drcom-1.4.4为列
+PS:这个编译安装过程，其实可以全程用命令进行，
+当然，如果要使用下列命令，你需要要足够的经验。</p>
+<p>sudo mount -o loop ubuntu-*.iso /cdrom ##挂载iso
+sudo apt-cdrom -m -d /cdrom add ##添加cdrom为源
+sudo apt-get update ##刷新列表
+sudo apt-get install build-essential ##安装编译环境
+tar -xzf drcom-1.4.5.tar.gz ##解压命令
+cd drcom-1.4.5
+make
+sudo make install #编译安装
+ifconfig ##查看链接信息
+sudo gedit /etc/drcom.conf
+sudo drcomd
+drcomc login ##登入
+drcomc logout ##登出
+如果你想了解更详细的操作，请请看下文
+首先，我们当然要下载个linux下的drcom源代码，在这里可以下载最新版本的drcom点击进入下载页面</p>
+<p>不建议在windows下解压drcom-1.4.5.tar.gz，最好回到ubuntu解压，以防出错。
+然後就要安装drcom了，但是安装drcom需要编译工具，ubuntuliveCD默认又是不安装的。</p>
+<p>很多人就难倒在这里了，其实，这个编译工具是ISO里面自带的。如果你有CD，直接插上CD就可以使用命令：
+sudo aptitude install build-essential</p>
+<p>安装编译环境。</p>
+<p>如果你是硬盘安装，又没有CDRom的话，可以挂载iso</p>
+<p>sudo mount -o loop ubuntu-*.iso /cdrom</p>
+<p>其中&quot;ubuntu-*.iso”是你下载的镜像位置，你可以用拖动的方法来拉到终端里都可以。
+挂载好镜像後，要在系统管理-软件源，</p>
+<p>那里把下面的CDrom打上勾，
+clip_image002
+然後close，重新加载源。
+clip_image003
+这时提示找不到源，
+clip_image004
+这个可以不用理，因为你没有上网，不能加载网上的源，能加载cdrom就行。
+或者 使用命令加载和更新：
+sudo apt-cdrom -m -d /cdrom add &amp;&amp; sudo apt-get update
+这样就可以顺利用命令安装编译环境
+sudo apt-get install build-essential
+或者，你可以选择在新立得里查找安装</p>
+<p>clip_image005
+clip_image006
+clip_image007
+编译环境安装完毕，接着就可以把你下载的drcom源代码解压，</p>
+<p>解压方法有很多种，可以图形，可以命令，不过个人偏好把下载的drcom-1.4.4.tar.gz放在桌面，右键解压到此处。
+clip_image008
+clip_image009
+解压完毕後，cd进你解压的目录编译安装
+clip_image010
+make
+sudo make install
+clip_image011
+安装完毕後，就需要编辑/etc/drcom.conf填写你的上网信息。
+clip_image012
+sudo gedit /etc/drcom.conf
+clip_image013
+clip_image014
+clip_image015
+clip_image016
+username=myusername ##填入你登陆的帐号
+password=mypassword ##填入你的密码
+device=eth0 ##指明通往外网的网卡的名字。
+except= ##用“网络地址/网络掩码”的形式列出内网的地址。(不是内网地址就删除)
+dnsp= ##你的首要DNS
+dnss= ##你的次要DNS，如果没有的话，请和首要DNS填的一样
+dhcp= ##你的DHCP服务器，一般不填
+hostip=
+servip=192.168.252.1 ##你的登陆IP，就是在XP下填写登陆服务器那个IP，一般是没有登陆时自动转向的那个页面，就是那个web登陆页面。
+hostport=
+servport=
+hostname=
+winver=
+winbuild=
+servicepack=
+autologout=0
+里面除了帐号密码，其他信息都可以在右上角网卡信息那里看到。</p>
+<p>关于&quot;servip=“地址说明可以参考下面图片，就是网页登录的那个地址IP
+如，下图就要填servip=10.254.200.252
+clip_image017
+感谢xu_connery提供图片
+特别注意的是从1.4.0开始，”/etc/drcom.con&quot;里增加了&quot;device=&quot;和&quot;except=&quot;两项,取消&quot;mac&quot;和&quot;nic&quot;两项。
+配置好帐号信息後，记得保存。
+这样就可以立刻上网了。</p>
+<p>连接命令：
+sudo drcomd ##启动drcom
+drcomc login ##登录
+由于我是用虚拟机截图，以上命令成功应该显示
+Login succeeded
+登出命令：
+drcomc logout
+Logout succeeded</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/07/06/system-remotedesktop-port/" itemprop="url">
                   修改远程桌面服务的默认端口
                 </a>
@@ -1096,218 +1308,6 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
             
               
                 
-                <a class="post-title-link" href="/2012/07/06/system-dr-com/" itemprop="url">
-                  校园网使用Dr.com上网
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/system-dr-com/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/system-dr-com/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多校园都是使用上网客户端验证的，其中，drcom是比较常见的一种。
-对于初学者来说硬盘安装ubuntu8.04使用drcom上网验证确实是比较痛苦的。
-我当初就是深受其害的一员，这里分享下我使用drcom的一些经验。
-以下是以ubuntu8.04下安装drcom-1.4.4为列
-PS:这个编译安装过程，其实可以全程用命令进行，
-当然，如果要使用下列命令，你需要要足够的经验。</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom ##挂载iso
-sudo apt-cdrom -m -d /cdrom add ##添加cdrom为源
-sudo apt-get update ##刷新列表
-sudo apt-get install build-essential ##安装编译环境
-tar -xzf drcom-1.4.5.tar.gz ##解压命令
-cd drcom-1.4.5
-make
-sudo make install #编译安装
-ifconfig ##查看链接信息
-sudo gedit /etc/drcom.conf
-sudo drcomd
-drcomc login ##登入
-drcomc logout ##登出
-如果你想了解更详细的操作，请请看下文
-首先，我们当然要下载个linux下的drcom源代码，在这里可以下载最新版本的drcom点击进入下载页面</p>
-<p>不建议在windows下解压drcom-1.4.5.tar.gz，最好回到ubuntu解压，以防出错。
-然後就要安装drcom了，但是安装drcom需要编译工具，ubuntuliveCD默认又是不安装的。</p>
-<p>很多人就难倒在这里了，其实，这个编译工具是ISO里面自带的。如果你有CD，直接插上CD就可以使用命令：
-sudo aptitude install build-essential</p>
-<p>安装编译环境。</p>
-<p>如果你是硬盘安装，又没有CDRom的话，可以挂载iso</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom</p>
-<p>其中&quot;ubuntu-*.iso”是你下载的镜像位置，你可以用拖动的方法来拉到终端里都可以。
-挂载好镜像後，要在系统管理-软件源，</p>
-<p>那里把下面的CDrom打上勾，
-clip_image002
-然後close，重新加载源。
-clip_image003
-这时提示找不到源，
-clip_image004
-这个可以不用理，因为你没有上网，不能加载网上的源，能加载cdrom就行。
-或者 使用命令加载和更新：
-sudo apt-cdrom -m -d /cdrom add &amp;&amp; sudo apt-get update
-这样就可以顺利用命令安装编译环境
-sudo apt-get install build-essential
-或者，你可以选择在新立得里查找安装</p>
-<p>clip_image005
-clip_image006
-clip_image007
-编译环境安装完毕，接着就可以把你下载的drcom源代码解压，</p>
-<p>解压方法有很多种，可以图形，可以命令，不过个人偏好把下载的drcom-1.4.4.tar.gz放在桌面，右键解压到此处。
-clip_image008
-clip_image009
-解压完毕後，cd进你解压的目录编译安装
-clip_image010
-make
-sudo make install
-clip_image011
-安装完毕後，就需要编辑/etc/drcom.conf填写你的上网信息。
-clip_image012
-sudo gedit /etc/drcom.conf
-clip_image013
-clip_image014
-clip_image015
-clip_image016
-username=myusername ##填入你登陆的帐号
-password=mypassword ##填入你的密码
-device=eth0 ##指明通往外网的网卡的名字。
-except= ##用“网络地址/网络掩码”的形式列出内网的地址。(不是内网地址就删除)
-dnsp= ##你的首要DNS
-dnss= ##你的次要DNS，如果没有的话，请和首要DNS填的一样
-dhcp= ##你的DHCP服务器，一般不填
-hostip=
-servip=192.168.252.1 ##你的登陆IP，就是在XP下填写登陆服务器那个IP，一般是没有登陆时自动转向的那个页面，就是那个web登陆页面。
-hostport=
-servport=
-hostname=
-winver=
-winbuild=
-servicepack=
-autologout=0
-里面除了帐号密码，其他信息都可以在右上角网卡信息那里看到。</p>
-<p>关于&quot;servip=“地址说明可以参考下面图片，就是网页登录的那个地址IP
-如，下图就要填servip=10.254.200.252
-clip_image017
-感谢xu_connery提供图片
-特别注意的是从1.4.0开始，”/etc/drcom.con&quot;里增加了&quot;device=&quot;和&quot;except=&quot;两项,取消&quot;mac&quot;和&quot;nic&quot;两项。
-配置好帐号信息後，记得保存。
-这样就可以立刻上网了。</p>
-<p>连接命令：
-sudo drcomd ##启动drcom
-drcomc login ##登录
-由于我是用虚拟机截图，以上命令成功应该显示
-Login succeeded
-登出命令：
-drcomc logout
-Logout succeeded</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/07/04/web-ajax-cache/" itemprop="url">
                   ajax调用第一次成功,以后均失败解决办法
                 </a>
@@ -1429,8 +1429,8 @@ Logout succeeded</p>
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-open-root-user/" itemprop="url">
-                  如何开启Ubuntu 的 root 用户
+                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">
+                  java实现http文件下载
                 </a>
               
             
@@ -1457,8 +1457,8 @@ Logout succeeded</p>
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -1473,8 +1473,8 @@ Logout succeeded</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/04/linux-ubuntu-open-root-user/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/linux-ubuntu-open-root-user/" itemprop="commentsCount"></span>
+                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-http-download/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1499,34 +1499,35 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Ubuntu安装后，root用户默认是被锁定了的，不允许登录，也不允许“su”到 root。有人说这是个不好的实践，特别是对于服务器来说。我觉得对于桌面用户来说，这样安全性更高一些，是应该的；但对于服务器可以设置成“允许 su 到root，但不允许root用户直接登录”。而我为了开发时的方便，则在桌面和服务器上都采用这种方式。
-允许 su 到 root
-非常简单，下面是设置的方法：
-me@tipfoo:~$ sudo passwd
-Password: &lt;— 输入安装时那个用户的密码
-Enter new UNIX password: &lt;— 新的Root用户密码
-Retype new UNIX password: &lt;— 重复新的Root用户密码
-passwd：已成功更新密码
-允许root登录
-如果要允许root登录（不推荐），则这样操作：
-me@tipfoo:~$ gksu /usr/sbin/gdmsetup
-（或者使用桌面菜单：系统＞系统管理＞登录窗口）
-点“安全”选项页，选择“允许本地管理员登录”。
-注：这一步依赖上一步
-不输入密码直接登录
-在论坛上也看见有人抱怨，家中的Ubuntu不能像Window$那样──不用输入密码就能登录。其实同样能做到：
-就在上一步的“安全”选项页中，勾选：
-“启用自动登录”，“用户”选择（如：“me”）;
-注意：公共用的计算机千万不能这么设置！
-SSH登录远程服务器
-如果远程服务器只允许root用户SSH到服务器时，在Ubuntu下，必须“su 到root”用户才能登录成功(具体是看服务器端的配置)。
-首先，复制密钥到“/root/.ssh/”目录，
-me@tipfoo:~$ su</p>
-<p>Password:</p>
-<p>root@tipfoo:/home/me# chmod 600 -R /root/.ssh/</p>
-<p>root@tipfoo:/home/me# ssh -p 27482 11.22.33.44</p>
-<p>Enter passphrase for key ‘/root/.ssh/id_rsa’:</p>
-<p>Last login: Thu Jun 21 14:29:00 2007 from 11.22.33.45</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
+了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
+分了几百甚至上千上万，那简直是个灾难。
+　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
+如此，我们就可以用程序来完成这个资源的完全下载。
+　　1. 基础知识
+　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
+Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
+　　步骤1:客户端发起连接请求一个URL
+　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
+　　步骤3:客户端接收输入流，将流中的内容存到文件
+　　2. 网络连接的建立
+　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
+存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>代理的访问
+　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
+，访问的JAVA代码如下:</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>网络资源的保存
+　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
+流中的所以内容，并将其保存在文件中。示例代码:</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
