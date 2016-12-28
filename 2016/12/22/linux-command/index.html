@@ -110,7 +110,7 @@
 <meta property="og:url" content="http://2le.me/2016/12/22/linux-command/index.html">
 <meta property="og:site_name" content="Bianle's Blog">
 <meta property="og:description" content="一些常用的linux命令">
-<meta property="og:updated_time" content="2016-12-26T11:21:21.000Z">
+<meta property="og:updated_time" content="2016-12-27T03:10:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux命令">
 <meta name="twitter:description" content="一些常用的linux命令">
@@ -393,6 +393,8 @@
       
         <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>一些常用的linux命令</p>
 <a id="more"></a>
+<h2 id="linux查看系统信息"><a class="header-anchor" href="#linux查看系统信息"> </a>linux查看系统信息</h2>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><div class="line">uname -<span class="keyword">a</span> <span class="comment">#电脑以及操作系统的相关信息</span></div><div class="line">cat /proc/<span class="built_in">version</span> <span class="comment">#内核版本</span></div><div class="line">cat /etc/issue <span class="comment">#发行版信息</span></div><div class="line">lsb_release -<span class="keyword">a</span> <span class="comment">#适用于所有的linux，包括Redhat、SuSE、Debian等发行版，但是在debian下要安装lsb</span></div></pre></td></tr></table></figure>
 <h2 id="下载"><a class="header-anchor" href="#下载"> </a>下载</h2>
 <figure class="highlight dts"><table><tr><td class="code"><pre><div class="line">scp [-P <span class="params">&lt;端口号&gt;</span>] <span class="params">&lt;用户名&gt;</span>@<span class="params">&lt;远程服务器地址&gt;</span>:<span class="params">&lt;文件目录&gt;</span> <span class="params">&lt;本地文件目录&gt;</span></div><div class="line">scp -P <span class="number">28639</span> root@vpn.le.im:<span class="meta-keyword">/usr/</span>local<span class="meta-keyword">/ngrok/</span>bin/darwin_amd64/ngrok ~/</div></pre></td></tr></table></figure>
 <h2 id="查看文件修改时间"><a class="header-anchor" href="#查看文件修改时间"> </a>查看文件修改时间</h2>
@@ -400,6 +402,18 @@
 <h2 id="set-e"><a class="header-anchor" href="#set-e"> </a>set -e</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="built_in">set</span> <span class="_">-e</span></div><div class="line"><span class="built_in">command</span> 1</div><div class="line"><span class="built_in">command</span> 2</div><div class="line">...</div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure>
 <p>每个脚本都应该在文件开头加上set -e,这句语句告诉bash如果任何语句的执行结果不是true则应该退出</p>
+<h2 id="centos6上安装samba服务时需要关闭selinux"><a class="header-anchor" href="#centos6上安装samba服务时需要关闭selinux"> </a>centos6上安装<code>samba</code>服务时需要关闭<code>selinux</code></h2>
+<h3 id="查看状态"><a class="header-anchor" href="#查看状态"> </a>查看状态</h3>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><div class="line">sestatus</div><div class="line">SELinux <span class="string">status:</span>                 enabled  </div><div class="line">SELinuxfs <span class="string">mount:</span>                <span class="regexp">/sys/</span>fs/selinux  </div><div class="line">SELinux root <span class="string">directory:</span>         <span class="regexp">/etc/</span>selinux  </div><div class="line">Loaded policy <span class="string">name:</span>             targeted  </div><div class="line">Current <span class="string">mode:</span>                   enforcing  </div><div class="line">Mode from config <span class="string">file:</span>          enforcing  </div><div class="line">Policy MLS <span class="string">status:</span>              enabled  </div><div class="line">Policy deny_unknown <span class="string">status:</span>     allowed  </div><div class="line">Max kernel policy <span class="string">version:</span>      <span class="number">28</span></div></pre></td></tr></table></figure>
+<h3 id="临时关闭"><a class="header-anchor" href="#临时关闭"> </a>临时关闭</h3>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">setenforce <span class="number">0</span></div></pre></td></tr></table></figure>
+<h3 id="永久关闭"><a class="header-anchor" href="#永久关闭"> </a>永久关闭</h3>
+<p>将<code>SELINUX</code>值设为<code>disabled</code></p>
+<figure class="highlight vala"><table><tr><td class="code"><pre><div class="line">cat /etc/selinux/config</div><div class="line"><span class="meta"># This file controls the state of SELinux on the system.  </span></div><div class="line"><span class="meta"># SELINUX= can take one of these three values:  </span></div><div class="line"><span class="meta">#     enforcing - SELinux security policy is enforced.  </span></div><div class="line"><span class="meta">#     permissive - SELinux prints warnings instead of enforcing.  </span></div><div class="line"><span class="meta">#     disabled - No SELinux policy is loaded.  </span></div><div class="line"><span class="meta">#SELINUX=enforcing  </span></div><div class="line">SELINUX=disabled  </div><div class="line"><span class="meta"># SELINUXTYPE= can take one of three two values:  </span></div><div class="line"><span class="meta">#     targeted - Targeted processes are protected,  </span></div><div class="line"><span class="meta">#     minimum - Modification of targeted policy. Only selected processes are protected.   </span></div><div class="line"><span class="meta">#     mls - Multi Level Security protection.  </span></div><div class="line">SELINUXTYPE=targeted</div></pre></td></tr></table></figure>
+<p>或者直接执行以下命令修改</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">sed -<span class="selector-tag">i</span> <span class="string">'/SELINUX/s/enforcing/disabled/'</span> /etc/selinux/config</div></pre></td></tr></table></figure>
+<h3 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h3>
+<p><a href="http://www.centoscn.com/CentOS/config/2015/0618/5681.html" target="_blank" rel="external">http://www.centoscn.com/CentOS/config/2015/0618/5681.html</a></p>
 
       
     </div>
@@ -557,7 +571,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">229</span>
+              <span class="site-state-item-count">230</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -565,7 +579,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -693,7 +707,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.</span> <span class="nav-text"> 下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看文件修改时间"><span class="nav-number">2.</span> <span class="nav-text"> 查看文件修改时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-e"><span class="nav-number">3.</span> <span class="nav-text"> set -e</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux查看系统信息"><span class="nav-number">1.</span> <span class="nav-text"> linux查看系统信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">2.</span> <span class="nav-text"> 下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看文件修改时间"><span class="nav-number">3.</span> <span class="nav-text"> 查看文件修改时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-e"><span class="nav-number">4.</span> <span class="nav-text"> set -e</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos6上安装samba服务时需要关闭selinux"><span class="nav-number">5.</span> <span class="nav-text"> centos6上安装samba服务时需要关闭selinux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看状态"><span class="nav-number">5.1.</span> <span class="nav-text"> 查看状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#临时关闭"><span class="nav-number">5.2.</span> <span class="nav-text"> 临时关闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永久关闭"><span class="nav-number">5.3.</span> <span class="nav-text"> 永久关闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.4.</span> <span class="nav-text"> 参考</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

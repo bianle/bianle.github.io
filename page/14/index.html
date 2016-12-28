@@ -319,6 +319,189 @@
             
               
                 
+                <a class="post-title-link" href="/2013/01/17/java-tomcat-deploy/" itemprop="url">
+                  Tomcat部署Web应用方法总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-17T21:30:00+08:00" content="2013-01-17">
+              2013-01-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/17/java-tomcat-deploy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/17/java-tomcat-deploy/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Tomcat部署Web应用方法总结
+在Tomcat中部署Java Web应用程序有两种方式：静态部署和动态部署。
+在下文中$CATALINA_HOME指的是Tomcat根目录。
+一、静态部署
+静态部署指的是我们在服务器启动之前部署我们的程序，只有当服务器启动之后，我们的Web应用程序才能访问。
+以下3种方式都可以部署：（以PetWeb项目为例说明，PetWeb目录假设是F:/PetWeb）
+1.利用Tomcat自动部署
+将PetWeb目录拷贝到$CATALINA_HOME/webapps下，然后启动服务器就可以了，Tomcat启动时将自动加载应用。
+访问地址如下：<a href="http://localhost:8080/PetWeb/" target="_blank" rel="external">http://localhost:8080/PetWeb/</a>
+这种方式比较简单，但是web应用程序必须在webapps目录下。Tomcat的Webapps目录是Tomcat默认的应用目录，当服务器启动时，会加载所有这个目录下的应用。
+2.修改Server.xml文件部署
+这种方式可以不必将PetWeb目录拷贝到webapps下，直接在F:/部署。方法如下，更改$CATALINA_HOME/conf/server.xml文件，
+找到以下内容：
+Xml代码：
+<context path="/Pet" reloadable="false" docbase="F:/PetWeb" workdir="d:/Mywebapps/emp">
+path：是访问时的根地址，表示访问的路径；如上述例子中，访问该应用程序地址如下：<a href="http://localhost:8080/Pet/" target="_blank" rel="external">http://localhost:8080/Pet/</a>
+reloadable：表示可以在运行时在classes与lib文件夹下自动加载类包。其中reloadable=&quot;false&quot;表示当应用程序 中的内容发生更改之后服务器不会自动加载，这个属性在开发阶段通常都设为true，方便开发，在发布阶段应该设置为false，提高应用程序的访问速度。
+docbase：表示应用程序的路径，注意斜杠的方向“/”。docBase可以使用绝对路径，也可以使用相对路径，相对路径相对于webapps。
+workdir：表示缓存文件的放置地址
+3.增加自定义web部署文件(推荐使用，不需要重启Tomcat)
+这种方式和方法2差不多，但不是在Server.xml文件中添加Context标签，而是在$CATALINA_HOME/conf /Catalina/localhost中添加一个xml文件，如Pet.xml.在Tomcat安装目录conf/Catalina /localhost下，里面有Tomcat自带的三个应用，随意复制其中的一个XML文件，然后修改docbase指向你自己的应用程序，并把文件名改 名，各参数参见方法2中的<context>标签的参数，或者你也可以自己新建一个XML文件。(注意此文件名将作为Context中的path属性值,不管文件里的path属性值如何设置也是无效的)，将以下内容复制过去，修改相应路径即可。
+Xml代码：
+<context path="/Pet" docbase="F:/PetWeb" debug="0" privileged="true" reloadable="false"></context>
+访问地址如下：<a href="http://localhost:8080/Pet/" target="_blank" rel="external">http://localhost:8080/Pet/</a>
+注：Web应用以.war文件的形式部署
+可以将JSP程序打包成一个war包放在目录下，服务器会自动解开这个war包，并在这个目录下生成一个同名的文件夹。一个war包就是有特性格式的jar包，它是将一个Web程序的所有内容进行压缩得到。
+我们刚才是将PetWeb文件夹部署在了服务器中，我们知道可以将Web应用程序的内容打成.war包，然后在部署在服务器上。打包请参考如下步骤：
+1、打开命令提示符（cmd）
+2、设置jdk环境变量
+3、在命令提示符中进入项目文件夹F:/PetWeb后，键入如下命令：jar cvf Pet.war */ . （注意最后有个“.”）。这样在F:/PetWeb下应该有Pet.war文件。 （也可以打包到指定的地方，命令如下：jar cvf d:/Pet.war */ .）
+部署Pet.war文件非常简单，将刚才xml文件中的docBase=&quot;F:/PetWeb&quot;更改为docBase=“F:/Pet.war&quot;或者直接将其拷贝到webapps目录下就可以。然后重新启动服务器就可以将Pet.war部署为一个Web应用程序了。
+如果你够细心的话你会发现，服务器将Pet.war文件解开，并且在webapps下面又生成了一个Pet文件夹，然后把Pet.war的内容拷贝到里面去了。我们可以通过以下方式取消自动解压缩，将xml配置文件中的unpackWAR属性设置为&quot;false” 即可。
+二、动态部署
+动态部署是指可以在服务器启动之后部署web应用程序，而不用重新启动服务器。动态部署要用到服务器提供的manager.war文件，如果 在$CATALINA_HOME/webapps/下没有该文件，你必须去重新下载tomcat，否则不能完成以下的功能。要想使用该管理程序必须首先编 辑$CATALINA_HOME/conf/tomcat-users.xml文件，内容如下：（关于这个文件的更多内容，请参考 Java Web应用程序的安全模型二 ）
+<tomcat-users>
+&lt; role rolename=“tomcat”/&gt;
+&lt; role rolename=“role1”/&gt;
+<role rolename="manager">
+&lt; user username=“coresun” password=“coresun” roles=“manager”/&gt;
+&lt; user username=“tomcat” password=“tomcat” roles=“tomcat”/&gt;
+&lt; user username=“both” password=“tomcat” roles=“tomcat,role1”/&gt;
+&lt; user username=“role1” password=“tomcat” roles=“role1”/&gt;
+&lt; /tomcat-users&gt;
+然后在浏览器中键入如下地址：<a href="http://localhost:8080/%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%9C%8B%E5%88%B0%E4%B8%80%E4%B8%AAtom%E7%8C%AB%E4%BA%86%E5%90%A7%E3%80%82%E7%82%B9%E5%87%BB%E5%B7%A6%E8%BE%B9%E7%9A%84Tomcat" target="_blank" rel="external">http://localhost:8080/，应该看到一个tom猫了吧。点击左边的Tomcat</a> Manager链接，提示输入用户名和密码，本文都是coresun，然后可以看到以下页面：
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/17/tomcat1.png" alt="tomcat"><span class="image-caption">tomcat</span>
+(1)Context Path(option):中输入/Pet
+(2)XML Configration file URL中要指定一个.xml文件，比如我们在F:/下建立一个Pet.xml文件，内容如下：<context reloadable="false">。docBase不用写了，因为要在下一个文本框中填入。或者更简单点，这个文本框什么都不填。
+(3)WAR or Directory URL:中键入F:/PetWet或者F:/Pet.war都可以，然后点击Deploy按钮，看看上面是不是已经看到了你web应用程序，名字就是你Context Path(option):中的名字。
+(4)如果你部署.war文件还有更加简单的方式，下面还有个Select WAR file upload点击浏览选择.war文件，然后点击Deploy也可以。
+让tomcat只运行conf/server.xml中指定的web应用
+可以有以下2种办法：
+实现一:
+1)将要部署的WEB应用放在webapps以外的路径, 并在server.xml相应的Context 中的docBase指定.
+2)删除webapps中的所有文件夹, 以及conf/catalina/localhost下所有xml文件.
+注: webapps是server.xml中的Host 元素的appBase属性的值.
+实现二:
+修改server.xml中Host 元素的属性, 添加或修改: deployXML=“false” deployOnStartup=“false” autoDeploy=&quot;false&quot;
+含义:
+deployXML=“false” : 不部署conf/catalina/localhost下的xml相应的WEB应用
+deployOnStartup=“false” :tomcat启动时, 不部署webapps下的所有web应用
+autoDeploy=“false” :避免tomcat在扫描改动时, 再次把webapps下的web应用给部署进来.
+注：
+Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法访问到该文件，必须有子目录才能访问该网页文件。
+例如：我们直接将index.html放在webapps目录中，通过浏览器http://localhost:8080/index.html是无法访问到index.html的。而必须要webapps/petweb/index.html才可以通过http://localhost:8080/petweb/index.html访问到index.html页面。</context></role></tomcat-users></context></context></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/01/17/java-tomcat-memory/" itemprop="url">
                   Linux和Windows下的Tomcat JVM内存设置
                 </a>
@@ -799,6 +982,126 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
               
                 
+                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">
+                  禁止状态栏显示链接
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/web-disabled-statebar/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-disabled-statebar/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">
                   1像素表格
                 </a>
@@ -870,175 +1173,6 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line"> <span class="selector-tag">table</span>&#123;</div><div class="line">       <span class="attribute">background</span>:black; </div><div class="line">       <span class="attribute">width</span>:<span class="number">600</span>;      </div><div class="line">       <span class="attribute">height</span>:<span class="number">100</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; </div><div class="line">     <span class="attribute">background</span>:white;</div><div class="line"> &#125; </div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">1</span> <span class="attr">cellspacing</span>=<span class="string">1</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-reg/" itemprop="url">
-                  js正则
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-reg/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-reg/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="正则表达式符号说明"><a class="header-anchor" href="#正则表达式符号说明"> </a>正则表达式符号说明</h1>
-<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line">“+”元字符规定其前导字符必须在目标对象中连续出现一次或多次。==&#123;1,&#125; </div><div class="line">“*”元字符规定其前导字符必须在目标对象中出现零次或连续多次。==&#123;0,&#125; </div><div class="line">“?”元字符规定其前导对象必须在目标对象中连续出现零次或一次。==&#123;0,1&#125; </div><div class="line"> </div><div class="line">n,m为非负整数,n&lt;m </div><div class="line">&#123;n&#125; 确定匹配n次 如p&#123;2&#125; pp才匹配 </div><div class="line">&#123;n,&#125; 至少匹配n次 如p&#123;2,&#125; pp,ppp,pppp都匹配,p不匹配 </div><div class="line">&#123;n,m&#125; 匹配&gt;=n,&lt;=m次, 如p&#123;2,4&#125; pp,ppp,pppp都匹配, p,ppppp都不匹配 </div><div class="line"> </div><div class="line"> </div><div class="line">s：用于匹配单个空格符，包括tab键和换行符； </div><div class="line">S：用于匹配除单个空格符之外的所有字符； </div><div class="line">d：用于匹配从<span class="number">0</span>到<span class="number">9</span>的数字； </div><div class="line">w：用于匹配字母，数字或下划线字符； </div><div class="line">W：用于匹配所有与w不匹配的字符； </div><div class="line">. ：用于匹配除换行符之外的所有字符。 </div><div class="line"> </div><div class="line"> </div><div class="line">“^”定位符规定匹配模式必须出现在目标字符串的开头 </div><div class="line">/^hell/ 匹配“hell”, “hello”或“hellhound”开头的字符串 </div><div class="line"> </div><div class="line">“$”定位符规定匹配模式必须出现在目标对象的结尾 </div><div class="line">/ar$/　匹配“car”, “bar”或 “ar” 结尾的字符串 </div><div class="line"> </div><div class="line">“b”定位符规定匹配模式必须出现在目标字符串的开头或结尾的两个边界之一(代表着单词的开头或结尾) </div><div class="line">/bbom/　以“b”定位符开头，匹配以 “bomb”, 或 “bom”开头的字符串。 </div><div class="line">/manb/　以“b”定位符结尾，匹配以 “human”, “woman”或 “man”结尾的字符串相 </div><div class="line"> </div><div class="line">“B”匹配不是单词开头或结束的位置 </div><div class="line"> </div><div class="line">()符号包含的内容必须同时出现在目标对象中。 </div><div class="line">如:/([a-z][A-Z][<span class="number">0</span><span class="number">-9</span>])+/  abc不匹配 aA9才匹配 </div><div class="line"> </div><div class="line">|符号表示:或 </div><div class="line">如:/to|too|<span class="number">2</span>/ 与目标对象中的 “to”, “too”, 或 “<span class="number">2</span>” 相匹配 </div><div class="line"> </div><div class="line">[^]符号表示:否定符号(必须放在[]中) </div><div class="line">如:/[^A-<span class="keyword">C</span>]/　上述字符串将会与目标对象中除A，B，和<span class="keyword">C</span>之外的任何字符相匹配 </div><div class="line"> </div><div class="line">符号表示:转义符号</div></pre></td></tr></table></figure>
-<h1 id="正则表达式应用模式参数"><a class="header-anchor" href="#正则表达式应用模式参数"> </a>正则表达式应用模式参数</h1>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">语法 <span class="number">1</span> re = <span class="regexp">/pattern/</span>[flags] </div><div class="line">语法 <span class="number">2</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"pattern"</span>,[<span class="string">"flags"</span>]) </div><div class="line"> </div><div class="line">g （全文查找出现的所有 pattern） </div><div class="line">i （忽略大小写） </div><div class="line">m （多行查找） </div><div class="line"> </div><div class="line">语法<span class="number">1</span>:<span class="keyword">var</span> pattern = <span class="regexp">/Java/g</span>; (用 <span class="string">"/"</span> 字符分隔模式) </div><div class="line">语法<span class="number">2</span>:<span class="keyword">var</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"ain"</span>,<span class="string">"g"</span>); (用引号将模式引起来)</div></pre></td></tr></table></figure>
-<h1 id="一次匹配多少个符合条件的子元素-匹配最大量和最小量"><a class="header-anchor" href="#一次匹配多少个符合条件的子元素-匹配最大量和最小量"> </a>一次匹配多少个符合条件的子元素(匹配最大量和最小量)</h1>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">Greedy: 在能匹配的前提下，取量词的最大值。 </div><div class="line">Reluctant: 在匹配的前提下，取量词的最小值。 </div><div class="line">Possessive: 取量词的最大值，无论匹配与否。 </div><div class="line">如： </div><div class="line">Pattern.compile(<span class="string">"^.*B"</span>).matcher(<span class="string">"AABAABAA"</span>) : <span class="string">"AABAAB"</span> </div><div class="line">Pattern.compile(<span class="string">"^.*?B"</span>).matcher(<span class="string">"AABAABAA"</span>) : <span class="string">"AAB"</span> </div><div class="line">Pattern.compile(<span class="string">"^.*+B"</span>).matcher(<span class="string">"AABAABAA"</span>) : <span class="keyword">null</span></div></pre></td></tr></table></figure>
-<h1 id="处理多个匹配"><a class="header-anchor" href="#处理多个匹配"> </a>处理多个匹配</h1>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment">//第一种</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>,<span class="string">"g"</span>);<span class="comment">//一定要有g不然会死循环</span></div><div class="line"></div><div class="line"><span class="comment">//初始化result数组</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> result = <span class="keyword">null</span>;</div><div class="line"></div><div class="line"><span class="comment">//多次使用RegExp对象pattern2指定的正则表达式匹配不表字符串text,如果返回null,则不再循环下去</span></div><div class="line"></div><div class="line"><span class="keyword">while</span>((result = pattern.exec(text)) != <span class="keyword">null</span>)&#123;</div><div class="line"></div><div class="line">   alert(<span class="string">"返回结果为: "</span>+result);</div><div class="line"></div><div class="line">   <span class="comment">//显示本次匹配的子串的开始位置和下一次匹配开始的位置(result[0]为匹配的字符串)</span></div><div class="line"></div><div class="line">   alert(<span class="string">"Matched '"</span>+ result[<span class="number">0</span>] +<span class="string">"'"</span>+<span class="string">"at Position "</span>+result.index+<span class="string">"; next Search begins at "</span>+ pattern2.lastIndex);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="replace使用正则"><a class="header-anchor" href="#replace使用正则"> </a>replace使用正则</h1>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">//实例化RegExp对象pattern2， 使用g选项匹配所有符合正则表达式的子串</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</div><div class="line"></div><div class="line"><span class="comment">//对目标子串调用replace调用replace方法用另一个字符串替换匹配给定的正则表达式的子串</span></div><div class="line"></div><div class="line">result = text.replace(pattern2, <span class="string">"VB"</span>);</div><div class="line"></div><div class="line"><span class="comment">//显示替换后的字符串</span></div><div class="line"></div><div class="line">alert(<span class="string">"替换后的新串为： "</span>+result);</div><div class="line"></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="comment">//使用方法处理找到匹配的字符串</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">$<span class="number">1</span></span>)</span>&#123;</div><div class="line"></div><div class="line">   <span class="keyword">var</span> gyear=(<span class="keyword">new</span> <span class="built_in">Date</span>()).getYear()-<span class="built_in">parseInt</span>($<span class="number">1</span>)+<span class="number">1</span>;</div><div class="line"></div><div class="line">   <span class="keyword">return</span> $<span class="number">1</span>+<span class="string">"("</span>+gyear+<span class="string">"年出生)"</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> reg=<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(d+)岁"</span>,<span class="string">"g"</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> newstr=str.replace(reg,test);<span class="comment">//使用方法作为要替代的字符串</span></div><div class="line"></div><div class="line">alert(str);</div><div class="line"></div><div class="line">alert(newstr);</div></pre></td></tr></table></figure>
-<h1 id="split使用正则"><a class="header-anchor" href="#split使用正则"> </a>split使用正则</h1>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</div><div class="line"></div><div class="line"><span class="comment">//对目标字符串调用split方法</span></div><div class="line"></div><div class="line">result = text.split(pattern2);</div><div class="line"></div><div class="line"><span class="comment">//遍历结果集</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;result.length; i++)&#123;</div><div class="line"></div><div class="line">   <span class="comment">//显示拆分后的每一个子串</span></div><div class="line"></div><div class="line">   alert(<span class="string">"拆分后的每一个子串: "</span>+<span class="string">"' "</span>+result+<span class="string">" '"</span>);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="找到首次匹配的子串的开始位置"><a class="header-anchor" href="#找到首次匹配的子串的开始位置"> </a>找到首次匹配的子串的开始位置</h1>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</div><div class="line"></div><div class="line">result = text.search(pattern);</div><div class="line"></div><div class="line"><span class="comment">//显示首次匹配子串的开始位置</span></div><div class="line"></div><div class="line">alert(<span class="string">"匹配子串的开始位置: "</span>+result);</div></pre></td></tr></table></figure>
-<h1 id="exec方法详解"><a class="header-anchor" href="#exec方法详解"> </a>exec方法详解</h1>
-<figure class="highlight hsp"><table><tr><td class="code"><pre><div class="line"><span class="keyword">exec</span>方法返回的其实并不是匹配结果字符串，而是一个对象 </div><div class="line"> </div><div class="line">它的属性: index <span class="keyword">input</span> <span class="number">0</span>。其中index是表示匹配在原字符串中的索引；而<span class="keyword">input</span>则是表示输入的字符串； </div><div class="line"> </div><div class="line">至于<span class="number">0</span>则是表示只有一个匹配结果，可以用下标<span class="number">0</span>来引用这个匹配结果，这个数量可能改变。我们可以通过返回值的<span class="keyword">length</span>属性来得知匹配结果的总数量。</div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>  <span class="title">execReg</span>(<span class="params">reg,str</span>)</span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">var</span> result =  reg.exec(str);</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'index:'</span>+result.index+<span class="string">'&lt;br  /&gt;'</span>+<span class="string">'input:'</span>+result.input+<span class="string">'&lt;br  /&gt;'</span>);</div><div class="line"></div><div class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;result.length;i++)&#123;</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'result['</span>+i+<span class="string">']:'</span>+result[i]+<span class="string">'&lt;br  /&gt;'</span>)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> reg = <span class="regexp">/w/</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span>  str=<span class="string">'bbs.bblueidea.com'</span>;</div><div class="line"></div><div class="line">execReg(reg,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.bblueidea.com result[0]:b</p>
-</blockquote>
-<p><a href="http://xn--bbs-f78dmb268ah3uj63dsoxb.bblueidea.com" target="_blank" rel="external">输入字符串为bbs.bblueidea.com</a>； 匹配的b在原字符串的索引是0。 正则的匹配结果为一个，b；</p>
-<figure class="highlight gcode"><table><tr><td class="code"><pre><div class="line">var reg =  /<span class="comment">(w)</span><span class="comment">(w)</span><span class="comment">(.+)</span>/;</div><div class="line"></div><div class="line">var  str=<span class="string">'bbs.bblueidea.com'</span>;</div><div class="line"></div><div class="line">execReg<span class="comment">(reg,str)</span>;</div></pre></td></tr></table></figure>
-<p>结果为：</p>
-<blockquote>
-<p>index:0 input:bbs.bblueidea.com result[0]:bbs.bblueidea.com result[1]:b result[2]:b result[3]:s.bblueidea.com</p>
-</blockquote>
-<p>由上面两个例子可见，返回对象[0]就是整个正则表达式所匹配的内容。后续的元素则是各个子正则表达式的匹配内容。 //g修饰的区别 exec方法在返回结果对象的同时，还可能会更新原来的正则表达式，这就要看正则表达式是否设置了g修饰符。先来看两个例子吧：</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">reg</span> = /b/;</div><div class="line"></div><div class="line"><span class="keyword">var</span> str =  <span class="number">'bb</span>s<span class="variable">.blueidea</span><span class="variable">.com</span>';</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.blueidea.com result[0]:b index:0 input:bbs.blueidea.com result[0]:b
-也就是说，两次匹配的结果完全一样，从索引可以看出来，匹配的都是字符串首的b字符。 下面看看设置了g的正则表达式表现如何：</p>
-</blockquote>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">reg</span> = /b/g;</div><div class="line"></div><div class="line"><span class="keyword">var</span> str =  <span class="number">'bb</span>s<span class="variable">.blueidea</span><span class="variable">.com</span>';</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.blueidea.com result[0]:b index:1 input:bbs.blueidea.com result[0]:b
-可以看得出来，第二次匹配的是字符串的字符串的第二个b。这也就是g修饰符的作用了，下面来看exec是如何区别对待g和非g正则表达式的。  如果正则表达式没有设置g，那么exec方法不会对正则表达式有任何的影响，如果设置了g，那么exec执行之后会更新正则表达式的lastIndex属性，表示本次匹配后，所匹配字符串的下一个字符的索引，下一次再用这个正则表达式匹配字符串的时候就会从上次的lastIndex属性开始匹配，也就是上面两个例子结果不同的原因了。</p>
-</blockquote>
-<h1 id="test方法"><a class="header-anchor" href="#test方法"> </a>test方法</h1>
-<p>test方法仅仅检查是否能够匹配str，并且返回布尔值以表示是否成功</p>
-<h1 id="match方法"><a class="header-anchor" href="#match方法"> </a>match方法</h1>
-<p>与正则表达式的exec方法类似，该方法同样返回一个类似数组的对象，也有input和index属性。我们定义如下一个函数用来测试：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>  <span class="title">matchReg</span>(<span class="params">reg,str</span>)</span>&#123;</div><div class="line"></div><div class="line"> <span class="keyword">var</span> result =  str.match(reg);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(result )&#123;</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'index:'</span>+result.index+<span class="string">'&lt;br  /&gt;'</span></div><div class="line"></div><div class="line">+<span class="string">'input:'</span>+result.input+<span class="string">'&lt;br  /&gt;'</span></div><div class="line"></div><div class="line">);</div><div class="line"></div><div class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;result.length;i++)&#123;</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'result['</span>+i+<span class="string">']:'</span>+result[i]+<span class="string">'&lt;br  /&gt;'</span>)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line"></div><div class="line">alert(<span class="string">'null：匹配失败！'</span>)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> reg = <span class="regexp">/b/</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> str =  <span class="string">'bbs.blueidea.com'</span>;</div><div class="line"></div><div class="line">matchReg(reg,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.blueidea.com result[0]:b
-可见，和exec的结果一样。 但是如果正则表达式设置了g修饰符，exec和match的行为可就不一样了，见下例： index:undefined input:undefined result[0]:b result[1]:b result[2]:b 设置了g修饰符的正则表达式在完成一次成功匹配后不会停止，而是继续找到所有可以匹配到的字符。返回的结果包括了三个b。不过没有提供input和index这些信息。</p>
-</blockquote>
 
           
         
@@ -1213,250 +1347,6 @@ WindowsUpdate删除掉</p>
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">
-                  js判断数字
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-number-check/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-number-check/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">
-                  自定义js的trim()方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-trim/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-trim/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
-<p>写成类的方法格式如下：（str.trim();）</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>写成函数可以这样：(trim(str))</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">
                   可拖动模式窗口
                 </a>
@@ -1577,8 +1467,8 @@ WindowsUpdate删除掉</p>
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/java-gwt-code-lv/" itemprop="url">
-                  GWT 项目中代码分四级概念
+                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">
+                  js判断数字
                 </a>
               
             
@@ -1605,8 +1495,8 @@ WindowsUpdate删除掉</p>
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -1621,8 +1511,8 @@ WindowsUpdate删除掉</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/10/java-gwt-code-lv/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/java-gwt-code-lv/" itemprop="commentsCount"></span>
+                <a href="/2013/01/10/web-js-number-check/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-number-check/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1647,15 +1537,141 @@ WindowsUpdate删除掉</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
-使用多个 Module 和 EntryPoint 相对都是非常简单的。创建过程同官方的新建一个Module 和 EntryPoint 没什么两样。那么我们，还有一种需求就是需要一些额外的关注：一个 application , 多个 hostpage， 因为 GWT 默认项目就只是一个 Single Host Page 的 Application。其实，我们有很多人已经注意到了这一点，并且有人 open 了一个 gwt module 来帮助大家实现这一点，它就是 gwtmultipage 。
-gwtmultipage 使用起来相当简单，简单三步就可以了：
-1.加载 org.gwtmultipage.gwtmultipage 这个 GWT module java 包到项目中
-2.修改主 Module 的 gwt.xml， EntryPoint 改成&lt;entry -point class=’org.gwtmultipage.client.EntrypointDispatcher’/&gt;
-当然要先加上它所在的 module<inherits name="’org.gwtmultipage.gwtmultipage’/">
-3.在你的 EntryPoint 类名前加 annotation:@UrlPatternEntryPoint(value=”module.html”)
-就可把 前端 jsp 或者 html 文件与 某个 EntryPoint 对应起来了。gwtmultipage 通过 org.gwtmultipage.client.EntrypointDispatcher 把 host page与 EntryPoint 一一对应。
-EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/10/db-mysql-err150/" itemprop="url">
+                  mysql errno:150
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/db-mysql-err150/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/db-mysql-err150/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
+在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序
+已知的原因：</p>
+<ol>
+<li>两个字段的类型或者大小不严格匹配，例如，如果一个是INT(10), 那么外键也必须设置成INT(10), 而不是 INT(11) 也不能是 TINYINT. 你得使用 SHOW 命令来查看字段的大小，因为一些查询浏览器有时候把 int(10) 和int(11) 都显示为integer。另外，你还必须确定两个字段是否一个为 SIGNED,而另一个又是UNSIGNED, 这两字段必须严格地一致匹配，更多关于signed 和 unsigned 的信息，请参阅：<a href="http://www.verysimple.com/blog/?p=57" target="_blank" rel="external">http://www.verysimple.com/blog/?p=57</a></li>
+<li>你试图引用的其中一个外键没有建立起索引，或者不是一个primary key , 如果其中一个不是primary key 的放，你必须为它创建一个索引。</li>
+<li>外键的名字是一个已经存在的一个键值了，这个时候，你应该检查你的数据库以确保外健名字是唯一的，或者你在键名后面加上几个随机的字符以测试是否是这个原因。</li>
+<li>其中一个或者两个表是MyISAM引擎的表，若想要使用外键约束，必须是InnoDB引擎，（实际上，如果两个表都是MyISAM 引擎的，这个错误根本不会发生，但也不会产生外键），你可以通过查询浏览器来设置表的引擎类型</li>
+<li>你可能设置了ON DELETE SET NULL, 但是相关的键的字段又设置成了NOTS NULL 值。你可能通过修改cascade 的属性值或者把字段属性设置成 allow null 来搞定这个bug.</li>
+<li>请确定你的Charset 和 Collate 选项在表级和字段级上的一致</li>
+<li>你可能设置为外键设置了一个默认值，如 default=0</li>
+<li>在这个关系里面，其中的一个字段是一个混合键值中的一个，它没有自己独立的索引，这时，你必须为它创建一个独立的索引。</li>
+<li>ALTER 声明中有语法错误</li>
+<li>要连接的两个表的编码格式不同</li>
+</ol>
 
           
         
@@ -1729,7 +1745,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">229</span>
+              <span class="site-state-item-count">230</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1737,7 +1753,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
