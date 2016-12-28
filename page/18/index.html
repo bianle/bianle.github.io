@@ -319,8 +319,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/12/05/java-reflex/" itemprop="url">
-                  JAVA反射机制-class类的获取
+                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">
+                  ext中文传参乱码
                 </a>
               
             
@@ -347,8 +347,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -363,8 +363,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/05/java-reflex/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-reflex/" itemprop="commentsCount"></span>
+                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/web-extjs-encodeuri/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -389,213 +389,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
-信息。
-当一个类或接口被装入的JVM 时便会产生一个与之关联的java.lang.Class 对象，可以通过
-这个Class 对象对被装入类的详细信息进行访问。
-简单的说，获取某一个类所对应的Class 对象可以通过如下三种途径：</p>
-<ol>
-<li>Object 的getClass 方法
-java.lang.Object 中定义有getClass 方法：
-public final Class getClass()
-所有Java 对象都具备这个方
-法。该方法用于返回与调用该方法对象所属类关联的Class 对象，
-例如：</li>
-</ol>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line"><span class="built_in">Date</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">Class c1 = date1.getClass();</div><div class="line">Class c2 = date2.getClass();</div><div class="line"><span class="keyword">System</span>.out.println(c1.<span class="built_in">getName</span>()); <span class="comment">// java.util.Date</span></div><div class="line"><span class="keyword">System</span>.out.println(c1 == c2); <span class="comment">// true</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，调用Date 对象date1 的getClass 方法将返回用于封装Date 类信息的Class
-对象。这里调用了Class 类的getName 方法：</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">String</span> getName()</div></pre></td></tr></table></figure>
-<p>这个方法的含义很直观，即返回所封装的类的名称。
-需要注意的是，代码中的date1 和date2 的getClass 方法返回了相同的Class 对象（c1==c2
-的值为true）。这是因为，对于相同的类，JVM 只会载入一次，而与该类对应的Class 对象
-也只会存在一个，无论该类实例化了多少对象。
-另外，需要强调的是，当一个对象被其父类的引用或其实现的接口类型的引用所指向的时，
-getClass 方法返回的是与对象实际所属类关联的Class 对象。例如：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">List</span> <span class="built_in">list</span> = <span class="literal">new</span> ArrayList();</div><div class="line">System.out.println(<span class="built_in">list</span>.getClass().getName()); <span class="comment">// java.util.ArrayList</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，语句list.getClass()方法返回的是list 所指向对象实际所属类java.util.ArrayList
-对应的Class 对象而并未java.util.List 所对应的Class 对象。有些时候可以通过这个方法了解
-一个对象的运行时类型，例如：</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line">HashSet <span class="keyword">set</span> = new <span class="comment">HashSet()</span>;</div><div class="line">Iterator it = <span class="keyword">set</span>.iterator();</div><div class="line"><span class="keyword">System</span>.out.println(it.getClass().getName()); <span class="comment">//java.util.HashMap$KeyIterator</span></div></pre></td></tr></table></figure>
-<p>从代码可以看出，HashSet 的iterator 方法返回的是实现了Iterator 接口的HashMap 内部类
-（KeyIterator）对象。
-因为抽象类和接口不可能实例化对象，因此不能通过Object 的getClass 方法获得与抽象类
-和接口关联的Class 对象。</p>
-<ol start="2">
-<li>使用.class 的方式
-使用类名加“.class”的方式即会返回与该类对应的Class 对象。例如：</li>
-</ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">Class</span> clazz = <span class="keyword">String</span>.<span class="keyword">class</span>;</div><div class="line">System.<span class="keyword">out</span>.println(clazz.getName()); <span class="comment">// java.lang.String</span></div></pre></td></tr></table></figure>
-<p>这个方法可以直接获得与指定类关联的Class 对象，而并不需要有该类的对象存在。</p>
-<ol start="3">
-<li>使用Class.forName 方法
-Class 有一个著名的static 方法forName：</li>
-</ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">Class</span> forName(<span class="keyword">String</span> className) throws ClassNotFoundException</div></pre></td></tr></table></figure>
-<p>该方法可以根据字符串参数所指定的类名获取与该类关联的Class 对象。如果该类还没有被
-装入，该方法会将该类装入JVM。
-该方法声明抛出ClassNotFoundException 异常。顾名思义，当该方法无法获取需要装入的类
-时（例如，在当前类路径中不存在这个类），就会抛出这个异常。
-例如，如果当前类路径中存在Foo 类：</p>
-<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">package org.whatisjava.reflect;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> &#123;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo()"</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo is initialized"</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行下面的代码：控制台会有如下输出：
-Class clazz = Class.forName(“org.whatisjava.reflect.Foo”);
-Foo is initialized
-Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装入JVM，并返回与之
-关联的Class 对象。JVM 装入Foo 类后对其进行初始化，调用了其static 块中的代码。需要
-注意的是：forName 方法的参数是类的完整限定名（即包含包名）。
-区别于前面两种获取Class 对象的方法。使用Class.forName 方法所要获取的与之对应的Class
-对象的类可以通过字符串的方式给定。该方法通常用于在程序运行时根据类名动态的载入该
-类并获得与之对应的Class 对象。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/12/05/java-gwt-new-window/" itemprop="url">
-                  gwt新窗口打开url设置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-12-05T18:09:17+08:00" content="2012-12-05">
-              2012-12-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/12/05/java-gwt-new-window/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-gwt-new-window/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
-在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
-由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
-但是在ie下此问题就浮出水面了。
-原始代码是类似这个样子的：
-Window.open(newURL, “_blank”, null);
-就是null参数控制新窗口为模态的，改为下面的样子就没有问题了
-Window.open(newURL, “_blank”, “”);
-参考一下open方法的文档就什么都明白了</p>
-<blockquote>
-<p>void com.google.gwt.user.client.Window.open(String url, String name, String features)
-Opens a new browser window. The “name” and “features” arguments are specified here.
-Parameters:
-url the URL that the new window will display
-name the name of the window (e.g. “_blank”)
-features the features to be enabled/disabled on this window</p>
-</blockquote>
-<p>window.open (‘page.html’, ‘newwindow’, ‘height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no’)</p>
-<p>window.open 弹出新窗口的命令；
-‘page.html’ 弹出窗口的文件名；
-‘newwindow’ 弹出窗口的名字（不是文件名），非必须，可用空”代替；
-height=100 窗口高度；
-width=400 窗口宽度；
-top=0 窗口距离屏幕上方的象素值；
-left=0 窗口距离屏幕左侧的象素值；
-toolbar=no 是否显示工具栏，yes为显示；
-menubar，scrollbars 表示菜单栏和滚动栏。
-resizable=no 是否允许改变窗口大小，yes为允许；
-location=no 是否显示地址栏，yes为允许；
-status=no 是否显示状态栏内的信息，yes为允许；</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -799,8 +593,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
               
                 
-                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">
-                  ext中文传参乱码
+                <a class="post-title-link" href="/2012/12/05/system-ie-icon-disapear/" itemprop="url">
+                  桌面IE图标不见了
                 </a>
               
             
@@ -827,8 +621,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
                   </a>
                 </span>
 
@@ -843,8 +637,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/web-extjs-encodeuri/" itemprop="commentsCount"></span>
+                <a href="/2012/12/05/system-ie-icon-disapear/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/system-ie-icon-disapear/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -869,7 +663,187 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
+Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
+”，不含引号，
+然后直接将其文件夹拉到桌面或复制剪切都行。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/12/05/java-reflex/" itemprop="url">
+                  JAVA反射机制-class类的获取
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-05T18:09:17+08:00" content="2012-12-05">
+              2012-12-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/12/05/java-reflex/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-reflex/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
+信息。
+当一个类或接口被装入的JVM 时便会产生一个与之关联的java.lang.Class 对象，可以通过
+这个Class 对象对被装入类的详细信息进行访问。
+简单的说，获取某一个类所对应的Class 对象可以通过如下三种途径：</p>
+<ol>
+<li>Object 的getClass 方法
+java.lang.Object 中定义有getClass 方法：
+public final Class getClass()
+所有Java 对象都具备这个方
+法。该方法用于返回与调用该方法对象所属类关联的Class 对象，
+例如：</li>
+</ol>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line"><span class="built_in">Date</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">Class c1 = date1.getClass();</div><div class="line">Class c2 = date2.getClass();</div><div class="line"><span class="keyword">System</span>.out.println(c1.<span class="built_in">getName</span>()); <span class="comment">// java.util.Date</span></div><div class="line"><span class="keyword">System</span>.out.println(c1 == c2); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>上面的代码中，调用Date 对象date1 的getClass 方法将返回用于封装Date 类信息的Class
+对象。这里调用了Class 类的getName 方法：</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">String</span> getName()</div></pre></td></tr></table></figure>
+<p>这个方法的含义很直观，即返回所封装的类的名称。
+需要注意的是，代码中的date1 和date2 的getClass 方法返回了相同的Class 对象（c1==c2
+的值为true）。这是因为，对于相同的类，JVM 只会载入一次，而与该类对应的Class 对象
+也只会存在一个，无论该类实例化了多少对象。
+另外，需要强调的是，当一个对象被其父类的引用或其实现的接口类型的引用所指向的时，
+getClass 方法返回的是与对象实际所属类关联的Class 对象。例如：</p>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">List</span> <span class="built_in">list</span> = <span class="literal">new</span> ArrayList();</div><div class="line">System.out.println(<span class="built_in">list</span>.getClass().getName()); <span class="comment">// java.util.ArrayList</span></div></pre></td></tr></table></figure>
+<p>上面的代码中，语句list.getClass()方法返回的是list 所指向对象实际所属类java.util.ArrayList
+对应的Class 对象而并未java.util.List 所对应的Class 对象。有些时候可以通过这个方法了解
+一个对象的运行时类型，例如：</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line">HashSet <span class="keyword">set</span> = new <span class="comment">HashSet()</span>;</div><div class="line">Iterator it = <span class="keyword">set</span>.iterator();</div><div class="line"><span class="keyword">System</span>.out.println(it.getClass().getName()); <span class="comment">//java.util.HashMap$KeyIterator</span></div></pre></td></tr></table></figure>
+<p>从代码可以看出，HashSet 的iterator 方法返回的是实现了Iterator 接口的HashMap 内部类
+（KeyIterator）对象。
+因为抽象类和接口不可能实例化对象，因此不能通过Object 的getClass 方法获得与抽象类
+和接口关联的Class 对象。</p>
+<ol start="2">
+<li>使用.class 的方式
+使用类名加“.class”的方式即会返回与该类对应的Class 对象。例如：</li>
+</ol>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">Class</span> clazz = <span class="keyword">String</span>.<span class="keyword">class</span>;</div><div class="line">System.<span class="keyword">out</span>.println(clazz.getName()); <span class="comment">// java.lang.String</span></div></pre></td></tr></table></figure>
+<p>这个方法可以直接获得与指定类关联的Class 对象，而并不需要有该类的对象存在。</p>
+<ol start="3">
+<li>使用Class.forName 方法
+Class 有一个著名的static 方法forName：</li>
+</ol>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">Class</span> forName(<span class="keyword">String</span> className) throws ClassNotFoundException</div></pre></td></tr></table></figure>
+<p>该方法可以根据字符串参数所指定的类名获取与该类关联的Class 对象。如果该类还没有被
+装入，该方法会将该类装入JVM。
+该方法声明抛出ClassNotFoundException 异常。顾名思义，当该方法无法获取需要装入的类
+时（例如，在当前类路径中不存在这个类），就会抛出这个异常。
+例如，如果当前类路径中存在Foo 类：</p>
+<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">package org.whatisjava.reflect;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> &#123;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo()"</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo is initialized"</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行下面的代码：控制台会有如下输出：
+Class clazz = Class.forName(“org.whatisjava.reflect.Foo”);
+Foo is initialized
+Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装入JVM，并返回与之
+关联的Class 对象。JVM 装入Foo 类后对其进行初始化，调用了其static 块中的代码。需要
+注意的是：forName 方法的参数是类的完整限定名（即包含包名）。
+区别于前面两种获取Class 对象的方法。使用Class.forName 方法所要获取的与之对应的Class
+对象的类可以通过字符串的方式给定。该方法通常用于在程序运行时根据类名动态的载入该
+类并获得与之对应的Class 对象。</p>
 
           
         
@@ -1040,8 +1014,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
               
                 
-                <a class="post-title-link" href="/2012/10/16/web-jquery/" itemprop="url">
-                  Jquery的$命名冲突
+                <a class="post-title-link" href="/2012/10/16/web-js-page-size/" itemprop="url">
+                  JavaScript获取网页高度宽度
                 </a>
               
             
@@ -1084,8 +1058,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/10/16/web-jquery/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-jquery/" itemprop="commentsCount"></span>
+                <a href="/2012/10/16/web-js-page-size/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-js-page-size/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1110,46 +1084,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在Jquery中，$是JQuery的别名，所有使用$的地方也都可以使用JQuery来替换，如$(‘#msg’)等同于JQuery(‘#msg’)的写法。然而，当我们引入多个js库后，在另外一个js库中也定义了$符号的话，那么我们在使用$符号时就发生了冲突。下面以引入两个库文件jquery.js和prototype.js为例来进行说明。
-第一种情况：jquery.js在prototype.js之后进行引入,如：</p>
-<script src="prototype.js" type="text/javascript"><script src="jquery.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$永远代表的是jquery中定义的$符号，也可以写成JQuery(‘#msg’).hide();如果想要使用prototype.js中定义的$,我们在后面再介绍。
-第二种情况：jquery.js在prototype.js之前进行引入,如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$此时代表的prototype.js中定义的$符号，如果我们想要调用jquery.js中的工厂选择函数功能的话，只能用全称写法JQuery(‘#msg’).hide().
-下面先介绍在第一种引入js库文件顺序的情况下，如何正确的使用不同的js库中定义的$符号。
-一.使用JQuery.noConflict()
-该方法的作用就是让Jquery放弃对$的所有权，将$的控制权交还给prototype.js,因为jquery.js是后引入的，所以最后拥有$控制权的是jquery。它的返回值是JQuery。当在代码中调用了该 方法以后，我们就不可以使用$来调用jquery的方法了，此时$就代表在prototype.js库中定义的$了。如下：
-JQuery.noConflict(); //此处不可以再写成$('#msg').hide(),此时的$代表prototype.js中定义的$符号。 
-JQuey('#msg').hide(); 
- 
-自此以后$就代表prototype.js中定义的$,jquery.js中的$无法再使用,只能使用jquery.js中$的全称JQuery了。
-二.自定义JQuery的别名 
-如果觉得第一种方法中使用了JQuery.noConflict()方法以后,只能使用JQuery全称比较麻烦的话，我们还可以为JQuery重定义别名。如下：
-var $j=JQuery.noConflict(); $j('#msg').hide();//此处$j就代表JQuery 
- 
-自此以后$就代表prototype.js中定义的$,jquey.js中的$无法再使用,只能使用$j来作为jquey.js中JQuery的别名了。
-三.使用语句块，在语句块中仍然使用jquery.js中定义的$，如下：
-JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此时在整个ready事件的方法中使用的$都是jquery.js中定义的$. 
-});
- 
- 
-或者使用如下语句块：
-(function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery)
- 
-如果在第二种引入js库文件顺序的情况下,如何使用jquery.js中的$,我们还是可以使用上面介绍的语句块的方法，如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery) </script>
-<p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1319,8 +1254,8 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
             
               
                 
-                <a class="post-title-link" href="/2012/10/16/web-js-page-size/" itemprop="url">
-                  JavaScript获取网页高度宽度
+                <a class="post-title-link" href="/2012/10/16/web-jquery/" itemprop="url">
+                  Jquery的$命名冲突
                 </a>
               
             
@@ -1363,8 +1298,8 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/10/16/web-js-page-size/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-js-page-size/" itemprop="commentsCount"></span>
+                <a href="/2012/10/16/web-jquery/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-jquery/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1389,7 +1324,46 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在Jquery中，$是JQuery的别名，所有使用$的地方也都可以使用JQuery来替换，如$(‘#msg’)等同于JQuery(‘#msg’)的写法。然而，当我们引入多个js库后，在另外一个js库中也定义了$符号的话，那么我们在使用$符号时就发生了冲突。下面以引入两个库文件jquery.js和prototype.js为例来进行说明。
+第一种情况：jquery.js在prototype.js之后进行引入,如：</p>
+<script src="prototype.js" type="text/javascript"><script src="jquery.js" type="text/javascript"/>
+ 
+在这种情况下,我们在自己的js代码中如下写的话：
+$('#msg').hide(); 
+ 
+$永远代表的是jquery中定义的$符号，也可以写成JQuery(‘#msg’).hide();如果想要使用prototype.js中定义的$,我们在后面再介绍。
+第二种情况：jquery.js在prototype.js之前进行引入,如：
+<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/>
+ 
+在这种情况下,我们在自己的js代码中如下写的话：
+$('#msg').hide(); 
+ 
+$此时代表的prototype.js中定义的$符号，如果我们想要调用jquery.js中的工厂选择函数功能的话，只能用全称写法JQuery(‘#msg’).hide().
+下面先介绍在第一种引入js库文件顺序的情况下，如何正确的使用不同的js库中定义的$符号。
+一.使用JQuery.noConflict()
+该方法的作用就是让Jquery放弃对$的所有权，将$的控制权交还给prototype.js,因为jquery.js是后引入的，所以最后拥有$控制权的是jquery。它的返回值是JQuery。当在代码中调用了该 方法以后，我们就不可以使用$来调用jquery的方法了，此时$就代表在prototype.js库中定义的$了。如下：
+JQuery.noConflict(); //此处不可以再写成$('#msg').hide(),此时的$代表prototype.js中定义的$符号。 
+JQuey('#msg').hide(); 
+ 
+自此以后$就代表prototype.js中定义的$,jquery.js中的$无法再使用,只能使用jquery.js中$的全称JQuery了。
+二.自定义JQuery的别名 
+如果觉得第一种方法中使用了JQuery.noConflict()方法以后,只能使用JQuery全称比较麻烦的话，我们还可以为JQuery重定义别名。如下：
+var $j=JQuery.noConflict(); $j('#msg').hide();//此处$j就代表JQuery 
+ 
+自此以后$就代表prototype.js中定义的$,jquey.js中的$无法再使用,只能使用$j来作为jquey.js中JQuery的别名了。
+三.使用语句块，在语句块中仍然使用jquery.js中定义的$，如下：
+JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此时在整个ready事件的方法中使用的$都是jquery.js中定义的$. 
+});
+ 
+ 
+或者使用如下语句块：
+(function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
+})(JQuery)
+ 
+如果在第二种引入js库文件顺序的情况下,如何使用jquery.js中的$,我们还是可以使用上面介绍的语句块的方法，如：
+<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
+})(JQuery) </script>
+<p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
 
           
         
