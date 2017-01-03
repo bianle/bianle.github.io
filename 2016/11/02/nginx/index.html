@@ -108,7 +108,17 @@
 
 配置文件里
 SCRIPT_FILENAME
-配置问题">
+配置问题
+ nginx添加ssl模块
+
+进入nginx的sbin目录（这里是/opt/nginx-1.10.0/sbin）查看nginx当前配置
+
+./nginx -V
+nginx
+
+进入nginx的源码包(这里是/opt/download/nginx-1.10.0)重新编译
+
+./configur">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx">
 <meta property="og:url" content="http://2le.me/2016/11/02/nginx/index.html">
@@ -117,15 +127,37 @@ SCRIPT_FILENAME
 
 配置文件里
 SCRIPT_FILENAME
-配置问题">
-<meta property="og:updated_time" content="2016-11-02T09:48:39.000Z">
+配置问题
+ nginx添加ssl模块
+
+进入nginx的sbin目录（这里是/opt/nginx-1.10.0/sbin）查看nginx当前配置
+
+./nginx -V
+nginx
+
+进入nginx的源码包(这里是/opt/download/nginx-1.10.0)重新编译
+
+./configur">
+<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/29/20161229130953.png">
+<meta property="og:updated_time" content="2016-12-29T05:19:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx">
 <meta name="twitter:description" content="No input file specified
 
 配置文件里
 SCRIPT_FILENAME
-配置问题">
+配置问题
+ nginx添加ssl模块
+
+进入nginx的sbin目录（这里是/opt/nginx-1.10.0/sbin）查看nginx当前配置
+
+./nginx -V
+nginx
+
+进入nginx的源码包(这里是/opt/download/nginx-1.10.0)重新编译
+
+./configur">
+<meta name="twitter:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/29/20161229130953.png">
 
 
 
@@ -409,6 +441,27 @@ SCRIPT_FILENAME
 <p>配置文件里
 SCRIPT_FILENAME
 配置问题</p>
+<h2 id="nginx添加ssl模块"><a class="header-anchor" href="#nginx添加ssl模块"> </a>nginx添加ssl模块</h2>
+<ol>
+<li>进入nginx的sbin目录（这里是/opt/nginx-1.10.0/sbin）查看nginx当前配置</li>
+</ol>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">./nginx -V</div></pre></td></tr></table></figure>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/29/20161229130953.png" alt="nginx"><span class="image-caption">nginx</span></p>
+<ol start="2">
+<li>进入nginx的源码包(这里是/opt/download/nginx-1.10.0)重新编译</li>
+</ol>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line">./configure --prefix=<span class="regexp">/opt/nginx</span>-<span class="number">1.10</span>.<span class="number">0</span> --<span class="keyword">with</span>-http_stub_status_module --<span class="keyword">with</span>-http_ssl_module</div><div class="line"></div><div class="line">make <span class="comment">##这一步之后千万不要`make install`!!!</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>进入nginx的sbin目录备份原来的nginx二进制文件</li>
+</ol>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><div class="line"><span class="keyword">cp</span> nginx nginx.bak</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>停止nginx服务，回到源码目录把重新编译的二进制文件拷贝到nginx的sbin目录替换旧的</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">cp objs<span class="regexp">/nginx /</span>opt<span class="regexp">/nginx-1.10.0/</span>sbin<span class="regexp">/</span></div></pre></td></tr></table></figure>
+<ol start="5">
+<li>执行第1步，验证一下</li>
+</ol>
 
       
     </div>
@@ -566,7 +619,7 @@ SCRIPT_FILENAME
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">230</span>
+              <span class="site-state-item-count">231</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -702,7 +755,7 @@ SCRIPT_FILENAME
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx添加ssl模块"><span class="nav-number">1.</span> <span class="nav-text"> nginx添加ssl模块</span></a></li></ol></div>
             
           </div>
         </section>
@@ -721,7 +774,7 @@ SCRIPT_FILENAME
         <div class="copyright" >
   
   &copy;  2012 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
