@@ -1119,8 +1119,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-window-resize/" itemprop="url">
-                  改变当前浏览器窗口大小
+                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">
+                  自定义js的trim()方法
                 </a>
               
             
@@ -1163,8 +1163,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-js-window-resize/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-window-resize/" itemprop="commentsCount"></span>
+                <a href="/2013/01/10/web-js-trim/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-trim/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1189,7 +1189,11 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"JavaScript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    self.resizeTo(200,300)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
+<p>写成类的方法格式如下：（str.trim();）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>写成函数可以这样：(trim(str))</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1239,8 +1243,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">
-                  1像素表格
+                <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">
+                  可拖动模式窗口
                 </a>
               
             
@@ -1283,8 +1287,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-1px-table/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-1px-table/" itemprop="commentsCount"></span>
+                <a href="/2013/01/10/web-js-mode-window/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-mode-window/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1309,127 +1313,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line"> <span class="selector-tag">table</span>&#123;</div><div class="line">       <span class="attribute">background</span>:black; </div><div class="line">       <span class="attribute">width</span>:<span class="number">600</span>;      </div><div class="line">       <span class="attribute">height</span>:<span class="number">100</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; </div><div class="line">     <span class="attribute">background</span>:white;</div><div class="line"> &#125; </div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">1</span> <span class="attr">cellspacing</span>=<span class="string">1</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">
-                  禁止状态栏显示链接
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
-              2013-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/10/web-disabled-statebar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-disabled-statebar/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>可拖动模式窗口<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"> </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertWin</span>(<span class="params">title, msg, w, h</span>)</span>&#123;  </div><div class="line">    <span class="keyword">var</span> titleheight = <span class="string">"22px"</span>; <span class="comment">// 提示窗口标题高度  </span></div><div class="line">    <span class="keyword">var</span> bordercolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的边框颜色  </span></div><div class="line">    <span class="keyword">var</span> titlecolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示窗口的标题颜色  </span></div><div class="line">    <span class="keyword">var</span> titlebgcolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的标题背景色 </span></div><div class="line">    <span class="keyword">var</span> bgcolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示内容的背景色 </span></div><div class="line">     </div><div class="line">    <span class="keyword">var</span> iWidth = <span class="built_in">document</span>.documentElement.clientWidth;  </div><div class="line">    <span class="keyword">var</span> iHeight = <span class="built_in">document</span>.documentElement.clientHeight;  </div><div class="line">    <span class="keyword">var</span> bgObj = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);  </div><div class="line">    bgObj.style.cssText = <span class="string">"position:absolute;left:0px;top:0px;width:"</span>+iWidth+<span class="string">"px;height:"</span>+<span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, iHeight)+<span class="string">"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(bgObj);  </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> msgObj=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>); </div><div class="line">    msgObj.style.cssText = <span class="string">"position:absolute;font:11px ‘宋体’;top:"</span>+(iHeight-h)/<span class="number">2</span>+<span class="string">"px;left:"</span>+(iWidth-w)/<span class="number">2</span>+<span class="string">"px;width:"</span>+w+<span class="string">"px;height:"</span>+h+<span class="string">"px;text-align:center;border:1px solid "</span>+bordercolor+<span class="string">";background-color:"</span>+bgcolor+<span class="string">";padding:1px;line-height:22px;z-index:102;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(msgObj); </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>); </div><div class="line">    msgObj.appendChild(table); </div><div class="line">    table.style.cssText = <span class="string">"margin:0px;border:0px;padding:0px;"</span>; </div><div class="line">    table.cellSpacing = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> tr = table.insertRow(<span class="number">-1</span>); </div><div class="line">    <span class="keyword">var</span> titleBar = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    titleBar.style.cssText = <span class="string">"width:100%;height:"</span>+titleheight+<span class="string">"px;text-align:left;padding:3px;margin:0px;font:bold 13px ‘宋体’;color:"</span>+titlecolor+<span class="string">";border:1px solid "</span> + bordercolor + <span class="string">";cursor:move;background-color:"</span> + titlebgcolor; </div><div class="line">    titleBar.style.paddingLeft = <span class="string">"10px"</span>; </div><div class="line">    titleBar.innerHTML = title; </div><div class="line">    <span class="keyword">var</span> moveX = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveY = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveTop = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveLeft = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveable = <span class="literal">false</span>; </div><div class="line">    <span class="keyword">var</span> docMouseMoveEvent = <span class="built_in">document</span>.onmousemove; </div><div class="line">    <span class="keyword">var</span> docMouseUpEvent = <span class="built_in">document</span>.onmouseup; </div><div class="line">    titleBar.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">var</span> evt = getEvent(); </div><div class="line">        moveable = <span class="literal">true</span>;  </div><div class="line">        moveX = evt.clientX; </div><div class="line">        moveY = evt.clientY; </div><div class="line">        moveTop = <span class="built_in">parseInt</span>(msgObj.style.top); </div><div class="line">        moveLeft = <span class="built_in">parseInt</span>(msgObj.style.left); </div><div class="line">         </div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">if</span> (moveable) &#123; </div><div class="line">                <span class="keyword">var</span> evt = getEvent(); </div><div class="line">                <span class="keyword">var</span> x = moveLeft + evt.clientX – moveX; </div><div class="line">                <span class="keyword">var</span> y = moveTop + evt.clientY – moveY; </div><div class="line">                <span class="keyword">if</span> ( x &gt; <span class="number">0</span> &amp;&amp;( x + w &lt; iWidth) &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; (y + h &lt; iHeight) ) &#123; </div><div class="line">                    msgObj.style.left = x + <span class="string">"px"</span>; </div><div class="line">                    msgObj.style.top = y + <span class="string">"px"</span>; </div><div class="line">                &#125; </div><div class="line">            &#125;     </div><div class="line">        &#125;; </div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">            <span class="keyword">if</span> (moveable) &#123;  </div><div class="line">                <span class="built_in">document</span>.onmousemove = docMouseMoveEvent; </div><div class="line">                <span class="built_in">document</span>.onmouseup = docMouseUpEvent; </div><div class="line">                moveable = <span class="literal">false</span>;  </div><div class="line">                moveX = <span class="number">0</span>; </div><div class="line">                moveY = <span class="number">0</span>; </div><div class="line">                moveTop = <span class="number">0</span>; </div><div class="line">                moveLeft = <span class="number">0</span>; </div><div class="line">            &#125;  </div><div class="line">        &#125;; </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> closeBtn = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    closeBtn.style.cssText = <span class="string">"cursor:pointer; padding:2px;background-color:"</span> + titlebgcolor; </div><div class="line">    closeBtn.innerHTML = <span class="string">"&lt;span style=’font-size:15pt; color:"</span>+titlecolor+<span class="string">";’&gt;×&lt;/span&gt;"</span>; </div><div class="line">    closeBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(bgObj);  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(msgObj);  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">var</span> msgBox = table.insertRow(<span class="number">-1</span>).insertCell(<span class="number">-1</span>); </div><div class="line">    msgBox.style.cssText = <span class="string">"font:10pt ‘宋体’;"</span>; </div><div class="line">    msgBox.colSpan  = <span class="number">2</span>; </div><div class="line">    msgBox.innerHTML = msg; </div><div class="line">     </div><div class="line">    <span class="comment">// 获得事件Event对象，用于兼容IE和FireFox </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.event || <span class="built_in">arguments</span>.callee.caller.arguments[<span class="number">0</span>]; </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点这里"</span> <span class="attr">onclick</span>=<span class="string">"alertWin(‘标题’,'这里是内容’,300,200);"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1604,8 +1488,8 @@ WindowsUpdate删除掉</p>
             
               
                 
-                <a class="post-title-link" href="/2013/01/10/java-eclipse-console/" itemprop="url">
-                  Eclipse 的控制台console乱码
+                <a class="post-title-link" href="/2013/01/10/web-js-window-resize/" itemprop="url">
+                  改变当前浏览器窗口大小
                 </a>
               
             
@@ -1632,8 +1516,8 @@ WindowsUpdate删除掉</p>
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -1648,8 +1532,8 @@ WindowsUpdate删除掉</p>
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/01/10/java-eclipse-console/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/java-eclipse-console/" itemprop="commentsCount"></span>
+                <a href="/2013/01/10/web-js-window-resize/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-window-resize/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1674,17 +1558,127 @@ WindowsUpdate删除掉</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Eclipse 的控制台必须用GBK编码。
-条件1，Window | Preferences | Workspace | Text file encoding | GBK编码。
-这样定义的是整个工作区间的编码。
-这样就把整个工作空间的编码格式定死了，但是如果某一个工程用的是不同的编码格式的话这样单独再解决。如下：
-条件2，工程上 右键 | Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是整个工程的编码。
-这样就把整个工程的编码格式定死了，但是如果某一个文件用的是不同的编码格式的话这样单独再解决。如下：
-条件3，在某个文件上 右键| Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是单独某个文件的编码。
-这里要说的是文件的实际编码格式优先用的是：第3个，其次再用2，最后先用1。有时候是123，必须满足条件。无论怎样这几种编码格式试一试就全知道了。
-条件4，还有运行时编码设置如下：菜单：Run Configuration | 右侧的选项卡Common 的 Console Encoding 选择GBK编码。这个是用来控制console控制台显示，必须是GBK，就不会乱码。尽管1，2，3条件都不是GBK，只要4是GBK。控制台就不会乱码。</p>
-<p>这样保证了工作空间和工程代码编程方式和工程里的单独文件的编码格式的不冲突。</p>
-<p>我们想改变别人的代码的编码格式的话用如下方法：1：用记事本打开，2:改变下面的编码格式如UTF-8，3：另存为xxx.java。这样另存的编码格式就变成自己想要的编码格式了。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"JavaScript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    self.resizeTo(200,300)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">
+                  js判断数字
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-10T18:09:17+08:00" content="2013-01-10">
+              2013-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/10/web-js-number-check/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/10/web-js-number-check/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
 
           
         
