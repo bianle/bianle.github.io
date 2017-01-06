@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-01-06T05:05:08.000Z</updated>
+  <updated>2017-01-06T08:36:00.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux-centos</title>
+    <link href="http://2le.me/2017/01/06/linux-centos-1/"/>
+    <id>http://2le.me/2017/01/06/linux-centos-1/</id>
+    <published>2017-01-06T07:58:57.000Z</published>
+    <updated>2017-01-06T08:36:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="最小化安装后需要做的事情"><a class="header-anchor" href="#最小化安装后需要做的事情"> </a>最小化安装后需要做的事情</h2>
+<h3 id="联网"><a class="header-anchor" href="#联网"> </a>联网</h3>
+<p><code>vi /etc/sysconfig/network-script/ifcfg-eth0</code></p>
+<blockquote>
+<p>NM_CONTROLLED=&quot;no&quot;
+ONBOOT=&quot;yes&quot;
+BOOTPROTO=“dhcp”
+<code>service network start</code></p>
+</blockquote>
+<h2 id="开启sshd"><a class="header-anchor" href="#开启sshd"> </a>开启sshd</h2>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">service sshd <span class="literal">start</span></div></pre></td></tr></table></figure>
+<h2 id="下载wget"><a class="header-anchor" href="#下载wget"> </a>下载wget</h2>
+<h2 id="修改为国内源-阿里云为例"><a class="header-anchor" href="#修改为国内源-阿里云为例"> </a>修改为国内源（阿里云为例）</h2>
+<ol>
+<li>备份你的原镜像文件，以免出错后可以恢复。</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">mv /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span> /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span><span class="selector-class">.backup</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载新的CentOS-Base.repo 到/etc/yum.repos.d/
+CentOS 5
+<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-5.repo</code>
+CentOS 6
+<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</code></li>
+<li>运行yum makecache生成缓存</li>
+</ol>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">yum clean <span class="keyword">all</span></div><div class="line">yum makecache</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;最小化安装后需要做的事情&quot;&gt;&lt;a class=&quot;header-a
+    
+    </summary>
+    
+      <category term="linux" scheme="http://2le.me/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://2le.me/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>联通HG220GU-WO36光猫管理员权限破解</title>
@@ -48,6 +96,110 @@
     
     
       <category term="net" scheme="http://2le.me/tags/net/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql主从配置</title>
+    <link href="http://2le.me/2017/01/06/mysql-master-slaver/"/>
+    <id>http://2le.me/2017/01/06/mysql-master-slaver/</id>
+    <published>2017-01-05T16:04:44.000Z</published>
+    <updated>2017-01-06T16:55:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
+<p>今天（哦不00点04分了，应该说是昨天），打算自己配置一个主从mysql实践一把学习学习，于是倒腾了一下午公司电脑里的东西，腾出了40g硬盘，删了N个游戏（心疼呀！），虚了俩台centos6.6，找了同事极力推荐的<code>oneinstack</code>,装了mysql5.6，开整！记下步骤，兴许哪天就能用上呢！</p>
+<h2 id="环境"><a class="header-anchor" href="#环境"> </a>环境</h2>
+<ol start="0">
+<li>虚一台centos
+主机名<code>db01</code>,为了快速安装，最小化安装就好了（其实并不好）</li>
+<li>安装mysql
+我想顺便试下<code>oneinstack</code>(有点大材小用)，刚想<code>wget</code>发现木网（最小化安装的），修改网络配置后启动<code>network</code>服务连上网<code>yum</code>又慢的想吐道路曲折跌跌撞撞但最终也装上了，不赘述！</li>
+<li>再虚一台centos
+这时注意3点：</li>
+</ol>
+<ul>
+<li>改下hostname(修改<code>/etc/sysconfig/network</code>文件<code>HOSTNAME</code>)，我改成<code>db02</code>了</li>
+<li>拷贝虚拟机会自动添加一个网卡，造成连不上网，修改下网卡配置<a href="http://www.01happy.com/vmware-copy-centos-device-eth0-does-not-seem-to-be-present/" target="_blank" rel="external">看这里</a></li>
+<li>修改mysql的uuid（<code>/data/mysql/auto.cnf</code>修改下uuid值）</li>
+</ul>
+<h2 id="配置"><a class="header-anchor" href="#配置"> </a>配置</h2>
+<h3 id="master端"><a class="header-anchor" href="#master端"> </a>master端</h3>
+<ol>
+<li>创建用户，执行sql命令</li>
+</ol>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">create <span class="keyword">user</span> <span class="title">repl</span>;</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>给repl用户授权</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">GRANT</span> <span class="keyword">REPLICATION</span> <span class="keyword">SLAVE</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'repl'</span>@<span class="string">'172.19.136.%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'123zxc=-0/.,'</span>;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改配置文件(<code>/etc/my.cnf</code>)
+在[mysqld]下面增加（或修改）下面几行代码</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">server-id</span>=<span class="number">1</span>   //给数据库服务的唯一标识，一般为大家设置服务器Ip的末尾号</div><div class="line"><span class="attr">log_bin</span>=master-bin</div><div class="line"><span class="attr">log_bin_index</span>=master-bin.index</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>查看master日志</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">status</span>;</div></pre></td></tr></table></figure>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/07/20170107004223.png" alt="master status"><span class="image-caption">master status</span></p>
+<ol start="5">
+<li>重启mysql</li>
+</ol>
+<h3 id="slaver端"><a class="header-anchor" href="#slaver端"> </a>slaver端</h3>
+<ol>
+<li>修改配置文件后重启服务
+[mysqld]下增加（或修改）以下几行</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">server-id</span>=<span class="number">2</span> //不要和master重复了</div><div class="line"><span class="attr">relay-log-index</span>=slave-relay-bin.index</div><div class="line"><span class="attr">relay-log</span>=slave-relay-bin</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>连接master,执行以下sql命令</li>
+</ol>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">change master to master_host='<span class="number">172.19</span><span class="number">.136</span><span class="number">.241</span>',</div><div class="line">master_user='repl',</div><div class="line">master_port=<span class="number">3306</span>,</div><div class="line">master_password='<span class="number">123</span>zxc=<span class="number">-0</span>/.,',</div><div class="line">master_log_file='master-bin<span class="number">.000001</span>',</div><div class="line">master_log_pos=<span class="number">0</span>;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>启动slave</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">start</span> <span class="keyword">slave</span>;</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>查看slave状态</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>\G;</div></pre></td></tr></table></figure>
+<ul>
+<li>报错1：</li>
+</ul>
+<blockquote>
+<p>The slave I/O thread stops because master and slave have equal MySQL server UUIDs; these UUIDs must be different for replication to work.
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/07/20170107004817.png" alt="uuid"><span class="image-caption">uuid</span>
+解决：修改下uuid</p>
+</blockquote>
+<ul>
+<li>报错2：网不通
+解决：修改防火墙配置，终端命令为：<code>/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT</code></li>
+</ul>
+<h2 id="效果"><a class="header-anchor" href="#效果"> </a>效果</h2>
+<ol>
+<li>
+<p>在master建一个表
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/06/20170106235111.png" alt="在主库创建一个表"><span class="image-caption">在主库创建一个表</span></p>
+</li>
+<li>
+<p>在slaver上<code>show tables</code>
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/06/20170106235153.png" alt="查看从库"><span class="image-caption">查看从库</span></p>
+</li>
+</ol>
+<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
+<p><a href="http://www.cnblogs.com/alvin_xp/p/4162249.html" target="_blank" rel="external">http://www.cnblogs.com/alvin_xp/p/4162249.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;背景&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+    
+    </summary>
+    
+      <category term="mysql" scheme="http://2le.me/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="http://2le.me/tags/mysql/"/>
     
   </entry>
   
@@ -771,104 +923,6 @@
     </summary>
     
       <category term="idea" scheme="http://2le.me/categories/idea/"/>
-    
-    
-      <category term="idea" scheme="http://2le.me/tags/idea/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>idea抽取常量</title>
-    <link href="http://2le.me/2016/11/28/idea-extact-constant/"/>
-    <id>http://2le.me/2016/11/28/idea-extact-constant/</id>
-    <published>2016-11-28T02:56:07.000Z</published>
-    <updated>2016-12-09T05:39:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>idea抽取常量</p>
-<a id="more"></a>
-<h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
-<p>这几天修改sonar上扫描出来的代码缺陷，其中一个<code>String literals should not be duplicated</code>让我
-又学会了一个idea的快捷键<code>抽取常量</code></p>
-<h2 id="症状"><a class="header-anchor" href="#症状"> </a>症状</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/28/20161128112210.png" alt="idea"><span class="image-caption">idea</span></p>
-<figure class="highlight less"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">mav</span><span class="selector-class">.addObject</span>(<span class="string">"result"</span>, <span class="string">"balabala"</span>);</div><div class="line"><span class="selector-tag">mav</span><span class="selector-class">.addObject</span>(<span class="string">"result"</span>, <span class="string">"balabala"</span>);</div><div class="line"><span class="selector-tag">mav</span><span class="selector-class">.addObject</span>(<span class="string">"result"</span>, <span class="string">"balabala"</span>);</div><div class="line"><span class="selector-tag">mav</span><span class="selector-class">.addObject</span>(<span class="string">"result"</span>, <span class="string">"balabala"</span>);</div><div class="line">...</div></pre></td></tr></table></figure>
-<h2 id="快捷键"><a class="header-anchor" href="#快捷键"> </a>快捷键</h2>
-<p>选中<code>&quot;result&quot;</code> , 按 <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Option⌥</kbd> + <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd> + <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">c</kbd> , 弹出下图提示(<s>此时再按下 <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Option⌥</kbd> + <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd> + <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">c</kbd> 则弹出更多选项</s>)</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/28/20161128112300.png" alt="idea"><span class="image-caption">idea</span></p>
-<p>选中Replac all occurrences, <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">enter↵</kbd> 搞定</p>
-<h2 id="插曲"><a class="header-anchor" href="#插曲"> </a>插曲</h2>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Option⌥</kbd> + <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd> + <kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">c</kbd> 和 alfred 的 snipper 冲突，懒得改键了我暂时把alfred关了
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;idea抽取常量&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="idea" scheme="http://2le.me/categories/idea/"/>
-    
-    
-      <category term="idea" scheme="http://2le.me/tags/idea/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>idea宏</title>
-    <link href="http://2le.me/2016/11/25/idea-macros/"/>
-    <id>http://2le.me/2016/11/25/idea-macros/</id>
-    <published>2016-11-25T09:17:48.000Z</published>
-    <updated>2016-12-09T05:40:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>idea宏</p>
-<a id="more"></a>
-<h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
-<p>最近修改sonar上扫描的问题，有些重复问题（比如下边这个），本着『磨刀不误砍柴工』的精神学了下idea宏的录制方法。</p>
-<blockquote>
-<p>Local Variables should not be declared and then immediately returned or throw<br>
-本地变量不应该刚定义完就直接返回</p>
-</blockquote>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/25/20161125150047.png" alt="idea"><span class="image-caption">idea</span></p>
-<h2 id="步骤"><a class="header-anchor" href="#步骤"> </a>步骤</h2>
-<h3 id="开始之前"><a class="header-anchor" href="#开始之前"> </a>开始之前</h3>
-<p>光标在<code>new</code>关键字前</p>
-<h3 id="开始录制"><a class="header-anchor" href="#开始录制"> </a>开始录制</h3>
-<p>菜单<code>Edit-Macros-Start Macros Recording</code>开始录制宏这时候右下角出现录制标志</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/25/20161125145858.png" alt="idea"><span class="image-caption">idea</span></p>
-<h3 id="以下是录制的内容"><a class="header-anchor" href="#以下是录制的内容"> </a>以下是录制的内容</h3>
-<ol>
-<li>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">shift⇧</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">→</kbd>，光标移动到选取并选中
-</li>
-<li>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">x</kbd>，剪切
-</li>
-<li>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">y</kbd>，删除这一行
-</li>
-<li>两次<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">shift⇧</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">alt</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">←</kbd>，光标后退两个单词（分号和<code>mav</code>）</li>
-<li>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Ctrl</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">v</kbd>，粘贴
-</li>
-<li>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Ctrl</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">s</kbd>，保存
-</li>
-</ol>
-<h3 id="录制完毕后保存并绑定导快捷键"><a class="header-anchor" href="#录制完毕后保存并绑定导快捷键"> </a>录制完毕后保存并绑定导快捷键</h3>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/25/20161125150850.png" alt="idea"><span class="image-caption">idea</span></p>
-<h3 id="回放"><a class="header-anchor" href="#回放"> </a>回放</h3>
-<p>找到其他类，光标移到<code>new</code>关键字前，按<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Option⌥</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">1</kbd></p>
-<h2 id="效果"><a class="header-anchor" href="#效果"> </a>效果</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/25/idea-macros.gif" alt="idea"><span class="image-caption">idea</span></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;idea宏&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://2le.me/categories/java/"/>
     
     
       <category term="idea" scheme="http://2le.me/tags/idea/"/>
