@@ -319,8 +319,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/12/05/java-hibernate-object-name-validate/" itemprop="url">
-                  Hibernate 使用 SQL 查询时报错 “对象名 XX 无效”的解决办法
+                <a class="post-title-link" href="/2012/12/06/java-tomcat-ssl/" itemprop="url">
+                  TOMCAT-SSL双向认证-配置实例
                 </a>
               
             
@@ -333,8 +333,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-12-05T18:09:17+08:00" content="2012-12-05">
-              2012-12-05
+            <time itemprop="dateCreated" datetime="2012-12-06T18:09:17+08:00" content="2012-12-06">
+              2012-12-06
             </time>
           </span>
 
@@ -363,8 +363,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/05/java-hibernate-object-name-validate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-hibernate-object-name-validate/" itemprop="commentsCount"></span>
+                <a href="/2012/12/06/java-tomcat-ssl/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/06/java-tomcat-ssl/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -389,41 +389,47 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
-询语言。后者是Hibernate支持的底层数据库查询语言，说白了就是支持以前我们使用
-的SQL语句。
-前2天试着用Hibernate提供的SQL查询数据库，得到的确实不友好的错误提示。
-错误信息如下：
-Caused by: java.sql.SQLException: [Microsoft][SQLServer 2000 Driver for
-JDBC][SQLServer]对象名 ‘ 实际操作的表名 ‘ 无效。
-Hibernate提供的SQL查询语句格式及我检索的条件如下：
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-sQuery.addEntity(Classes.class);
-分析：
-1、查看自己写的语句，没有丝毫的错误。放到SQL查询分析器执行。也能检索出数据。
-这确保了这条语句是没错的。
-提示：Hibernate中的SQL语句是不区分大小写的，即便是你查询的表名。比如你写成这
-样也是合法的 “SEleCt * fRoM ClaSSes “。那么Hibernate怎样操作对象？问题的关键
-是这里sQuery.addEntity(Classes.class);这条语句， 你要正确填写你要检索的表的
-实体，它必须是你存在的POJO。
-2、使用Hibernate官方推荐的HQL查询，同样的数据库，同样的表。结果是正确的。这
-确保了数据库链接是绝对没有问题的。
-3、仔细检查我写的SQL查询方法，没有发现什么语法错误。
-4、检查我查询表的POJO对象的映射文件.XXX.hbm.xml ，主键生成方式是 native 。似
-乎也没有错误。
-5、检查数据库检索表的主键，也已经设成自动增长。
-疑问：
-既然上面都有保证，为什么Hibernate还是检索不到我查询的对象（表）呢，记起POJO
-对象映射文件的class元素中，有这么一段 schema=”dbo” catalog=”HibernateTest”
-。
-提示：schema：数据库所有者。catalog：目录，也就是此对象映射的表属于那个数据
-库。
-和它有关吗？
-修改
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-为
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
-执行查询类，OK了。问题解决了。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SSL (Secure Socket Layer – 安全套接字层)
+功能：保障在Internet上数据传输之安全，利用数据加密(Encryption)技术，确保数据在网络上之传输过程中不会被截取及窃听，防止篡改。
+如何让我们的WEB应用程序应用SSL安全保障？经过几天摸索，终于实现 TOMCAT+SSL 双向认证，也就是说，首先，客户端将要认证服务器的安全性，确保访问的是正确的服务器，而非假冒的钓鱼网站；其次，服务器也要认证客户端的安全性，只有那些拥有服务器授权证书的客户端才可以访问。
+下面请遵循详细步骤
+1.在D盘建立目录：mykeys
+2.启动命令行，并转移到 d:/mykeys
+a)创建服务器密钥，其密钥库为 d:/mykeys/server.ks，注意keypass和storepass保持一致，它们分别代表 密钥密码和密钥库密码，注意 CN=localhost 中，localhost表示要配置SSL的主机名，不能任意指定
+D:/mykeys&gt;keytool -genkey -v -alias serverKey -dname “CN=localhost” -keyalg RSA -keypass rwm258 -keystore server.ks -storepass rwm258
+b)创建客户端密钥，其密钥库为 d:/mykeys/client.p12，注意这个密钥库的后缀名，注意密钥库类型PKCS12
+D:/mykeys&gt;keytool -genkey -v -alias clientKey -dname “CN=SomeOne” -keyalg RSA -keypass lyl147 -keystore client.p12 -storepass lyl147 -storetype PKCS12
+c)        将客户端密钥导出为证书文件
+D:/mykeys&gt;keytool -export -alias clientKey -file clientKey.cer -keystore client.p12 -storepass lyl147 -storetype PKCS12
+d)        将上述客户端密钥文件导入服务器证书库，并设置为信任证书；注意会问你是否信任该证书，回答 y 即可
+D:/mykeys&gt;keytool -import -v -alias clientKey -file clientKey.cer -keystore server.ks -storepass rwm258
+3.为了在本机浏览器中进行SSL访问，请：双击 d:/mykeys/client.p12 ，将启动证书向导
+a)要导入的文件 文件名  D:/mykeys/client.p12
+b)为私钥键入密码lyl147 ，勾选：标志此密钥为可导出的
+c)证书存储，选：将所有的证书放入下列存储区，然后，浏览-个人
+d)现在，打开IE，查看证书：工具-Internet选项-内容-证书-个人，可以看到 SomeOne 证书已被安装</p>
+<ol start="4">
+<li>配置TOMCAT服务器，以支持SSL认证，编辑文件：%tomcat_home%/conf/server.xml，下面这段配置代码本来是被屏蔽的，现在请取消其屏蔽，并相应增加密钥库的配置，其中clientAuth=“true” 用以启动双向认证，否则，只有客户端认证服务器-单向
+&lt;Connector port=“8443” protocol=“HTTP/1.1” SSLEnabled=“true”</li>
+</ol>
+<p>maxThreads=“150” scheme=“https” secure=“true”</p>
+<p>clientAuth=“true” sslProtocol=“TLS”</p>
+<p>keystoreFile=“D:/mykeys/server.ks” keystorePass=“rwm258”</p>
+<p>truststoreFile=“D:/mykeys/server.ks &quot; truststorePass=” rwm258&quot; /&gt;</p>
+<ol start="5">
+<li>启动 TOMCAT，然后在IE浏览器中访问：<a href="https://localhost:8443/" target="_blank" rel="external">https://localhost:8443/</a>
+a) 将弹出一个消息框，这是要客户端认证服务器，查看证书可看到服务器证书为 localhost ，回顾前面的步骤，正是我们创建的那个服务器证书；这里点 是
+b) 页面出现，说明客户端被允许访问</li>
+<li>现在，再次打开IE，工具-Internet选项-内容-证书-个人 ，删除那个 SomeOne 证书
+a) 现在，再次在IE浏览器中访问：<a href="https://localhost:8443/" target="_blank" rel="external">https://localhost:8443/</a> 你会发现，回顾前面的 3 步骤，你会明白为什么要将客户端证书导入 IE 浏览器；
+7.请再次重复 3 步骤，之后再尝试访问
+OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一台电脑来访问本机服务器如何处理呢？很简单，把 d:/mykeys/client.p12 复制到该机器，然后执行 3 步骤，将这个证书导入到该机器的 IE 浏览器个人证书中，记得密码是：lyl147；当然，在那台电脑上访问时，要将localhost修改为本机主机名或IP地址
+——————————————————————-
+要使你自己的WEB程序应用SSL安全访问，请遵循如下配置
+在你应用的 web.xml 文件的 <web-app></web-app> 中加入如下配置</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">login-config</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">auth-method</span>&gt;</span>CLIENT-CERT<span class="tag">&lt;/<span class="name">auth-method</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">realm-name</span>&gt;</span>Client Cert Users-only Area<span class="tag">&lt;/<span class="name">realm-name</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">login-config</span>&gt;</span> </div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">security-constraint</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">web-resource-collection</span> &gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">web-resource-name</span> &gt;</span>SSL<span class="tag">&lt;/<span class="name">web-resource-name</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">web-resource-collection</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">transport-guarantee</span>&gt;</span>CONFIDENTIAL<span class="tag">&lt;/<span class="name">transport-guarantee</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">security-constraint</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>你会发现，即使使用 http://….:8080 来访问你的应用程序，它也会重定向为 https://….8443 访问，也就是说，你的应用已经强制使用SSL安全访问层</p>
 
           
         
@@ -865,6 +871,160 @@ Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
             
               
                 
+                <a class="post-title-link" href="/2012/12/05/java-hibernate-object-name-validate/" itemprop="url">
+                  Hibernate 使用 SQL 查询时报错 “对象名 XX 无效”的解决办法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-05T18:09:17+08:00" content="2012-12-05">
+              2012-12-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/12/05/java-hibernate-object-name-validate/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-hibernate-object-name-validate/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
+询语言。后者是Hibernate支持的底层数据库查询语言，说白了就是支持以前我们使用
+的SQL语句。
+前2天试着用Hibernate提供的SQL查询数据库，得到的确实不友好的错误提示。
+错误信息如下：
+Caused by: java.sql.SQLException: [Microsoft][SQLServer 2000 Driver for
+JDBC][SQLServer]对象名 ‘ 实际操作的表名 ‘ 无效。
+Hibernate提供的SQL查询语句格式及我检索的条件如下：
+SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
+sQuery.addEntity(Classes.class);
+分析：
+1、查看自己写的语句，没有丝毫的错误。放到SQL查询分析器执行。也能检索出数据。
+这确保了这条语句是没错的。
+提示：Hibernate中的SQL语句是不区分大小写的，即便是你查询的表名。比如你写成这
+样也是合法的 “SEleCt * fRoM ClaSSes “。那么Hibernate怎样操作对象？问题的关键
+是这里sQuery.addEntity(Classes.class);这条语句， 你要正确填写你要检索的表的
+实体，它必须是你存在的POJO。
+2、使用Hibernate官方推荐的HQL查询，同样的数据库，同样的表。结果是正确的。这
+确保了数据库链接是绝对没有问题的。
+3、仔细检查我写的SQL查询方法，没有发现什么语法错误。
+4、检查我查询表的POJO对象的映射文件.XXX.hbm.xml ，主键生成方式是 native 。似
+乎也没有错误。
+5、检查数据库检索表的主键，也已经设成自动增长。
+疑问：
+既然上面都有保证，为什么Hibernate还是检索不到我查询的对象（表）呢，记起POJO
+对象映射文件的class元素中，有这么一段 schema=”dbo” catalog=”HibernateTest”
+。
+提示：schema：数据库所有者。catalog：目录，也就是此对象映射的表属于那个数据
+库。
+和它有关吗？
+修改
+SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
+为
+SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
+执行查询类，OK了。问题解决了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/12/05/java-reflex/" itemprop="url">
                   JAVA反射机制-class类的获取
                 </a>
@@ -1114,126 +1274,6 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><a href="http://wp.qq.com/index.html" target="_blank" rel="external">http://wp.qq.com/index.html</a></p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="selector-tag">a</span> target=<span class="string">"_blank"</span> href=<span class="string">"http://wpa.qq.com/msgrd?v=3&amp;uin=229371515&amp;site=qq&amp;menu=yes"</span> mce_href=<span class="string">"http://wpa.qq.com/msgrd?v=3&amp;uin=229371515&amp;site=qq&amp;menu=yes"</span>&gt;</div><div class="line">  &lt;<span class="selector-tag">img</span> <span class="attribute">border</span>=<span class="string">"0"</span> src=<span class="string">"http://wpa.qq.com/pa?p=2:229371515:42"</span> mce_src=<span class="string">"http://wpa.qq.com/pa?p=2:229371515:42"</span> alt=<span class="string">"给我留言"</span> title=<span class="string">"给我留言"</span> /&gt;</div><div class="line">&lt;/a&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">
-                  java socket小demo
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-10-16T18:09:17+08:00" content="2012-10-16">
-              2012-10-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/10/16/java-socket-demo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/java-socket-demo/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">2222</span>);</div><div class="line">			System.out.println(<span class="string">"Server已经启动。。。"</span>);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">				Socket so = ss.accept();<span class="comment">//等待客户连接</span></div><div class="line">				<span class="keyword">new</span> ServerThread(so).start();</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			Socket so = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">2222</span>);</div><div class="line">			DataInputStream dis = <span class="keyword">new</span> </div><div class="line">			  DataInputStream(so.getInputStream());</div><div class="line">			DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">			  DataOutputStream(so.getOutputStream());</div><div class="line">			InputStreamReader isr = <span class="keyword">new</span> </div><div class="line">			  InputStreamReader(System.in);</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">			    String str = br.readLine();</div><div class="line">			    <span class="comment">//1 没有通知服务器</span></div><div class="line">			    dos.writeUTF(str);</div><div class="line">			    <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(str)) <span class="keyword">break</span>;</div><div class="line">			    String s = dis.readUTF();</div><div class="line">			    System.out.println(s);</div><div class="line">			&#125;</div><div class="line">			dis.close();dos.close();</div><div class="line">			so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataInputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataOutputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> Socket so;</div><div class="line">	<span class="keyword">public</span> ServerThread(Socket so)&#123;</div><div class="line">		<span class="keyword">this</span>.so = so;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run()&#123;</div><div class="line">		<span class="keyword">try</span>&#123;		   </div><div class="line">		    DataInputStream dis = <span class="keyword">new</span> </div><div class="line">		      DataInputStream(so.getInputStream());</div><div class="line">		    DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">		      DataOutputStream(so.getOutputStream());</div><div class="line">		    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		        String s = dis.readUTF();</div><div class="line">		        <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(s)) <span class="keyword">break</span>;</div><div class="line">		        dos.writeUTF(<span class="string">"from server:"</span>+s);</div><div class="line">		    &#125;</div><div class="line">		    dis.close();dos.close();</div><div class="line">		    so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1562,8 +1602,8 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
             
               
                 
-                <a class="post-title-link" href="/2012/10/16/web-js-cal/" itemprop="url">
-                  js精确计算
+                <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">
+                  java socket小demo
                 </a>
               
             
@@ -1576,7 +1616,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-10-16T17:30:33+08:00" content="2012-10-16">
+            <time itemprop="dateCreated" datetime="2012-10-16T18:09:17+08:00" content="2012-10-16">
               2012-10-16
             </time>
           </span>
@@ -1590,8 +1630,8 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -1606,8 +1646,8 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/10/16/web-js-cal/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-js-cal/" itemprop="commentsCount"></span>
+                <a href="/2012/10/16/java-socket-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/java-socket-demo/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1632,7 +1672,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">//说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。</span></div><div class="line"><span class="comment">//调用：accAdd(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1加上arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accAdd</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> r1, r2, m;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		r1 = (<span class="number">1</span> * arg1).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">		r1 = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		r2 = (<span class="number">1</span> * arg2).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">		r2 = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	m = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="built_in">Math</span>.max(r1, r2));</div><div class="line">	<span class="keyword">return</span> (arg1 * m + arg2 * m) / m;</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的减法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的减法结果。</span></div><div class="line"><span class="comment">//调用：accSub(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1减上arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accSub</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> accAdd(arg1, -arg2);</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的乘法结果会有误差，在两个浮点数相乘的时候会比较明显。这个函数返回较为精确的乘法结果。</span></div><div class="line"><span class="comment">//调用：accMul(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1乘以arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accMul</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> m = <span class="number">0</span>, s1 = (<span class="number">1</span> * arg1).toString(), s2 = (<span class="number">1</span> * arg2).toString();</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		m += s1.split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		m += s2.split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">var</span> ss = <span class="built_in">Number</span>(s1.replace(<span class="string">"."</span>, <span class="string">""</span>)) * <span class="built_in">Number</span>(s2.replace(<span class="string">"."</span>, <span class="string">""</span>)) / <span class="built_in">Math</span>.pow(<span class="number">10</span>, m);</div><div class="line">	<span class="keyword">return</span> <span class="built_in">Math</span>.round(ss * <span class="number">100</span>) / <span class="number">100</span>;</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的除法结果会有误差，在两个浮点数相除的时候会比较明显。这个函数返回较为精确的除法结果。</span></div><div class="line"><span class="comment">//调用：accDiv(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1除以arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accDiv</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> t1 = <span class="number">0</span>, t2 = <span class="number">0</span>, r1, r2;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		t1 = (<span class="number">1</span> * arg1).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		t2 = (<span class="number">1</span> * arg2).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">with</span> (<span class="built_in">Math</span>) &#123;</div><div class="line">		r1 = <span class="built_in">Number</span>((<span class="number">1</span> * arg1).toString().replace(<span class="string">"."</span>, <span class="string">""</span>));</div><div class="line">		r2 = <span class="built_in">Number</span>((<span class="number">1</span> * arg2).toString().replace(<span class="string">"."</span>, <span class="string">""</span>));</div><div class="line">		<span class="keyword">var</span> ss = (r1 / r2) * pow(<span class="number">10</span>, t2 - t1);</div><div class="line">		<span class="keyword">return</span> <span class="built_in">Math</span>.round(ss * <span class="number">100</span>) / <span class="number">100</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//金额大小写转换</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertCurrency</span>(<span class="params">currencyDigits</span>) </span>&#123;</div><div class="line"><span class="comment">// Constants:</span></div><div class="line"><span class="keyword">var</span> MAXIMUM_NUMBER = <span class="number">99999999999.99</span>;</div><div class="line"><span class="comment">// Predefine the radix characters and currency symbols for output:</span></div><div class="line"><span class="keyword">var</span> CN_ZERO = <span class="string">"零"</span>;</div><div class="line"><span class="keyword">var</span> CN_ONE = <span class="string">"壹"</span>;</div><div class="line"><span class="keyword">var</span> CN_TWO = <span class="string">"贰"</span>;</div><div class="line"><span class="keyword">var</span> CN_THREE = <span class="string">"叁"</span>;</div><div class="line"><span class="keyword">var</span> CN_FOUR = <span class="string">"肆"</span>;</div><div class="line"><span class="keyword">var</span> CN_FIVE = <span class="string">"伍"</span>;</div><div class="line"><span class="keyword">var</span> CN_SIX = <span class="string">"陆"</span>;</div><div class="line"><span class="keyword">var</span> CN_SEVEN = <span class="string">"柒"</span>;</div><div class="line"><span class="keyword">var</span> CN_EIGHT = <span class="string">"捌"</span>;</div><div class="line"><span class="keyword">var</span> CN_NINE = <span class="string">"玖"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN = <span class="string">"拾"</span>;</div><div class="line"><span class="keyword">var</span> CN_HUNDRED = <span class="string">"佰"</span>;</div><div class="line"><span class="keyword">var</span> CN_THOUSAND = <span class="string">"仟"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN_THOUSAND = <span class="string">"万"</span>;</div><div class="line"><span class="keyword">var</span> CN_HUNDRED_MILLION = <span class="string">"亿"</span>;</div><div class="line"><span class="keyword">var</span> CN_SYMBOL = <span class="string">"人民币"</span>;</div><div class="line"><span class="keyword">var</span> CN_DOLLAR = <span class="string">"元"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN_CENT = <span class="string">"角"</span>;</div><div class="line"><span class="keyword">var</span> CN_CENT = <span class="string">"分"</span>;</div><div class="line"><span class="keyword">var</span> CN_INTEGER = <span class="string">"整"</span>;</div><div class="line"></div><div class="line"><span class="comment">// Variables:</span></div><div class="line"><span class="keyword">var</span> integral; <span class="comment">// Represent integral part of digit number. </span></div><div class="line"><span class="keyword">var</span> decimal; <span class="comment">// Represent decimal part of digit number.</span></div><div class="line"><span class="keyword">var</span> outputCharacters; <span class="comment">// The output result.</span></div><div class="line"><span class="keyword">var</span> parts;</div><div class="line"><span class="keyword">var</span> digits, radices, bigRadices, decimals;</div><div class="line"><span class="keyword">var</span> zeroCount;</div><div class="line"><span class="keyword">var</span> i, p, d;</div><div class="line"><span class="keyword">var</span> quotient, modulus;</div><div class="line"></div><div class="line"><span class="comment">// Validate input string:</span></div><div class="line">currencyDigits = currencyDigits.toString();</div><div class="line"><span class="keyword">if</span> (currencyDigits == <span class="string">""</span>) &#123;</div><div class="line">  alert(<span class="string">"Empty input!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (currencyDigits.match(<span class="regexp">/[^,.d]/</span>) != <span class="literal">null</span>) &#123;</div><div class="line">  alert(<span class="string">"Invalid characters in the input string!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> ((currencyDigits).match(<span class="regexp">/^((d&#123;1,3&#125;(,d&#123;3&#125;)*(.((d&#123;3&#125;,)*d&#123;1,3&#125;))?)|(d+(.d+)?))$/</span>) == <span class="literal">null</span>) &#123;</div><div class="line">  alert(<span class="string">"Illegal format of digit number!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Normalize the format of input digits:</span></div><div class="line">currencyDigits = currencyDigits.replace(<span class="regexp">/,/g</span>, <span class="string">""</span>); <span class="comment">// Remove comma delimiters.</span></div><div class="line">currencyDigits = currencyDigits.replace(<span class="regexp">/^0+/</span>, <span class="string">""</span>); <span class="comment">// Trim zeros at the beginning. </span></div><div class="line"><span class="comment">// Assert the number is not greater than the maximum number.</span></div><div class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(currencyDigits) &gt; MAXIMUM_NUMBER) &#123;</div><div class="line">  alert(<span class="string">"Too large a number to convert!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// http://www.knowsky.com/ Process the coversion from currency digits to characters:</span></div><div class="line"><span class="comment">// Separate integral and decimal parts before processing coversion:</span></div><div class="line">parts = currencyDigits.split(<span class="string">"."</span>);</div><div class="line"><span class="keyword">if</span> (parts.length &gt; <span class="number">1</span>) &#123;</div><div class="line">  integral = parts[<span class="number">0</span>];</div><div class="line">  decimal = parts[<span class="number">1</span>];</div><div class="line">  <span class="comment">// Cut down redundant decimal digits that are after the second.</span></div><div class="line">  decimal = decimal.substr(<span class="number">0</span>, <span class="number">2</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line">  integral = parts[<span class="number">0</span>];</div><div class="line">  decimal = <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prepare the characters corresponding to the digits:</span></div><div class="line">digits = <span class="keyword">new</span> <span class="built_in">Array</span>(CN_ZERO, CN_ONE, CN_TWO, CN_THREE, CN_FOUR, CN_FIVE, CN_SIX, CN_SEVEN, CN_EIGHT,CN_NINE);</div><div class="line">radices = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">""</span>, CN_TEN, CN_HUNDRED, CN_THOUSAND);</div><div class="line">bigRadices = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">""</span>, CN_TEN_THOUSAND, CN_HUNDRED_MILLION);</div><div class="line">decimals = <span class="keyword">new</span> <span class="built_in">Array</span>(CN_TEN_CENT, CN_CENT);</div><div class="line"><span class="comment">// Start processing:</span></div><div class="line">outputCharacters = <span class="string">""</span>;</div><div class="line"><span class="comment">// Process integral part if it is larger than 0:</span></div><div class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(integral) &gt; <span class="number">0</span>) &#123;</div><div class="line">  zeroCount = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; integral.length; i++) &#123;</div><div class="line">   p = integral.length - i - <span class="number">1</span>;</div><div class="line">   d = integral.substr(i, <span class="number">1</span>);</div><div class="line">   quotient = p / <span class="number">4</span>;</div><div class="line">   modulus = p % <span class="number">4</span>;</div><div class="line">   <span class="keyword">if</span> (d == <span class="string">"0"</span>) &#123;</div><div class="line">    zeroCount++;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">if</span> (zeroCount &gt; <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">     outputCharacters += digits[<span class="number">0</span>];</div><div class="line">    &#125;</div><div class="line">    zeroCount = <span class="number">0</span>;</div><div class="line">    outputCharacters += digits[<span class="built_in">Number</span>(d)] + radices[modulus];</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">if</span> (modulus == <span class="number">0</span> &amp;&amp; zeroCount &lt; <span class="number">4</span>) &#123; </div><div class="line"></div><div class="line">    outputCharacters += bigRadices[quotient];</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">  outputCharacters += CN_DOLLAR;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Process decimal part if there is:</span></div><div class="line"><span class="keyword">if</span> (decimal != <span class="string">""</span>) &#123;</div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; decimal.length; i++) &#123;</div><div class="line">   d = decimal.substr(i, <span class="number">1</span>);</div><div class="line">   <span class="keyword">if</span> (d != <span class="string">"0"</span>) &#123;</div><div class="line">    outputCharacters += digits[<span class="built_in">Number</span>(d)] + decimals[i];</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Confirm and return the final output string:</span></div><div class="line"><span class="keyword">if</span> (outputCharacters == <span class="string">""</span>) &#123;</div><div class="line">  outputCharacters = CN_ZERO + CN_DOLLAR;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (decimal == <span class="string">""</span>) &#123;</div><div class="line">  outputCharacters += CN_INTEGER;</div><div class="line">&#125;</div><div class="line"><span class="comment">//outputCharacters = CN_SYMBOL + outputCharacters;</span></div><div class="line">outputCharacters = outputCharacters;</div><div class="line"><span class="keyword">return</span> outputCharacters;</div><div class="line">&#125;<span class="comment">// </span></div><div class="line"><span class="comment">//还原金额   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmoney</span>(<span class="params">s</span>)</span>&#123; </div><div class="line">	<span class="keyword">return</span> <span class="built_in">parseFloat</span>(s.replace(<span class="regexp">/[^d.-]/g</span>,<span class="string">""</span>));  </div><div class="line">&#125; 	</div><div class="line"></div><div class="line"><span class="comment">//金额合计的格式化s为要格式化的参数（浮点型），n为小数点后保留的位数	</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fmoney</span>(<span class="params">s,n</span>)</span>&#123;</div><div class="line">	n = n&gt;<span class="number">0</span> &amp;&amp; n&lt;=<span class="number">20</span> ? n : <span class="number">2</span>;</div><div class="line">	s = <span class="built_in">parseFloat</span>((s+<span class="string">""</span>).replace(<span class="regexp">/[^d.-]/g</span>,<span class="string">""</span>)).toFixed(n)+<span class="string">""</span>;</div><div class="line">	<span class="keyword">var</span> l = s.split(<span class="string">"."</span>)[<span class="number">0</span>].split(<span class="string">""</span>).reverse(), </div><div class="line">	r = s.split(<span class="string">"."</span>)[<span class="number">1</span>]; </div><div class="line">	t = <span class="string">""</span>;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;l.length;i++)&#123;</div><div class="line">		t+=l[i]+((i+<span class="number">1</span>)%<span class="number">3</span>==<span class="number">0</span> &amp;&amp; (i+<span class="number">1</span>) != l.length ? <span class="string">","</span> : <span class="string">""</span>); </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> t.split(<span class="string">""</span>).reverse().join(<span class="string">""</span>)+<span class="string">"."</span>+r;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">2222</span>);</div><div class="line">			System.out.println(<span class="string">"Server已经启动。。。"</span>);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">				Socket so = ss.accept();<span class="comment">//等待客户连接</span></div><div class="line">				<span class="keyword">new</span> ServerThread(so).start();</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			Socket so = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">2222</span>);</div><div class="line">			DataInputStream dis = <span class="keyword">new</span> </div><div class="line">			  DataInputStream(so.getInputStream());</div><div class="line">			DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">			  DataOutputStream(so.getOutputStream());</div><div class="line">			InputStreamReader isr = <span class="keyword">new</span> </div><div class="line">			  InputStreamReader(System.in);</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">			    String str = br.readLine();</div><div class="line">			    <span class="comment">//1 没有通知服务器</span></div><div class="line">			    dos.writeUTF(str);</div><div class="line">			    <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(str)) <span class="keyword">break</span>;</div><div class="line">			    String s = dis.readUTF();</div><div class="line">			    System.out.println(s);</div><div class="line">			&#125;</div><div class="line">			dis.close();dos.close();</div><div class="line">			so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataInputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataOutputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> Socket so;</div><div class="line">	<span class="keyword">public</span> ServerThread(Socket so)&#123;</div><div class="line">		<span class="keyword">this</span>.so = so;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run()&#123;</div><div class="line">		<span class="keyword">try</span>&#123;		   </div><div class="line">		    DataInputStream dis = <span class="keyword">new</span> </div><div class="line">		      DataInputStream(so.getInputStream());</div><div class="line">		    DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">		      DataOutputStream(so.getOutputStream());</div><div class="line">		    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		        String s = dis.readUTF();</div><div class="line">		        <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(s)) <span class="keyword">break</span>;</div><div class="line">		        dos.writeUTF(<span class="string">"from server:"</span>+s);</div><div class="line">		    &#125;</div><div class="line">		    dis.close();dos.close();</div><div class="line">		    so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1706,7 +1746,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">231</span>
+              <span class="site-state-item-count">232</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1714,7 +1754,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1723,7 +1763,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">159</span>
+                <span class="site-state-item-count">160</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -319,6 +319,126 @@
             
               
                 
+                <a class="post-title-link" href="/2012/10/16/web-js-cal/" itemprop="url">
+                  js精确计算
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-10-16T17:30:33+08:00" content="2012-10-16">
+              2012-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/10/16/web-js-cal/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/web-js-cal/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">//说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。</span></div><div class="line"><span class="comment">//调用：accAdd(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1加上arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accAdd</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> r1, r2, m;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		r1 = (<span class="number">1</span> * arg1).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">		r1 = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		r2 = (<span class="number">1</span> * arg2).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">		r2 = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	m = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="built_in">Math</span>.max(r1, r2));</div><div class="line">	<span class="keyword">return</span> (arg1 * m + arg2 * m) / m;</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的减法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的减法结果。</span></div><div class="line"><span class="comment">//调用：accSub(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1减上arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accSub</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> accAdd(arg1, -arg2);</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的乘法结果会有误差，在两个浮点数相乘的时候会比较明显。这个函数返回较为精确的乘法结果。</span></div><div class="line"><span class="comment">//调用：accMul(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1乘以arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accMul</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> m = <span class="number">0</span>, s1 = (<span class="number">1</span> * arg1).toString(), s2 = (<span class="number">1</span> * arg2).toString();</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		m += s1.split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		m += s2.split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">var</span> ss = <span class="built_in">Number</span>(s1.replace(<span class="string">"."</span>, <span class="string">""</span>)) * <span class="built_in">Number</span>(s2.replace(<span class="string">"."</span>, <span class="string">""</span>)) / <span class="built_in">Math</span>.pow(<span class="number">10</span>, m);</div><div class="line">	<span class="keyword">return</span> <span class="built_in">Math</span>.round(ss * <span class="number">100</span>) / <span class="number">100</span>;</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的除法结果会有误差，在两个浮点数相除的时候会比较明显。这个函数返回较为精确的除法结果。</span></div><div class="line"><span class="comment">//调用：accDiv(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1除以arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accDiv</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> t1 = <span class="number">0</span>, t2 = <span class="number">0</span>, r1, r2;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		t1 = (<span class="number">1</span> * arg1).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		t2 = (<span class="number">1</span> * arg2).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">with</span> (<span class="built_in">Math</span>) &#123;</div><div class="line">		r1 = <span class="built_in">Number</span>((<span class="number">1</span> * arg1).toString().replace(<span class="string">"."</span>, <span class="string">""</span>));</div><div class="line">		r2 = <span class="built_in">Number</span>((<span class="number">1</span> * arg2).toString().replace(<span class="string">"."</span>, <span class="string">""</span>));</div><div class="line">		<span class="keyword">var</span> ss = (r1 / r2) * pow(<span class="number">10</span>, t2 - t1);</div><div class="line">		<span class="keyword">return</span> <span class="built_in">Math</span>.round(ss * <span class="number">100</span>) / <span class="number">100</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//金额大小写转换</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertCurrency</span>(<span class="params">currencyDigits</span>) </span>&#123;</div><div class="line"><span class="comment">// Constants:</span></div><div class="line"><span class="keyword">var</span> MAXIMUM_NUMBER = <span class="number">99999999999.99</span>;</div><div class="line"><span class="comment">// Predefine the radix characters and currency symbols for output:</span></div><div class="line"><span class="keyword">var</span> CN_ZERO = <span class="string">"零"</span>;</div><div class="line"><span class="keyword">var</span> CN_ONE = <span class="string">"壹"</span>;</div><div class="line"><span class="keyword">var</span> CN_TWO = <span class="string">"贰"</span>;</div><div class="line"><span class="keyword">var</span> CN_THREE = <span class="string">"叁"</span>;</div><div class="line"><span class="keyword">var</span> CN_FOUR = <span class="string">"肆"</span>;</div><div class="line"><span class="keyword">var</span> CN_FIVE = <span class="string">"伍"</span>;</div><div class="line"><span class="keyword">var</span> CN_SIX = <span class="string">"陆"</span>;</div><div class="line"><span class="keyword">var</span> CN_SEVEN = <span class="string">"柒"</span>;</div><div class="line"><span class="keyword">var</span> CN_EIGHT = <span class="string">"捌"</span>;</div><div class="line"><span class="keyword">var</span> CN_NINE = <span class="string">"玖"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN = <span class="string">"拾"</span>;</div><div class="line"><span class="keyword">var</span> CN_HUNDRED = <span class="string">"佰"</span>;</div><div class="line"><span class="keyword">var</span> CN_THOUSAND = <span class="string">"仟"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN_THOUSAND = <span class="string">"万"</span>;</div><div class="line"><span class="keyword">var</span> CN_HUNDRED_MILLION = <span class="string">"亿"</span>;</div><div class="line"><span class="keyword">var</span> CN_SYMBOL = <span class="string">"人民币"</span>;</div><div class="line"><span class="keyword">var</span> CN_DOLLAR = <span class="string">"元"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN_CENT = <span class="string">"角"</span>;</div><div class="line"><span class="keyword">var</span> CN_CENT = <span class="string">"分"</span>;</div><div class="line"><span class="keyword">var</span> CN_INTEGER = <span class="string">"整"</span>;</div><div class="line"></div><div class="line"><span class="comment">// Variables:</span></div><div class="line"><span class="keyword">var</span> integral; <span class="comment">// Represent integral part of digit number. </span></div><div class="line"><span class="keyword">var</span> decimal; <span class="comment">// Represent decimal part of digit number.</span></div><div class="line"><span class="keyword">var</span> outputCharacters; <span class="comment">// The output result.</span></div><div class="line"><span class="keyword">var</span> parts;</div><div class="line"><span class="keyword">var</span> digits, radices, bigRadices, decimals;</div><div class="line"><span class="keyword">var</span> zeroCount;</div><div class="line"><span class="keyword">var</span> i, p, d;</div><div class="line"><span class="keyword">var</span> quotient, modulus;</div><div class="line"></div><div class="line"><span class="comment">// Validate input string:</span></div><div class="line">currencyDigits = currencyDigits.toString();</div><div class="line"><span class="keyword">if</span> (currencyDigits == <span class="string">""</span>) &#123;</div><div class="line">  alert(<span class="string">"Empty input!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (currencyDigits.match(<span class="regexp">/[^,.d]/</span>) != <span class="literal">null</span>) &#123;</div><div class="line">  alert(<span class="string">"Invalid characters in the input string!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> ((currencyDigits).match(<span class="regexp">/^((d&#123;1,3&#125;(,d&#123;3&#125;)*(.((d&#123;3&#125;,)*d&#123;1,3&#125;))?)|(d+(.d+)?))$/</span>) == <span class="literal">null</span>) &#123;</div><div class="line">  alert(<span class="string">"Illegal format of digit number!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Normalize the format of input digits:</span></div><div class="line">currencyDigits = currencyDigits.replace(<span class="regexp">/,/g</span>, <span class="string">""</span>); <span class="comment">// Remove comma delimiters.</span></div><div class="line">currencyDigits = currencyDigits.replace(<span class="regexp">/^0+/</span>, <span class="string">""</span>); <span class="comment">// Trim zeros at the beginning. </span></div><div class="line"><span class="comment">// Assert the number is not greater than the maximum number.</span></div><div class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(currencyDigits) &gt; MAXIMUM_NUMBER) &#123;</div><div class="line">  alert(<span class="string">"Too large a number to convert!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// http://www.knowsky.com/ Process the coversion from currency digits to characters:</span></div><div class="line"><span class="comment">// Separate integral and decimal parts before processing coversion:</span></div><div class="line">parts = currencyDigits.split(<span class="string">"."</span>);</div><div class="line"><span class="keyword">if</span> (parts.length &gt; <span class="number">1</span>) &#123;</div><div class="line">  integral = parts[<span class="number">0</span>];</div><div class="line">  decimal = parts[<span class="number">1</span>];</div><div class="line">  <span class="comment">// Cut down redundant decimal digits that are after the second.</span></div><div class="line">  decimal = decimal.substr(<span class="number">0</span>, <span class="number">2</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line">  integral = parts[<span class="number">0</span>];</div><div class="line">  decimal = <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prepare the characters corresponding to the digits:</span></div><div class="line">digits = <span class="keyword">new</span> <span class="built_in">Array</span>(CN_ZERO, CN_ONE, CN_TWO, CN_THREE, CN_FOUR, CN_FIVE, CN_SIX, CN_SEVEN, CN_EIGHT,CN_NINE);</div><div class="line">radices = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">""</span>, CN_TEN, CN_HUNDRED, CN_THOUSAND);</div><div class="line">bigRadices = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">""</span>, CN_TEN_THOUSAND, CN_HUNDRED_MILLION);</div><div class="line">decimals = <span class="keyword">new</span> <span class="built_in">Array</span>(CN_TEN_CENT, CN_CENT);</div><div class="line"><span class="comment">// Start processing:</span></div><div class="line">outputCharacters = <span class="string">""</span>;</div><div class="line"><span class="comment">// Process integral part if it is larger than 0:</span></div><div class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(integral) &gt; <span class="number">0</span>) &#123;</div><div class="line">  zeroCount = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; integral.length; i++) &#123;</div><div class="line">   p = integral.length - i - <span class="number">1</span>;</div><div class="line">   d = integral.substr(i, <span class="number">1</span>);</div><div class="line">   quotient = p / <span class="number">4</span>;</div><div class="line">   modulus = p % <span class="number">4</span>;</div><div class="line">   <span class="keyword">if</span> (d == <span class="string">"0"</span>) &#123;</div><div class="line">    zeroCount++;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">if</span> (zeroCount &gt; <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">     outputCharacters += digits[<span class="number">0</span>];</div><div class="line">    &#125;</div><div class="line">    zeroCount = <span class="number">0</span>;</div><div class="line">    outputCharacters += digits[<span class="built_in">Number</span>(d)] + radices[modulus];</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">if</span> (modulus == <span class="number">0</span> &amp;&amp; zeroCount &lt; <span class="number">4</span>) &#123; </div><div class="line"></div><div class="line">    outputCharacters += bigRadices[quotient];</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">  outputCharacters += CN_DOLLAR;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Process decimal part if there is:</span></div><div class="line"><span class="keyword">if</span> (decimal != <span class="string">""</span>) &#123;</div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; decimal.length; i++) &#123;</div><div class="line">   d = decimal.substr(i, <span class="number">1</span>);</div><div class="line">   <span class="keyword">if</span> (d != <span class="string">"0"</span>) &#123;</div><div class="line">    outputCharacters += digits[<span class="built_in">Number</span>(d)] + decimals[i];</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Confirm and return the final output string:</span></div><div class="line"><span class="keyword">if</span> (outputCharacters == <span class="string">""</span>) &#123;</div><div class="line">  outputCharacters = CN_ZERO + CN_DOLLAR;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (decimal == <span class="string">""</span>) &#123;</div><div class="line">  outputCharacters += CN_INTEGER;</div><div class="line">&#125;</div><div class="line"><span class="comment">//outputCharacters = CN_SYMBOL + outputCharacters;</span></div><div class="line">outputCharacters = outputCharacters;</div><div class="line"><span class="keyword">return</span> outputCharacters;</div><div class="line">&#125;<span class="comment">// </span></div><div class="line"><span class="comment">//还原金额   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmoney</span>(<span class="params">s</span>)</span>&#123; </div><div class="line">	<span class="keyword">return</span> <span class="built_in">parseFloat</span>(s.replace(<span class="regexp">/[^d.-]/g</span>,<span class="string">""</span>));  </div><div class="line">&#125; 	</div><div class="line"></div><div class="line"><span class="comment">//金额合计的格式化s为要格式化的参数（浮点型），n为小数点后保留的位数	</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fmoney</span>(<span class="params">s,n</span>)</span>&#123;</div><div class="line">	n = n&gt;<span class="number">0</span> &amp;&amp; n&lt;=<span class="number">20</span> ? n : <span class="number">2</span>;</div><div class="line">	s = <span class="built_in">parseFloat</span>((s+<span class="string">""</span>).replace(<span class="regexp">/[^d.-]/g</span>,<span class="string">""</span>)).toFixed(n)+<span class="string">""</span>;</div><div class="line">	<span class="keyword">var</span> l = s.split(<span class="string">"."</span>)[<span class="number">0</span>].split(<span class="string">""</span>).reverse(), </div><div class="line">	r = s.split(<span class="string">"."</span>)[<span class="number">1</span>]; </div><div class="line">	t = <span class="string">""</span>;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;l.length;i++)&#123;</div><div class="line">		t+=l[i]+((i+<span class="number">1</span>)%<span class="number">3</span>==<span class="number">0</span> &amp;&amp; (i+<span class="number">1</span>) != l.length ? <span class="string">","</span> : <span class="string">""</span>); </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> t.split(<span class="string">""</span>).reverse().join(<span class="string">""</span>)+<span class="string">"."</span>+r;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/09/21/svn-out-of-date/" itemprop="url">
                   svn删除目录后提交显示xxx is out of date解决方法
                 </a>
@@ -1254,168 +1374,6 @@ cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己�
             
               
                 
-                <a class="post-title-link" href="/2012/07/12/php-web-robot/" itemprop="url">
-                  WP Robot 3.31版本破解方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
-              2012-07-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index">
-                    <span itemprop="name">php</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/12/php-web-robot/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/php-web-robot/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先，介绍一下WP Robot ：
-WP Robot 是一款支持wordpressBlog系统的插件，最受欢迎的自动Blog程序,强大且使用容易。 你可以根据关键词自动生成Blog任何目标文章。
-完美的自动采集发布功能，结合最人性化的功能设置，是你建站群，做外贸，做网赚，SEO优化的必不可少的利器。
-支持根据keywords关键词内容采集，支持RSS内容采集。
-WP Robot 的特点</p>
-<ul>
-<li>创建任何你所希望内容的文章发布到你的WordPress Blog上。</li>
-<li>支持多关键词搜索，基本版支持20个关键词，高级版支持50个关键词，还有无限制版可选（当然指的是正版）。</li>
-<li>在任何不同的分类中创建文章，比如不同的分类使用不同的关键词。</li>
-<li>自定义两片文章的发布时间间隔，比如你发表“iPhone4”这个关键词，每3天或者每小时发布一篇等等。</li>
-<li>精确地控制文章内容生成，通过关键词搭配创建不同的任务，避免重复文章出现(论坛里有检查WPBlog内文章重复的插件下载的）。</li>
-<li>自动获取文章 tags， Tags是 WordPress 比较有好的功能之一，访客可以通过一些Tags检索含有相同标签的文章。</li>
-<li>很多的自定义选项，你可以选择是否直接发布或者存为草稿等等 。
-目前支持20个采集源：
-自动采集发布Articles文章（<a href="http://Articlesbase.com" target="_blank" rel="external">Articlesbase.com</a>）
-自动采集发布eBay产品
-自动采集发布Yahoo answer
-自动采集发布Youtube视频
-自动采集发布Flickr图片采集
-自动采集发布Yahoo News
-自动采集发布RSS
-自动采集发布Twitter微博
-还有CB,CJ,LS,SAS
-……
-WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要169美元。
-———————————————————————————————————————————–</li>
-</ul>
-<p>wordpress采集插件WP robot 破解版3.1 与 3.2版本。</p>
-<ol>
-<li>Install WPRobot 3.2 Nulled</li>
-<li>When asked for email enter any email</li>
-<li>Setup plugin how you want it.</li>
-<li>Deactivate and delete WPRobot 3.2 from your wordpress</li>
-<li>Install WPRobot 3.3</li>
-<li>Activate and setup any additional modules you need to.</li>
-<li>Enjoy!
-翻译：
-01、先上传WPRobot_3.2破解版到空间，进入WP网站后台，启用插件，然后随便输入一个email激活；
-02、再在后台禁用或删除WPRobot_3.2破解版，然后在再上传WPRobot_3.31破解版；
-03、最后激活WPRobot_3.31破解版就可用了。
-下载地址：（压缩包内两个版本已经包含）
-<a href="http://115.com/file/dpu4vdlt" target="_blank" rel="external">http://115.com/file/dpu4vdlt</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">
                   JS返回顶部
                 </a>
@@ -1726,7 +1684,7 @@ Jelastic平台最大的优点是你不需要学习它的任何API，只需要上
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">231</span>
+              <span class="site-state-item-count">232</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1734,7 +1692,7 @@ Jelastic平台最大的优点是你不需要学习它的任何API，只需要上
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1743,7 +1701,7 @@ Jelastic平台最大的优点是你不需要学习它的任何API，只需要上
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">159</span>
+                <span class="site-state-item-count">160</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
