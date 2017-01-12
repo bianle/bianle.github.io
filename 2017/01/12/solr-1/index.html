@@ -1,0 +1,1044 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="solr," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Bianle's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="solr相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solr">
+<meta property="og:url" content="http://2le.me/2017/01/12/solr-1/index.html">
+<meta property="og:site_name" content="Bianle's Blog">
+<meta property="og:description" content="solr相关">
+<meta property="og:updated_time" content="2017-01-12T02:10:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="solr">
+<meta name="twitter:description" content="solr相关">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://2le.me/2017/01/12/solr-1/"/>
+
+
+  <title> solr | Bianle's Blog </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3519f77bf8b5b1d5a98cc671b3a83214";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Bianle's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">The quieter you become, the more you are able to hear.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                solr
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-12T09:08:30+08:00" content="2017-01-12">
+              2017-01-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/solr/" itemprop="url" rel="index">
+                    <span itemprop="name">solr</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/12/solr-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/solr-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="solr相关"><a class="header-anchor" href="#solr相关"> </a>solr相关</h2>
+<a id="more"></a>
+<h2 id="solr常用查询参数"><a class="header-anchor" href="#solr常用查询参数"> </a>solr常用查询参数</h2>
+<h3 id="q-查询条件表达式"><a class="header-anchor" href="#q-查询条件表达式"> </a><code>q</code>:查询条件表达式。</h3>
+<p>提供<code>AND</code>,<code>OR</code>,<code>*</code>,<code>?</code>等关键字，模糊匹配。</p>
+<p>举个栗子:</p>
+<ol>
+<li><code>name:Jim AND age:18</code>,查询名字类似Jim年龄18的小伙伴</li>
+<li>范围查询<code>startDate:[* TO 2017-01-01T00:00:00Z]</code>,查询开始时间在17年1月1日之前的
+<em>注意：solr要求的时间格式为<code>yyyy-MM-dd'T'HH:mm:ss'Z'</code>，对于日期索引solr里以标准时间存储，所以我们查询时需要将日期转成格林威治时间，参考以下代码:</em></li>
+</ol>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line">SimpleDateFormat sdf = <span class="keyword">new</span>  SimpleDateFormat(<span class="string">"yyyy-MM-dd'T'HH:mm:ss'Z'"</span>);</div><div class="line">sdf.setTimeZone(TimeZone.getTimeZone(<span class="string">"GMT"</span>));<span class="comment">//将北京时间转成标准时间</span></div><div class="line"><span class="keyword">String</span> <span class="built_in">dateStr</span> = sdf.<span class="keyword">format</span>(someDate);</div></pre></td></tr></table></figure>
+<h3 id="fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"><a class="header-anchor" href="#fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"> </a><code>fq(filter query)</code>:过滤查询表达式,对查询结果过滤,在分页之前</h3>
+<h3 id="sort-排序表达式-默认按score排序-提供asc-desc关键字且必填-不区分大小写"><a class="header-anchor" href="#sort-排序表达式-默认按score排序-提供asc-desc关键字且必填-不区分大小写"> </a><code>sort</code>:排序表达式。默认按<code>score</code>排序。提供<code>ASC</code>,<code>DESC</code>关键字且必填，不区分大小写</h3>
+<p>举个栗子：
+<code>age desc</code>按年龄倒序排序</p>
+<h3 id="start-rows-分页参数-start：开始的位置-rows：返回条数"><a class="header-anchor" href="#start-rows-分页参数-start：开始的位置-rows：返回条数"> </a><code>start</code>,<code>rows</code>:分页参数。start：开始的位置，rows：返回条数</h3>
+<h3 id="df-默认的查询字段-这个参数会覆盖在schema里定义的默认查询字段"><a class="header-anchor" href="#df-默认的查询字段-这个参数会覆盖在schema里定义的默认查询字段"> </a><code>df</code>:默认的查询字段。这个参数会覆盖在schema里定义的默认查询字段</h3>
+<h3 id="raw-query-parameters-原始查询参数-比如：开启debug-可以页面勾选-或者直接添加参数：debugquery-on"><a class="header-anchor" href="#raw-query-parameters-原始查询参数-比如：开启debug-可以页面勾选-或者直接添加参数：debugquery-on"> </a><code>Raw Query Parameters</code>:原始查询参数。比如：开启debug，可以页面勾选，或者直接添加参数：debugQuery=on</h3>
+<h3 id="wt-writer-type-指定输出格式-可以有-xml-json-php-python-csv-ruby"><a class="header-anchor" href="#wt-writer-type-指定输出格式-可以有-xml-json-php-python-csv-ruby"> </a><code>wt(writer type)</code>:指定输出格式，可以有 xml, json, php, python,csv,ruby。</h3>
+<h3 id="indent-返回的结果是否缩进-默认关闭-用-indent-true-on-开启-一般调试json-php-python-ruby输出才有必要用这个参数"><a class="header-anchor" href="#indent-返回的结果是否缩进-默认关闭-用-indent-true-on-开启-一般调试json-php-python-ruby输出才有必要用这个参数"> </a><code>indent</code>:返回的结果是否缩进，默认关闭，用 indent=true|on 开启，一般调试json,php,python,ruby输出才有必要用这个参数。</h3>
+<h3 id="debugquery-调试数据时可能会用到-有四个可选参数值"><a class="header-anchor" href="#debugquery-调试数据时可能会用到-有四个可选参数值"> </a><code>debugQuery</code>:调试数据时可能会用到，有四个可选参数值。</h3>
+<ol>
+<li>timing – 提供调试对于组件时间耗费等信息</li>
+<li>query — 提供调试关于查询信息</li>
+<li>results — 提供调试关于结果信息</li>
+<li>true – 设置为true，相当于&amp;debugQuery=true</li>
+</ol>
+<h3 id="q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"><a class="header-anchor" href="#q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"> </a><code>q.op</code>: 指定默认的连接符AND还是OR，将会覆盖schema.xml的defaultOperator配置。</h3>
+<h3 id="qt-query-type-指定那个类型来处理查询请求-一般不用指定-默认是standard"><a class="header-anchor" href="#qt-query-type-指定那个类型来处理查询请求-一般不用指定-默认是standard"> </a><code>qt(query type)</code>，指定那个类型来处理查询请求，一般不用指定，默认是standard</h3>
+<ol>
+<li>Transformers 结果放回前处理document中的字段。如[docid] Luence document id 值。</li>
+<li>verbose 获得中间步骤的详细信息.</li>
+</ol>
+<h3 id="version-查询语法的版本-建议不使用它-由服务器指定默认值"><a class="header-anchor" href="#version-查询语法的版本-建议不使用它-由服务器指定默认值"> </a><code>version</code>:查询语法的版本，建议不使用它，由服务器指定默认值。</h3>
+<h3 id="deftype-指定query-parser-常用deftype-lucene-deftype-dismax-deftype-edismax"><a class="header-anchor" href="#deftype-指定query-parser-常用deftype-lucene-deftype-dismax-deftype-edismax"> </a><code>defType</code>: 指定query parser，常用defType=lucene, defType=dismax, defType=edismax。</h3>
+<p>自定义查询类型可参考:<a href="http://blog.chenlb.com/2009/02/use-custom-solr-queryparser.html" target="_blank" rel="external">http://blog.chenlb.com/2009/02/use-custom-solr-queryparser.html</a></p>
+<h3 id="参考资料："><a class="header-anchor" href="#参考资料："> </a>参考资料：</h3>
+<p><a href="http://wiki.apache.org/solr/CommonQueryParameters" target="_blank" rel="external">http://wiki.apache.org/solr/CommonQueryParameters</a>
+<a href="http://wiki.apache.org/solr/SolrQuerySyntax" target="_blank" rel="external">http://wiki.apache.org/solr/SolrQuerySyntax</a></p>
+<h2 id="dismax-disjunction-max"><a class="header-anchor" href="#dismax-disjunction-max"> </a>[ ] dismax(Disjunction Max)</h2>
+<h2 id="edismax-extended-dismax"><a class="header-anchor" href="#edismax-extended-dismax"> </a>[ ] edismax(Extended DisMax)</h2>
+<h2 id="hl-highlight-高亮参数"><a class="header-anchor" href="#hl-highlight-高亮参数"> </a>[ ] hl(highlight):高亮参数</h2>
+<h2 id="facet参数"><a class="header-anchor" href="#facet参数"> </a>[ ] facet参数</h2>
+<h2 id="spatial参数"><a class="header-anchor" href="#spatial参数"> </a>[ ] spatial参数</h2>
+<h2 id="spellcheck-拼写检查"><a class="header-anchor" href="#spellcheck-拼写检查"> </a>[ ] spellcheck 拼写检查</h2>
+<h2 id="solr的检索运算符"><a class="header-anchor" href="#solr的检索运算符"> </a>[ ] Solr的检索运算符</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>赏你个鸡腿，吃饱了好好干！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/static/weixin.png" alt="bianle WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/static/alipay.png" alt="bianle Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/solr/" rel="tag">#solr</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/07/mysql-master-slaver/" rel="next" title="mysql主从配置">
+                <i class="fa fa-chevron-left"></i> mysql主从配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/12/solr-1/"
+           data-title="solr" data-url="http://2le.me/2017/01/12/solr-1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars.githubusercontent.com/bianle"
+               alt="bianle" />
+          <p class="site-author-name" itemprop="name">bianle</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">235</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">160</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bianle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bianlelpqi" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/i9erle" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://😇😈.ws" title="http://😇😈.ws" target="_blank">http://😇😈.ws</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dzm.la" title="短怎么啦" target="_blank">短怎么啦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.tunnel.ink" title="ngrok" target="_blank">ngrok</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xingyetang.com" title="唐兴业的博客" target="_blank">唐兴业的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.panpan.lu" title="卢盼盼的博客" target="_blank">卢盼盼的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yangjian.me" title="Alimon's Blog" target="_blank">Alimon's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hexo.io" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://timyang.net" title="Tim's Blog" target="_blank">Tim's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lifegoo.pluskid.org/wiki/index.html" title="星黎殿" target="_blank">星黎殿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://phl.iteye.com" title="猫头哥（朴海林）" target="_blank">猫头哥（朴海林）</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zhaxiancheng" title="zxc" target="_blank">zxc</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#solr相关"><span class="nav-number">1.</span> <span class="nav-text"> solr相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr常用查询参数"><span class="nav-number">2.</span> <span class="nav-text"> solr常用查询参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q-查询条件表达式"><span class="nav-number">2.1.</span> <span class="nav-text"> q:查询条件表达式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"><span class="nav-number">2.2.</span> <span class="nav-text"> fq(filter query):过滤查询表达式,对查询结果过滤,在分页之前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-排序表达式-默认按score排序-提供asc-desc关键字且必填-不区分大小写"><span class="nav-number">2.3.</span> <span class="nav-text"> sort:排序表达式。默认按score排序。提供ASC,DESC关键字且必填，不区分大小写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start-rows-分页参数-start：开始的位置-rows：返回条数"><span class="nav-number">2.4.</span> <span class="nav-text"> start,rows:分页参数。start：开始的位置，rows：返回条数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#df-默认的查询字段-这个参数会覆盖在schema里定义的默认查询字段"><span class="nav-number">2.5.</span> <span class="nav-text"> df:默认的查询字段。这个参数会覆盖在schema里定义的默认查询字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raw-query-parameters-原始查询参数-比如：开启debug-可以页面勾选-或者直接添加参数：debugquery-on"><span class="nav-number">2.6.</span> <span class="nav-text"> Raw Query Parameters:原始查询参数。比如：开启debug，可以页面勾选，或者直接添加参数：debugQuery=on</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wt-writer-type-指定输出格式-可以有-xml-json-php-python-csv-ruby"><span class="nav-number">2.7.</span> <span class="nav-text"> wt(writer type):指定输出格式，可以有 xml, json, php, python,csv,ruby。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#indent-返回的结果是否缩进-默认关闭-用-indent-true-on-开启-一般调试json-php-python-ruby输出才有必要用这个参数"><span class="nav-number">2.8.</span> <span class="nav-text"> indent:返回的结果是否缩进，默认关闭，用 indent=true|on 开启，一般调试json,php,python,ruby输出才有必要用这个参数。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debugquery-调试数据时可能会用到-有四个可选参数值"><span class="nav-number">2.9.</span> <span class="nav-text"> debugQuery:调试数据时可能会用到，有四个可选参数值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"><span class="nav-number">2.10.</span> <span class="nav-text"> q.op: 指定默认的连接符AND还是OR，将会覆盖schema.xml的defaultOperator配置。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qt-query-type-指定那个类型来处理查询请求-一般不用指定-默认是standard"><span class="nav-number">2.11.</span> <span class="nav-text"> qt(query type)，指定那个类型来处理查询请求，一般不用指定，默认是standard</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#version-查询语法的版本-建议不使用它-由服务器指定默认值"><span class="nav-number">2.12.</span> <span class="nav-text"> version:查询语法的版本，建议不使用它，由服务器指定默认值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deftype-指定query-parser-常用deftype-lucene-deftype-dismax-deftype-edismax"><span class="nav-number">2.13.</span> <span class="nav-text"> defType: 指定query parser，常用defType=lucene, defType=dismax, defType=edismax。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料："><span class="nav-number">2.14.</span> <span class="nav-text"> 参考资料：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dismax-disjunction-max"><span class="nav-number">3.</span> <span class="nav-text"> [ ] dismax(Disjunction Max)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edismax-extended-dismax"><span class="nav-number">4.</span> <span class="nav-text"> [ ] edismax(Extended DisMax)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hl-highlight-高亮参数"><span class="nav-number">5.</span> <span class="nav-text"> [ ] hl(highlight):高亮参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#facet参数"><span class="nav-number">6.</span> <span class="nav-text"> [ ] facet参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spatial参数"><span class="nav-number">7.</span> <span class="nav-text"> [ ] spatial参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spellcheck-拼写检查"><span class="nav-number">8.</span> <span class="nav-text"> [ ] spellcheck 拼写检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr的检索运算符"><span class="nav-number">9.</span> <span class="nav-text"> [ ] Solr的检索运算符</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bianle</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user">本站访客数</i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye">本站总访问量</i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"2le"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

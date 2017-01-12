@@ -319,6 +319,140 @@
             
               
                 
+                <a class="post-title-link" href="/2012/02/01/php-wp-domain/" itemprop="url">
+                  WordPress如何更换域名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-02-01T18:09:17+08:00" content="2012-02-01">
+              2012-02-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/php/" itemprop="url" rel="index">
+                    <span itemprop="name">php</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/02/01/php-wp-domain/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/02/01/php-wp-domain/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。</p>
+<ol>
+<li>
+<p>修改数据库配置文件，如果你在同一主机同一空间上更改域名，这步可以省掉，如果数据库不同，还得要打开wp-config.php将数据库配置正确才可以正常访问新域名。</p>
+</li>
+<li>
+<p>更改博客的安装地址和博客地址，首先用phpmyadmin打开你的数据库，然后找到wp-options这个数据表，找到第一条记录也就是siteurl这条，还有第39条home，这两条将地址改成你更换后的最域名即可。只有完成这一步后，才可以顺利进入后台，否则即使你输入密码，也会自动跳转到原来的老域名。PHP My管理中选择数据库，—-&gt;点击 SQL 在输入栏中输入如下代码：</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_options <span class="keyword">SET</span> option_value = <span class="keyword">replace</span>( option_value, ‘<span class="keyword">http</span>://老域名’, ’<span class="keyword">http</span>://新域名’) <span class="keyword">WHERE</span> option_name = ‘home’ <span class="keyword">OR</span> option_name =’siteurl’ ;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改文章内部所有的链接为新域名，相信大家在以前发表的文章中一定加了不少内链吧，域名更换了，老的内链也就没有意义了。此时得要将文章内链的旧域名修改为新域名。如果从后台文章编辑里一个一个找那是不现实的，方法有一个，通用phpmyadmin进入你所在的数据库，执行以下语句就可以把文章内的所有内链旧域名批量改为新域名：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> post_content = <span class="keyword">replace</span>(post_content, ‘<span class="keyword">http</span>://老域名’, ‘<span class="keyword">http</span>://新域名’); </div><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> guid = <span class="keyword">replace</span>( guid, ‘<span class="keyword">http</span>://老域名’ , ’<span class="keyword">http</span>://新域名’ ) ;</div></pre></td></tr></table></figure>
+<p>好了进入后台用以前的账号密码登陆就好了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/01/30/php-wp-runcode/" itemprop="url">
                   WordPress RunCode – WordPress文章运行代码插件
                 </a>
@@ -650,128 +784,6 @@
             
               
                 
-                <a class="post-title-link" href="/2012/01/10/web-js-get-string-real-length/" itemprop="url">
-                  js获取String的实际长度
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-01-10T18:09:17+08:00" content="2012-01-10">
-              2012-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/01/10/web-js-get-string-real-length/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/web-js-get-string-real-length/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>有时候我们需要知道字符串的实际占用长度，比如汉字“一”实际占用两个阿拉伯“1”的长度</p>
-<figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> getStrSize = <span class="function"><span class="keyword">function</span><span class="params">(str)</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> realLength = <span class="number">0</span>, len = str.length, charCode = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">        charCode = str.charCodeAt(i);</div><div class="line">        <span class="keyword">if</span> (charCode &gt;= <span class="number">0</span> &amp;&amp; charCode &lt;= <span class="number">128</span>) realLength += <span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span> realLength += <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> realLength;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>则“123四五六”实际长度为9.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/01/10/skill-hide-file-in-picture/" itemprop="url">
                   将文件藏到图片
                 </a>
@@ -899,6 +911,128 @@ destination 为新文件指定目录和/或文件名。
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/01/10/web-js-get-string-real-length/" itemprop="url">
+                  js获取String的实际长度
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-01-10T18:09:17+08:00" content="2012-01-10">
+              2012-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/01/10/web-js-get-string-real-length/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/01/10/web-js-get-string-real-length/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>有时候我们需要知道字符串的实际占用长度，比如汉字“一”实际占用两个阿拉伯“1”的长度</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> getStrSize = <span class="function"><span class="keyword">function</span><span class="params">(str)</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> realLength = <span class="number">0</span>, len = str.length, charCode = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">        charCode = str.charCodeAt(i);</div><div class="line">        <span class="keyword">if</span> (charCode &gt;= <span class="number">0</span> &amp;&amp; charCode &lt;= <span class="number">128</span>) realLength += <span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span> realLength += <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> realLength;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>则“123四五六”实际长度为9.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -944,7 +1078,7 @@ destination 为新文件指定目录和/或文件名。
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">234</span>
+              <span class="site-state-item-count">235</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -952,7 +1086,7 @@ destination 为新文件指定目录和/或文件名。
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

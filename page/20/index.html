@@ -319,6 +319,208 @@
             
               
                 
+                <a class="post-title-link" href="/2012/07/19/linux-28-linux-commands/" itemprop="url">
+                  28个Unix/Linux的命令行神器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-19T18:09:17+08:00" content="2012-07-19">
+              2012-07-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/19/linux-28-linux-commands/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/19/linux-28-linux-commands/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>下面是Kristóf Kovács收集的28个Unix/Linux下的28个命令行下的工具（原文链接），有一些是大家熟悉的，有一些是非常有用的，有一些是不为人知的。这些工具都非常不错，希望每个人都知道。本篇文章还在Hacker News上被讨论，你可以过去看看。
+dstat &amp; sar
+iostat, vmstat, ifstat 三合一的工具，用来查看系统性能。
+官方网站：<a href="http://dag.wieers.com/rpm/packages/dstat/" target="_blank" rel="external">http://dag.wieers.com/rpm/packages/dstat/</a>
+你可以这样使用：
+alias dstat=’dstat -cdlmnpsy’</p>
+<p>slurm
+查看网络流量的一个工具
+官方网站：Simple Linux Utility for Resource Management</p>
+<p>vim &amp; emacs
+真正程序员的代码编辑器。</p>
+<p>screen, dtach, tmux, byobu
+你是不是经常需要 SSH 或者 telent 远程登录到 Linux 服务器？你是不是经常为一些长时间运行的任务而头疼，比如系统备份、ftp 传输等等。通常情况下我们都是为每一个这样的任务开一个远程终端窗口，因为他们执行的时间太长了。必须等待它执行完毕，在此期间可不能关掉窗口或者断开连接，否则这个任务就会被杀掉，一切半途而废了。
+screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。请参看IBM DeveloperWorks的这篇文章《使用 screen 管理你的远程会话》</p>
+<p>dtach 是用来模拟screen的detach的功能的小工具，其可以让你随意地attach到各种会话上 。下图为dtach+dvtm的样子。</p>
+<p>tmux是一个优秀的终端复用软件，类似GNU Screen，但来自于OpenBSD，采用BSD授权。使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需再“浪费”多余的终端来连接这台远程主机；当然其功能远不止于此。与screen相比的优点：可以横向和纵向分割窗口，且窗格可以自由移动和调整大小。可在多个缓冲区进行复制和粘贴，支持跨窗口搜索；非正常断线后不需重新detach；……  有人说——与tmux相比，screen简直弱爆了。</p>
+<p>byobu是Ubuntu开发的，在Screen的基础上进行包装，使其更加易用的一个工具。最新的Byobu，已经是基于Tmux作为后端了。可通过“byobu-tmux”这个命令行前端来接受各种与tmux一模一样的参数来控制它。Byobu的细节做的非常好，效果图如下：</p>
+<p>multitail
+multiTail是个用来实现同时监控多个文档、类似tail命令的功能的软件。他和tail的区别就是他会在控制台中打开多个窗口，这样使同时监控多个日志文档成为可能。他还可以看log文件的统计，合并log文件，过滤log文件，分屏，……。
+官网：<a href="http://www.vanheusden.com/multitail/" target="_blank" rel="external">http://www.vanheusden.com/multitail/</a></p>
+<p>tpp
+终端下的PPT，要是在某某大会上用这个演示PPT，就太TMD的Geek了。
+官网：<a href="http://www.ngolde.de/tpp.html" target="_blank" rel="external">http://www.ngolde.de/tpp.html</a></p>
+<p>xargs &amp; parallel
+Executes tasks from input (even multithread).
+xargs 是一个比较古老的命令，有简单的并行功能，这个不说了。对于GNU parallel(online manpage)来说，它不仅能够处理本机上多执行绪，还能分散至远端电脑协助处理。而使用GNU parallel前，要先确定本机有安装GNU parallel/ssh/rsync，远端电脑也要安装ssh。</p>
+<p>duplicity &amp; rsyncrypto
+duplicity是使用rsync算法加密的高效率备份软件，Duplicity支持目录加密生产和格式上传到远程或本地文件服务器。
+rsyncrypto 就是 rsync + encryption。
+Encrypting backup tools.</p>
+<p>nethack &amp; slash’em
+netHack（Wiki），20年历史的古老电脑游戏。没有声音，没有漂亮的界面，不过这个游戏真的很有意思。网上有个家伙说：如果你一生只做一件事情，那么玩NetHack。这句话很惹眼，但也让人觉得这个游戏很复杂不容易上手。其实，这个游戏很虽然很复杂，却容易上手。虽然玩通关很难，但上手很容易。NetHack上有许多复杂的规则，”the DevTeam thinks of everything”（开发团队想到了所有的事情)。各种各样的怪物，各种各样的武器….，有许多spoilers文件来说明其规则。除了每次开始随机生成的地图，每次玩游戏，你也都会碰到奇怪的事情: 因为喝了一种药水，变成了机器人;因为踢坏了商店的门被要求高价赔偿;你的狗为你偷来了商店的东西…… 这有点象人生，你不能完全了解这个世界，但你仍然可以选择自己的面对方式。
+网上有许多文章所这是最好的电脑游戏或最好的电脑游戏之一。也许是因为它开放的源代码让人赞赏，古老的历史让人宽容，复杂的规则让人敬畏。虽然它不是当前流行的游戏，但它比任何一个当前流行的游戏都更有可能再经受20年的考验。
+Slash’EM 也是一个基于NetHack的经典游戏。</p>
+<p>lftp
+利用lftp命令行ftp工具进行网站数据的增量备份，镜像，就像使用rsync一样。</p>
+<p>ack
+ack是一个perl脚本，是grep的一个可选替换品。其可以对匹配字符有高亮显示。是为程序员专门设计的，默认递归搜索，省提供多种文件类型供选。</p>
+<p>calcurse &amp; remind + wyrd
+calcurse是一个命令行下的日历和日程软件。remind + wyrd也很类似。关于日历，我不得不提一个Linux的Cycle日历，也是一个神器，呵呵。</p>
+<p>newsbeuter &amp; rsstail
+newsbeuter 和 rsstail 是命令行下RSS的阅读工具。</p>
+<p>powertop
+做个环保的程序员，看看自己的电脑里哪些程序费电。powerTOP 是一个让 Intel 平台的笔记本电脑节省电源的 Linux 工具。此工具由 Intel 公司发布。它可以帮助用户找出那些耗电量大的程序，通过修复或者关闭那些应用程序或进程，从而为用户节省电源。</p>
+<p>htop &amp; iotop
+htop 和 iotop用来查看进程，内存和IO负载。</p>
+<p>ttyrec &amp; ipbt
+ttyrec是一个 tty 控制台录制程序，其所录制的数据文件可以使用与之配套的 ttyplay 播放。不管是你在 tty 中的各种操作，还是在 tty 中耳熟能详的软件，都可进行录制。
+ipbt是一个用来回放 ttyrec 所录制的控制台输入过程的工具。
+与此类似的还有Shelr和termrec</p>
+<p>rsync
+通过SSH进行文件同步的经典工具</p>
+<p>mtr
+MTR – traceroute 2.0，其是把 traceroute 和 ping 集成在一块的一个小工具 用于诊断网络。</p>
+<p>socat &amp; netpipes
+socat是一个多功能的网络工具，名字来由是” Socket CAT”，可以看作是netcat的N倍加强版。
+netpipes 和socat一样，主要是用来在命令行来进行socket操作的命令，这样你就可以在Shell脚本下行进socket网络通讯了。</p>
+<p>iftop &amp; iptraf
+iftop和iptraf可以用来查看当前网络链接的一些流量情况。</p>
+<p>siege &amp; tsung
+siege是一个压力测试和评测工具，设计用于WEB开发这评估应用在压力下的承受能力：可以根据配置对一个WEB站点进行多用户的并发访问，记录每个用户所有请求过程的相应时间，并在一定数量的并发访问下重复进行。
+Tsung是一个压力测试工具，可以测试包括HTTP, WebDAV, PostgreSQL, MySQL, LDAP, and XMPP/Jabber等服务器。针对 HTTP 测试，Tsung 支持 HTTP 1.0/1.1 ，包含一个代理模式的会话记录、支持 GET、POST 和 PUT 以及 DELETE 方法，支持 Cookie 和基本的 WWW 认证，同时还支持 SSL。</p>
+<p>ledger
+ledger 是一个命令行下记帐的小工具。</p>
+<p>taskwarrior
+taskWarrior 是一个基于命令行的 TODO 列表管理工具。主要功能包括：标签、彩色表格输出、报表和图形、大量的命令、底层API、多用户文件锁等功能。</p>
+<p>下图是TaskWarrior 2.0的界面：</p>
+<p>curl
+cURL是一个利用URL语法在命令行下工作的文件传输工具，1997年首次发行。它支持文件上传和下载，所以是综合传输工具，但按传统，习惯称cURL为下载工具。cURL还包含了用于程序开发的libcurl。cURL支援的通訊協定有FTP、FTPS、HTTP、HTTPS、TFTP、SFTP、Gopher、SCP、Telnet、DICT、FILE、LDAP、LDAPS、IMAP、POP3、SMTP和RTSP。</p>
+<p>rtorrent &amp; aria2
+rTorrent 是一个非常简洁、优秀、非常轻量的BT客户端. 它使用了 ncurses 库以 C++ 编写, 因此它完全基于文本并在终端中运行. 将 rTorrent 用在安装有 GNU Screen 和 Secure Shell 的低端系统上作为远程的 BT 客户端是非常理想的。
+aria2 是 Linux 下一个不错的高速下载工具。由于它具有分段下载引擎，所以支持从多个地址或者从一个地址的多个连接来下载同一个文件。这样自然就大大加快了文件的下载速度。aria2 也具有断点续传功能，这使你随时能够恢复已经中断的文件下载。除了支持一般的 http(s) 和 ftp 协议外，aria2 还支持 BitTorrent 协议。这意味着，你也可以使用 aria2 来下载 torrent 文件。</p>
+<p>ttytter &amp; earthquake
+TTYtter 是一个Perl写的命令行上发Twitter的工具，可以进行所有其他平台客户端能进行的事情，当然，支持中文。脚本控、CLI控、终端控、Perl控的最愛。
+Earthquake也是一个命令行上的Twitter客户端。</p>
+<p>vifm &amp; ranger
+Vifm 基于ncurses的文件管理器，DOS风格，用键盘操作。</p>
+<p>Ranger用 Python 完成，默认为使用 Vim 风格的按键绑定，比如 hjkl（上下左右），dd（剪切），yy（复制）等等。功能很全，扩展/可配置性也非常不错。类似MacOS X下Finder（文件管理器）的多列文件管理方式。支持多标签页。实时预览文本文件和目录。</p>
+<p>cowsay &amp; sl
+cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己搜一搜。</p>
+<p>sl是什么？ls？呵呵，你会经常把ls 打成sl吗？如果是的话，这个东西可以让你娱乐一下，你会看到一辆火车呼啸而过~~，相当拉风。你可以使用sudo apt-get install sl 安装。</p>
+<p>最后，再介绍一个命令中linuxlogo，你可以使用 sudo apt-get install linuxlogo来安装，然后，就可以使用linuxlogo -L来看一下各种Linux的logo。</p>
+<p>本文来自：酷壳</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/07/12/web-chrome-debug/" itemprop="url">
                   Chrome开发工具支持远程调试
                 </a>
@@ -395,6 +597,166 @@
 <p>3.现在运行正常的 (客户端) Chrome 实例并转到 <a href="http://localhost:9222" target="_blank" rel="external">http://localhost:9222</a> 那里。</p>
 <p>您将能看到一些链接，指向相应页面的远程调试会话。点击即可开始远程调试Chrome页面：</p>
 <p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2012/07/12/chrome1.png" alt="chrome"><span class="image-caption">chrome</span></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/12/linux-vim-plugin/" itemprop="url">
+                  Vim插件：增加模糊查找和智能补全功能
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
+              2012-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/12/linux-vim-plugin/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/linux-vim-plugin/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>这里给大家推荐一个Vim配置工具，本工具由fisadev个人开发，并且遵循GPL开源协议，所以你可以放心地使用它！因为这是作者个人使用，所以设置都是按照作者自己的习惯来的，如有不适应，你可以自己修改源代码。废话不多说，先看预览图：</p>
+<p>智能的自动提示</p>
+<p>右侧是“类浏览器 ”</p>
+<p>代码错误检查</p>
+<p>代码模糊匹配
+这里推荐使用Vundle管理插件，安装和卸载插件都非常简单！插件的安装位置在 .Vim/bundle/。更多信息点击<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="external">这里</a>。
+智能的自动填充功能。可以自动填充模块名、实例方法和属性，有时还会提示使用过的文本（比如常用命名）。
+模糊文件和代码查找功能
+,e = 打开文件（就像:e一样）但是增加了递归查询和模糊匹配。例如：如果你输入“mopy”，它匹配到一个分目录下的“<a href="http://models.py" target="_blank" rel="external">models.py</a>”文件，你可以直接使用Ctrl+T打开文件。
+,g = 模糊服务查找 （类、方法、变量、函数，以及等等……）例如：如果你输入“usr”，它可以找到当前文件里的User类定义。
+,f = 模糊文本查找，并且打开文件。 例如：如果你输入“ctm=6”，它能匹配到“current_time = 16”。
+,d = 和 ,g相同 (symbol finder) 但是搜索的是指针下的单词 (sort of “fuzzy go to definition”)。
+,E = 和 ,e相同 (file finder)不过搜索的是光标下的文件 (sort of “fuzzy go to file”)。
+类/模块浏览器。类/模块浏览器里列出了类、函数、方法以及类似文件，敲回车键就可以导航过去。使用F4切换它的状态。
+F2挂起任务浏览器。这会从读取当前文件开始，并且搜索“TODO”和“FIXME”等注释，然后在列表里显示。导航方法和类浏览器类似。
+使用Pyflakes对Python代码进行错误检查。它可以检测出代码里未使用的变量和引用，以及语法错误等等。
+在当前Python文件上运行PEP8验证器，输入“,8” ，就会显示Pyflakes检测出来的Python错误。
+它同时还是一个相当优秀的Python和PHP调试器。这里有一个小教程，我增加了几个键盘快捷键方便使用（这只有在调试器启动后才可以使用）。
+F5 = 单步执行（step over）
+F6 = 插入（step into）
+F7 = 跳出（step out）
+F8 = 执行到断点处停止
+F9 = 设置断点
+F10 = 在表达式窗口计算表达式结果
+F11 = go down on the stack
+F12 = go up on the stack
+推荐你看看视频教程，在这里我无法给出所有用法举例。
+安装步骤
+首先你需要Vim Python编译支持，并且保证安装目录下没有.Vim文件夹。（你可以运行Vim –version | grep +Python来检查你的Vim是否支持Python。）
+软件依赖：</p>
+<p>sudo apt-get install exuberant-ctags git
+sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
+如果你没有安装pip，可以在<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="external">这里</a>下载。
+配置好安装文件
+把下载的.Vimrc文件放到Linux home文件夹下。
+例如我的用户名是fisa，那就把它放到/home/fisa/目录下。
+打开Vim
+在终端打开Vim，它将会自动安装插件到.Vim/bundle目录下。你所需要做的就是等待安装完成，然后就会看到崭新的闪亮的Vim！
+可选：
+如果你喜欢，可以查看<a href="https://github.com/fisadev/fisa-Vim-config/blob/master/README.rst" target="_blank" rel="external">README</a>文件结尾的使用指南。
+项目<a href="https://github.com/fisadev/fisa-Vim-config" target="_blank" rel="external">GitHub地址</a></p>
 
           
         
@@ -535,152 +897,6 @@ Jelastic平台最大的优点是你不需要学习它的任何API，只需要上
 6 个可用于托管 Java 应用的云计算平台
 这是针对企业的平台，个人还无法使用，据说使用它非常之简单，有用过的朋友可以分享一下。</li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">
-                  JS返回顶部
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-12T18:09:17+08:00" content="2012-07-12">
-              2012-07-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/12/web-js-totop/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/web-js-totop/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文介绍三款简单的返回页面顶部代码，可以使用简单的HTML锚标记，也可使用Javascript Scroll函数动态返回，其它的还有悬浮脚本等有点复杂了，本文不再介绍，大家根据自己需要选择其中的一种即可，总之简约最美的，能减少代码就减少代码，能不调用的就别调用，要不是天缘博客的文章都是牛长也不会添加这个功能。
-一、使用锚标记返回页面顶部
-使用HTML锚标记最简单，就是看起来有点不好看，点击后会在地址栏显示这个锚标记，其它的倒没什么。
-页面顶部放置：
-<a name="top" id="top"></a>
-放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
-页面底部放置：
-<a href="#top" target="_self">返回顶部</a>
-二、使用Javascript Scroll函数返回顶部
-scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
-方式1：
-1<a href="javascript:scroll(0,0)" target="_blank" rel="external">返回顶部</a>
-scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
-方式2：
-本方式是渐进式返回顶部，要好看一些，代码如下：
-1functionpageScroll() { 2window.scrollBy(0,-10); 3scrolldelay = setTimeout(‘pageScroll()’,100); 4} 56<a href="pageScroll();">返回顶部</a>
-这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
-1if(document.documentElement.scrollTop==0) clearTimeout(scrolldelay);三、使用Onload加上scroll功能实现动态返回顶部
-1、首先在网页BODY标签结束之前加上：</body></p>
-<div id="gotop">返回顶部</div>
-2、再调用以下JS脚本部分（本脚本非天缘原创，早前来源于Z-BLOG官方论坛上收集，源包未带作者链接，如果原作者看到敬请留言添加）：
-01BackTop=function(btnId){ 02 varbtn=document.getElementById(btnId); 03 vard=document.documentElement; 04 window.onscroll=set; 05 btn.onclick=function(){ 06 btn.style.display="none"; 07 window.onscroll=null; 08 this.timer=setInterval(function(){ 09 d.scrollTop-=Math.ceil(d.scrollTop*0.1); 10 if(d.scrollTop==0) clearInterval(btn.timer,window.onscroll=set); 11 },10); 12 }; 13 functionset(){btn.style.display=d.scrollTop?’block':"none"} 14}; 15BackTop(‘gotop’);
-对Z-BLOG而言，可以放到$(document).ready(function(){….函数中，也可以独立存成一个js文件，比如gotop.js，再通过：
-<script src="/js/gotop.js" type="text/javascript"></script>
-来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设路径为JS，其它位置请自行修改。
-补充：
-上述返回顶部代码都是文字式样的，也可以把文字更换为漂亮一点的图标，另外还有悬浮状的返回顶部代码（就是页面滚动时，返回顶部图标也会跟着跑的那种），需要使用到层等，搞的有点复杂了，本文暂不列出。
 
           
         
@@ -892,8 +1108,8 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
             
               
                 
-                <a class="post-title-link" href="/2012/07/12/linux-vim-plugin/" itemprop="url">
-                  Vim插件：增加模糊查找和智能补全功能
+                <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">
+                  JS返回顶部
                 </a>
               
             
@@ -920,8 +1136,8 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -936,8 +1152,8 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/12/linux-vim-plugin/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/linux-vim-plugin/" itemprop="commentsCount"></span>
+                <a href="/2012/07/12/web-js-totop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/12/web-js-totop/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -962,47 +1178,33 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>这里给大家推荐一个Vim配置工具，本工具由fisadev个人开发，并且遵循GPL开源协议，所以你可以放心地使用它！因为这是作者个人使用，所以设置都是按照作者自己的习惯来的，如有不适应，你可以自己修改源代码。废话不多说，先看预览图：</p>
-<p>智能的自动提示</p>
-<p>右侧是“类浏览器 ”</p>
-<p>代码错误检查</p>
-<p>代码模糊匹配
-这里推荐使用Vundle管理插件，安装和卸载插件都非常简单！插件的安装位置在 .Vim/bundle/。更多信息点击<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="external">这里</a>。
-智能的自动填充功能。可以自动填充模块名、实例方法和属性，有时还会提示使用过的文本（比如常用命名）。
-模糊文件和代码查找功能
-,e = 打开文件（就像:e一样）但是增加了递归查询和模糊匹配。例如：如果你输入“mopy”，它匹配到一个分目录下的“<a href="http://models.py" target="_blank" rel="external">models.py</a>”文件，你可以直接使用Ctrl+T打开文件。
-,g = 模糊服务查找 （类、方法、变量、函数，以及等等……）例如：如果你输入“usr”，它可以找到当前文件里的User类定义。
-,f = 模糊文本查找，并且打开文件。 例如：如果你输入“ctm=6”，它能匹配到“current_time = 16”。
-,d = 和 ,g相同 (symbol finder) 但是搜索的是指针下的单词 (sort of “fuzzy go to definition”)。
-,E = 和 ,e相同 (file finder)不过搜索的是光标下的文件 (sort of “fuzzy go to file”)。
-类/模块浏览器。类/模块浏览器里列出了类、函数、方法以及类似文件，敲回车键就可以导航过去。使用F4切换它的状态。
-F2挂起任务浏览器。这会从读取当前文件开始，并且搜索“TODO”和“FIXME”等注释，然后在列表里显示。导航方法和类浏览器类似。
-使用Pyflakes对Python代码进行错误检查。它可以检测出代码里未使用的变量和引用，以及语法错误等等。
-在当前Python文件上运行PEP8验证器，输入“,8” ，就会显示Pyflakes检测出来的Python错误。
-它同时还是一个相当优秀的Python和PHP调试器。这里有一个小教程，我增加了几个键盘快捷键方便使用（这只有在调试器启动后才可以使用）。
-F5 = 单步执行（step over）
-F6 = 插入（step into）
-F7 = 跳出（step out）
-F8 = 执行到断点处停止
-F9 = 设置断点
-F10 = 在表达式窗口计算表达式结果
-F11 = go down on the stack
-F12 = go up on the stack
-推荐你看看视频教程，在这里我无法给出所有用法举例。
-安装步骤
-首先你需要Vim Python编译支持，并且保证安装目录下没有.Vim文件夹。（你可以运行Vim –version | grep +Python来检查你的Vim是否支持Python。）
-软件依赖：</p>
-<p>sudo apt-get install exuberant-ctags git
-sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
-如果你没有安装pip，可以在<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="external">这里</a>下载。
-配置好安装文件
-把下载的.Vimrc文件放到Linux home文件夹下。
-例如我的用户名是fisa，那就把它放到/home/fisa/目录下。
-打开Vim
-在终端打开Vim，它将会自动安装插件到.Vim/bundle目录下。你所需要做的就是等待安装完成，然后就会看到崭新的闪亮的Vim！
-可选：
-如果你喜欢，可以查看<a href="https://github.com/fisadev/fisa-Vim-config/blob/master/README.rst" target="_blank" rel="external">README</a>文件结尾的使用指南。
-项目<a href="https://github.com/fisadev/fisa-Vim-config" target="_blank" rel="external">GitHub地址</a></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文介绍三款简单的返回页面顶部代码，可以使用简单的HTML锚标记，也可使用Javascript Scroll函数动态返回，其它的还有悬浮脚本等有点复杂了，本文不再介绍，大家根据自己需要选择其中的一种即可，总之简约最美的，能减少代码就减少代码，能不调用的就别调用，要不是天缘博客的文章都是牛长也不会添加这个功能。
+一、使用锚标记返回页面顶部
+使用HTML锚标记最简单，就是看起来有点不好看，点击后会在地址栏显示这个锚标记，其它的倒没什么。
+页面顶部放置：
+<a name="top" id="top"></a>
+放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
+页面底部放置：
+<a href="#top" target="_self">返回顶部</a>
+二、使用Javascript Scroll函数返回顶部
+scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
+方式1：
+1<a href="javascript:scroll(0,0)" target="_blank" rel="external">返回顶部</a>
+scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
+方式2：
+本方式是渐进式返回顶部，要好看一些，代码如下：
+1functionpageScroll() { 2window.scrollBy(0,-10); 3scrolldelay = setTimeout(‘pageScroll()’,100); 4} 56<a href="pageScroll();">返回顶部</a>
+这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
+1if(document.documentElement.scrollTop==0) clearTimeout(scrolldelay);三、使用Onload加上scroll功能实现动态返回顶部
+1、首先在网页BODY标签结束之前加上：</body></p>
+<div id="gotop">返回顶部</div>
+2、再调用以下JS脚本部分（本脚本非天缘原创，早前来源于Z-BLOG官方论坛上收集，源包未带作者链接，如果原作者看到敬请留言添加）：
+01BackTop=function(btnId){ 02 varbtn=document.getElementById(btnId); 03 vard=document.documentElement; 04 window.onscroll=set; 05 btn.onclick=function(){ 06 btn.style.display="none"; 07 window.onscroll=null; 08 this.timer=setInterval(function(){ 09 d.scrollTop-=Math.ceil(d.scrollTop*0.1); 10 if(d.scrollTop==0) clearInterval(btn.timer,window.onscroll=set); 11 },10); 12 }; 13 functionset(){btn.style.display=d.scrollTop?’block':"none"} 14}; 15BackTop(‘gotop’);
+对Z-BLOG而言，可以放到$(document).ready(function(){….函数中，也可以独立存成一个js文件，比如gotop.js，再通过：
+<script src="/js/gotop.js" type="text/javascript"></script>
+来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设路径为JS，其它位置请自行修改。
+补充：
+上述返回顶部代码都是文字式样的，也可以把文字更换为漂亮一点的图标，另外还有悬浮状的返回顶部代码（就是页面滚动时，返回顶部图标也会跟着跑的那种），需要使用到层等，搞的有点复杂了，本文暂不列出。
 
           
         
@@ -1435,8 +1637,8 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
             
               
                 
-                <a class="post-title-link" href="/2012/07/06/system-remotedesktop-port/" itemprop="url">
-                  修改远程桌面服务的默认端口
+                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">
+                  十大bt问题
                 </a>
               
             
@@ -1463,8 +1665,8 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
+                  <a href="/categories/生活/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
                   </a>
                 </span>
 
@@ -1479,8 +1681,8 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/06/system-remotedesktop-port/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/system-remotedesktop-port/" itemprop="commentsCount"></span>
+                <a href="/2012/07/06/life-bt-question-top10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/life-bt-question-top10/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1505,132 +1707,36 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
-第一步：在远程计算机（即被访问的计算机）上通过任务栏的“开始-&gt;运行-&gt;输入regedit”，打开注册表编辑器。
-第二步：在注册表中找到Hkey_local_machine\system\currentcontrolset\control\terminal server\wds\repwd\tds\tcp，将其下的portnumber值从3389修改为80，注意10进制和16进制数字的区别。
-第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
-control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修改为80，同样注意10进制和16进制数字的区别。全部修改后重新启动计算机就完成了被访问计算机上的设置。
-第四步：这样我们就可以在网络中任意一台安装了远程桌面登录器的计算机上连接刚刚设置的计算机了，使用的端口是80端口。值得注意的是在输入被访问计算机IP地址时需要使用类似ip:80的形式。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">
-                  在命令行里看电影
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-06T18:09:17+08:00" content="2012-07-06">
-              2012-07-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/06/linux-cmd-movie/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/06/linux-cmd-movie/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>
+<p>企鹅肉问题：
+一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
+</li>
+<li>
+<p>跳火车问题：
+一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
+</li>
+<li>
+<p>水草问题：
+有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
+</li>
+<li>
+<p>葬礼故事的问题：
+有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
+</li>
+<li>
+<p>半根火柴问题：
+有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
+</li>
+<li>
+<p>满地木屑问题：
+马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
+</li>
+<li>
+<p>夜半敲门问题：
+一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
+</li>
+</ol>
 
           
         
@@ -1704,7 +1810,7 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">234</span>
+              <span class="site-state-item-count">235</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1712,7 +1818,7 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
