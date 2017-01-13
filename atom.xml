@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-01-12T02:17:10.000Z</updated>
+  <updated>2017-01-13T06:00:16.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>tomcat+reids+session共享</title>
+    <link href="http://2le.me/2017/01/13/tomcat-reids-session-share/"/>
+    <id>http://2le.me/2017/01/13/tomcat-reids-session-share/</id>
+    <published>2017-01-13T05:02:31.000Z</published>
+    <updated>2017-01-13T06:00:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="拷贝jar包到tomcat的lib目录"><a class="header-anchor" href="#拷贝jar包到tomcat的lib目录"> </a>拷贝jar包到tomcat的lib目录</h2>
+<ol>
+<li>tomcat-redis-session-manager-VERSION.jar <a href="https://github.com/jcoleman/tomcat-redis-session-manager" target="_blank" rel="external">github</a> <a href="https://pan.baidu.com/s/1c2ikhyg" target="_blank" rel="external">百度云（密码bian）</a></li>
+<li>jedis-2.5.2.jar <a href="https://pan.baidu.com/s/1dFh2f0d" target="_blank" rel="external">百度云（密码bian）</a></li>
+<li>commons-pool2-2.2.jar <a href="https://pan.baidu.com/s/1sltUPit" target="_blank" rel="external">百度云（密码bian）</a></li>
+</ol>
+<h2 id="修改context-xml配置文件"><a class="header-anchor" href="#修改context-xml配置文件"> </a>修改context.xml配置文件</h2>
+<figure class="highlight django"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve"</span> /&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">Manager</span> <span class="attr">className</span>=<span class="string">"com.orangefunction.tomcat.redissessions.RedisSessionManager"</span></span></div><div class="line">         <span class="attr">host</span>=<span class="string">"localhost"</span> &lt;!<span class="attr">--</span> <span class="attr">optional:</span> <span class="attr">defaults</span> <span class="attr">to</span> "<span class="attr">localhost</span>" <span class="attr">--</span>&gt;</div><div class="line">         port="6379" <span class="comment">&lt;!-- optional: defaults to "6379" --&gt;</span></div><div class="line">         database="0" <span class="comment">&lt;!-- optional: defaults to "0" --&gt;</span></div><div class="line">         maxInactiveInterval="60" <span class="comment">&lt;!-- optional: defaults to "60" (in seconds) --&gt;</span></div><div class="line">         sessionPersistPolicies="PERSIST_POLICY_1,PERSIST_POLICY_2,.." <span class="comment">&lt;!-- optional --&gt;</span></div><div class="line">         sentinelMaster="SentinelMasterName" <span class="comment">&lt;!-- optional --&gt;</span></div><div class="line">         sentinels="sentinel-host-1:port,sentinel-host-2:port,.." <span class="comment">&lt;!-- optional --&gt;</span> /&gt;</div></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"com.radiadesign.catalina.session.RedisSessionHandlerValve"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">Manager</span> <span class="attr">className</span>=<span class="string">"com.radiadesign.catalina.session.RedisSessionManager"</span></span></div><div class="line">    <span class="attr">host</span>=<span class="string">"10.1.0.6"</span> <span class="attr">port</span>=<span class="string">"6379"</span> <span class="attr">password</span>=<span class="string">"pwd"</span> <span class="attr">database</span>=<span class="string">"11"</span> <span class="attr">maxInactiveInterval</span>=<span class="string">"60"</span></div><div class="line">/&gt;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;拷贝jar包到tomcat的lib目录&quot;&gt;&lt;a class=&quot;h
+    
+    </summary>
+    
+      <category term="java" scheme="http://2le.me/categories/java/"/>
+    
+    
+      <category term="tomcat" scheme="http://2le.me/tags/tomcat/"/>
+    
+  </entry>
   
   <entry>
     <title>solr</title>
@@ -932,39 +964,6 @@ CentOS 6
     
     
       <category term="tips" scheme="http://2le.me/tags/tips/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>idea代码分析</title>
-    <link href="http://2le.me/2016/11/28/idea-analyze/"/>
-    <id>http://2le.me/2016/11/28/idea-analyze/</id>
-    <published>2016-11-28T06:39:05.000Z</published>
-    <updated>2016-12-09T05:40:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>idea代码分析功能</p>
-<a id="more"></a>
-<h2 id="利用idea代码分析删除unused-method-paramter"><a class="header-anchor" href="#利用idea代码分析删除unused-method-paramter"> </a>利用idea代码分析删除<code>unused method paramter</code></h2>
-<p><code>Analyze -&gt; Run Inspection By Name</code> 输入 <code>Unused me</code> 双击 <code>Unused method paramters</code></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/28/20161128144228.png" alt="idea"><span class="image-caption">idea</span></p>
-<p>出现如下界面，点击ok</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/28/20161128144429.png" alt="idea"><span class="image-caption">idea</span></p>
-<p>稍等片刻，分析结果
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/28/20161128144641.png" alt="idea"><span class="image-caption">idea</span></p>
-<p>点击<code>Delete unused parameter(s)</code></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/28/20161128145120.png" alt="idea"><span class="image-caption">idea</span></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;idea代码分析功能&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://2le.me/categories/java/"/>
-    
-    
-      <category term="idea" scheme="http://2le.me/tags/idea/"/>
     
   </entry>
   
