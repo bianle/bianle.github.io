@@ -319,6 +319,132 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/14/lnmt/" itemprop="url">
+                  简单的LNMT环境搭建
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-14T21:50:09+08:00" content="2017-01-14">
+              2017-01-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/14/lnmt/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/14/lnmt/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
+<ol>
+<li>4台centos7系统服务器，为简化安装我搭了4个2c4g的。理论上应用服务器优先考虑cpu，数据服务器优先考虑磁盘io，缓存服务器则需要大的内存。</li>
+</ol>
+<h2 id="部署图"><a class="header-anchor" href="#部署图"> </a>部署图</h2>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">                                              +-----------------------+</div><div class="line">                                              |<span class="string">dsn-db01(10.1.0.6)     </span>|</div><div class="line">                                              |<span class="string">                       </span>|</div><div class="line">                                              |<span class="string">    +-------------+    </span>|</div><div class="line">                                session manage|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">                                         +---------&gt; redis3.2.6  |<span class="string">    </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> dsn-app01(10.1.0.8)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">                       </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">persist  </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+---------&gt; mysql5.7(m) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----+-^-----+    </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">          </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|<span class="string"> sync</span></div><div class="line">                  |<span class="string">proxy_pass            </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">|<span class="string"> dsn-app02(10.1.0.9)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">dsn-db02  </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">(10.1.0.7)</span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----v-+-----+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+    </span>|<span class="string">    </span>|<span class="string"> mysql5.7(s) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">         </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">         </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">         </span>|<span class="string">                       </span>|</div><div class="line">+-----------------------------------+         +-----------------------+</div></pre></td></tr></table></figure>
+<h2 id="安装步骤"><a class="header-anchor" href="#安装步骤"> </a>安装步骤</h2>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/01/13/tomcat-reids-session-share/" itemprop="url">
                   tomcat+reids+session共享
                 </a>
@@ -1525,133 +1651,6 @@ CentOS 6
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/23/java-jenkins/" itemprop="url">
-                  jenkins
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-23T13:08:40+08:00" content="2016-12-23">
-              2016-12-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/12/23/java-jenkins/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/23/java-jenkins/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装"><a class="header-anchor" href="#安装"> </a>安装</h2>
-<ol>
-<li><code>yum install java</code></li>
-<li><code>rpm -ivh http://ftp.tsukuba.wide.ad.jp/software/jenkins/redhat-stable/jenkins-2.7.4-1.1.noarch.rpm</code></li>
-<li><code>service jenkins start</code></li>
-</ol>
-<h2 id="使用"><a class="header-anchor" href="#使用"> </a>使用</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/23/20161223132154.png" alt="jenkins"><span class="image-caption">jenkins</span></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1697,7 +1696,7 @@ CentOS 6
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">236</span>
+              <span class="site-state-item-count">237</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

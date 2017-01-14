@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-01-13T06:00:16.000Z</updated>
+  <updated>2017-01-14T15:34:19.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>简单的LNMT环境搭建</title>
+    <link href="http://2le.me/2017/01/14/lnmt/"/>
+    <id>http://2le.me/2017/01/14/lnmt/</id>
+    <published>2017-01-14T13:50:09.000Z</published>
+    <updated>2017-01-14T15:34:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
+<ol>
+<li>4台centos7系统服务器，为简化安装我搭了4个2c4g的。理论上应用服务器优先考虑cpu，数据服务器优先考虑磁盘io，缓存服务器则需要大的内存。</li>
+</ol>
+<h2 id="部署图"><a class="header-anchor" href="#部署图"> </a>部署图</h2>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">                                              +-----------------------+</div><div class="line">                                              |<span class="string">dsn-db01(10.1.0.6)     </span>|</div><div class="line">                                              |<span class="string">                       </span>|</div><div class="line">                                              |<span class="string">    +-------------+    </span>|</div><div class="line">                                session manage|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">                                         +---------&gt; redis3.2.6  |<span class="string">    </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> dsn-app01(10.1.0.8)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">                       </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">persist  </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+---------&gt; mysql5.7(m) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----+-^-----+    </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">          </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|<span class="string"> sync</span></div><div class="line">                  |<span class="string">proxy_pass            </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">|<span class="string"> dsn-app02(10.1.0.9)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">dsn-db02  </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">(10.1.0.7)</span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----v-+-----+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+    </span>|<span class="string">    </span>|<span class="string"> mysql5.7(s) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">         </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">         </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">         </span>|<span class="string">                       </span>|</div><div class="line">+-----------------------------------+         +-----------------------+</div></pre></td></tr></table></figure>
+<h2 id="安装步骤"><a class="header-anchor" href="#安装步骤"> </a>安装步骤</h2>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+    
+    </summary>
+    
+      <category term="java" scheme="http://2le.me/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://2le.me/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>tomcat+reids+session共享</title>
@@ -935,36 +964,6 @@ CentOS 6
     
     
       <category term="svn" scheme="http://2le.me/tags/svn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>黑科技</title>
-    <link href="http://2le.me/2016/12/01/black-tech/"/>
-    <id>http://2le.me/2016/12/01/black-tech/</id>
-    <published>2016-12-01T07:16:58.000Z</published>
-    <updated>2016-12-09T05:38:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>一些黑科技</p>
-<a id="more"></a>
-<h2 id="自定义百度网盘分享密码-提取码"><a class="header-anchor" href="#自定义百度网盘分享密码-提取码"> </a>自定义百度网盘分享密码 提取码</h2>
-<blockquote>
-<p>点击分享按钮后会弹出一个模态框，先不管它，按 F12 打开开发者工具，切换至控制台（Console），将以下代码复制粘贴到控制台，然后回车；</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">javascript:<span class="built_in">require</span>([<span class="string">"function-widget-1:share/util/service/createLinkShare.js"</span>]).prototype.makePrivatePassword=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> prompt(<span class="string">"老D的自定义百度网盘提取码"</span>,<span class="string">"laod"</span>)&#125;</div></pre></td></tr></table></figure>
-<p><a href="https://laod.cn/black-technology/baidu-wangpan-tiquma.html" target="_blank" rel="external">https://laod.cn/black-technology/baidu-wangpan-tiquma.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一些黑科技&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="tips" scheme="http://2le.me/categories/tips/"/>
-    
-    
-      <category term="tips" scheme="http://2le.me/tags/tips/"/>
     
   </entry>
   
