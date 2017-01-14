@@ -104,31 +104,43 @@
 
 
 
-<meta name="description" content="准备
+<meta name="description" content="架构
 
-4台centos7系统服务器，为简化安装我搭了4个2c4g的。理论上应用服务器优先考虑cpu，数据服务器优先考虑磁盘io，缓存服务器则需要大的内存。
+负载均衡服务器x1
+web服务器x2
+应用服务器x2
+数据库服务器x2
+文件服务器x1
+缓存服务器x1
 
- 部署图
-                                              +-----------------------+">
+简化安装2个web服务器和2个应用服务器部署在2台物理机，主数据库服务器和缓存服务器部署在1台服务器，文件服务器不单独部署，搭了4台2c4g的centos7系统机器（实际应用中不同角色的服务器对硬件资源要求各不相同，应用服务器需要处理大量的业务逻辑， 因此需要更快更强大的CPU；">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简单的LNMT环境搭建">
 <meta property="og:url" content="http://2le.me/2017/01/14/lnmt/index.html">
 <meta property="og:site_name" content="Bianle's Blog">
-<meta property="og:description" content="准备
+<meta property="og:description" content="架构
 
-4台centos7系统服务器，为简化安装我搭了4个2c4g的。理论上应用服务器优先考虑cpu，数据服务器优先考虑磁盘io，缓存服务器则需要大的内存。
+负载均衡服务器x1
+web服务器x2
+应用服务器x2
+数据库服务器x2
+文件服务器x1
+缓存服务器x1
 
- 部署图
-                                              +-----------------------+">
-<meta property="og:updated_time" content="2017-01-14T15:34:19.000Z">
+简化安装2个web服务器和2个应用服务器部署在2台物理机，主数据库服务器和缓存服务器部署在1台服务器，文件服务器不单独部署，搭了4台2c4g的centos7系统机器（实际应用中不同角色的服务器对硬件资源要求各不相同，应用服务器需要处理大量的业务逻辑， 因此需要更快更强大的CPU；">
+<meta property="og:updated_time" content="2017-01-14T16:18:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单的LNMT环境搭建">
-<meta name="twitter:description" content="准备
+<meta name="twitter:description" content="架构
 
-4台centos7系统服务器，为简化安装我搭了4个2c4g的。理论上应用服务器优先考虑cpu，数据服务器优先考虑磁盘io，缓存服务器则需要大的内存。
+负载均衡服务器x1
+web服务器x2
+应用服务器x2
+数据库服务器x2
+文件服务器x1
+缓存服务器x1
 
- 部署图
-                                              +-----------------------+">
+简化安装2个web服务器和2个应用服务器部署在2台物理机，主数据库服务器和缓存服务器部署在1台服务器，文件服务器不单独部署，搭了4台2c4g的centos7系统机器（实际应用中不同角色的服务器对硬件资源要求各不相同，应用服务器需要处理大量的业务逻辑， 因此需要更快更强大的CPU；">
 
 
 
@@ -406,13 +418,42 @@
       
 
       
-        <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
+        <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="架构"><a class="header-anchor" href="#架构"> </a>架构</h2>
 <ol>
-<li>4台centos7系统服务器，为简化安装我搭了4个2c4g的。理论上应用服务器优先考虑cpu，数据服务器优先考虑磁盘io，缓存服务器则需要大的内存。</li>
+<li>负载均衡服务器x1</li>
+<li>web服务器x2</li>
+<li>应用服务器x2</li>
+<li>数据库服务器x2</li>
+<li>文件服务器x1</li>
+<li>缓存服务器x1</li>
 </ol>
+<p>简化安装2个web服务器和2个应用服务器部署在2台物理机，主数据库服务器和缓存服务器部署在1台服务器，文件服务器不单独部署，搭了4台2c4g的centos7系统机器（<em>实际应用中不同角色的服务器对硬件资源要求各不相同，应用服务器需要处理大量的业务逻辑， 因此需要更快更强大的CPU；数据库服务器需要快速磁盘检索和数据缓存，因此需要更快的硬盘和更大的内存；文件服务器需要存储大量用户上传的文件，因此需要更大的硬盘</em>）。</p>
 <h2 id="部署图"><a class="header-anchor" href="#部署图"> </a>部署图</h2>
 <figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">                                              +-----------------------+</div><div class="line">                                              |<span class="string">dsn-db01(10.1.0.6)     </span>|</div><div class="line">                                              |<span class="string">                       </span>|</div><div class="line">                                              |<span class="string">    +-------------+    </span>|</div><div class="line">                                session manage|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">                                         +---------&gt; redis3.2.6  |<span class="string">    </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> dsn-app01(10.1.0.8)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">                       </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">persist  </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+---------&gt; mysql5.7(m) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----+-^-----+    </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">          </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|<span class="string"> sync</span></div><div class="line">                  |<span class="string">proxy_pass            </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">|<span class="string"> dsn-app02(10.1.0.9)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">dsn-db02  </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">(10.1.0.7)</span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----v-+-----+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+    </span>|<span class="string">    </span>|<span class="string"> mysql5.7(s) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">         </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">         </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">         </span>|<span class="string">                       </span>|</div><div class="line">+-----------------------------------+         +-----------------------+</div></pre></td></tr></table></figure>
+<h2 id="准备介质"><a class="header-anchor" href="#准备介质"> </a>准备介质</h2>
 <h2 id="安装步骤"><a class="header-anchor" href="#安装步骤"> </a>安装步骤</h2>
+<h3 id="linux安装"><a class="header-anchor" href="#linux安装"> </a><strong>l</strong>inux安装</h3>
+<p>centos6或7</p>
+<h3 id="nginx安装"><a class="header-anchor" href="#nginx安装"> </a><strong>n</strong>ginx安装</h3>
+<ol>
+<li>解压源码包</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">tar</span> <span class="selector-tag">xzf</span> <span class="selector-tag">openssl-1</span><span class="selector-class">.0</span><span class="selector-class">.2j</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line"><span class="selector-tag">tar</span> <span class="selector-tag">xzf</span> <span class="selector-tag">nginx-1</span><span class="selector-class">.10</span><span class="selector-class">.2</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div><div class="line"><span class="selector-tag">tar</span> <span class="selector-tag">xzf</span> <span class="selector-tag">pcre-8</span><span class="selector-class">.39</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>安装jemalloc</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">yum install bzip2</div><div class="line">tar xjf jemalloc-<span class="number">4.4</span>.<span class="number">0</span><span class="selector-class">.tar</span><span class="selector-class">.bz2</span></div><div class="line">cd jemaloc-<span class="number">4.4</span>.<span class="number">0</span></div><div class="line">./configure</div><div class="line">make &amp;&amp; make install</div><div class="line">ln -s /usr/local/lib/libjemalloc<span class="selector-class">.so</span>.<span class="number">2</span> /usr/lib64/libjemalloc<span class="selector-class">.so</span>.<span class="number">1</span></div><div class="line">echo <span class="string">'/usr/local/lib'</span> &gt; /etc/ld<span class="selector-class">.so</span><span class="selector-class">.conf</span><span class="selector-class">.d</span>/local<span class="selector-class">.conf</span></div><div class="line">ldconfig</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>添加用户</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">groupadd www</div><div class="line">useradd -s <span class="regexp">/sbin/</span>nologin -g www -M www</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>编译安装</li>
+</ol>
+<figure class="highlight brainfuck"><table><tr><td class="code"><pre><div class="line"><span class="string">.</span><span class="comment">/configure</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">prefix=/opt/nginx</span><span class="literal">-</span><span class="comment">1</span><span class="string">.</span><span class="comment">10</span><span class="string">.</span><span class="comment">2</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">user=www</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">group=www</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">http_stub_status_module</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">http_v2_module</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">http_ssl_module</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">http_gzip_static_module</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">http_realip_module</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">http_flv_module</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">http_mp4_module</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">openssl=</span><span class="string">.</span><span class="string">.</span><span class="comment">/openssl</span><span class="literal">-</span><span class="comment">1</span><span class="string">.</span><span class="comment">0</span><span class="string">.</span><span class="comment">2j</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">pcre=</span><span class="string">.</span><span class="string">.</span><span class="comment">/pcre</span><span class="literal">-</span><span class="comment">8</span><span class="string">.</span><span class="comment">39</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">pcre</span><span class="literal">-</span><span class="comment">jit</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">with</span><span class="literal">-</span><span class="comment">ld</span><span class="literal">-</span><span class="comment">opt='</span><span class="literal">-</span><span class="comment">ljemalloc'</span></div><div class="line"><span class="comment">make</span> <span class="comment">&amp;&amp;</span> <span class="comment">make</span> <span class="comment">install</span></div></pre></td></tr></table></figure>
+<h3 id="mysql安装"><a class="header-anchor" href="#mysql安装"> </a><strong>m</strong>ysql安装</h3>
+<h3 id="tomcat安装"><a class="header-anchor" href="#tomcat安装"> </a><strong>t</strong>omcat安装</h3>
+<h3 id="redis安装"><a class="header-anchor" href="#redis安装"> </a>redis安装</h3>
 
       
     </div>
@@ -702,7 +743,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text"> 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署图"><span class="nav-number">2.</span> <span class="nav-text"> 部署图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">3.</span> <span class="nav-text"> 安装步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.</span> <span class="nav-text"> 架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署图"><span class="nav-number">2.</span> <span class="nav-text"> 部署图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备介质"><span class="nav-number">3.</span> <span class="nav-text"> 准备介质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">4.</span> <span class="nav-text"> 安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux安装"><span class="nav-number">4.1.</span> <span class="nav-text"> linux安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx安装"><span class="nav-number">4.2.</span> <span class="nav-text"> nginx安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql安装"><span class="nav-number">4.3.</span> <span class="nav-text"> mysql安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat安装"><span class="nav-number">4.4.</span> <span class="nav-text"> tomcat安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis安装"><span class="nav-number">4.5.</span> <span class="nav-text"> redis安装</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
