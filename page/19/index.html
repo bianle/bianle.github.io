@@ -440,6 +440,126 @@
             
               
                 
+                <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">
+                  java socket小demo
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-10-16T18:09:17+08:00" content="2012-10-16">
+              2012-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/10/16/java-socket-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/java-socket-demo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">2222</span>);</div><div class="line">			System.out.println(<span class="string">"Server已经启动。。。"</span>);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">				Socket so = ss.accept();<span class="comment">//等待客户连接</span></div><div class="line">				<span class="keyword">new</span> ServerThread(so).start();</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			Socket so = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">2222</span>);</div><div class="line">			DataInputStream dis = <span class="keyword">new</span> </div><div class="line">			  DataInputStream(so.getInputStream());</div><div class="line">			DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">			  DataOutputStream(so.getOutputStream());</div><div class="line">			InputStreamReader isr = <span class="keyword">new</span> </div><div class="line">			  InputStreamReader(System.in);</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">			    String str = br.readLine();</div><div class="line">			    <span class="comment">//1 没有通知服务器</span></div><div class="line">			    dos.writeUTF(str);</div><div class="line">			    <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(str)) <span class="keyword">break</span>;</div><div class="line">			    String s = dis.readUTF();</div><div class="line">			    System.out.println(s);</div><div class="line">			&#125;</div><div class="line">			dis.close();dos.close();</div><div class="line">			so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataInputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataOutputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> Socket so;</div><div class="line">	<span class="keyword">public</span> ServerThread(Socket so)&#123;</div><div class="line">		<span class="keyword">this</span>.so = so;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run()&#123;</div><div class="line">		<span class="keyword">try</span>&#123;		   </div><div class="line">		    DataInputStream dis = <span class="keyword">new</span> </div><div class="line">		      DataInputStream(so.getInputStream());</div><div class="line">		    DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">		      DataOutputStream(so.getOutputStream());</div><div class="line">		    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		        String s = dis.readUTF();</div><div class="line">		        <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(s)) <span class="keyword">break</span>;</div><div class="line">		        dos.writeUTF(<span class="string">"from server:"</span>+s);</div><div class="line">		    &#125;</div><div class="line">		    dis.close();dos.close();</div><div class="line">		    so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/10/16/web-js-page-size/" itemprop="url">
                   JavaScript获取网页高度宽度
                 </a>
@@ -670,126 +790,6 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
 <script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
 })(JQuery) </script>
 <p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">
-                  java socket小demo
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-10-16T18:09:17+08:00" content="2012-10-16">
-              2012-10-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/10/16/java-socket-demo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/16/java-socket-demo/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">2222</span>);</div><div class="line">			System.out.println(<span class="string">"Server已经启动。。。"</span>);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">				Socket so = ss.accept();<span class="comment">//等待客户连接</span></div><div class="line">				<span class="keyword">new</span> ServerThread(so).start();</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			Socket so = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">2222</span>);</div><div class="line">			DataInputStream dis = <span class="keyword">new</span> </div><div class="line">			  DataInputStream(so.getInputStream());</div><div class="line">			DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">			  DataOutputStream(so.getOutputStream());</div><div class="line">			InputStreamReader isr = <span class="keyword">new</span> </div><div class="line">			  InputStreamReader(System.in);</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">			    String str = br.readLine();</div><div class="line">			    <span class="comment">//1 没有通知服务器</span></div><div class="line">			    dos.writeUTF(str);</div><div class="line">			    <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(str)) <span class="keyword">break</span>;</div><div class="line">			    String s = dis.readUTF();</div><div class="line">			    System.out.println(s);</div><div class="line">			&#125;</div><div class="line">			dis.close();dos.close();</div><div class="line">			so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataInputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataOutputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> Socket so;</div><div class="line">	<span class="keyword">public</span> ServerThread(Socket so)&#123;</div><div class="line">		<span class="keyword">this</span>.so = so;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run()&#123;</div><div class="line">		<span class="keyword">try</span>&#123;		   </div><div class="line">		    DataInputStream dis = <span class="keyword">new</span> </div><div class="line">		      DataInputStream(so.getInputStream());</div><div class="line">		    DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">		      DataOutputStream(so.getOutputStream());</div><div class="line">		    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		        String s = dis.readUTF();</div><div class="line">		        <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(s)) <span class="keyword">break</span>;</div><div class="line">		        dos.writeUTF(<span class="string">"from server:"</span>+s);</div><div class="line">		    &#125;</div><div class="line">		    dis.close();dos.close();</div><div class="line">		    so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1209,6 +1209,126 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
             
               
                 
+                <a class="post-title-link" href="/2012/08/16/web-print-iframe/" itemprop="url">
+                  打印iframe内容
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-16T18:09:17+08:00" content="2012-08-16">
+              2012-08-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/16/web-print-iframe/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/16/web-print-iframe/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>iframe要先获得焦点，window.focus()</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/08/16/web-disable-backspace/" itemprop="url">
                   js禁用只读文本框获得焦点时的回格键
                 </a>
@@ -1281,126 +1401,6 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>只读的文本框,当鼠标焦点在文本框里面的时候按回退键(backSpace),会退回到前一个页面,将以下的脚本放入页面中即可。</p>
 <figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;script&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">document.documentElement.onkeydown = function(evt)&#123;</div><div class="line">  </div><div class="line">var b = !!evt, oEvent = evt || window.event;</div><div class="line"></div><div class="line">  </div><div class="line">if (oEvent.keyCode == <span class="number">8</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">var <span class="keyword">node</span> <span class="title">= b</span> ? oEvent.target : oEvent.srcElement;</div><div class="line"></div><div class="line">  </div><div class="line">var reg = /^(input|textarea)$/i, regType = /^(text|textarea)$/i;</div><div class="line"></div><div class="line">  </div><div class="line">if (!reg.test(<span class="keyword">node</span>.<span class="title">nodeName</span>) || !regType.test(<span class="keyword">node</span>.<span class="title">type</span>) || <span class="keyword">node</span>.<span class="title">readOnly</span> || <span class="keyword">node</span>.<span class="title">disabled</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">if (b)</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.stopPropagation();</div><div class="line"></div><div class="line">  </div><div class="line">&#125; </div><div class="line"></div><div class="line">  </div><div class="line">else</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.cancelBubble = <span class="literal">true</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.keyCode = <span class="number">0</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.returnValue = <span class="literal">false</span>;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/script&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/08/16/web-print-iframe/" itemprop="url">
-                  打印iframe内容
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-08-16T18:09:17+08:00" content="2012-08-16">
-              2012-08-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/08/16/web-print-iframe/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/16/web-print-iframe/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>iframe要先获得焦点，window.focus()</p>
 
           
         
