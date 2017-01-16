@@ -319,8 +319,8 @@
             
               
                 
-                <a class="post-title-link" href="/2012/12/05/java-hibernate-object-name-validate/" itemprop="url">
-                  Hibernate 使用 SQL 查询时报错 “对象名 XX 无效”的解决办法
+                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">
+                  ext中文传参乱码
                 </a>
               
             
@@ -347,8 +347,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -363,8 +363,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/12/05/java-hibernate-object-name-validate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/java-hibernate-object-name-validate/" itemprop="commentsCount"></span>
+                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/05/web-extjs-encodeuri/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -389,41 +389,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
-询语言。后者是Hibernate支持的底层数据库查询语言，说白了就是支持以前我们使用
-的SQL语句。
-前2天试着用Hibernate提供的SQL查询数据库，得到的确实不友好的错误提示。
-错误信息如下：
-Caused by: java.sql.SQLException: [Microsoft][SQLServer 2000 Driver for
-JDBC][SQLServer]对象名 ‘ 实际操作的表名 ‘ 无效。
-Hibernate提供的SQL查询语句格式及我检索的条件如下：
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-sQuery.addEntity(Classes.class);
-分析：
-1、查看自己写的语句，没有丝毫的错误。放到SQL查询分析器执行。也能检索出数据。
-这确保了这条语句是没错的。
-提示：Hibernate中的SQL语句是不区分大小写的，即便是你查询的表名。比如你写成这
-样也是合法的 “SEleCt * fRoM ClaSSes “。那么Hibernate怎样操作对象？问题的关键
-是这里sQuery.addEntity(Classes.class);这条语句， 你要正确填写你要检索的表的
-实体，它必须是你存在的POJO。
-2、使用Hibernate官方推荐的HQL查询，同样的数据库，同样的表。结果是正确的。这
-确保了数据库链接是绝对没有问题的。
-3、仔细检查我写的SQL查询方法，没有发现什么语法错误。
-4、检查我查询表的POJO对象的映射文件.XXX.hbm.xml ，主键生成方式是 native 。似
-乎也没有错误。
-5、检查数据库检索表的主键，也已经设成自动增长。
-疑问：
-既然上面都有保证，为什么Hibernate还是检索不到我查询的对象（表）呢，记起POJO
-对象映射文件的class元素中，有这么一段 schema=”dbo” catalog=”HibernateTest”
-。
-提示：schema：数据库所有者。catalog：目录，也就是此对象映射的表属于那个数据
-库。
-和它有关吗？
-修改
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-为
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
-执行查询类，OK了。问题解决了。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -1363,126 +1329,6 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
             
               
                 
-                <a class="post-title-link" href="/2012/08/16/web-print-iframe/" itemprop="url">
-                  打印iframe内容
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-08-16T18:09:17+08:00" content="2012-08-16">
-              2012-08-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/08/16/web-print-iframe/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/16/web-print-iframe/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>iframe要先获得焦点，window.focus()</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/08/16/web-disable-backspace/" itemprop="url">
                   js禁用只读文本框获得焦点时的回格键
                 </a>
@@ -1555,6 +1401,126 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>只读的文本框,当鼠标焦点在文本框里面的时候按回退键(backSpace),会退回到前一个页面,将以下的脚本放入页面中即可。</p>
 <figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;script&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">document.documentElement.onkeydown = function(evt)&#123;</div><div class="line">  </div><div class="line">var b = !!evt, oEvent = evt || window.event;</div><div class="line"></div><div class="line">  </div><div class="line">if (oEvent.keyCode == <span class="number">8</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">var <span class="keyword">node</span> <span class="title">= b</span> ? oEvent.target : oEvent.srcElement;</div><div class="line"></div><div class="line">  </div><div class="line">var reg = /^(input|textarea)$/i, regType = /^(text|textarea)$/i;</div><div class="line"></div><div class="line">  </div><div class="line">if (!reg.test(<span class="keyword">node</span>.<span class="title">nodeName</span>) || !regType.test(<span class="keyword">node</span>.<span class="title">type</span>) || <span class="keyword">node</span>.<span class="title">readOnly</span> || <span class="keyword">node</span>.<span class="title">disabled</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">if (b)</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.stopPropagation();</div><div class="line"></div><div class="line">  </div><div class="line">&#125; </div><div class="line"></div><div class="line">  </div><div class="line">else</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.cancelBubble = <span class="literal">true</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.keyCode = <span class="number">0</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.returnValue = <span class="literal">false</span>;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/script&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/16/web-print-iframe/" itemprop="url">
+                  打印iframe内容
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-16T18:09:17+08:00" content="2012-08-16">
+              2012-08-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/16/web-print-iframe/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/16/web-print-iframe/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>iframe要先获得焦点，window.focus()</p>
 
           
         
