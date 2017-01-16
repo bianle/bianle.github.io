@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-01-15T06:45:52.000Z</updated>
+  <updated>2017-01-16T07:03:57.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://2le.me/2017/01/14/lnmt/"/>
     <id>http://2le.me/2017/01/14/lnmt/</id>
     <published>2017-01-14T13:50:09.000Z</published>
-    <updated>2017-01-15T06:45:52.000Z</updated>
+    <updated>2017-01-16T07:03:57.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="架构"><a class="header-anchor" href="#架构"> </a>架构</h2>
 <ol>
@@ -95,6 +95,17 @@
 <h3 id="redis安装"><a class="header-anchor" href="#redis安装"> </a>redis安装</h3>
 <figure class="highlight vim"><table><tr><td class="code"><pre><div class="line">tar xzf redis*</div><div class="line"><span class="keyword">cd</span> redis*</div><div class="line"><span class="keyword">make</span></div><div class="line"><span class="built_in">mkdir</span> -<span class="keyword">p</span> /usr/local/redis/&#123;bin,etc,var&#125;</div><div class="line"><span class="keyword">cp</span> src/&#123;redis-benchmark,redis-check-aof,redis-check-rdb,redis-cli,redis-sentinel,redis-server&#125; /usr/local/redis/bin/</div><div class="line"><span class="keyword">cp</span> redis.<span class="keyword">conf</span> /usr/local/redis/etc/</div><div class="line"><span class="keyword">ln</span> -s /usr/local/redis/bin/* /usr/local/bin/</div><div class="line">sed -i <span class="string">'s@pidfile.*@pidfile /var/run/redis.pid@'</span> /usr/local/redis/etc/redis.<span class="keyword">conf</span></div><div class="line">sed -i <span class="string">"s@logfile.*@logfile /usr/local/redis/var/redis.log@"</span> /usr/local/redis/etc/redis.<span class="keyword">conf</span></div><div class="line">sed -i <span class="string">"s@^dir.*@dir /usr/local/redis/var@"</span> /usr/local/redis/etc/redis.<span class="keyword">conf</span></div><div class="line">sed -i <span class="string">'s@daemonize no@daemonize yes@'</span> /usr/local/redis/etc/redis.<span class="keyword">conf</span></div><div class="line">sed -i <span class="string">"s@^# bind 127.0.0.1@bind 127.0.0.1@"</span> /usr/local/redis/etc/redis.<span class="keyword">conf</span></div><div class="line"><span class="keyword">cp</span> Redis-server-init /etc/init.d/redis-server</div><div class="line"><span class="keyword">cc</span> start-<span class="keyword">stop</span>-daemon.<span class="keyword">c</span> -<span class="keyword">o</span> /sbin/start-<span class="keyword">stop</span>-daemon</div><div class="line">chkconfig --<span class="built_in">add</span> redis-server</div><div class="line">chkconfig redis-server <span class="keyword">on</span></div><div class="line">useradd -M -s /sbin/nologin redis</div><div class="line">chown -R <span class="keyword">redi</span><span class="variable">s:redis</span> /usr/local/redis/var</div></pre></td></tr></table></figure>
 <h3 id="tomcat安装"><a class="header-anchor" href="#tomcat安装"> </a>tomcat安装</h3>
+<ol>
+<li>解压到/opt</li>
+<li>添加软连接tomcat7</li>
+<li>添加到服务</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">vi <span class="regexp">/etc/i</span>nit.d<span class="regexp">/tomcat</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment"># description: tomcat Start Stop Restart</span></div><div class="line"><span class="comment"># processname: tomcat</span></div><div class="line"><span class="comment"># chkconfig: 2345 20 80</span></div><div class="line"></div><div class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="built_in">export</span> CATALINA_HOME=/opt/tomcat7</div><div class="line"><span class="built_in">export</span> CATALINA_PID=<span class="string">"<span class="variable">$CATALINA_HOME</span>/logs/tomcat.pid"</span></div><div class="line"><span class="built_in">export</span> JAVA_OPTS=<span class="string">"-Xmx1536M"</span></div><div class="line"><span class="built_in">export</span> LANG=<span class="string">"zh_CN.UTF-8"</span></div><div class="line"></div><div class="line">RUN_AS=application</div><div class="line">RUN=<span class="string">"su <span class="variable">$RUN_AS</span> -c "</span></div><div class="line"></div><div class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></div><div class="line">start)</div><div class="line">	<span class="variable">$RUN</span> <span class="string">"cd <span class="variable">$CATALINA_HOME</span> &amp;&amp; bin/startup.sh"</span></div><div class="line">;;</div><div class="line">stop)</div><div class="line">	<span class="variable">$RUN</span> <span class="string">"cd <span class="variable">$CATALINA_HOME</span> &amp;&amp; bin/shutdown.sh"</span></div><div class="line">	<span class="variable">$RUN</span> <span class="string">"test -f <span class="variable">$CATALINA_PID</span> &amp;&amp; kill -9 `cat <span class="variable">$CATALINA_PID</span>`"</span></div><div class="line">;;</div><div class="line">restart)</div><div class="line">	<span class="variable">$RUN</span> <span class="string">"cd <span class="variable">$CATALINA_HOME</span> &amp;&amp; bin/shutdown.sh"</span></div><div class="line">	<span class="variable">$RUN</span> <span class="string">"cd <span class="variable">$CATALINA_HOME</span> &amp;&amp; bin/startup.sh"</span></div><div class="line">;;</div><div class="line"><span class="keyword">esac</span></div><div class="line"></div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>自动启动</li>
+</ol>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">chkconfig <span class="comment">--add tomcat</span></div><div class="line">chkconfig tomcat <span class="keyword">on</span></div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
