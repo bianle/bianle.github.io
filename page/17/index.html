@@ -319,6 +319,271 @@
             
               
                 
+                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">
+                  在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
+<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
+<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
+<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
+<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
+<p>使用示例：</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
+<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
+<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
+<ol>
+<li>
+<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
+</li>
+<li>
+<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
+</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/01/05/linux-port-view/" itemprop="url">
+                  怎么查看端口占用情况
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
+              2013-01-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/01/05/linux-port-view/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/linux-port-view/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
+<p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
+<p>假如我们需要确定谁占用了我们的9050端口</p>
+<p>1、Windows平台
+在windows命令行窗口下执行：</p>
+<figure class="highlight x86asm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">C:</span>&gt;netstat -aon|findstr <span class="string">"9050"</span></div><div class="line"></div><div class="line">TCP    <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">9050</span>         <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">0</span>              LISTENING       <span class="number">2016</span></div></pre></td></tr></table></figure>
+<p>看到了吗，端口被进程号为2016的进程占用，继续执行下面命令：</p>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line"><span class="keyword">C</span>:&gt;tasklist|findstr <span class="string">"2016"</span></div><div class="line"></div><div class="line">tor.exe                     <span class="number">2016</span> Console                 <span class="number">0</span>     <span class="number">16</span>,<span class="number">064</span> <span class="keyword">K</span></div></pre></td></tr></table></figure>
+<p>很清楚吧，tor占用了你的端口。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/01/05/software-editplus/" itemprop="url">
                   使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)
                 </a>
@@ -792,611 +1057,6 @@ grub&gt;boot</p>
             
               
                 
-                <a class="post-title-link" href="/2013/01/05/java-simple-web-server/" itemprop="url">
-                  Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files.
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/05/java-simple-web-server/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/java-simple-web-server/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>This is the window that comes up when you run the program, just a little motivator so you can see what��s in the end of the tunnel.</p>
-<p>Note to get the maximum out of this tutorial it is recommended that you have a basic grasp on how HTTP works. If the little man inside your head says what tha H is HTTP, you should go to the bottom and check some of the pointers. There you will find some nice text to explain the basic concept.</p>
-<p>Let��s get started!
-When making a program nowadays the first thing you should think about is the GUI (graphical user interface). If the program dosen��t look fancy, you can just press all the cancel buttons on the project. Ok that was meant as a joke, but there is some truth in it. People tend to judge a program a lot on its look, even though the real coding job is in making the stuff that goes on behind the scenes.</p>
-<p>The good news is that we are making this in Java, and since Java is such a friendly programming language it��s real easy to get some interface going. Comments are in green.</p>
-<p>//file: webserver_starter.java
-//declare a class wich inherit JFrame
-public classwebserver_starter
-extendsJFrame {
-//declare some panel, scrollpanel, textarea for gui
-JPanel jPanel1 = newJPanel();
-JScrollPane jScrollPane1 = newJScrollPane();
-JTextArea jTextArea2 = newJTextArea();
-staticInteger listen_port = null;
-//basic class constructor
-publicwebserver_starter() {
-try{
-jbInit();
-}
-catch(Exception e) {
-e.printStackTrace();
-}
-}
-//the JavaAPI entry point
-//where it starts this class if run
-public staticvoidmain(String[] args) {
-//start server on port x, default 80
-//use argument to main for what port to start on
-try{
-listen_port = newInteger(args[0]);
-//catch parse error
-}
-catch(Exception e) {
-listen_port = newInteger(80);
-}
-//create an instance of this class
-webserver_starter webserver = newwebserver_starter();
-}
-//set up the user interface
-privatevoidjbInit() throwsException {
-//oh the pretty colors
-jTextArea2.setBackground(newColor(16, 12, 66));
-jTextArea2.setForeground(newColor(151, 138, 255));
-jTextArea2.setBorder(BorderFactory.createLoweredBevelBorder());
-jTextArea2.setToolTipText(&quot;&quot;);
-jTextArea2.setEditable(false);
-jTextArea2.setColumns(30);
-jTextArea2.setRows(15);
-//change this to impress your friends
-this.setTitle(“Jon��s fancy prancy webserver”);
-//ugly inline listener, it��s for handling closing of the window
-this.addWindowListener(newjava.awt.event.WindowAdapter() {
-publicvoidwindowClosing(WindowEvent e) {
-this_windowClosed(e);
-}
-});
-//add the various to the proper containers
-jScrollPane1.getViewport().add(jTextArea2);
-jPanel1.add(jScrollPane1);
-this.getContentPane().add(jPanel1, BorderLayout.EAST);
-//tveak the apearance
-this.setVisible(true);
-this.setSize(420, 350);
-this.setResizable(false);
-//make sure it is drawn
-this.validate();
-//create the actual serverstuff,
-//all that is implemented in another class
-newserver(listen_port.intValue(), this);
-}
-//exit program when “X” is pressed.
-voidthis_windowClosed(WindowEvent e) {
-System.exit(1);
-}
-//this is a method to get messages from the actual
-//server to the window
-publicvoidsend_message_to_window(String s) {
-jTextArea2.append(s);
-}
-} //class end</p>
-<p>In a nutshell this code sets up the window and makes everything look good. If you look at the picture of the program on top of this page. This code makes that!</p>
-<p>Ok, enough time wasted on the look. Lets get down with the fun stuff, making the actual httpserver.</p>
-<p>//file: server.java
-//the real (http) serverclass
-//it extends thread so the server is run in a different
-//thread than the gui, that is to make it responsive.
-//it��s really just a macho coding thing.
-public classserver
-extendsThread {
-//the constructor method
-//the parameters it takes is what port to bind to, the default tcp port
-//for a httpserver is port 80. the other parameter is a reference to
-//the gui, this is to pass messages to our nice interface
-publicserver(intlisten_port, webserver_starter to_send_message_to) {
-message_to = to_send_message_to;
-port = listen_port;
-//this makes a new thread, as mentioned before,it��s to keep gui in
-//one thread, server in another. You may argue that this is totally
-//unnecessary, but we are gonna have this on the web so it needs to
-//be a bit macho! Another thing is that real pro webservers handles
-//each request in a new thread. This server dosen��t, it handles each
-//request one after another in the same thread. This can be a good
-//assignment!! To redo this code so that each request to the server
-//is handled in its own thread. The way it is now it blocks while
-//one client access the server, ex if it transferres a big file the
-//client have to wait real long before it gets any response.
-this.start();
-}
-privatevoids(String s2) { //an alias to avoid typing so much!
-message_to.send_message_to_window(s2);
-}
-privatewebserver_starter message_to; //the starter class, needed for gui
-privateintport; //port we are going to listen to
-//this is a overridden method from the Thread class we extended from
-publicvoidrun() {
-//we are now inside our own thread separated from the gui.
-ServerSocket serversocket = null;
-//To easily pick up lots of girls, change this to your name!!!
-s(“The simple httpserver v. 0000000000nCoded by Jon Berg” +
-&quot;&lt;jon.berg[on server]<a href="http://turtlemeat.com" target="_blank" rel="external">turtlemeat.com</a>&gt;nn&quot;);
-//Pay attention, this is where things starts to cook!
-try{
-//print/send message to the guiwindow
-s(“Trying to bind to localhost on port &quot; + Integer.toString(port) + “��”);
-//make a ServerSocket and bind it to given port,
-serversocket = newServerSocket(port);
-}
-catch(Exception e) { //catch any errors and print errors to gui
-s(“nFatal Error:” + e.getMessage());
-return;
-}
-s(“OK!n”);
-//go in a infinite loop, wait for connections, process request, send response
-while(true) {
-s(“nReady, Waiting for requests��n”);
-try{
-//this call waits/blocks until someone connects to the port we
-//are listening to
-Socket connectionsocket = serversocket.accept();
-//figure out what ipaddress the client commes from, just for show!
-InetAddress client = connectionsocket.getInetAddress();
-//and print it to gui
-s(client.getHostName() + &quot; connected to server.n”);
-//Read the http request from the client from the socket interface
-//into a buffer.
-BufferedReader input =
-newBufferedReader(newInputStreamReader(connectionsocket.
-getInputStream()));
-//Prepare a outputstream from us to the client,
-//this will be used sending back our response
-//(header + requested file) to the client.
-DataOutputStream output =
-newDataOutputStream(connectionsocket.getOutputStream());
-//as the name suggest this method handles the http request, see further down.
-//abstraction rules
-http_handler(input, output);
-}
-catch(Exception e) { //catch any errors, and print them
-s(“nError:” + e.getMessage());
-}
-} //go back in loop, wait for next request
-}
-//our implementation of the hypertext transfer protocol
-//its very basic and stripped down
-privatevoidhttp_handler(BufferedReader input, DataOutputStream output) {
-intmethod = 0; //1 get, 2 head, 0 not supported
-String http = newString(); //a bunch of strings to hold
-String path = newString(); //the various things, what http v, what path,
-String file = newString(); //what file
-String user_agent = newString(); //what user_agent
-try{
-//This is the two types of request we can handle
-//GET /index.html HTTP/1.0
-//HEAD /index.html HTTP/1.0
-String tmp = input.readLine(); //read from the stream
-String tmp2 = newString(tmp);
-tmp.toUpperCase(); //convert it to uppercase
-if(tmp.startsWith(“GET”)) { //compare it is it GET
-method = 1;
-} //if we set it to method 1
-if(tmp.startsWith(“HEAD”)) { //same here is it HEAD
-method = 2;
-} //set method to 2
-if(method == 0) { // not supported
-try{
-output.writeBytes(construct_http_header(501, 0));
-output.close();
-return;
-}
-catch(Exception e3) { //if some error happened catch it
-s(“error:” + e3.getMessage());
-} //and display error
-}
-//}
-//tmp contains “GET /index.html HTTP/1.0 ����.”
-//find first space
-//find next space
-//copy whats between minus slash, then you get “index.html”
-//it��s a bit of dirty code, but bear with me��
-intstart = 0;
-intend = 0;
-for(inta = 0; a &lt; tmp2.length(); a++) {
-if(tmp2.charAt(a) == �� �� &amp;&amp; start != 0) {
-end = a;
-break;
-}
-if(tmp2.charAt(a) == �� �� &amp;&amp; start == 0) {
-start = a;
-}
-}
-path = tmp2.substring(start + 2, end); //fill in the path
-}
-catch(Exception e) {
-s(“errorr” + e.getMessage());
-} //catch any exception
-//path do now have the filename to what to the file it wants to open
-s(“nClient requested:” + newFile(path).getAbsolutePath() + “n”);
-FileInputStream requestedfile = null;
-try{
-//NOTE that there are several security consideration when passing
-//the untrusted string “path” to FileInputStream.
-//You can access all files the current user has read access to!!!
-//current user is the user running the javaprogram.
-//you can do this by passing “…/” in the url or specify absoulute path
-//or change drive (win)
-//try to open the file,
-requestedfile = newFileInputStream(path);
-}
-catch(Exception e) {
-try{
-//if you could not open the file send a 404
-output.writeBytes(construct_http_header(404, 0));
-//close the stream
-output.close();
-}
-catch(Exception e2) {}
-;
-s(“error” + e.getMessage());
-} //print error to gui
-//happy day scenario
-try{
-inttype_is = 0;
-//find out what the filename ends with,
-//so you can construct a the right content type
-if(path.endsWith(&quot;.zip&quot;
-) {
-type_is = 3;
-}
-if(path.endsWith(&quot;.jpg&quot;) || path.endsWith(&quot;.jpeg&quot;)) {
-type_is = 1;
-}
-if(path.endsWith(&quot;.gif&quot;)) {
-type_is = 2;
-//write out the header, 200 -&gt;everything is ok we are all happy.
-}
-output.writeBytes(construct_http_header(200, 5));
-//if it was a HEAD request, we don��t print any BODY
-if(method == 1) { //1 is GET 2 is head and skips the body
-while(true) {
-//read the file from filestream, and print out through the
-//client-outputstream on a byte per byte base.
-intb = requestedfile.read();
-if(b == -1) {
-break; //end of file
-}
-output.write(b);
-}
-}
-//clean up the files, close open handles
-output.close();
-requestedfile.close();
-}
-catch(Exception e) {}
-}
-//this method makes the HTTP header for the response
-//the headers job is to tell the browser the result of the request
-//among if it was successful or not.
-privateString construct_http_header(intreturn_code, intfile_type) {
-String s = &quot;HTTP/1.0 &quot;;
-//you probably have seen these if you have been surfing the web a while
-switch(return_code) {
-case200:
-s = s + “200 OK”;
-break;
-case400:
-s = s + “400 Bad Request”;
-break;
-case403:
-s = s + “403 Forbidden”;
-break;
-case404:
-s = s + “404 Not Found”;
-break;
-case500:
-s = s + “500 Internal Server Error”;
-break;
-case501:
-s = s + “501 Not Implemented”;
-break;
-}
-s = s + “rn”; //other header fields,
-s = s + “Connection: closern”; //we can��t handle persistent connections
-s = s + “Server: SimpleHTTPtutorial v0rn”; //server name
-//Construct the right Content-Type for the header.
-//This is so the browser knows what to do with the
-//file, you may know the browser dosen��t look on the file
-//extension, it is the servers job to let the browser know
-//what kind of file is being transmitted. You may have experienced
-//if the server is miss configured it may result in
-//pictures displayed as text!
-switch(file_type) {
-//plenty of types for you to fill in
-case0:
-break;
-case1:
-s = s + “Content-Type: image/jpegrn”;
-break;
-case2:
-s = s + “Content-Type: image/gifrn”;
-case3:
-s = s + “Content-Type: application/x-zip-compressedrn”;
-default:
-s = s + “Content-Type: text/htmlrn”;
-break;
-}
-////so on and so on����
-s = s + “rn”; //this marks the end of the httpheader
-//and the start of the body
-//ok return our newly created header!
-returns;
-}
-} //class phhew caffeine yes please!</p>
-<p>BEWARE! When you run the web server you are potentially opening for all your files to be red by the entire Internet! The httpserver is only ment to be used for testing. If you absoulutely want to run this httpserver for longer periods of time; consider creating a new user with only read access to the files you want to share and running it only with this user!</p>
-<p>Download the tutorial files! this zipfile contains both sourcecode and compiled javabytecode files. So you can test the program without having the javacompiler. It also contains a sample index.html and a jpg file.</p>
-<p>How to run the program? Get into commandline, cd to the dir where you extracted the files (webserver_starter.class and the other files). Then type: java webserver_starter</p>
-<p>Then the window you see on top of this page should pop up. To test if this httpserver is really functioning, you open your browser, and in the location line you type: <a href="http://localhost/index.html" target="_blank" rel="external">http://localhost/index.html</a> ,this will bring up a sample html file that is in the zipfile.</p>
-<p>If you want to test the httpserver from another machine on the Internet, then you need to know the ip-address or hostname the httpserver is running on, then you type that in the location line in the browser, like <a href="http://123.123.123.123/index.html" target="_blank" rel="external">http://123.123.123.123/index.html</a> .Note, it may not work if you are behind a firewall or a NAT router, but that��s not the programs�� fault!</p>
-<p>Update: Oct 2011. This code is not actively updated, but I changed a few things mainly due to many people are referencing this. The switch (file_type) was missing breaks. requestedfile.read() and output.write() now reads and writes a byte array which speeds things up. And added favicon support since somebody asked about it.</p>
-<p>How to compile: Open command line. cd to directory where you unpacked it. javac *.java
-How to run: Open command line. cd to directory where you unpacked it. java -cp . webserver_starter</p>
-<p>Pointers to related stuff on the hypertext transfer protocol (http) and web servers:</p>
-<p>HowStuffWorks This is a very basic introduction for the novice on how web servers works. Has also other text about Internet and Routers, in easy to understandable language. Nice if you are starting out learning.</p>
-<p>HTTP Made Really Easy Here is some nice text that goes through the main points in HTTP. A little more technical. It��s recommended that you know these things to understand the above tutorial.
-Apache the best and most widely used web server on the Internet today, check it out. If you want to run your own web server this is the one to get, you can get binaries for both Windows and Unix. You can download the entire sourcecode if you want to check how it was made.</p>
-<p>Mozilla / Netscape is a nice web browser. Get rid of the Explorer, there are some rumors that Internet Explorer secretly collects all the pages you are visiting and sends it to <a href="http://microsoft.com" target="_blank" rel="external">microsoft.com</a>.</p>
-<p>RFC-1945 RFC describing Hypertext Transfer Protocol �� HTTP/1.0</p>
-<p>RFC-2616 RFC describing Hypertext Transfer Protocol �� HTTP/1.1</p>
-<p>RFC webpage The Request For Comment webpage, RFC are technical documents describing all sorts of protocols on the Internet.</p>
-<p>Java2 Runtime / SDK Download site for the Java Runtime (needed for running Java programs) and Java Software Development Kit (needed for making Java programs).</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">
-                  在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-01-05T18:09:17+08:00" content="2013-01-05">
-              2013-01-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
-<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
-<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
-<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
-<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
-<p>使用示例：</p>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
-<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
-<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
-<ol>
-<li>
-<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
-</li>
-<li>
-<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
-</li>
-</ol>
-<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/12/27/web-frameset-fixed/" itemprop="url">
                   frameset固定宽度并且居中显示
                 </a>
@@ -1468,6 +1128,196 @@ Apache the best and most widely used web server on the Internet today, check it 
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">其实就再套了一个框架，多了红色部分的代码而已；这样就可以使得框架居中了……..</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">"*,1024,*"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"130,*,40"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"top.html"</span> <span class="attr">name</span>=<span class="string">"topFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"topFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"center.html"</span> <span class="attr">name</span>=<span class="string">"mainFrame"</span> <span class="attr">id</span>=<span class="string">"mainFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"bottom.html"</span> <span class="attr">name</span>=<span class="string">"bottomFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"bottomFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/12/27/web-js-change-css/" itemprop="url">
+                  JS来改变CSS样式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-27T18:09:17+08:00" content="2012-12-27">
+              2012-12-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/12/27/web-js-change-css/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/27/web-js-change-css/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>document.getElementById(“xx”).style.xxx中的所有属性是什么</p>
+<p>盒子标签和属性对照
+CSS语法（不区分大小写）|JavaScript语法（区分大小写）
+border| border
+border-bottom| borderBottom
+border-bottom-color|borderBottomColor
+border-bottom-style|borderBottomStyle
+border-bottom-width|borderBottomWidth
+border-color|borderColor
+border-left|	borderLeft
+border-left-color|	borderLeftColor
+border-left-style|	borderLeftStyle
+border-left-width|	borderLeftWidth
+border-right|	borderRight
+border-right-color|	borderRightColor
+border-right-style|	borderRightStyle
+border-right-width|	borderRightWidth
+border-style|	borderStyle
+border-top|	borderTop
+border-top-color|	borderTopColor
+border-top-style|	borderTopStyle
+border-top-width|	borderTopWidth
+border-width|	borderWidth
+clear|	clear
+float|	floatStyle
+margin|	margin
+margin-bottom|	marginBottom
+margin-left|	marginLeft
+margin-right|	marginRight
+margin-top|	marginTop
+padding|	padding
+padding-bottom|	paddingBottom
+padding-left|	paddingLeft
+padding-right|	paddingRight
+padding-top|	paddingTop
+颜色和背景标签和属性对照
+CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
+background|	background
+background-attachment|	backgroundAttachment
+background-color|	backgroundColor
+background-image|	backgroundImage
+background-position|	backgroundPosition
+background-repeat|	backgroundRepeat
+color|	color</p>
+<p>样式标签和属性对照
+CSS语法（不区分大小写）	JavaScript 语法（区分大小写）
+display|	display
+list-style-type|	listStyleType
+list-style-image|	listStyleImage
+list-style-position|	listStylePosition
+list-style|	listStyle
+white-space|	whiteSpace</p>
+<p>文字样式标签和属性对照
+CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
+font	font
+font-family	fontFamily
+font-size	fontSize
+font-style	fontStyle
+font-variant	fontVariant
+font-weight	fontWeight</p>
+<p>文本标签和属性对照
+CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
+letter-spacing|	letterSpacing
+line-break|	lineBreak
+line-height|	lineHeight
+text-align|	textAlign
+text-decoration|	textDecoration
+text-indent|	textIndent
+text-justify|	textJustify
+text-transform|	textTransform
+vertical-align|	xverticalAlign</p>
 
           
         
@@ -1768,196 +1618,6 @@ Number of rows committed = 0</p>
 <p>怎样清除数据后,可以把ID再从1开始计算呢?</p>
 <p>如把数据表users中的自增ID改成从1开始的记录</p>
 <figure class="highlight less"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">DBCC</span> <span class="selector-tag">CHECKIDENT</span> (‘users’, RESEED,<span class="number">1</span>)</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/12/27/web-js-change-css/" itemprop="url">
-                  JS来改变CSS样式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-12-27T18:09:17+08:00" content="2012-12-27">
-              2012-12-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/12/27/web-js-change-css/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/12/27/web-js-change-css/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>document.getElementById(“xx”).style.xxx中的所有属性是什么</p>
-<p>盒子标签和属性对照
-CSS语法（不区分大小写）|JavaScript语法（区分大小写）
-border| border
-border-bottom| borderBottom
-border-bottom-color|borderBottomColor
-border-bottom-style|borderBottomStyle
-border-bottom-width|borderBottomWidth
-border-color|borderColor
-border-left|	borderLeft
-border-left-color|	borderLeftColor
-border-left-style|	borderLeftStyle
-border-left-width|	borderLeftWidth
-border-right|	borderRight
-border-right-color|	borderRightColor
-border-right-style|	borderRightStyle
-border-right-width|	borderRightWidth
-border-style|	borderStyle
-border-top|	borderTop
-border-top-color|	borderTopColor
-border-top-style|	borderTopStyle
-border-top-width|	borderTopWidth
-border-width|	borderWidth
-clear|	clear
-float|	floatStyle
-margin|	margin
-margin-bottom|	marginBottom
-margin-left|	marginLeft
-margin-right|	marginRight
-margin-top|	marginTop
-padding|	padding
-padding-bottom|	paddingBottom
-padding-left|	paddingLeft
-padding-right|	paddingRight
-padding-top|	paddingTop
-颜色和背景标签和属性对照
-CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
-background|	background
-background-attachment|	backgroundAttachment
-background-color|	backgroundColor
-background-image|	backgroundImage
-background-position|	backgroundPosition
-background-repeat|	backgroundRepeat
-color|	color</p>
-<p>样式标签和属性对照
-CSS语法（不区分大小写）	JavaScript 语法（区分大小写）
-display|	display
-list-style-type|	listStyleType
-list-style-image|	listStyleImage
-list-style-position|	listStylePosition
-list-style|	listStyle
-white-space|	whiteSpace</p>
-<p>文字样式标签和属性对照
-CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
-font	font
-font-family	fontFamily
-font-size	fontSize
-font-style	fontStyle
-font-variant	fontVariant
-font-weight	fontWeight</p>
-<p>文本标签和属性对照
-CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
-letter-spacing|	letterSpacing
-line-break|	lineBreak
-line-height|	lineHeight
-text-align|	textAlign
-text-decoration|	textDecoration
-text-indent|	textIndent
-text-justify|	textJustify
-text-transform|	textTransform
-vertical-align|	xverticalAlign</p>
 
           
         
