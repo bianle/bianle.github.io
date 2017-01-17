@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-01-16T09:59:33.000Z</updated>
+  <updated>2017-01-17T06:40:34.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://2le.me/2017/01/14/lnmt/"/>
     <id>http://2le.me/2017/01/14/lnmt/</id>
     <published>2017-01-14T13:50:09.000Z</published>
-    <updated>2017-01-16T09:59:33.000Z</updated>
+    <updated>2017-01-17T06:40:34.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="架构"><a class="header-anchor" href="#架构"> </a>架构</h2>
 <ol>
@@ -38,7 +38,9 @@
 <p>openssl-1.0.2j.tar.gz
 nginx-1.10.2.tar.gz
 pcre-8.39.tar.gz
-jemalloc-4.4.0.tar.bz2</p>
+jemalloc-4.4.0.tar.bz2
+apache-tomcat-7.0.69.tar.gz
+<a href="https://pan.baidu.com/s/1dEO54zv" target="_blank" rel="external">百度云密码bian</a></p>
 <h2 id="安装步骤"><a class="header-anchor" href="#安装步骤"> </a>安装步骤</h2>
 <h3 id="linux安装"><a class="header-anchor" href="#linux安装"> </a><strong>l</strong>inux安装</h3>
 <p>centos6或7</p>
@@ -64,6 +66,14 @@ jemalloc-4.4.0.tar.bz2</p>
 </ol>
 <figure class="highlight haml"><table><tr><td class="code"><pre><div class="line">cd nginx-1.10.2</div><div class="line"></div><div class="line">./configure \</div><div class="line">-<span class="ruby">-prefix=<span class="regexp">/opt/nginx</span>-<span class="number">1.10</span>.<span class="number">2</span> \</span></div><div class="line">-<span class="ruby">-user=www --group=www \</span></div><div class="line">-<span class="ruby">-with-http_stub_status_module \</span></div><div class="line">-<span class="ruby">-with-http_v2_module \</span></div><div class="line">-<span class="ruby">-with-http_ssl_module \</span></div><div class="line">-<span class="ruby">-with-http_gzip_static_module \</span></div><div class="line">-<span class="ruby">-with-http_realip_module \</span></div><div class="line">-<span class="ruby">-with-http_flv_module \</span></div><div class="line">-<span class="ruby">-with-http_mp4_module \</span></div><div class="line">-<span class="ruby">-with-openssl=../openssl-<span class="number">1.0</span>.<span class="number">2</span>j \</span></div><div class="line">-<span class="ruby">-with-pcre=../pcre-<span class="number">8.39</span> \</span></div><div class="line">-<span class="ruby">-with-pcre-jit \</span></div><div class="line">-<span class="ruby">-with-ld-opt=<span class="string">'-ljemalloc'</span></span></div><div class="line"></div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
 <h3 id="mysql安装"><a class="header-anchor" href="#mysql安装"> </a>mysql安装</h3>
+<ol start="0">
+<li>新建用户</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">useradd -M -<span class="keyword">s</span> /sbin/nologin mysql</div><div class="line"><span class="keyword">mkdir</span> /usr/<span class="keyword">local</span>/mysql</div><div class="line"><span class="keyword">chown</span> -R mysql.mysql /usr/<span class="keyword">local</span>/mysql</div><div class="line"><span class="keyword">mkdir</span> -p /data/mysql</div><div class="line"><span class="keyword">chown</span> -R mysql.mysql /data/mysql</div></pre></td></tr></table></figure>
+<ol start="0">
+<li>安装依赖</li>
+</ol>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> cmake ncurses-devel bison</div></pre></td></tr></table></figure>
 <ol>
 <li>下载mysql5.7源码</li>
 </ol>
@@ -83,7 +93,7 @@ jemalloc-4.4.0.tar.bz2</p>
 <ol start="5">
 <li>加到系统服务</li>
 </ol>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><div class="line"><span class="attribute">cp</span> mysql.server /etc/init.d/mysqld</div><div class="line">sed -i <span class="string">"s@^basedir=.*<span class="variable">@basedir</span>=/usr/local/mysql@"</span> /etc/init.d/mysqld</div><div class="line">sed -i <span class="string">"s@^datadir=.*<span class="variable">@datadir</span>=/data/mysql@"</span> /etc/init.d/mysqld</div><div class="line">chmod +x /etc/init.d/mysqld</div><div class="line"></div><div class="line">chkconfig --add mysqld; <span class="attribute">chkconfig</span> mysqld <span class="literal">on</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><div class="line">cp support-files<span class="regexp">/mysql.server /</span>etc<span class="regexp">/init.d/</span>mysqld</div><div class="line">sed -i <span class="string">"s@^basedir=.*@basedir=/usr/local/mysql@"</span> <span class="regexp">/etc/</span>init.d/mysqld</div><div class="line">sed -i <span class="string">"s@^datadir=.*@datadir=/data/mysql@"</span> <span class="regexp">/etc/</span>init.d/mysqld</div><div class="line">chmod +x <span class="regexp">/etc/</span>init.d/mysqld</div><div class="line"></div><div class="line">chkconfig --add mysqld; </div><div class="line">chkconfig mysqld on;</div></pre></td></tr></table></figure>
 <ol start="6">
 <li>修改配置文件</li>
 </ol>
@@ -91,7 +101,7 @@ jemalloc-4.4.0.tar.bz2</p>
 <ol start="5">
 <li>初始化</li>
 </ol>
-<figure class="highlight dsconfig"><table><tr><td class="code"><pre><div class="line"><span class="string">mysqld </span><span class="built_in">--initialize-insecure</span> <span class="built_in">--user=mysql</span> <span class="built_in">--basedir=/usr/local/mysql</span> <span class="built_in">--datadir=/data/mysql</span></div><div class="line"><span class="string">chown </span><span class="string">mysql.</span><span class="string">mysql </span>-R /<span class="string">data/</span><span class="string">mysql</span></div><div class="line"></div><div class="line"><span class="string">echo </span><span class="string">"export PATH=/usr/local/mysql/bin:\$PATH"</span> &gt;&gt; /<span class="string">etc/</span><span class="string">profile</span></div><div class="line"></div><div class="line"><span class="string">mysql </span>-e <span class="string">"grant all privileges on *.* to root@'127.0.0.1' identified by \"</span>&lt;<span class="string">password&gt;</span>\<span class="string">" with grant option;"</span></div><div class="line"><span class="string">mysql </span>-e <span class="string">"grant all privileges on *.* to root@'localhost' identified by \"</span>&lt;<span class="string">password&gt;</span>\<span class="string">" with grant option;"</span></div></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="regexp">/usr/</span>local<span class="regexp">/mysql/</span>bin<span class="regexp">/mysqld --initialize-insecure --user=mysql --basedir=/u</span>sr<span class="regexp">/local/my</span>sql --datadir=<span class="regexp">/data/my</span>sql</div><div class="line">chown mysql.mysql -R <span class="regexp">/data/my</span>sql</div><div class="line"></div><div class="line">echo <span class="string">"export PATH=/usr/local/mysql/bin:\$PATH"</span> &gt;&gt; <span class="regexp">/etc/</span>profile</div><div class="line"></div><div class="line">service mysql start</div><div class="line"></div><div class="line">mysql -e <span class="string">"grant all privileges on *.* to root@'127.0.0.1' identified by \"&lt;password&gt;\" with grant option;"</span></div><div class="line">mysql -e <span class="string">"grant all privileges on *.* to root@'localhost' identified by \"&lt;password&gt;\" with grant option;"</span></div></pre></td></tr></table></figure>
 <h3 id="redis安装"><a class="header-anchor" href="#redis安装"> </a>redis安装</h3>
 <ol>
 <li>安装</li>
@@ -102,7 +112,7 @@ jemalloc-4.4.0.tar.bz2</p>
 </ol>
 <figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">vi <span class="regexp">/etc/i</span>nit.d<span class="regexp">/redis-server</span></div></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#! /bin/sh</span></div><div class="line"><span class="comment">### BEGIN INIT INFO</span></div><div class="line"><span class="comment"># Provides:     redis-server</span></div><div class="line"><span class="comment"># Required-Start:   $syslog</span></div><div class="line"><span class="comment"># Required-Stop:    $syslog</span></div><div class="line"><span class="comment"># Should-Start:     $local_fs</span></div><div class="line"><span class="comment"># Should-Stop:      $local_fs</span></div><div class="line"><span class="comment"># Default-Start:    2 3 4 5</span></div><div class="line"><span class="comment"># Default-Stop:     0 1 6</span></div><div class="line"><span class="comment"># Short-Description:    redis-server - Persistent key-value db</span></div><div class="line"><span class="comment"># Description:      redis-server - Persistent key-value db</span></div><div class="line"><span class="comment">### END INIT INFO</span></div><div class="line"></div><div class="line">PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/sbin:/bin:/usr/sbin:/usr/bin</div><div class="line">DAEMON=/usr/<span class="built_in">local</span>/redis/bin/redis-server</div><div class="line">DAEMON_ARGS=/usr/<span class="built_in">local</span>/redis/etc/redis.conf</div><div class="line">NAME=redis-server</div><div class="line">DESC=redis-server</div><div class="line">PIDFILE=/var/run/redis.pid</div><div class="line"></div><div class="line"><span class="built_in">test</span> -x <span class="variable">$DAEMON</span> || <span class="built_in">exit</span> 0</div><div class="line"><span class="built_in">test</span> -x <span class="variable">$DAEMONBOOTSTRAP</span> || <span class="built_in">exit</span> 0</div><div class="line"></div><div class="line"><span class="built_in">set</span> <span class="_">-e</span></div><div class="line"></div><div class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></div><div class="line">  start)</div><div class="line">    <span class="built_in">echo</span> -n <span class="string">"Starting <span class="variable">$DESC</span>: "</span></div><div class="line">    touch <span class="variable">$PIDFILE</span></div><div class="line">    chown redis:redis <span class="variable">$PIDFILE</span></div><div class="line">    <span class="keyword">if</span> start-stop-daemon --start --quiet --pidfile <span class="variable">$PIDFILE</span> --chuid redis:redis --exec <span class="variable">$DAEMON</span> -- <span class="variable">$DAEMON_ARGS</span></div><div class="line">    <span class="keyword">then</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">"[OK]"</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">"failed"</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    ;;</div><div class="line">  stop)</div><div class="line">    <span class="built_in">echo</span> -n <span class="string">"Stopping <span class="variable">$DESC</span>: "</span></div><div class="line">    <span class="keyword">if</span> start-stop-daemon --stop --retry 10 --quiet --oknodo --pidfile <span class="variable">$PIDFILE</span> --exec <span class="variable">$DAEMON</span></div><div class="line">    <span class="keyword">then</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">"[OK]"</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">"failed"</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    rm <span class="_">-f</span> <span class="variable">$PIDFILE</span></div><div class="line">    ;;</div><div class="line"></div><div class="line">  restart|force-reload)</div><div class="line">    <span class="variable">$&#123;0&#125;</span> stop</div><div class="line">    <span class="variable">$&#123;0&#125;</span> start</div><div class="line">    ;;</div><div class="line">  *)</div><div class="line">    <span class="built_in">echo</span> <span class="string">"Usage: /etc/init.d/<span class="variable">$NAME</span> &#123;start|stop|restart|force-reload&#125;"</span> &gt;&amp;2</div><div class="line">    <span class="built_in">exit</span> 1</div><div class="line">    ;;</div><div class="line"><span class="keyword">esac</span></div><div class="line"></div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure>
-<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><div class="line">cc <span class="built_in">start</span>-<span class="built_in">stop</span>-daemon.c -o /sbin/<span class="built_in">start</span>-<span class="built_in">stop</span>-daemon</div><div class="line">chkconfig <span class="comment">--add redis-server</span></div><div class="line">chkconfig redis-server <span class="keyword">on</span></div></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><div class="line">chmod +x redis-server</div><div class="line">cc <span class="built_in">start</span>-<span class="built_in">stop</span>-daemon.c -o /sbin/<span class="built_in">start</span>-<span class="built_in">stop</span>-daemon</div><div class="line">chkconfig <span class="comment">--add redis-server</span></div><div class="line">chkconfig redis-server <span class="keyword">on</span></div></pre></td></tr></table></figure>
 <ol start="3">
 <li>修改权限</li>
 </ol>
