@@ -128,7 +128,7 @@ web服务器x2
 缓存服务器x1
 
 简化安装2个web服务器和2个应用服务器部署在2台物理机，主数据库服务器和缓存服务器部署在1台服务器，文件服务器不单独部署，搭了4台2c4g的centos7系统机器（实际应用中不同角色的服务器对硬件资源要求各不相同，应用服务器需要处理大量的业务逻辑， 因此需要更快更强大的CPU；">
-<meta property="og:updated_time" content="2017-01-17T06:40:34.000Z">
+<meta property="og:updated_time" content="2017-01-17T08:28:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单的LNMT环境搭建">
 <meta name="twitter:description" content="架构
@@ -542,6 +542,12 @@ apache-tomcat-7.0.69.tar.gz
 <li>自动启动</li>
 </ol>
 <figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">chkconfig <span class="comment">--add tomcat</span></div><div class="line">chkconfig tomcat <span class="keyword">on</span></div></pre></td></tr></table></figure>
+<h2 id="集群配置"><a class="header-anchor" href="#集群配置"> </a>集群配置</h2>
+<h3 id="redis-反向代理"><a class="header-anchor" href="#redis-反向代理"> </a>redis 反向代理</h3>
+<h3 id="tomcat-session共享"><a class="header-anchor" href="#tomcat-session共享"> </a>tomcat session共享</h3>
+<p><a href="/2017/01/13/tomcat-reids-session-share/">tomcat+reids+session共享</a></p>
+<h3 id="mysql主从配置"><a class="header-anchor" href="#mysql主从配置"> </a>mysql主从配置</h3>
+<p><a href="/2017/01/07/mysql-master-slaver/">mysql主从配置</a></p>
 
       
     </div>
@@ -831,7 +837,7 @@ apache-tomcat-7.0.69.tar.gz
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.</span> <span class="nav-text"> 架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署图"><span class="nav-number">2.</span> <span class="nav-text"> 部署图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备介质"><span class="nav-number">3.</span> <span class="nav-text"> 准备介质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">4.</span> <span class="nav-text"> 安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux安装"><span class="nav-number">4.1.</span> <span class="nav-text"> linux安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx安装"><span class="nav-number">4.2.</span> <span class="nav-text"> nginx安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql安装"><span class="nav-number">4.3.</span> <span class="nav-text"> mysql安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis安装"><span class="nav-number">4.4.</span> <span class="nav-text"> redis安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat安装"><span class="nav-number">4.5.</span> <span class="nav-text"> tomcat安装</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.</span> <span class="nav-text"> 架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署图"><span class="nav-number">2.</span> <span class="nav-text"> 部署图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备介质"><span class="nav-number">3.</span> <span class="nav-text"> 准备介质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">4.</span> <span class="nav-text"> 安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux安装"><span class="nav-number">4.1.</span> <span class="nav-text"> linux安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx安装"><span class="nav-number">4.2.</span> <span class="nav-text"> nginx安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql安装"><span class="nav-number">4.3.</span> <span class="nav-text"> mysql安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis安装"><span class="nav-number">4.4.</span> <span class="nav-text"> redis安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat安装"><span class="nav-number">4.5.</span> <span class="nav-text"> tomcat安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群配置"><span class="nav-number">5.</span> <span class="nav-text"> 集群配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-反向代理"><span class="nav-number">5.1.</span> <span class="nav-text"> redis 反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat-session共享"><span class="nav-number">5.2.</span> <span class="nav-text"> tomcat session共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql主从配置"><span class="nav-number">5.3.</span> <span class="nav-text"> mysql主从配置</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
