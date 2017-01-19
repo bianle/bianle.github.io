@@ -128,7 +128,7 @@ web服务器x2
 缓存服务器x1
 
 简化安装2个web服务器和2个应用服务器部署在2台物理机，主数据库服务器和缓存服务器部署在1台服务器，文件服务器不单独部署，搭了4台2c4g的centos7系统机器（实际应用中不同角色的服务器对硬件资源要求各不相同，应用服务器需要处理大量的业务逻辑， 因此需要更快更强大的CPU；">
-<meta property="og:updated_time" content="2017-01-17T08:28:34.000Z">
+<meta property="og:updated_time" content="2017-01-17T08:29:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单的LNMT环境搭建">
 <meta name="twitter:description" content="架构
@@ -431,11 +431,11 @@ web服务器x2
 <h2 id="部署图"><a class="header-anchor" href="#部署图"> </a>部署图</h2>
 <figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">                                              +-----------------------+</div><div class="line">                                              |<span class="string">dsn-db01(10.1.0.6)     </span>|</div><div class="line">                                              |<span class="string">                       </span>|</div><div class="line">                                              |<span class="string">    +-------------+    </span>|</div><div class="line">                                session manage|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">                                         +---------&gt; redis3.2.6  |<span class="string">    </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> dsn-app01(10.1.0.8)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">                       </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">persist  </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+---------&gt; mysql5.7(m) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----+-^-----+    </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">          </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|<span class="string"> sync</span></div><div class="line">                  |<span class="string">proxy_pass            </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">                  |<span class="string">                      </span>|<span class="string">               </span>|<span class="string"> </span>|</div><div class="line">+-----------------------------------+    |<span class="string">    +-----------------------+</span></div><div class="line">|<span class="string"> dsn-app02(10.1.0.9)               </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">dsn-db02  </span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string">                 </span>|<span class="string">                 </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">(10.1.0.7)</span>|<span class="string"> </span>|<span class="string">          </span>|</div><div class="line">|<span class="string"> +-------------+ </span>|<span class="string"> +-------------+ </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    +-----v-+-----+    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string"> </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string"> nginx1.10.2 +-+-&gt; tomcat7     +------+    </span>|<span class="string">    </span>|<span class="string"> mysql5.7(s) </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> </span>|<span class="string">             </span>|<span class="string">   </span>|<span class="string">             </span>|<span class="string"> </span>|<span class="string">         </span>|<span class="string">    </span>|<span class="string">             </span>|<span class="string">    </span>|</div><div class="line">|<span class="string"> +-------------+   +-------------+ </span>|<span class="string">         </span>|<span class="string">    +-------------+    </span>|</div><div class="line">|<span class="string">                                   </span>|<span class="string">         </span>|<span class="string">                       </span>|</div><div class="line">+-----------------------------------+         +-----------------------+</div></pre></td></tr></table></figure>
 <h2 id="准备介质"><a class="header-anchor" href="#准备介质"> </a>准备介质</h2>
-<p>openssl-1.0.2j.tar.gz
-nginx-1.10.2.tar.gz
-pcre-8.39.tar.gz
-jemalloc-4.4.0.tar.bz2
-apache-tomcat-7.0.69.tar.gz
+<p>openssl-1.0.2j.tar.gz<br>
+nginx-1.10.2.tar.gz<br>
+pcre-8.39.tar.gz<br>
+jemalloc-4.4.0.tar.bz2<br>
+apache-tomcat-7.0.69.tar.gz<br>
 <a href="https://pan.baidu.com/s/1dEO54zv" target="_blank" rel="external">百度云密码bian</a></p>
 <h2 id="安装步骤"><a class="header-anchor" href="#安装步骤"> </a>安装步骤</h2>
 <h3 id="linux安装"><a class="header-anchor" href="#linux安装"> </a><strong>l</strong>inux安装</h3>
@@ -608,6 +608,10 @@ apache-tomcat-7.0.69.tar.gz
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/01/19/solr-cloud-example/" rel="prev" title="solr cloud 示例">
+                solr cloud 示例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -701,7 +705,7 @@ apache-tomcat-7.0.69.tar.gz
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">237</span>
+              <span class="site-state-item-count">238</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
