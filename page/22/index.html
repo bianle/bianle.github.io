@@ -319,154 +319,6 @@
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">
-                  java实现http文件下载
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
-              2012-07-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-http-download/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
-了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
-分了几百甚至上千上万，那简直是个灾难。
-　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
-如此，我们就可以用程序来完成这个资源的完全下载。
-　　1. 基础知识
-　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
-Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
-　　步骤1:客户端发起连接请求一个URL
-　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
-　　步骤3:客户端接收输入流，将流中的内容存到文件
-　　2. 网络连接的建立
-　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
-存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
-<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
-<ol start="3">
-<li>代理的访问
-　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
-，访问的JAVA代码如下:</li>
-</ol>
-<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
-<ol start="4">
-<li>网络资源的保存
-　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
-流中的所以内容，并将其保存在文件中。示例代码:</li>
-</ol>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
-<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2012/07/04/web-gxt-desktop/" itemprop="url">
                   gxt desktop
                 </a>
@@ -588,8 +440,8 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
             
               
                 
-                <a class="post-title-link" href="/2012/07/04/web-js-animate/" itemprop="url">
-                  js渐变效果
+                <a class="post-title-link" href="/2012/07/04/java-jdbc-demo/" itemprop="url">
+                  jdbc连接demo
                 </a>
               
             
@@ -632,8 +484,8 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/07/04/web-js-animate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/web-js-animate/" itemprop="commentsCount"></span>
+                <a href="/2012/07/04/java-jdbc-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-jdbc-demo/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -658,7 +510,173 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html xmlns="&lt;a href="http://www.w3.org/1999/xhtml"&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span> new document <span class="tag">&lt;/<span class="name">title</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"宽度渐变"</span> <span class="attr">id</span>=<span class="string">"wt-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"高度渐变"</span> <span class="attr">id</span>=<span class="string">"hi-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"透明度渐变"</span> <span class="attr">id</span>=<span class="string">"op-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"边框渐变"</span> <span class="attr">id</span>=<span class="string">"bd-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"综合渐变"</span> <span class="attr">id</span>=<span class="string">"zh-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"demo"</span> <span class="attr">style</span>=<span class="string">"width:370px;height:100px;background-color:#00CC33;border:2px solid #990033; font-size:12px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">center</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animate</span>(<span class="params">el, prop, opts</span>) </span>&#123;   </div><div class="line"><span class="keyword">this</span>.el = el;   </div><div class="line"><span class="keyword">this</span>.prop = prop;   </div><div class="line"><span class="keyword">this</span>.from = opts.from;   </div><div class="line"><span class="keyword">this</span>.to = opts.to;   </div><div class="line"><span class="keyword">this</span>.time = opts.time;   </div><div class="line"><span class="keyword">this</span>.callback = opts.callback;   </div><div class="line"><span class="keyword">this</span>.animDiff = <span class="keyword">this</span>.to - <span class="keyword">this</span>.from;   </div><div class="line">&#125;   </div><div class="line">Animate.prototype._setStyle = <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;   </div><div class="line"><span class="keyword">switch</span>(<span class="keyword">this</span>.prop) &#123;   </div><div class="line"><span class="keyword">case</span> <span class="string">'opacity'</span>:   </div><div class="line"><span class="keyword">this</span>.el.style[<span class="keyword">this</span>.prop] = val;   </div><div class="line"><span class="keyword">this</span>.el.style.filter = <span class="string">'alpha(opacity='</span> + val * <span class="number">100</span> + <span class="string">')'</span>;   </div><div class="line"><span class="keyword">break</span>;   </div><div class="line"><span class="keyword">default</span>:   </div><div class="line"><span class="keyword">this</span>.el.style[<span class="keyword">this</span>.prop] = val + <span class="string">'px'</span>;   </div><div class="line"><span class="keyword">break</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line">Animate.prototype._animate = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> that = <span class="keyword">this</span>;   </div><div class="line"><span class="keyword">this</span>.now = <span class="keyword">new</span> <span class="built_in">Date</span>();   </div><div class="line"><span class="keyword">this</span>.diff = <span class="keyword">this</span>.now - <span class="keyword">this</span>.startTime;   </div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.diff &gt; <span class="keyword">this</span>.time) &#123;   </div><div class="line"><span class="keyword">this</span>._setStyle(<span class="keyword">this</span>.to);   </div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.callback) &#123;   </div><div class="line"><span class="keyword">this</span>.callback.call(<span class="keyword">this</span>);   </div><div class="line">&#125;   </div><div class="line">clearInterval(<span class="keyword">this</span>.timer);   </div><div class="line"><span class="keyword">return</span>;   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">this</span>.percentage = (<span class="built_in">Math</span>.floor((<span class="keyword">this</span>.diff / <span class="keyword">this</span>.time) * <span class="number">100</span>) / <span class="number">100</span>);   </div><div class="line"><span class="keyword">this</span>.val = (<span class="keyword">this</span>.animDiff * <span class="keyword">this</span>.percentage) + <span class="keyword">this</span>.from;   </div><div class="line"><span class="keyword">this</span>._setStyle(<span class="keyword">this</span>.val);   </div><div class="line">&#125;   </div><div class="line">Animate.prototype.start = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> that = <span class="keyword">this</span>;   </div><div class="line"><span class="keyword">this</span>.startTime = <span class="keyword">new</span> <span class="built_in">Date</span>();   </div><div class="line">clearInterval(<span class="keyword">this</span>.timer);   </div><div class="line"><span class="keyword">this</span>.timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">that._animate.call(that);   </div><div class="line">&#125;, <span class="number">4</span>);   </div><div class="line">&#125;   </div><div class="line">Animate.canTransition = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.createElement(<span class="string">'foo'</span>);   </div><div class="line">el.style.cssText = <span class="string">'-webkit-transition: all .5s linear;'</span>;   </div><div class="line"><span class="keyword">return</span> !!el.style.webkitTransitionProperty;   </div><div class="line">&#125;();   </div><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> T$ = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">document</span>.getElementById(id); &#125;   </div><div class="line"><span class="keyword">var</span> T$$ = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">document</span>.getElementsByName(n); &#125;   </div><div class="line"><span class="keyword">var</span> demo = T$(<span class="string">'demo'</span>); <span class="keyword">var</span> btns = T$$(<span class="string">'fx'</span>);   </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">disableButton</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = btns.length; i &lt; len; ++i) &#123;   </div><div class="line">btns[i].disabled = <span class="string">'disabled'</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">resetButton</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = btns.length; i &lt; len; ++i) &#123;   </div><div class="line">btns[i].disabled = <span class="string">''</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 宽度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeWidth</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'width'</span>, <span class="keyword">from</span> = demo.clientWidth, to = <span class="keyword">from</span> - <span class="number">270</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = demo.clientWidth; to = <span class="keyword">from</span> + <span class="number">270</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton &#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 高度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeHeight</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'height'</span>, <span class="keyword">from</span> = demo.clientHeight, to = <span class="keyword">from</span> + <span class="number">100</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = demo.clientHeight; to = <span class="keyword">from</span> - <span class="number">100</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 透明度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeOpacity</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'opacity'</span>, <span class="keyword">from</span> = <span class="number">1</span>, to = <span class="number">0</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = <span class="number">0</span>; to = <span class="number">1</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 边框渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeBorderWidth</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'borderWidth'</span>, <span class="keyword">from</span> = <span class="number">2</span>, to = <span class="number">10</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = <span class="number">10</span>; to = <span class="number">2</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton &#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'wt-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeWidth();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'hi-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeHeight();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'op-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeOpacity();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'bd-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeBorderWidth();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'zh-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeWidth(); changeHeight(); changeOpacity();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">//if (Animate.canTransition) &#123;   </span></div><div class="line"><span class="comment">//demo.style.webkitTransition = 'opacity 3s ease-in';   </span></div><div class="line"><span class="comment">//demo.style.opacity = 0;   </span></div><div class="line"><span class="comment">//&#125; else &#123;   </span></div><div class="line"><span class="comment">//&#125;   </span></div><div class="line">&#125;   </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>jdbc连接参数</p>
+<blockquote>
+<p>oracle
+driver=&quot;oracle.jdbc.driver.OracleDriver&quot;
+url=&quot;jdbc:oracle:thin:@localhost:1521:数据库名&quot;
+sqlserver
+driver=&quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;
+url=&quot;jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=数据库名&quot;
+mysql
+driver=&quot;com.mysql.jdbc.Driver&quot;
+url=&quot;jdbc:mysql://localhost/数据库名?[后接参数]&quot;
+db2
+driver=&quot;com.ibm.db2.jdbc.app.DB2Driver&quot;
+url=&quot;jdbc:db2://localhost:5000/数据库名&quot;
+sybase
+driver=&quot;com.sybase.jdbc.SybDriver&quot;
+url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
+</blockquote>
+<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">
+                  java实现http文件下载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/java-http-download/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
+了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
+分了几百甚至上千上万，那简直是个灾难。
+　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
+如此，我们就可以用程序来完成这个资源的完全下载。
+　　1. 基础知识
+　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
+Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
+　　步骤1:客户端发起连接请求一个URL
+　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
+　　步骤3:客户端接收输入流，将流中的内容存到文件
+　　2. 网络连接的建立
+　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
+存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>代理的访问
+　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
+，访问的JAVA代码如下:</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>网络资源的保存
+　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
+流中的所以内容，并将其保存在文件中。示例代码:</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -838,6 +856,174 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
             
               
                 
+                <a class="post-title-link" href="/2012/07/04/game-dnf/" itemprop="url">
+                  我看了很感人
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
+              2012-07-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/游戏/" itemprop="url" rel="index">
+                    <span itemprop="name">游戏</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/07/04/game-dnf/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/game-dnf/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>傻子很少去网吧也从来没有玩过网络游戏，在网吧里看见很多人玩地下城与勇士，于是他也加入其中。傻子选了个神枪手的职业，因为他觉得很帅。 ­
+就这样开始了DNF之旅，傻子进游戏后不知道怎么开枪，陪哥布林玩了好久捉迷藏，终于通关后救出赛丽亚MM。NPC赛丽亚习惯的说谢谢你了勇士，傻子还傻傻的打字说不用谢。 ­
+傻子很笨花了几个小时才进了赫尔马顿城镇。一路上很多NPC和他打招呼，他很开心。他很高兴认识这么多新朋友。 ­
+过了几天傻子慢慢的16级了，学会了去凯丽师傅那学技能，还很认真的帮大家完成任务。每当完成任务回来NPC送他一些装备他都会高兴的不得了。 ­
+这天他正要进图，忽然看见一个小个子MM在那喊：有哪位哥哥能带带我啊？我才3级。。喊了半天没人理他。傻子觉得她很可怜走过去说：我带你吧。就这样傻子带她刷猛毒雷鸣废墟，因为傻子16级了打这的怪很轻松，傻子叫MM站远会伤到你的。MM说傻子真体贴。傻子呵呵的笑了。傻子说你小心点，走着也会摔倒，真是个孩子。MM说那你就叫我孩子吧。我喜欢听你叫我孩子。孩子说喜欢树上打下来的草莓，傻子说那我摘给你。孩子说你真好。孩子傻子心里感觉很开心。 ­
+第二天傻子早饭也没吃急急的跑去网吧上了游戏，因为他们约了明天一起组队升级…孩子还没来，傻子在游戏上发呆。到中午快一点的时候孩子上游戏了说不好意思来晚了问傻子吃了饭没？下午可要好好战斗。。傻子说早吃了就等你了。就这样傻子带孩子练级去了，孩子说冰姐姐和火姐姐好漂亮阿。傻子笑着说没有你可爱，孩子打了个可爱的表情<sup>-</sup>。在大街上孩子看见别的魔法师穿了一套时装嚷着说要是穿在我身上肯定比她们漂亮.傻子在屏幕前红着脸不说话了，他真想为孩子买一套时装，可是傻子真的很穷，穷的连上网费都没。更别说游戏里那么贵的时装虽然他不知道要多少钱。傻子决定一定要为孩子买一套傻子这么想。傻子感觉第一次喜欢一个人了，只要有她在身边就是件幸福的事。 ­
+就这样他们边打怪边聊天孩子告诉傻子很多游戏里的知识：在西海岸的那一边有着一座美丽的天空之城，在天帷巨兽遗迹里住着一位邪恶的教主控制着善良的GBL，在白雪岂岂的万年雪山有一位迷失心智的冰心少年，在暗黑城堡有着一位昔日讨伐恶魔，而战死无法得到安息的无头骑士很多很多……傻子认真的听着，原来DNF的世界是那么大，傻子说以后的路我们一起走吧。嗯孩子轻轻的说。孩子还告诉傻子自己有个50多级的大号，等你级高点了送你点装备，傻子眼眶湿湿的，第一次有人对他这么好。 ­
+从没干过什么的傻子去找工作，别人问傻子能做什么，傻子摇摇头。他们看傻子呆头呆脑的都拒绝了他都说你到别处看看去吧，傻子跑了很多地方，在一个送桶装矿泉水的地方傻子苦苦的哀求老板说用他吧，自己不要很多钱，只要能赚到上网费就行了。大叔看傻子挺真诚的也很可怜对他说，每个月三百块，送一桶水提成5毛。明天来上班吧，傻子不停的谢老板，傻子很开心找到了自己的第一份工作。。 ­
+孩子是傻子的第7个qq好友，孩子发个视频过来说想看看帅哥，傻子不敢接他怕孩子看到自己傻样子会不理他了，于是对孩子说网吧里没视频。孩子说那算了有空去空间给我踩踩。傻子点进孩子空间里面很好看，对孩子说里面很漂亮，孩子说都是自己弄的花了很多时间心思，傻子夸孩子真用心。傻子无意中点进孩子的相册看到了孩子的照片，梳着马尾辫的孩子笑的很灿烂人也漂亮。傻子认为她就是一个天使，傻子偷偷的把照片下到自己手机上。晚上睡觉的时候傻子心里想的都是孩子，看着孩子的照片傻子第一次失眠了…. ­
+这时傻子17级，孩子15级了。。孩子说我们去杀僵尸吧这里没经验了，傻子呵呵大笑说没问题，于是进图傻子操作很菜技能也不懂的怎么用，挂了出来。孩子说你真笨，傻子不好意思的对孩子说对不起，再来一次吧。第二次也虚弱了出来，孩子嘟着嘴说我18级的时候能过王者级别的了。傻子红着脸不说话了。他认为现在还不能保护好孩子决定等练厉害了在来找她，于是傻子对孩子说等我。把身上仅有的4万金币交易给了孩子，她没说话转身走了。。­
+傻子望着孩子柔弱的背影消失后转身也进了暗黑雷鸣废墟…­
+因为没钱买药傻子不知道自己虚弱了多少次，一次次的冲进去副本里，开始从普通到冒险。傻子到18级的时候毅然选择了转漫游，因为他知道孩子的大号也是漫游，转职任务上傻子花了一天时间终于自己完成了。傻子认为只要自己努力没什么完不成的。 ­
+慢慢的…傻子打勇士级的僵尸图了还是很吃力。在路上边采集树上的草莓，既使自己快挂了也舍不得吃草莓，因为他还没忘记孩子喜欢草莓，他要送给她。 ­
+过了两天当傻子到19级的时候他已经能轻松的过JS王者了。傻子认为现在能找孩子能保护她了，发消息过去没不用回复。。一连几天傻子都没见孩子上线，发了好多邮件，,也去空间留了好多言，傻子没心情打怪去哪儿都虚弱回来。那时，孩子是傻子的一切。就这样傻子还是每天等孩子。过了几天傻子看见孩子上线了，傻子跑过去找孩子，远远的看见孩子身边有一位高等级时装的大将军，他们正一起走向西海岸的天空之城…傻子想跑过去叫孩子，可是脚步却停住了。傻子心里酸酸的第一次感受到吃醋的味道。。­
+第二天傻子见到孩子，问她怎么这些天没上线。孩子说玩大号去了。傻子傻傻地说：走，孩子我现在能通JS王了可以保护你了。孩子对傻子说你自己去吧<code>我要去天空之城了有一个朋友在西海岸等她，并在交易栏里放了把20级紫色的左轮枪。转身要走。傻子知道是昨天那个人在等她，忽然间好像明白了什么，他怕失去她怕再也见不到她了。在赫尔马顿大街上傻子用这生从未有过的勇气大喊：等等，孩子我一直喜欢你。 ­ 孩子愣了愣对傻子说道：我不会喜欢一个低级的穷傻子，当初只是为了让你带我练级才和你在一起而已…­ 傻子哀求的说：给我一次机会吧。 ­ 孩子讽刺的说：等你有枪神的称号在来找我吧。孩子想让傻子知难而退，她认为傻子那么笨是不可能完成的。因为她知道枪神之路是多少艰难。一个人，一把枪。 ­ 傻子知道枪神是漫游48级转职的称号，傻子交易她放上去99颗草莓和余下的金币，傻子只说了句等我。转身就走了。孩子看着草莓心里感到有点内疚… ­ 没有孩子的陪伴，傻子有点孤单，当傻子到20级时拿着孩子送的武器心里暖暖的，这一天傻子正要去完成诺顿大叔交给他最后一次消灭僵尸王的任务。在进图的时候看见一个小个子魔法师喊着找人带JS王，看着她傻子不由想起孩子，密她说我带你去。那女孩说你能行吗，多少钱？傻子说不要钱。傻子心肠总是热心的几盘下来帮那女孩任务都做了。傻子PL用完了，对女孩说要下了再见。女孩感到惊讶现在游戏里还有这种人不是傻子吧。傻子被加了好友，成了女孩的第一个好友…­ 第二天傻子上线向赫尔城镇的朋友们告别踏上去西海岸天空之城的路，面对新的副本傻子很努力，一个人从普通到王者因为他不想再让孩子说他笨。 ­ 女孩转的是召唤师因为她觉得这个职业很安逸，宝宝一出来自己可以不用打怪。时间长了女孩一个人练级也会觉得无聊，于是想找人组队一起练，可是别人见她是召唤都不愿意组女孩，说她招宝宝会卡，女孩觉得委屈。。 ­ 一天，女孩翻了下好友名单看见傻子在线想起了是他， ­ 发了个消息过去：你好！­ 傻子见有个窗口密他，傻子不记得女孩了只好发说了句你好。 ­ 女孩以为傻子记得自己，很高兴就对傻子说一起组队练级吧。 ­ 傻子很意外，还没有谁组过自己呢，都说漫游刷图垃圾。就对女孩说好。 ­ 女孩迈着大步过去找傻子，傻子23级.女孩21级.­ 傻子说女孩你怎么养这么多怪物，女孩嚷着说是自己的宝宝，不是怪物= =。傻子知道了女孩是召唤师。女孩这一天很开心，傻子没嫌弃自己卡，还帮自己完成任务，就这样傻子和女孩重新认识了。 ­ 傻子在路上打到一个学者护腕，女孩羡慕的说那个值很多钱，以后自己有钱也想买一个。傻子说那送你吧。女孩看着一身垃圾装备的傻子说你还是卖了自己买装备吧。傻子说以后还可以打的到。女孩不好意思的接过护腕说以后有钱了还你。傻子呵呵大笑。女孩心里想原来他真的是个傻子。。。 ­ 以后女孩每天上线就找傻子一起练级。觉得和傻子在一起很塌实。女孩对傻子说做我师傅吧。傻子说我没什么本领教给你，女孩说你能带我练级帮我过任务，虽然女孩一个人也能完成。傻子第一次感觉被人需要，于是女孩成了傻子的徒弟。 ­ 傻子和女孩成功登上最后的悬空城后，女孩说真是座美丽的天空之城，傻子想起了孩子的话，原本他们约好一起走，可是现在却不在他身边，傻子有点伤心。 ­ 女孩问傻子说师傅你怎么玩一个难练的漫游，傻子说为了一个孩子，他喜欢的人，还说她在等他。女孩听了傻子讲他和她的故事，觉得傻子好傻也很感动，就对傻子说如果有人对我这么好，我马上嫁给他。傻子笑笑说你会遇见喜欢你的人的。女孩决定帮师傅快点到48级。 ­ 来到天帏巨兽,他们一起穿过丛林越过炼欲翻过第一山脊，傻子觉得很轻松，女孩说师傅你真厉害。傻子笑笑说谁叫我是你师傅，傻子只是不知道，因为有女孩在。在打怪的时候女孩心疼的拿着皮鞭抽她的宝宝，叫他们打快点。。这时傻子35级.女孩34级. ­ 傻子这天上班还没来，女孩在逛街时看见一把很精美的35左轮，虽然有点贵，女孩还是买下来了，并把它加到7。傻子上线的时候女孩把左轮交到傻子手里说送师傅的。傻子说不用了，我有武器。女孩知道傻子舍不得孩子送的那把武器，女孩生气了说师傅心里没有她这个徒弟。傻子见女孩生气不知道怎么办只好换上她送的武器，把孩子送他的左轮小心的装进背包。女孩这才笑了。 ­ 女孩对傻子说想看看你师傅长什么样。傻子只把女孩当徒弟所以接了视频，女孩看到的是一个瘦瘦很清秀的男孩，女孩觉得自己脸有点红。 ­ 傻子对女孩说徒弟你真可爱。 ­ 女孩说只是可爱吗，难道我不漂亮？ ­ 傻子说也漂亮。女孩说了句笨蛋。 ­ 女孩是很漂亮，甚至比孩子还漂亮。 ­ 女孩对傻子说以后不许在找其他徒弟了，傻子问为什么。女孩说如果你有10个徒弟了就没什么时间陪我练级了。 ­ 傻子说谁会找我这个又穷等级又低的人做师傅，也只有你这个傻徒弟了，女孩笑了。 ­ 女孩心里喜欢上傻子了，可是她知道傻子心里只有孩子。 ­ 斯顿雪域，傻子救出查理班图族长给予傻子勇士称号。时间过的很快，转眼傻子到45级了，傻子很高兴离枪神是那么近了，女孩更加珍惜和傻子在一起的时间。- ­ 女孩问傻子说：师傅以后如果你和孩子在一起了，还会陪我练级么。 ­ 傻子说：傻徒弟你不能老跟着师傅呀，你以后也会有喜欢的人和喜欢你的人。 ­ 女孩喃喃说：他有喜欢的人了， ­ 傻子说你这么好，谁不喜欢是他的损失。女孩：……­ 傻子快到48级的时候，女孩为了祝贺傻子成为枪神决定给傻子一份礼物，她要亲手给傻子强化一把+11的速射左轮，女孩从来舍不得给自己买装备，虽然很便宜。女孩用她存来的金币买了武器，可是强化11不是那么简单，失败了几次后女孩包里的金币所剩无几，她只好把仓库辛苦攒来的材料晶体什么的都卖了，最后一次成功了，女孩很欣慰。 ­ 今天傻子升级到48级，满心欢喜的去找凯丽师傅觉醒枪神，可是凯丽对傻子说虽然你已经获得勇士证明，可是对于枪神来说远远不够，等你打倒对手获得1000胜点在来吧。傻子从来没有去过PK场，单纯的傻子怎么打的赢那些钩心斗角的人，只能一点一点的赚胜点，女孩为了让傻子早点完成帮傻子刷胜点，整整一个通宵傻子终于觉醒了，女孩却感冒病倒了。下的时候对傻子说师傅恭喜你成为枪神，徒弟送你的礼物祝你和喜欢的人幸福。傻子走了去找孩子了。。女孩望着傻子.. ­ 傻子已经三个多月没见到孩子，傻子找到孩子再次见到她的时候孩子已经50多级了，穿着一身漂亮的时装的元素法师。傻子说好久不见，我完成约定来找你了。 ­ 孩子见到傻子很惊讶，甚至有点忘记他了，孩子想不到傻子能成为枪神还会来找自己，孩子看着傻子一身垃圾装备，却有一把好武器，她不知道傻子是怎么过来的。，孩子默默不语。傻子说孩子以后我们一起吧。孩子认为傻子只是凑巧罢了，成为枪神只要有耐性谁都可以，傻子只有傻劲。孩子扔下冰冷冷的一句话：等你有墨竹手镯，贤哲戒指，尼玛神兽项链在来找我吧。孩子认为这次傻子该知道什么意思了吧…. ­ 傻子只是个单纯的人，傻子对女孩说这3样东西哪里打，女孩听了傻子的话告诉傻子说那孩子根本不喜欢你。傻子说没有，她在等我。女孩说你别傻了，你知道这3样东西多珍贵吗，她只是个骗子。傻子第一次对女孩生气说不许说孩子坏话，并解除了师徒关系。女孩哭了。 ­ 好几天傻子和女孩都没有说话，女孩很想傻子，主动找到傻子说师傅我错了。傻子也说了句对不起。于是又重新拜了师。傻子很穷连一个墨竹的钱也没，更别谈其他的了，女孩说买不起我们自己打，他们查了资料悬空出墨竹手镯，于是刷悬空，第七天出了墨竹。 ­ 网上说禁地出贤哲戒指图，于是又去刷禁地，一星期，二星期，很幸运第20天出了图纸。 ­ 傻子高兴的对女孩说，只要努力没什么做不到的。女孩说也许是吧… ­ 最后一个是尼玛项链，傻子和孩子刷过蜘蛛山脊墓地，一个月.两个月. ­ 傻子还是相信只要努力没什么做不到。 ­ 有的东西就算在怎么努力也是没结果，就像我和你有缘无份，女孩心里说道。­ 女孩去网上花几百元买了一条，在刷图的时候趁傻子不注意把项链扔到地上。女孩对傻子说哇</code>师傅打到项链了。傻子笑呵呵的拣起项链对女孩说：终于打到了，明天可以去找孩子，谢谢你徒弟陪我打这么久。女孩心里祝福傻子。这时傻子和女孩都50级了。( ­
+傻子再一次找到孩子，这时候她已经60级了，傻子把3样首饰交到她手里，孩子吃惊的看着傻子，感到愧疚原来傻子是真的喜欢自己，可是孩子有老公了那个大将军他们很久以前就在一起了。 ­
+孩子不想在骗傻子了就对他说：你找个好女孩吧，我只是个坏孩子。并把东西还给傻子。 ­
+傻子说：我只要和你在一起，没有谁能代替你。 ­
+女孩说：我已经有老公了，对不起.你走吧. ­
+傻子说是我做的不好还是什么？只要你说的我一定做的到。 ­
+女孩狠了狠心对傻子说：如果你能收集到99999颗草莓，我就答应嫁给你。 ­
+傻子还是傻傻的说了句等我，就转身走了。孩子望着傻子只说了句忘记我吧。 ­
+以后的日子，在格兰之森总是有着一个50多级的傻子在喊着收草莓，有些人看见傻子每天在喊着收草莓故意把草莓卖的很贵，即便如此傻子还是买了，很快以前存的金币用完了。 ­
+女孩知道了这事以后没说什么，只是默默的陪在傻子身边，如果能早点遇见傻子该多好。­
+傻子在刷草莓的时候也会带那些新人，只是要求把掉落的草莓给他，也会无私的把打到的一些低级装备和金币送给他们 ­
+可是99999个草莓是那么遥遥无期，可是傻子还是一如既往的坚持着，望着仓库里慢慢堆起来的草莓，傻子相信努力的话没什么做不到。新手们问傻子为什么收集草莓？ ­
+傻子呵呵的说有个女孩在等他，等他娶她。因为他们约定好了，他们都说你好傻，傻子笑笑。日子久了大家也会把拣到的草莓送给傻子。 ­
+不知过了多久，傻子依然收着草莓，有一天，格兰这来了两个很高级的人-一个元素和一个大将军。在那喊着公会收人，傻子呆呆着望着那个元素，那个元素也望着傻子回忆着什么。公会老大指着傻子说老婆你看那个傻子，不知道干什么的每天带人不收钱只要草莓真是傻子哈哈。­
+那个元素对他说不许叫他傻子。男人和她吵。他火了，叫了会里几个人来刷频骂傻子。 ­
+傻子傻傻的站那被一群人骂，不知道怎么办好。女孩跑过去和一群男人评理。那些人连骂女孩一起骂。 ­
+就在这时，不知道谁发了个喇叭，说傻子和女孩在10频道被人欺负了，不多久，格兰这来了好多人，有十多级的新手，也有五六十级的高级号还有一些名气很大的工会老大都来了，原来他们都是新人时期受到过傻子和女孩帮助过的人，傻子一直把他们带到格兰毕业，对他们来说傻子和女孩就是他们的师傅一样。好多人指责那个骂傻子的工会老大，服务器喇叭也一直没停过，有的人刷频的骂那工会老大，有的喊谁欺负傻子和女孩他就别想在这服混下去，有的提议说把那人拉黑。不一会刚才欺负傻子的那群人头顶上出现全民公敌的称号，灰溜溜的下线了。­
+漫骂声结束后，大家又说了很多鼓励傻子的话，祝福傻子能找日和孩子在一起祝他们幸福“““ ­
+傻子沉默了很久，买了个喇叭只写了句谢谢大家“`然后下线了。 ­
+女孩找到孩子问为什么对这么对傻子，如果不喜欢可以直接说出来没必要老欺骗他的感情。孩子说没有，只是他没理解我话的意思而已。­
+女孩说傻子哪里不好了。 ­
+孩子说他很好，可惜他级不高，带不了我升级，也不会给我买漂亮的时装。女孩气愤的说傻子很努力的升级，可是你为什么都不等等他，他给你冲的QB都可以买好几套时装了，你还不知足。 ­
+孩子说。。。。QB？我不知道。 ­
+女孩说傻子每个月都有给你冲，都是他辛苦工作赚来的。自己都舍不得买时装都给你了。 ­
+孩子查询了下qq帐户，吃惊的望着上面的1080个QB….­
+女孩哭着说还她的师傅，还她的傻子。 ­
+很长时间傻子再也没有上过线，女孩也走了，没有了傻子游戏对她来说也没意义。 ­
+她终于明白了那句话：世界上最遥远的距离不是生与死，而是我站在你面前,你却不知道我喜欢你…… ­
+孩子依旧在游戏，她在等傻子，等他娶她。为什么失去才懂的珍惜？只是她明白的是不是晚了点。 ­
+很多人都说傻子对孩子彻底失望了，离开了游戏。 ­
+也有人传言说傻子的号给盗了，据盗号的说清楚的看到满仓库的草莓.99998个­
+谁知道呢，傻子也许是累了.对游戏…对爱情…­
+只是傻子不知道一直陪在他身边的是女孩… ­
+也许若干年后.傻子回忆过往.想起女孩…会明白至尊宝对紫霞仙子说过的那段话： ­
+曾经有一份真诚的爱情摆在我面前，我没有珍惜，等失去的时候，才后悔莫及。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/07/04/web-html-disable-copy/" itemprop="url">
                   网页防止复制
                 </a>
@@ -911,153 +1097,6 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在body标签内加上一段代码，禁用右键菜单</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="selector-tag">body</span> oncontextmenu=<span class="string">"return false"</span></div><div class="line">onselectstart=<span class="string">"return false"</span></div><div class="line">ondragstart=<span class="string">"return false"</span></div><div class="line">onbeforecopy=<span class="string">"return false"</span></div><div class="line">oncopy=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>() </div><div class="line">onselect=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>()&gt;</div></pre></td></tr></table></figure>
 <figure class="highlight nix"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="attr">type="text"</span> <span class="attr">id="username"</span> <span class="attr">name="username"</span> <span class="attr">value="禁止复制"</span> <span class="attr">onpaste="return</span> <span class="literal">false</span><span class="string">" oncontextmenu="</span>return <span class="literal">false</span><span class="string">" oncopy="</span>return <span class="literal">false</span><span class="string">" oncut="</span>return <span class="literal">false</span><span class="string">" &gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-open-root-user/" itemprop="url">
-                  如何开启Ubuntu 的 root 用户
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-07-04T18:09:17+08:00" content="2012-07-04">
-              2012-07-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/07/04/linux-ubuntu-open-root-user/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/04/linux-ubuntu-open-root-user/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Ubuntu安装后，root用户默认是被锁定了的，不允许登录，也不允许“su”到 root。有人说这是个不好的实践，特别是对于服务器来说。我觉得对于桌面用户来说，这样安全性更高一些，是应该的；但对于服务器可以设置成“允许 su 到root，但不允许root用户直接登录”。而我为了开发时的方便，则在桌面和服务器上都采用这种方式。
-允许 su 到 root
-非常简单，下面是设置的方法：
-me@tipfoo:~$ sudo passwd
-Password: &lt;— 输入安装时那个用户的密码
-Enter new UNIX password: &lt;— 新的Root用户密码
-Retype new UNIX password: &lt;— 重复新的Root用户密码
-passwd：已成功更新密码
-允许root登录
-如果要允许root登录（不推荐），则这样操作：
-me@tipfoo:~$ gksu /usr/sbin/gdmsetup
-（或者使用桌面菜单：系统＞系统管理＞登录窗口）
-点“安全”选项页，选择“允许本地管理员登录”。
-注：这一步依赖上一步
-不输入密码直接登录
-在论坛上也看见有人抱怨，家中的Ubuntu不能像Window$那样──不用输入密码就能登录。其实同样能做到：
-就在上一步的“安全”选项页中，勾选：
-“启用自动登录”，“用户”选择（如：“me”）;
-注意：公共用的计算机千万不能这么设置！
-SSH登录远程服务器
-如果远程服务器只允许root用户SSH到服务器时，在Ubuntu下，必须“su 到root”用户才能登录成功(具体是看服务器端的配置)。
-首先，复制密钥到“/root/.ssh/”目录，
-me@tipfoo:~$ su</p>
-<p>Password:</p>
-<p>root@tipfoo:/home/me# chmod 600 -R /root/.ssh/</p>
-<p>root@tipfoo:/home/me# ssh -p 27482 11.22.33.44</p>
-<p>Enter passphrase for key ‘/root/.ssh/id_rsa’:</p>
-<p>Last login: Thu Jun 21 14:29:00 2007 from 11.22.33.45</p>
 
           
         
@@ -1530,8 +1569,8 @@ wq！：强制保存退出
             
               
                 
-                <a class="post-title-link" href="/2012/06/20/web-js-dnd/" itemprop="url">
-                  js拖动
+                <a class="post-title-link" href="/2012/06/20/web-js-lightbox/" itemprop="url">
+                  全屏屏蔽、自动居中的lightBox
                 </a>
               
             
@@ -1574,8 +1613,8 @@ wq！：强制保存退出
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2012/06/20/web-js-dnd/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/20/web-js-dnd/" itemprop="commentsCount"></span>
+                <a href="/2012/06/20/web-js-lightbox/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/06/20/web-js-lightbox/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1600,7 +1639,7 @@ wq！：强制保存退出
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"&lt;a href="</span><span class="attr">http:</span>//<span class="attr">www.w3.org</span>/<span class="attr">1999</span>/<span class="attr">xhtml</span>"&gt;</span>http://www.w3.org/1999/xhtml<span class="tag">&lt;/<span class="name">a</span>&gt;</span>"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">javascript</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line"><span class="keyword">var</span> intX;</div><div class="line"></div><div class="line"><span class="keyword">var</span> intY;</div><div class="line"></div><div class="line"><span class="keyword">var</span> blnDrag = <span class="literal">false</span>; <span class="comment">//鼠标是否已经按下</span></div><div class="line"></div><div class="line"><span class="comment">//鼠标按下</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MouseDown</span>(<span class="params">event,id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//鼠标按下</span></div><div class="line"></div><div class="line">blnDrag = <span class="literal">true</span>;</div><div class="line"></div><div class="line">intX = event.clientX - GetDiv(id).style.pixelLeft;</div><div class="line"></div><div class="line">intY = event.clientY - GetDiv(id).style.pixelTop;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//鼠标拖动</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">DragDiv</span>(<span class="params">event,id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//判断鼠标是否已经按下</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (!blnDrag) &#123;</div><div class="line"></div><div class="line"><span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line"></div><div class="line">GetDiv(id).style.pixelLeft = event.clientX - intX;</div><div class="line"></div><div class="line">GetDiv(id).style.pixelTop = event.clientY - intY;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//鼠标松开时</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mouseUp</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//鼠标没有按下</span></div><div class="line"></div><div class="line">blnDrag = <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//得到DIV</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">GetDiv</span>(<span class="params">id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">return</span> <span class="built_in">document</span>.getElementById(id);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span> &gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"form1"</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span> <span class="attr">style</span>=<span class="string">"CURSOR: move; POSITION: absolute;  WIDTH: 140px; HEIGHT: 112px; background-color:Red"</span>     <span class="attr">onmousemove</span>=<span class="string">"DragDiv(event,this.id)"</span>     <span class="attr">onmousedown</span>=<span class="string">"MouseDown(event,this.id)"</span>     <span class="attr">onmouseup</span>=<span class="string">"mouseUp()"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"author"</span> <span class="attr">content</span>=<span class="string">"Chomo"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"start"</span> <span class="attr">href</span>=<span class="string">"http://www.14px.com"</span> <span class="attr">title</span>=<span class="string">"Home"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>全屏屏蔽、自动居中的lightBox<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">* &#123; margin:0; padding:0; &#125;</div><div class="line">html,body &#123; height:100%; overflow:hidden; font:12px/1.5 simsun;&#125;</div><div class="line">.myPage &#123; line-height:3; overflow:auto; width:100%; height:100%;&#125;</div><div class="line">.lightBox,</div><div class="line">.popupCover,</div><div class="line">.popupIframe,</div><div class="line">.popupComponent &#123; position:absolute; left:0; top:0; width:100%; height:100%;&#125;</div><div class="line">.popupComponent &#123; z-index:2; display:none;&#125;</div><div class="line">.popupIframe &#123; display:none; _display:block; _filter:alpha(opacity=0);&#125;</div><div class="line">.popupCover &#123; background:#000; opacity:0.7; *filter:alpha(opacity=70);&#125;</div><div class="line">.lightBox &#123; text-align:center; overflow:auto;&#125;</div><div class="line">.lightBoxContent &#123; display:inline-block; *display:inline; zoom:1; width:300px; padding:10px; background:#fff; border:5px solid #00b4ff; vertical-align:middle;&#125;</div><div class="line">.lightBoxMaxHeight &#123; display:inline-block; vertical-align:middle; height:100%; *height:99.5%; width:1px; overflow:hidden; margin-left:-1px;&#125;</div><div class="line">.lightBoxWrapper &#123; display:inline-block; *display:inline; zoom:1; text-align:left;&#125;</div><div class="line">.lightBoxClose &#123; color:#f00;&#125;</div><div class="line">.lightBoxSubmit &#123; margin-top:10px; padding-top:5px; border-top:1px solid #ccc;&#125;</div><div class="line">.lightBoxSubmit input &#123; font-size:12px; padding:0 10px; overflow:visible; margin:0 5px;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupComponent"</span> <span class="attr">id</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">class</span>=<span class="string">"popupIframe"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupCover"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"lightBoxMaxHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxContent"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxWrapper"</span>&gt;</span></div><div class="line">                当提示小于一行时文字居中<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxSubmit"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"确定"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox')"</span> /&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"取消"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox')"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupComponent"</span> <span class="attr">id</span>=<span class="string">"lightBox2"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">class</span>=<span class="string">"popupIframe"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupCover"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxContent"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxWrapper"</span>&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxSubmit"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"确定"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox2')"</span> /&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"取消"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox2')"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"lightBoxMaxHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"myPage"</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"text-align:center;"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"位于第一屏的按钮"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox')"</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">option</span>&gt;</span>一个用于测试IE6中是否能覆盖住的select<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">option</span>&gt;</span>又一个用于测试IE6中是否能覆盖住的select<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"text-align:center;"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"位于第二屏中的按钮"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox')"</span> /&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"当内容已经超过了一屏的高度"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox2')"</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showLayer</span>(<span class="params">id</span>) </span>&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(id).style.display = <span class="string">"block"</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hideLayer</span>(<span class="params">id</span>) </span>&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(id).style.display = <span class="string">"none"</span>;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-01-19T09:50:22.000Z</updated>
+  <updated>2017-01-20T02:04:31.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://2le.me/2017/01/19/solr-cloud-example/"/>
     <id>http://2le.me/2017/01/19/solr-cloud-example/</id>
     <published>2017-01-19T09:04:10.000Z</published>
-    <updated>2017-01-19T09:50:22.000Z</updated>
+    <updated>2017-01-20T02:04:31.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>单机搭建solr集群示例(4节点)</p>
 <a id="more"></a>
@@ -29,7 +29,7 @@
 solr6.3.0</p>
 <h2 id="步骤"><a class="header-anchor" href="#步骤"> </a>步骤</h2>
 <p>进到solr安装目录然后执行以下命令</p>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">mkdir -p test/cloud/<span class="keyword">node</span><span class="title">&#123;1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;/solr <span class="comment">##新建4个solr主目录（solr.solr.home）</span></div><div class="line">echo test/cloud/<span class="keyword">node</span><span class="title">&#123;1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;/solr/ | xargs -n <span class="number">1</span> cp -v server/solr/&#123;solr.xml,zoo.cfg&#125; <span class="comment">##把配置文件拷贝到4个solr主目录</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">8983</span> -s <span class="string">"test/cloud/node1/solr"</span> <span class="comment">##启动第一个节点</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">7574</span> -s <span class="string">"test/cloud/node2/solr"</span> -z localhost:<span class="number">9983</span> <span class="comment">##启动第二个节点并加入到第一个节点启动的内置zookeeper</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">8984</span> -s <span class="string">"test/cloud/node3/solr"</span> -z localhost:<span class="number">9983</span> <span class="comment">##启动第三个节点并加入到第一个节点启动的内置zookeeper</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">7575</span> -s <span class="string">"test/cloud/node4/solr"</span> -z localhost:<span class="number">9983</span> <span class="comment">##启动第四个节点并加入到第一个节点启动的内置zookeeper</span></div><div class="line">bin/solr create -c testcloud -d data_driven_schema_configs -n testcloud -s <span class="number">2</span> -rf <span class="number">2</span> <span class="comment">##上传`data_driven_schema_configs`到zookeeper并创建testcloud collection</span></div></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line"><span class="comment">##新建4个solr主目录（solr.solr.home）</span></div><div class="line">mkdir -p test/cloud/<span class="keyword">node</span><span class="title">&#123;1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;/solr</div><div class="line"><span class="comment">##把配置文件拷贝到4个solr主目录</span></div><div class="line">echo test/cloud/<span class="keyword">node</span><span class="title">&#123;1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;/solr/ | xargs -n <span class="number">1</span> cp -v server/solr/&#123;solr.xml,zoo.cfg&#125; </div><div class="line"><span class="comment">##启动第一个节点</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">8983</span> -s <span class="string">"test/cloud/node1/solr"</span> </div><div class="line"><span class="comment">##启动第二个节点并加入到第一个节点启动的内置zookeeper</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">7574</span> -s <span class="string">"test/cloud/node2/solr"</span> -z localhost:<span class="number">9983</span> </div><div class="line"><span class="comment">##启动第三个节点并加入到第一个节点启动的内置zookeeper</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">8984</span> -s <span class="string">"test/cloud/node3/solr"</span> -z localhost:<span class="number">9983</span> </div><div class="line"><span class="comment">##启动第四个节点并加入到第一个节点启动的内置zookeeper</span></div><div class="line">bin/solr <span class="literal">start</span> -cloud -p <span class="number">7575</span> -s <span class="string">"test/cloud/node4/solr"</span> -z localhost:<span class="number">9983</span> </div><div class="line"><span class="comment">##上传`data_driven_schema_configs`到zookeeper并创建testcloud collection</span></div><div class="line">bin/solr create -c testcloud -d data_driven_schema_configs -n testcloud -s <span class="number">2</span> -rf <span class="number">2</span></div></pre></td></tr></table></figure>
 <h2 id="效果"><a class="header-anchor" href="#效果"> </a>效果</h2>
 <p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/19/20170119171658.png" alt="solr-cloud"><span class="image-caption">solr-cloud</span></p>
 ]]></content>
