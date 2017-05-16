@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-02-15T07:59:14.000Z</updated>
+  <updated>2017-05-16T09:18:16.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java多线程</title>
+    <link href="http://2le.me/2017/05/16/java-thread/"/>
+    <id>http://2le.me/2017/05/16/java-thread/</id>
+    <published>2017-05-16T09:13:52.000Z</published>
+    <updated>2017-05-16T09:18:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="tips"><a class="header-anchor" href="#tips"> </a>tips</h2>
+<h3 id="不要对基本类型加锁"><a class="header-anchor" href="#不要对基本类型加锁"> </a>不要对基本类型加锁</h3>
+<h3 id="案例"><a class="header-anchor" href="#案例"> </a>案例</h3>
+<p>来自<a href="http://www.iteye.com/problems/81127" target="_blank" rel="external">iteye</a>:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> TestRun run = <span class="keyword">new</span> TestRun();</div><div class="line"></div><div class="line">        Thread thread = <span class="keyword">new</span> Thread(run);</div><div class="line">        Thread thread2 = <span class="keyword">new</span> Thread(run);</div><div class="line">        thread.start();</div><div class="line">        thread2.start();</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestRun</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> Integer i    = <span class="number">0</span>;</div><div class="line">    <span class="keyword">public</span> Object  lock = <span class="keyword">new</span> Object();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (i) &#123;</div><div class="line">            i++;</div><div class="line">            System.out.println(<span class="string">"step1:"</span> + i);</div><div class="line">            i++;</div><div class="line">            System.out.println(<span class="string">"step2:"</span> + i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>运行的结果。按理说，锁住了i对象，同步快中的内容顺序执行，结果为：
+step1:1
+step2:2
+step1:3
+step2:4</p>
+<p>但结果却是：
+step1:1
+step1:2
+step2:3
+step2:4
+或者
+step1:1
+step2:3
+step1:2
+step2:4</p>
+<p>貌似没有锁住。
+当改为synchronized （lock）{
+……
+}
+结果就正常了！</p>
+<p>为什么？？？？锁住对象了，不能对对象进行操作吗？</p>
+</blockquote>
+<blockquote>
+<p>原因是Java的自动封箱和解箱操作在作怪。
+这里的i++实际上是i = new Integer(i+1)，所以执行完i++后，i已经不是原来的对象了，同步块自然就无效了。
+其它基本类型的封装类，如Short、Long等等也不能作为同步对象</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;tips&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
+    
+    </summary>
+    
+      <category term="java" scheme="http://2le.me/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://2le.me/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>demo</title>
@@ -1026,52 +1081,6 @@ CentOS 6
     
     
       <category term="emacs" scheme="http://2le.me/tags/emacs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python-eyeD3</title>
-    <link href="http://2le.me/2016/12/06/python-eyeD3/"/>
-    <id>http://2le.me/2016/12/06/python-eyeD3/</id>
-    <published>2016-12-06T09:16:55.000Z</published>
-    <updated>2016-12-09T05:37:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>用python都去mp3文件内嵌的封面</p>
-<a id="more"></a>
-<h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
-<p>读取mp3封面</p>
-<h2 id="指路人"><a class="header-anchor" href="#指路人"> </a>指路人</h2>
-<blockquote>
-<p>You can use eyed3 which is a great utility for handling id3 tags. To extract all images from an mp3 file you can use:</p>
-<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">&gt;eyeD3 <span class="comment">--write-images=DIR mp3_file</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>This will write all embedded images from the mp3 file to the specified directory.</p>
-</blockquote>
-<blockquote>
-<p>I just found out that ffmpeg will do the trick!</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&gt;ffmpeg -<span class="selector-tag">i</span> file<span class="selector-class">.mp3</span> file<span class="selector-class">.jpg</span></div><div class="line">&gt;</div></pre></td></tr></table></figure>
-</blockquote>
-<p><a href="http://unix.stackexchange.com/questions/41287/how-to-extract-album-cover-image-from-mp3-file" target="_blank" rel="external">http://unix.stackexchange.com/questions/41287/how-to-extract-album-cover-image-from-mp3-file</a></p>
-<h2 id="eyed3试用"><a class="header-anchor" href="#eyed3试用"> </a>eyeD3试用</h2>
-<h3 id="安装"><a class="header-anchor" href="#安装"> </a>安装</h3>
-<p>eyeD3是个python模块可以通过<code>pip</code>安装，命令为：</p>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">pip <span class="keyword">install</span> eyeD3</div></pre></td></tr></table></figure>
-<p>如果没安装<code>pip</code>，提前安装<code>sudo easy_install pip</code></p>
-<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="http://eyed3.nicfit.net/" target="_blank" rel="external">官网</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;用python都去mp3文件内嵌的封面&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="python" scheme="http://2le.me/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://2le.me/tags/python/"/>
     
   </entry>
   
