@@ -319,6 +319,126 @@
             
               
                 
+                <a class="post-title-link" href="/2014/09/25/db-oracle-connect-by/" itemprop="url">
+                  CONNECT BY 行转列
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-09-25T15:13:00+08:00" content="2014-09-25">
+              2014-09-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/09/25/db-oracle-connect-by/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/25/db-oracle-connect-by/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">max</span>(a) <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> sys_connect_by_path(outer_name,<span class="string">'    '</span>) a <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Sys_Io_Table_Column t <span class="keyword">where</span> t.table_id = <span class="string">'00000000000000000526512180550341'</span>) </div><div class="line"><span class="keyword">START</span> <span class="keyword">WITH</span> <span class="keyword">NO</span> = <span class="number">1</span>  <span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">NO</span> = <span class="keyword">PRIOR</span> <span class="keyword">NO</span>+<span class="number">1</span>)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/09/12/java-del-unicode-space/" itemprop="url">
                   删除unicode空格
                 </a>
@@ -679,8 +799,8 @@
             
               
                 
-                <a class="post-title-link" href="/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/" itemprop="url">
-                  启动tomcat报java.lang.NoClassDefFoundError: javax/el/ExpressionFactory
+                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">
+                  查询本月天数
                 </a>
               
             
@@ -707,8 +827,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
                   </a>
                 </span>
 
@@ -723,8 +843,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/" itemprop="commentsCount"></span>
+                <a href="/2014/03/25/db-oracle-get-month-days/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/db-oracle-get-month-days/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -749,17 +869,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory异常
-如果你按照以上目录发布工程，抛出以下异常：</p>
-<ol>
-<li>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory</li>
-<li>或打开页面后显示： HTTP Status 404 – /xxx/xxx
-报404错误
-Tomcat/5.5.17
-则将javaee.jar包再copy一份放在tomcat目录的common\lib下就不会了。
-关于用到的javaee.jar、jsf-api.jar、jsf-impl.jar、jstl-1.2.jar这四个包可以通过myeclipse中获得，
-如果你安装了myeclipse5.5的话，我安装的是MyEclipse，这四个包的所在的目录是：<code>MyEclipse\myeclipse\eclipse\plugins\com.genuitec.eclipse.j2eedt.core_6(目录下)\data\libraryset\EE_5</code></li>
-</ol>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
 
           
         
@@ -936,8 +1046,8 @@ Tomcat/5.5.17
             
               
                 
-                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">
-                  查询本月天数
+                <a class="post-title-link" href="/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/" itemprop="url">
+                  启动tomcat报java.lang.NoClassDefFoundError: javax/el/ExpressionFactory
                 </a>
               
             
@@ -964,8 +1074,8 @@ Tomcat/5.5.17
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -980,8 +1090,8 @@ Tomcat/5.5.17
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/03/25/db-oracle-get-month-days/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/db-oracle-get-month-days/" itemprop="commentsCount"></span>
+                <a href="/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1006,7 +1116,17 @@ Tomcat/5.5.17
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory异常
+如果你按照以上目录发布工程，抛出以下异常：</p>
+<ol>
+<li>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory</li>
+<li>或打开页面后显示： HTTP Status 404 – /xxx/xxx
+报404错误
+Tomcat/5.5.17
+则将javaee.jar包再copy一份放在tomcat目录的common\lib下就不会了。
+关于用到的javaee.jar、jsf-api.jar、jsf-impl.jar、jstl-1.2.jar这四个包可以通过myeclipse中获得，
+如果你安装了myeclipse5.5的话，我安装的是MyEclipse，这四个包的所在的目录是：<code>MyEclipse\myeclipse\eclipse\plugins\com.genuitec.eclipse.j2eedt.core_6(目录下)\data\libraryset\EE_5</code></li>
+</ol>
 
           
         
@@ -1411,138 +1531,11 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/03/25/linux-rh-unstall-java1-4/" itemprop="url">
-                  linux(red hat 5)卸载自带java1.4
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-03-25T08:09:17+08:00" content="2014-03-25">
-              2014-03-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/03/25/linux-rh-unstall-java1-4/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/25/linux-rh-unstall-java1-4/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>1.打开终端输入<code>#rpm -qa | grep gcj</code> ，其显示内容有：</p>
-<blockquote>
-<p>java-1.4.2-gci-compat………
-java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java开头的文件)</p>
-</blockquote>
-<p>2.卸载</p>
-<p>'#rpm -e –nodeps java-1.4.2-gci…` (利用rpm -e –nodeps 命令删除上面查找的内容)</p>
-<p>此时jdk1.4已被卸了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1583,7 +1576,7 @@ java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">240</span>
+              <span class="site-state-item-count">241</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
