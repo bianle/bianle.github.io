@@ -311,136 +311,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/java-http-download/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">java实现http文件下载</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
-了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
-分了几百甚至上千上万，那简直是个灾难。
-　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
-如此，我们就可以用程序来完成这个资源的完全下载。
-　　1. 基础知识
-　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
-Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
-　　步骤1:客户端发起连接请求一个URL
-　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
-　　步骤3:客户端接收输入流，将流中的内容存到文件
-　　2. 网络连接的建立
-　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
-存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
-<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
-<ol start="3">
-<li>代理的访问
-　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
-，访问的JAVA代码如下:</li>
-</ol>
-<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
-<ol start="4">
-<li>网络资源的保存
-　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
-流中的所以内容，并将其保存在文件中。示例代码:</li>
-</ol>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
-<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-js-animate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -543,7 +413,7 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-ubuntu-telnet/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-input-jump/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -562,7 +432,7 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-telnet/" itemprop="url">如何启动ubuntu下的telnet服务</a></h1>
+                <a class="post-title-link" href="/2012/07/04/web-input-jump/" itemprop="url">web-input-jump</a></h1>
         
 
         <div class="post-meta">
@@ -601,17 +471,8 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>以一般用户登录系统
-执行命令 sudo apt-get install xinetd
-系统提示输入用户密码，输入密码后安装xinet软件包
-执行命令 sudo apt-get install telnetd
-系统提示输入用户密码，输入密码后安装telnet软件包
-执行命令 sudo touch /etc/xinetd.d/telnet新
-建一个文件内容如下，并保存
-执行命令 sudo nano -w /etc/xinetd.d/telnet</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><div class="line"><span class="comment"># default: on</span></div><div class="line"></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \</span></div><div class="line"></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.</span></div><div class="line"></div><div class="line">service telnet</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">disable = no</div><div class="line"></div><div class="line">flags = REUSE</div><div class="line"></div><div class="line">socket_type = stream</div><div class="line"></div><div class="line">wait = no</div><div class="line"></div><div class="line">user = root</div><div class="line"></div><div class="line">server = /usr/sbin/in.telnetd</div><div class="line"></div><div class="line">log_on_failure += USERID</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>执行如下命令：sudo nano -w /etc/xinetd.conf 并加入如下内容：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">instances</span> = <span class="number">60</span></div><div class="line"><span class="attr">log_type</span> = SYSLOG authpriv</div><div class="line"></div><div class="line"><span class="attr">log_on_success</span> = HOST PID</div><div class="line"></div><div class="line"><span class="attr">log_on_failure</span> = HOST</div><div class="line"></div><div class="line"><span class="attr">cps</span> = <span class="number">25</span> <span class="number">30</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">script</span>   <span class="attr">language</span>=<span class="string">JavaScript</span>&gt;</span><span class="javascript">  </span></div><div class="line">  <span class="function"><span class="keyword">function</span>   <span class="title">toNext</span>(<span class="params">obj,str</span>)</span>&#123;      </div><div class="line">    <span class="keyword">if</span>(obj.value.length==str&amp;&amp;obj.nextSibling.nextSibling.type==<span class="string">"text"</span>)  </div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).select() </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> c=<span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>); </div><div class="line">    carray=c.split(<span class="string">" "</span>);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes1"</span>).value=carray[<span class="number">0</span>];</div><div class="line">    alert(carray[<span class="number">0</span>]);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).value=carray[<span class="number">1</span>];</div><div class="line">    <span class="built_in">window</span>.clipboardData.clearData();</div><div class="line">  &#125;  </div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes1"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span> <span class="attr">onbeforepaste</span>=<span class="string">"abc()"</span>&gt;</span>SN1  </div><div class="line">  —  </div><div class="line">      <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes2"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span>&gt;</span>SN2</div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -887,7 +748,7 @@ me@tipfoo:~$ su</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-input-jump/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-ubuntu-telnet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -906,7 +767,7 @@ me@tipfoo:~$ su</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/04/web-input-jump/" itemprop="url">web-input-jump</a></h1>
+                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-telnet/" itemprop="url">如何启动ubuntu下的telnet服务</a></h1>
         
 
         <div class="post-meta">
@@ -945,8 +806,17 @@ me@tipfoo:~$ su</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">script</span>   <span class="attr">language</span>=<span class="string">JavaScript</span>&gt;</span><span class="javascript">  </span></div><div class="line">  <span class="function"><span class="keyword">function</span>   <span class="title">toNext</span>(<span class="params">obj,str</span>)</span>&#123;      </div><div class="line">    <span class="keyword">if</span>(obj.value.length==str&amp;&amp;obj.nextSibling.nextSibling.type==<span class="string">"text"</span>)  </div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).select() </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> c=<span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>); </div><div class="line">    carray=c.split(<span class="string">" "</span>);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes1"</span>).value=carray[<span class="number">0</span>];</div><div class="line">    alert(carray[<span class="number">0</span>]);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).value=carray[<span class="number">1</span>];</div><div class="line">    <span class="built_in">window</span>.clipboardData.clearData();</div><div class="line">  &#125;  </div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes1"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span> <span class="attr">onbeforepaste</span>=<span class="string">"abc()"</span>&gt;</span>SN1  </div><div class="line">  —  </div><div class="line">      <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes2"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span>&gt;</span>SN2</div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>以一般用户登录系统
+执行命令 sudo apt-get install xinetd
+系统提示输入用户密码，输入密码后安装xinet软件包
+执行命令 sudo apt-get install telnetd
+系统提示输入用户密码，输入密码后安装telnet软件包
+执行命令 sudo touch /etc/xinetd.d/telnet新
+建一个文件内容如下，并保存
+执行命令 sudo nano -w /etc/xinetd.d/telnet</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><div class="line"><span class="comment"># default: on</span></div><div class="line"></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \</span></div><div class="line"></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.</span></div><div class="line"></div><div class="line">service telnet</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">disable = no</div><div class="line"></div><div class="line">flags = REUSE</div><div class="line"></div><div class="line">socket_type = stream</div><div class="line"></div><div class="line">wait = no</div><div class="line"></div><div class="line">user = root</div><div class="line"></div><div class="line">server = /usr/sbin/in.telnetd</div><div class="line"></div><div class="line">log_on_failure += USERID</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行如下命令：sudo nano -w /etc/xinetd.conf 并加入如下内容：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">instances</span> = <span class="number">60</span></div><div class="line"><span class="attr">log_type</span> = SYSLOG authpriv</div><div class="line"></div><div class="line"><span class="attr">log_on_success</span> = HOST PID</div><div class="line"></div><div class="line"><span class="attr">log_on_failure</span> = HOST</div><div class="line"></div><div class="line"><span class="attr">cps</span> = <span class="number">25</span> <span class="number">30</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1424,6 +1294,136 @@ driver=&quot;com.sybase.jdbc.SybDriver&quot;
 url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
 </blockquote>
 <figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/java-http-download/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">java实现http文件下载</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
+了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
+分了几百甚至上千上万，那简直是个灾难。
+　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
+如此，我们就可以用程序来完成这个资源的完全下载。
+　　1. 基础知识
+　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
+Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
+　　步骤1:客户端发起连接请求一个URL
+　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
+　　步骤3:客户端接收输入流，将流中的内容存到文件
+　　2. 网络连接的建立
+　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
+存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>代理的访问
+　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
+，访问的JAVA代码如下:</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>网络资源的保存
+　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
+流中的所以内容，并将其保存在文件中。示例代码:</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
