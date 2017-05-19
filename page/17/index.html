@@ -284,9 +284,43 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -819,7 +853,7 @@ $ ssh -l hyx 192.168.0.103
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-port-view/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-ubuntu-update-grub/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -838,7 +872,7 @@ $ ssh -l hyx 192.168.0.103
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/05/linux-port-view/" itemprop="url">怎么查看端口占用情况</a></h1>
+                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">安装Ubuntu后找不到windows sudo update-grub</a></h1>
         
 
         <div class="post-meta">
@@ -877,15 +911,131 @@ $ ssh -l hyx 192.168.0.103
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
-<p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
-<p>假如我们需要确定谁占用了我们的9050端口</p>
-<p>1、Windows平台
-在windows命令行窗口下执行：</p>
-<figure class="highlight x86asm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">C:</span>&gt;netstat -aon|findstr <span class="string">"9050"</span></div><div class="line"></div><div class="line">TCP    <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">9050</span>         <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">0</span>              LISTENING       <span class="number">2016</span></div></pre></td></tr></table></figure>
-<p>看到了吗，端口被进程号为2016的进程占用，继续执行下面命令：</p>
-<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line"><span class="keyword">C</span>:&gt;tasklist|findstr <span class="string">"2016"</span></div><div class="line"></div><div class="line">tor.exe                     <span class="number">2016</span> Console                 <span class="number">0</span>     <span class="number">16</span>,<span class="number">064</span> <span class="keyword">K</span></div></pre></td></tr></table></figure>
-<p>很清楚吧，tor占用了你的端口。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
+<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
+<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
+<p>menuentry “Windows 7” {
+insmod ntfs
+set root=(hd0,1)
+drivemap -s (hd0) ${root}</p>
+<p>chainloader +1
+}</p>
+<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
+<p>grub&gt;root (hd0,0)
+grub&gt;chainloader /bootmgr
+grub&gt;boot</p>
+<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/java-httpclient-xml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">httpclient发送xml字符串（推送）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// 新接的一个项目接口，非要用xml请求，找不到别的post方式，最终选用这种方式，将参数拼成xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//如果是xml文件，可以这样写 </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// 请求地址</span></div><div class="line"></div><div class="line">        <span class="comment">// 设置请求的内容直接从文件中读取 </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// 这里添加xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// 指定请求内容的类型 </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// 创建 HttpClient 的实例 </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// 返回200为成功 </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// 返回的内容 </span></div><div class="line">            post.releaseConnection();<span class="comment">// 释放连接 </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 以上就是发送请求的代码，对方接收到数据可以直接解析成xml</span></div><div class="line"></div><div class="line">    <span class="comment">// 读取xml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要jar包：</p>
+<ol>
+<li>
+<p>jdom.jar</p>
+</li>
+<li>
+<p>commons-httpclient.jar</p>
+</li>
+</ol>
 
           
         
@@ -1251,121 +1401,6 @@ EditPlus模板下载</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-ubuntu-update-grub/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">安装Ubuntu后找不到windows sudo update-grub</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
-<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
-<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
-<p>menuentry “Windows 7” {
-insmod ntfs
-set root=(hd0,1)
-drivemap -s (hd0) ${root}</p>
-<p>chainloader +1
-}</p>
-<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
-<p>grub&gt;root (hd0,0)
-grub&gt;chainloader /bootmgr
-grub&gt;boot</p>
-<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/db-sqlserver-return-autogen-id/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1442,6 +1477,116 @@ grub&gt;boot</p>
 </li>
 </ol>
 <figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-port-view/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/05/linux-port-view/" itemprop="url">怎么查看端口占用情况</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
+<p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
+<p>假如我们需要确定谁占用了我们的9050端口</p>
+<p>1、Windows平台
+在windows命令行窗口下执行：</p>
+<figure class="highlight x86asm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">C:</span>&gt;netstat -aon|findstr <span class="string">"9050"</span></div><div class="line"></div><div class="line">TCP    <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">9050</span>         <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">0</span>              LISTENING       <span class="number">2016</span></div></pre></td></tr></table></figure>
+<p>看到了吗，端口被进程号为2016的进程占用，继续执行下面命令：</p>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line"><span class="keyword">C</span>:&gt;tasklist|findstr <span class="string">"2016"</span></div><div class="line"></div><div class="line">tor.exe                     <span class="number">2016</span> Console                 <span class="number">0</span>     <span class="number">16</span>,<span class="number">064</span> <span class="keyword">K</span></div></pre></td></tr></table></figure>
+<p>很清楚吧，tor占用了你的端口。</p>
 
           
         
@@ -1935,7 +2080,7 @@ Apache the best and most widely used web server on the Internet today, check it 
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/java-httpclient-xml/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/web-js-change-css/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1954,7 +2099,7 @@ Apache the best and most widely used web server on the Internet today, check it 
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">httpclient发送xml字符串（推送）</a></h1>
+                <a class="post-title-link" href="/2012/12/27/web-js-change-css/" itemprop="url">JS来改变CSS样式</a></h1>
         
 
         <div class="post-meta">
@@ -1993,136 +2138,77 @@ Apache the best and most widely used web server on the Internet today, check it 
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// 新接的一个项目接口，非要用xml请求，找不到别的post方式，最终选用这种方式，将参数拼成xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//如果是xml文件，可以这样写 </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// 请求地址</span></div><div class="line"></div><div class="line">        <span class="comment">// 设置请求的内容直接从文件中读取 </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// 这里添加xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// 指定请求内容的类型 </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// 创建 HttpClient 的实例 </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// 返回200为成功 </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// 返回的内容 </span></div><div class="line">            post.releaseConnection();<span class="comment">// 释放连接 </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 以上就是发送请求的代码，对方接收到数据可以直接解析成xml</span></div><div class="line"></div><div class="line">    <span class="comment">// 读取xml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>需要jar包：</p>
-<ol>
-<li>
-<p>jdom.jar</p>
-</li>
-<li>
-<p>commons-httpclient.jar</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/java-eclipse-problem-manager/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/27/java-eclipse-problem-manager/" itemprop="url">解决eclipse中Flex的ProblemManager 错误</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>每次在eclipse中保存Flex源文件是就弹出报错框“The attribute value type is com.adobe.flexbuilder.project.compiler.internal.ProblemManager and expected is one of java.lang.String, Boolean, Integer”，原来是ProblemManager补丁没打上。</p>
-<p>解决办法：</p>
-<ol>
-<li>
-<p>下载补丁包[ProblemManager]</p>
-</li>
-<li>
-<p>解压下载的文件</p>
-</li>
-<li>
-<p>到 Flex Builder安装目录</p>
-</li>
-<li>
-<p>用winrar打开eclipse安装目录下/plugins/com.adobe.flexbuilder.project_3.0.204732/zornproject.jar文件</p>
-</li>
-<li>
-<p>如果eclipse已经打开的话先关掉，将刚才下载解压的文件目录 com拖到winrar中完成压缩</p>
-</li>
-</ol>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>document.getElementById(“xx”).style.xxx中的所有属性是什么</p>
+<p>盒子标签和属性对照
+CSS语法（不区分大小写）|JavaScript语法（区分大小写）
+border| border
+border-bottom| borderBottom
+border-bottom-color|borderBottomColor
+border-bottom-style|borderBottomStyle
+border-bottom-width|borderBottomWidth
+border-color|borderColor
+border-left|	borderLeft
+border-left-color|	borderLeftColor
+border-left-style|	borderLeftStyle
+border-left-width|	borderLeftWidth
+border-right|	borderRight
+border-right-color|	borderRightColor
+border-right-style|	borderRightStyle
+border-right-width|	borderRightWidth
+border-style|	borderStyle
+border-top|	borderTop
+border-top-color|	borderTopColor
+border-top-style|	borderTopStyle
+border-top-width|	borderTopWidth
+border-width|	borderWidth
+clear|	clear
+float|	floatStyle
+margin|	margin
+margin-bottom|	marginBottom
+margin-left|	marginLeft
+margin-right|	marginRight
+margin-top|	marginTop
+padding|	padding
+padding-bottom|	paddingBottom
+padding-left|	paddingLeft
+padding-right|	paddingRight
+padding-top|	paddingTop
+颜色和背景标签和属性对照
+CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
+background|	background
+background-attachment|	backgroundAttachment
+background-color|	backgroundColor
+background-image|	backgroundImage
+background-position|	backgroundPosition
+background-repeat|	backgroundRepeat
+color|	color</p>
+<p>样式标签和属性对照
+CSS语法（不区分大小写）	JavaScript 语法（区分大小写）
+display|	display
+list-style-type|	listStyleType
+list-style-image|	listStyleImage
+list-style-position|	listStylePosition
+list-style|	listStyle
+white-space|	whiteSpace</p>
+<p>文字样式标签和属性对照
+CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
+font	font
+font-family	fontFamily
+font-size	fontSize
+font-style	fontStyle
+font-variant	fontVariant
+font-weight	fontWeight</p>
+<p>文本标签和属性对照
+CSS 语法（不区分大小写）	JavaScript 语法（区分大小写）
+letter-spacing|	letterSpacing
+line-break|	lineBreak
+line-height|	lineHeight
+text-align|	textAlign
+text-decoration|	textDecoration
+text-indent|	textIndent
+text-justify|	textJustify
+text-transform|	textTransform
+vertical-align|	xverticalAlign</p>
 
           
         
@@ -2510,6 +2596,323 @@ Apache the best and most widely used web server on the Internet today, check it 
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === '') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 
