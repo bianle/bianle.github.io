@@ -345,6 +345,323 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2015/12/28/centos-vpn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/28/centos-vpn/" itemprop="url">centos-vpn</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装ppp和pptp"><a class="header-anchor" href="#安装ppp和pptp"> </a>安装ppp和pptp</h2>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">yum -y install ppp pptp pptp-<span class="built_in">setup</span></div></pre></td></tr></table></figure>
+<h2 id="配置pptp"><a class="header-anchor" href="#配置pptp"> </a>配置pptp</h2>
+<figure class="highlight brainfuck"><table><tr><td class="code"><pre><div class="line"><span class="comment">pptpsetup</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">create</span> <span class="comment">wjvpn</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">server</span> <span class="comment">192</span><span class="string">.</span><span class="comment">200</span><span class="string">.</span><span class="comment">194</span><span class="string">.</span><span class="comment">142</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">username</span> <span class="comment">bianle</span></div></pre></td></tr></table></figure>
+<p><code>wjvpn</code>为自定义连接名<br>
+<code>bianle</code>为vpn用户名<br>
+<code>192.200.194.142</code>为vpn服务器地址<br>
+执行命令系统会提示输入vpn的密码</p>
+<h2 id="编辑-etc-ppp-peers-wjvpn"><a class="header-anchor" href="#编辑-etc-ppp-peers-wjvpn"> </a>编辑<code>/etc/ppp/peers/wjvpn</code></h2>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">vim  <span class="regexp">/etc/</span>ppp<span class="regexp">/peers/</span>wjvpn</div></pre></td></tr></table></figure>
+<p>改为:</p>
+<blockquote>
+<p># written by pptpsetup<br>
+pty &quot;pptp 192.200.194.142 --nolaunchpppd&quot;<br>
+lock<br>
+#noauth<br>
+nobsdcomp<br>
+nodeflate<br>
+name bianle<br>
+remotename wjvpn<br>
+ipparam wjvpn2<br>
+require-mppe-128<br>
+refuse-pap<br>
+refuse-chap<br>
+refuse-eap<br>
+refuse-mschap</p>
+</blockquote>
+<h2 id="编辑chap-secrets"><a class="header-anchor" href="#编辑chap-secrets"> </a>编辑<code>chap-secrets</code></h2>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">vim <span class="regexp">/etc/</span>ppp<span class="regexp">/chap-secrets</span></div></pre></td></tr></table></figure>
+<p>改为:</p>
+<blockquote>
+<p># Secrets for authentication using CHAP<br>
+# client        server  secret                  IP addresses</p>
+</blockquote>
+<blockquote>
+<p># added by pptpsetup for wjvpn
+bianle wjvpn “xxxxx” *</p>
+</blockquote>
+<h2 id="把pon和poff命令拷贝-或者链接-到系统path目录"><a class="header-anchor" href="#把pon和poff命令拷贝-或者链接-到系统path目录"> </a>把<code>pon</code>和<code>poff</code>命令拷贝(或者链接)到系统path目录</h2>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>pon <span class="regexp">/usr/</span>sbin/</div><div class="line">cp <span class="regexp">/usr/</span>share<span class="regexp">/doc/</span>ppp<span class="number">-2.4</span><span class="number">.5</span><span class="regexp">/scripts/</span>poff <span class="regexp">/usr/</span>sbin/</div><div class="line">chmod +x <span class="regexp">/usr/</span>sbin<span class="regexp">/pon /</span>usr<span class="regexp">/sbin/</span>poff</div></pre></td></tr></table></figure>
+<h2 id="拨号"><a class="header-anchor" href="#拨号"> </a>拨号</h2>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">pon wjvpn</span></div></pre></td></tr></table></figure>
+<h2 id="查看是否连接"><a class="header-anchor" href="#查看是否连接"> </a>查看是否连接</h2>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">ifconfig</span></div></pre></td></tr></table></figure>
+<p>正常情况话会提示如下信息:</p>
+<blockquote>
+<p>ppp0: flags=4305&lt;UP,POINTOPOINT,RUNNING,NOARP,MULTICAST&gt;  mtu 1456<br>
+inet 172.16.21.77  netmask 255.255.255.255  destination 172.16.20.208<br>
+ppp  txqueuelen 3  (Point-to-Point Protocol)<br>
+RX packets 9  bytes 106 (106.0 B)<br>
+RX errors 0  dropped 0  overruns 0  frame 0<br>
+TX packets 7  bytes 82 (82.0 B)<br>
+TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</p>
+</blockquote>
+<h2 id="断开连接"><a class="header-anchor" href="#断开连接"> </a>断开连接</h2>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">poff wjvpn</span></div></pre></td></tr></table></figure>
+<h2 id="调试模式"><a class="header-anchor" href="#调试模式"> </a>调试模式</h2>
+<p><s>vi /etc/ppp/options.pptpd</s></p>
+<p><code>/var/log/message</code>查看日志</p>
+<h2 id="添加路由"><a class="header-anchor" href="#添加路由"> </a>添加路由</h2>
+<p>添加路由后才能用ppp上网</p>
+<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">sudo route <span class="keyword">add</span> <span class="keyword">default</span> dev ppp0</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2015/12/14/ghost-blog-hosted-by-openshift/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/12/14/ghost-blog-hosted-by-openshift/" itemprop="url">在openshift上搭建ghost博客系统</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift1.png" alt="openshift">到<a href="https://www.openshift.com/" target="_blank" rel="external">openshift网站</a>免费注册一个账号。（貌似现在被墙了，得翻墙头过去）</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift2.png" alt="openshift">进入控制台<code>OPENSHIFT WEB CONSOLE</code></p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift3.png" alt="openshift">添加一个应用<code>Add Application...</code></p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift4.png" alt="openshift">选择应用类型,点击<code>Browse By Tag</code>按钮选择<code>Node Js</code></p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift5.png" alt="openshift">配置应用,点击标题<code>Nodejs0.10</code>进入配置页面</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift6.png" alt="openshift">填写<code>Public Url,需要补充两部分</code>格式为<code>http://&lt;应用名称&gt;-&lt;命名空间&gt;.rhcloud.com</code>,如我填写的<code>http://nodejs-bianle.rhcloud.com</code>,命名空间全网唯一,应用名称在本命名空间内唯一.源码填写Ghost的github仓库地址<code>https://github.com/developercorey/openshift-ghost-quickstart.git</code></p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift7.png" alt="openshift">openshift支持绑定域名,点击应用列表中应用右侧齿轮按钮可进入应用配置界面</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift8.png" alt="openshift">点<code>Change</code>(如果已经绑定过则为<code>change alias</code>),填写要绑定的域名,并且将该域名CNAME方式解析到默认应用路径(我的是http://nodejs-bianle.rhcloud.com)(这一步骤通常在域名注册商或域名解析服务商那完成)</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift9.png" alt="openshift">修改ghost配置,改成绑定的网址. 先添加ssh-key到openshift,点击<code>setting</code>-<code>add a new key</code>打开配置页面</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift10.png" alt="openshift">填写生成好的公钥</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift11.png" alt="openshift">拷贝源码路径<code>ssh://566ed2892d5271b18e0000e0@nodejs-bianle.rhcloud.com/~/git/nodejs.git/</code></p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift12.png" alt="openshift">SecureCRT（ssh客户端）远程登录<code>nodejs-bianle.rhcloud.com</code>，用户名<code>566ed2892d5271b18e0000e0</code>会提示加载私钥选择生成的私钥</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift12.png" alt="openshift">进入<code>app-root/runtime/repo</code>目录修改<code>config.js</code>文件</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift13.png" alt="openshift">将url改成自己的域名</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift14.png" alt="openshift">登录后台<code>/ghost</code>创建用户</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift15.png" alt="openshift">填写基本信息</p>
+</li>
+<li>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/12/15/openshift16.png" alt="openshift">邀请你的好友一起用(ghost支持多用户)</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2015/12/10/eclipse-maven/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1746,249 +2063,6 @@ c^d / n = k … … m    m就是明文编码，不关心k</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2015/11/16/hexo-math/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/16/hexo-math/" itemprop="url">hexo-math</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ul>
-<li>MathJax inline:</li>
-</ul>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">Simple inline <span class="variable">$a</span>=b+c<span class="variable">$.</span></div></pre></td></tr></table></figure>
-<p>Simple inline $a=b+c$.</p>
-<ul>
-<li>MathJax Block:</li>
-</ul>
-<figure class="highlight taggerscript"><table><tr><td class="code"><pre><div class="line">$$<span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial u&#125;&#123;<span class="symbol">\p</span>artial t&#125;</div><div class="line">= h^2 <span class="symbol">\l</span>eft( <span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial^2 u&#125;&#123;<span class="symbol">\p</span>artial x^2&#125; +</div><div class="line"><span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial^2 u&#125;&#123;<span class="symbol">\p</span>artial y^2&#125; +</div><div class="line"><span class="symbol">\f</span>rac&#123;<span class="symbol">\p</span>artial^2 u&#125;&#123;<span class="symbol">\p</span>artial z^2&#125;<span class="symbol">\r</span>ight)$$</div></pre></td></tr></table></figure>
-<p>$$\frac{\partial u}{\partial t}
-= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
-\frac{\partial^2 u}{\partial y^2} +
-\frac{\partial^2 u}{\partial z^2}\right)$$</p>
-<ul>
-<li>Tag:</li>
-</ul>
-<figure class="highlight taggerscript"><table><tr><td class="code"><pre><div class="line">This equation &#123;<span class="variable">% math %</span>&#125;<span class="symbol">\c</span>os 2<span class="symbol">\t</span>heta = <span class="symbol">\c</span>os^2 <span class="symbol">\t</span>heta - <span class="symbol">\s</span>in^2 <span class="symbol">\t</span>heta =  2 <span class="symbol">\c</span>os^2 <span class="symbol">\t</span>heta - 1 &#123;<span class="variable">% endmath %</span>&#125; is inline.</div></pre></td></tr></table></figure>
-<p>This equation <span>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1$</span><!-- Has MathJax --> is inline.</p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><div class="line">&#123;<span class="comment">% math %&#125;</span></div><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;aligned&#125;</span></span></div><div class="line"><span class="tag">\<span class="name">dot</span><span class="string">&#123;x&#125;</span></span> &amp; = <span class="tag">\<span class="name">sigma</span></span>(y-x) <span class="tag">\<span class="name">\</span></span></div><div class="line"><span class="tag">\<span class="name">dot</span><span class="string">&#123;y&#125;</span></span> &amp; = <span class="tag">\<span class="name">rho</span></span> x - y - xz <span class="tag">\<span class="name">\</span></span></div><div class="line"><span class="tag">\<span class="name">dot</span><span class="string">&#123;z&#125;</span></span> &amp; = -<span class="tag">\<span class="name">beta</span></span> z + xy</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;aligned&#125;</span></span></div><div class="line">&#123;<span class="comment">% endmath %&#125;</span></div></pre></td></tr></table></figure>
-<span>$$\begin{aligned}
-\dot{x} &amp; = \sigma(y-x) \\
-\dot{y} &amp; = \rho x - y - xz \\
-\dot{z} &amp; = -\beta z + xy
-\end{aligned}$$</span><!-- Has MathJax -->
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2015/11/02/life-move/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/11/02/life-move/" itemprop="url">搬家</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox"
-                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/11/02/move.jpg?imageView2/2/w/1000/h/750" rel="gallery_cj2vhf41d008xkvs6rgpd6xhp"
-                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/11/02/move.jpg?imageView2/2/w/1000/h/750" itemprop="contentUrl"/>
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>周六,搬家到铁建广场,<ruby>兴奋<rp> (</rp><rt>lèi de</rt><rp>) </rp></ruby>难眠,周日逛了一上午华贸品超市,<ruby>你好北苑<rp> (</rp><rt>zài jiàn xī yuàn</rt><rp>) </rp></ruby> !</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2038,7 +2112,7 @@ c^d / n = k … … m    m就是明文编码，不关心k</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">242</span>
+                <span class="site-state-item-count">244</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2049,7 +2123,7 @@ c^d / n = k … … m    m就是明文编码，不关心k</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2060,7 +2134,7 @@ c^d / n = k … … m    m就是明文编码，不关心k</p>
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">161</span>
+                <span class="site-state-item-count">162</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

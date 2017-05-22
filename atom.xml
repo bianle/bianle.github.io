@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-05-19T02:01:21.000Z</updated>
+  <updated>2017-05-22T10:03:31.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,155 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>solr相关</title>
+    <link href="http://2le.me/2017/05/19/solr2/"/>
+    <id>http://2le.me/2017/05/19/solr2/</id>
+    <published>2017-05-19T13:57:54.000Z</published>
+    <updated>2017-05-22T10:03:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="ik添加到maven"><a class="header-anchor" href="#ik添加到maven"> </a>ik添加到maven</h2>
+<ol>
+<li>下载源码<a href="https://git.oschina.net/wltea/IK-Analyzer-2012FF.git" target="_blank" rel="external">IK-Analyzer-2012FF</a></li>
+<li>新建空的maven项目</li>
+<li>src目录下文件拷贝到src java目录</li>
+<li>pom.xml添加依赖</li>
+</ol>
+<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">lucene.version</span>&gt;</span>4.10.4<span class="tag">&lt;/<span class="name">lucene.version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-queryparser<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-analyzers-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-test-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="solr添加到maven"><a class="header-anchor" href="#solr添加到maven"> </a>solr添加到maven</h2>
+<ol>
+<li>下载源码<a href="http://archive.apache.org/dist/lucene/solr/4.10.4/" target="_blank" rel="external">solr-4.10.4-src.tgz</a></li>
+<li><code>ant generate-maven-artifacts</code>
+Ivy is not available
+<a href="http://www.hankcs.com/program/java/solve-the-ivy-is-not-available.html" target="_blank" rel="external">解决ivy is not available</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;ik添加到maven&quot;&gt;&lt;a class=&quot;header-anc
+    
+    </summary>
+    
+      <category term="solr" scheme="http://2le.me/categories/solr/"/>
+    
+    
+      <category term="solr" scheme="http://2le.me/tags/solr/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ik分词器学习总结</title>
+    <link href="http://2le.me/2017/05/19/ik-summary/"/>
+    <id>http://2le.me/2017/05/19/ik-summary/</id>
+    <published>2017-05-19T07:37:00.000Z</published>
+    <updated>2017-05-22T10:03:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="主要类及类的作用"><a class="header-anchor" href="#主要类及类的作用"> </a>主要类及类的作用</h2>
+<h3 id="core包"><a class="header-anchor" href="#core包"> </a>core包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154250.png" alt="ik-core"><span class="image-caption">ik-core</span></p>
+<h4 id="iksegmenter"><a class="header-anchor" href="#iksegmenter"> </a>IKSegmenter</h4>
+<p>IK分词器主类<br>
+主要方法<code>init()</code>初始化分词器：</p>
+<ol>
+<li>初始化词典</li>
+<li>初始化分词上下文</li>
+<li>加载子分词器</li>
+<li>加载歧义裁决器</li>
+</ol>
+<h4 id="lettersegmenter"><a class="header-anchor" href="#lettersegmenter"> </a>LetterSegmenter</h4>
+<p>子分词器，英文分词器<br>
+主要方法<code>analyze()</code>处理三种类型的词：</p>
+<ol>
+<li>纯英文单词或字母&quot;this is a dog&quot;</li>
+<li>纯阿拉伯数字&quot;500&quot;</li>
+<li>字母数字混合词&quot;Nikon D90&quot;</li>
+</ol>
+<h4 id="cn-quantifiersegmente"><a class="header-anchor" href="#cn-quantifiersegmente"> </a>CN_QuantifierSegmente</h4>
+<p>子分词器，中文量词分词器
+主要方法<code>analyze()</code>处理中文数量词：</p>
+<ol>
+<li>中文数词（一二两三四五六七八九十零壹贰叁肆伍陆柒捌玖拾百千万亿拾佰仟萬億兆卅廿）</li>
+<li>中文数词（或阿拉伯数字）+量词；如&quot;21寸电脑&quot;,“二十架飞机”</li>
+</ol>
+<h4 id="cjksegmenter"><a class="header-anchor" href="#cjksegmenter"> </a>CJKSegmenter</h4>
+<p>子分词器，中文分词器(CJK,中日韩统一表意文字)
+主要方法<code>analyze()</code>
+主要是通过主词典对中文进行切分，如：“我不愿意”-&gt;“我|不愿意|愿意”</p>
+<h4 id="ikarbitrator"><a class="header-anchor" href="#ikarbitrator"> </a>IKArbitrator</h4>
+<p>IK分词歧义裁决器
+主要方法<code>process()</code>:<br>
+歧义裁决原则：匹配的长度越长越好，词的数量越少越好，路径跨度越长越好
+如“我|不愿意|愿意”经过歧义裁决后“我|不愿意”</p>
+<h4 id="lexeme"><a class="header-anchor" href="#lexeme"> </a>Lexeme</h4>
+<p>词元</p>
+<h3 id="cfg包"><a class="header-anchor" href="#cfg包"> </a>cfg包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154228.png?imageView2/2/w/200" alt="ik-cfg"><span class="image-caption">ik-cfg</span></p>
+<h4 id="configuration"><a class="header-anchor" href="#configuration"> </a>Configuration</h4>
+<p>配置文件接口
+主要方法：</p>
+<ol>
+<li>getMainDictionary() //获取主词典路径</li>
+<li>getQuantifierDicionary() //获取量词词典路径</li>
+<li>getExtDictionarys() //获取扩展词典路径</li>
+<li>getExtStopWordDictionarys() //获取停止词词典路径</li>
+</ol>
+<h4 id="defaultconfig"><a class="header-anchor" href="#defaultconfig"> </a>DefaultConfig</h4>
+<p>Configuration的默认实现</p>
+<h3 id="dict-包"><a class="header-anchor" href="#dict-包"> </a>dict 包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154312.png" alt="ik-dict"><span class="image-caption">ik-dict</span></p>
+<h4 id="dictionary"><a class="header-anchor" href="#dictionary"> </a>Dictionary</h4>
+<p>字典类，提供字典相关的方法（感觉叫DictionaryUtil更贴切）
+主要方法：<br>
+loadMainDict() //加载主词典<br>
+loadExtDict() //加载扩展词典<br>
+loadStopWordDict() //加载用户扩展的停止词词典
+loadQuantifierDict() //加载量词词典</p>
+<h4 id="dictsegment"><a class="header-anchor" href="#dictsegment"> </a>DictSegment</h4>
+<p>字典树分段，代表字典树的一个分支（这才是真正意义上的字典）
+主要方法：
+match() //匹配字段，返回这次匹配的命中对象<code>Hit</code></p>
+<h4 id="hit"><a class="header-anchor" href="#hit"> </a>Hit</h4>
+<p>表示匹配字段的命中
+主要方法：<br>
+isMatch() //是否匹配</p>
+<blockquote>
+<p>字典树数据结构前缀树</p>
+</blockquote>
+<h3 id="lucene包"><a class="header-anchor" href="#lucene包"> </a>lucene包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154329.png?imageView2/2/w/200" alt="ik-lucene"><span class="image-caption">ik-lucene</span></p>
+<h4 id="ikanalyzer"><a class="header-anchor" href="#ikanalyzer"> </a>IKAnalyzer</h4>
+<p>IK分词器的主类是IK分词器的 Lucene Analyzer 类实现
+IKAnalyzer(boolean useSmart) useSmart 为true时智能切词，false时最细粒度切词</p>
+<h4 id="iktokenizer"><a class="header-anchor" href="#iktokenizer"> </a>IKTokenizer</h4>
+<p>Lucene Tokenizer的适配器类，重写了构造分词组件方法createComponents()</p>
+<h2 id="基本流程"><a class="header-anchor" href="#基本流程"> </a>基本流程</h2>
+<p>1、	分词器初始化
+2、	预处理
+3、	英文分词
+4、	中文量词分词
+5、	中文分词
+6、	歧义处理
+7、	善后</p>
+<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
+<p><a href="http://blog.163.com/liaoxiangui@126/blog/static/7956964020130299518177/" target="_blank" rel="external">IK analyser源码解析</a></p>
+<p><a href="http://www.cnblogs.com/sunshineKID/p/3437958.html" target="_blank" rel="external">IK分词源代码分析学习——总体流程</a></p>
+<p><a href="http://blog.csdn.net/iamaboyy/article/details/7569977" target="_blank" rel="external">IK中文分词扩展自定义词典！！！</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;主要类及类的作用&quot;&gt;&lt;a class=&quot;header-ancho
+    
+    </summary>
+    
+      <category term="lucese" scheme="http://2le.me/categories/lucese/"/>
+    
+    
+      <category term="ik analzyer" scheme="http://2le.me/tags/ik-analzyer/"/>
+    
+  </entry>
   
   <entry>
     <title>番羽土啬</title>
@@ -931,114 +1080,6 @@ CentOS 6
     
     
       <category term="macos" scheme="http://2le.me/tags/macos/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>emacs-mobileorg</title>
-    <link href="http://2le.me/2016/12/20/emacs-mobileorg/"/>
-    <id>http://2le.me/2016/12/20/emacs-mobileorg/</id>
-    <published>2016-12-20T03:01:40.000Z</published>
-    <updated>2016-12-29T02:11:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><blockquote>
-<p>MobileOrg is a FREE (open-source) iPhone and iPod Touch application for storing, searching, viewing and editing your Org-mode files. MobileOrg works offline. Although you may not always be online, you can always access your data. You can even capture notes while offline and sync the next time you have connectivity.
-– 这是官方的介绍，大概意思就是MobileOrg是个很拽的东西，让你在手机上也能玩的起Org，不管你有没有3G，4G信号。</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="准备工作"><a class="header-anchor" href="#准备工作"> </a>准备工作</h2>
-<ol>
-<li>一台安装了eamcs的电脑（电脑）</li>
-<li>一部安装了mobileorg的手机（手机）</li>
-<li>电脑和手机同时可以访问的服务器（服务器）</li>
-</ol>
-<h2 id="服务器配置"><a class="header-anchor" href="#服务器配置"> </a>服务器配置</h2>
-<p>登录服务器新建一文件夹用于存放要同步的文件</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> org</div></pre></td></tr></table></figure>
-<h2 id="电脑配置"><a class="header-anchor" href="#电脑配置"> </a>电脑配置</h2>
-<h3 id="emacs配置-2016-12-28-20-44-20更新去掉几个文件"><a class="header-anchor" href="#emacs配置-2016-12-28-20-44-20更新去掉几个文件"> </a>emacs配置(2016-12-28 20:44:20更新去掉几个文件)</h3>
-<p>将以下代码添加到emacs的配置文件<code>~/.emacs</code>或者<code>~/.emacs.d/init.el</code></p>
-<figure class="highlight clojure"><table><tr><td class="code"><pre><div class="line"><span class="comment">;; This is just an example.  The way you do it might be</span></div><div class="line"><span class="comment">;; completely different, and that's fine, as long as you wind up</span></div><div class="line"><span class="comment">;; with `org-agenda-files' set usefully.</span></div><div class="line">(<span class="name">setq</span> org-directory <span class="string">"~/org/"</span>) <span class="comment">;;org主目录</span></div><div class="line">(<span class="name">custom-set-variables</span></div><div class="line"> '(<span class="name">org-agenda-files</span> (<span class="name"><span class="builtin-name">quote</span></span> (<span class="string">"todo.org"</span></div><div class="line">                            <span class="string">"private/personal.org"</span>))))<span class="comment">;;上边定义了org主目录这里可以写相对路径</span></div><div class="line"><span class="comment">;;这里设置MobileOrg同步的文件如果不配置则默认同步org-agenda-files列表</span></div><div class="line"><span class="comment">;;(setq org-mobile-files (list "office.org"</span></div><div class="line"><span class="comment">;;                 "home.org"</span></div><div class="line"><span class="comment">;;                 ))</span></div><div class="line"></div><div class="line">(<span class="name">setq</span> org-mobile-directory <span class="string">"/bl@tunnel.ink:org"</span>) <span class="comment">;;服务器路径，格式： /[用户名@]&lt;服务器&gt;:&lt;电脑的org文件将同步到的目录&gt;。</span></div><div class="line">(<span class="name">setq</span> org-mobile-inbox-for-pull <span class="string">"~/org/index.org"</span>)<span class="comment">;;手机同步用。注：这个地址要写绝对路径！</span></div></pre></td></tr></table></figure>
-<h3 id="建立相关文件和文件夹"><a class="header-anchor" href="#建立相关文件和文件夹"> </a>建立相关文件和文件夹</h3>
-<figure class="highlight irpf90"><table><tr><td class="code"><pre><div class="line">cd Documents</div><div class="line"><span class="keyword">touch</span> work.org </div><div class="line">mkdir <span class="keyword">private</span></div><div class="line"><span class="keyword">touch</span> <span class="keyword">private</span>/personal.org</div></pre></td></tr></table></figure>
-<h2 id="手机配置"><a class="header-anchor" href="#手机配置"> </a>手机配置</h2>
-<h3 id="选择ssh"><a class="header-anchor" href="#选择ssh"> </a>选择ssh</h3>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/Screenshot_2016-12-20-11-29-53.png" alt="mobileorg手机配置示意"><span class="image-caption">mobileorg手机配置示意</span></p>
-<h3 id="填写服务器信息"><a class="header-anchor" href="#填写服务器信息"> </a>填写服务器信息</h3>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/Screenshot_2016-12-20-11-30-15.png" alt="mobileorg手机配置示意"><span class="image-caption">mobileorg手机配置示意</span></p>
-<h2 id="开始同步"><a class="header-anchor" href="#开始同步"> </a>开始同步</h2>
-<ol>
-<li>随便写点东西
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/20161220114454.png" alt="电脑写内容展示"><span class="image-caption">电脑写内容展示</span></li>
-<li>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">M-x</kbd> org-mobile-push 然后输入密码，emacs会通过scp命令自动将文件传到服务器
-</li>
-<li>手机点击同步按钮（就是右上角那个圈圈）
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/20/Screenshot_2016-12-20-11-41-38.png" alt="手机同步内容展示"><span class="image-caption">手机同步内容展示</span></li>
-</ol>
-<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="http://svn.red-bean.com/repos/main/3bits/mobile_org_3bits.txt" target="_blank" rel="external">http://svn.red-bean.com/repos/main/3bits/mobile_org_3bits.txt</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;MobileOrg is a FREE (open-source) iPhone and iPod Touch application for storing, searching, viewing and editing your Org-mode files. MobileOrg works offline. Although you may not always be online, you can always access your data. You can even capture notes while offline and sync the next time you have connectivity.
-– 这是官方的介绍，大概意思就是MobileOrg是个很拽的东西，让你在手机上也能玩的起Org，不管你有没有3G，4G信号。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="emacs" scheme="http://2le.me/categories/emacs/"/>
-    
-    
-      <category term="emacs" scheme="http://2le.me/tags/emacs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>boot2docker</title>
-    <link href="http://2le.me/2016/12/13/boot2docker/"/>
-    <id>http://2le.me/2016/12/13/boot2docker/</id>
-    <published>2016-12-13T00:31:44.000Z</published>
-    <updated>2016-12-13T03:30:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>osx下安装boot2docker</p>
-<a id="more"></a>
-<h2 id="下载安装包"><a class="header-anchor" href="#下载安装包"> </a>下载安装包</h2>
-<p><a href="https://github.com/boot2docker/osx-installer/releases/" target="_blank" rel="external">github</a></p>
-<h2 id="安装"><a class="header-anchor" href="#安装"> </a>安装</h2>
-<h2 id="命令行启动"><a class="header-anchor" href="#命令行启动"> </a>命令行启动</h2>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><div class="line"><span class="keyword">boot2docker </span>init <span class="comment">#只需要执行一次</span></div><div class="line"><span class="keyword">boot2docker </span>start</div><div class="line"><span class="keyword">boot2docker </span><span class="keyword">shellinit</span></div><div class="line">eval <span class="string">"$(boot2docker shellinit)"</span> <span class="comment">#只对当前会话生效</span></div></pre></td></tr></table></figure>
-<h2 id="验证是否安装成功"><a class="header-anchor" href="#验证是否安装成功"> </a>验证是否安装成功</h2>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><div class="line">docker <span class="keyword">run</span><span class="bash"> hello-world</span></div></pre></td></tr></table></figure>
-<h2 id="基本练习"><a class="header-anchor" href="#基本练习"> </a>基本练习</h2>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">boot2docker status</div><div class="line">docker <span class="built_in">version</span></div></pre></td></tr></table></figure>
-<h3 id="在docker上启动一个nginx容器"><a class="header-anchor" href="#在docker上启动一个nginx容器"> </a>在docker上启动一个nginx容器</h3>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><div class="line">docker <span class="keyword">run</span><span class="bash"> <span class="_">-d</span> -P --name web nginx</span></div></pre></td></tr></table></figure>
-<p>使用<code>docker ps</code>查看运行的容器</p>
-<p>使用<code>docker port web</code>查看容器端口</p>
-<p>获取boot2docker主机地址</p>
-<figure class="highlight armasm"><table><tr><td class="code"><pre><div class="line"><span class="keyword">boot2docker </span><span class="built_in">ip</span></div></pre></td></tr></table></figure>
-<p>停止并删除容器</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">docker <span class="built_in">stop</span> web</div><div class="line">docker rm web</div></pre></td></tr></table></figure>
-<h2 id="安装compose"><a class="header-anchor" href="#安装compose"> </a>安装compose</h2>
-<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">curl -L https:<span class="regexp">//gi</span>thub.com<span class="regexp">/docker/</span>compose<span class="regexp">/releases/</span>download<span class="regexp">/1.3.1/</span>docker-compose-`uname -s`-`uname -m` &gt; <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>docker-compose</div><div class="line">chmod +x <span class="regexp">/usr/</span>local<span class="regexp">/bin/</span>docker-compose</div></pre></td></tr></table></figure>
-<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="http://www.widuu.com/docker/compose/install.html" target="_blank" rel="external">http://www.widuu.com/docker/compose/install.html</a>
-<a href="http://www.widuu.com/docker/installation/mac.html" target="_blank" rel="external">http://www.widuu.com/docker/installation/mac.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;osx下安装boot2docker&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="docker" scheme="http://2le.me/categories/docker/"/>
-    
-    
-      <category term="docker" scheme="http://2le.me/tags/docker/"/>
     
   </entry>
   

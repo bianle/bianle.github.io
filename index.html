@@ -345,6 +345,313 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/05/19/solr2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/19/solr2/" itemprop="url">solr相关</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="ik添加到maven"><a class="header-anchor" href="#ik添加到maven"> </a>ik添加到maven</h2>
+<ol>
+<li>下载源码<a href="https://git.oschina.net/wltea/IK-Analyzer-2012FF.git" target="_blank" rel="external">IK-Analyzer-2012FF</a></li>
+<li>新建空的maven项目</li>
+<li>src目录下文件拷贝到src java目录</li>
+<li>pom.xml添加依赖</li>
+</ol>
+<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">lucene.version</span>&gt;</span>4.10.4<span class="tag">&lt;/<span class="name">lucene.version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-queryparser<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-analyzers-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-test-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="solr添加到maven"><a class="header-anchor" href="#solr添加到maven"> </a>solr添加到maven</h2>
+<ol>
+<li>下载源码<a href="http://archive.apache.org/dist/lucene/solr/4.10.4/" target="_blank" rel="external">solr-4.10.4-src.tgz</a></li>
+<li><code>ant generate-maven-artifacts</code>
+Ivy is not available
+<a href="http://www.hankcs.com/program/java/solve-the-ivy-is-not-available.html" target="_blank" rel="external">解决ivy is not available</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/05/19/ik-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/19/ik-summary/" itemprop="url">ik分词器学习总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="主要类及类的作用"><a class="header-anchor" href="#主要类及类的作用"> </a>主要类及类的作用</h2>
+<h3 id="core包"><a class="header-anchor" href="#core包"> </a>core包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154250.png" alt="ik-core"><span class="image-caption">ik-core</span></p>
+<h4 id="iksegmenter"><a class="header-anchor" href="#iksegmenter"> </a>IKSegmenter</h4>
+<p>IK分词器主类<br>
+主要方法<code>init()</code>初始化分词器：</p>
+<ol>
+<li>初始化词典</li>
+<li>初始化分词上下文</li>
+<li>加载子分词器</li>
+<li>加载歧义裁决器</li>
+</ol>
+<h4 id="lettersegmenter"><a class="header-anchor" href="#lettersegmenter"> </a>LetterSegmenter</h4>
+<p>子分词器，英文分词器<br>
+主要方法<code>analyze()</code>处理三种类型的词：</p>
+<ol>
+<li>纯英文单词或字母&quot;this is a dog&quot;</li>
+<li>纯阿拉伯数字&quot;500&quot;</li>
+<li>字母数字混合词&quot;Nikon D90&quot;</li>
+</ol>
+<h4 id="cn-quantifiersegmente"><a class="header-anchor" href="#cn-quantifiersegmente"> </a>CN_QuantifierSegmente</h4>
+<p>子分词器，中文量词分词器
+主要方法<code>analyze()</code>处理中文数量词：</p>
+<ol>
+<li>中文数词（一二两三四五六七八九十零壹贰叁肆伍陆柒捌玖拾百千万亿拾佰仟萬億兆卅廿）</li>
+<li>中文数词（或阿拉伯数字）+量词；如&quot;21寸电脑&quot;,“二十架飞机”</li>
+</ol>
+<h4 id="cjksegmenter"><a class="header-anchor" href="#cjksegmenter"> </a>CJKSegmenter</h4>
+<p>子分词器，中文分词器(CJK,中日韩统一表意文字)
+主要方法<code>analyze()</code>
+主要是通过主词典对中文进行切分，如：“我不愿意”-&gt;“我|不愿意|愿意”</p>
+<h4 id="ikarbitrator"><a class="header-anchor" href="#ikarbitrator"> </a>IKArbitrator</h4>
+<p>IK分词歧义裁决器
+主要方法<code>process()</code>:<br>
+歧义裁决原则：匹配的长度越长越好，词的数量越少越好，路径跨度越长越好
+如“我|不愿意|愿意”经过歧义裁决后“我|不愿意”</p>
+<h4 id="lexeme"><a class="header-anchor" href="#lexeme"> </a>Lexeme</h4>
+<p>词元</p>
+<h3 id="cfg包"><a class="header-anchor" href="#cfg包"> </a>cfg包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154228.png?imageView2/2/w/200" alt="ik-cfg"><span class="image-caption">ik-cfg</span></p>
+<h4 id="configuration"><a class="header-anchor" href="#configuration"> </a>Configuration</h4>
+<p>配置文件接口
+主要方法：</p>
+<ol>
+<li>getMainDictionary() //获取主词典路径</li>
+<li>getQuantifierDicionary() //获取量词词典路径</li>
+<li>getExtDictionarys() //获取扩展词典路径</li>
+<li>getExtStopWordDictionarys() //获取停止词词典路径</li>
+</ol>
+<h4 id="defaultconfig"><a class="header-anchor" href="#defaultconfig"> </a>DefaultConfig</h4>
+<p>Configuration的默认实现</p>
+<h3 id="dict-包"><a class="header-anchor" href="#dict-包"> </a>dict 包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154312.png" alt="ik-dict"><span class="image-caption">ik-dict</span></p>
+<h4 id="dictionary"><a class="header-anchor" href="#dictionary"> </a>Dictionary</h4>
+<p>字典类，提供字典相关的方法（感觉叫DictionaryUtil更贴切）
+主要方法：<br>
+loadMainDict() //加载主词典<br>
+loadExtDict() //加载扩展词典<br>
+loadStopWordDict() //加载用户扩展的停止词词典
+loadQuantifierDict() //加载量词词典</p>
+<h4 id="dictsegment"><a class="header-anchor" href="#dictsegment"> </a>DictSegment</h4>
+<p>字典树分段，代表字典树的一个分支（这才是真正意义上的字典）
+主要方法：
+match() //匹配字段，返回这次匹配的命中对象<code>Hit</code></p>
+<h4 id="hit"><a class="header-anchor" href="#hit"> </a>Hit</h4>
+<p>表示匹配字段的命中
+主要方法：<br>
+isMatch() //是否匹配</p>
+<blockquote>
+<p>字典树数据结构前缀树</p>
+</blockquote>
+<h3 id="lucene包"><a class="header-anchor" href="#lucene包"> </a>lucene包</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/22/20170522154329.png?imageView2/2/w/200" alt="ik-lucene"><span class="image-caption">ik-lucene</span></p>
+<h4 id="ikanalyzer"><a class="header-anchor" href="#ikanalyzer"> </a>IKAnalyzer</h4>
+<p>IK分词器的主类是IK分词器的 Lucene Analyzer 类实现
+IKAnalyzer(boolean useSmart) useSmart 为true时智能切词，false时最细粒度切词</p>
+<h4 id="iktokenizer"><a class="header-anchor" href="#iktokenizer"> </a>IKTokenizer</h4>
+<p>Lucene Tokenizer的适配器类，重写了构造分词组件方法createComponents()</p>
+<h2 id="基本流程"><a class="header-anchor" href="#基本流程"> </a>基本流程</h2>
+<p>1、	分词器初始化
+2、	预处理
+3、	英文分词
+4、	中文量词分词
+5、	中文分词
+6、	歧义处理
+7、	善后</p>
+<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
+<p><a href="http://blog.163.com/liaoxiangui@126/blog/static/7956964020130299518177/" target="_blank" rel="external">IK analyser源码解析</a></p>
+<p><a href="http://www.cnblogs.com/sunshineKID/p/3437958.html" target="_blank" rel="external">IK分词源代码分析学习——总体流程</a></p>
+<p><a href="http://blog.csdn.net/iamaboyy/article/details/7569977" target="_blank" rel="external">IK中文分词扩展自定义词典！！！</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/05/19/fan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1209,320 +1516,6 @@ step2:4</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/01/07/mysql-master-slaver/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/07/mysql-master-slaver/" itemprop="url">mysql主从配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
-<p>今天（哦不00点04分了，应该说是昨天），打算自己配置一个主从mysql实践一把学习学习，于是倒腾了一下午公司电脑里的东西，腾出了40g硬盘，删了N个游戏（心疼呀！），虚了俩台centos6.6，找了同事极力推荐的<code>oneinstack</code>,装了mysql5.6，开整！记下步骤，兴许哪天就能用上呢！</p>
-<h2 id="环境"><a class="header-anchor" href="#环境"> </a>环境</h2>
-<ol start="0">
-<li>虚一台centos
-主机名<code>db01</code>,为了快速安装，最小化安装就好了（其实并不好）</li>
-<li>安装mysql
-我想顺便试下<code>oneinstack</code>(有点大材小用)，刚想<code>wget</code>发现木网（最小化安装的），修改网络配置后启动<code>network</code>服务连上网<code>yum</code>又慢的想吐道路曲折跌跌撞撞但最终也装上了，不赘述！</li>
-<li>再虚一台centos
-这时注意3点：
-<ul>
-<li>改下hostname(修改<code>/etc/sysconfig/network</code>文件<code>HOSTNAME</code>)，我改成<code>db02</code>了</li>
-<li>拷贝虚拟机会自动添加一个网卡，造成连不上网，修改下网卡配置<a href="http://www.01happy.com/vmware-copy-centos-device-eth0-does-not-seem-to-be-present/" target="_blank" rel="external">看这里</a></li>
-<li>修改mysql的uuid（<code>/data/mysql/auto.cnf</code>修改下uuid值）</li>
-</ul>
-</li>
-</ol>
-<h2 id="配置"><a class="header-anchor" href="#配置"> </a>配置</h2>
-<h3 id="master端"><a class="header-anchor" href="#master端"> </a>master端</h3>
-<ol>
-<li>创建用户，执行sql命令</li>
-</ol>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">create <span class="keyword">user</span> <span class="title">repl</span>;</div></pre></td></tr></table></figure>
-<ol start="2">
-<li>给repl用户授权</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">GRANT</span> <span class="keyword">REPLICATION</span> <span class="keyword">SLAVE</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'repl'</span>@<span class="string">'172.19.136.%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'123zxc=-0/.,'</span>;</div></pre></td></tr></table></figure>
-<ol start="3">
-<li>修改配置文件(<code>/etc/my.cnf</code>)
-在[mysqld]下面增加（或修改）下面几行代码</li>
-</ol>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">server-id</span>=<span class="number">1</span>   //给数据库服务的唯一标识，一般为大家设置服务器Ip的末尾号</div><div class="line"><span class="attr">log_bin</span>=master-bin</div><div class="line"><span class="attr">log_bin_index</span>=master-bin.index</div></pre></td></tr></table></figure>
-<ol start="4">
-<li>查看master日志</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">show</span> <span class="keyword">master</span> <span class="keyword">status</span>;</div></pre></td></tr></table></figure>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/07/20170107004223.png" alt="master status"><span class="image-caption">master status</span></p>
-<ol start="5">
-<li>重启mysql</li>
-</ol>
-<h3 id="slaver端"><a class="header-anchor" href="#slaver端"> </a>slaver端</h3>
-<ol>
-<li>修改配置文件后重启服务
-[mysqld]下增加（或修改）以下几行</li>
-</ol>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">server-id</span>=<span class="number">2</span> //不要和master重复了</div><div class="line"><span class="attr">relay-log-index</span>=slave-relay-bin.index</div><div class="line"><span class="attr">relay-log</span>=slave-relay-bin</div></pre></td></tr></table></figure>
-<ol start="2">
-<li>连接master,执行以下sql命令</li>
-</ol>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">change master to master_host='<span class="number">172.19</span><span class="number">.136</span><span class="number">.241</span>',</div><div class="line">master_user='repl',</div><div class="line">master_port=<span class="number">3306</span>,</div><div class="line">master_password='<span class="number">123</span>zxc=<span class="number">-0</span>/.,',</div><div class="line">master_log_file='master-bin<span class="number">.000001</span>',</div><div class="line">master_log_pos=<span class="number">0</span>;</div></pre></td></tr></table></figure>
-<ol start="3">
-<li>启动slave</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">start</span> <span class="keyword">slave</span>;</div></pre></td></tr></table></figure>
-<ol start="4">
-<li>查看slave状态</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">show</span> <span class="keyword">slave</span> <span class="keyword">status</span>\G;</div></pre></td></tr></table></figure>
-<ul>
-<li>报错1：</li>
-</ul>
-<blockquote>
-<p>The slave I/O thread stops because master and slave have equal MySQL server UUIDs; these UUIDs must be different for replication to work.</p>
-</blockquote>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/07/20170107004817.png" alt="uuid"><span class="image-caption">uuid</span><br>
-解决：修改下uuid</p>
-<ul>
-<li>报错2：网不通<br>
-解决：修改防火墙配置，终端命令为：<code>/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT</code></li>
-</ul>
-<h2 id="效果"><a class="header-anchor" href="#效果"> </a>效果</h2>
-<ol>
-<li>
-<p>在master建一个表
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/06/20170106235111.png" alt="在主库创建一个表"><span class="image-caption">在主库创建一个表</span></p>
-</li>
-<li>
-<p>在slaver上<code>show tables</code>
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/06/20170106235153.png" alt="查看从库"><span class="image-caption">查看从库</span></p>
-</li>
-</ol>
-<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="http://www.cnblogs.com/alvin_xp/p/4162249.html" target="_blank" rel="external">http://www.cnblogs.com/alvin_xp/p/4162249.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/01/06/linux-centos-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/06/linux-centos-1/" itemprop="url">linux-centos</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="最小化安装后需要做的事情"><a class="header-anchor" href="#最小化安装后需要做的事情"> </a>最小化安装后需要做的事情</h2>
-<h3 id="联网"><a class="header-anchor" href="#联网"> </a>联网</h3>
-<p><code>vi /etc/sysconfig/network-script/ifcfg-eth0</code></p>
-<blockquote>
-<p>NM_CONTROLLED=“no”   ##取消Network Manager托管
-ONBOOT=“yes”   ##开机启动
-BOOTPROTO=“dhcp”  ##ip获取方式
-<code>service network start</code></p>
-</blockquote>
-<h2 id="开启sshd"><a class="header-anchor" href="#开启sshd"> </a>开启sshd</h2>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">service sshd <span class="literal">start</span></div></pre></td></tr></table></figure>
-<h2 id="下载wget"><a class="header-anchor" href="#下载wget"> </a>下载wget</h2>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> wget</div></pre></td></tr></table></figure>
-<h2 id="修改为国内源-阿里云为例"><a class="header-anchor" href="#修改为国内源-阿里云为例"> </a>修改为国内源（阿里云为例）</h2>
-<ol>
-<li>备份你的原镜像文件，以免出错后可以恢复。</li>
-</ol>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">mv /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span> /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span><span class="selector-class">.backup</span></div></pre></td></tr></table></figure>
-<ol start="2">
-<li>下载新的CentOS-Base.repo 到/etc/yum.repos.d/
-CentOS 5
-<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-5.repo</code>
-CentOS 6
-<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</code></li>
-<li>运行yum makecache生成缓存</li>
-</ol>
-<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">yum clean <span class="keyword">all</span></div><div class="line">yum makecache</div></pre></td></tr></table></figure>
-<h2 id="安装openssh-clients-scp在这个包"><a class="header-anchor" href="#安装openssh-clients-scp在这个包"> </a>安装openssh-clients(scp在这个包)</h2>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> openssh-clients</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1572,7 +1565,7 @@ CentOS 6
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">242</span>
+                <span class="site-state-item-count">244</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1583,7 +1576,7 @@ CentOS 6
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1594,7 +1587,7 @@ CentOS 6
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">161</span>
+                <span class="site-state-item-count">162</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
