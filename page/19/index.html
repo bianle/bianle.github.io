@@ -345,6 +345,178 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/25/db-sql-convert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/25/db-sql-convert/" itemprop="url">SQL中CONVERT转化函数的用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>格式:
+<code>CONVERT(data_type,expression[,style])</code>
+说明:
+此样式一般在时间类型(datetime,smalldatetime)与字符串类型(nchar,nvarchar,char,varchar)
+相互转换的时候才用到.</p>
+<p>例子:
+<code>SELECT CONVERT(varchar(30),getdate(),101) now</code>
+结果为:</p>
+<blockquote>
+<p>now
+—————————————
+|09/15/2001</p>
+</blockquote>
+<p>style数字在转换时间时的含义如下:</p>
+<p>STYLE(2位表示年份)|	STYLE(4位表示年份)|	输入输出格式
+0|	100|	mon dd yyyy hh:miAM(或PM)
+1|	101美国| 	mm/dd/yy
+2|	102ANSI| 	yy-mm-dd
+3|	103英法| 	dd/mm/yy
+4|	104德国| 	dd.mm.yy
+5|	105意大利| 	dd-mm-yy
+6|	106|	dd mon yy
+7|	107|	mon dd,yy
+8|	108|	hh:mm:ss
+9|	109|	mon dd yyyy hh:mi:ss:mmmmAM(或PM)
+10|	110美国| 	mm-dd-yy
+11|	111日本| 	yy/mm/dd
+12|	112ISO| 	yymmdd
+13|	113欧洲默认值| 	dd mon yyyy hh:mi:ss:mmm(24小时制)
+14|	114|	hh:mi:ss:mmm(24小时制)
+20|	120 ODBC 规范| 	yyyy-mm-dd hh:mi:ss(24小时制)
+21|	121|	yyyy-mm-dd hh:mi:ss:mmm(24小时制)</p>
+<p>语句及查询结果：
+SELECT CONVERT(varchar(100), GETDATE(), 0): 05 16 2006 10:57AM
+SELECT CONVERT(varchar(100), GETDATE(), 1): 05/16/06
+SELECT CONVERT(varchar(100), GETDATE(), 2): 06.05.16
+SELECT CONVERT(varchar(100), GETDATE(), 3): 16/05/06
+SELECT CONVERT(varchar(100), GETDATE(), 4): 16.05.06
+SELECT CONVERT(varchar(100), GETDATE(), 5): 16-05-06
+SELECT CONVERT(varchar(100), GETDATE(), 6): 16 05 06
+SELECT CONVERT(varchar(100), GETDATE(), 7): 05 16, 06
+SELECT CONVERT(varchar(100), GETDATE(), 8): 10:57:46
+SELECT CONVERT(varchar(100), GETDATE(), 9): 05 16 2006 10:57:46:827AM
+SELECT CONVERT(varchar(100), GETDATE(), 10): 05-16-06
+SELECT CONVERT(varchar(100), GETDATE(), 11): 06/05/16
+SELECT CONVERT(varchar(100), GETDATE(), 12): 060516
+SELECT CONVERT(varchar(100), GETDATE(), 13): 16 05 2006 10:57:46:937
+SELECT CONVERT(varchar(100), GETDATE(), 14): 10:57:46:967
+SELECT CONVERT(varchar(100), GETDATE(), 20): 2006-05-16 10:57:47
+SELECT CONVERT(varchar(100), GETDATE(), 21): 2006-05-16 10:57:47.157
+SELECT CONVERT(varchar(100), GETDATE(), 22): 05/16/06 10:57:47 AM
+SELECT CONVERT(varchar(100), GETDATE(), 23): 2006-05-16
+SELECT CONVERT(varchar(100), GETDATE(), 24): 10:57:47
+SELECT CONVERT(varchar(100), GETDATE(), 25): 2006-05-16 10:57:47.250
+SELECT CONVERT(varchar(100), GETDATE(), 100): 05 16 2006 10:57AM
+SELECT CONVERT(varchar(100), GETDATE(), 101): 05/16/2006
+SELECT CONVERT(varchar(100), GETDATE(), 102): 2006.05.16
+SELECT CONVERT(varchar(100), GETDATE(), 103): 16/05/2006
+SELECT CONVERT(varchar(100), GETDATE(), 104): 16.05.2006
+SELECT CONVERT(varchar(100), GETDATE(), 105): 16-05-2006
+SELECT CONVERT(varchar(100), GETDATE(), 106): 16 05 2006
+SELECT CONVERT(varchar(100), GETDATE(), 107): 05 16, 2006
+SELECT CONVERT(varchar(100), GETDATE(), 108): 10:57:49
+SELECT CONVERT(varchar(100), GETDATE(), 109): 05 16 2006 10:57:49:437AM
+SELECT CONVERT(varchar(100), GETDATE(), 110): 05-16-2006
+SELECT CONVERT(varchar(100), GETDATE(), 111): 2006/05/16
+SELECT CONVERT(varchar(100), GETDATE(), 112): 20060516
+SELECT CONVERT(varchar(100), GETDATE(), 113): 16 05 2006 10:57:49:513
+SELECT CONVERT(varchar(100), GETDATE(), 114): 10:57:49:547
+SELECT CONVERT(varchar(100), GETDATE(), 120): 2006-05-16 10:57:49
+SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/15/web-gwt-i18n/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -901,6 +1073,111 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/system-ie-icon-disapear/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/05/system-ie-icon-disapear/" itemprop="url">桌面IE图标不见了</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
+Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
+”，不含引号，
+然后直接将其文件夹拉到桌面或复制剪切都行。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-reflex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1017,111 +1294,6 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
 区别于前面两种获取Class 对象的方法。使用Class.forName 方法所要获取的与之对应的Class
 对象的类可以通过字符串的方式给定。该方法通常用于在程序运行时根据类名动态的载入该
 类并获得与之对应的Class 对象。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/system-ie-icon-disapear/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/05/system-ie-icon-disapear/" itemprop="url">桌面IE图标不见了</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
-Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
-”，不含引号，
-然后直接将其文件夹拉到桌面或复制剪切都行。</p>
 
           
         
@@ -1423,108 +1595,6 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/web-extjs-encodeuri/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">ext中文传参乱码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1574,7 +1644,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">246</span>
+                <span class="site-state-item-count">247</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1585,7 +1655,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1596,7 +1666,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">163</span>
+                <span class="site-state-item-count">164</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
