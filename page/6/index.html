@@ -345,7 +345,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/11/mysql-powerdesigner/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/exception-python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -364,7 +364,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/11/mysql-powerdesigner/" itemprop="url">mysql-powerdesigner</a></h1>
+                <a class="post-title-link" href="/2016/11/22/exception-python/" itemprop="url">好大的异常-python篇</a></h1>
         
 
         <div class="post-meta">
@@ -403,37 +403,9 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="powerdesigner-mysql逆向工程"><a class="header-anchor" href="#powerdesigner-mysql逆向工程"> </a>powerdesigner mysql逆向工程</h2>
-<ul>
-<li>
-<p>安装mysql-connector-odbc-5.1.5-win32</p>
-</li>
-<li>
-<p><code>win-e</code> 搜索<code>odbc</code>
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/11/20161111151014.png" alt="mysql"><span class="image-caption">mysql</span></p>
-</li>
-<li>
-<p>点击<code>添加</code>
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/11/20161111151102.png" alt="mysql"><span class="image-caption">mysql</span></p>
-</li>
-<li>
-<p>选择驱动
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/11/20161111151227.png" alt="mysql"><span class="image-caption">mysql</span></p>
-</li>
-<li>
-<p>填写配置信息
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/11/20161111151307.png" alt="mysql"><span class="image-caption">mysql</span></p>
-</li>
-<li>
-<p>点击确定后添加数据源成功
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/11/20161111151407.png" alt="mysql"><span class="image-caption">mysql</span></p>
-</li>
-<li>
-<p>dbms选择mysql
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/11/20161111151455.png" alt="mysql"><span class="image-caption">mysql</span></p>
-</li>
-<li></li>
-</ul>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="python-version-2-7-required-which-was-not-found-in-the-registry"><a class="header-anchor" href="#python-version-2-7-required-which-was-not-found-in-the-registry"> </a>Python version 2.7 required, which was not found in the registry</h2>
+<p><a href="http://blog.csdn.net/zdnlp/article/details/12171687" target="_blank" rel="external">http://blog.csdn.net/zdnlp/article/details/12171687</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># script to register Python 2.0 or later for use with win32all</span></div><div class="line"><span class="comment"># and other extensions that require Python registry settings</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># written by Joakim Loew for Secret Labs AB / PythonWare</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># source:</span></div><div class="line"><span class="comment"># http://www.pythonware.com/products/works/articles/regpy20.htm</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># modified by Valentine Gogichashvili as described in http://www.mail-archive.com/distutils-sig@python.org/msg10512.html</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> sys</div><div class="line"> </div><div class="line"><span class="keyword">from</span> _winreg <span class="keyword">import</span> *</div><div class="line"> </div><div class="line"><span class="comment"># tweak as necessary</span></div><div class="line">version = sys.version[:<span class="number">3</span>]</div><div class="line">installpath = sys.prefix</div><div class="line"> </div><div class="line">regpath = <span class="string">"SOFTWARE\\Python\\Pythoncore\\%s\\"</span> % (version)</div><div class="line">installkey = <span class="string">"InstallPath"</span></div><div class="line">pythonkey = <span class="string">"PythonPath"</span></div><div class="line">pythonpath = <span class="string">"%s;%s\\Lib\\;%s\\DLLs\\"</span> % (</div><div class="line">    installpath, installpath, installpath</div><div class="line">)</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">RegisterPy</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        reg = OpenKey(HKEY_CURRENT_USER, regpath)</div><div class="line">    <span class="keyword">except</span> EnvironmentError <span class="keyword">as</span> e:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            reg = CreateKey(HKEY_CURRENT_USER, regpath)</div><div class="line">            SetValue(reg, installkey, REG_SZ, installpath)</div><div class="line">            SetValue(reg, pythonkey, REG_SZ, pythonpath)</div><div class="line">            CloseKey(reg)</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"*** Unable to register!"</span></div><div class="line">            <span class="keyword">return</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"--- Python"</span>, version, <span class="string">"is now registered!"</span></div><div class="line">        <span class="keyword">return</span></div><div class="line">    <span class="keyword">if</span> (QueryValue(reg, installkey) == installpath <span class="keyword">and</span></div><div class="line">        QueryValue(reg, pythonkey) == pythonpath):</div><div class="line">        CloseKey(reg)</div><div class="line">        <span class="keyword">print</span> <span class="string">"=== Python"</span>, version, <span class="string">"is already registered!"</span></div><div class="line">        <span class="keyword">return</span></div><div class="line">    CloseKey(reg)</div><div class="line">    <span class="keyword">print</span> <span class="string">"*** Unable to register!"</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"*** You probably have another Python installation!"</span></div><div class="line"> </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    RegisterPy()</div></pre></td></tr></table></figure>
 
           
         
@@ -477,7 +449,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/ssh/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/mysql-tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -496,7 +468,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/09/ssh/" itemprop="url">ssh</a></h1>
+                <a class="post-title-link" href="/2016/11/22/mysql-tips/" itemprop="url">小技巧 - mysql篇</a></h1>
         
 
         <div class="post-meta">
@@ -534,10 +506,122 @@
 
       
         
-          <ruby>ssh<rp> (</rp><rt>Secure Shell</rt><rp>) </rp></ruby>相关的内容
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="mysql-查询行号"><a class="header-anchor" href="#mysql-查询行号"> </a>mysql 查询行号</h2>
+<figure class="highlight moonscript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">select</span> @rowno:=@rowno+<span class="number">1</span> as rowno,t.* <span class="keyword">from</span> test t,(<span class="built_in">select</span> @rowno:=<span class="number">0</span>) r</div></pre></td></tr></table></figure>
+<h2 id="mysql里int字段插入float会四舍五入"><a class="header-anchor" href="#mysql里int字段插入float会四舍五入"> </a>mysql里int字段插入float会四舍五入</h2>
+<h2 id="关于索引-2016-12-28-15-15-20补充"><a class="header-anchor" href="#关于索引-2016-12-28-15-15-20补充"> </a>关于索引（2016-12-28 15:15:20补充）</h2>
+<ol>
+<li>字符串类型索引字段，查询条件如果传数字，索引不生效</li>
+<li>联合索引，查询条件只有部分字段的话，索引不生效</li>
+</ol>
+<p>以下忽略：
+红掌柜项目优化sql</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">SELECT</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span>,</div><div class="line">	M. NAME,</div><div class="line">	M<span class="selector-class">.MOBILE</span>,</div><div class="line">	M<span class="selector-class">.CARD_DATE</span>,</div><div class="line">	M<span class="selector-class">.MAINTAIN_DATE</span>,</div><div class="line">	M<span class="selector-class">.EMPLOYEE_ID</span>,</div><div class="line">	M<span class="selector-class">.BABY_NAME</span>,</div><div class="line">	M<span class="selector-class">.BABY_BIRTHDAY</span>,</div><div class="line">	M<span class="selector-class">.BABY_SEX</span>,</div><div class="line">	M<span class="selector-class">.MEMBER_SEX</span>,</div><div class="line">	M<span class="selector-class">.IS_OFFLINE</span>,</div><div class="line">	T<span class="selector-class">.TOTAL_CONSUME_AMOUNT</span>,</div><div class="line">	T<span class="selector-class">.TOTAL_ORDER_NUM</span>,</div><div class="line">	T<span class="selector-class">.LAST_CONSUME_DATE</span>,</div><div class="line">	r<span class="selector-class">.connect_status</span>,</div><div class="line">	CASE WHEN r<span class="selector-class">.connect_status</span> = <span class="number">3</span> THEN <span class="number">1</span> WHEN r<span class="selector-class">.connect_status</span> IS NULL THEN <span class="number">3</span> ELSE r<span class="selector-class">.connect_status</span> END remark_type</div><div class="line">FROM</div><div class="line">	RM_MEMBER M</div><div class="line">LEFT JOIN rm_contact_remark r ON r<span class="selector-class">.employee_id</span> = m<span class="selector-class">.employee_id</span></div><div class="line">AND r<span class="selector-class">.member_id</span> = m<span class="selector-class">.member_id</span></div><div class="line">AND act_id =- <span class="number">1</span>,</div><div class="line"> RM_MEMBER_TAG T</div><div class="line">WHERE</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span> = T<span class="selector-class">.MEMBER_ID</span></div><div class="line">AND M<span class="selector-class">.EMPLOYEE_ID</span> = <span class="string">'14082377'</span></div><div class="line">ORDER BY</div><div class="line">	remark_type DESC,</div><div class="line">	M<span class="selector-class">.UPDATE_TIME</span> DESC,</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span></div><div class="line">LIMIT <span class="number">0</span>,</div><div class="line"> <span class="number">20</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/sublime-text-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/22/sublime-text-2/" itemprop="url">sublime-text-2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>st2相关</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/11/09/ssh/#more" rel="contents">
+            <a class="btn" href="/2016/11/22/sublime-text-2/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -583,7 +667,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/exception-windows/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/run-apk-in-chrome/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -602,7 +686,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/09/exception-windows/" itemprop="url">好大的异常-windows篇</a></h1>
+                <a class="post-title-link" href="/2016/11/22/run-apk-in-chrome/" itemprop="url">chrome安装安装应用</a></h1>
         
 
         <div class="post-meta">
@@ -641,339 +725,13 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="outlook一直显示正在加载中"><a class="header-anchor" href="#outlook一直显示正在加载中"> </a>outlook一直显示正在加载中</h2>
-<p>打开office其他软件如word，excel禁用硬件加速</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/about-logo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/09/about-logo/" itemprop="url">关于logo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>就是他 - <a href="https://avatars1.githubusercontent.com/u/3324365" target="_blank" rel="external">logo</a></p>
-<p>我是仿照这个<a href="http://www.guokr.com/article/50618/#id6" target="_blank" rel="external">光照派纹章</a>做的，感兴趣的可以看下</p>
-<p><a href="http://www.flipscript.com/ambigram-generator.aspx" target="_blank" rel="external">这个网站</a>也可以自动生成</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/jquery-tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/09/jquery-tips/" itemprop="url">jquery-tips</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="jquery-ajax"><a class="header-anchor" href="#jquery-ajax"> </a>jquery ajax</h2>
-<ol>
-<li>post请求 ，浏览器不会进行缓存；</li>
-<li>get请求,若dateType属性 为“script”/“jsonp”时，浏览器也不会进行缓存（此时其cache属性默认为false）；</li>
-<li>get请求，dateType（default: Intelligent Guess (xml, json, script, or html)），若为text/xml/html/json时，可以设置 cache属性为 false来避免缓存</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/blog-ghost/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/09/blog-ghost/" itemprop="url">ghost</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="先fuck一下gfw"><a class="header-anchor" href="#先fuck一下gfw"> </a>先fuck一下gfw</h2>
-<h2 id="修改字体"><a class="header-anchor" href="#修改字体"> </a>修改字体</h2>
-<p><code>fonts.googleapi.com</code> 统统改成 <code>fonts.useso.com</code></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="如何流畅得在所有linux发行版上跑android的apk程序"><a class="header-anchor" href="#如何流畅得在所有linux发行版上跑android的apk程序"> </a>如何流畅得在所有linux发行版上跑android的apk程序。</h2>
+<p><a href="http://tieba.baidu.com/p/3308520670" target="_blank" rel="external">http://tieba.baidu.com/p/3308520670</a></p>
+<h2 id="chrome运行apk问题：无法加载以下来源的扩展程序：-there-is-no-message-element-for-key-extname"><a class="header-anchor" href="#chrome运行apk问题：无法加载以下来源的扩展程序：-there-is-no-message-element-for-key-extname"> </a>chrome运行apk问题：无法加载以下来源的扩展程序： There is no “message” element for key extName.</h2>
 <blockquote>
-<p>/content/themes/capser/default.hbs<br>
-/core/client/app/html/apps.html<br>
-/core/client/app/html/themes.html<br>
-/core/client/app/index.html<br>
-/core/server/views/user-error.hbs<br>
-/core/server/views/private.hbs<br>
-/core/server/views/default.hbs</p>
+<p>打开你转换apk后的文件夹，找到_locales\en目录下的messages.json文件，用txt或word打开，在&quot;description&quot;: “Extension name&quot;后加英文逗号，回车，添加&quot;message”: “XXXX”   XXXX为转换apk后的文件夹名，比如你这个应该就是&quot;message&quot;: “com.xiaoji.emulator”  保存后重新加载应该就可以了， 我遇到跟你一样的问题，多方查证尝试已解决</p>
 </blockquote>
-<h2 id="2016-12-07-16-21-54补充"><a class="header-anchor" href="#2016-12-07-16-21-54补充"> </a>2016-12-07 16:21:54补充</h2>
-<p>useso.com也慢了</p>
-<p>用下边几个：</p>
-<p>fonts.css.network 
-<a href="http://libs.bangbang93.com" target="_blank" rel="external">libs.bangbang93.com</a> 
-<a href="http://fonts.proxy.ustclug.org" target="_blank" rel="external">fonts.proxy.ustclug.org</a> 
-<a href="http://cdn.moefont.com/fonts" target="_blank" rel="external">cdn.moefont.com/fonts</a></p>
+<p><a href="https://zhidao.baidu.com/question/553546877343977732.html" target="_blank" rel="external">https://zhidao.baidu.com/question/553546877343977732.html</a></p>
 
           
         
@@ -1017,7 +775,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/ghost-mail/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/ascii/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1036,7 +794,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/09/ghost-mail/" itemprop="url">ghost邮件服务器</a></h1>
+                <a class="post-title-link" href="/2016/11/22/ascii/" itemprop="url">ascii</a></h1>
         
 
         <div class="post-meta">
@@ -1075,13 +833,38 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="注册mailgun"><a class="header-anchor" href="#注册mailgun"> </a>注册mailgun</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109084858.png" alt="mailgun"><span class="image-caption">mailgun</span></p>
-<h2 id="添加自己的域名并验证-验证成功后会得到一个密码"><a class="header-anchor" href="#添加自己的域名并验证-验证成功后会得到一个密码"> </a>添加自己的域名并验证，验证成功后会得到一个密码</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109085551.png" alt="mailgun"><span class="image-caption">mailgun</span></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109085727.png" alt="mailgun"><span class="image-caption">mailgun</span></p>
-<h2 id="修改ghost配置"><a class="header-anchor" href="#修改ghost配置"> </a>修改ghost配置</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109085904.png" alt="mailgun"><span class="image-caption">mailgun</span></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="tree-command-output-with-pure-7-bit-ascii-output"><a class="header-anchor" href="#tree-command-output-with-pure-7-bit-ascii-output"> </a>“tree” command output with “pure” (7-bit) ASCII output</h2>
+<blockquote>
+<p>I’m not sure about this but I think all you need is</p>
+<p>tree | sed ‘s/├/+/g; s/─/-/g; s/└/\/g’		<br>
+For example:</p>
+<p>$ tree												<br>
+.													<br>
+├── file0										<br>
+└── foo											<br>
+├── bar										<br>
+│   └── file2								<br>
+└── file1</p>
+<p>2 directories, 3 files								<br>
+$ tree | sed ‘s/├/+/g; s/─/-/g; s/└/\/g’		<br>
+.													<br>
+±- file0											<br>
+– foo											<br>
+±- bar										<br>
+│   – file2									<br>
+– file1</p>
+<p>2 directories, 3 files								<br>
+Alternatively, you can use the --charset option:</p>
+<p>$ tree --charset=ascii								<br>
+.													<br>
+|-- file0											<br>
+<code>-- foo											 |-- bar										 |</code>– file2									<br>
+`-- file1</p>
+<p>2 directories, 3 files</p>
+</blockquote>
+<p><a href="http://unix.stackexchange.com/questions/127063/tree-command-output-with-pure-7-bit-ascii-output" target="_blank" rel="external">http://unix.stackexchange.com/questions/127063/tree-command-output-with-pure-7-bit-ascii-output</a></p>
+<h2 id="佛"><a class="header-anchor" href="#佛"> </a>佛</h2>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><div class="line"><span class="comment">// </span></div><div class="line"><span class="comment">//                                  _oo8oo_</span></div><div class="line"><span class="comment">//                                 o8888888o</span></div><div class="line"><span class="comment">//                                 88" . "88</span></div><div class="line"><span class="comment">//                                 (| -_- |)</span></div><div class="line"><span class="comment">//                                 0\  =  /0</span></div><div class="line"><span class="comment">//                               ___/'==='\___</span></div><div class="line"><span class="comment">//                             .' \\|     |// '.</span></div><div class="line"><span class="comment">//                            / \\|||  :  |||// \</span></div><div class="line"><span class="comment">//                           / _||||| -:- |||||_ \</span></div><div class="line"><span class="comment">//                          |   | \\\  -  /// |   |</span></div><div class="line"><span class="comment">//                          | \_|  ''\---/''  |_/ |</span></div><div class="line"><span class="comment">//                          \  .-\__  '-'  __/-.  /</span></div><div class="line"><span class="comment">//                        ___'. .'  /--.--\  '. .'___</span></div><div class="line"><span class="comment">//                     ."" '&lt;  '.___\_&lt;|&gt;_/___.'  &gt;' "".</span></div><div class="line"><span class="comment">//                    | | :  `- \`.:`\ _ /`:.`/ -`  : | |</span></div><div class="line"><span class="comment">//                    \  \ `-.   \_ __\ /__ _/   .-` /  /</span></div><div class="line"><span class="comment">//                =====`-.____`.___ \_____/ ___.`____.-`=====</span></div><div class="line"><span class="comment">//                                  `=---=`</span></div><div class="line"><span class="comment">// </span></div><div class="line"><span class="comment">// </span></div><div class="line"><span class="comment">//               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//                          佛祖保佑         永不宕机/永无bug</span></div><div class="line"><span class="comment">//</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1125,7 +908,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/ghost-disqus/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/20/wechat/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1144,7 +927,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/09/ghost-disqus/" itemprop="url">ghost集成disqus评论</a></h1>
+                <a class="post-title-link" href="/2016/11/20/wechat/" itemprop="url">微信</a></h1>
         
 
         <div class="post-meta">
@@ -1183,13 +966,10 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="注册disqus获取插件代码"><a class="header-anchor" href="#注册disqus获取插件代码"> </a>注册disqus获取插件代码</h2>
-<h2 id="修改content-themes-casper下post-hbs-在最后一个-footer-里追加"><a class="header-anchor" href="#修改content-themes-casper下post-hbs-在最后一个-footer-里追加"> </a>修改<code>content/themes/casper</code>下<code>post.hbs</code>,在最后一个<code>&lt;footer&gt;</code>里追加</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="comment">&lt;!--disqus plugin begin--&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"disqus_thread"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="comment">/**</span></div><div class="line">* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.</div><div class="line">* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables</div><div class="line">*/</div><div class="line"><span class="comment">/*</span></div><div class="line">var disqus_config = function () &#123;</div><div class="line">this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable</div><div class="line">this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable</div><div class="line">&#125;;</div><div class="line">*/</div><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// DON'T EDIT BELOW THIS LINE</span></div><div class="line"><span class="keyword">var</span> d = <span class="built_in">document</span>, s = d.createElement(<span class="string">'script'</span>);</div><div class="line"></div><div class="line">s.src = <span class="string">'//leim.disqus.com/embed.js'</span>;</div><div class="line"></div><div class="line">s.setAttribute(<span class="string">'data-timestamp'</span>, +<span class="keyword">new</span> <span class="built_in">Date</span>());</div><div class="line">(d.head || d.body).appendChild(s);</div><div class="line">&#125;)();</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span>Please enable JavaScript to view the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://disqus.com/?ref_noscript"</span> <span class="attr">rel</span>=<span class="string">"nofollow"</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"dsq-count-scr"</span> <span class="attr">src</span>=<span class="string">"//leim.disqus.com/count.js"</span> <span class="attr">async</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--disqus plugin ended--&gt;</span></div></pre></td></tr></table></figure>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109084206.png" alt="ghost-disqus"><span class="image-caption">ghost-disqus</span></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109084300.png" alt="ghost-disqus"><span class="image-caption">ghost-disqus</span></p>
-<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="http://blog.christophvoigt.com/enable-comments-on-ghost-with-disqus/" target="_blank" rel="external">http://blog.christophvoigt.com/enable-comments-on-ghost-with-disqus/</a></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="公众号平台开发文档"><a class="header-anchor" href="#公众号平台开发文档"> </a>公众号平台开发文档</h2>
+<p><a href="http://mp.weixin.qq.com/wiki/home/index.html" target="_blank" rel="external">http://mp.weixin.qq.com/wiki/home/index.html</a></p>
+<h2 id="使用python一步一步搭建微信公众平台"><a class="header-anchor" href="#使用python一步一步搭建微信公众平台"> </a>使用python一步一步搭建微信公众平台</h2>
+<p><a href="https://my.oschina.net/yangyanxing/blog/159215" target="_blank" rel="external">https://my.oschina.net/yangyanxing/blog/159215</a></p>
 
           
         
@@ -1233,7 +1013,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/ghost-qiniu/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/20/springmvc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1252,7 +1032,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/09/ghost-qiniu/" itemprop="url">ghost集成七牛</a></h1>
+                <a class="post-title-link" href="/2016/11/20/springmvc/" itemprop="url">springmvc</a></h1>
         
 
         <div class="post-meta">
@@ -1291,14 +1071,8 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装七牛插件"><a class="header-anchor" href="#安装七牛插件"> </a>安装七牛插件</h2>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">npm <span class="keyword">install</span> qiniu <span class="comment">--save</span></div></pre></td></tr></table></figure>
-<h2 id="拷贝qiniu-js到-core-server-storage-目录下"><a class="header-anchor" href="#拷贝qiniu-js到-core-server-storage-目录下"> </a>拷贝<a href="https://pan.baidu.com/s/1pKUmRNX" target="_blank" rel="external">qiniu.js</a>到<code>/core/server/storage/</code>目录下</h2>
-<h2 id="修改-core-server-storage-index-js"><a class="header-anchor" href="#修改-core-server-storage-index-js"> </a>修改<code>/core/server/storage/index.js</code></h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109081831.png" alt="ghost-qiniu"><span class="image-caption">ghost-qiniu</span></p>
-<h2 id="ghost配置"><a class="header-anchor" href="#ghost配置"> </a>ghost配置</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109081438.png" alt="ghost-qiniu"><span class="image-caption">ghost-qiniu</span></p>
-<figure class="highlight less"><table><tr><td class="code"><pre><div class="line"><span class="attribute">storage</span>: &#123;</div><div class="line">    <span class="attribute">provider</span>: <span class="string">'qiniu'</span>,</div><div class="line">    <span class="attribute">bucketname</span>: <span class="string">'bianle'</span>,</div><div class="line">    <span class="attribute">ACCESS_KEY</span>: <span class="string">'xxx'</span>,</div><div class="line">    <span class="attribute">SECRET_KEY</span>: <span class="string">'xxx'</span>,</div><div class="line">    <span class="attribute">root</span>: <span class="string">'/image/'</span>,</div><div class="line">    <span class="attribute">prefix</span>: <span class="string">'http://bianle.qiniudn.com'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="springmvc处理date类型的成员变量方法"><a class="header-anchor" href="#springmvc处理date类型的成员变量方法"> </a>SpringMVC处理Date类型的成员变量方法</h2>
+<p><a href="http://blog.csdn.net/z69183787/article/details/40373565" target="_blank" rel="external">http://blog.csdn.net/z69183787/article/details/40373565</a></p>
 
           
         
@@ -1342,7 +1116,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/08/php-1/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/20/ehcache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1361,7 +1135,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/11/08/php-1/" itemprop="url">php</a></h1>
+                <a class="post-title-link" href="/2016/11/20/ehcache/" itemprop="url">ehcache</a></h1>
         
 
         <div class="post-meta">
@@ -1400,9 +1174,245 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="php-m"><a class="header-anchor" href="#php-m"> </a><code>php -m</code></h2>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="ehcache详解"><a class="header-anchor" href="#ehcache详解"> </a>ehcache详解</h2>
+<p><a href="http://raychase.iteye.com/blog/1545906" target="_blank" rel="external">http://raychase.iteye.com/blog/1545906</a></p>
 
           
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/20/eclipse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/20/eclipse/" itemprop="url">eclipse</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="eclipse的servers视图中无法添加tomcat6-tomcat7"><a class="header-anchor" href="#eclipse的servers视图中无法添加tomcat6-tomcat7"> </a>Eclipse的Servers视图中无法添加Tomcat6/Tomcat7</h2>
+<p><a href="http://blog.csdn.net/blueheart20/article/details/40043749" target="_blank" rel="external">http://blog.csdn.net/blueheart20/article/details/40043749</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/17/addrbook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/17/addrbook/" itemprop="url">电话本</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="盐山到北京"><a class="header-anchor" href="#盐山到北京"> </a>盐山到北京</h2>
+<table>
+<thead>
+<tr>
+<th>线路</th>
+<th>电话</th>
+<th>车牌号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>反刘-北京</td>
+<td>15831889766（随车）13930753802（司机）</td>
+<td></td>
+</tr>
+<tr>
+<td>旧县-北京</td>
+<td>13932709041（旧县）13932776260（北京）</td>
+<td>冀J78388（旧县）冀J78275（北京）</td>
+</tr>
+<tr>
+<td>吉科-北京</td>
+<td>13703278260</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/17/addrbook/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1439,7 +1449,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1484,7 +1494,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">247</span>
+                <span class="site-state-item-count">260</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
