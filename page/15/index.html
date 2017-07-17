@@ -345,6 +345,108 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/09/25/db-oracle-connect-by/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/09/25/db-oracle-connect-by/" itemprop="url">CONNECT BY 行转列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">max</span>(a) <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> sys_connect_by_path(outer_name,<span class="string">'    '</span>) a <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Sys_Io_Table_Column t <span class="keyword">where</span> t.table_id = <span class="string">'00000000000000000526512180550341'</span>) </div><div class="line"><span class="keyword">START</span> <span class="keyword">WITH</span> <span class="keyword">NO</span> = <span class="number">1</span>  <span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">NO</span> = <span class="keyword">PRIOR</span> <span class="keyword">NO</span>+<span class="number">1</span>)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2014/09/12/java-del-unicode-space/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -608,108 +710,6 @@
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Math</span>.uuid = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// Private array of chars to use  </span></div><div class="line">            <span class="keyword">var</span> CHARS = <span class="string">'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'</span> </div><div class="line">                    .split(<span class="string">''</span>); </div><div class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">len, radix</span>) </span>&#123; </div><div class="line">                <span class="keyword">var</span> chars = CHARS, uuid = [], rnd = <span class="built_in">Math</span>.random; </div><div class="line">                radix = radix || chars.length; </div><div class="line">                <span class="keyword">if</span> (len) &#123; <span class="comment">// Compact form      </span></div><div class="line">                    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) </div><div class="line">                        uuid[i] = chars[<span class="number">0</span> | rnd() * radix]; </div><div class="line">                &#125; <span class="keyword">else</span> &#123; <span class="comment">// rfc4122, version 4 form      var r;// rfc4122 requires these characters      </span></div><div class="line">                    uuid[<span class="number">8</span>] = uuid[<span class="number">13</span>] = uuid[<span class="number">18</span>] = uuid[<span class="number">23</span>] = <span class="string">'-'</span>; </div><div class="line">                    uuid[<span class="number">14</span>] = <span class="string">'4'</span>;<span class="comment">// Fill in random data.  At i==19 set the high bits of clock sequence as      </span></div><div class="line">                    <span class="comment">// per rfc4122, sec. 4.1.5      </span></div><div class="line">                    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">36</span>; i++) &#123; </div><div class="line">                        <span class="keyword">if</span> (!uuid[i]) &#123; </div><div class="line">                            r = <span class="number">0</span> | rnd() * <span class="number">16</span>; </div><div class="line">                            uuid[i] = chars[(i == <span class="number">19</span>) ? (r &amp; <span class="number">0x3</span>) | <span class="number">0x8</span> </div><div class="line">                                    : r &amp; <span class="number">0xf</span>]; </div><div class="line">                        &#125; </div><div class="line">                    &#125; </div><div class="line">                &#125; </div><div class="line">                <span class="keyword">return</span> uuid.join(<span class="string">''</span>); </div><div class="line">            &#125;; </div><div class="line">        &#125;)();<span class="comment">// Deprecated - only here for backward compatability </span></div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">UUID</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">return</span> <span class="built_in">Math</span>.uuid(); </div><div class="line">        &#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-get-month-days/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">查询本月天数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
 
           
         
@@ -1194,6 +1194,108 @@ Tomcat/5.5.17
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-get-month-days/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">查询本月天数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-trunc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1287,120 +1389,11 @@ Tomcat/5.5.17
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/linux-rh-unstall-java1-4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/25/linux-rh-unstall-java1-4/" itemprop="url">linux(red hat 5)卸载自带java1.4</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>1.打开终端输入<code>#rpm -qa | grep gcj</code> ，其显示内容有：</p>
-<blockquote>
-<p>java-1.4.2-gci-compat………
-java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java开头的文件)</p>
-</blockquote>
-<p>2.卸载</p>
-<p>'#rpm -e –nodeps java-1.4.2-gci…` (利用rpm -e –nodeps 命令删除上面查找的内容)</p>
-<p>此时jdk1.4已被卸了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1445,7 +1438,7 @@ java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">260</span>
+                <span class="site-state-item-count">261</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1456,7 +1449,7 @@ java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1467,7 +1460,7 @@ java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">165</span>
+                <span class="site-state-item-count">166</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

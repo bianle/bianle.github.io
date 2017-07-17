@@ -345,6 +345,120 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/14/sonar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/14/sonar/" itemprop="url">sonar</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="interruptedexception-should-not-be-ignored"><a class="header-anchor" href="#interruptedexception-should-not-be-ignored"> </a>“InterruptedException” should not be ignored</h2>
+<p>squid:S2142
+InterruptedExceptions should never be ignored in the code, and simply logging the exception counts in this case as “ignoring”. Instead, InterruptedExceptions should either be rethrown - immediately or after cleaning up the method’s state - or the method should be reinterrupted. Any other course of action risks delaying thread shutdown and loses the information that the thread was interrupted - probably without finishing its task.</p>
+<p>Noncompliant Code Example</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123; <span class="comment">// Noncompliant; logging is not enough</span></div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Compliant Solution</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> throws InterruptedException</span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">    <span class="comment">// clean up state...</span></div><div class="line">    <span class="keyword">throw</span> e;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">    <span class="comment">// clean up state...</span></div><div class="line">    Thread.currentThread().interrupt();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>See</p>
+<ul>
+<li><a href="http://cwe.mitre.org/data/definitions/391.html" target="_blank" rel="external">MITRE, CWE-391</a> - Unchecked Error Condition</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/12/setup-ssl-cert-for-nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1303,114 +1417,11 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/shabusi05/" itemprop="url">[网剧]杀不死05</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer4" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer4 = new DPlayer({"element":document.getElementById("dplayer4"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC05%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs5.jpg"}});</script>  
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1455,7 +1466,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">260</span>
+                <span class="site-state-item-count">261</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1466,7 +1477,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1477,7 +1488,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">165</span>
+                <span class="site-state-item-count">166</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

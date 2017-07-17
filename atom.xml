@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-07-12T04:43:06.000Z</updated>
+  <updated>2017-07-14T09:31:23.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -14,6 +14,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>sonar</title>
+    <link href="http://2le.me/2017/07/14/sonar/"/>
+    <id>http://2le.me/2017/07/14/sonar/</id>
+    <published>2017-07-14T09:29:48.000Z</published>
+    <updated>2017-07-14T09:31:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="interruptedexception-should-not-be-ignored"><a class="header-anchor" href="#interruptedexception-should-not-be-ignored"> </a>“InterruptedException” should not be ignored</h2>
+<p>squid:S2142
+InterruptedExceptions should never be ignored in the code, and simply logging the exception counts in this case as “ignoring”. Instead, InterruptedExceptions should either be rethrown - immediately or after cleaning up the method’s state - or the method should be reinterrupted. Any other course of action risks delaying thread shutdown and loses the information that the thread was interrupted - probably without finishing its task.</p>
+<p>Noncompliant Code Example</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123; <span class="comment">// Noncompliant; logging is not enough</span></div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Compliant Solution</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> throws InterruptedException</span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">    <span class="comment">// clean up state...</span></div><div class="line">    <span class="keyword">throw</span> e;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">    <span class="comment">// clean up state...</span></div><div class="line">    Thread.currentThread().interrupt();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>See</p>
+<ul>
+<li><a href="http://cwe.mitre.org/data/definitions/391.html" target="_blank" rel="external">MITRE, CWE-391</a> - Unchecked Error Condition</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;interruptedexception-should-not-
+    
+    </summary>
+    
+      <category term="sonar" scheme="http://2le.me/categories/sonar/"/>
+    
+    
+      <category term="sonar" scheme="http://2le.me/tags/sonar/"/>
+    
+  </entry>
   
   <entry>
     <title>nginx安装ssl证书</title>
@@ -720,33 +755,6 @@ lucene Analyzer抽象类</li>
     
     
       <category term="gfw" scheme="http://2le.me/tags/gfw/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>js总结</title>
-    <link href="http://2le.me/2017/05/18/js-summary/"/>
-    <id>http://2le.me/2017/05/18/js-summary/</id>
-    <published>2017-05-18T09:37:19.000Z</published>
-    <updated>2017-05-19T01:15:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="ie678不能试用json-stringify"><a class="header-anchor" href="#ie678不能试用json-stringify"> </a>IE678不能试用JSON.stringify</h2>
-<blockquote>
-<p><a href="https://github.com/douglascrockford/JSON-js" target="_blank" rel="external">https://github.com/douglascrockford/JSON-js</a></p>
-</blockquote>
-<p>来自：<a href="http://it.oyksoft.com/post/6772/" target="_blank" rel="external">jQuery解决IE6、7、8不能使用 JSON.stringify 函数的问题</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;ie678不能试用json-stringify&quot;&gt;&lt;a clas
-    
-    </summary>
-    
-      <category term="js" scheme="http://2le.me/categories/js/"/>
-    
-    
-      <category term="js" scheme="http://2le.me/tags/js/"/>
     
   </entry>
   
