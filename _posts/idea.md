@@ -49,6 +49,7 @@ http://www.oschina.net/question/273712_162220?sort=time
 
 方法2. 重装idea http://stackoverflow.com/questions/13585631/intellij-wont-save-svn-authentication-information
 
+<<<<<<< HEAD
 ## idea新建项目时慢
 ![idea](http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/23/20161223143224.png)
 
@@ -73,3 +74,8 @@ http://www.oschina.net/question/273712_162220?sort=time
 
 ## idea 排除文件夹
 ![idea-excluded](http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/12/idea-excluded.gif)
+=======
+
+
+
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

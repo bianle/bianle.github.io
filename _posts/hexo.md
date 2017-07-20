@@ -15,7 +15,11 @@ categories: hexo
 ```
 如：
 ```
+<<<<<<< HEAD
 npm install --save hexo-deployer-git
+=======
+npm install --save hexo-deployer-get
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 ```
 
 ### 常用插件
@@ -37,11 +41,14 @@ npm install --save hexo-deployer-git
 
 https://hexo.io/plugins/
 
+<<<<<<< HEAD
 ## 主题
 
 ### 自己写个主题
 [Hexo 主题制作指南](http://chensd.com/2016-06/hexo-theme-guide.html)
 
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 ## 常见错误
 
 1. `ERROR Deployer not found: github`  

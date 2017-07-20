@@ -29,6 +29,7 @@ fonts.css.network 
 libs.bangbang93.com  
 fonts.proxy.ustclug.org  
 cdn.moefont.com/fonts  
+<<<<<<< HEAD
 
 ## 安装
 ```
@@ -47,3 +48,5 @@ cd <blog>
 ```
 ghost install local
 ```
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

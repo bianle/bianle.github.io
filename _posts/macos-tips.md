@@ -39,6 +39,7 @@ sudo vim /etc/ppp/options
 3. 把高级设置里面”通过VPN连接发送所有流量“勾上
 
 4. 连接
+<<<<<<< HEAD
 
 ## 更改顶部托盘图标顺序
 
@@ -52,3 +53,5 @@ sudo vim /etc/ppp/options
 
 参考[这](http://www.cnprint.org/bbs/thread/80/266058/)
 
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

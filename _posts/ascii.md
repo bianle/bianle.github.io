@@ -45,6 +45,7 @@ categories: ascii
 http://unix.stackexchange.com/questions/127063/tree-command-output-with-pure-7-bit-ascii-output
 
 
+<<<<<<< HEAD
 ## 佛
 
 ```
@@ -75,3 +76,5 @@ http://unix.stackexchange.com/questions/127063/tree-command-output-with-pure-7-b
 //
 
 ```
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

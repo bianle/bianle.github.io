@@ -10,6 +10,7 @@ categories: js
 https://github.com/yui/yuicompressor/issues/234
 
 
+<<<<<<< HEAD
 ## js函数前面的加号叹号波浪号
 
 如：
@@ -24,3 +25,5 @@ https://github.com/yui/yuicompressor/issues/234
 ```
 如果没有这个加号的话，解析器会认为function是一个函数声明的开始，而后面（）将会导致语法错误。在function前面加上+号时，就变成了一个函数表达式，而函数表达式后面又添加了一个()就变成了一个立即执行的函数了
 参考：http://stackoverflow.com/questions/13341698/javascript-plus-sign-in-front-of-function-name
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

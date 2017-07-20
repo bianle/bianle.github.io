@@ -31,6 +31,7 @@ http://blog.csdn.net/wang379275614/article/details/43940259
 ```
 maven install -Dmaven.test.skip=true
 ```
+<<<<<<< HEAD
 
 ### 从模板构建项目
 ```
@@ -51,3 +52,5 @@ mvn -T 1C clean install ## 每个cpu内核1个线程
 mvn -T 1.5C clean install ## 每个cpu内核1.5个线程
 ```
 参考：https://cwiki.apache.org/confluence/display/MAVEN/Parallel+builds+in+Maven+3
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

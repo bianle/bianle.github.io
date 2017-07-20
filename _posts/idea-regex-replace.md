@@ -22,6 +22,7 @@ idea正则替换功能
 
 2. 查找串`([a-zA-Z]*).size\(\)>0`替换为`!$1.isEmpty()`
 3. 点击`Replace all`
+<<<<<<< HEAD
 
 
 ## 批量(2017-07-17 13:45:56)
@@ -59,3 +60,5 @@ public void set$1(Date $2){\n        if($2!=null){\n            this.$2=(Date)$2
 4. 点击`Find`然后`Replace`单个替换或者`all files`全部替换
 
 ![idea-reg](http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/17/idea-reg.gif)
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

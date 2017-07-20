@@ -34,5 +34,8 @@ storage: {
 }
 ```
 
+<<<<<<< HEAD
 ## github 
 https://github.com/Minwe/qn-store
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

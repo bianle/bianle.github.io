@@ -8,5 +8,9 @@ categories: 工具
 1. http://babun.github.io/ 下载安装包
 2. 解压执行`index.bat`安装到`%USERPROFILE%\.babun`目录win7对应 `C:\Users\<username>\.babun`目录
 3. babun shell /bin/zsh 设置默认shell
+<<<<<<< HEAD
 http://7xlbo3.com1.z0.glb.clouddn.com/2015%2F12%2F29%2Fbubun.png
+=======
+
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 

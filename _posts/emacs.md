@@ -5,6 +5,7 @@ tags: emacs
 categories: eamcs
 ---
 
+<<<<<<< HEAD
 ## Emacs 是什么
 
 >Emacs Makes A Computer Slow  
@@ -27,6 +28,9 @@ categories: eamcs
 >Exceptionally Mediocre Algorithm for Computer Scientists  
 >Easily Maintained with the Assistance of Chemical Solutions  
 >Eradication of Memory Accomplished with Complete Simplicity  
+=======
+>Emacs = Esc + Meta + Alt + Ctrl + Super
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 
 <!-- more -->
 
@@ -58,6 +62,7 @@ http://docs.huihoo.com/homepage/shredderyin/emacs_elisp.html
 
 ## org-mode
 
+<<<<<<< HEAD
 ### 快捷键（参考：http://blog.csdn.net/u014801157/article/details/24372485）
 M-LEFT/RIGHT	升级/降级当前标题，不允许有子标题的存在
 M-S-LEFT/RIGHT	升级/降级标题树，即标题树内的各级标题相应升/降级
@@ -81,6 +86,13 @@ http://stackoverflow.com/questions/6688075/permanently-summing-a-column-in-an-or
 
 ## dired
 [必備的 Dired 設定與簡易教學](https://kuanyui.github.io/2014/06/21/dired-tutorial-and-essential-configs/)
+=======
+### org-capture
+
+[使用Org Capture来收集灵感](http://www.jianshu.com/p/d308e17a48d1)  
+[使用org-capture记录密码](http://alpha-blog.wanglianghome.org/2010/08/20/append-table-row-with-org-capture/)  
+[Capture mode and Date Trees in org-mode](http://members.optusnet.com.au/~charles57/GTD/datetree.html)  
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 
 ## github上emacs相关
 
@@ -90,6 +102,7 @@ http://stackoverflow.com/questions/6688075/permanently-summing-a-column-in-an-or
 
 https://www.gnu.org/software/emacs/manual/html_node/elisp/Advising-Functions.html
 
+<<<<<<< HEAD
 ## emacs 替换掉^M
 从`windows`平台拷过来的文件带^M，如何去掉
 {% kbd M-x %} replace-string {% kbd ret %} {% kbd c-q %} {% kbd c-m %} {% kbd ret %} {% kbd ret %}
@@ -104,6 +117,8 @@ ln -s /usr/local/Cellar/emacs/24.3/Emacs.app /Applications/
 ```
 其中--cocoa选项为编译cocoa版本的emacs（即带有GUI），--srgb选项为启用sRGB颜色支持，--with-x选项用于启用对于X11环境的支持。
 
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 ## 其他
 
 [Emacs Power_ Can your editor do THIS](http://v.youku.com/v_show/id_XMjA4Mzg2MjAw.html)

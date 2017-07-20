@@ -11,6 +11,7 @@ categories: nginx
 SCRIPT_FILENAME
 配置问题
 
+<<<<<<< HEAD
 ## nginx添加ssl模块
 
 1. 进入nginx的sbin目录（这里是/opt/nginx-1.10.0/sbin）查看nginx当前配置
@@ -39,3 +40,5 @@ cp objs/nginx /opt/nginx-1.10.0/sbin/
 ```
 
 5. 执行第1步，验证一下
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

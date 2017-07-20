@@ -28,6 +28,7 @@ http://blog.csdn.net/hi_kevin/article/details/8983746
 ```
 
 但是，每隔一秒就略坑了，得写60次
+<<<<<<< HEAD
 
 ## 监测进程定时重启
 
@@ -64,3 +65,5 @@ ll /proc/31305/exe
 ```
 ![linux](http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/29/20161229130743.png)
 
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

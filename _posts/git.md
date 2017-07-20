@@ -1,10 +1,15 @@
 ---
+<<<<<<< HEAD
 title: "git相关"
+=======
+title: "git"
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 date: 2016-11-02 16:59:59
 tags: git 
 categories: git
 ---
 
+<<<<<<< HEAD
 git 相关技巧
 - 2017-03-22 16:37:53 add git clone 带子模块的项目
 <!-- more -->
@@ -22,10 +27,16 @@ git submodule update
 git submodule add <repository url> <local path>
 ```
 
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 ## 搭建git服务器
 
 http://developer.51cto.com/art/201507/483448.htm
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 ## Git Stash用法
 
 http://www.cppblog.com/deercoder/archive/2011/11/13/160007.aspx
@@ -83,6 +94,7 @@ make && make install
 rm /usr/bin/git
 ln -s /usr/local/bin/git /usr/bin/git
 ```
+<<<<<<< HEAD
 
 ## centos 6.5 升级git（2016-12-24 20:08:26补充）
 
@@ -106,3 +118,5 @@ sudo make install install-doc install-html
 参考：http://serverfault.com/questions/448814/yum-doesnt-install-latest-version-of-git-on-centos6
 
 
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

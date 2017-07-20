@@ -13,6 +13,7 @@ select @rowno:=@rowno+1 as rowno,t.* from test t,(select @rowno:=0) r
 
 ## mysql里int字段插入float会四舍五入
 
+<<<<<<< HEAD
 ## 关于索引（2016-12-28 15:15:20补充）
 
 1. 字符串类型索引字段，查询条件如果传数字，索引不生效
@@ -54,3 +55,6 @@ ORDER BY
 LIMIT 0,
  20
 ```
+=======
+
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90

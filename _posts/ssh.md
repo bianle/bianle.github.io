@@ -5,6 +5,7 @@ tags: ssh
 categories: ssh
 ---
 
+<<<<<<< HEAD
 {% ruby ssh|Secure Shell %}相关的内容
 <!-- more -->
 
@@ -53,6 +54,10 @@ chmod 600 bl/.ssh/auhorized_keys
 
 ### 参考
 
+=======
+## SSH无密码登入非root用户如何设置
+
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
 >1#:
 >大家好，由于近期要管理大批机器，我在设置SSH登入的采用公钥无密码登入。但是只有ROOT用户才有效果
 >客户机A 把id_rsa.pub内容拷贝到服务器主机B /root/.ssh/authorized_keys

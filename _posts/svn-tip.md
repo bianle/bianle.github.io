@@ -54,6 +54,7 @@ svn diff --diff-cmd=meld
 ![svn config](http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/14/20161214114317.png)
 
 
+<<<<<<< HEAD
 ## centos svnserve
 
 yum install -y subversion
@@ -64,3 +65,5 @@ mkdir /var/svn
 svnadmin create /var/svn/repo0
 
 http://www.centoscn.com/CentosServer/ftp/2014/0306/2505.html
+=======
+>>>>>>> 6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90
