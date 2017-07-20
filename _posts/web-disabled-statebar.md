@@ -1,5 +1,5 @@
 title: 禁止状态栏显示链接
-tags: [ie,状态栏]
+tags: [ie]
 categories: web前端
 date: 2013-01-10 18:09:17
 ---

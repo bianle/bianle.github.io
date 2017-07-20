@@ -1,0 +1,37 @@
+---
+title: "tomcat+reids+session共享"
+date: 2017-01-13 13:02:31
+tags: tomcat
+categories: java
+---
+
+
+## 拷贝jar包到tomcat的lib目录
+
+1. tomcat-redis-session-manager-VERSION.jar [github](https://github.com/jcoleman/tomcat-redis-session-manager) [百度云（密码bian）](https://pan.baidu.com/s/1c2ikhyg)
+2. jedis-2.5.2.jar [百度云（密码bian）](https://pan.baidu.com/s/1dFh2f0d)
+3. commons-pool2-2.2.jar [百度云（密码bian）](https://pan.baidu.com/s/1sltUPit)
+
+## 修改context.xml配置文件
+
+```
+<Valve className="com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve" />
+<Manager className="com.orangefunction.tomcat.redissessions.RedisSessionManager"
+         host="localhost" <!-- optional: defaults to "localhost" -->
+         port="6379" <!-- optional: defaults to "6379" -->
+         database="0" <!-- optional: defaults to "0" -->
+         maxInactiveInterval="60" <!-- optional: defaults to "60" (in seconds) -->
+         sessionPersistPolicies="PERSIST_POLICY_1,PERSIST_POLICY_2,.." <!-- optional -->
+         sentinelMaster="SentinelMasterName" <!-- optional -->
+         sentinels="sentinel-host-1:port,sentinel-host-2:port,.." <!-- optional --> />
+```
+
+示例：
+
+```
+<Valve className="com.radiadesign.catalina.session.RedisSessionHandlerValve" />
+<Manager className="com.radiadesign.catalina.session.RedisSessionManager"
+    host="10.1.0.6" port="6379" password="pwd" database="11" maxInactiveInterval="60"
+/>
+```
+

@@ -1,9 +1,6 @@
 title: 'scrollLeft,scrollTop等等详解'
-tags:
-  - html
-  - web
-categories:
-  - web前端
+tags: [web]
+categories: web
 date: 2013-01-10 15:39:00
 ---
 一张图

@@ -1,8 +1,6 @@
 title: js回调函数
-tags:
-  - js
-categories:
-  - web前端
+tags: js
+categories: web前端
 date: 2012-06-20 10:26:00
 ---
 ```
