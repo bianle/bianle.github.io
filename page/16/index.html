@@ -345,114 +345,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-sql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/25/db-oracle-sql/" itemprop="url">oracle sql整理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="oracle-分页查询"><a class="header-anchor" href="#oracle-分页查询"> </a>oracle 分页查询</h1>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ( <span class="keyword">SELECT</span> A.*, <span class="keyword">ROWNUM</span> RN <span class="keyword">FROM</span> ([<span class="keyword">sql</span>语句]) A <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= [lineSize*currentPage] ) <span class="keyword">WHERE</span> RN &gt;=[((currentPage<span class="number">-1</span>)*lineSize+<span class="number">1</span>)];</div></pre></td></tr></table></figure>
-<figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line"><span class="keyword">WITH</span> t <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ‘remoteAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,protocol:HTTP/<span class="number">1.1</span>,localAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,mac:<span class="number">44</span>-<span class="number">37</span>-E6-<span class="number">86</span>-C4-<span class="number">6</span>A,Cookie:%<span class="number">2</span>Fclient6%<span class="number">2</span>F=<span class="number">1361081051064</span>;logoin=<span class="number">1361081051064</span>;’ id</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> dual),</div><div class="line"></div><div class="line">        t1 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> REPLACE(id, ‘logoin=’, ‘logoin:’) id1 <span class="keyword">FROM</span> t),</div><div class="line"></div><div class="line">        t2 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ’<span class="number">1</span>′ num0,</div><div class="line"></div><div class="line">                 rownum num1,</div><div class="line"></div><div class="line">                 regexp_substr(id1, ‘[^,|;|:]+’, <span class="number">1</span>, LEVEL) t1a</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> t1</div><div class="line"></div><div class="line">          CONNECT <span class="keyword">BY</span> LEVEL &lt;= regexp_count(id1, ‘,’) + regexp_count(id1, ‘;’) +</div><div class="line"></div><div class="line">                     regexp_count(id1, ‘:’))</div><div class="line"></div><div class="line">        <span class="keyword">SELECT</span> *</div><div class="line"></div><div class="line">          <span class="keyword">FROM</span> t2 pivot(MAX(t1a) <span class="keyword">FOR</span> num1 <span class="keyword">IN</span>(</div><div class="line"></div><div class="line">                                             </div><div class="line">                                             <span class="number">2</span> remoteaddr,</div><div class="line"></div><div class="line">                                             <span class="number">4</span> protocol,</div><div class="line"></div><div class="line">                                             <span class="number">6</span> localaddr,</div><div class="line"></div><div class="line">                                             <span class="number">8</span> mac,</div><div class="line"></div><div class="line">                                             <span class="number">10</span> cookie,</div><div class="line"></div><div class="line"><span class="number">12</span> logoin))</div></pre></td></tr></table></figure>
-<h1 id="oracle-正则表达式"><a class="header-anchor" href="#oracle-正则表达式"> </a>oracle 正则表达式</h1>
-<p>关键字<code>REGEXP_SUBSTR</code></p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><div class="line">SELECT REGEXP_SUBSTR(‘在#<span class="number">12</span>d’, ‘#<span class="string">[[:digit:]]</span>+’) FROM DUAL</div></pre></td></tr></table></figure>
-<p>参考：<a href="http://www.jb51.net/article/31227.htm" target="_blank" rel="external">http://www.jb51.net/article/31227.htm</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-trunc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1152,6 +1044,136 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-ie-css-limit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">IE中样式表、选择符的数量限制记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
+<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
+<blockquote>
+<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 4095 rules</li>
+<li>A sheet may @import up to 31 sheets</li>
+<li>@import nesting supports up to 4 levels deep
+Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>There’s a simple test page for the limits here.</p>
+</blockquote>
+<blockquote>
+<p>-Eric</p>
+</blockquote>
+<blockquote>
+<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 65534 rules</li>
+<li>A document may use up to 4095 stylesheets</li>
+<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
+</ul>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-num-reg/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1270,136 +1292,6 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
 </li>
 </ol>
 </section>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-ie-css-limit/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">IE中样式表、选择符的数量限制记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
-<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
-<blockquote>
-<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 4095 rules</li>
-<li>A sheet may @import up to 31 sheets</li>
-<li>@import nesting supports up to 4 levels deep
-Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>There’s a simple test page for the limits here.</p>
-</blockquote>
-<blockquote>
-<p>-Eric</p>
-</blockquote>
-<blockquote>
-<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 65534 rules</li>
-<li>A document may use up to 4095 stylesheets</li>
-<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
-</ul>
-</blockquote>
 
           
         
@@ -1652,6 +1544,131 @@ Some folks have wondered about the math that underlies these numbers. The root o
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/life-learn-from-prison-break/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/03/life-learn-from-prison-break/" itemprop="url">一个男人从越狱里的人物身上应该学到什么</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>MichaelScofield
+头脑。我理解的头脑，应该是智慧+冷静。作为这部戏的主角，导演很慷慨的把两点品质都赋予了Michael，他的智慧和冷静是贯穿始终的，近乎完美。</li>
+<li>LincolnBurrows
+勇气。在整部戏中，Lincoln应该是最有男子汉气质的人了。他明知有圈套还是要去救出儿子；当监狱暴乱他遭遇T-Bag一伙时，在没有退路的情况下勇敢的搏斗，毫无惧色。
+如果你失去了财富，那你失去了一点；如果你失去了名誉，那你失去了很多；如果你失去了勇气，那你把一切都失去了。</li>
+<li>BenjaminFranklin
+责任。作为一名美国军人，当他发现虐囚事件时，勇敢的站出来揭露，结果被迫害（当然在中国，不要学他这一点，否则会死的很难看）；当他为了生计去给别人开偷来的卡车被抓时，为了不让妻子担心和维护在女儿心中的形象，扔谎称在服役，而独自承受坐牢的痛苦；为了和妻女团聚，冒着极大的风险越狱。
+有责任感的男人是值得信赖的，朋友也不会抛弃他，看看那些帮助他妻子和女儿逃亡的黑人铁哥们吧。</li>
+<li>JohnAbruzzi
+尊严。因为那句著名的临终遗言：“我只向上帝下跪，但他不在这里。”当你赢得了尊严，也就赢得了别人的尊重，包括你的对手。</li>
+<li>DavidApolskis
+忠诚。虽然开始David处于对鸡奸的恐惧和汉堡的诱惑，曾经出卖过Michael他们，但当时他并不是他们中的一员，而且Michael警告T-Bag不要打他的主意这件事情，他似乎也并不知道。
+在最后，当他被FBI抓获时，他没有背叛自己的朋友，毅然的选择了忠诚。
+我们都看到了FBI给他开出的价码：不追究他的越狱行为，并送他到一所高级监狱去服刑。的确如果他供出Michael他们，这种“重大立功表现”是很有可能得到这些的。
+我想当他敲开那个同车的漂亮姑娘的家门时，他一定知道这对他意味着什么，毕竟他一共只被判了2年的刑期。</li>
+<li>TheodoreBagwell
+信念。作为最不受欢迎的一个同伴，他一开始就是被越狱小组排斥的，他是以差点杀死JohnAbruzzi为代价才保住了这张票，而且刚逃出监狱，就失去了一只手。
+两次失去左手的是他，两次得到巨款也是他，别人都有朋友、家人帮忙或陪伴，只有他是孤独的，但他就凭着求生的信念，勇敢的活了下来。</li>
+<li>FernandoSucre
+浪漫。作为一个只剩下16个月刑期的犯人，他越狱的理由竟然是怀孕的女友要和别人结婚。当他骑着朋友的大哈雷去拉斯维加斯准备在婚礼上把女友抢回来时，每个女人也许都在想：我要是他的女友该多幸福啊。</li>
+<li>SaraTancredi
+敬业。当监狱开始暴乱的时候，她不顾警卫队长的劝告，执意进去抢救一个中暑的犯人；当生命垂危的JohnAbruzzi被送往直升飞机时，是她陪在旁边焦急但是很不失冷静的不断呼喊：“John，坚持住，呼吸，坚持住，你会没事的。”在那一刻，我觉得这个恶贯满盈的犯人更象她的亲人，那也是Sara最美的时候。大家可以去看看，在第1季第13集一开始，那一刻，Sara就象一个天使。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -1701,7 +1718,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">263</span>
+                <span class="site-state-item-count">262</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1712,7 +1729,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1723,7 +1740,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">166</span>
+                <span class="site-state-item-count">167</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
