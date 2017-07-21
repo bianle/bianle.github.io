@@ -345,6 +345,142 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/02/maven/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/02/maven/" itemprop="url">maven</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="国内maven镜像"><a class="header-anchor" href="#国内maven镜像"> </a>国内maven镜像</h2>
+<p><a href="http://nexus.hsweb.me/content/groups/public/" target="_blank" rel="external">http://nexus.hsweb.me/content/groups/public/</a></p>
+<p><a href="http://maven.aliyun.com/nexus/content/groups/public/" target="_blank" rel="external">http://maven.aliyun.com/nexus/content/groups/public/</a></p>
+<p><a href="http://mvnrepo.tae.taobao.com/content/groups/public/" target="_blank" rel="external">http://mvnrepo.tae.taobao.com/content/groups/public/</a></p>
+<p><a href="http://maven.mofasuidao.xyz/nexus/content/groups/public/" target="_blank" rel="external">http://maven.mofasuidao.xyz/nexus/content/groups/public/</a></p>
+<h2 id="nexus环境搭建及简单介绍"><a class="header-anchor" href="#nexus环境搭建及简单介绍"> </a>Nexus环境搭建及简单介绍</h2>
+<p><a href="http://blog.csdn.net/wang379275614/article/details/43940259" target="_blank" rel="external">http://blog.csdn.net/wang379275614/article/details/43940259</a></p>
+<p>默认密码admin/admin123</p>
+<p><a href="http://blog.csdn.net/longxia1987/article/details/8902830" target="_blank" rel="external">Maven nexus 安装nexus : wrapper | OpenSCManager failed - 拒绝访问。 (0x5)</a></p>
+<p><a href="http://aijezdm915.iteye.com/blog/1335025" target="_blank" rel="external">maven Nexus入门指南（图文）</a></p>
+<h2 id="常用命令"><a class="header-anchor" href="#常用命令"> </a>常用命令</h2>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">maven install -Dmaven<span class="selector-class">.test</span><span class="selector-class">.skip</span>=true</div></pre></td></tr></table></figure>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<h3 id="从模板构建项目"><a class="header-anchor" href="#从模板构建项目"> </a>从模板构建项目</h3>
+<figure class="highlight nix"><table><tr><td class="code"><pre><div class="line">Projects mvn archetype:generate <span class="attr">-DgroupId=&lt;groupId&gt;</span> <span class="attr">-DartifactId=&lt;artifactId&gt;</span> <span class="attr">-DarchetypeGroupId=&lt;archetypeGroupId&gt;</span> <span class="attr">-DarchetypeArtifactId=&lt;archetypeArtifactId&gt;</span> <span class="attr">-DarchetypeVersion=&lt;archetypeVersion&gt;</span> -Dfile.<span class="attr">encoding=UTF-8</span> <span class="attr">-DarchetypeCatalog=internal</span></div><div class="line"></div><div class="line">mvn archetype:generate <span class="attr">-DgroupId=lu.panpan</span> <span class="attr">-DartifactId=yhb</span> <span class="attr">-DarchetypeGroupId=org.gy.archetype</span> <span class="attr">-DarchetypeArtifactId=gy-archetype-parent</span> <span class="attr">-DarchetypeVersion=1.0-SNAPSHOT</span> -Dfile.<span class="attr">encoding=UTF-8</span> <span class="attr">-DarchetypeCatalog=internal</span></div></pre></td></tr></table></figure>
+<h2 id="参数"><a class="header-anchor" href="#参数"> </a>参数</h2>
+<h3 id="t-多线程"><a class="header-anchor" href="#t-多线程"> </a>-T 多线程</h3>
+<p>maven3.x支持并发</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">mvn -T <span class="number">4</span> clean <span class="keyword">install</span> <span class="comment">## 4线程并发构建</span></div><div class="line">mvn -T <span class="number">1</span>C clean <span class="keyword">install</span> <span class="comment">## 每个cpu内核1个线程</span></div><div class="line">mvn -T <span class="number">1.5</span>C clean <span class="keyword">install</span> <span class="comment">## 每个cpu内核1.5个线程</span></div></pre></td></tr></table></figure>
+<h1 id="参考：https-cwiki-apache-org-confluence-display-maven-parallel-builds-in-maven-3"><a class="header-anchor" href="#参考：https-cwiki-apache-org-confluence-display-maven-parallel-builds-in-maven-3"> </a>参考：<a href="https://cwiki.apache.org/confluence/display/MAVEN/Parallel+builds+in+Maven+3" target="_blank" rel="external">https://cwiki.apache.org/confluence/display/MAVEN/Parallel+builds+in+Maven+3</a></h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/02/php/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -519,6 +655,7 @@
 <p>配置文件里
 SCRIPT_FILENAME
 配置问题</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <h2 id="nginx添加ssl模块"><a class="header-anchor" href="#nginx添加ssl模块"> </a>nginx添加ssl模块</h2>
 <ol>
 <li>进入nginx的sbin目录（这里是/opt/nginx-1.10.0/sbin）查看nginx当前配置</li>
@@ -538,8 +675,24 @@ SCRIPT_FILENAME
 </ol>
 <figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">cp objs<span class="regexp">/nginx /</span>opt<span class="regexp">/nginx-1.10.0/</span>sbin<span class="regexp">/</span></div></pre></td></tr></table></figure>
 <ol start="5">
-<li>执行第1步，验证一下</li>
+<li>执行第1步，验证一下
+=======</li>
 </ol>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>6db12a9147e2e19ad77c1dd9325ac3b6c6cfcd90</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 
           
         
@@ -1222,6 +1375,8 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
 <p><a href="http://www.cnblogs.com/hitwtx/archive/2012/02/13/2349752.html" target="_blank" rel="external">http://www.cnblogs.com/hitwtx/archive/2012/02/13/2349752.html</a></p>
 <h2 id="搭建dns服务器"><a class="header-anchor" href="#搭建dns服务器"> </a>搭建dns服务器</h2>
 <p><a href="http://jingyan.baidu.com/article/454316ab56277df7a6c03a6a.html" target="_blank" rel="external">http://jingyan.baidu.com/article/454316ab56277df7a6c03a6a.html</a></p>
+<h2 id="centos服务器磁盘跑满了-如何处理"><a class="header-anchor" href="#centos服务器磁盘跑满了-如何处理"> </a>CentOS服务器磁盘跑满了,如何处理</h2>
+<p><a href="http://www.centoscn.com/CentOS/Intermediate/2014/0727/3361.html" target="_blank" rel="external">http://www.centoscn.com/CentOS/Intermediate/2014/0727/3361.html</a></p>
 
           
         
@@ -1369,136 +1524,6 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/01/java-tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/01/java-tips/" itemprop="url">java小提示</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ul>
-<li>
-<p>非静态方法不要修改静态变量
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/01/20161101151208.png" alt="sonar"><span class="image-caption">sonar</span></p>
-</li>
-<li>
-<p>判断集合不为空isEmpty()</p>
-</li>
-</ul>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">productList</span> == null||productList.size()==<span class="number">0</span></div><div class="line"></div><div class="line"><span class="attr">productList</span> == null||productList.isEmpty()</div></pre></td></tr></table></figure>
-<ul>
-<li>
-<p>new BigDecimal(0.1) -&gt; BigDecimal.valueOf(0.1)</p>
-</li>
-<li>
-<p>p.getTotalPerformancePay().equals(BigDecimal.ZERO)</p>
-</li>
-<li>
-<p>注意运算符的优先级</p>
-</li>
-</ul>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">response.setMsg(<span class="string">"未查询到商品价格信息："</span> + rst == <span class="keyword">null</span> ? <span class="keyword">null</span> : rst.getErrorMessage());</div></pre></td></tr></table></figure>
-<blockquote>
-<p>Condition ‘“未查询到商品价格信息：” + rst == null’ is always ‘false’</p>
-</blockquote>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">response.setMsg(<span class="string">"未查询到商品价格信息："</span> + (rst == <span class="keyword">null</span> ? <span class="keyword">null</span> : rst.getErrorMessage()));</div></pre></td></tr></table></figure>
-<h2 id="java数组为什么没有泛型"><a class="header-anchor" href="#java数组为什么没有泛型"> </a>java数组为什么没有泛型</h2>
-<p><a href="http://blog.csdn.net/orzlzro/article/details/7017435" target="_blank" rel="external">http://blog.csdn.net/orzlzro/article/details/7017435</a>
-<a href="http://docs.oracle.com/javase/tutorial/extra/generics/fineprint.html" target="_blank" rel="external">http://docs.oracle.com/javase/tutorial/extra/generics/fineprint.html</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1548,7 +1573,7 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">262</span>
+                <span class="site-state-item-count">263</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1559,7 +1584,7 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1570,7 +1595,7 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">167</span>
+                <span class="site-state-item-count">166</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

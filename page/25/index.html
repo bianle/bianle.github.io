@@ -345,6 +345,118 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-ubuntu-telnet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-telnet/" itemprop="url">如何启动ubuntu下的telnet服务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>以一般用户登录系统
+执行命令 sudo apt-get install xinetd
+系统提示输入用户密码，输入密码后安装xinet软件包
+执行命令 sudo apt-get install telnetd
+系统提示输入用户密码，输入密码后安装telnet软件包
+执行命令 sudo touch /etc/xinetd.d/telnet新
+建一个文件内容如下，并保存
+执行命令 sudo nano -w /etc/xinetd.d/telnet</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><div class="line"><span class="comment"># default: on</span></div><div class="line"></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \</span></div><div class="line"></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.</span></div><div class="line"></div><div class="line">service telnet</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">disable = no</div><div class="line"></div><div class="line">flags = REUSE</div><div class="line"></div><div class="line">socket_type = stream</div><div class="line"></div><div class="line">wait = no</div><div class="line"></div><div class="line">user = root</div><div class="line"></div><div class="line">server = /usr/sbin/in.telnetd</div><div class="line"></div><div class="line">log_on_failure += USERID</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行如下命令：sudo nano -w /etc/xinetd.conf 并加入如下内容：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">instances</span> = <span class="number">60</span></div><div class="line"><span class="attr">log_type</span> = SYSLOG authpriv</div><div class="line"></div><div class="line"><span class="attr">log_on_success</span> = HOST PID</div><div class="line"></div><div class="line"><span class="attr">log_on_failure</span> = HOST</div><div class="line"></div><div class="line"><span class="attr">cps</span> = <span class="number">25</span> <span class="number">30</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-nano-vim-vi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -714,6 +826,114 @@ wq！：强制保存退出
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/20/web-js-call/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/06/20/web-js-call/" itemprop="url">js call</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript"></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyObj</span><span class="params">()</span></span>&#123;  &#125;</div><div class="line"></div><div class="line">MyObj.prototype.myMethod = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">alert(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">new</span> MyObj().myMethod(<span class="number">1</span>);</div><div class="line"></div><div class="line">MyObj.prototype.myMethod(<span class="number">1</span>);</div><div class="line"></div><div class="line">MyObj.prototype.myMethod.call(<span class="number">1</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>运行结果是：</p>
+<blockquote>
+<p>[object Object]
+[object Object]
+1</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/20/web-js-lightbox/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -875,114 +1095,6 @@ wq！：强制保存退出
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"&lt;a href="</span><span class="attr">http:</span>//<span class="attr">www.w3.org</span>/<span class="attr">1999</span>/<span class="attr">xhtml</span>"&gt;</span>http://www.w3.org/1999/xhtml<span class="tag">&lt;/<span class="name">a</span>&gt;</span>"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">javascript</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line"><span class="keyword">var</span> intX;</div><div class="line"></div><div class="line"><span class="keyword">var</span> intY;</div><div class="line"></div><div class="line"><span class="keyword">var</span> blnDrag = <span class="literal">false</span>; <span class="comment">//鼠标是否已经按下</span></div><div class="line"></div><div class="line"><span class="comment">//鼠标按下</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MouseDown</span>(<span class="params">event,id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//鼠标按下</span></div><div class="line"></div><div class="line">blnDrag = <span class="literal">true</span>;</div><div class="line"></div><div class="line">intX = event.clientX - GetDiv(id).style.pixelLeft;</div><div class="line"></div><div class="line">intY = event.clientY - GetDiv(id).style.pixelTop;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//鼠标拖动</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">DragDiv</span>(<span class="params">event,id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//判断鼠标是否已经按下</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> (!blnDrag) &#123;</div><div class="line"></div><div class="line"><span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line"></div><div class="line">GetDiv(id).style.pixelLeft = event.clientX - intX;</div><div class="line"></div><div class="line">GetDiv(id).style.pixelTop = event.clientY - intY;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//鼠标松开时</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mouseUp</span>(<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//鼠标没有按下</span></div><div class="line"></div><div class="line">blnDrag = <span class="literal">false</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//得到DIV</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">GetDiv</span>(<span class="params">id</span>) </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">return</span> <span class="built_in">document</span>.getElementById(id);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span> &gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"form1"</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span> <span class="attr">style</span>=<span class="string">"CURSOR: move; POSITION: absolute;  WIDTH: 140px; HEIGHT: 112px; background-color:Red"</span>     <span class="attr">onmousemove</span>=<span class="string">"DragDiv(event,this.id)"</span>     <span class="attr">onmousedown</span>=<span class="string">"MouseDown(event,this.id)"</span>     <span class="attr">onmouseup</span>=<span class="string">"mouseUp()"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/20/web-js-call/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/06/20/web-js-call/" itemprop="url">js call</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript"></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyObj</span><span class="params">()</span></span>&#123;  &#125;</div><div class="line"></div><div class="line">MyObj.prototype.myMethod = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">alert(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">new</span> MyObj().myMethod(<span class="number">1</span>);</div><div class="line"></div><div class="line">MyObj.prototype.myMethod(<span class="number">1</span>);</div><div class="line"></div><div class="line">MyObj.prototype.myMethod.call(<span class="number">1</span>);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>运行结果是：</p>
-<blockquote>
-<p>[object Object]
-[object Object]
-1</p>
-</blockquote>
 
           
         
@@ -1596,113 +1708,6 @@ wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloa
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/04/web-get-swf-object-in-firefox/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/06/04/web-get-swf-object-in-firefox/" itemprop="url">在Firefox中如何获取网页里的SWF对象</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我们经常会碰到flash和网页中的js脚本交互的的情况，一般的flash中使用ExternalInterface就可以让as脚本和html容器中的js脚本互相调用。但由于不同浏览器对DOM解析不同，导致有时候无法获取网页中的SWF对象。
-下面是网页中插入flash的代码，应该再熟悉不过了：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">classid</span>=<span class="string">"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"</span></span></div><div class="line"> <span class="attr">codebase</span>=<span class="string">"http://download.macromedia.com/pub/shockwave/cabs/</span></div><div class="line"> flash/swflash.cab#version=7,0,19,0" <span class="attr">name</span>=<span class="string">"flashrek"</span> <span class="attr">width</span>=<span class="string">"285"</span> <span class="attr">height</span>=<span class="string">"200"</span> <span class="attr">id</span>=<span class="string">"flashrek"</span>&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"movie"</span> <span class="attr">value</span>=<span class="string">"flashrek.swf"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"quality"</span> <span class="attr">value</span>=<span class="string">"high"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">embed</span> <span class="attr">src</span>=<span class="string">"flashrek.swf"</span> <span class="attr">width</span>=<span class="string">"285"</span> <span class="attr">height</span>=<span class="string">"200"</span> <span class="attr">quality</span>=<span class="string">"high"</span></span></div><div class="line"> <span class="attr">pluginspage</span>=<span class="string">http://www.macromedia.com/go/getflashplayer</span> <span class="attr">type</span>=<span class="string">"application/x-shockwave-flash"</span>&gt;<span class="tag">&lt;/<span class="name">embed</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>如果用document.getElementById方法来获取flash对象的话，IE中正常而firefox中却不行。这主要是firefox与IE解析DOM的差异导致的，下面给出一种解决方法，同时满足不同浏览器的需求：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getSWF</span>(<span class="params">name</span>)</span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">var</span> e=<span class="built_in">document</span>.getElementById(name);</div><div class="line"></div><div class="line"><span class="keyword">return</span> (navigator.appName.indexOf(<span class="string">"Microsoft"</span>) != <span class="number">-1</span>)?e:e.</div><div class="line"> getElementsByTagName(<span class="string">"embed"</span>)[<span class="number">0</span>];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>使用方法：getSWF(“flashrek”)。其中的参数是插入时设置的flash的ID。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1752,7 +1757,7 @@ wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloa
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">262</span>
+                <span class="site-state-item-count">263</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1763,7 +1768,7 @@ wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloa
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1774,7 +1779,7 @@ wget -t0 -c -nH -x -np -b -m -P /home/sunny/NOD32view/  <a href="http://downloa
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">167</span>
+                <span class="site-state-item-count">166</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
