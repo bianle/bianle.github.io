@@ -24,3 +24,5 @@ http://www.cnblogs.com/hitwtx/archive/2012/02/13/2349752.html
 
 http://jingyan.baidu.com/article/454316ab56277df7a6c03a6a.html
 
+## CentOS服务器磁盘跑满了,如何处理
+http://www.centoscn.com/CentOS/Intermediate/2014/0727/3361.html
