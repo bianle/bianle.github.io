@@ -126,13 +126,8 @@ wget http://mirrors.hust.edu.cn/apache/lucene/solr/6.3.0/solr-6.3.0.tgztar zxf s
 下载历史版本在这http://archive.apache.org/dist/lucene/solr/
  创建solr用户并以solr用户启动solr
 useradd -M -s /bin">
-<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/19/20170719160636.png">
 <meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/19/facetedsearch.jpg">
-<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162702.png">
-<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162750.png">
-<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif">
-<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif">
-<meta property="og:updated_time" content="2017-07-21T09:54:46.000Z">
+<meta property="og:updated_time" content="2017-07-24T13:07:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="solr学习笔记草稿">
 <meta name="twitter:description" content="1. solr 安装
@@ -141,7 +136,7 @@ wget http://mirrors.hust.edu.cn/apache/lucene/solr/6.3.0/solr-6.3.0.tgztar zxf s
 下载历史版本在这http://archive.apache.org/dist/lucene/solr/
  创建solr用户并以solr用户启动solr
 useradd -M -s /bin">
-<meta name="twitter:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/19/20170719160636.png">
+<meta name="twitter:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/19/facetedsearch.jpg">
 
 
 
@@ -454,15 +449,7 @@ useradd -M -s /bin">
 <h2 id="2-主要配置文件"><a class="header-anchor" href="#2-主要配置文件"> </a>2. 主要配置文件</h2>
 <h3 id="schema-xml-5以后改为managed-schema"><a class="header-anchor" href="#schema-xml-5以后改为managed-schema"> </a>schema.xml(5以后改为managed-schema)</h3>
 <p>field节点
-required属性默认为false
-schema定义doc结构
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/19/20170719160636.png" alt="solr-schema"><span class="image-caption">solr-schema</span>
-schema配置文件主要由三部分构成</p>
-<ol>
-<li>fields 元素包含 field dynamicField</li>
-<li>其他元素 uniqueKey copyField</li>
-<li>types元素定义solr能够处理的日期、数字、和文本字段</li>
-</ol>
+required属性默认为false</p>
 <h2 id="fields-字段"><a class="header-anchor" href="#fields-字段"> </a><fields>字段</fields></h2>
 <h3 id="field-一般字段"><a class="header-anchor" href="#field-一般字段"> </a><field>一般字段</field></h3>
 <h3 id="dynamicfield-动态字段"><a class="header-anchor" href="#dynamicfield-动态字段"> </a><dynamicfield>动态字段</dynamicfield></h3>
@@ -557,62 +544,6 @@ Sat Jan 01 00:00:00 CST 1</p>
 <h2 id="spatial参数"><a class="header-anchor" href="#spatial参数"> </a>[ ] spatial参数</h2>
 <h2 id="spellcheck-拼写检查"><a class="header-anchor" href="#spellcheck-拼写检查"> </a>[ ] spellcheck 拼写检查</h2>
 <h2 id="solr的检索运算符"><a class="header-anchor" href="#solr的检索运算符"> </a>[ ] Solr的检索运算符</h2>
-<h2 id="q-和-fq-的区别"><a class="header-anchor" href="#q-和-fq-的区别"> </a>q 和 fq 的区别</h2>
-<p>q 一般是用户输入的关键字如<code>keyword:海尔空调</code>
-fq 一般是其他过滤条件如<code>category:电器</code> <code>onsale:1</code></p>
-<p>q参数只有1个
-fq参数可以有多个如：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器&amp;fq=<span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
-<p>结果等价于</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器 AND <span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
-<p>但是缓存不同上边的写法solr会分别缓存<code>category:电器</code>和<code>onsale:1</code>的结果</p>
-<p>关闭缓存:
-fq={!cache false}id:111</p>
-<p>过滤顺序：</p>
-<p>添加执行成本，执行成本越低越先执行,成本大于等于100的过滤器被solr视为后置过滤器</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">1</span>&#125;category:电器</div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">2</span>&#125;<span class="literal">on</span>sale:<span class="number">1</span></div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">100</span>&#125;star:[<span class="number">5</span> TO <span class="number">9</span>]</div></pre></td></tr></table></figure>
-<p>q为搜索条件影响搜索结果评分
-fq为筛选查询，只搜索q的查询结果，不会影响搜索结果的评分</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162702.png" alt="solr"><span class="image-caption">solr</span></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162750.png" alt="solr"><span class="image-caption">solr</span></p>
-<h2 id="q"><a class="header-anchor" href="#q"> </a>q</h2>
-<p>q=keyword:iphone 4s
-q=keyword:&quot;iphone 4s&quot;
-q=keyword:(iphone 4s)</p>
-<p>df:keyword</p>
-<p>必备词
-海尔 + 空调
-海尔 AND 空调
-海尔 &amp;&amp; 空调
-+海尔 +空调
-海尔 空调 （默认运算符是AND时）</p>
-<p>可选词</p>
-<p>海尔 OR 空调
-海尔 || 空调
-海尔 空调 （默认运算符是OR时）</p>
-<p>词项临近度</p>
-<p>“海尔空调”~3
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
-<p>字符临近度</p>
-<p>海尔
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
-<p>排除词项
-keyword:(海尔 -兄弟)
-keyword:(海尔 NOT 兄弟)</p>
-<p>区间搜索
-age:[0 TO 100] 闭区间如果字段类型为整数表示1到99
-age:{0 TO 100} 开区间如果字段类型为整数表示0到100</p>
-<p>通配符搜索</p>
-<ul>
-<li>1个或多个
-? 1个</li>
-</ul>
-<p>权重表达式
-海尔空调^10</p>
-<p>特殊字符转义
-±&amp;&amp;||!(){}[]^&quot;~*?:/
-我&amp;&amp;你
-我&amp;&amp;你</p>
 <p>eDisMax 扩展析取最大化查询解析器</p>
 <p>qf查询字段
 q=海尔&amp;qf=cmmdtyName^10 categoryName</p>
@@ -715,6 +646,10 @@ Ivy is not available
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/07/24/solr-study2/" rel="prev" title="solr学习笔记 - 2)schema配置文件">
+                solr学习笔记 - 2)schema配置文件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -810,7 +745,7 @@ Ivy is not available
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">264</span>
+                <span class="site-state-item-count">266</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -957,7 +892,7 @@ Ivy is not available
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-solr-安装"><span class="nav-number">1.</span> <span class="nav-text"> 1. solr 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装包"><span class="nav-number">1.1.</span> <span class="nav-text"> 下载安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建solr用户并以solr用户启动solr"><span class="nav-number">1.2.</span> <span class="nav-text"> 创建solr用户并以solr用户启动solr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的启动参数"><span class="nav-number">1.3.</span> <span class="nav-text"> 常用的启动参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-主要配置文件"><span class="nav-number">2.</span> <span class="nav-text"> 2. 主要配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#schema-xml-5以后改为managed-schema"><span class="nav-number">2.1.</span> <span class="nav-text"> schema.xml(5以后改为managed-schema)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fields-字段"><span class="nav-number">3.</span> <span class="nav-text"> 字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#field-一般字段"><span class="nav-number">3.1.</span> <span class="nav-text"> 一般字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dynamicfield-动态字段"><span class="nav-number">3.2.</span> <span class="nav-text"> 动态字段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copyfield-复制字段"><span class="nav-number">4.</span> <span class="nav-text"> 复制字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uniquekey-唯一键字段"><span class="nav-number">5.</span> <span class="nav-text"> 唯一键字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#types-字段类型"><span class="nav-number">6.</span> <span class="nav-text"> 字段类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fieldtype-字段类型"><span class="nav-number">6.1.</span> <span class="nav-text"> 字段类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串字段"><span class="nav-number">6.1.1.</span> <span class="nav-text"> 字符串字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期字段"><span class="nav-number">6.1.2.</span> <span class="nav-text"> 日期字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值字段"><span class="nav-number">6.1.3.</span> <span class="nav-text"> 数值字段</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-solr控制台"><span class="nav-number">7.</span> <span class="nav-text"> 3. solr控制台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solrj"><span class="nav-number">8.</span> <span class="nav-text"> solrj</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#局部更新"><span class="nav-number">8.1.</span> <span class="nav-text"> 局部更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#facet-search-分面搜索"><span class="nav-number">9.</span> <span class="nav-text"> facet search 分面搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr-cloud"><span class="nav-number">10.</span> <span class="nav-text"> solr cloud</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr数据导入"><span class="nav-number">11.</span> <span class="nav-text"> solr数据导入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solr-数据库导入配置文件可以定义多个entity"><span class="nav-number">11.1.</span> <span class="nav-text"> solr 数据库导入配置文件可以定义多个entity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solr-导入如果不指定entity参数则默认导入全部entity"><span class="nav-number">11.2.</span> <span class="nav-text"> solr 导入如果不指定entity参数则默认导入全部entity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solr-导入http请求get和post实现不一致-猜测-post是同步的-get是异步的"><span class="nav-number">11.3.</span> <span class="nav-text"> solr 导入http请求get和post实现不一致（猜测）,post是同步的，get是异步的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr查询器"><span class="nav-number">12.</span> <span class="nav-text"> solr查询器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr常用查询参数"><span class="nav-number">13.</span> <span class="nav-text"> solr常用查询参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q-查询条件表达式"><span class="nav-number">13.1.</span> <span class="nav-text"> q:查询条件表达式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"><span class="nav-number">13.2.</span> <span class="nav-text"> fq(filter query):过滤查询表达式,对查询结果过滤,在分页之前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-排序表达式"><span class="nav-number">13.3.</span> <span class="nav-text"> sort:排序表达式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start-rows-分页参数"><span class="nav-number">13.4.</span> <span class="nav-text"> start,rows:分页参数。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#df-默认的查询字段"><span class="nav-number">13.5.</span> <span class="nav-text"> df:默认的查询字段。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raw-query-parameters-原始查询参数"><span class="nav-number">13.6.</span> <span class="nav-text"> Raw Query Parameters:原始查询参数。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wt-writer-type-指定输出格式"><span class="nav-number">13.7.</span> <span class="nav-text"> wt(writer type):指定输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#indent-返回的结果是否缩进"><span class="nav-number">13.8.</span> <span class="nav-text"> indent:返回的结果是否缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debugquery-调试数据时可能会用到-有四个可选参数值"><span class="nav-number">13.9.</span> <span class="nav-text"> debugQuery:调试数据时可能会用到，有四个可选参数值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"><span class="nav-number">13.10.</span> <span class="nav-text"> q.op: 指定默认的连接符AND还是OR，将会覆盖schema.xml的defaultOperator配置。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qt-query-type-指定那个类型来处理查询请求"><span class="nav-number">13.11.</span> <span class="nav-text"> qt(query type)，指定那个类型来处理查询请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#version-查询语法的版本-建议不使用它-由服务器指定默认值"><span class="nav-number">13.12.</span> <span class="nav-text"> version:查询语法的版本，建议不使用它，由服务器指定默认值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deftype-指定query-parser"><span class="nav-number">13.13.</span> <span class="nav-text"> defType: 指定query parser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料："><span class="nav-number">13.14.</span> <span class="nav-text"> 参考资料：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dismax-disjunction-max"><span class="nav-number">14.</span> <span class="nav-text"> [ ] dismax(Disjunction Max)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edismax-extended-dismax"><span class="nav-number">15.</span> <span class="nav-text"> [ ] edismax(Extended DisMax)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hl-highlight-高亮参数"><span class="nav-number">16.</span> <span class="nav-text"> [ ] hl(highlight):高亮参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#facet参数"><span class="nav-number">17.</span> <span class="nav-text"> [ ] facet参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spatial参数"><span class="nav-number">18.</span> <span class="nav-text"> [ ] spatial参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spellcheck-拼写检查"><span class="nav-number">19.</span> <span class="nav-text"> [ ] spellcheck 拼写检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr的检索运算符"><span class="nav-number">20.</span> <span class="nav-text"> [ ] Solr的检索运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#q-和-fq-的区别"><span class="nav-number">21.</span> <span class="nav-text"> q 和 fq 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#q"><span class="nav-number">22.</span> <span class="nav-text"> q</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ik分词器"><span class="nav-number">23.</span> <span class="nav-text"> ik分词器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ik添加到maven"><span class="nav-number">24.</span> <span class="nav-text"> ik添加到maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr添加到maven"><span class="nav-number">25.</span> <span class="nav-text"> solr添加到maven</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-solr-安装"><span class="nav-number">1.</span> <span class="nav-text"> 1. solr 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装包"><span class="nav-number">1.1.</span> <span class="nav-text"> 下载安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建solr用户并以solr用户启动solr"><span class="nav-number">1.2.</span> <span class="nav-text"> 创建solr用户并以solr用户启动solr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的启动参数"><span class="nav-number">1.3.</span> <span class="nav-text"> 常用的启动参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-主要配置文件"><span class="nav-number">2.</span> <span class="nav-text"> 2. 主要配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#schema-xml-5以后改为managed-schema"><span class="nav-number">2.1.</span> <span class="nav-text"> schema.xml(5以后改为managed-schema)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fields-字段"><span class="nav-number">3.</span> <span class="nav-text"> 字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#field-一般字段"><span class="nav-number">3.1.</span> <span class="nav-text"> 一般字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dynamicfield-动态字段"><span class="nav-number">3.2.</span> <span class="nav-text"> 动态字段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copyfield-复制字段"><span class="nav-number">4.</span> <span class="nav-text"> 复制字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uniquekey-唯一键字段"><span class="nav-number">5.</span> <span class="nav-text"> 唯一键字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#types-字段类型"><span class="nav-number">6.</span> <span class="nav-text"> 字段类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fieldtype-字段类型"><span class="nav-number">6.1.</span> <span class="nav-text"> 字段类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串字段"><span class="nav-number">6.1.1.</span> <span class="nav-text"> 字符串字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期字段"><span class="nav-number">6.1.2.</span> <span class="nav-text"> 日期字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值字段"><span class="nav-number">6.1.3.</span> <span class="nav-text"> 数值字段</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-solr控制台"><span class="nav-number">7.</span> <span class="nav-text"> 3. solr控制台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solrj"><span class="nav-number">8.</span> <span class="nav-text"> solrj</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#局部更新"><span class="nav-number">8.1.</span> <span class="nav-text"> 局部更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#facet-search-分面搜索"><span class="nav-number">9.</span> <span class="nav-text"> facet search 分面搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr-cloud"><span class="nav-number">10.</span> <span class="nav-text"> solr cloud</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr数据导入"><span class="nav-number">11.</span> <span class="nav-text"> solr数据导入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#solr-数据库导入配置文件可以定义多个entity"><span class="nav-number">11.1.</span> <span class="nav-text"> solr 数据库导入配置文件可以定义多个entity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solr-导入如果不指定entity参数则默认导入全部entity"><span class="nav-number">11.2.</span> <span class="nav-text"> solr 导入如果不指定entity参数则默认导入全部entity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solr-导入http请求get和post实现不一致-猜测-post是同步的-get是异步的"><span class="nav-number">11.3.</span> <span class="nav-text"> solr 导入http请求get和post实现不一致（猜测）,post是同步的，get是异步的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr查询器"><span class="nav-number">12.</span> <span class="nav-text"> solr查询器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr常用查询参数"><span class="nav-number">13.</span> <span class="nav-text"> solr常用查询参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q-查询条件表达式"><span class="nav-number">13.1.</span> <span class="nav-text"> q:查询条件表达式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"><span class="nav-number">13.2.</span> <span class="nav-text"> fq(filter query):过滤查询表达式,对查询结果过滤,在分页之前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-排序表达式"><span class="nav-number">13.3.</span> <span class="nav-text"> sort:排序表达式。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start-rows-分页参数"><span class="nav-number">13.4.</span> <span class="nav-text"> start,rows:分页参数。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#df-默认的查询字段"><span class="nav-number">13.5.</span> <span class="nav-text"> df:默认的查询字段。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raw-query-parameters-原始查询参数"><span class="nav-number">13.6.</span> <span class="nav-text"> Raw Query Parameters:原始查询参数。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wt-writer-type-指定输出格式"><span class="nav-number">13.7.</span> <span class="nav-text"> wt(writer type):指定输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#indent-返回的结果是否缩进"><span class="nav-number">13.8.</span> <span class="nav-text"> indent:返回的结果是否缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debugquery-调试数据时可能会用到-有四个可选参数值"><span class="nav-number">13.9.</span> <span class="nav-text"> debugQuery:调试数据时可能会用到，有四个可选参数值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"><span class="nav-number">13.10.</span> <span class="nav-text"> q.op: 指定默认的连接符AND还是OR，将会覆盖schema.xml的defaultOperator配置。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qt-query-type-指定那个类型来处理查询请求"><span class="nav-number">13.11.</span> <span class="nav-text"> qt(query type)，指定那个类型来处理查询请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#version-查询语法的版本-建议不使用它-由服务器指定默认值"><span class="nav-number">13.12.</span> <span class="nav-text"> version:查询语法的版本，建议不使用它，由服务器指定默认值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deftype-指定query-parser"><span class="nav-number">13.13.</span> <span class="nav-text"> defType: 指定query parser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料："><span class="nav-number">13.14.</span> <span class="nav-text"> 参考资料：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dismax-disjunction-max"><span class="nav-number">14.</span> <span class="nav-text"> [ ] dismax(Disjunction Max)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edismax-extended-dismax"><span class="nav-number">15.</span> <span class="nav-text"> [ ] edismax(Extended DisMax)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hl-highlight-高亮参数"><span class="nav-number">16.</span> <span class="nav-text"> [ ] hl(highlight):高亮参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#facet参数"><span class="nav-number">17.</span> <span class="nav-text"> [ ] facet参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spatial参数"><span class="nav-number">18.</span> <span class="nav-text"> [ ] spatial参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spellcheck-拼写检查"><span class="nav-number">19.</span> <span class="nav-text"> [ ] spellcheck 拼写检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr的检索运算符"><span class="nav-number">20.</span> <span class="nav-text"> [ ] Solr的检索运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ik分词器"><span class="nav-number">21.</span> <span class="nav-text"> ik分词器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ik添加到maven"><span class="nav-number">22.</span> <span class="nav-text"> ik添加到maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solr添加到maven"><span class="nav-number">23.</span> <span class="nav-text"> solr添加到maven</span></a></li></ol></div>
             
 
           </div>

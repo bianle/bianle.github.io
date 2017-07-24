@@ -345,6 +345,224 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/03/25/java-log4j/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/03/25/java-log4j/" itemprop="url">log4j.properties</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">log4j.rootCategory=DEBUG, stdout, R</div><div class="line"></div><div class="line">#Console config </div><div class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div><div class="line"></div><div class="line">#File config </div><div class="line">log4j.appender.R=org.apache.log4j.RollingFileAppender </div><div class="line">log4j.appender.R.File=c:/jmsLog.<span class="keyword">log</span> </div><div class="line">#log4j.appender.R.File=<span class="comment">//oracle/icdc/instance/lib/jmsLog.log </span></div><div class="line">log4j.appender.R.MaxFileSize=<span class="number">100</span>KB </div><div class="line">log4j.appender.R.MaxBackupIndex=<span class="number">0</span> </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/02/01/php-wp-domain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/02/01/php-wp-domain/" itemprop="url">WordPress如何更换域名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。</p>
+<ol>
+<li>
+<p>修改数据库配置文件，如果你在同一主机同一空间上更改域名，这步可以省掉，如果数据库不同，还得要打开wp-config.php将数据库配置正确才可以正常访问新域名。</p>
+</li>
+<li>
+<p>更改博客的安装地址和博客地址，首先用phpmyadmin打开你的数据库，然后找到wp-options这个数据表，找到第一条记录也就是siteurl这条，还有第39条home，这两条将地址改成你更换后的最域名即可。只有完成这一步后，才可以顺利进入后台，否则即使你输入密码，也会自动跳转到原来的老域名。PHP My管理中选择数据库，—-&gt;点击 SQL 在输入栏中输入如下代码：</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_options <span class="keyword">SET</span> option_value = <span class="keyword">replace</span>( option_value, ‘<span class="keyword">http</span>://老域名’, ’<span class="keyword">http</span>://新域名’) <span class="keyword">WHERE</span> option_name = ‘home’ <span class="keyword">OR</span> option_name =’siteurl’ ;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改文章内部所有的链接为新域名，相信大家在以前发表的文章中一定加了不少内链吧，域名更换了，老的内链也就没有意义了。此时得要将文章内链的旧域名修改为新域名。如果从后台文章编辑里一个一个找那是不现实的，方法有一个，通用phpmyadmin进入你所在的数据库，执行以下语句就可以把文章内的所有内链旧域名批量改为新域名：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> post_content = <span class="keyword">replace</span>(post_content, ‘<span class="keyword">http</span>://老域名’, ‘<span class="keyword">http</span>://新域名’); </div><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> guid = <span class="keyword">replace</span>( guid, ‘<span class="keyword">http</span>://老域名’ , ’<span class="keyword">http</span>://新域名’ ) ;</div></pre></td></tr></table></figure>
+<p>好了进入后台用以前的账号密码登陆就好了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/01/30/php-wp-runcode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -914,7 +1132,7 @@ destination 为新文件指定目录和/或文件名。
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">264</span>
+                <span class="site-state-item-count">266</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

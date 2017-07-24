@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-07-21T09:54:46.000Z</updated>
+  <updated>2017-07-24T14:56:16.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -16,11 +16,448 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>solr学习笔记 - 3)查询参数</title>
+    <link href="http://2le.me/2017/07/24/solr-study3/"/>
+    <id>http://2le.me/2017/07/24/solr-study3/</id>
+    <published>2017-07-24T09:37:02.000Z</published>
+    <updated>2017-07-24T14:56:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="通过-solr-控制台查询"><a class="header-anchor" href="#通过-solr-控制台查询"> </a>通过 solr 控制台查询</h2>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/24/solr-query.png" alt="通过 solr 控制台查询"><span class="image-caption">通过 solr 控制台查询</span></p>
+<ol>
+<li>访问solr控制台http://localhost:8080/solr</li>
+<li>选择core</li>
+<li>点击查询</li>
+<li>输入查询参数点击<code>Execute Query</code>按钮执行查询</li>
+</ol>
+<h2 id="基本查询参数"><a class="header-anchor" href="#基本查询参数"> </a>基本查询参数</h2>
+<h3 id="q"><a class="header-anchor" href="#q"> </a>q</h3>
+<p><code>q</code>为搜索词</p>
+<blockquote>
+<p>这几种查询有什么区别？<br>
+q=keyword:iphone 4s<br>
+q=keyword:iphone\ 4s<br>
+q=keyword:&quot;iphone 4s&quot;<br>
+q=keyword:(iphone 4s)</p>
+</blockquote>
+<p>第一个<code>q=keyword:iphone 4s</code>在没有设置<code>df:keyword</code>的情况下会报错：</p>
+<blockquote>
+<p>no field name specified in query and no default specified via ‘df’ param</p>
+</blockquote>
+<h4 id="必备词"><a class="header-anchor" href="#必备词"> </a>必备词</h4>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">海尔 +空调</div><div class="line">海尔 <span class="keyword">AND</span> 空调</div><div class="line">海尔 &amp;&amp; 空调</div><div class="line">+海尔 +空调</div><div class="line">海尔空调 （默认运算符是<span class="keyword">AND</span>时）</div></pre></td></tr></table></figure>
+<h4 id="可选词"><a class="header-anchor" href="#可选词"> </a>可选词</h4>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">海尔 <span class="keyword">OR</span> 空调</div><div class="line">海尔 || 空调</div><div class="line">海尔空调 （默认运算符是<span class="keyword">OR</span>时）</div></pre></td></tr></table></figure>
+<h4 id="词项临近度"><a class="header-anchor" href="#词项临近度"> </a>词项临近度</h4>
+<p>“海尔空调”~3
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
+<h4 id="字符临近度"><a class="header-anchor" href="#字符临近度"> </a>字符临近度</h4>
+<p>海尔
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q2.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
+<h4 id="排除词项"><a class="header-anchor" href="#排除词项"> </a>排除词项</h4>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">keyword</span>:(海尔 -兄弟)</div><div class="line"><span class="built_in">keyword</span>:(海尔 <span class="literal">NOT</span> 兄弟)</div></pre></td></tr></table></figure>
+<h4 id="区间搜索"><a class="header-anchor" href="#区间搜索"> </a>区间搜索</h4>
+<figure class="highlight autoit"><table><tr><td class="code"><pre><div class="line">age:[<span class="number">0</span> <span class="keyword">TO</span> <span class="number">100</span>] 闭区间如果字段类型为整数表示<span class="number">1</span>到<span class="number">99</span></div><div class="line">age:&#123;<span class="number">0</span> <span class="keyword">TO</span> <span class="number">100</span>&#125; 开区间如果字段类型为整数表示<span class="number">0</span>到<span class="number">100</span></div></pre></td></tr></table></figure>
+<h4 id="通配符搜索"><a class="header-anchor" href="#通配符搜索"> </a>通配符搜索</h4>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">* <span class="number">1</span>个或多个</div><div class="line">? <span class="number">1</span>个</div></pre></td></tr></table></figure>
+<h4 id="权重表达式"><a class="header-anchor" href="#权重表达式"> </a>权重表达式</h4>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">海尔空调^<span class="number">10</span></div></pre></td></tr></table></figure>
+<h4 id="特殊字符转义"><a class="header-anchor" href="#特殊字符转义"> </a>特殊字符转义</h4>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><div class="line">+-&amp;&amp;||!()&#123;&#125;[]^"~*?:/</div><div class="line"></div><div class="line">我&amp;&amp;你</div><div class="line">我<span class="symbol">\&amp;</span><span class="symbol">\&amp;</span>你</div></pre></td></tr></table></figure>
+<h3 id="fq"><a class="header-anchor" href="#fq"> </a>fq</h3>
+<p><code>fq</code>为过滤词，非必选，可有多个值</p>
+<h4 id="关闭缓存"><a class="header-anchor" href="#关闭缓存"> </a>关闭缓存</h4>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=&#123;!cache <span class="literal">false</span>&#125;id:<span class="number">111</span></div></pre></td></tr></table></figure>
+<h4 id="过滤顺序"><a class="header-anchor" href="#过滤顺序"> </a>过滤顺序</h4>
+<p>添加执行成本，执行成本越低越先执行,成本大于等于100的过滤器被solr视为后置过滤器</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">1</span>&#125;category:电器</div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">2</span>&#125;<span class="literal">on</span>sale:<span class="number">1</span></div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">100</span>&#125;star:[<span class="number">5</span> TO <span class="number">9</span>]</div></pre></td></tr></table></figure>
+<h3 id="q和fq的区别"><a class="header-anchor" href="#q和fq的区别"> </a>q和fq的区别</h3>
+<ol>
+<li>
+<p>应用场景
+<code>q</code>一般是用户输入的关键字如<code>keyword:海尔空调</code>
+<code>fq</code>一般是其他过滤条件如<code>category:电器</code> <code>onsale:1</code></p>
+</li>
+<li>
+<p>参数个数
+<code>q</code>参数必选有且只有1个
+<code>fq</code>参数可选且可以有多个如：</p>
+</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器&amp;fq=<span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
+<p>结果等价于</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器 AND <span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
+<p>但是缓存不同上边的写法solr会分别缓存<code>category:电器</code>和<code>onsale:1</code>的结果</p>
+<ol start="3">
+<li>对得分的影响
+<code>q</code>影响搜索结果评分
+<code>fq</code>不会影响搜索结果的评分</li>
+</ol>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162702.png" alt="solr-q影响得分"><span class="image-caption">solr-q影响得分</span>
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162750.png" alt="solr-fq不影响得分"><span class="image-caption">solr-fq不影响得分</span></p>
+<h3 id="sort-排序字段"><a class="header-anchor" href="#sort-排序字段"> </a>sort 排序字段</h3>
+<p>&lt;field|func&gt; (DESC|ASC)</p>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line">id <span class="keyword">ASC</span>, cmmdtyName <span class="keyword">DESC</span></div></pre></td></tr></table></figure>
+<h3 id="start-rows"><a class="header-anchor" href="#start-rows"> </a>start,rows</h3>
+<p>分页开始索引，每页条数</p>
+<h3 id="fl"><a class="header-anchor" href="#fl"> </a>fl</h3>
+<p>field list 字段列表</p>
+<h3 id="wt"><a class="header-anchor" href="#wt"> </a>wt</h3>
+<p>writer type
+响应格式</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">wt</span>=json</div></pre></td></tr></table></figure>
+<h3 id="debugquery"><a class="header-anchor" href="#debugquery"> </a>debugQuery</h3>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">debugQuery</span>=<span class="literal">true</span></div></pre></td></tr></table></figure>
+<h3 id="dismax"><a class="header-anchor" href="#dismax"> </a>dismax</h3>
+<h3 id="edismax"><a class="header-anchor" href="#edismax"> </a>edismax</h3>
+<p>扩展析取最大化查询解析器</p>
+<h4 id="mm"><a class="header-anchor" href="#mm"> </a>mm</h4>
+<table>
+<thead>
+<tr>
+<th>取值</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正整数</td>
+<td>2</td>
+<td>两个子句匹配,少于2个则全匹配</td>
+</tr>
+<tr>
+<td>负整数</td>
+<td>-3</td>
+<td>除了3个不匹配其他全匹配</td>
+</tr>
+<tr>
+<td>正百分比</td>
+<td>75%</td>
+<td>75%的子句（舍入到最近整数）匹配</td>
+</tr>
+<tr>
+<td>负百分比</td>
+<td>-30%</td>
+<td>最多30%的子句（舍入到最近整数）不匹配</td>
+</tr>
+<tr>
+<td>条件百分比</td>
+<td>3&lt;80%</td>
+<td>如果小于等于3个子句，全匹配，如果大于3个子句则80%匹配</td>
+</tr>
+<tr>
+<td>多条件百分比</td>
+<td>3&lt;-1 5&lt;4 7&lt;-30%</td>
+<td>小于等于3个子句全匹配，4或者5个子句最多1个不匹配，6或7个子句4个子句必须匹配，大于7个子句最多30%的子句（舍入到最近整数）不匹配</td>
+</tr>
+</tbody>
+</table>
+<h4 id="其他参数"><a class="header-anchor" href="#其他参数"> </a>其他参数</h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>q.alt</td>
+<td></td>
+<td>当q为空时缺省查询表达式</td>
+</tr>
+<tr>
+<td>qf</td>
+<td></td>
+<td>查询字段，多个字段空格分开可加权重</td>
+</tr>
+<tr>
+<td>mm</td>
+<td></td>
+<td>最小匹配</td>
+</tr>
+<tr>
+<td>pf</td>
+<td></td>
+<td>短语字段 pf2、pf3</td>
+</tr>
+<tr>
+<td>ps</td>
+<td></td>
+<td>短语间隔 ps2、ps3</td>
+</tr>
+<tr>
+<td>tie</td>
+<td></td>
+<td>决胜局</td>
+</tr>
+<tr>
+<td>bq</td>
+<td></td>
+<td>提升查询，不影响匹配到的文档数，只影响排序 <code>bq=onsale:1</code></td>
+</tr>
+<tr>
+<td>bf</td>
+<td></td>
+<td>提升函数,通过函数查询提升主查询相关度<code>bf=product(rord(starLevel),rord(saleNum),rord(onsaleTime))</code></td>
+</tr>
+<tr>
+<td>uf</td>
+<td></td>
+<td>用户可访问字段 默认uf=*</td>
+</tr>
+<tr>
+<td>boost</td>
+<td></td>
+<td>提升函数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hl"><a class="header-anchor" href="#hl"> </a>hl</h3>
+<p>高亮</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hl.fl</td>
+<td>字符串</td>
+<td>一个或多个高亮字段以逗号分隔</td>
+</tr>
+<tr>
+<td>hl.simple.pre</td>
+<td>字符串</td>
+<td>高亮词项前缀</td>
+</tr>
+<tr>
+<td>hl.simple.post</td>
+<td>字符串</td>
+<td>高亮词项后缀</td>
+</tr>
+<tr>
+<td>hl.requireFieldMatch</td>
+<td>true ¦ false</td>
+<td>高亮字段必须匹配</td>
+</tr>
+<tr>
+<td>hl.usePhraseHighlighter</td>
+<td>true ¦ false</td>
+<td>短语完全匹配</td>
+</tr>
+<tr>
+<td>hl.highlightMultiTerm</td>
+<td>true ¦ false</td>
+<td>启用区间/通配符/模糊/前缀查询高亮</td>
+</tr>
+</tbody>
+</table>
+<h3 id="facet"><a class="header-anchor" href="#facet"> </a>facet</h3>
+<p>分面查询</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>facet.query</td>
+<td>字符串</td>
+<td>分面查询参数</td>
+</tr>
+<tr>
+<td>facet.field</td>
+<td>字符串</td>
+<td>分面依据字段</td>
+</tr>
+<tr>
+<td>facet.prefix</td>
+<td>字符串</td>
+<td>分面前缀</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spatial-坑-待填"><a class="header-anchor" href="#spatial-坑-待填"> </a>spatial（坑，待填）</h3>
+<p>空间查询</p>
+<h3 id="spellcheck"><a class="header-anchor" href="#spellcheck"> </a>spellcheck</h3>
+<p>拼写检查</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spellcheck.q</td>
+<td>true ¦ false</td>
+<td>为查询指定拼写检查不指定则对q参数进行检查</td>
+</tr>
+<tr>
+<td>spellcheck.dictionary</td>
+<td>字符串</td>
+<td>字典名称</td>
+</tr>
+<tr>
+<td>spellcheck.count</td>
+<td>整数</td>
+<td>拼写建议最大数</td>
+</tr>
+<tr>
+<td>spellcheck.onlyMorePopular</td>
+<td>true ¦ false</td>
+<td>建议查询比原始查询多</td>
+</tr>
+<tr>
+<td>spellcheck.extendedResults</td>
+<td>true ¦ false</td>
+<td>获取建议词项的其他信息</td>
+</tr>
+<tr>
+<td>spellcheck.collate</td>
+<td>true ¦ false</td>
+<td>是否校准查询</td>
+</tr>
+<tr>
+<td>spellcheck.maxCollations</td>
+<td>整数</td>
+<td>最大校准查询数</td>
+</tr>
+<tr>
+<td>spellcheck.maxCollationTries</td>
+<td>整数</td>
+<td>校准尝试最大数</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;通过-solr-控制台查询&quot;&gt;&lt;a class=&quot;header-
+    
+    </summary>
+    
+      <category term="solr" scheme="http://2le.me/categories/solr/"/>
+    
+    
+      <category term="solr" scheme="http://2le.me/tags/solr/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>solr学习笔记 - 2)schema配置文件</title>
+    <link href="http://2le.me/2017/07/24/solr-study2/"/>
+    <id>http://2le.me/2017/07/24/solr-study2/</id>
+    <published>2017-07-24T07:20:17.000Z</published>
+    <updated>2017-07-24T09:34:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>schema主要作用是定义文档结构，如果把solr比作数据库，schema类似于数据库的表结构</p>
+<h2 id="概览"><a class="header-anchor" href="#概览"> </a>概览</h2>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/24/solr-schema.png" alt="solr schema.xml 配置文件主要结构"><span class="image-caption">solr schema.xml 配置文件主要结构</span></p>
+<p>schema配置文件主要由三部分构成</p>
+<ol>
+<li><code>&lt;fields&gt;</code>元素为字段配置，包含<code>&lt;field&gt;</code>和<code>&lt;dynamicField&gt;</code>元素</li>
+<li>其他元素 <code>&lt;uniqueKey&gt;</code> <code>&lt;copyField&gt;</code>等</li>
+<li><code>&lt;types&gt;</code>元素为字段类型配置，定义solr能够处理的日期、数字、和文本字段</li>
+</ol>
+<h2 id="schema-属性解释"><a class="header-anchor" href="#schema-属性解释"> </a>&lt;schema&gt;属性解释</h2>
+<ol>
+<li>name:仅用于显示</li>
+<li>version:版本号仅用于solr内部启用具体功能</li>
+</ol>
+<h2 id="fields-元素"><a class="header-anchor" href="#fields-元素"> </a>&lt;fields&gt;元素</h2>
+<p>fields定义文档字段，包含普通<ruby>字段<rp> (</rp><rt>field</rt><rp>) </rp></ruby> 和 <ruby>动态字段<rp> (</rp><rt>dynamicField</rt><rp>) </rp></ruby> 节点</p>
+<h3 id="属性解释"><a class="header-anchor" href="#属性解释"> </a>属性解释</h3>
+<ol>
+<li>name:字段名，大小写敏感</li>
+<li>type:字段类型</li>
+<li>indexed:(true|false)是否索引</li>
+<li>stored:(true|false)是否存储</li>
+<li>multiValued:(true|false)是否多值字段</li>
+</ol>
+<h3 id="其他特殊字段"><a class="header-anchor" href="#其他特殊字段"> </a>其他特殊字段</h3>
+<ol>
+<li><code>_version_</code>字段
+用于避免并发冲突</li>
+</ol>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><div class="line">&lt;field name=<span class="string">"_version_"</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"long"</span> indexed=<span class="string">"true"</span> stored=<span class="string">"true"</span>/&gt;</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>唯一键字段</li>
+</ol>
+<p>唯一键字段在定义完字段后由<code>&lt;uniqueKey&gt;</code>指定</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uniqueKey</span>&gt;</span>id<span class="tag">&lt;/<span class="name">uniqueKey</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>复制字段
+复制字段在定义完字段后由<code>copyField</code>指定</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"cmmdtyName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"categoryName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"parentCategoryName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"brandName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="types-元素"><a class="header-anchor" href="#types-元素"> </a>&lt;types&gt;元素</h2>
+<p>定义字段类型solr内置了常用的字段类型包括：字符串字段(string)、数值字段(int,float,long,double,tint,tfloat,tlong,tdouble)、日期字段(date,tdate)等，也可以自定义高级字段类型</p>
+<h3 id="属性解释-v2"><a class="header-anchor" href="#属性解释-v2"> </a>属性解释</h3>
+<ol>
+<li>name:字段名</li>
+<li>class:对应的类名,solr对内置字段类型的类名采用缩写形式</li>
+<li>sortMissingFirst:该字段没值的排到有值的前面</li>
+<li>sortMissingLast:该字段没值的排到有值的后面</li>
+<li>precisionStep:精度步长。基于trie的字段上执行快速区间查询，步长越小索引项越多，区间查询效率越高</li>
+<li>positionIncrementGap:多值字段增加词距。防止短语查询在多值字段中匹配到一个值的结尾和另一个值的开头
+如 desc是一个多值字段，desc:科学研究 desc:生命科学 ,默认短语搜索<code>desc:&quot;研究生&quot;</code>可以匹配</li>
+</ol>
+<h3 id="高级字段类型"><a class="header-anchor" href="#高级字段类型"> </a>高级字段类型</h3>
+<p>以下是官方示例schema中高级字段配置：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">fieldType</span> <span class="attr">name</span>=<span class="string">"text_general"</span> <span class="attr">class</span>=<span class="string">"solr.TextField"</span> <span class="attr">positionIncrementGap</span>=<span class="string">"100"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--索引分析器--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">analyzer</span> <span class="attr">type</span>=<span class="string">"index"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tokenizer</span> <span class="attr">class</span>=<span class="string">"solr.StandardTokenizerFactory"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!--停止词要保持与查询分析器一致--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.StopFilterFactory"</span> <span class="attr">ignoreCase</span>=<span class="string">"true"</span> <span class="attr">words</span>=<span class="string">"stopwords.txt"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!-- 同义词会增加索引体积所以一般在查询分析器里添加--&gt;</span></div><div class="line">        <span class="comment">&lt;!--</span></div><div class="line">        &lt;filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/&gt;</div><div class="line">        --&gt;</div><div class="line">        <span class="comment">&lt;!--大小写转换要保持与查询分析器一致--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.LowerCaseFilterFactory"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">analyzer</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--查询分析器 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">analyzer</span> <span class="attr">type</span>=<span class="string">"query"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--solr 标准分词器 以空格和标点分词--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tokenizer</span> <span class="attr">class</span>=<span class="string">"solr.StandardTokenizerFactory"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!--停止词分词过滤器 词元移除--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.StopFilterFactory"</span> <span class="attr">ignoreCase</span>=<span class="string">"true"</span> <span class="attr">words</span>=<span class="string">"stopwords.txt"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!--同义词分词过滤器 词元注入--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.SynonymFilterFactory"</span> <span class="attr">synonyms</span>=<span class="string">"synonyms.txt"</span> <span class="attr">ignoreCase</span>=<span class="string">"true"</span> <span class="attr">expand</span>=<span class="string">"true"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!--大小写转换 词元转换--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"solr.LowerCaseFilterFactory"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">analyzer</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">fieldType</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>高级字段配置通常包含：</p>
+<ol>
+<li>索引分析器</li>
+<li>查询分析器</li>
+</ol>
+<p>每个分析器又包含：</p>
+<ol>
+<li>分词器</li>
+<li>停止词分词过滤器</li>
+<li>同义词分词过滤器,由于同义词会增加索引体积所以一般只在查询分析器里添加</li>
+<li>词元转换过滤器,大小写转换，<strong>索引分析器和查询分析器的词元过滤器必须保持一致</strong></li>
+</ol>
+<h2 id="其他配置项"><a class="header-anchor" href="#其他配置项"> </a>其他配置项</h2>
+<p>其他配置项如:</p>
+<ol>
+<li><code>uniqueKey</code>,<code>copyField</code>(这俩是特殊的字段，需要先定义其他字段，所以放在了fields外)</li>
+<li><code>solrQueryParser</code>配置搜索默认操作连接符</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">solrQueryParser</span> <span class="attr">defaultOperator</span>=<span class="string">"AND"</span>/&gt;</span></div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;schema主要作用是定义文档结构，如果把solr比作数据库，schema
+    
+    </summary>
+    
+      <category term="solr" scheme="http://2le.me/categories/solr/"/>
+    
+    
+      <category term="solr" scheme="http://2le.me/tags/solr/"/>
+    
+  </entry>
+  
+  <entry>
     <title>solr学习笔记草稿</title>
     <link href="http://2le.me/2017/07/21/solr-draft/"/>
     <id>http://2le.me/2017/07/21/solr-draft/</id>
     <published>2017-07-21T09:54:17.000Z</published>
-    <updated>2017-07-21T09:54:46.000Z</updated>
+    <updated>2017-07-24T13:07:21.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="1-solr-安装"><a class="header-anchor" href="#1-solr-安装"> </a>1. solr 安装</h2>
 <h3 id="下载安装包"><a class="header-anchor" href="#下载安装包"> </a>下载安装包</h3>
@@ -38,15 +475,7 @@
 <h2 id="2-主要配置文件"><a class="header-anchor" href="#2-主要配置文件"> </a>2. 主要配置文件</h2>
 <h3 id="schema-xml-5以后改为managed-schema"><a class="header-anchor" href="#schema-xml-5以后改为managed-schema"> </a>schema.xml(5以后改为managed-schema)</h3>
 <p>field节点
-required属性默认为false
-schema定义doc结构
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/19/20170719160636.png" alt="solr-schema"><span class="image-caption">solr-schema</span>
-schema配置文件主要由三部分构成</p>
-<ol>
-<li>fields 元素包含 field dynamicField</li>
-<li>其他元素 uniqueKey copyField</li>
-<li>types元素定义solr能够处理的日期、数字、和文本字段</li>
-</ol>
+required属性默认为false</p>
 <h2 id="fields-字段"><a class="header-anchor" href="#fields-字段"> </a><fields>字段</fields></h2>
 <h3 id="field-一般字段"><a class="header-anchor" href="#field-一般字段"> </a><field>一般字段</field></h3>
 <h3 id="dynamicfield-动态字段"><a class="header-anchor" href="#dynamicfield-动态字段"> </a><dynamicfield>动态字段</dynamicfield></h3>
@@ -141,62 +570,6 @@ Sat Jan 01 00:00:00 CST 1</p>
 <h2 id="spatial参数"><a class="header-anchor" href="#spatial参数"> </a>[ ] spatial参数</h2>
 <h2 id="spellcheck-拼写检查"><a class="header-anchor" href="#spellcheck-拼写检查"> </a>[ ] spellcheck 拼写检查</h2>
 <h2 id="solr的检索运算符"><a class="header-anchor" href="#solr的检索运算符"> </a>[ ] Solr的检索运算符</h2>
-<h2 id="q-和-fq-的区别"><a class="header-anchor" href="#q-和-fq-的区别"> </a>q 和 fq 的区别</h2>
-<p>q 一般是用户输入的关键字如<code>keyword:海尔空调</code>
-fq 一般是其他过滤条件如<code>category:电器</code> <code>onsale:1</code></p>
-<p>q参数只有1个
-fq参数可以有多个如：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器&amp;fq=<span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
-<p>结果等价于</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器 AND <span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
-<p>但是缓存不同上边的写法solr会分别缓存<code>category:电器</code>和<code>onsale:1</code>的结果</p>
-<p>关闭缓存:
-fq={!cache false}id:111</p>
-<p>过滤顺序：</p>
-<p>添加执行成本，执行成本越低越先执行,成本大于等于100的过滤器被solr视为后置过滤器</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">1</span>&#125;category:电器</div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">2</span>&#125;<span class="literal">on</span>sale:<span class="number">1</span></div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">100</span>&#125;star:[<span class="number">5</span> TO <span class="number">9</span>]</div></pre></td></tr></table></figure>
-<p>q为搜索条件影响搜索结果评分
-fq为筛选查询，只搜索q的查询结果，不会影响搜索结果的评分</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162702.png" alt="solr"><span class="image-caption">solr</span></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162750.png" alt="solr"><span class="image-caption">solr</span></p>
-<h2 id="q"><a class="header-anchor" href="#q"> </a>q</h2>
-<p>q=keyword:iphone 4s
-q=keyword:&quot;iphone 4s&quot;
-q=keyword:(iphone 4s)</p>
-<p>df:keyword</p>
-<p>必备词
-海尔 + 空调
-海尔 AND 空调
-海尔 &amp;&amp; 空调
-+海尔 +空调
-海尔 空调 （默认运算符是AND时）</p>
-<p>可选词</p>
-<p>海尔 OR 空调
-海尔 || 空调
-海尔 空调 （默认运算符是OR时）</p>
-<p>词项临近度</p>
-<p>“海尔空调”~3
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
-<p>字符临近度</p>
-<p>海尔
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
-<p>排除词项
-keyword:(海尔 -兄弟)
-keyword:(海尔 NOT 兄弟)</p>
-<p>区间搜索
-age:[0 TO 100] 闭区间如果字段类型为整数表示1到99
-age:{0 TO 100} 开区间如果字段类型为整数表示0到100</p>
-<p>通配符搜索</p>
-<ul>
-<li>1个或多个
-? 1个</li>
-</ul>
-<p>权重表达式
-海尔空调^10</p>
-<p>特殊字符转义
-±&amp;&amp;||!(){}[]^&quot;~*?:/
-我&amp;&amp;你
-我&amp;&amp;你</p>
 <p>eDisMax 扩展析取最大化查询解析器</p>
 <p>qf查询字段
 q=海尔&amp;qf=cmmdtyName^10 categoryName</p>
@@ -278,23 +651,24 @@ Ivy is not available
     <link href="http://2le.me/2017/07/19/solr-study/"/>
     <id>http://2le.me/2017/07/19/solr-study/</id>
     <published>2017-07-19T07:39:24.000Z</published>
-    <updated>2017-07-24T06:46:50.000Z</updated>
+    <updated>2017-07-24T07:17:00.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="环境要求"><a class="header-anchor" href="#环境要求"> </a>环境要求</h2>
 <p>java1.6+</p>
 <h2 id="二进制分发包"><a class="header-anchor" href="#二进制分发包"> </a>二进制分发包</h2>
 <ol>
-<li>到国内apache镜像网站 <a href="http://mirrors.hust.edu.cn/apache/lucene/solr" target="_blank" rel="external">http://mirrors.hust.edu.cn/apache/lucene/solr</a> 下载指定版本二进制分发包，历史版本在这下载<a href="http://archive.apache.org/dist/lucene/solr/" target="_blank" rel="external">http://archive.apache.org/dist/lucene/solr/</a></li>
+<li>到国内apache镜像网站 <a href="http://mirrors.hust.edu.cn/apache/lucene/solr" target="_blank" rel="external">http://mirrors.hust.edu.cn/apache/lucene/solr</a> 下载指定版本二进制分发包，历史版本在这下载<a href="http://archive.apache.org/dist/lucene/solr/" target="_blank" rel="external">http://archive.apache.org/dist/lucene/solr/</a>
+（国外服务器略慢）或者我下载了4.10.4版本的放在百度网盘了链接: <a href="https://pan.baidu.com/s/1nvn1EHz" target="_blank" rel="external">https://pan.baidu.com/s/1nvn1EHz</a> 密码: bian</li>
 </ol>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line">wget -c <span class="symbol">http:</span>/<span class="regexp">/mirrors.hust.edu.cn/apache</span><span class="regexp">/lucene/solr</span><span class="regexp">/&lt;版本号&gt;/solr</span>-&lt;版本号&gt;.tgz <span class="comment">##下载二进制分发包</span></div></pre></td></tr></table></figure>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line">wget -c <span class="symbol">http:</span>/<span class="regexp">/archive.apache.org/dist</span><span class="regexp">/lucene/solr</span><span class="regexp">/4.10.4/solr</span>-<span class="number">4.10</span>.<span class="number">4</span>.tgz <span class="comment">##下载二进制分发包</span></div></pre></td></tr></table></figure>
 <ol start="2">
 <li>解压压缩包</li>
 </ol>
-<figure class="highlight dts"><table><tr><td class="code"><pre><div class="line">tar zxf solr-<span class="params">&lt;版本号&gt;</span>.tgz <span class="meta">##解压压缩包</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">tar</span> <span class="selector-tag">zxf</span> <span class="selector-tag">solr-4</span><span class="selector-class">.10</span><span class="selector-class">.4</span><span class="selector-class">.tgz</span> ##解压压缩包</div></pre></td></tr></table></figure>
 <ol start="3">
 <li>启动</li>
 </ol>
-<figure class="highlight dos"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> solr-&lt;版本号&gt;/example</div><div class="line">java -jar <span class="built_in">start</span>.jar</div></pre></td></tr></table></figure>
+<figure class="highlight dos"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> solr-<span class="number">4</span>.<span class="number">10</span>.<span class="number">4</span>/example</div><div class="line">java -jar <span class="built_in">start</span>.jar</div></pre></td></tr></table></figure>
 <p>solr6之后版本启动方式有区别:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">cd</span> solr-&lt;版本号&gt;/bin</div><div class="line">./solr start <span class="_">-e</span> techproducts</div></pre></td></tr></table></figure>
 <h2 id="集成到maven"><a class="header-anchor" href="#集成到maven"> </a>集成到maven</h2>
@@ -307,23 +681,27 @@ Ivy is not available
 </ol>
 <figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span></div><div class="line">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span>&gt;</div><div class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>lu.panpan<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>solr Maven Webapp<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">solr.version</span>&gt;</span>4.10.4<span class="tag">&lt;/<span class="name">solr.version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">org.slf4j-version</span>&gt;</span>1.7.13<span class="tag">&lt;/<span class="name">org.slf4j-version</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-solrj<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;solr.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>*<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>*<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-test-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;org.apache.lucene&lt;/groupId&gt; &lt;artifactId&gt;lucene-analyzers-kuromoji&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;org.apache.lucene&lt;/groupId&gt; &lt;artifactId&gt;lucene-analyzers-smartcn&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;com.google.guava&lt;/groupId&gt; &lt;artifactId&gt;guava&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-dataimporthandler<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;solr.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>*<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>*<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-test-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;org.apache.lucene&lt;/groupId&gt; &lt;artifactId&gt;lucene-analyzers-kuromoji&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;org.apache.lucene&lt;/groupId&gt; &lt;artifactId&gt;lucene-analyzers-smartcn&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;com.google.guava&lt;/groupId&gt; &lt;artifactId&gt;guava&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-dataimporthandler-extras<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;solr.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>*<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>*<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-test-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;org.apache.lucene&lt;/groupId&gt; &lt;artifactId&gt;lucene-analyzers-kuromoji&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;org.apache.lucene&lt;/groupId&gt; &lt;artifactId&gt;lucene-analyzers-smartcn&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;exclusion&gt; &lt;groupId&gt;com.google.guava&lt;/groupId&gt; &lt;artifactId&gt;guava&lt;/artifactId&gt; &lt;/exclusion&gt; --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.ibm.icu<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>icu4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.poi<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>*<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- log --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;org.slf4j-version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jcl-over-slf4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;org.slf4j-version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-over-slf4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;org.slf4j-version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jul-to-slf4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;org.slf4j-version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-log4j12<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;org.slf4j-version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jboss.logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jboss-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>ch.qos.logback<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>logback-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>ch.qos.logback<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>logback-classic<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.suning.ebuy<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>byutil-util<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- test --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jmockit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jmockit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.testng<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>testng<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>$<span class="template-variable">&#123;project.artifactId&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.6.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.7<span class="tag">&lt;/<span class="name">source</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.7<span class="tag">&lt;/<span class="name">target</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$<span class="template-variable">&#123;basedir&#125;</span><span class="xml">/src/main/webapp/WEB-INF/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span></div><div class="line">          <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-war-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">warName</span>&gt;</span>$<span class="template-variable">&#123;project.artifactId&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">warName</span>&gt;</span></span></div><div class="line">          <span class="tag">&lt;<span class="name">webResources</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/webapp<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">filtering</span>&gt;</span>true<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">includes</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.html<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.js<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.css<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.xml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.ftl<span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">              <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">webResources</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></div></pre></td></tr></table></figure>
 <ol start="3">
+<li>拷贝源码包里webapp下文件到项目webapp下</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">cp -r ~<span class="regexp">/Downloads/</span>solr-<span class="number">4.10</span>.<span class="number">4</span><span class="regexp">/solr/</span>webapp<span class="regexp">/web/</span>* ~<span class="regexp">/IdeaProjects/</span>solr<span class="regexp">/solr/</span>src<span class="regexp">/main/</span>webapp<span class="regexp">/</span></div></pre></td></tr></table></figure>
+<ol start="4">
 <li>新建一个solr home文件夹(任何位置，如:~/solr_home)，将源码包示例配置文件拷到solr home文件夹</li>
 </ol>
 <figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">cd ~</div><div class="line">mkdir solr_home</div><div class="line">cp -r ~<span class="regexp">/Downloads/</span>solr-<span class="number">4.10</span>.<span class="number">4</span><span class="regexp">/solr/</span>example<span class="regexp">/example-schemaless/</span>solr<span class="regexp">/* ~/</span>solr_home<span class="regexp">/</span></div></pre></td></tr></table></figure>
 <ol start="5">
 <li>
-<p>指定solr home(solr home路径写全称)后启动tomcat</p>
-<ol>
+<p>配置solr home(solr home路径写全称)</p>
+<ul>
 <li>可以通过修改java运行参数指定solr home</li>
-</ol>
+</ul>
  <figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">-Dsolr<span class="selector-class">.solr</span><span class="selector-class">.home</span>=/Users/bianle/solr_home</div></pre></td></tr></table></figure>
-<ol start="2">
-<li>也可以修改web.xlm指定solr home</li>
-</ol>
+<ul>
+<li>也可以修改web.xlm指定solr home（同时配置了此项和java运行参数以此为准）</li>
+</ul>
  <figure class="highlight fortran"><table><tr><td class="code"><pre><div class="line">&lt;env-<span class="built_in">entry</span>&gt;</div><div class="line">   &lt;env-<span class="built_in">entry</span>-<span class="keyword">name</span>&gt;solr/home&lt;/env-<span class="built_in">entry</span>-<span class="keyword">name</span>&gt;</div><div class="line">   &lt;env-<span class="built_in">entry</span>-<span class="keyword">value</span>&gt;/Users/bianle/solr_home&lt;/env-<span class="built_in">entry</span>-<span class="keyword">value</span>&gt;</div><div class="line">   &lt;env-<span class="built_in">entry</span>-<span class="keyword">type</span>&gt;java.lang.String&lt;/env-<span class="built_in">entry</span>-<span class="keyword">type</span>&gt;</div><div class="line">&lt;/env-<span class="built_in">entry</span>&gt;</div></pre></td></tr></table></figure>
-<ol start="3">
-<li>1和2同时配置以2为准</li>
-</ol>
+</li>
+<li>
+<p>maven打包部署到tomcat启动</p>
 </li>
 </ol>
 ]]></content>
@@ -602,13 +980,13 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
     <updated>2017-07-12T03:24:37.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer6" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer6 = new DPlayer({"element":document.getElementById("dplayer6"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC08%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs8.jpg"}});</script>  
+<div id="dplayer7" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer7 = new DPlayer({"element":document.getElementById("dplayer7"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC08%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs8.jpg"}});</script>  
 ]]></content>
     
     <summary type="html">
     
       &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;  
-&lt;div id=&quot;dplayer6&quot; c
+&lt;div id=&quot;dplayer7&quot; c
     
     </summary>
     
@@ -627,13 +1005,13 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
     <updated>2017-07-12T03:22:20.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer7" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer7 = new DPlayer({"element":document.getElementById("dplayer7"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC07%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs7.jpg"}});</script>  
+<div id="dplayer6" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer6 = new DPlayer({"element":document.getElementById("dplayer6"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC07%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs7.jpg"}});</script>  
 ]]></content>
     
     <summary type="html">
     
       &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;  
-&lt;div id=&quot;dplayer7&quot; c
+&lt;div id=&quot;dplayer6&quot; c
     
     </summary>
     
@@ -702,13 +1080,13 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
     <updated>2017-07-12T03:21:48.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer2" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer2 = new DPlayer({"element":document.getElementById("dplayer2"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC04%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs4.jpg"}});</script>  
+<div id="dplayer3" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer3 = new DPlayer({"element":document.getElementById("dplayer3"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC04%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs4.jpg"}});</script>  
 ]]></content>
     
     <summary type="html">
     
       &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;  
-&lt;div id=&quot;dplayer2&quot; c
+&lt;div id=&quot;dplayer3&quot; c
     
     </summary>
     
@@ -727,13 +1105,13 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
     <updated>2017-07-12T03:21:40.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer3" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer3 = new DPlayer({"element":document.getElementById("dplayer3"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC03%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs3.jpg"}});</script>  
+<div id="dplayer2" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer2 = new DPlayer({"element":document.getElementById("dplayer2"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC03%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs3.jpg"}});</script>  
 ]]></content>
     
     <summary type="html">
     
       &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;  
-&lt;div id=&quot;dplayer3&quot; c
+&lt;div id=&quot;dplayer2&quot; c
     
     </summary>
     
@@ -766,137 +1144,6 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
     
     
       <category term="影视" scheme="http://2le.me/tags/%E5%BD%B1%E8%A7%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[网剧]杀不死01</title>
-    <link href="http://2le.me/2017/06/30/shabusi01/"/>
-    <id>http://2le.me/2017/06/30/shabusi01/</id>
-    <published>2017-06-30T05:19:11.000Z</published>
-    <updated>2017-07-12T03:21:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer0" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer0 = new DPlayer({"element":document.getElementById("dplayer0"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC01%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs1.jpg"}});</script>  
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;  
-&lt;div id=&quot;dplayer0&quot; c
-    
-    </summary>
-    
-      <category term="影视" scheme="http://2le.me/categories/%E5%BD%B1%E8%A7%86/"/>
-    
-    
-      <category term="影视" scheme="http://2le.me/tags/%E5%BD%B1%E8%A7%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>solr排序中使用函数</title>
-    <link href="http://2le.me/2017/06/20/solr-sort-func/"/>
-    <id>http://2le.me/2017/06/20/solr-sort-func/</id>
-    <published>2017-06-20T02:28:18.000Z</published>
-    <updated>2017-06-26T10:07:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="需求"><a class="header-anchor" href="#需求"> </a>需求</h2>
-<h3 id="价格升序"><a class="header-anchor" href="#价格升序"> </a>价格升序</h3>
-<ol>
-<li>有库存有价格，价格升序</li>
-<li>无库存有价格，价格升序</li>
-<li>有库存无价格，自然排序</li>
-<li>无库存无价格，自然排序</li>
-</ol>
-<h3 id="实现方案"><a class="header-anchor" href="#实现方案"> </a>实现方案</h3>
-<ol>
-<li>
-<p>根据需求确定商品有无库存和有无价格的权重：有库存&gt;有价格&gt;无库存&gt;无价格</p>
-</li>
-<li>
-<p>为每个商品标签设置权重如下：</p>
-</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>标签</th>
-<th>权重</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>有库存</td>
-<td>0</td>
-</tr>
-<tr>
-<td>有价格</td>
-<td>1</td>
-</tr>
-<tr>
-<td>无库存</td>
-<td>2</td>
-</tr>
-<tr>
-<td>无价格</td>
-<td>4</td>
-</tr>
-</tbody>
-</table>
-<ol start="3">
-<li>组合后商品权重为每个标签求和：</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>标签</th>
-<th>权重</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>有库存有价格</td>
-<td>1</td>
-</tr>
-<tr>
-<td>无库存有价格</td>
-<td>3</td>
-</tr>
-<tr>
-<td>有库存无价格</td>
-<td>4</td>
-</tr>
-<tr>
-<td>无库存无价格</td>
-<td>6</td>
-</tr>
-</tbody>
-</table>
-<ol start="4">
-<li>根据排序权重确定排序参数如下：</li>
-</ol>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">&#123;!<span class="function"><span class="keyword">func</span>&#125;<span class="title">sum</span><span class="params">(product<span class="params">(sum<span class="params">(<span class="built_in">map</span><span class="params">(query<span class="params">($aaa)</span></span></span></span></span></span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">1</span>),<span class="built_in">map</span>(zsPrice,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>)),<span class="number">100000</span>),zsPrice) asc&amp;aaa=inventory:<span class="number">000001000173</span></div></pre></td></tr></table></figure>
-<p><code>query($aaa)</code>,其中$aaa为变量,<code>aaa=inventory:000001000173</code>是为aaa赋值，等同于<code>query(inventory:000001000173)</code>,返回搜索得分，搜不到（无库存）返回0
-<code>map(x,min,max,target,default)</code>,如果<code>x</code>在<code>min</code>和<code>max</code>之间映射成<code>target</code>，否则<code>default</code></p>
-<h3 id="价格降序"><a class="header-anchor" href="#价格降序"> </a>价格降序</h3>
-<p>有库存有价格 6
-无库存有价格 4
-有库存无价格 3
-无库存无价格 1</p>
-<figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">&#123;!<span class="function"><span class="keyword">func</span>&#125;<span class="title">sum</span><span class="params">(product<span class="params">(sum<span class="params">(<span class="built_in">map</span><span class="params">(query<span class="params">($aaa)</span></span></span></span></span></span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>),<span class="built_in">map</span>(zsPrice,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>)),<span class="number">100000</span>),zsPrice) desc&amp;aaa=inventory:<span class="number">000001000173</span></div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;需求&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
-    
-    </summary>
-    
-      <category term="solr" scheme="http://2le.me/categories/solr/"/>
-    
-    
-      <category term="solr" scheme="http://2le.me/tags/solr/"/>
     
   </entry>
   

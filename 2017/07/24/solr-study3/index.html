@@ -1,0 +1,1631 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="solr," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Bianle's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="通过 solr 控制台查询
+通过 solr 控制台查询
+
+访问solr控制台http://localhost:8080/solr
+选择core
+点击查询
+输入查询参数点击Execute Query按钮执行查询
+
+ 基本查询参数
+ q
+q为搜索词
+
+这几种查询有什么区别？
+q=keyword:iphone 4s
+q=keyword:iphone\ 4s
+q=keyword:&amp;quot;ipho">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solr学习笔记 - 3)查询参数">
+<meta property="og:url" content="http://2le.me/2017/07/24/solr-study3/index.html">
+<meta property="og:site_name" content="Bianle's Blog">
+<meta property="og:description" content="通过 solr 控制台查询
+通过 solr 控制台查询
+
+访问solr控制台http://localhost:8080/solr
+选择core
+点击查询
+输入查询参数点击Execute Query按钮执行查询
+
+ 基本查询参数
+ q
+q为搜索词
+
+这几种查询有什么区别？
+q=keyword:iphone 4s
+q=keyword:iphone\ 4s
+q=keyword:&amp;quot;ipho">
+<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/24/solr-query.png">
+<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif">
+<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q2.gif">
+<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162702.png">
+<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162750.png">
+<meta property="og:updated_time" content="2017-07-24T14:56:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="solr学习笔记 - 3)查询参数">
+<meta name="twitter:description" content="通过 solr 控制台查询
+通过 solr 控制台查询
+
+访问solr控制台http://localhost:8080/solr
+选择core
+点击查询
+输入查询参数点击Execute Query按钮执行查询
+
+ 基本查询参数
+ q
+q为搜索词
+
+这几种查询有什么区别？
+q=keyword:iphone 4s
+q=keyword:iphone\ 4s
+q=keyword:&amp;quot;ipho">
+<meta name="twitter:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/24/solr-query.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://2le.me/2017/07/24/solr-study3/"/>
+
+
+
+
+
+  <title>solr学习笔记 - 3)查询参数 | Bianle's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3519f77bf8b5b1d5a98cc671b3a83214";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Bianle's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">The quieter you become, the more you are able to hear.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/24/solr-study3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">solr学习笔记 - 3)查询参数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/24/solr-study3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="通过-solr-控制台查询"><a class="header-anchor" href="#通过-solr-控制台查询"> </a>通过 solr 控制台查询</h2>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/24/solr-query.png" alt="通过 solr 控制台查询"><span class="image-caption">通过 solr 控制台查询</span></p>
+<ol>
+<li>访问solr控制台http://localhost:8080/solr</li>
+<li>选择core</li>
+<li>点击查询</li>
+<li>输入查询参数点击<code>Execute Query</code>按钮执行查询</li>
+</ol>
+<h2 id="基本查询参数"><a class="header-anchor" href="#基本查询参数"> </a>基本查询参数</h2>
+<h3 id="q"><a class="header-anchor" href="#q"> </a>q</h3>
+<p><code>q</code>为搜索词</p>
+<blockquote>
+<p>这几种查询有什么区别？<br>
+q=keyword:iphone 4s<br>
+q=keyword:iphone\ 4s<br>
+q=keyword:&quot;iphone 4s&quot;<br>
+q=keyword:(iphone 4s)</p>
+</blockquote>
+<p>第一个<code>q=keyword:iphone 4s</code>在没有设置<code>df:keyword</code>的情况下会报错：</p>
+<blockquote>
+<p>no field name specified in query and no default specified via ‘df’ param</p>
+</blockquote>
+<h4 id="必备词"><a class="header-anchor" href="#必备词"> </a>必备词</h4>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">海尔 +空调</div><div class="line">海尔 <span class="keyword">AND</span> 空调</div><div class="line">海尔 &amp;&amp; 空调</div><div class="line">+海尔 +空调</div><div class="line">海尔空调 （默认运算符是<span class="keyword">AND</span>时）</div></pre></td></tr></table></figure>
+<h4 id="可选词"><a class="header-anchor" href="#可选词"> </a>可选词</h4>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">海尔 <span class="keyword">OR</span> 空调</div><div class="line">海尔 || 空调</div><div class="line">海尔空调 （默认运算符是<span class="keyword">OR</span>时）</div></pre></td></tr></table></figure>
+<h4 id="词项临近度"><a class="header-anchor" href="#词项临近度"> </a>词项临近度</h4>
+<p>“海尔空调”~3
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
+<h4 id="字符临近度"><a class="header-anchor" href="#字符临近度"> </a>字符临近度</h4>
+<p>海尔
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/20/solr-q2.gif" alt="solr-q"><span class="image-caption">solr-q</span></p>
+<h4 id="排除词项"><a class="header-anchor" href="#排除词项"> </a>排除词项</h4>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">keyword</span>:(海尔 -兄弟)</div><div class="line"><span class="built_in">keyword</span>:(海尔 <span class="literal">NOT</span> 兄弟)</div></pre></td></tr></table></figure>
+<h4 id="区间搜索"><a class="header-anchor" href="#区间搜索"> </a>区间搜索</h4>
+<figure class="highlight autoit"><table><tr><td class="code"><pre><div class="line">age:[<span class="number">0</span> <span class="keyword">TO</span> <span class="number">100</span>] 闭区间如果字段类型为整数表示<span class="number">1</span>到<span class="number">99</span></div><div class="line">age:&#123;<span class="number">0</span> <span class="keyword">TO</span> <span class="number">100</span>&#125; 开区间如果字段类型为整数表示<span class="number">0</span>到<span class="number">100</span></div></pre></td></tr></table></figure>
+<h4 id="通配符搜索"><a class="header-anchor" href="#通配符搜索"> </a>通配符搜索</h4>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">* <span class="number">1</span>个或多个</div><div class="line">? <span class="number">1</span>个</div></pre></td></tr></table></figure>
+<h4 id="权重表达式"><a class="header-anchor" href="#权重表达式"> </a>权重表达式</h4>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">海尔空调^<span class="number">10</span></div></pre></td></tr></table></figure>
+<h4 id="特殊字符转义"><a class="header-anchor" href="#特殊字符转义"> </a>特殊字符转义</h4>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><div class="line">+-&amp;&amp;||!()&#123;&#125;[]^"~*?:/</div><div class="line"></div><div class="line">我&amp;&amp;你</div><div class="line">我<span class="symbol">\&amp;</span><span class="symbol">\&amp;</span>你</div></pre></td></tr></table></figure>
+<h3 id="fq"><a class="header-anchor" href="#fq"> </a>fq</h3>
+<p><code>fq</code>为过滤词，非必选，可有多个值</p>
+<h4 id="关闭缓存"><a class="header-anchor" href="#关闭缓存"> </a>关闭缓存</h4>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=&#123;!cache <span class="literal">false</span>&#125;id:<span class="number">111</span></div></pre></td></tr></table></figure>
+<h4 id="过滤顺序"><a class="header-anchor" href="#过滤顺序"> </a>过滤顺序</h4>
+<p>添加执行成本，执行成本越低越先执行,成本大于等于100的过滤器被solr视为后置过滤器</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">1</span>&#125;category:电器</div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">2</span>&#125;<span class="literal">on</span>sale:<span class="number">1</span></div><div class="line"><span class="attr">fq</span>=&#123;!cost=<span class="number">100</span>&#125;star:[<span class="number">5</span> TO <span class="number">9</span>]</div></pre></td></tr></table></figure>
+<h3 id="q和fq的区别"><a class="header-anchor" href="#q和fq的区别"> </a>q和fq的区别</h3>
+<ol>
+<li>
+<p>应用场景
+<code>q</code>一般是用户输入的关键字如<code>keyword:海尔空调</code>
+<code>fq</code>一般是其他过滤条件如<code>category:电器</code> <code>onsale:1</code></p>
+</li>
+<li>
+<p>参数个数
+<code>q</code>参数必选有且只有1个
+<code>fq</code>参数可选且可以有多个如：</p>
+</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器&amp;fq=<span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
+<p>结果等价于</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=category:电器 AND <span class="literal">on</span>sale:<span class="number">1</span></div></pre></td></tr></table></figure>
+<p>但是缓存不同上边的写法solr会分别缓存<code>category:电器</code>和<code>onsale:1</code>的结果</p>
+<ol start="3">
+<li>对得分的影响
+<code>q</code>影响搜索结果评分
+<code>fq</code>不会影响搜索结果的评分</li>
+</ol>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162702.png" alt="solr-q影响得分"><span class="image-caption">solr-q影响得分</span>
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/05/11/20170511162750.png" alt="solr-fq不影响得分"><span class="image-caption">solr-fq不影响得分</span></p>
+<h3 id="sort-排序字段"><a class="header-anchor" href="#sort-排序字段"> </a>sort 排序字段</h3>
+<p>&lt;field|func&gt; (DESC|ASC)</p>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line">id <span class="keyword">ASC</span>, cmmdtyName <span class="keyword">DESC</span></div></pre></td></tr></table></figure>
+<h3 id="start-rows"><a class="header-anchor" href="#start-rows"> </a>start,rows</h3>
+<p>分页开始索引，每页条数</p>
+<h3 id="fl"><a class="header-anchor" href="#fl"> </a>fl</h3>
+<p>field list 字段列表</p>
+<h3 id="wt"><a class="header-anchor" href="#wt"> </a>wt</h3>
+<p>writer type
+响应格式</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">wt</span>=json</div></pre></td></tr></table></figure>
+<h3 id="debugquery"><a class="header-anchor" href="#debugquery"> </a>debugQuery</h3>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">debugQuery</span>=<span class="literal">true</span></div></pre></td></tr></table></figure>
+<h3 id="dismax"><a class="header-anchor" href="#dismax"> </a>dismax</h3>
+<h3 id="edismax"><a class="header-anchor" href="#edismax"> </a>edismax</h3>
+<p>扩展析取最大化查询解析器</p>
+<h4 id="mm"><a class="header-anchor" href="#mm"> </a>mm</h4>
+<table>
+<thead>
+<tr>
+<th>取值</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正整数</td>
+<td>2</td>
+<td>两个子句匹配,少于2个则全匹配</td>
+</tr>
+<tr>
+<td>负整数</td>
+<td>-3</td>
+<td>除了3个不匹配其他全匹配</td>
+</tr>
+<tr>
+<td>正百分比</td>
+<td>75%</td>
+<td>75%的子句（舍入到最近整数）匹配</td>
+</tr>
+<tr>
+<td>负百分比</td>
+<td>-30%</td>
+<td>最多30%的子句（舍入到最近整数）不匹配</td>
+</tr>
+<tr>
+<td>条件百分比</td>
+<td>3&lt;80%</td>
+<td>如果小于等于3个子句，全匹配，如果大于3个子句则80%匹配</td>
+</tr>
+<tr>
+<td>多条件百分比</td>
+<td>3&lt;-1 5&lt;4 7&lt;-30%</td>
+<td>小于等于3个子句全匹配，4或者5个子句最多1个不匹配，6或7个子句4个子句必须匹配，大于7个子句最多30%的子句（舍入到最近整数）不匹配</td>
+</tr>
+</tbody>
+</table>
+<h4 id="其他参数"><a class="header-anchor" href="#其他参数"> </a>其他参数</h4>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>q.alt</td>
+<td></td>
+<td>当q为空时缺省查询表达式</td>
+</tr>
+<tr>
+<td>qf</td>
+<td></td>
+<td>查询字段，多个字段空格分开可加权重</td>
+</tr>
+<tr>
+<td>mm</td>
+<td></td>
+<td>最小匹配</td>
+</tr>
+<tr>
+<td>pf</td>
+<td></td>
+<td>短语字段 pf2、pf3</td>
+</tr>
+<tr>
+<td>ps</td>
+<td></td>
+<td>短语间隔 ps2、ps3</td>
+</tr>
+<tr>
+<td>tie</td>
+<td></td>
+<td>决胜局</td>
+</tr>
+<tr>
+<td>bq</td>
+<td></td>
+<td>提升查询，不影响匹配到的文档数，只影响排序 <code>bq=onsale:1</code></td>
+</tr>
+<tr>
+<td>bf</td>
+<td></td>
+<td>提升函数,通过函数查询提升主查询相关度<code>bf=product(rord(starLevel),rord(saleNum),rord(onsaleTime))</code></td>
+</tr>
+<tr>
+<td>uf</td>
+<td></td>
+<td>用户可访问字段 默认uf=*</td>
+</tr>
+<tr>
+<td>boost</td>
+<td></td>
+<td>提升函数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hl"><a class="header-anchor" href="#hl"> </a>hl</h3>
+<p>高亮</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hl.fl</td>
+<td>字符串</td>
+<td>一个或多个高亮字段以逗号分隔</td>
+</tr>
+<tr>
+<td>hl.simple.pre</td>
+<td>字符串</td>
+<td>高亮词项前缀</td>
+</tr>
+<tr>
+<td>hl.simple.post</td>
+<td>字符串</td>
+<td>高亮词项后缀</td>
+</tr>
+<tr>
+<td>hl.requireFieldMatch</td>
+<td>true ¦ false</td>
+<td>高亮字段必须匹配</td>
+</tr>
+<tr>
+<td>hl.usePhraseHighlighter</td>
+<td>true ¦ false</td>
+<td>短语完全匹配</td>
+</tr>
+<tr>
+<td>hl.highlightMultiTerm</td>
+<td>true ¦ false</td>
+<td>启用区间/通配符/模糊/前缀查询高亮</td>
+</tr>
+</tbody>
+</table>
+<h3 id="facet"><a class="header-anchor" href="#facet"> </a>facet</h3>
+<p>分面查询</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>facet.query</td>
+<td>字符串</td>
+<td>分面查询参数</td>
+</tr>
+<tr>
+<td>facet.field</td>
+<td>字符串</td>
+<td>分面依据字段</td>
+</tr>
+<tr>
+<td>facet.prefix</td>
+<td>字符串</td>
+<td>分面前缀</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spatial-坑-待填"><a class="header-anchor" href="#spatial-坑-待填"> </a>spatial（坑，待填）</h3>
+<p>空间查询</p>
+<h3 id="spellcheck"><a class="header-anchor" href="#spellcheck"> </a>spellcheck</h3>
+<p>拼写检查</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spellcheck.q</td>
+<td>true ¦ false</td>
+<td>为查询指定拼写检查不指定则对q参数进行检查</td>
+</tr>
+<tr>
+<td>spellcheck.dictionary</td>
+<td>字符串</td>
+<td>字典名称</td>
+</tr>
+<tr>
+<td>spellcheck.count</td>
+<td>整数</td>
+<td>拼写建议最大数</td>
+</tr>
+<tr>
+<td>spellcheck.onlyMorePopular</td>
+<td>true ¦ false</td>
+<td>建议查询比原始查询多</td>
+</tr>
+<tr>
+<td>spellcheck.extendedResults</td>
+<td>true ¦ false</td>
+<td>获取建议词项的其他信息</td>
+</tr>
+<tr>
+<td>spellcheck.collate</td>
+<td>true ¦ false</td>
+<td>是否校准查询</td>
+</tr>
+<tr>
+<td>spellcheck.maxCollations</td>
+<td>整数</td>
+<td>最大校准查询数</td>
+</tr>
+<tr>
+<td>spellcheck.maxCollationTries</td>
+<td>整数</td>
+<td>校准尝试最大数</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>赏你个鸡腿，吃饱了好好干！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/static/weixin.png" alt="bianle WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/static/alipay.png" alt="bianle Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/solr/" rel="tag"># solr</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/24/solr-study2/" rel="next" title="solr学习笔记 - 2)schema配置文件">
+                <i class="fa fa-chevron-left"></i> solr学习笔记 - 2)schema配置文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars.githubusercontent.com/bianle"
+               alt="bianle" />
+          <p class="site-author-name" itemprop="name">bianle</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">266</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">167</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bianle" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bianlelpqi" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/i9erle" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://😇😈.ws" title="http://😇😈.ws" target="_blank">http://😇😈.ws</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://dzm.la" title="短怎么啦" target="_blank">短怎么啦</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.tunnel.ink" title="ngrok" target="_blank">ngrok</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://xingyetang.com" title="唐兴业的博客" target="_blank">唐兴业的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.panpan.lu" title="卢盼盼的博客" target="_blank">卢盼盼的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yangjian.me" title="Alimon's Blog" target="_blank">Alimon's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hexo.io" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://timyang.net" title="Tim's Blog" target="_blank">Tim's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lifegoo.pluskid.org/wiki/index.html" title="星黎殿" target="_blank">星黎殿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://phl.iteye.com" title="猫头哥（朴海林）" target="_blank">猫头哥（朴海林）</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://zhaxiancheng" title="zxc" target="_blank">zxc</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-solr-控制台查询"><span class="nav-number">1.</span> <span class="nav-text"> 通过 solr 控制台查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本查询参数"><span class="nav-number">2.</span> <span class="nav-text"> 基本查询参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q"><span class="nav-number">2.1.</span> <span class="nav-text"> q</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#必备词"><span class="nav-number">2.1.1.</span> <span class="nav-text"> 必备词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可选词"><span class="nav-number">2.1.2.</span> <span class="nav-text"> 可选词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#词项临近度"><span class="nav-number">2.1.3.</span> <span class="nav-text"> 词项临近度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符临近度"><span class="nav-number">2.1.4.</span> <span class="nav-text"> 字符临近度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排除词项"><span class="nav-number">2.1.5.</span> <span class="nav-text"> 排除词项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区间搜索"><span class="nav-number">2.1.6.</span> <span class="nav-text"> 区间搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通配符搜索"><span class="nav-number">2.1.7.</span> <span class="nav-text"> 通配符搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#权重表达式"><span class="nav-number">2.1.8.</span> <span class="nav-text"> 权重表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特殊字符转义"><span class="nav-number">2.1.9.</span> <span class="nav-text"> 特殊字符转义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fq"><span class="nav-number">2.2.</span> <span class="nav-text"> fq</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭缓存"><span class="nav-number">2.2.1.</span> <span class="nav-text"> 关闭缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤顺序"><span class="nav-number">2.2.2.</span> <span class="nav-text"> 过滤顺序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q和fq的区别"><span class="nav-number">2.3.</span> <span class="nav-text"> q和fq的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-排序字段"><span class="nav-number">2.4.</span> <span class="nav-text"> sort 排序字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start-rows"><span class="nav-number">2.5.</span> <span class="nav-text"> start,rows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fl"><span class="nav-number">2.6.</span> <span class="nav-text"> fl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wt"><span class="nav-number">2.7.</span> <span class="nav-text"> wt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debugquery"><span class="nav-number">2.8.</span> <span class="nav-text"> debugQuery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dismax"><span class="nav-number">2.9.</span> <span class="nav-text"> dismax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#edismax"><span class="nav-number">2.10.</span> <span class="nav-text"> edismax</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mm"><span class="nav-number">2.10.1.</span> <span class="nav-text"> mm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他参数"><span class="nav-number">2.10.2.</span> <span class="nav-text"> 其他参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hl"><span class="nav-number">2.11.</span> <span class="nav-text"> hl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#facet"><span class="nav-number">2.12.</span> <span class="nav-text"> facet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spatial-坑-待填"><span class="nav-number">2.13.</span> <span class="nav-text"> spatial（坑，待填）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spellcheck"><span class="nav-number">2.14.</span> <span class="nav-text"> spellcheck</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bianle</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "c9597f1b39254c22ba2f3fb2160ff765",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === '') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
