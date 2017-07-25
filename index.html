@@ -722,6 +722,48 @@ q=keyword:(iphone 4s)</p>
 </tr>
 </tbody>
 </table>
+<h3 id="group"><a class="header-anchor" href="#group"> </a>group</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>group</td>
+<td></td>
+<td>是否启用分组</td>
+</tr>
+<tr>
+<td>group.field</td>
+<td></td>
+<td>分组字段</td>
+</tr>
+<tr>
+<td>group.limit</td>
+<td></td>
+<td>每组返回文档数限制</td>
+</tr>
+<tr>
+<td>group.offset</td>
+<td></td>
+<td>每组返回文档开始索引 如 group.offset=1 则从第二个文档开始返回</td>
+</tr>
+<tr>
+<td>group.sort</td>
+<td></td>
+<td>组内排序</td>
+</tr>
+<tr>
+<td>group.facet</td>
+<td></td>
+<td>分组后分面</td>
+</tr>
+</tbody>
+</table>
 
           
         
@@ -865,6 +907,8 @@ q=keyword:(iphone 4s)</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"cmmdtyName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"categoryName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"parentCategoryName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"brandName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <h2 id="types-元素"><a class="header-anchor" href="#types-元素"> </a>&lt;types&gt;元素</h2>
 <p>定义字段类型solr内置了常用的字段类型包括：字符串字段(string)、数值字段(int,float,long,double,tint,tfloat,tlong,tdouble)、日期字段(date,tdate)等，也可以自定义高级字段类型</p>
+<h3 id="日期字段"><a class="header-anchor" href="#日期字段"> </a>日期字段</h3>
+<p>日期格式默认采用ISO-8601日期/时间格式(YYYY-MM-DDTHH:MM:SSZ) 如：2017-01-01T23:59:59Z</p>
 <h3 id="属性解释-v2"><a class="header-anchor" href="#属性解释-v2"> </a>属性解释</h3>
 <ol>
 <li>name:字段名</li>
@@ -897,362 +941,6 @@ q=keyword:(iphone 4s)</p>
 <li><code>solrQueryParser</code>配置搜索默认操作连接符</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">solrQueryParser</span> <span class="attr">defaultOperator</span>=<span class="string">"AND"</span>/&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/21/solr-draft/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/21/solr-draft/" itemprop="url">solr学习笔记草稿</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="1-solr-安装"><a class="header-anchor" href="#1-solr-安装"> </a>1. solr 安装</h2>
-<h3 id="下载安装包"><a class="header-anchor" href="#下载安装包"> </a>下载安装包</h3>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line">wget <span class="symbol">http:</span>/<span class="regexp">/mirrors.hust.edu.cn/apache</span><span class="regexp">/lucene/solr</span><span class="regexp">/6.3.0/solr</span>-<span class="number">6.3</span>.<span class="number">0</span>.tgz</div><div class="line">tar zxf solr*</div></pre></td></tr></table></figure>
-<p>下载历史版本在这<a href="http://archive.apache.org/dist/lucene/solr/" target="_blank" rel="external">http://archive.apache.org/dist/lucene/solr/</a></p>
-<h3 id="创建solr用户并以solr用户启动solr"><a class="header-anchor" href="#创建solr用户并以solr用户启动solr"> </a>创建solr用户并以solr用户启动solr</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">useradd -M <span class="_">-s</span> /bin/bash solr</div><div class="line">chown -R solr.solr solr*</div><div class="line"><span class="built_in">cd</span> solr*</div><div class="line">su solr -c <span class="string">"bin/solr start"</span></div></pre></td></tr></table></figure>
-<p>或：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">useradd -M <span class="_">-s</span> /sbin/nologin solr</div><div class="line">chown -R solr.solr solr*</div><div class="line"><span class="built_in">cd</span> solr*</div><div class="line">su solr <span class="_">-s</span> /bin/bash -c <span class="string">"bin/solr start"</span></div></pre></td></tr></table></figure>
-<h3 id="常用的启动参数"><a class="header-anchor" href="#常用的启动参数"> </a>常用的启动参数</h3>
-<ol>
-<li><code>-f</code> 前台运行</li>
-<li><code>-p &lt;port&gt;</code> 指定端口</li>
-</ol>
-<h2 id="2-主要配置文件"><a class="header-anchor" href="#2-主要配置文件"> </a>2. 主要配置文件</h2>
-<h3 id="schema-xml-5以后改为managed-schema"><a class="header-anchor" href="#schema-xml-5以后改为managed-schema"> </a>schema.xml(5以后改为managed-schema)</h3>
-<p>field节点
-required属性默认为false</p>
-<h2 id="fields-字段"><a class="header-anchor" href="#fields-字段"> </a><fields>字段</fields></h2>
-<h3 id="field-一般字段"><a class="header-anchor" href="#field-一般字段"> </a><field>一般字段</field></h3>
-<h3 id="dynamicfield-动态字段"><a class="header-anchor" href="#dynamicfield-动态字段"> </a><dynamicfield>动态字段</dynamicfield></h3>
-<h2 id="copyfield-复制字段"><a class="header-anchor" href="#copyfield-复制字段"> </a><copyfield>复制字段</copyfield></h2>
-<h2 id="uniquekey-唯一键字段"><a class="header-anchor" href="#uniquekey-唯一键字段"> </a><uniquekey>唯一键字段</uniquekey></h2>
-<h2 id="types-字段类型"><a class="header-anchor" href="#types-字段类型"> </a><types>字段类型</types></h2>
-<h3 id="fieldtype-字段类型"><a class="header-anchor" href="#fieldtype-字段类型"> </a><fieldtype>字段类型</fieldtype></h3>
-<h4 id="字符串字段"><a class="header-anchor" href="#字符串字段"> </a>字符串字段</h4>
-<h4 id="日期字段"><a class="header-anchor" href="#日期字段"> </a>日期字段</h4>
-<h4 id="数值字段"><a class="header-anchor" href="#数值字段"> </a>数值字段</h4>
-<h2 id="3-solr控制台"><a class="header-anchor" href="#3-solr控制台"> </a>3. solr控制台</h2>
-<p>修改schema.xml后控制台-&gt;Core Admin-&gt;Reload后生效</p>
-<h2 id="solrj"><a class="header-anchor" href="#solrj"> </a>solrj</h2>
-<h3 id="局部更新"><a class="header-anchor" href="#局部更新"> </a>局部更新</h3>
-<blockquote>
-<p>set – set or replace a particular value, or remove the value if null is specified as the new valueadd – adds an additional value to a list</p>
-<p>remove – removes a value (or a list of values) from a list</p>
-<p>removeregex – removes from a list that match the given Java regular expression</p>
-<p>inc – increments a numeric value by a specific amount (use a negative value to decrement)</p>
-</blockquote>
-<h2 id="facet-search-分面搜索"><a class="header-anchor" href="#facet-search-分面搜索"> </a>facet search 分面搜索</h2>
-<p>翻译过来有点绕，一图了然</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/19/facetedsearch.jpg" alt="facet search"><span class="image-caption">facet search</span></p>
-<p>来自<a href="http://www.chepoo.com/elasticsearch-facet-search-example.html" target="_blank" rel="external">这</a></p>
-<h2 id="solr-cloud"><a class="header-anchor" href="#solr-cloud"> </a>solr cloud</h2>
-<p>以下是创建cloud示例执行日志</p>
-<figure class="highlight pf"><table><tr><td class="code"><pre><div class="line">bash-<span class="number">4.1</span>$ ./solr start -e cloud</div><div class="line"></div><div class="line">Welcome <span class="keyword">to</span> the SolrCloud example!</div><div class="line"></div><div class="line">This interactive session will help you launch a SolrCloud cluster <span class="keyword">on</span> your local workstation.</div><div class="line">To begin, how many Solr nodes would you like <span class="keyword">to</span> run <span class="keyword">in</span> your local cluster? (specify <span class="number">1</span>-<span class="number">4</span> nodes) [<span class="number">2</span>]:</div><div class="line"><span class="number">4</span></div><div class="line">Ok, let's start up <span class="number">4</span> Solr nodes <span class="keyword">for</span> your example SolrCloud cluster.</div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node1 [<span class="number">8983</span>]:</div><div class="line"></div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node2 [<span class="number">7574</span>]:</div><div class="line"></div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node3 [<span class="number">8984</span>]:</div><div class="line"></div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node4 [<span class="number">7575</span>]:</div><div class="line"></div><div class="line">Creating Solr home directory /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1/solr</div><div class="line">Cloning /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1 into</div><div class="line">   /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node2</div><div class="line">Cloning /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1 into</div><div class="line">   /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node3</div><div class="line">Cloning /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1 into</div><div class="line">   /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node4</div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8983</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">8983</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node1/solr"</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8983</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8983</span> (pid=<span class="number">7722</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7574</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">7574</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node2/solr"</span> -z localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7574</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7574</span> (pid=<span class="number">7873</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8984</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">8984</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node3/solr"</span> -z localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8984</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8984</span> (pid=<span class="number">8018</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7575</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">7575</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node4/solr"</span> -z localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7575</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7575</span> (pid=<span class="number">8164</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Now let's create a new collection <span class="keyword">for</span> indexing documents <span class="keyword">in</span> your <span class="number">4</span>-node cluster.</div><div class="line">Please provide a name <span class="keyword">for</span> your new collection: [gettingstarted]</div><div class="line"></div><div class="line">How many shards would you like <span class="keyword">to</span> split gettingstarted into? [<span class="number">2</span>]</div><div class="line"></div><div class="line">How many replicas per shard would you like <span class="keyword">to</span> create? [<span class="number">2</span>]</div><div class="line"></div><div class="line">Please choose a configuration <span class="keyword">for</span> the gettingstarted collection, available options are:</div><div class="line">basic_configs, data_driven_schema_configs, or sample_techproducts_configs [data_driven_schema_configs]</div><div class="line"></div><div class="line"></div><div class="line">Connecting <span class="keyword">to</span> ZooKeeper at localhost:<span class="number">9983</span> ...</div><div class="line">Uploading /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/server/solr/configsets/data_driven_schema_configs/conf <span class="keyword">for</span> config gettingstarted <span class="keyword">to</span> ZooKeeper at localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">Creating new collection 'gettingstarted' using command:</div><div class="line">http://localhost:<span class="number">8983</span>/solr/admin/collections?action=CREATE&amp;name=gettingstarted&amp;numShards=<span class="number">2</span>&amp;replicationFactor=<span class="number">2</span>&amp;<span class="keyword">max</span>ShardsPerNode=<span class="number">1</span>&amp;collection.configName=gettingstarted</div><div class="line"></div><div class="line">&#123;</div><div class="line">  <span class="string">"responseHeader"</span>:&#123;</div><div class="line">    <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">    <span class="string">"QTime"</span>:<span class="number">20418</span>&#125;,</div><div class="line">  <span class="string">"success"</span>:&#123;</div><div class="line">    <span class="string">"172.19.136.171:8984_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19553</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard2_replica2"</span>&#125;,</div><div class="line">    <span class="string">"172.19.136.171:7575_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19391</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard1_replica2"</span>&#125;,</div><div class="line">    <span class="string">"172.19.136.171:7574_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19801</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard2_replica1"</span>&#125;,</div><div class="line">    <span class="string">"172.19.136.171:8983_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19853</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard1_replica1"</span>&#125;&#125;&#125;</div><div class="line"></div><div class="line">Enabling auto soft-commits with <span class="keyword">max</span>Time <span class="number">3</span> secs using the Config API</div><div class="line"></div><div class="line">POSTing request <span class="keyword">to</span> Config API: http://localhost:<span class="number">8983</span>/solr/gettingstarted/config</div><div class="line">&#123;<span class="string">"set-property"</span>:&#123;<span class="string">"updateHandler.autoSoftCommit.maxTime"</span>:<span class="string">"3000"</span>&#125;&#125;</div><div class="line">Successfully set-property updateHandler.autoSoftCommit.<span class="keyword">max</span>Time <span class="keyword">to</span> <span class="number">3000</span></div><div class="line"></div><div class="line"></div><div class="line">SolrCloud example running, please visit: http://localhost:<span class="number">8983</span>/solr</div></pre></td></tr></table></figure>
-<p>执行完毕后创建了如下cloud</p>
-<figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">+-------+     +-------+           +-------+     +-------+</div><div class="line">|<span class="string"> node1 </span>|<span class="string">     </span>|<span class="string"> node2 </span>|<span class="string">           </span>|<span class="string"> node3 </span>|<span class="string">     </span>|<span class="string"> node4 </span>|</div><div class="line">|<span class="string"> 8983  </span>|<span class="string">     </span>|<span class="string"> 7574  </span>|<span class="string">           </span>|<span class="string"> 8984  </span>|<span class="string">     </span>|<span class="string"> 7575  </span>|</div><div class="line">+---+---+     +---+---+           +---+---+     +---+---+</div><div class="line">    |<span class="string">             </span>|<span class="string">                   </span>|<span class="string">             </span>|</div><div class="line">    +------+------+                   +-------+-----+</div><div class="line">           |<span class="string">                                  </span>|</div><div class="line">      +----+----+                        +----+----+</div><div class="line">      |<span class="string"> shard1  </span>|<span class="string">                        </span>|<span class="string"> shard2  </span>|</div><div class="line">      |<span class="string">         </span>|<span class="string">                        </span>|<span class="string">         </span>|</div><div class="line">      +----+----+                        +----+----+</div><div class="line">           |<span class="string">                                  </span>|</div><div class="line">           +---------------+------------------+</div><div class="line">                           |<span class="string"></span></div><div class="line">                  +--------+---------+</div><div class="line">                  |<span class="string"> collection       </span>|</div><div class="line">                  |<span class="string">                  </span>|</div><div class="line">                  +------------------+</div></pre></td></tr></table></figure>
-<h2 id="solr数据导入"><a class="header-anchor" href="#solr数据导入"> </a>solr数据导入</h2>
-<h3 id="solr-数据库导入配置文件可以定义多个entity"><a class="header-anchor" href="#solr-数据库导入配置文件可以定义多个entity"> </a>solr 数据库导入配置文件可以定义多个entity</h3>
-<h3 id="solr-导入如果不指定entity参数则默认导入全部entity"><a class="header-anchor" href="#solr-导入如果不指定entity参数则默认导入全部entity"> </a>solr 导入如果不指定entity参数则默认导入全部entity</h3>
-<h3 id="solr-导入http请求get和post实现不一致-猜测-post是同步的-get是异步的"><a class="header-anchor" href="#solr-导入http请求get和post实现不一致-猜测-post是同步的-get是异步的"> </a>solr 导入http请求get和post实现不一致（猜测）,post是同步的，get是异步的</h3>
-<h2 id="solr查询器"><a class="header-anchor" href="#solr查询器"> </a>solr查询器</h2>
-<h2 id="solr常用查询参数"><a class="header-anchor" href="#solr常用查询参数"> </a>solr常用查询参数</h2>
-<h3 id="q-查询条件表达式"><a class="header-anchor" href="#q-查询条件表达式"> </a><code>q</code>:查询条件表达式。</h3>
-<p>提供<code>AND</code>,<code>OR</code>,<code>*</code>,<code>?</code>等关键字，模糊匹配。</p>
-<p>举个栗子:</p>
-<ol>
-<li><code>name:Jim AND age:18</code>,查询名字类似Jim年龄18的小伙伴</li>
-<li>范围查询<code>startDate:[* TO 2017-01-01T00:00:00Z]</code>，查询开始时间在17年1月1日之前的
-<em>注意：solr要求的时间格式为<code>yyyy-MM-dd'T'HH:mm:ss'Z'</code>，对于日期索引solr里以标准时间存储，所以我们查询时需要将日期转成格林威治时间，参考以下代码:</em></li>
-</ol>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line">SimpleDateFormat sdf = <span class="keyword">new</span>  SimpleDateFormat(<span class="string">"yyyy-MM-dd'T'HH:mm:ss'Z'"</span>);</div><div class="line">sdf.setTimeZone(TimeZone.getTimeZone(<span class="string">"GMT"</span>));<span class="comment">//将北京时间转成标准时间</span></div><div class="line"><span class="keyword">String</span> <span class="built_in">dateStr</span> = sdf.<span class="keyword">format</span>(someDate);</div></pre></td></tr></table></figure>
-<p>公元前日期用负数表示如<code>-0009</code>代表公元前10年（为什么是10？因为没有0000年，在solr里或者说在java里0000代表公元前1年）</p>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> _d1 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy"</span>).<span class="built_in">parse</span>(<span class="string">"-0001"</span>);</div><div class="line"><span class="built_in">Date</span> d0 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy"</span>).<span class="built_in">parse</span>(<span class="string">"0000"</span>);</div><div class="line"><span class="built_in">Date</span> d1 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy"</span>).<span class="built_in">parse</span>(<span class="string">"0001"</span>);</div><div class="line"><span class="keyword">System</span>.out.println(_d1);</div><div class="line"><span class="keyword">System</span>.out.println(d0);</div><div class="line"><span class="keyword">System</span>.out.println(d1);</div></pre></td></tr></table></figure>
-<blockquote>
-<p>Wed Jan 01 00:00:00 CST 2
-Thu Jan 01 00:00:00 CST 1
-Sat Jan 01 00:00:00 CST 1</p>
-</blockquote>
-<h3 id="fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"><a class="header-anchor" href="#fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"> </a><code>fq(filter query)</code>:过滤查询表达式,对查询结果过滤,在分页之前</h3>
-<h3 id="sort-排序表达式"><a class="header-anchor" href="#sort-排序表达式"> </a><code>sort</code>:排序表达式。</h3>
-<p>默认按<code>score</code>排序。提供<code>ASC</code>,<code>DESC</code>关键字且必填，不区分大小写</p>
-<p>举个栗子：
-<code>age desc</code>按年龄倒序排序</p>
-<h3 id="start-rows-分页参数"><a class="header-anchor" href="#start-rows-分页参数"> </a><code>start</code>,<code>rows</code>:分页参数。</h3>
-<p>start：开始的位置，rows：返回条数</p>
-<h3 id="df-默认的查询字段"><a class="header-anchor" href="#df-默认的查询字段"> </a><code>df</code>:默认的查询字段。</h3>
-<p>这个参数会覆盖在schema里定义的默认查询字段</p>
-<h3 id="raw-query-parameters-原始查询参数"><a class="header-anchor" href="#raw-query-parameters-原始查询参数"> </a><code>Raw Query Parameters</code>:原始查询参数。</h3>
-<p>比如：开启debug，可以页面勾选，或者直接添加参数：debugQuery=on</p>
-<h3 id="wt-writer-type-指定输出格式"><a class="header-anchor" href="#wt-writer-type-指定输出格式"> </a><code>wt(writer type)</code>:指定输出格式</h3>
-<p>可以有 xml, json, php, python,csv,ruby。</p>
-<h3 id="indent-返回的结果是否缩进"><a class="header-anchor" href="#indent-返回的结果是否缩进"> </a><code>indent</code>:返回的结果是否缩进</h3>
-<p>默认关闭，用 indent=true|on 开启，一般调试json,php,python,ruby输出才有必要用这个参数。</p>
-<h3 id="debugquery-调试数据时可能会用到-有四个可选参数值"><a class="header-anchor" href="#debugquery-调试数据时可能会用到-有四个可选参数值"> </a><code>debugQuery</code>:调试数据时可能会用到，有四个可选参数值。</h3>
-<ol>
-<li>timing – 提供调试对于组件时间耗费等信息</li>
-<li>query — 提供调试关于查询信息</li>
-<li>results — 提供调试关于结果信息</li>
-<li>true – 设置为true，相当于&amp;debugQuery=true</li>
-</ol>
-<h3 id="q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"><a class="header-anchor" href="#q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"> </a><code>q.op</code>: 指定默认的连接符AND还是OR，将会覆盖schema.xml的defaultOperator配置。</h3>
-<h3 id="qt-query-type-指定那个类型来处理查询请求"><a class="header-anchor" href="#qt-query-type-指定那个类型来处理查询请求"> </a><code>qt(query type)</code>，指定那个类型来处理查询请求</h3>
-<p>一般不用指定，默认是standard</p>
-<ol>
-<li>Transformers 结果放回前处理document中的字段。如[docid] Luence document id 值。</li>
-<li>verbose 获得中间步骤的详细信息.</li>
-</ol>
-<h3 id="version-查询语法的版本-建议不使用它-由服务器指定默认值"><a class="header-anchor" href="#version-查询语法的版本-建议不使用它-由服务器指定默认值"> </a><code>version</code>:查询语法的版本，建议不使用它，由服务器指定默认值。</h3>
-<h3 id="deftype-指定query-parser"><a class="header-anchor" href="#deftype-指定query-parser"> </a><code>defType</code>: 指定query parser</h3>
-<p>常用defType=lucene, defType=dismax, defType=edismax。
-自定义查询类型可参考:<a href="http://blog.chenlb.com/2009/02/use-custom-solr-queryparser.html" target="_blank" rel="external">http://blog.chenlb.com/2009/02/use-custom-solr-queryparser.html</a></p>
-<h3 id="参考资料："><a class="header-anchor" href="#参考资料："> </a>参考资料：</h3>
-<p><a href="http://wiki.apache.org/solr/CommonQueryParameters" target="_blank" rel="external">http://wiki.apache.org/solr/CommonQueryParameters</a>
-<a href="http://wiki.apache.org/solr/SolrQuerySyntax" target="_blank" rel="external">http://wiki.apache.org/solr/SolrQuerySyntax</a></p>
-<h2 id="dismax-disjunction-max"><a class="header-anchor" href="#dismax-disjunction-max"> </a>[ ] dismax(Disjunction Max)</h2>
-<h2 id="edismax-extended-dismax"><a class="header-anchor" href="#edismax-extended-dismax"> </a>[ ] edismax(Extended DisMax)</h2>
-<h2 id="hl-highlight-高亮参数"><a class="header-anchor" href="#hl-highlight-高亮参数"> </a>[ ] hl(highlight):高亮参数</h2>
-<h2 id="facet参数"><a class="header-anchor" href="#facet参数"> </a>[ ] facet参数</h2>
-<h2 id="spatial参数"><a class="header-anchor" href="#spatial参数"> </a>[ ] spatial参数</h2>
-<h2 id="spellcheck-拼写检查"><a class="header-anchor" href="#spellcheck-拼写检查"> </a>[ ] spellcheck 拼写检查</h2>
-<h2 id="solr的检索运算符"><a class="header-anchor" href="#solr的检索运算符"> </a>[ ] Solr的检索运算符</h2>
-<p>eDisMax 扩展析取最大化查询解析器</p>
-<p>qf查询字段
-q=海尔&amp;qf=cmmdtyName^10 categoryName</p>
-<p>[ ] pf短语字段
-[ ] ps短语间隔</p>
-<p>qs查询短语间隔
-tie决胜局 0.0 1.0</p>
-<p>bq提升查询
-仅影响排序
-bq=onsale:1
-bf提升函数</p>
-<figure class="highlight lisp"><table><tr><td class="code"><pre><div class="line">bf=product(<span class="name">rord</span>(<span class="name">starLevel</span>),rord(<span class="name">saleNum</span>),rord(<span class="name">onsaleTime</span>))</div></pre></td></tr></table></figure>
-<p>mm 最小匹配</p>
-<h2 id="ik分词器"><a class="header-anchor" href="#ik分词器"> </a>ik分词器</h2>
-<h2 id="ik添加到maven"><a class="header-anchor" href="#ik添加到maven"> </a>ik添加到maven</h2>
-<ol>
-<li>下载源码<a href="https://git.oschina.net/wltea/IK-Analyzer-2012FF.git" target="_blank" rel="external">IK-Analyzer-2012FF</a></li>
-<li>新建空的maven项目</li>
-<li>src目录下文件拷贝到src java目录</li>
-<li>pom.xml添加依赖</li>
-</ol>
-<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">lucene.version</span>&gt;</span>4.10.4<span class="tag">&lt;/<span class="name">lucene.version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-queryparser<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-analyzers-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-test-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="solr添加到maven"><a class="header-anchor" href="#solr添加到maven"> </a>solr添加到maven</h2>
-<ol>
-<li>下载源码<a href="http://archive.apache.org/dist/lucene/solr/4.10.4/" target="_blank" rel="external">solr-4.10.4-src.tgz</a></li>
-<li><code>ant generate-maven-artifacts</code>
-Ivy is not available
-<a href="http://www.hankcs.com/program/java/solve-the-ivy-is-not-available.html" target="_blank" rel="external">解决ivy is not available</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/20/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/20/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="quick-start"><a class="header-anchor" href="#quick-start"> </a>Quick Start</h2>
-<h3 id="create-a-new-post"><a class="header-anchor" href="#create-a-new-post"> </a>Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="run-server"><a class="header-anchor" href="#run-server"> </a>Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="generate-static-files"><a class="header-anchor" href="#generate-static-files"> </a>Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="header-anchor" href="#deploy-to-remote-sites"> </a>Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
           
         
@@ -1514,6 +1202,247 @@ Bringing up loopback insterface:                                                
 Bringing up interface eth0:  Device eth0 does not seem to be present,delaying initialization.                    [FAILED]</p>
 </blockquote>
 <p><a href="http://www.linuxidc.com/Linux/2012-12/76248.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/76248.htm</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/18/solr-draft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/solr-draft/" itemprop="url">solr学习笔记草稿</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="1-solr-安装"><a class="header-anchor" href="#1-solr-安装"> </a>1. solr 安装</h2>
+<h3 id="下载安装包"><a class="header-anchor" href="#下载安装包"> </a>下载安装包</h3>
+<figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line">wget <span class="symbol">http:</span>/<span class="regexp">/mirrors.hust.edu.cn/apache</span><span class="regexp">/lucene/solr</span><span class="regexp">/6.3.0/solr</span>-<span class="number">6.3</span>.<span class="number">0</span>.tgz</div><div class="line">tar zxf solr*</div></pre></td></tr></table></figure>
+<p>下载历史版本在这<a href="http://archive.apache.org/dist/lucene/solr/" target="_blank" rel="external">http://archive.apache.org/dist/lucene/solr/</a></p>
+<h3 id="创建solr用户并以solr用户启动solr"><a class="header-anchor" href="#创建solr用户并以solr用户启动solr"> </a>创建solr用户并以solr用户启动solr</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">useradd -M <span class="_">-s</span> /bin/bash solr</div><div class="line">chown -R solr.solr solr*</div><div class="line"><span class="built_in">cd</span> solr*</div><div class="line">su solr -c <span class="string">"bin/solr start"</span></div></pre></td></tr></table></figure>
+<p>或：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">useradd -M <span class="_">-s</span> /sbin/nologin solr</div><div class="line">chown -R solr.solr solr*</div><div class="line"><span class="built_in">cd</span> solr*</div><div class="line">su solr <span class="_">-s</span> /bin/bash -c <span class="string">"bin/solr start"</span></div></pre></td></tr></table></figure>
+<h3 id="常用的启动参数"><a class="header-anchor" href="#常用的启动参数"> </a>常用的启动参数</h3>
+<ol>
+<li><code>-f</code> 前台运行</li>
+<li><code>-p &lt;port&gt;</code> 指定端口</li>
+</ol>
+<h2 id="2-主要配置文件"><a class="header-anchor" href="#2-主要配置文件"> </a>2. 主要配置文件</h2>
+<h3 id="schema-xml-5以后改为managed-schema"><a class="header-anchor" href="#schema-xml-5以后改为managed-schema"> </a>schema.xml(5以后改为managed-schema)</h3>
+<p>field节点
+required属性默认为false</p>
+<h2 id="fields-字段"><a class="header-anchor" href="#fields-字段"> </a><fields>字段</fields></h2>
+<h3 id="field-一般字段"><a class="header-anchor" href="#field-一般字段"> </a><field>一般字段</field></h3>
+<h3 id="dynamicfield-动态字段"><a class="header-anchor" href="#dynamicfield-动态字段"> </a><dynamicfield>动态字段</dynamicfield></h3>
+<h2 id="copyfield-复制字段"><a class="header-anchor" href="#copyfield-复制字段"> </a><copyfield>复制字段</copyfield></h2>
+<h2 id="uniquekey-唯一键字段"><a class="header-anchor" href="#uniquekey-唯一键字段"> </a><uniquekey>唯一键字段</uniquekey></h2>
+<h2 id="types-字段类型"><a class="header-anchor" href="#types-字段类型"> </a><types>字段类型</types></h2>
+<h3 id="fieldtype-字段类型"><a class="header-anchor" href="#fieldtype-字段类型"> </a><fieldtype>字段类型</fieldtype></h3>
+<h4 id="字符串字段"><a class="header-anchor" href="#字符串字段"> </a>字符串字段</h4>
+<h4 id="日期字段"><a class="header-anchor" href="#日期字段"> </a>日期字段</h4>
+<h4 id="数值字段"><a class="header-anchor" href="#数值字段"> </a>数值字段</h4>
+<h2 id="3-solr控制台"><a class="header-anchor" href="#3-solr控制台"> </a>3. solr控制台</h2>
+<p>修改schema.xml后控制台-&gt;Core Admin-&gt;Reload后生效</p>
+<h2 id="solrj"><a class="header-anchor" href="#solrj"> </a>solrj</h2>
+<h3 id="局部更新"><a class="header-anchor" href="#局部更新"> </a>局部更新</h3>
+<blockquote>
+<p>set – set or replace a particular value, or remove the value if null is specified as the new valueadd – adds an additional value to a list</p>
+<p>remove – removes a value (or a list of values) from a list</p>
+<p>removeregex – removes from a list that match the given Java regular expression</p>
+<p>inc – increments a numeric value by a specific amount (use a negative value to decrement)</p>
+</blockquote>
+<h2 id="facet-search-分面搜索"><a class="header-anchor" href="#facet-search-分面搜索"> </a>facet search 分面搜索</h2>
+<p>翻译过来有点绕，一图了然</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/01/19/facetedsearch.jpg" alt="facet search"><span class="image-caption">facet search</span></p>
+<p>来自<a href="http://www.chepoo.com/elasticsearch-facet-search-example.html" target="_blank" rel="external">这</a></p>
+<h2 id="solr-cloud"><a class="header-anchor" href="#solr-cloud"> </a>solr cloud</h2>
+<p>以下是创建cloud示例执行日志</p>
+<figure class="highlight pf"><table><tr><td class="code"><pre><div class="line">bash-<span class="number">4.1</span>$ ./solr start -e cloud</div><div class="line"></div><div class="line">Welcome <span class="keyword">to</span> the SolrCloud example!</div><div class="line"></div><div class="line">This interactive session will help you launch a SolrCloud cluster <span class="keyword">on</span> your local workstation.</div><div class="line">To begin, how many Solr nodes would you like <span class="keyword">to</span> run <span class="keyword">in</span> your local cluster? (specify <span class="number">1</span>-<span class="number">4</span> nodes) [<span class="number">2</span>]:</div><div class="line"><span class="number">4</span></div><div class="line">Ok, let's start up <span class="number">4</span> Solr nodes <span class="keyword">for</span> your example SolrCloud cluster.</div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node1 [<span class="number">8983</span>]:</div><div class="line"></div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node2 [<span class="number">7574</span>]:</div><div class="line"></div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node3 [<span class="number">8984</span>]:</div><div class="line"></div><div class="line">Please enter the <span class="keyword">port</span> <span class="keyword">for</span> node4 [<span class="number">7575</span>]:</div><div class="line"></div><div class="line">Creating Solr home directory /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1/solr</div><div class="line">Cloning /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1 into</div><div class="line">   /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node2</div><div class="line">Cloning /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1 into</div><div class="line">   /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node3</div><div class="line">Cloning /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node1 into</div><div class="line">   /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/example/cloud/node4</div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8983</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">8983</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node1/solr"</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8983</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8983</span> (pid=<span class="number">7722</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7574</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">7574</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node2/solr"</span> -z localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7574</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7574</span> (pid=<span class="number">7873</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8984</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">8984</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node3/solr"</span> -z localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8984</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">8984</span> (pid=<span class="number">8018</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Starting up Solr <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7575</span> using command:</div><div class="line">/opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/bin/solr start -cloud -p <span class="number">7575</span> -s <span class="string">"/opt/solr-6.3.0/example/cloud/node4/solr"</span> -z localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">NOTE: Please install lsof as this script needs it <span class="keyword">to</span> determine if Solr is listening <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7575</span>.</div><div class="line"></div><div class="line">Started Solr server <span class="keyword">on</span> <span class="keyword">port</span> <span class="number">7575</span> (pid=<span class="number">8164</span>). Happy searching!</div><div class="line"></div><div class="line"></div><div class="line">Now let's create a new collection <span class="keyword">for</span> indexing documents <span class="keyword">in</span> your <span class="number">4</span>-node cluster.</div><div class="line">Please provide a name <span class="keyword">for</span> your new collection: [gettingstarted]</div><div class="line"></div><div class="line">How many shards would you like <span class="keyword">to</span> split gettingstarted into? [<span class="number">2</span>]</div><div class="line"></div><div class="line">How many replicas per shard would you like <span class="keyword">to</span> create? [<span class="number">2</span>]</div><div class="line"></div><div class="line">Please choose a configuration <span class="keyword">for</span> the gettingstarted collection, available options are:</div><div class="line">basic_configs, data_driven_schema_configs, or sample_techproducts_configs [data_driven_schema_configs]</div><div class="line"></div><div class="line"></div><div class="line">Connecting <span class="keyword">to</span> ZooKeeper at localhost:<span class="number">9983</span> ...</div><div class="line">Uploading /opt/solr-<span class="number">6.3</span>.<span class="number">0</span>/server/solr/configsets/data_driven_schema_configs/conf <span class="keyword">for</span> config gettingstarted <span class="keyword">to</span> ZooKeeper at localhost:<span class="number">9983</span></div><div class="line"></div><div class="line">Creating new collection 'gettingstarted' using command:</div><div class="line">http://localhost:<span class="number">8983</span>/solr/admin/collections?action=CREATE&amp;name=gettingstarted&amp;numShards=<span class="number">2</span>&amp;replicationFactor=<span class="number">2</span>&amp;<span class="keyword">max</span>ShardsPerNode=<span class="number">1</span>&amp;collection.configName=gettingstarted</div><div class="line"></div><div class="line">&#123;</div><div class="line">  <span class="string">"responseHeader"</span>:&#123;</div><div class="line">    <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">    <span class="string">"QTime"</span>:<span class="number">20418</span>&#125;,</div><div class="line">  <span class="string">"success"</span>:&#123;</div><div class="line">    <span class="string">"172.19.136.171:8984_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19553</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard2_replica2"</span>&#125;,</div><div class="line">    <span class="string">"172.19.136.171:7575_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19391</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard1_replica2"</span>&#125;,</div><div class="line">    <span class="string">"172.19.136.171:7574_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19801</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard2_replica1"</span>&#125;,</div><div class="line">    <span class="string">"172.19.136.171:8983_solr"</span>:&#123;</div><div class="line">      <span class="string">"responseHeader"</span>:&#123;</div><div class="line">        <span class="string">"status"</span>:<span class="number">0</span>,</div><div class="line">        <span class="string">"QTime"</span>:<span class="number">19853</span>&#125;,</div><div class="line">      <span class="string">"core"</span>:<span class="string">"gettingstarted_shard1_replica1"</span>&#125;&#125;&#125;</div><div class="line"></div><div class="line">Enabling auto soft-commits with <span class="keyword">max</span>Time <span class="number">3</span> secs using the Config API</div><div class="line"></div><div class="line">POSTing request <span class="keyword">to</span> Config API: http://localhost:<span class="number">8983</span>/solr/gettingstarted/config</div><div class="line">&#123;<span class="string">"set-property"</span>:&#123;<span class="string">"updateHandler.autoSoftCommit.maxTime"</span>:<span class="string">"3000"</span>&#125;&#125;</div><div class="line">Successfully set-property updateHandler.autoSoftCommit.<span class="keyword">max</span>Time <span class="keyword">to</span> <span class="number">3000</span></div><div class="line"></div><div class="line"></div><div class="line">SolrCloud example running, please visit: http://localhost:<span class="number">8983</span>/solr</div></pre></td></tr></table></figure>
+<p>执行完毕后创建了如下cloud</p>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">+-------+     +-------+           +-------+     +-------+</div><div class="line">|<span class="string"> node1 </span>|<span class="string">     </span>|<span class="string"> node2 </span>|<span class="string">           </span>|<span class="string"> node3 </span>|<span class="string">     </span>|<span class="string"> node4 </span>|</div><div class="line">|<span class="string"> 8983  </span>|<span class="string">     </span>|<span class="string"> 7574  </span>|<span class="string">           </span>|<span class="string"> 8984  </span>|<span class="string">     </span>|<span class="string"> 7575  </span>|</div><div class="line">+---+---+     +---+---+           +---+---+     +---+---+</div><div class="line">    |<span class="string">             </span>|<span class="string">                   </span>|<span class="string">             </span>|</div><div class="line">    +------+------+                   +-------+-----+</div><div class="line">           |<span class="string">                                  </span>|</div><div class="line">      +----+----+                        +----+----+</div><div class="line">      |<span class="string"> shard1  </span>|<span class="string">                        </span>|<span class="string"> shard2  </span>|</div><div class="line">      |<span class="string">         </span>|<span class="string">                        </span>|<span class="string">         </span>|</div><div class="line">      +----+----+                        +----+----+</div><div class="line">           |<span class="string">                                  </span>|</div><div class="line">           +---------------+------------------+</div><div class="line">                           |<span class="string"></span></div><div class="line">                  +--------+---------+</div><div class="line">                  |<span class="string"> collection       </span>|</div><div class="line">                  |<span class="string">                  </span>|</div><div class="line">                  +------------------+</div></pre></td></tr></table></figure>
+<h2 id="solr数据导入"><a class="header-anchor" href="#solr数据导入"> </a>solr数据导入</h2>
+<h3 id="solr-数据库导入配置文件可以定义多个entity"><a class="header-anchor" href="#solr-数据库导入配置文件可以定义多个entity"> </a>solr 数据库导入配置文件可以定义多个entity</h3>
+<h3 id="solr-导入如果不指定entity参数则默认导入全部entity"><a class="header-anchor" href="#solr-导入如果不指定entity参数则默认导入全部entity"> </a>solr 导入如果不指定entity参数则默认导入全部entity</h3>
+<h3 id="solr-导入http请求get和post实现不一致-猜测-post是同步的-get是异步的"><a class="header-anchor" href="#solr-导入http请求get和post实现不一致-猜测-post是同步的-get是异步的"> </a>solr 导入http请求get和post实现不一致（猜测）,post是同步的，get是异步的</h3>
+<h2 id="solr查询器"><a class="header-anchor" href="#solr查询器"> </a>solr查询器</h2>
+<h2 id="solr常用查询参数"><a class="header-anchor" href="#solr常用查询参数"> </a>solr常用查询参数</h2>
+<h3 id="q-查询条件表达式"><a class="header-anchor" href="#q-查询条件表达式"> </a><code>q</code>:查询条件表达式。</h3>
+<p>提供<code>AND</code>,<code>OR</code>,<code>*</code>,<code>?</code>等关键字，模糊匹配。</p>
+<p>举个栗子:</p>
+<ol>
+<li><code>name:Jim AND age:18</code>,查询名字类似Jim年龄18的小伙伴</li>
+<li>范围查询<code>startDate:[* TO 2017-01-01T00:00:00Z]</code>，查询开始时间在17年1月1日之前的
+<em>注意：solr要求的时间格式为<code>yyyy-MM-dd'T'HH:mm:ss'Z'</code>，对于日期索引solr里以标准时间存储，所以我们查询时需要将日期转成格林威治时间，参考以下代码:</em></li>
+</ol>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line">SimpleDateFormat sdf = <span class="keyword">new</span>  SimpleDateFormat(<span class="string">"yyyy-MM-dd'T'HH:mm:ss'Z'"</span>);</div><div class="line">sdf.setTimeZone(TimeZone.getTimeZone(<span class="string">"GMT"</span>));<span class="comment">//将北京时间转成标准时间</span></div><div class="line"><span class="keyword">String</span> <span class="built_in">dateStr</span> = sdf.<span class="keyword">format</span>(someDate);</div></pre></td></tr></table></figure>
+<p>公元前日期用负数表示如<code>-0009</code>代表公元前10年（为什么是10？因为没有0000年，在solr里或者说在java里0000代表公元前1年）</p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> _d1 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy"</span>).<span class="built_in">parse</span>(<span class="string">"-0001"</span>);</div><div class="line"><span class="built_in">Date</span> d0 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy"</span>).<span class="built_in">parse</span>(<span class="string">"0000"</span>);</div><div class="line"><span class="built_in">Date</span> d1 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy"</span>).<span class="built_in">parse</span>(<span class="string">"0001"</span>);</div><div class="line"><span class="keyword">System</span>.out.println(_d1);</div><div class="line"><span class="keyword">System</span>.out.println(d0);</div><div class="line"><span class="keyword">System</span>.out.println(d1);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Wed Jan 01 00:00:00 CST 2
+Thu Jan 01 00:00:00 CST 1
+Sat Jan 01 00:00:00 CST 1</p>
+</blockquote>
+<h3 id="fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"><a class="header-anchor" href="#fq-filter-query-过滤查询表达式-对查询结果过滤-在分页之前"> </a><code>fq(filter query)</code>:过滤查询表达式,对查询结果过滤,在分页之前</h3>
+<h3 id="sort-排序表达式"><a class="header-anchor" href="#sort-排序表达式"> </a><code>sort</code>:排序表达式。</h3>
+<p>默认按<code>score</code>排序。提供<code>ASC</code>,<code>DESC</code>关键字且必填，不区分大小写</p>
+<p>举个栗子：
+<code>age desc</code>按年龄倒序排序</p>
+<h3 id="start-rows-分页参数"><a class="header-anchor" href="#start-rows-分页参数"> </a><code>start</code>,<code>rows</code>:分页参数。</h3>
+<p>start：开始的位置，rows：返回条数</p>
+<h3 id="df-默认的查询字段"><a class="header-anchor" href="#df-默认的查询字段"> </a><code>df</code>:默认的查询字段。</h3>
+<p>这个参数会覆盖在schema里定义的默认查询字段</p>
+<h3 id="raw-query-parameters-原始查询参数"><a class="header-anchor" href="#raw-query-parameters-原始查询参数"> </a><code>Raw Query Parameters</code>:原始查询参数。</h3>
+<p>比如：开启debug，可以页面勾选，或者直接添加参数：debugQuery=on</p>
+<h3 id="wt-writer-type-指定输出格式"><a class="header-anchor" href="#wt-writer-type-指定输出格式"> </a><code>wt(writer type)</code>:指定输出格式</h3>
+<p>可以有 xml, json, php, python,csv,ruby。</p>
+<h3 id="indent-返回的结果是否缩进"><a class="header-anchor" href="#indent-返回的结果是否缩进"> </a><code>indent</code>:返回的结果是否缩进</h3>
+<p>默认关闭，用 indent=true|on 开启，一般调试json,php,python,ruby输出才有必要用这个参数。</p>
+<h3 id="debugquery-调试数据时可能会用到-有四个可选参数值"><a class="header-anchor" href="#debugquery-调试数据时可能会用到-有四个可选参数值"> </a><code>debugQuery</code>:调试数据时可能会用到，有四个可选参数值。</h3>
+<ol>
+<li>timing – 提供调试对于组件时间耗费等信息</li>
+<li>query — 提供调试关于查询信息</li>
+<li>results — 提供调试关于结果信息</li>
+<li>true – 设置为true，相当于&amp;debugQuery=true</li>
+</ol>
+<h3 id="q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"><a class="header-anchor" href="#q-op-指定默认的连接符and还是or-将会覆盖schema-xml的defaultoperator配置"> </a><code>q.op</code>: 指定默认的连接符AND还是OR，将会覆盖schema.xml的defaultOperator配置。</h3>
+<h3 id="qt-query-type-指定那个类型来处理查询请求"><a class="header-anchor" href="#qt-query-type-指定那个类型来处理查询请求"> </a><code>qt(query type)</code>，指定那个类型来处理查询请求</h3>
+<p>一般不用指定，默认是standard</p>
+<ol>
+<li>Transformers 结果放回前处理document中的字段。如[docid] Luence document id 值。</li>
+<li>verbose 获得中间步骤的详细信息.</li>
+</ol>
+<h3 id="version-查询语法的版本-建议不使用它-由服务器指定默认值"><a class="header-anchor" href="#version-查询语法的版本-建议不使用它-由服务器指定默认值"> </a><code>version</code>:查询语法的版本，建议不使用它，由服务器指定默认值。</h3>
+<h3 id="deftype-指定query-parser"><a class="header-anchor" href="#deftype-指定query-parser"> </a><code>defType</code>: 指定query parser</h3>
+<p>常用defType=lucene, defType=dismax, defType=edismax。
+自定义查询类型可参考:<a href="http://blog.chenlb.com/2009/02/use-custom-solr-queryparser.html" target="_blank" rel="external">http://blog.chenlb.com/2009/02/use-custom-solr-queryparser.html</a></p>
+<h3 id="参考资料："><a class="header-anchor" href="#参考资料："> </a>参考资料：</h3>
+<p><a href="http://wiki.apache.org/solr/CommonQueryParameters" target="_blank" rel="external">http://wiki.apache.org/solr/CommonQueryParameters</a>
+<a href="http://wiki.apache.org/solr/SolrQuerySyntax" target="_blank" rel="external">http://wiki.apache.org/solr/SolrQuerySyntax</a></p>
+<h2 id="dismax-disjunction-max"><a class="header-anchor" href="#dismax-disjunction-max"> </a>[ ] dismax(Disjunction Max)</h2>
+<h2 id="edismax-extended-dismax"><a class="header-anchor" href="#edismax-extended-dismax"> </a>[ ] edismax(Extended DisMax)</h2>
+<h2 id="hl-highlight-高亮参数"><a class="header-anchor" href="#hl-highlight-高亮参数"> </a>[ ] hl(highlight):高亮参数</h2>
+<h2 id="facet参数"><a class="header-anchor" href="#facet参数"> </a>[ ] facet参数</h2>
+<h2 id="spatial参数"><a class="header-anchor" href="#spatial参数"> </a>[ ] spatial参数</h2>
+<h2 id="spellcheck-拼写检查"><a class="header-anchor" href="#spellcheck-拼写检查"> </a>[ ] spellcheck 拼写检查</h2>
+<h2 id="solr的检索运算符"><a class="header-anchor" href="#solr的检索运算符"> </a>[ ] Solr的检索运算符</h2>
+<p>eDisMax 扩展析取最大化查询解析器</p>
+<p>qf查询字段
+q=海尔&amp;qf=cmmdtyName^10 categoryName</p>
+<p>[ ] pf短语字段
+[ ] ps短语间隔</p>
+<p>qs查询短语间隔
+tie决胜局 0.0 1.0</p>
+<p>bq提升查询
+仅影响排序
+bq=onsale:1
+bf提升函数</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><div class="line">bf=product(<span class="name">rord</span>(<span class="name">starLevel</span>),rord(<span class="name">saleNum</span>),rord(<span class="name">onsaleTime</span>))</div></pre></td></tr></table></figure>
+<p>mm 最小匹配</p>
+<h2 id="ik分词器"><a class="header-anchor" href="#ik分词器"> </a>ik分词器</h2>
+<h2 id="ik添加到maven"><a class="header-anchor" href="#ik添加到maven"> </a>ik添加到maven</h2>
+<ol>
+<li>下载源码<a href="https://git.oschina.net/wltea/IK-Analyzer-2012FF.git" target="_blank" rel="external">IK-Analyzer-2012FF</a></li>
+<li>新建空的maven项目</li>
+<li>src目录下文件拷贝到src java目录</li>
+<li>pom.xml添加依赖</li>
+</ol>
+<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">lucene.version</span>&gt;</span>4.10.4<span class="tag">&lt;/<span class="name">lucene.version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-queryparser<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.lucene<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lucene-analyzers-common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-test-framework<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$<span class="template-variable">&#123;lucene.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jdk.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="solr添加到maven"><a class="header-anchor" href="#solr添加到maven"> </a>solr添加到maven</h2>
+<ol>
+<li>下载源码<a href="http://archive.apache.org/dist/lucene/solr/4.10.4/" target="_blank" rel="external">solr-4.10.4-src.tgz</a></li>
+<li><code>ant generate-maven-artifacts</code>
+Ivy is not available
+<a href="http://www.hankcs.com/program/java/solve-the-ivy-is-not-available.html" target="_blank" rel="external">解决ivy is not available</a></li>
+</ol>
 
           
         
@@ -2011,6 +1940,109 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/30/shabusi11/" itemprop="url">[网剧]杀不死11</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
+<div id="dplayer10" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer10 = new DPlayer({"element":document.getElementById("dplayer10"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC11%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs11.jpg"}});</script>  
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -2060,7 +2092,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">266</span>
+                <span class="site-state-item-count">265</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
