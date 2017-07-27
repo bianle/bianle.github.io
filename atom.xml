@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2017-07-25T10:36:06.000Z</updated>
+  <updated>2017-07-26T09:00:18.000Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -16,22 +16,23 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>solr学习笔记 - 3)查询参数</title>
+    <title>solr学习笔记（三）查询参数</title>
     <link href="http://2le.me/2017/07/24/solr-study3/"/>
     <id>http://2le.me/2017/07/24/solr-study3/</id>
     <published>2017-07-24T09:37:02.000Z</published>
-    <updated>2017-07-25T10:36:06.000Z</updated>
+    <updated>2017-07-26T09:00:18.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="通过-solr-控制台查询"><a class="header-anchor" href="#通过-solr-控制台查询"> </a>通过 solr 控制台查询</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/24/solr-query.png" alt="通过 solr 控制台查询"><span class="image-caption">通过 solr 控制台查询</span></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>solr基本查询参数</p>
+<a id="more"></a>
+<h2 id="从控制台查询"><a class="header-anchor" href="#从控制台查询"> </a>从控制台查询</h2>
 <ol>
 <li>访问solr控制台http://localhost:8080/solr</li>
 <li>选择core</li>
 <li>点击查询</li>
 <li>输入查询参数点击<code>Execute Query</code>按钮执行查询</li>
 </ol>
-<h2 id="基本查询参数"><a class="header-anchor" href="#基本查询参数"> </a>基本查询参数</h2>
-<h3 id="q"><a class="header-anchor" href="#q"> </a>q</h3>
+<h2 id="查询参数"><a class="header-anchor" href="#查询参数"> </a>查询参数</h2>
+<h3 id="q-query"><a class="header-anchor" href="#q-query"> </a>q(query)</h3>
 <p><code>q</code>为搜索词</p>
 <blockquote>
 <p>这几种查询有什么区别？<br>
@@ -64,7 +65,7 @@ q=keyword:(iphone 4s)</p>
 <figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">海尔空调^<span class="number">10</span></div></pre></td></tr></table></figure>
 <h4 id="特殊字符转义"><a class="header-anchor" href="#特殊字符转义"> </a>特殊字符转义</h4>
 <figure class="highlight taggerscript"><table><tr><td class="code"><pre><div class="line">+-&amp;&amp;||!()&#123;&#125;[]^"~*?:/</div><div class="line"></div><div class="line">我&amp;&amp;你</div><div class="line">我<span class="symbol">\&amp;</span><span class="symbol">\&amp;</span>你</div></pre></td></tr></table></figure>
-<h3 id="fq"><a class="header-anchor" href="#fq"> </a>fq</h3>
+<h3 id="fq-filter-query"><a class="header-anchor" href="#fq-filter-query"> </a>fq(filter query)</h3>
 <p><code>fq</code>为过滤词，非必选，可有多个值</p>
 <h4 id="关闭缓存"><a class="header-anchor" href="#关闭缓存"> </a>关闭缓存</h4>
 <figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">fq</span>=&#123;!cache <span class="literal">false</span>&#125;id:<span class="number">111</span></div></pre></td></tr></table></figure>
@@ -100,15 +101,16 @@ q=keyword:(iphone 4s)</p>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line">id <span class="keyword">ASC</span>, cmmdtyName <span class="keyword">DESC</span></div></pre></td></tr></table></figure>
 <h3 id="start-rows"><a class="header-anchor" href="#start-rows"> </a>start,rows</h3>
 <p>分页开始索引，每页条数</p>
-<h3 id="fl"><a class="header-anchor" href="#fl"> </a>fl</h3>
-<p>field list 字段列表</p>
-<h3 id="wt"><a class="header-anchor" href="#wt"> </a>wt</h3>
-<p>writer type
-响应格式</p>
+<h3 id="fl-field-list"><a class="header-anchor" href="#fl-field-list"> </a>fl(field list)</h3>
+<p>字段列表</p>
+<h3 id="wt-writer-type"><a class="header-anchor" href="#wt-writer-type"> </a>wt(writer type)</h3>
+<p>响应格式</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">wt</span>=json</div></pre></td></tr></table></figure>
 <h3 id="debugquery"><a class="header-anchor" href="#debugquery"> </a>debugQuery</h3>
+<p>调试模式</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">debugQuery</span>=<span class="literal">true</span></div></pre></td></tr></table></figure>
 <h3 id="dismax"><a class="header-anchor" href="#dismax"> </a>dismax</h3>
+<p>析取最大化查询解析器</p>
 <h3 id="edismax"><a class="header-anchor" href="#edismax"> </a>edismax</h3>
 <p>扩展析取最大化查询解析器</p>
 <h4 id="mm"><a class="header-anchor" href="#mm"> </a>mm</h4>
@@ -215,7 +217,7 @@ q=keyword:(iphone 4s)</p>
 </tr>
 </tbody>
 </table>
-<h3 id="hl"><a class="header-anchor" href="#hl"> </a>hl</h3>
+<h3 id="hl-highlight"><a class="header-anchor" href="#hl-highlight"> </a>hl(highlight)</h3>
 <p>高亮</p>
 <table>
 <thead>
@@ -272,7 +274,7 @@ q=keyword:(iphone 4s)</p>
 <tr>
 <td>facet.query</td>
 <td>字符串</td>
-<td>分面查询参数</td>
+<td>查询分面表达式</td>
 </tr>
 <tr>
 <td>facet.field</td>
@@ -387,7 +389,7 @@ q=keyword:(iphone 4s)</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;通过-solr-控制台查询&quot;&gt;&lt;a class=&quot;header-
+      &lt;p&gt;solr基本查询参数&lt;/p&gt;
     
     </summary>
     
@@ -399,13 +401,14 @@ q=keyword:(iphone 4s)</p>
   </entry>
   
   <entry>
-    <title>solr学习笔记 - 2)schema配置文件</title>
+    <title>solr学习笔记（二）schema配置文件</title>
     <link href="http://2le.me/2017/07/24/solr-study2/"/>
     <id>http://2le.me/2017/07/24/solr-study2/</id>
     <published>2017-07-24T07:20:17.000Z</published>
-    <updated>2017-07-25T02:52:18.000Z</updated>
+    <updated>2017-07-26T08:53:35.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>schema主要作用是定义文档结构，如果把solr比作数据库，schema类似于数据库的表结构</p>
+<a id="more"></a>
 <h2 id="概览"><a class="header-anchor" href="#概览"> </a>概览</h2>
 <p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/24/solr-schema.png" alt="solr schema.xml 配置文件主要结构"><span class="image-caption">solr schema.xml 配置文件主要结构</span></p>
 <p>schema配置文件主要由三部分构成</p>
@@ -420,7 +423,8 @@ q=keyword:(iphone 4s)</p>
 <li>version:版本号仅用于solr内部启用具体功能</li>
 </ol>
 <h2 id="fields-元素"><a class="header-anchor" href="#fields-元素"> </a>&lt;fields&gt;元素</h2>
-<p>fields定义文档字段，包含普通<ruby>字段<rp> (</rp><rt>field</rt><rp>) </rp></ruby> 和 <ruby>动态字段<rp> (</rp><rt>dynamicField</rt><rp>) </rp></ruby> 节点</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/26/20170726151658.png" alt="fields元素"><span class="image-caption">fields元素</span>
+fields定义文档字段，包含普通<ruby>字段<rp> (</rp><rt>field</rt><rp>) </rp></ruby> 和 <ruby>动态字段<rp> (</rp><rt>dynamicField</rt><rp>) </rp></ruby> 节点</p>
 <h3 id="属性解释"><a class="header-anchor" href="#属性解释"> </a>属性解释</h3>
 <ol>
 <li>name:字段名，大小写敏感</li>
@@ -446,7 +450,9 @@ q=keyword:(iphone 4s)</p>
 </ol>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"cmmdtyName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"categoryName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"parentCategoryName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">copyField</span> <span class="attr">source</span>=<span class="string">"brandName"</span> <span class="attr">dest</span>=<span class="string">"searchVal"</span>/&gt;</span></div></pre></td></tr></table></figure>
 <h2 id="types-元素"><a class="header-anchor" href="#types-元素"> </a>&lt;types&gt;元素</h2>
-<p>定义字段类型solr内置了常用的字段类型包括：字符串字段(string)、数值字段(int,float,long,double,tint,tfloat,tlong,tdouble)、日期字段(date,tdate)等，也可以自定义高级字段类型</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/26/20170726151800.png" alt="types元素"><span class="image-caption">types元素</span></p>
+<p>types元素定义了字段类型</p>
+<p>solr内置了常用的字段类型包括：字符串字段(string)、数值字段(int,float,long,double,tint,tfloat,tlong,tdouble)、日期字段(date,tdate)等，也可以自定义高级字段类型</p>
 <h3 id="日期字段"><a class="header-anchor" href="#日期字段"> </a>日期字段</h3>
 <p>日期格式默认采用ISO-8601日期/时间格式(YYYY-MM-DDTHH:MM:SSZ) 如：2017-01-01T23:59:59Z</p>
 <h3 id="属性解释-v2"><a class="header-anchor" href="#属性解释-v2"> </a>属性解释</h3>
@@ -485,7 +491,7 @@ q=keyword:(iphone 4s)</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;schema主要作用是定义文档结构，如果把solr比作数据库，schema
+      &lt;p&gt;schema主要作用是定义文档结构，如果把solr比作数据库，schema类似于数据库的表结构&lt;/p&gt;
     
     </summary>
     
@@ -497,13 +503,15 @@ q=keyword:(iphone 4s)</p>
   </entry>
   
   <entry>
-    <title>solr学习笔记 - 1）solr安装</title>
+    <title>solr学习笔记（一）solr安装</title>
     <link href="http://2le.me/2017/07/19/solr-study/"/>
     <id>http://2le.me/2017/07/19/solr-study/</id>
     <published>2017-07-19T07:39:24.000Z</published>
-    <updated>2017-07-24T07:17:00.000Z</updated>
+    <updated>2017-07-27T01:04:57.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="环境要求"><a class="header-anchor" href="#环境要求"> </a>环境要求</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>solr4.10.4 安装</p>
+<a id="more"></a>
+<h2 id="环境要求"><a class="header-anchor" href="#环境要求"> </a>环境要求</h2>
 <p>java1.6+</p>
 <h2 id="二进制分发包"><a class="header-anchor" href="#二进制分发包"> </a>二进制分发包</h2>
 <ol>
@@ -554,11 +562,12 @@ q=keyword:(iphone 4s)</p>
 <p>maven打包部署到tomcat启动</p>
 </li>
 </ol>
+<p>完整代码在这下载<a href="https://github.com/bianle/solr-pom" target="_blank" rel="external">https://github.com/bianle/solr-pom</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;环境要求&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
+      &lt;p&gt;solr4.10.4 安装&lt;/p&gt;
     
     </summary>
     
@@ -604,9 +613,11 @@ Bringing up interface eth0:  Device eth0 does not seem to be present,delaying in
     <link href="http://2le.me/2017/07/18/solr-draft/"/>
     <id>http://2le.me/2017/07/18/solr-draft/</id>
     <published>2017-07-18T09:54:17.000Z</published>
-    <updated>2017-07-25T00:58:47.000Z</updated>
+    <updated>2017-07-26T08:50:31.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="1-solr-安装"><a class="header-anchor" href="#1-solr-安装"> </a>1. solr 安装</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>草稿</p>
+<a id="more"></a>
+<h2 id="1-solr-安装"><a class="header-anchor" href="#1-solr-安装"> </a>1. solr 安装</h2>
 <h3 id="下载安装包"><a class="header-anchor" href="#下载安装包"> </a>下载安装包</h3>
 <figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line">wget <span class="symbol">http:</span>/<span class="regexp">/mirrors.hust.edu.cn/apache</span><span class="regexp">/lucene/solr</span><span class="regexp">/6.3.0/solr</span>-<span class="number">6.3</span>.<span class="number">0</span>.tgz</div><div class="line">tar zxf solr*</div></pre></td></tr></table></figure>
 <p>下载历史版本在这<a href="http://archive.apache.org/dist/lucene/solr/" target="_blank" rel="external">http://archive.apache.org/dist/lucene/solr/</a></p>
@@ -620,19 +631,9 @@ Bringing up interface eth0:  Device eth0 does not seem to be present,delaying in
 <li><code>-p &lt;port&gt;</code> 指定端口</li>
 </ol>
 <h2 id="2-主要配置文件"><a class="header-anchor" href="#2-主要配置文件"> </a>2. 主要配置文件</h2>
-<h3 id="schema-xml-5以后改为managed-schema"><a class="header-anchor" href="#schema-xml-5以后改为managed-schema"> </a>schema.xml(5以后改为managed-schema)</h3>
+<h3 id="schema-xml"><a class="header-anchor" href="#schema-xml"> </a>schema.xml</h3>
 <p>field节点
 required属性默认为false</p>
-<h2 id="fields-字段"><a class="header-anchor" href="#fields-字段"> </a><fields>字段</fields></h2>
-<h3 id="field-一般字段"><a class="header-anchor" href="#field-一般字段"> </a><field>一般字段</field></h3>
-<h3 id="dynamicfield-动态字段"><a class="header-anchor" href="#dynamicfield-动态字段"> </a><dynamicfield>动态字段</dynamicfield></h3>
-<h2 id="copyfield-复制字段"><a class="header-anchor" href="#copyfield-复制字段"> </a><copyfield>复制字段</copyfield></h2>
-<h2 id="uniquekey-唯一键字段"><a class="header-anchor" href="#uniquekey-唯一键字段"> </a><uniquekey>唯一键字段</uniquekey></h2>
-<h2 id="types-字段类型"><a class="header-anchor" href="#types-字段类型"> </a><types>字段类型</types></h2>
-<h3 id="fieldtype-字段类型"><a class="header-anchor" href="#fieldtype-字段类型"> </a><fieldtype>字段类型</fieldtype></h3>
-<h4 id="字符串字段"><a class="header-anchor" href="#字符串字段"> </a>字符串字段</h4>
-<h4 id="日期字段"><a class="header-anchor" href="#日期字段"> </a>日期字段</h4>
-<h4 id="数值字段"><a class="header-anchor" href="#数值字段"> </a>数值字段</h4>
 <h2 id="3-solr控制台"><a class="header-anchor" href="#3-solr控制台"> </a>3. solr控制台</h2>
 <p>修改schema.xml后控制台-&gt;Core Admin-&gt;Reload后生效</p>
 <h2 id="solrj"><a class="header-anchor" href="#solrj"> </a>solrj</h2>
@@ -750,7 +751,7 @@ Ivy is not available
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;1-solr-安装&quot;&gt;&lt;a class=&quot;header-anch
+      &lt;p&gt;草稿&lt;/p&gt;
     
     </summary>
     
@@ -1117,13 +1118,13 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
     <updated>2017-07-12T03:21:40.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer1" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer1 = new DPlayer({"element":document.getElementById("dplayer1"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC03%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs3.jpg"}});</script>  
+<div id="dplayer2" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer2 = new DPlayer({"element":document.getElementById("dplayer2"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC03%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs3.jpg"}});</script>  
 ]]></content>
     
     <summary type="html">
     
       &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;  
-&lt;div id=&quot;dplayer1&quot; c
+&lt;div id=&quot;dplayer2&quot; c
     
     </summary>
     
@@ -1142,13 +1143,13 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
     <updated>2017-07-12T03:21:28.000Z</updated>
     
     <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
-<div id="dplayer2" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer2 = new DPlayer({"element":document.getElementById("dplayer2"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC02%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs2.jpg"}});</script>
+<div id="dplayer1" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer1 = new DPlayer({"element":document.getElementById("dplayer1"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC02%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs2.jpg"}});</script>
 ]]></content>
     
     <summary type="html">
     
       &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;div id=&quot;dplayer2&quot; cla
+&lt;div id=&quot;dplayer1&quot; cla
     
     </summary>
     
