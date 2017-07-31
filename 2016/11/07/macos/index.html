@@ -114,11 +114,12 @@
 国人必备的30个Alfred Workflow
  iterm2
 http://blog.csdn.net/shenxin870409/article/details/41597307
- oh-my-zsh
-Oh My Zsh 插件篇 - 实用工具
- brew
- 安装
-ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/">
+ iterm2 ssh 自动登录
+
+在$PATH目录(如:/usr/local/bin)新建expect脚本(如:iterm2ssh.sh)
+
+内容如下：
+#!/usr/bin/expect">
 <meta property="og:type" content="article">
 <meta property="og:title" content="macos">
 <meta property="og:url" content="http://2le.me/2016/11/07/macos/index.html">
@@ -127,23 +128,25 @@ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/">
 国人必备的30个Alfred Workflow
  iterm2
 http://blog.csdn.net/shenxin870409/article/details/41597307
- oh-my-zsh
-Oh My Zsh 插件篇 - 实用工具
- brew
- 安装
-ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/">
-<meta property="og:updated_time" content="2017-07-31T03:18:05.000Z">
+ iterm2 ssh 自动登录
+
+在$PATH目录(如:/usr/local/bin)新建expect脚本(如:iterm2ssh.sh)
+
+内容如下：
+#!/usr/bin/expect">
+<meta property="og:updated_time" content="2017-07-31T08:19:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macos">
 <meta name="twitter:description" content="alfred
 国人必备的30个Alfred Workflow
  iterm2
 http://blog.csdn.net/shenxin870409/article/details/41597307
- oh-my-zsh
-Oh My Zsh 插件篇 - 实用工具
- brew
- 安装
-ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/">
+ iterm2 ssh 自动登录
+
+在$PATH目录(如:/usr/local/bin)新建expect脚本(如:iterm2ssh.sh)
+
+内容如下：
+#!/usr/bin/expect">
 
 
 
@@ -444,6 +447,22 @@ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/">
 <p><a href="http://www.waerfa.com/alfred-workflow" target="_blank" rel="external">国人必备的30个Alfred Workflow</a></p>
 <h2 id="iterm2"><a class="header-anchor" href="#iterm2"> </a>iterm2</h2>
 <p><a href="http://blog.csdn.net/shenxin870409/article/details/41597307" target="_blank" rel="external">http://blog.csdn.net/shenxin870409/article/details/41597307</a></p>
+<h3 id="iterm2-ssh-自动登录"><a class="header-anchor" href="#iterm2-ssh-自动登录"> </a>iterm2 ssh 自动登录</h3>
+<ol>
+<li>在<code>$PATH</code>目录(如:/usr/local/bin)新建expect脚本(如:iterm2ssh.sh)</li>
+</ol>
+<p>内容如下：</p>
+<figure class="highlight tcl"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/expect  </span></div><div class="line">  </div><div class="line"><span class="keyword">set</span> timeout <span class="number">30</span>  </div><div class="line">spawn ssh [<span class="keyword">lindex</span> $argv <span class="number">0</span>]@[<span class="keyword">lindex</span> $argv <span class="number">1</span>]  </div><div class="line">expect &#123;  </div><div class="line">        <span class="string">"(yes/no)?"</span>  </div><div class="line">        &#123;send <span class="string">"yes\n"</span>;exp_continue&#125;  </div><div class="line">        <span class="string">"password:"</span>  </div><div class="line">        &#123;send <span class="string">"[lindex $argv 2]\n"</span>&#125;  </div><div class="line">&#125;  </div><div class="line">interact</div></pre></td></tr></table></figure>
+<p>并设置可执行</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">chmod</span> +<span class="selector-tag">x</span> <span class="selector-tag">iterm2ssh</span><span class="selector-class">.sh</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>iterm2添加profile</li>
+</ol>
+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">o</kbd>打开profiles列表窗口，点击`edit profiles`按钮打开profiles编辑窗口，点击左侧`+`按钮新增profile，设置名称，`send text at start`
+<p>设置为<code>iterm2ssh.ssh &lt;用户名&gt; &lt;服务器地址&gt; &lt;密码&gt;</code></p>
+<ol start="3">
+<li>右键 new tab 选择刚才新增的profile即可</li>
+</ol>
 <h2 id="oh-my-zsh"><a class="header-anchor" href="#oh-my-zsh"> </a>oh-my-zsh</h2>
 <p><a href="http://www.tuicool.com/articles/J3aIvuU" target="_blank" rel="external">Oh My Zsh 插件篇 - 实用工具</a></p>
 <h2 id="brew"><a class="header-anchor" href="#brew"> </a>brew</h2>
@@ -792,7 +811,7 @@ git remote set-url origin <a href="https://mirrors.ustc.edu.cn/homebrew-core.git
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#alfred"><span class="nav-number">1.</span> <span class="nav-text"> alfred</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterm2"><span class="nav-number">2.</span> <span class="nav-text"> iterm2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oh-my-zsh"><span class="nav-number">3.</span> <span class="nav-text"> oh-my-zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#brew"><span class="nav-number">4.</span> <span class="nav-text"> brew</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">4.1.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brew-缓存位置-users-username-library-caches-homebrew"><span class="nav-number">4.2.</span> <span class="nav-text"> brew 缓存位置/Users/${UserName}/Library/Caches/Homebrew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brew-安装目录-usr-local-cellar"><span class="nav-number">4.3.</span> <span class="nav-text"> brew 安装目录/usr/local/Cellar/</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">4.4.</span> <span class="nav-text"> 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-unknown-command-versions"><span class="nav-number">4.5.</span> <span class="nav-text"> Error: Unknown command: versions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brew-国内源"><span class="nav-number">4.6.</span> <span class="nav-text"> brew 国内源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cornerstone"><span class="nav-number">5.</span> <span class="nav-text"> Cornerstone</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#alfred"><span class="nav-number">1.</span> <span class="nav-text"> alfred</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterm2"><span class="nav-number">2.</span> <span class="nav-text"> iterm2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iterm2-ssh-自动登录"><span class="nav-number">2.1.</span> <span class="nav-text"> iterm2 ssh 自动登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#oh-my-zsh"><span class="nav-number">3.</span> <span class="nav-text"> oh-my-zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#brew"><span class="nav-number">4.</span> <span class="nav-text"> brew</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">4.1.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brew-缓存位置-users-username-library-caches-homebrew"><span class="nav-number">4.2.</span> <span class="nav-text"> brew 缓存位置/Users/${UserName}/Library/Caches/Homebrew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brew-安装目录-usr-local-cellar"><span class="nav-number">4.3.</span> <span class="nav-text"> brew 安装目录/usr/local/Cellar/</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">4.4.</span> <span class="nav-text"> 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-unknown-command-versions"><span class="nav-number">4.5.</span> <span class="nav-text"> Error: Unknown command: versions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brew-国内源"><span class="nav-number">4.6.</span> <span class="nav-text"> brew 国内源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cornerstone"><span class="nav-number">5.</span> <span class="nav-text"> Cornerstone</span></a></li></ol></div>
             
 
           </div>

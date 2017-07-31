@@ -451,6 +451,108 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-mode-window/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">可拖动模式窗口</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>可拖动模式窗口<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"> </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertWin</span>(<span class="params">title, msg, w, h</span>)</span>&#123;  </div><div class="line">    <span class="keyword">var</span> titleheight = <span class="string">"22px"</span>; <span class="comment">// 提示窗口标题高度  </span></div><div class="line">    <span class="keyword">var</span> bordercolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的边框颜色  </span></div><div class="line">    <span class="keyword">var</span> titlecolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示窗口的标题颜色  </span></div><div class="line">    <span class="keyword">var</span> titlebgcolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的标题背景色 </span></div><div class="line">    <span class="keyword">var</span> bgcolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示内容的背景色 </span></div><div class="line">     </div><div class="line">    <span class="keyword">var</span> iWidth = <span class="built_in">document</span>.documentElement.clientWidth;  </div><div class="line">    <span class="keyword">var</span> iHeight = <span class="built_in">document</span>.documentElement.clientHeight;  </div><div class="line">    <span class="keyword">var</span> bgObj = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);  </div><div class="line">    bgObj.style.cssText = <span class="string">"position:absolute;left:0px;top:0px;width:"</span>+iWidth+<span class="string">"px;height:"</span>+<span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, iHeight)+<span class="string">"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(bgObj);  </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> msgObj=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>); </div><div class="line">    msgObj.style.cssText = <span class="string">"position:absolute;font:11px ‘宋体’;top:"</span>+(iHeight-h)/<span class="number">2</span>+<span class="string">"px;left:"</span>+(iWidth-w)/<span class="number">2</span>+<span class="string">"px;width:"</span>+w+<span class="string">"px;height:"</span>+h+<span class="string">"px;text-align:center;border:1px solid "</span>+bordercolor+<span class="string">";background-color:"</span>+bgcolor+<span class="string">";padding:1px;line-height:22px;z-index:102;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(msgObj); </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>); </div><div class="line">    msgObj.appendChild(table); </div><div class="line">    table.style.cssText = <span class="string">"margin:0px;border:0px;padding:0px;"</span>; </div><div class="line">    table.cellSpacing = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> tr = table.insertRow(<span class="number">-1</span>); </div><div class="line">    <span class="keyword">var</span> titleBar = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    titleBar.style.cssText = <span class="string">"width:100%;height:"</span>+titleheight+<span class="string">"px;text-align:left;padding:3px;margin:0px;font:bold 13px ‘宋体’;color:"</span>+titlecolor+<span class="string">";border:1px solid "</span> + bordercolor + <span class="string">";cursor:move;background-color:"</span> + titlebgcolor; </div><div class="line">    titleBar.style.paddingLeft = <span class="string">"10px"</span>; </div><div class="line">    titleBar.innerHTML = title; </div><div class="line">    <span class="keyword">var</span> moveX = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveY = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveTop = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveLeft = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveable = <span class="literal">false</span>; </div><div class="line">    <span class="keyword">var</span> docMouseMoveEvent = <span class="built_in">document</span>.onmousemove; </div><div class="line">    <span class="keyword">var</span> docMouseUpEvent = <span class="built_in">document</span>.onmouseup; </div><div class="line">    titleBar.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">var</span> evt = getEvent(); </div><div class="line">        moveable = <span class="literal">true</span>;  </div><div class="line">        moveX = evt.clientX; </div><div class="line">        moveY = evt.clientY; </div><div class="line">        moveTop = <span class="built_in">parseInt</span>(msgObj.style.top); </div><div class="line">        moveLeft = <span class="built_in">parseInt</span>(msgObj.style.left); </div><div class="line">         </div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">if</span> (moveable) &#123; </div><div class="line">                <span class="keyword">var</span> evt = getEvent(); </div><div class="line">                <span class="keyword">var</span> x = moveLeft + evt.clientX – moveX; </div><div class="line">                <span class="keyword">var</span> y = moveTop + evt.clientY – moveY; </div><div class="line">                <span class="keyword">if</span> ( x &gt; <span class="number">0</span> &amp;&amp;( x + w &lt; iWidth) &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; (y + h &lt; iHeight) ) &#123; </div><div class="line">                    msgObj.style.left = x + <span class="string">"px"</span>; </div><div class="line">                    msgObj.style.top = y + <span class="string">"px"</span>; </div><div class="line">                &#125; </div><div class="line">            &#125;     </div><div class="line">        &#125;; </div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">            <span class="keyword">if</span> (moveable) &#123;  </div><div class="line">                <span class="built_in">document</span>.onmousemove = docMouseMoveEvent; </div><div class="line">                <span class="built_in">document</span>.onmouseup = docMouseUpEvent; </div><div class="line">                moveable = <span class="literal">false</span>;  </div><div class="line">                moveX = <span class="number">0</span>; </div><div class="line">                moveY = <span class="number">0</span>; </div><div class="line">                moveTop = <span class="number">0</span>; </div><div class="line">                moveLeft = <span class="number">0</span>; </div><div class="line">            &#125;  </div><div class="line">        &#125;; </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> closeBtn = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    closeBtn.style.cssText = <span class="string">"cursor:pointer; padding:2px;background-color:"</span> + titlebgcolor; </div><div class="line">    closeBtn.innerHTML = <span class="string">"&lt;span style=’font-size:15pt; color:"</span>+titlecolor+<span class="string">";’&gt;×&lt;/span&gt;"</span>; </div><div class="line">    closeBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(bgObj);  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(msgObj);  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">var</span> msgBox = table.insertRow(<span class="number">-1</span>).insertCell(<span class="number">-1</span>); </div><div class="line">    msgBox.style.cssText = <span class="string">"font:10pt ‘宋体’;"</span>; </div><div class="line">    msgBox.colSpan  = <span class="number">2</span>; </div><div class="line">    msgBox.innerHTML = msg; </div><div class="line">     </div><div class="line">    <span class="comment">// 获得事件Event对象，用于兼容IE和FireFox </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.event || <span class="built_in">arguments</span>.callee.caller.arguments[<span class="number">0</span>]; </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点这里"</span> <span class="attr">onclick</span>=<span class="string">"alertWin(‘标题’,'这里是内容’,300,200);"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-reg/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -602,108 +704,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-1px-table/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">1像素表格</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line"> <span class="selector-tag">table</span>&#123;</div><div class="line">       <span class="attribute">background</span>:black; </div><div class="line">       <span class="attribute">width</span>:<span class="number">600</span>;      </div><div class="line">       <span class="attribute">height</span>:<span class="number">100</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; </div><div class="line">     <span class="attribute">background</span>:white;</div><div class="line"> &#125; </div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">1</span> <span class="attr">cellspacing</span>=<span class="string">1</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/db-mysql-err150/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -777,6 +777,210 @@
 <li>ALTER 声明中有语法错误</li>
 <li>要连接的两个表的编码格式不同</li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-disabled-statebar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">禁止状态栏显示链接</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-radio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-radio/" itemprop="url">js取radio值</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="function">function <span class="title">ok</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">var</span> temp=document.getElementsByName(<span class="string">"radio"</span>);</div><div class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;temp.length;i++)&#123;</div><div class="line">  <span class="comment">//遍历Radio</span></div><div class="line">    <span class="keyword">if</span>(temp[i].<span class="keyword">checked</span>)</div><div class="line">      &#123;alert(<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>);</div><div class="line">      <span class="comment">//获取Radio的值</span></div><div class="line">      document.form2.textfield.<span class="keyword">value</span>=<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>;</div><div class="line">      <span class="comment">//传递给另外一个表单</span></div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1029,220 +1233,6 @@ WindowsUpdate删除掉</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-eclipse-console/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/java-eclipse-console/" itemprop="url">Eclipse 的控制台console乱码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Eclipse 的控制台必须用GBK编码。
-条件1，Window | Preferences | Workspace | Text file encoding | GBK编码。
-这样定义的是整个工作区间的编码。
-这样就把整个工作空间的编码格式定死了，但是如果某一个工程用的是不同的编码格式的话这样单独再解决。如下：
-条件2，工程上 右键 | Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是整个工程的编码。
-这样就把整个工程的编码格式定死了，但是如果某一个文件用的是不同的编码格式的话这样单独再解决。如下：
-条件3，在某个文件上 右键| Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是单独某个文件的编码。
-这里要说的是文件的实际编码格式优先用的是：第3个，其次再用2，最后先用1。有时候是123，必须满足条件。无论怎样这几种编码格式试一试就全知道了。
-条件4，还有运行时编码设置如下：菜单：Run Configuration | 右侧的选项卡Common 的 Console Encoding 选择GBK编码。这个是用来控制console控制台显示，必须是GBK，就不会乱码。尽管1，2，3条件都不是GBK，只要4是GBK。控制台就不会乱码。</p>
-<p>这样保证了工作空间和工程代码编程方式和工程里的单独文件的编码格式的不冲突。</p>
-<p>我们想改变别人的代码的编码格式的话用如下方法：1：用记事本打开，2:改变下面的编码格式如UTF-8，3：另存为xxx.java。这样另存的编码格式就变成自己想要的编码格式了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-disabled-statebar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">禁止状态栏显示链接</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-window-resize/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1345,7 +1335,7 @@ WindowsUpdate删除掉</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-gwt-code-lv/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-1px-table/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1364,7 +1354,7 @@ WindowsUpdate删除掉</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/java-gwt-code-lv/" itemprop="url">GWT 项目中代码分四级概念</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">1像素表格</a></h1>
         
 
         <div class="post-meta">
@@ -1403,15 +1393,7 @@ WindowsUpdate删除掉</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
-使用多个 Module 和 EntryPoint 相对都是非常简单的。创建过程同官方的新建一个Module 和 EntryPoint 没什么两样。那么我们，还有一种需求就是需要一些额外的关注：一个 application , 多个 hostpage， 因为 GWT 默认项目就只是一个 Single Host Page 的 Application。其实，我们有很多人已经注意到了这一点，并且有人 open 了一个 gwt module 来帮助大家实现这一点，它就是 gwtmultipage 。
-gwtmultipage 使用起来相当简单，简单三步就可以了：
-1.加载 org.gwtmultipage.gwtmultipage 这个 GWT module java 包到项目中
-2.修改主 Module 的 gwt.xml， EntryPoint 改成&lt;entry -point class=’org.gwtmultipage.client.EntrypointDispatcher’/&gt;
-当然要先加上它所在的 module<inherits name="’org.gwtmultipage.gwtmultipage’/">
-3.在你的 EntryPoint 类名前加 annotation:@UrlPatternEntryPoint(value=”module.html”)
-就可把 前端 jsp 或者 html 文件与 某个 EntryPoint 对应起来了。gwtmultipage 通过 org.gwtmultipage.client.EntrypointDispatcher 把 host page与 EntryPoint 一一对应。
-EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line"> <span class="selector-tag">table</span>&#123;</div><div class="line">       <span class="attribute">background</span>:black; </div><div class="line">       <span class="attribute">width</span>:<span class="number">600</span>;      </div><div class="line">       <span class="attribute">height</span>:<span class="number">100</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; </div><div class="line">     <span class="attribute">background</span>:white;</div><div class="line"> &#125; </div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">1</span> <span class="attr">cellspacing</span>=<span class="string">1</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
