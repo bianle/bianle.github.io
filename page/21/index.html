@@ -901,7 +901,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/system-ie-icon-disapear/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/web-extjs-encodeuri/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -920,7 +920,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/12/05/system-ie-icon-disapear/" itemprop="url">桌面IE图标不见了</a></h1>
+                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">ext中文传参乱码</a></h1>
         
 
         <div class="post-meta">
@@ -959,10 +959,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
-Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
-”，不含引号，
-然后直接将其文件夹拉到桌面或复制剪切都行。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -1099,6 +1096,137 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
 为
 SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
 执行查询类，OK了。问题解决了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-gwt-new-window/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/05/java-gwt-new-window/" itemprop="url">gwt新窗口打开url设置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
+在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
+由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
+但是在ie下此问题就浮出水面了。
+原始代码是类似这个样子的：
+Window.open(newURL, “_blank”, null);
+就是null参数控制新窗口为模态的，改为下面的样子就没有问题了
+Window.open(newURL, “_blank”, “”);
+参考一下open方法的文档就什么都明白了</p>
+<blockquote>
+<p>void com.google.gwt.user.client.Window.open(String url, String name, String features)
+Opens a new browser window. The “name” and “features” arguments are specified here.
+Parameters:
+url the URL that the new window will display
+name the name of the window (e.g. “_blank”)
+features the features to be enabled/disabled on this window</p>
+</blockquote>
+<p>window.open (‘page.html’, ‘newwindow’, ‘height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no’)</p>
+<p>window.open 弹出新窗口的命令；
+‘page.html’ 弹出窗口的文件名；
+‘newwindow’ 弹出窗口的名字（不是文件名），非必须，可用空”代替；
+height=100 窗口高度；
+width=400 窗口宽度；
+top=0 窗口距离屏幕上方的象素值；
+left=0 窗口距离屏幕左侧的象素值；
+toolbar=no 是否显示工具栏，yes为显示；
+menubar，scrollbars 表示菜单栏和滚动栏。
+resizable=no 是否允许改变窗口大小，yes为允许；
+location=no 是否显示地址栏，yes为允许；
+status=no 是否显示状态栏内的信息，yes为允许；</p>
 
           
         
@@ -1301,7 +1429,7 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-gwt-new-window/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/system-ie-icon-disapear/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1320,7 +1448,7 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/12/05/java-gwt-new-window/" itemprop="url">gwt新窗口打开url设置</a></h1>
+                <a class="post-title-link" href="/2012/12/05/system-ie-icon-disapear/" itemprop="url">桌面IE图标不见了</a></h1>
         
 
         <div class="post-meta">
@@ -1359,138 +1487,10 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
-在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
-由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
-但是在ie下此问题就浮出水面了。
-原始代码是类似这个样子的：
-Window.open(newURL, “_blank”, null);
-就是null参数控制新窗口为模态的，改为下面的样子就没有问题了
-Window.open(newURL, “_blank”, “”);
-参考一下open方法的文档就什么都明白了</p>
-<blockquote>
-<p>void com.google.gwt.user.client.Window.open(String url, String name, String features)
-Opens a new browser window. The “name” and “features” arguments are specified here.
-Parameters:
-url the URL that the new window will display
-name the name of the window (e.g. “_blank”)
-features the features to be enabled/disabled on this window</p>
-</blockquote>
-<p>window.open (‘page.html’, ‘newwindow’, ‘height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no’)</p>
-<p>window.open 弹出新窗口的命令；
-‘page.html’ 弹出窗口的文件名；
-‘newwindow’ 弹出窗口的名字（不是文件名），非必须，可用空”代替；
-height=100 窗口高度；
-width=400 窗口宽度；
-top=0 窗口距离屏幕上方的象素值；
-left=0 窗口距离屏幕左侧的象素值；
-toolbar=no 是否显示工具栏，yes为显示；
-menubar，scrollbars 表示菜单栏和滚动栏。
-resizable=no 是否允许改变窗口大小，yes为允许；
-location=no 是否显示地址栏，yes为允许；
-status=no 是否显示状态栏内的信息，yes为允许；</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/web-extjs-encodeuri/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">ext中文传参乱码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
+Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
+”，不含引号，
+然后直接将其文件夹拉到桌面或复制剪切都行。</p>
 
           
         
