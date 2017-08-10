@@ -345,6 +345,354 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-flex-formmater/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">Flex-代码格式化eclipse插件:Flex Formatter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
+<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
+<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
+<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
+<ol>
+<li>Start up FlexBuilder / FlashBuilder.</li>
+<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
+<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
+<li>Click ‘New Remote Site…’</li>
+<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
+<li>Click OK</li>
+<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
+<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
+</ol>
+<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-ie-css-limit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">IE中样式表、选择符的数量限制记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
+<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
+<blockquote>
+<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 4095 rules</li>
+<li>A sheet may @import up to 31 sheets</li>
+<li>@import nesting supports up to 4 levels deep
+Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>There’s a simple test page for the limits here.</p>
+</blockquote>
+<blockquote>
+<p>-Eric</p>
+</blockquote>
+<blockquote>
+<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 65534 rules</li>
+<li>A document may use up to 4095 stylesheets</li>
+<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
+</ul>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/python-caps-util/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">python 小写转大写</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-num-reg/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -463,224 +811,6 @@
 </li>
 </ol>
 </section>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-flex-formmater/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">Flex-代码格式化eclipse插件:Flex Formatter</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
-<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
-<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
-<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
-<ol>
-<li>Start up FlexBuilder / FlashBuilder.</li>
-<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
-<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
-<li>Click ‘New Remote Site…’</li>
-<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
-<li>Click OK</li>
-<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
-<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
-</ol>
-<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/python-caps-util/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">python 小写转大写</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
 
           
         
@@ -849,6 +979,119 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-rsslibj/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/01/java-rsslibj/" itemprop="url">利用RSSLibJ读取RSS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
+<p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
+<p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
+<p>读取新浪RSS的一个例子，结合Jsf。</p>
+<p>页面：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/core"</span> <span class="attr">prefix</span>=<span class="string">"f"</span>%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/html"</span> <span class="attr">prefix</span>=<span class="string">"h"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%@page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=gb18030"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">f:view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h3</span>&gt;</span>RSS Reader<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"> 			请输入RSS地址：</div><div class="line"> 			<span class="tag">&lt;<span class="name">h:inputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">id</span>=<span class="string">"rssAddress"</span></span></span></div><div class="line">			<span class="attr">converterMessage</span>=<span class="string">"请输入一个正确的Rss地址!"</span> <span class="attr">style</span>=<span class="string">"width:280px;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">h:inputText</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:commandButton</span> <span class="attr">value</span>=<span class="string">"提交"</span> <span class="attr">action</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.readRss &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:commandButton</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:message</span> <span class="attr">for</span>=<span class="string">"rssAddress"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:message</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	从</div><div class="line">	<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">	获取的内容：</div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:dataTable</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.items &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">var</span>=<span class="string">"item"</span> <span class="attr">style</span>=<span class="string">"font-size:13px;"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.title &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputLink</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">				<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">			<span class="tag">&lt;/<span class="name">h:outputLink</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:dataTable</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">f:view</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>RSSReader.java</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.rss;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="keyword">BufferedReader</span>;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</div><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.net.URL;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Channel;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Item;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.RSSReader;</div><div class="line"></div><div class="line"><span class="keyword">import</span> electric.xml.ParseException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class RssReader &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> urlString =  <span class="string">"http://rss.sina.com.cn/news/marquee/ddt.xml"</span>;</div><div class="line">	<span class="keyword">private</span> List&lt;Item&gt; items;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> rssAddress;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyHost = <span class="string">"paicproxy2"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyPort = <span class="string">"8080"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getRssAddress() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setRssAddress(<span class="keyword">String</span> rssAddress) &#123;</div><div class="line">		<span class="keyword">this</span>.rssAddress = rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> List&lt;Item&gt; getItems() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxy(<span class="keyword">String</span> proxyHost,<span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		</div><div class="line">		<span class="comment">// 设置代理</span></div><div class="line">		Properties systemSettings = System.getProperties();</div><div class="line">		systemSettings.put(<span class="string">"http.proxyHost"</span>, proxyHost);</div><div class="line">		systemSettings.put(<span class="string">"http.proxyPort"</span>, proxyPort);</div><div class="line">		System.setProperties(systemSettings);</div><div class="line">	&#125;</div><div class="line">	 <span class="comment">/**</span></div><div class="line">     * 读取RSS。</div><div class="line">     * @param url</div><div class="line">     * @throws IOException </div><div class="line">     * @throws ParseException </div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> readRss() <span class="keyword">throws</span> IOException, ParseException &#123;</div><div class="line">    	setProxy(proxyHost, proxyPort);</div><div class="line">    	</div><div class="line">    	URL __url = <span class="keyword">new</span> URL(<span class="keyword">this</span>.rssAddress);</div><div class="line">    	HttpURLConnection conn = (HttpURLConnection) __url.openConnection();</div><div class="line">    	InputStream in = conn.getInputStream();</div><div class="line">    	<span class="keyword">BufferedReader</span> bufReader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(in,<span class="string">"utf-8"</span>));</div><div class="line">    	RSSReader rssReader = <span class="keyword">new</span> RSSReader(bufReader);</div><div class="line">    	Channel channel = rssReader.getChannel();</div><div class="line">    	<span class="keyword">this</span>.items = channel.getItems();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印获取的RSS内容。</div><div class="line">     * @param urlString</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> test(<span class="keyword">String</span> urlString) &#123;</div><div class="line">    	setProxy(urlString, urlString);	</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">			HttpURLConnection conn = (HttpURLConnection) url.openConnection();</div><div class="line">			InputStream is = conn.getInputStream();</div><div class="line">			StringBuilder sBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">			<span class="keyword">String</span> <span class="built_in">line</span> = <span class="keyword">null</span>;</div><div class="line">			</div><div class="line">			<span class="keyword">BufferedReader</span> reader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,<span class="string">"utf-8"</span>));</div><div class="line">			</div><div class="line">			<span class="keyword">while</span> ((<span class="built_in">line</span> = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">				sBuilder.<span class="built_in">append</span>(<span class="built_in">line</span>).<span class="built_in">append</span>(<span class="string">"\n"</span>);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			System.out.<span class="built_in">println</span>(sBuilder.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>faces-config.xml:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></div><div class="line"> <span class="meta">&lt;!DOCTYPE faces-config PUBLIC</span></div><div class="line"> "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"</div><div class="line"> "http://java.sun.com/dtd/web-facesconfig_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">faces-config</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">managed-bean</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-name</span>&gt;</span>rssReader<span class="tag">&lt;/<span class="name">managed-bean-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">			com.rss.RssReader</div><div class="line">		<span class="tag">&lt;/<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-scope</span>&gt;</span>request<span class="tag">&lt;/<span class="name">managed-bean-scope</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">managed-bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">faces-config</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/02/01/rss1.jpg" alt="rss"><span class="image-caption">rss</span></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-swt-swing-awt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -925,119 +1168,6 @@
 <li>Swing:</li>
 </ol>
 <p>不用说，也是按最大公分母，可是在效率上表现不怎么样，可能以后会有改变。因为它也是基于AWT容器的，所以无法实现透明窗体等效果。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-rsslibj/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/01/java-rsslibj/" itemprop="url">利用RSSLibJ读取RSS</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
-<p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
-<p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
-<p>读取新浪RSS的一个例子，结合Jsf。</p>
-<p>页面：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/core"</span> <span class="attr">prefix</span>=<span class="string">"f"</span>%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/html"</span> <span class="attr">prefix</span>=<span class="string">"h"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%@page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=gb18030"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">f:view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h3</span>&gt;</span>RSS Reader<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"> 			请输入RSS地址：</div><div class="line"> 			<span class="tag">&lt;<span class="name">h:inputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">id</span>=<span class="string">"rssAddress"</span></span></span></div><div class="line">			<span class="attr">converterMessage</span>=<span class="string">"请输入一个正确的Rss地址!"</span> <span class="attr">style</span>=<span class="string">"width:280px;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">h:inputText</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:commandButton</span> <span class="attr">value</span>=<span class="string">"提交"</span> <span class="attr">action</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.readRss &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:commandButton</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:message</span> <span class="attr">for</span>=<span class="string">"rssAddress"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:message</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	从</div><div class="line">	<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">	获取的内容：</div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:dataTable</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.items &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">var</span>=<span class="string">"item"</span> <span class="attr">style</span>=<span class="string">"font-size:13px;"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.title &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputLink</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">				<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">			<span class="tag">&lt;/<span class="name">h:outputLink</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:dataTable</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">f:view</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>RSSReader.java</p>
-<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.rss;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="keyword">BufferedReader</span>;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</div><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.net.URL;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Channel;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Item;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.RSSReader;</div><div class="line"></div><div class="line"><span class="keyword">import</span> electric.xml.ParseException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class RssReader &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> urlString =  <span class="string">"http://rss.sina.com.cn/news/marquee/ddt.xml"</span>;</div><div class="line">	<span class="keyword">private</span> List&lt;Item&gt; items;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> rssAddress;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyHost = <span class="string">"paicproxy2"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyPort = <span class="string">"8080"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getRssAddress() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setRssAddress(<span class="keyword">String</span> rssAddress) &#123;</div><div class="line">		<span class="keyword">this</span>.rssAddress = rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> List&lt;Item&gt; getItems() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxy(<span class="keyword">String</span> proxyHost,<span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		</div><div class="line">		<span class="comment">// 设置代理</span></div><div class="line">		Properties systemSettings = System.getProperties();</div><div class="line">		systemSettings.put(<span class="string">"http.proxyHost"</span>, proxyHost);</div><div class="line">		systemSettings.put(<span class="string">"http.proxyPort"</span>, proxyPort);</div><div class="line">		System.setProperties(systemSettings);</div><div class="line">	&#125;</div><div class="line">	 <span class="comment">/**</span></div><div class="line">     * 读取RSS。</div><div class="line">     * @param url</div><div class="line">     * @throws IOException </div><div class="line">     * @throws ParseException </div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> readRss() <span class="keyword">throws</span> IOException, ParseException &#123;</div><div class="line">    	setProxy(proxyHost, proxyPort);</div><div class="line">    	</div><div class="line">    	URL __url = <span class="keyword">new</span> URL(<span class="keyword">this</span>.rssAddress);</div><div class="line">    	HttpURLConnection conn = (HttpURLConnection) __url.openConnection();</div><div class="line">    	InputStream in = conn.getInputStream();</div><div class="line">    	<span class="keyword">BufferedReader</span> bufReader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(in,<span class="string">"utf-8"</span>));</div><div class="line">    	RSSReader rssReader = <span class="keyword">new</span> RSSReader(bufReader);</div><div class="line">    	Channel channel = rssReader.getChannel();</div><div class="line">    	<span class="keyword">this</span>.items = channel.getItems();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印获取的RSS内容。</div><div class="line">     * @param urlString</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> test(<span class="keyword">String</span> urlString) &#123;</div><div class="line">    	setProxy(urlString, urlString);	</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">			HttpURLConnection conn = (HttpURLConnection) url.openConnection();</div><div class="line">			InputStream is = conn.getInputStream();</div><div class="line">			StringBuilder sBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">			<span class="keyword">String</span> <span class="built_in">line</span> = <span class="keyword">null</span>;</div><div class="line">			</div><div class="line">			<span class="keyword">BufferedReader</span> reader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,<span class="string">"utf-8"</span>));</div><div class="line">			</div><div class="line">			<span class="keyword">while</span> ((<span class="built_in">line</span> = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">				sBuilder.<span class="built_in">append</span>(<span class="built_in">line</span>).<span class="built_in">append</span>(<span class="string">"\n"</span>);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			System.out.<span class="built_in">println</span>(sBuilder.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>faces-config.xml:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></div><div class="line"> <span class="meta">&lt;!DOCTYPE faces-config PUBLIC</span></div><div class="line"> "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"</div><div class="line"> "http://java.sun.com/dtd/web-facesconfig_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">faces-config</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">managed-bean</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-name</span>&gt;</span>rssReader<span class="tag">&lt;/<span class="name">managed-bean-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">			com.rss.RssReader</div><div class="line">		<span class="tag">&lt;/<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-scope</span>&gt;</span>request<span class="tag">&lt;/<span class="name">managed-bean-scope</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">managed-bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">faces-config</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>效果：</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/02/01/rss1.jpg" alt="rss"><span class="image-caption">rss</span></p>
 
           
         
@@ -1486,183 +1616,6 @@ system —-&gt;administration—–&gt;network
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/system-windows-reg/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/system-windows-reg/" itemprop="url">使用reg文件修改注册表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>REG文件实际上是一种注册表脚本文件，双击REG文件即可将其中的数据导入到注册表中。利用REG文件我们可以直接对注册表进行任何修改操作，它对注册表的操作可以不受注册表编辑器被禁用的限制，因此功能更为强大、灵活，另外，由于REG文件可以用任何文本文件编辑工具(例如记事本)进行修改，因此通过它对注册表数据进行修改后，如果发生错误，还可以通过改回REG文件中的数据后再导入，从而实现恢复操作，因此它又较之直接用注册表编辑器修改更安全，所以熟练掌握REG文件的运用，有时可以起到事半功倍、意想不到的效果。
-创建REG文件
-REG文件的创建是非常简单的，可以通过任何一个文本文件编辑工具来实现。我们就以创建一个可以解除注册表禁用限制的REG文件restore.reg为例来介绍一下具体过程。
-打开记事本，在记事本文件中输入以下内容：
-REGEDIT4 空一行
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\System]“DisableRegistryTools”=dword : 00000000
-保存此文件，在打开的“另存为”对话框中选择好保存路径，再单击“保存类型”中的下拉箭头选择“所有文件”(一定要选择此步，不然保存后的文件会自动加上TXT的扩展名)，然后在“文件名”中输入“restore.reg”后按“保存”按钮。以后你就可以通过双击这个restore.reg来直接解除禁用注册表的限制。
-对REG文件进行修改
-综述
-我们在利用REG文件对注册表进行操作时，要操作的对象有两种：一种是对主键进行操作，一种是对主键下的键值项目进行操作。对主键的操作有添加、删除两种，而对键值项目的操作则分为添加、修改和删除三种。下面我们就一个一个来实现。
-对主键的操作
-(1)添加主键
-要想利用REG文件在注册表中添加一个主键是非常方便的，只需要在文件体部分直接以“[ ]”的形式写上要添加的主键路径即可。
-例如：在HKEY_LOCAL_MACHINE\Software主键下添加一个名称为“软件工作室”的主键，内容如下：
-REGEDIT4
-空一行
-[HKEY_LOCAL_MACHINE\Software\软件工作室]
-(2)删除主键
-要用REG文件在注册表中删除一个主键，在文件体部分“[ ]”括起来的主键路径前面加上一个“-”符号即可，删除主键操作将会一并删除该主键下的所有子键及其键值项目，所以这是个比较危险的命令，使用要十分注意。例如要删除我们刚才添加的那个主键，内容如下：
-REGEDIT4
-空一行
-[-HKEY_LOCAL_MACHINE\Software\软件工作室]
-对键值项目的操作
-(1)添加键值项目
-添加键值项目的操作如同注册表编辑器中的“新建”命令，一般来说，键值的数据类型分为三种：字符串值、二进制值和DWORD值。在REG文件中我们也要设置添加的键值项目的数据类型，如果要添加字符串值，则“=”号后边要用英文的双引号引住数据；如果添加的为DWORD类型值，“=”号后边的格式为“dword:数据”；如果添加的为二进制值，“=”号后边 则为“hex:数据”。要设置默认值的键值数据时，“=”号前边的键值名称应为“@”符号，并且没有双引号。
-例如我们要在“HKEY_LOCAL_MACHINE\Software\软件工作室”主键下设置默认键值为“工作室”，并分别添加“姓名”键值项目(字符串值)、“年龄”键值项目(二进制值)、“婚否”键值项目(DWORD值)。相应的REG文件内容如下：
-REGEDIT4
-空一行
-[HKEY_LOCAL_MACHINE\Software\软件工作室]
-@=“工作室”
-“姓名”=“徐徐徐”
-“年龄”=hex:23
-&quot;婚否&quot;=dword:00000000
-在添加键值项目时，如果该键值所在的主键路径不存在的话，在添加键值项目的同时会自动新建该主键。另外在添加字符串值的键值项目时还有一点值得注意的地方，当这个字符串值是包括文件路径的字符串值时，路径分隔符应用“\”双斜杠表示，以示和注册表中的主键路径分隔符区别开来。例如我们要在注册中“HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run”主键下的启动组中添加位于“C:\PROGRAM FILES\BOOBSOFT\屏幕保护控制器”目录下的一个应用程序“屏幕保护控制器.exe”的启动键值项目，REG文件内容如下：
-REGEDIT4
-空一行
-[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run]
-“scr”=“C:\PROGRAM ILES\BOOBSOFT\屏幕保护控制器\屏幕保护控制器.exe”
-(2)修改键值项目
-其实修改和添加很类似，对于已经存在的键值项目，我们要修改其数据时，只需要将正确的数据赋予对应的键值项目即可，新的数据会自动覆盖错误的旧数据，例如，当某些恶意网页修改了你的IE标题栏文字，在标题栏中总是显示那个网站的广告文字，很讨厌，我们知道修改IE标题栏文字是通过“HKEY_CURRENT_USER\Software<br>
-Microsoft\Internet Explorer\Main”主键下的“Window Title”键值的数据进行设置的，那么我们就可以通过REG文件改回默认的IE标题栏文字。
-REGEDIT4
-空一行
-[HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main]
-“Window Title”=&quot;&quot;
-(3)删除键值项目
-用REG文件删除键值项目也是很方便的，和删除主键相类似，也是通过“=”号实现的，不过这次不是加在前面，而是把“-”符号放在键值项目的等号后面。例如一些恶意网页在修改IE标题栏等设置的同时，还修改了开始菜单相关的键值项目数据，使得开始菜单中的“运行”、“查找”、“关闭”等命令都不见了，导入下面的这个REG文件删除相应的键值项目后就可以找回开始菜单中的这些命令了。
-REGEDIT4
-空一行
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-“NoRun”=-(解除“运行”命令)
-“NoClose”=-(找回“关闭系统”命令)
-“NoFind”=-(找回“查找”命令)
-将REG文件中的数据导入到注册表中
-导入信息
-我们双击REG文件时，系统会首先提示“确实要把XXX.REG内的信息添加到注册表吗？”的询问对话框，单击“是”按钮，系统就会按照REG文件中所描述的操作对注册表进行修改，完成以后并会给出提示“XXX.REG中的信息已经成功输入注册表”，把REG文件中的信息导入注册表的操作称为“合并”。
-修改默认值
-在REG文件上单击鼠标右键，有三个命令是关于REG文件的：合并、Print、编辑，以粗体显示的就是“合并”操作，这也是默认的打开方式，也就是双击时执行的操作。如果你不想让双击REG文件时执行“合并”的操作，你可以更改它的默认打开方式为“编辑”。打开资源管理器，单击“工具”菜单中的“文件夹选项”命令，在打开的对话框中单击“文件类型”标签，然后在“已注册的文件类型”列表中找到并选中“注册表项目”，从下面的“打开方式”我们也可以看出：原来REG文件默认的“合并”操作关联的是注册表编辑器Regedit呀!接下来点击“编辑”按钮，打开“编辑文件类型”对话框，然后选择“操作”列表中的“编辑”，再点击“设为默认值”按钮即可，以后双击REG文件时就会用记事本来打开进行编辑。
-在这里笔者顺便告诉大家一个独门绝技，如果你希望REG文件在导入时没有任何提示，你可以在图4所示的对话框中选中“合并”，然后单击“编辑”按钮，在弹出对话框的命令行中输入“regedit.exe /s “%1””即可，这是使用了注册表编辑器Regedit的一个被称为安静导入模式的隐藏参数“/S”，在导入REG文件时如果加上“/S”参数，系统就不会再弹出任何提示对话框而直接导入了。
-解除禁用
-有时在某些电脑中设置了禁用注册表编辑器后，为了防止一些电脑高手使用REG文件，来解除对注册表编辑器的限制，会让REG文件的默认打开程序设置为其他无关程序，当然这时可以通过修改“文件夹选项”中的相关设置改回来，但还有一种更绝的办法可以使REG文件不能用系统默认的方式打开。
-运行注册表编辑器，将“HKEY_CLASSES_ROOT.reg”下的默认值改为“txtfile”，这时REG文件的打开方式都指向了TXT文本文件。这样更改后不知道的人即使修改“文件夹类型”中的“注册表项目”设置也无法改回来，当然这时系统也已经禁用了注册表编辑器，你是无法通过注册表编辑器修改了。但经过笔者的研究发现还有一种方法可以破解这种禁用REG文件。我们可以在编辑好的REG文件上按住“Shift”键的同时单击鼠标右键，这时系统会让你重新选择打开方式，从中选取用注册表编辑器Regedit打开就可以将REG文件导入注册表.
-REG文件格式
-(1)Windows 95/98/ME/NT 4.0第一行必须是“REGEDIT4”。Windows 2000/XP/Vista是“Windows Registry Editor Version 5.00&quot;。
-(2)第一行后必须空一行。条与条之间最好也空一行。每行前不能留空格。
-(3)注册表信息头尾用“[”与“]”包起来；
-(4)&quot; “内就是字符串内容；“DWORD”为“0”就是用“dword:00000000”表示。
-(5)如果有两个以上的注册表信息，信息与信息之间就需要有空行隔开。
-(6)如果要删除某个注册表信息该怎么办？很简单，在注册表信息前面加上“-”（减）号。
-REG文件规则
-字符串值S表示: “字符串”=”&quot;
-二进制值B表示: “二进制”=hex:
-DWORD（32-位）值D表示: “DWORD（32-位）”=dword:00000000
-DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00,00
-多字符串值M表示: “多字符串”=hex(7):00,00
-可扩充字符串值E表示： “可扩充字符串”=hex(2):00,00</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1712,7 +1665,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">266</span>
+                <span class="site-state-item-count">267</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1723,7 +1676,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">59</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1734,7 +1687,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">167</span>
+                <span class="site-state-item-count">168</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
