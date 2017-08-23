@@ -345,7 +345,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-grant/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/09/12/web-js-uuid/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -364,7 +364,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/03/25/db-oracle-grant/" itemprop="url">ORACLE 创建视图时,提示用户权限不足</a></h1>
+                <a class="post-title-link" href="/2014/09/12/web-js-uuid/" itemprop="url">Math.uuid</a></h1>
         
 
         <div class="post-meta">
@@ -403,14 +403,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先使用system帐户进行登录</p>
-<figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">sqlplus <span class="keyword">system</span>/<span class="keyword">pwd</span>[@DB]</div></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">view</span> <span class="keyword">to</span> scott</div></pre></td></tr></table></figure>
-<p>提示：授权成功。
-执行：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
-<p>退出当前system帐户。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Math</span>.uuid = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// Private array of chars to use  </span></div><div class="line">            <span class="keyword">var</span> CHARS = <span class="string">'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'</span> </div><div class="line">                    .split(<span class="string">''</span>); </div><div class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">len, radix</span>) </span>&#123; </div><div class="line">                <span class="keyword">var</span> chars = CHARS, uuid = [], rnd = <span class="built_in">Math</span>.random; </div><div class="line">                radix = radix || chars.length; </div><div class="line">                <span class="keyword">if</span> (len) &#123; <span class="comment">// Compact form      </span></div><div class="line">                    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) </div><div class="line">                        uuid[i] = chars[<span class="number">0</span> | rnd() * radix]; </div><div class="line">                &#125; <span class="keyword">else</span> &#123; <span class="comment">// rfc4122, version 4 form      var r;// rfc4122 requires these characters      </span></div><div class="line">                    uuid[<span class="number">8</span>] = uuid[<span class="number">13</span>] = uuid[<span class="number">18</span>] = uuid[<span class="number">23</span>] = <span class="string">'-'</span>; </div><div class="line">                    uuid[<span class="number">14</span>] = <span class="string">'4'</span>;<span class="comment">// Fill in random data.  At i==19 set the high bits of clock sequence as      </span></div><div class="line">                    <span class="comment">// per rfc4122, sec. 4.1.5      </span></div><div class="line">                    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">36</span>; i++) &#123; </div><div class="line">                        <span class="keyword">if</span> (!uuid[i]) &#123; </div><div class="line">                            r = <span class="number">0</span> | rnd() * <span class="number">16</span>; </div><div class="line">                            uuid[i] = chars[(i == <span class="number">19</span>) ? (r &amp; <span class="number">0x3</span>) | <span class="number">0x8</span> </div><div class="line">                                    : r &amp; <span class="number">0xf</span>]; </div><div class="line">                        &#125; </div><div class="line">                    &#125; </div><div class="line">                &#125; </div><div class="line">                <span class="keyword">return</span> uuid.join(<span class="string">''</span>); </div><div class="line">            &#125;; </div><div class="line">        &#125;)();<span class="comment">// Deprecated - only here for backward compatability </span></div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">UUID</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">return</span> <span class="built_in">Math</span>.uuid(); </div><div class="line">        &#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -566,6 +559,118 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/" itemprop="url">启动tomcat报java.lang.NoClassDefFoundError: javax/el/ExpressionFactory</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory异常
+如果你按照以上目录发布工程，抛出以下异常：</p>
+<ol>
+<li>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory</li>
+<li>或打开页面后显示： HTTP Status 404 – /xxx/xxx
+报404错误
+Tomcat/5.5.17
+则将javaee.jar包再copy一份放在tomcat目录的common\lib下就不会了。
+关于用到的javaee.jar、jsf-api.jar、jsf-impl.jar、jstl-1.2.jar这四个包可以通过myeclipse中获得，
+如果你安装了myeclipse5.5的话，我安装的是MyEclipse，这四个包的所在的目录是：<code>MyEclipse\myeclipse\eclipse\plugins\com.genuitec.eclipse.j2eedt.core_6(目录下)\data\libraryset\EE_5</code></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-sql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -674,7 +779,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-grant/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -693,7 +798,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/03/25/java-tomcat-java-lang-NoClassDefFoundError-javax-el-ExpressionFactory/" itemprop="url">启动tomcat报java.lang.NoClassDefFoundError: javax/el/ExpressionFactory</a></h1>
+                <a class="post-title-link" href="/2014/03/25/db-oracle-grant/" itemprop="url">ORACLE 创建视图时,提示用户权限不足</a></h1>
         
 
         <div class="post-meta">
@@ -732,17 +837,14 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory异常
-如果你按照以上目录发布工程，抛出以下异常：</p>
-<ol>
-<li>java.lang.NoClassDefFoundError: javax/el/ExpressionFactory</li>
-<li>或打开页面后显示： HTTP Status 404 – /xxx/xxx
-报404错误
-Tomcat/5.5.17
-则将javaee.jar包再copy一份放在tomcat目录的common\lib下就不会了。
-关于用到的javaee.jar、jsf-api.jar、jsf-impl.jar、jstl-1.2.jar这四个包可以通过myeclipse中获得，
-如果你安装了myeclipse5.5的话，我安装的是MyEclipse，这四个包的所在的目录是：<code>MyEclipse\myeclipse\eclipse\plugins\com.genuitec.eclipse.j2eedt.core_6(目录下)\data\libraryset\EE_5</code></li>
-</ol>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先使用system帐户进行登录</p>
+<figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">sqlplus <span class="keyword">system</span>/<span class="keyword">pwd</span>[@DB]</div></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">view</span> <span class="keyword">to</span> scott</div></pre></td></tr></table></figure>
+<p>提示：授权成功。
+执行：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
+<p>退出当前system帐户。</p>
 
           
         
@@ -1476,108 +1578,6 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/04/web-flex-music-player/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/04/web-flex-music-player/" itemprop="url">web-flex-music-player</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1627,7 +1627,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">267</span>
+                <span class="site-state-item-count">268</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1649,7 +1649,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">168</span>
+                <span class="site-state-item-count">169</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
