@@ -345,6 +345,127 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/12/setup-ssl-cert-for-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/12/setup-ssl-cert-for-nginx/" itemprop="url">nginx安装ssl证书</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="环境"><a class="header-anchor" href="#环境"> </a>环境</h2>
+<ol>
+<li>阿里云ecs + nginx + tomcat</li>
+<li>域名在阿里云申请，dns解析也是阿里云的（申请阿里云证书验证方便）</li>
+</ol>
+<h2 id="申请证书"><a class="header-anchor" href="#申请证书"> </a>申请证书</h2>
+<p>登录阿里云左侧导航<code>安全</code>-&gt;<code>证书服务</code>，申请证书</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/12/20170712111435.png" alt="ssl"><span class="image-caption">ssl</span></p>
+<p>申请后下载对应版本</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/12/20170712111630.png" alt="ssl"><span class="image-caption">ssl</span></p>
+<h2 id="上传到服务器"><a class="header-anchor" href="#上传到服务器"> </a>上传到服务器</h2>
+<p>把下载的证书上传到服务器，最好是单独的目录，方便管理</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/12/20170712111706.png" alt="ssl"><span class="image-caption">ssl</span></p>
+<h2 id="配置nginx"><a class="header-anchor" href="#配置nginx"> </a>配置nginx</h2>
+<p>开启ssl</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><div class="line">ssl on;</div><div class="line">ssl_certificate   <span class="regexp">/root/</span>cert<span class="regexp">/ceshi.agoodwater.cn/</span>ceshi.agoodwater.cn.pem;</div><div class="line">ssl_certificate_key  <span class="regexp">/root/</span>cert<span class="regexp">/ceshi.agoodwater.cn/</span>ceshi.agoodwater.cn.key;</div><div class="line">ssl_session_timeout <span class="number">5</span>m;</div><div class="line">ssl_ciphers ECDHE-RSA-AES128-GCM-<span class="string">SHA256:</span><span class="string">ECDHE:</span><span class="string">ECDH:</span><span class="string">AES:</span><span class="string">HIGH:</span>!<span class="string">NULL:</span>!<span class="string">aNULL:</span>!<span class="string">MD5:</span>!<span class="string">ADH:</span>!RC4;</div><div class="line">ssl_protocols TLSv1 TLSv1<span class="number">.1</span> TLSv1<span class="number">.2</span>;</div><div class="line">ssl_prefer_server_ciphers on;</div></pre></td></tr></table></figure>
+<p>兼容http请求</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">server&#123;</div><div class="line">	listen	<span class="number">80</span>;</div><div class="line">	server_name ceshi.agoodwater.cn;</div><div class="line">	rewrite ^(.*)$  https:<span class="regexp">//</span><span class="variable">$host</span><span class="variable">$1</span> permanent;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>完整配置如下</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><div class="line">server&#123;</div><div class="line">	listen	80;</div><div class="line">	server_name ceshi.agoodwater.cn;</div><div class="line">	rewrite ^(.*)$  https:<span class="comment">//$host$1 permanent;</span></div><div class="line">&#125;</div><div class="line">server &#123;</div><div class="line">    listen       443;</div><div class="line">    server_name  ceshi.agoodwater.cn;</div><div class="line">	</div><div class="line">    ssl <span class="keyword">on</span>;</div><div class="line">    ssl_certificate   /root/cert/ceshi.agoodwater.cn/ceshi.agoodwater.cn.pem;</div><div class="line">    ssl_certificate_key  /root/cert/ceshi.agoodwater.cn/ceshi.agoodwater.cn.key;</div><div class="line">    ssl_session_timeout 5m;</div><div class="line">    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</div><div class="line">    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</div><div class="line">    ssl_prefer_server_ciphers <span class="keyword">on</span>;</div><div class="line"></div><div class="line">    root /opt/www/<span class="keyword">m</span>.agoodwater.cn/;</div><div class="line">	access_log  /<span class="keyword">var</span>/<span class="keyword">log</span>/nginx/chcbkq.access.<span class="keyword">log</span>  main;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">		# 内网ip:port</div><div class="line">        proxy_pass http:<span class="comment">//219.142.236.81:4466;</span></div><div class="line">        proxy_set_header X-Proxy nginx;</div><div class="line">        proxy_read_timeout 50s;</div><div class="line"></div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-Ip <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-<span class="keyword">For</span> <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-Proto <span class="variable">$scheme</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/11/solr-sort-function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1285,109 +1406,6 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/shabusi04/" itemprop="url">[网剧]杀不死04</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer3" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer3 = new DPlayer({"element":document.getElementById("dplayer3"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC04%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs4.jpg"}});</script>  
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1437,7 +1455,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">268</span>
+                <span class="site-state-item-count">269</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1459,7 +1477,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">169</span>
+                <span class="site-state-item-count">170</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

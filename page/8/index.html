@@ -345,6 +345,137 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/17/linux-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/17/linux-tips/" itemprop="url">小技巧 - linux篇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="linux定时任务配置文件位置"><a class="header-anchor" href="#linux定时任务配置文件位置"> </a>linux定时任务配置文件位置</h2>
+<ol>
+<li><code>/var/spool/cron/</code> 存放的每个用户的任务以创建者名字命名，就是执行<code>crontab -e</code>保存的目录</li>
+<li><code>/etc/crontab</code> 系统任务</li>
+<li><code>/etc/cron.d/</code> 存放脚本</li>
+</ol>
+<p><a href="http://blog.csdn.net/hi_kevin/article/details/8983746" target="_blank" rel="external">http://blog.csdn.net/hi_kevin/article/details/8983746</a></p>
+<h2 id="linux定时任务精确到秒"><a class="header-anchor" href="#linux定时任务精确到秒"> </a>linux定时任务精确到秒</h2>
+<p>我们知道linux的crontab精确到分钟，如果想精确到秒怎么办，可以变通一下，通过sleep解决<br>
+如：每隔10秒执行一次<code>/root/sh/remind_yumidai.sh</code>脚本</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><div class="line"><span class="bullet">* </span><span class="bullet">* *</span> <span class="bullet">* *</span> /root/sh/remind_yumidai.sh</div><div class="line"><span class="bullet">* </span><span class="bullet">* *</span> <span class="bullet">* *</span> sleep 10;/root/sh/remind_yumidai.sh</div><div class="line"><span class="bullet">* </span><span class="bullet">* *</span> <span class="bullet">* *</span> sleep 20;/root/sh/remind_yumidai.sh</div><div class="line"><span class="bullet">* </span><span class="bullet">* *</span> <span class="bullet">* *</span> sleep 30;/root/sh/remind_yumidai.sh</div><div class="line"><span class="bullet">* </span><span class="bullet">* *</span> <span class="bullet">* *</span> sleep 40;/root/sh/remind_yumidai.sh</div><div class="line"><span class="bullet">* </span><span class="bullet">* *</span> <span class="bullet">* *</span> sleep 50;/root/sh/remind_yumidai.sh</div></pre></td></tr></table></figure>
+<p>但是，每隔一秒就略坑了，得写60次</p>
+<h2 id="监测进程定时重启"><a class="header-anchor" href="#监测进程定时重启"> </a>监测进程定时重启</h2>
+<h3 id="阿里云512小鸡ngrokd服务老挂-写了个程序定时监测-如果挂了-重启之"><a class="header-anchor" href="#阿里云512小鸡ngrokd服务老挂-写了个程序定时监测-如果挂了-重启之"> </a>阿里云512小鸡ngrokd服务老挂，写了个程序定时监测，如果挂了，重启之</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line">PROCESS_NUM=`ps -ef | grep <span class="string">"ngrokd"</span> | grep -v <span class="string">"grep"</span> | wc <span class="_">-l</span>`</div><div class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$PROCESS_NUM</span>"</span> == <span class="string">"1"</span> ]</div><div class="line"><span class="keyword">then</span></div><div class="line">     <span class="built_in">echo</span> <span class="string">'running'</span></div><div class="line"><span class="keyword">else</span></div><div class="line">     <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/src/ngrok/bin/</div><div class="line">     ./start.sh</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+<h2 id="查看当前正在运行的nginx使用哪个配置文件"><a class="header-anchor" href="#查看当前正在运行的nginx使用哪个配置文件"> </a>查看当前正在运行的<code>nginx</code>使用哪个配置文件</h2>
+<ol>
+<li>查看<code>PID</code></li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><div class="line"><span class="attribute">netstat</span> -anop | grep <span class="number">0.0.0.0:80</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过相应的进程ID(比如：31305）查询当前运行的nginx路径</li>
+</ol>
+<figure class="highlight vim"><table><tr><td class="code"><pre><div class="line"><span class="keyword">ll</span> /proc/<span class="number">31305</span>/<span class="keyword">exe</span></div></pre></td></tr></table></figure>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/29/20161229130602.png" alt="linux"><span class="image-caption">linux</span></p>
+<ol start="3">
+<li>获取到nginx的执行路径后，使用-t参数即可获取该进程对应的配置文件路径，如：</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="regexp">/opt/</span>nginx-<span class="number">1.10</span>.<span class="number">0</span><span class="regexp">/sbin/</span>nginx -t</div></pre></td></tr></table></figure>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/29/20161229130743.png" alt="linux"><span class="image-caption">linux</span></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/16/python-tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1341,114 +1472,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/09/ghost-disqus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/09/ghost-disqus/" itemprop="url">ghost集成disqus评论</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="注册disqus获取插件代码"><a class="header-anchor" href="#注册disqus获取插件代码"> </a>注册disqus获取插件代码</h2>
-<h2 id="修改content-themes-casper下post-hbs-在最后一个-footer-里追加"><a class="header-anchor" href="#修改content-themes-casper下post-hbs-在最后一个-footer-里追加"> </a>修改<code>content/themes/casper</code>下<code>post.hbs</code>,在最后一个<code>&lt;footer&gt;</code>里追加</h2>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="comment">&lt;!--disqus plugin begin--&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"disqus_thread"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="comment">/**</span></div><div class="line">* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.</div><div class="line">* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables</div><div class="line">*/</div><div class="line"><span class="comment">/*</span></div><div class="line">var disqus_config = function () &#123;</div><div class="line">this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable</div><div class="line">this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable</div><div class="line">&#125;;</div><div class="line">*/</div><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="comment">// DON'T EDIT BELOW THIS LINE</span></div><div class="line"><span class="keyword">var</span> d = <span class="built_in">document</span>, s = d.createElement(<span class="string">'script'</span>);</div><div class="line"></div><div class="line">s.src = <span class="string">'//leim.disqus.com/embed.js'</span>;</div><div class="line"></div><div class="line">s.setAttribute(<span class="string">'data-timestamp'</span>, +<span class="keyword">new</span> <span class="built_in">Date</span>());</div><div class="line">(d.head || d.body).appendChild(s);</div><div class="line">&#125;)();</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span>Please enable JavaScript to view the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://disqus.com/?ref_noscript"</span> <span class="attr">rel</span>=<span class="string">"nofollow"</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"dsq-count-scr"</span> <span class="attr">src</span>=<span class="string">"//leim.disqus.com/count.js"</span> <span class="attr">async</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--disqus plugin ended--&gt;</span></div></pre></td></tr></table></figure>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109084206.png" alt="ghost-disqus"><span class="image-caption">ghost-disqus</span></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/09/20161109084300.png" alt="ghost-disqus"><span class="image-caption">ghost-disqus</span></p>
-<h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="http://blog.christophvoigt.com/enable-comments-on-ghost-with-disqus/" target="_blank" rel="external">http://blog.christophvoigt.com/enable-comments-on-ghost-with-disqus/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1498,7 +1521,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">268</span>
+                <span class="site-state-item-count">269</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1520,7 +1543,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">169</span>
+                <span class="site-state-item-count">170</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
