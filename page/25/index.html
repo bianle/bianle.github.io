@@ -345,7 +345,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-ajax-cache/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/java-jdbc-demo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -364,7 +364,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/04/web-ajax-cache/" itemprop="url">ajax调用第一次成功,以后均失败解决办法</a></h1>
+                <a class="post-title-link" href="/2012/07/04/java-jdbc-demo/" itemprop="url">jdbc连接demo</a></h1>
         
 
         <div class="post-meta">
@@ -403,8 +403,25 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>IE内核的浏览器会自动缓存异步通信处理结果，第一次ajax请求已经被高速缓存，若第二次点击(请求)，IE浏览器会认为这是同一个请求，由于第一次请求已经得到了响应，因此不会再响应第二次、第三次…的请求。
-解决办法：保证每次异步请求的url地址都不相同，即唯一标识每一次请求。具体的解决方案可以在url添加一个参数，参数的值=<code>new Data().getTime()</code>. 即可达到目的。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>jdbc连接参数</p>
+<blockquote>
+<p>oracle
+driver=&quot;oracle.jdbc.driver.OracleDriver&quot;
+url=&quot;jdbc:oracle:thin:@localhost:1521:数据库名&quot;
+sqlserver
+driver=&quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;
+url=&quot;jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=数据库名&quot;
+mysql
+driver=&quot;com.mysql.jdbc.Driver&quot;
+url=&quot;jdbc:mysql://localhost/数据库名?[后接参数]&quot;
+db2
+driver=&quot;com.ibm.db2.jdbc.app.DB2Driver&quot;
+url=&quot;jdbc:db2://localhost:5000/数据库名&quot;
+sybase
+driver=&quot;com.sybase.jdbc.SybDriver&quot;
+url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
+</blockquote>
+<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -578,7 +595,7 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-ubuntu-open-root-user/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-ubuntu-telnet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -597,7 +614,7 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-open-root-user/" itemprop="url">如何开启Ubuntu 的 root 用户</a></h1>
+                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-telnet/" itemprop="url">如何启动ubuntu下的telnet服务</a></h1>
         
 
         <div class="post-meta">
@@ -636,34 +653,17 @@ Locator），它是一个服务器资源定位的描述，下载的过程总是�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Ubuntu安装后，root用户默认是被锁定了的，不允许登录，也不允许“su”到 root。有人说这是个不好的实践，特别是对于服务器来说。我觉得对于桌面用户来说，这样安全性更高一些，是应该的；但对于服务器可以设置成“允许 su 到root，但不允许root用户直接登录”。而我为了开发时的方便，则在桌面和服务器上都采用这种方式。
-允许 su 到 root
-非常简单，下面是设置的方法：
-me@tipfoo:~$ sudo passwd
-Password: &lt;— 输入安装时那个用户的密码
-Enter new UNIX password: &lt;— 新的Root用户密码
-Retype new UNIX password: &lt;— 重复新的Root用户密码
-passwd：已成功更新密码
-允许root登录
-如果要允许root登录（不推荐），则这样操作：
-me@tipfoo:~$ gksu /usr/sbin/gdmsetup
-（或者使用桌面菜单：系统＞系统管理＞登录窗口）
-点“安全”选项页，选择“允许本地管理员登录”。
-注：这一步依赖上一步
-不输入密码直接登录
-在论坛上也看见有人抱怨，家中的Ubuntu不能像Window$那样──不用输入密码就能登录。其实同样能做到：
-就在上一步的“安全”选项页中，勾选：
-“启用自动登录”，“用户”选择（如：“me”）;
-注意：公共用的计算机千万不能这么设置！
-SSH登录远程服务器
-如果远程服务器只允许root用户SSH到服务器时，在Ubuntu下，必须“su 到root”用户才能登录成功(具体是看服务器端的配置)。
-首先，复制密钥到“/root/.ssh/”目录，
-me@tipfoo:~$ su</p>
-<p>Password:</p>
-<p>root@tipfoo:/home/me# chmod 600 -R /root/.ssh/</p>
-<p>root@tipfoo:/home/me# ssh -p 27482 11.22.33.44</p>
-<p>Enter passphrase for key ‘/root/.ssh/id_rsa’:</p>
-<p>Last login: Thu Jun 21 14:29:00 2007 from 11.22.33.45</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>以一般用户登录系统
+执行命令 sudo apt-get install xinetd
+系统提示输入用户密码，输入密码后安装xinet软件包
+执行命令 sudo apt-get install telnetd
+系统提示输入用户密码，输入密码后安装telnet软件包
+执行命令 sudo touch /etc/xinetd.d/telnet新
+建一个文件内容如下，并保存
+执行命令 sudo nano -w /etc/xinetd.d/telnet</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><div class="line"><span class="comment"># default: on</span></div><div class="line"></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \</span></div><div class="line"></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.</span></div><div class="line"></div><div class="line">service telnet</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">disable = no</div><div class="line"></div><div class="line">flags = REUSE</div><div class="line"></div><div class="line">socket_type = stream</div><div class="line"></div><div class="line">wait = no</div><div class="line"></div><div class="line">user = root</div><div class="line"></div><div class="line">server = /usr/sbin/in.telnetd</div><div class="line"></div><div class="line">log_on_failure += USERID</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行如下命令：sudo nano -w /etc/xinetd.conf 并加入如下内容：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">instances</span> = <span class="number">60</span></div><div class="line"><span class="attr">log_type</span> = SYSLOG authpriv</div><div class="line"></div><div class="line"><span class="attr">log_on_success</span> = HOST PID</div><div class="line"></div><div class="line"><span class="attr">log_on_failure</span> = HOST</div><div class="line"></div><div class="line"><span class="attr">cps</span> = <span class="number">25</span> <span class="number">30</span></div></pre></td></tr></table></figure>
 
           
         
@@ -707,7 +707,7 @@ me@tipfoo:~$ su</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/java-jdbc-demo/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-html-disable-copy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -726,7 +726,7 @@ me@tipfoo:~$ su</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/04/java-jdbc-demo/" itemprop="url">jdbc连接demo</a></h1>
+                <a class="post-title-link" href="/2012/07/04/web-html-disable-copy/" itemprop="url">网页防止复制</a></h1>
         
 
         <div class="post-meta">
@@ -765,25 +765,9 @@ me@tipfoo:~$ su</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>jdbc连接参数</p>
-<blockquote>
-<p>oracle
-driver=&quot;oracle.jdbc.driver.OracleDriver&quot;
-url=&quot;jdbc:oracle:thin:@localhost:1521:数据库名&quot;
-sqlserver
-driver=&quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;
-url=&quot;jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=数据库名&quot;
-mysql
-driver=&quot;com.mysql.jdbc.Driver&quot;
-url=&quot;jdbc:mysql://localhost/数据库名?[后接参数]&quot;
-db2
-driver=&quot;com.ibm.db2.jdbc.app.DB2Driver&quot;
-url=&quot;jdbc:db2://localhost:5000/数据库名&quot;
-sybase
-driver=&quot;com.sybase.jdbc.SybDriver&quot;
-url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
-</blockquote>
-<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在body标签内加上一段代码，禁用右键菜单</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="selector-tag">body</span> oncontextmenu=<span class="string">"return false"</span></div><div class="line">onselectstart=<span class="string">"return false"</span></div><div class="line">ondragstart=<span class="string">"return false"</span></div><div class="line">onbeforecopy=<span class="string">"return false"</span></div><div class="line">oncopy=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>() </div><div class="line">onselect=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>()&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="attr">type="text"</span> <span class="attr">id="username"</span> <span class="attr">name="username"</span> <span class="attr">value="禁止复制"</span> <span class="attr">onpaste="return</span> <span class="literal">false</span><span class="string">" oncontextmenu="</span>return <span class="literal">false</span><span class="string">" oncopy="</span>return <span class="literal">false</span><span class="string">" oncut="</span>return <span class="literal">false</span><span class="string">" &gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1299,6 +1283,108 @@ wq！：强制保存退出
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/20/web-js-lightbox/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/06/20/web-js-lightbox/" itemprop="url">全屏屏蔽、自动居中的lightBox</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"author"</span> <span class="attr">content</span>=<span class="string">"Chomo"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"start"</span> <span class="attr">href</span>=<span class="string">"http://www.14px.com"</span> <span class="attr">title</span>=<span class="string">"Home"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>全屏屏蔽、自动居中的lightBox<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">* &#123; margin:0; padding:0; &#125;</div><div class="line">html,body &#123; height:100%; overflow:hidden; font:12px/1.5 simsun;&#125;</div><div class="line">.myPage &#123; line-height:3; overflow:auto; width:100%; height:100%;&#125;</div><div class="line">.lightBox,</div><div class="line">.popupCover,</div><div class="line">.popupIframe,</div><div class="line">.popupComponent &#123; position:absolute; left:0; top:0; width:100%; height:100%;&#125;</div><div class="line">.popupComponent &#123; z-index:2; display:none;&#125;</div><div class="line">.popupIframe &#123; display:none; _display:block; _filter:alpha(opacity=0);&#125;</div><div class="line">.popupCover &#123; background:#000; opacity:0.7; *filter:alpha(opacity=70);&#125;</div><div class="line">.lightBox &#123; text-align:center; overflow:auto;&#125;</div><div class="line">.lightBoxContent &#123; display:inline-block; *display:inline; zoom:1; width:300px; padding:10px; background:#fff; border:5px solid #00b4ff; vertical-align:middle;&#125;</div><div class="line">.lightBoxMaxHeight &#123; display:inline-block; vertical-align:middle; height:100%; *height:99.5%; width:1px; overflow:hidden; margin-left:-1px;&#125;</div><div class="line">.lightBoxWrapper &#123; display:inline-block; *display:inline; zoom:1; text-align:left;&#125;</div><div class="line">.lightBoxClose &#123; color:#f00;&#125;</div><div class="line">.lightBoxSubmit &#123; margin-top:10px; padding-top:5px; border-top:1px solid #ccc;&#125;</div><div class="line">.lightBoxSubmit input &#123; font-size:12px; padding:0 10px; overflow:visible; margin:0 5px;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupComponent"</span> <span class="attr">id</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">class</span>=<span class="string">"popupIframe"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupCover"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"lightBoxMaxHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxContent"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxWrapper"</span>&gt;</span></div><div class="line">                当提示小于一行时文字居中<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxSubmit"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"确定"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox')"</span> /&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"取消"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox')"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupComponent"</span> <span class="attr">id</span>=<span class="string">"lightBox2"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">class</span>=<span class="string">"popupIframe"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupCover"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxContent"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxWrapper"</span>&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxSubmit"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"确定"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox2')"</span> /&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"取消"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox2')"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"lightBoxMaxHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"myPage"</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"text-align:center;"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"位于第一屏的按钮"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox')"</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">option</span>&gt;</span>一个用于测试IE6中是否能覆盖住的select<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">option</span>&gt;</span>又一个用于测试IE6中是否能覆盖住的select<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"text-align:center;"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"位于第二屏中的按钮"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox')"</span> /&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"当内容已经超过了一屏的高度"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox2')"</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showLayer</span>(<span class="params">id</span>) </span>&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(id).style.display = <span class="string">"block"</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hideLayer</span>(<span class="params">id</span>) </span>&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(id).style.display = <span class="string">"none"</span>;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/20/web-js-call/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1364,108 +1450,6 @@ wq！：强制保存退出
 [object Object]
 1</p>
 </blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/20/web-js-lightbox/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/06/20/web-js-lightbox/" itemprop="url">全屏屏蔽、自动居中的lightBox</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"author"</span> <span class="attr">content</span>=<span class="string">"Chomo"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"start"</span> <span class="attr">href</span>=<span class="string">"http://www.14px.com"</span> <span class="attr">title</span>=<span class="string">"Home"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>全屏屏蔽、自动居中的lightBox<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">* &#123; margin:0; padding:0; &#125;</div><div class="line">html,body &#123; height:100%; overflow:hidden; font:12px/1.5 simsun;&#125;</div><div class="line">.myPage &#123; line-height:3; overflow:auto; width:100%; height:100%;&#125;</div><div class="line">.lightBox,</div><div class="line">.popupCover,</div><div class="line">.popupIframe,</div><div class="line">.popupComponent &#123; position:absolute; left:0; top:0; width:100%; height:100%;&#125;</div><div class="line">.popupComponent &#123; z-index:2; display:none;&#125;</div><div class="line">.popupIframe &#123; display:none; _display:block; _filter:alpha(opacity=0);&#125;</div><div class="line">.popupCover &#123; background:#000; opacity:0.7; *filter:alpha(opacity=70);&#125;</div><div class="line">.lightBox &#123; text-align:center; overflow:auto;&#125;</div><div class="line">.lightBoxContent &#123; display:inline-block; *display:inline; zoom:1; width:300px; padding:10px; background:#fff; border:5px solid #00b4ff; vertical-align:middle;&#125;</div><div class="line">.lightBoxMaxHeight &#123; display:inline-block; vertical-align:middle; height:100%; *height:99.5%; width:1px; overflow:hidden; margin-left:-1px;&#125;</div><div class="line">.lightBoxWrapper &#123; display:inline-block; *display:inline; zoom:1; text-align:left;&#125;</div><div class="line">.lightBoxClose &#123; color:#f00;&#125;</div><div class="line">.lightBoxSubmit &#123; margin-top:10px; padding-top:5px; border-top:1px solid #ccc;&#125;</div><div class="line">.lightBoxSubmit input &#123; font-size:12px; padding:0 10px; overflow:visible; margin:0 5px;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupComponent"</span> <span class="attr">id</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">class</span>=<span class="string">"popupIframe"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupCover"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"lightBoxMaxHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxContent"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxWrapper"</span>&gt;</span></div><div class="line">                当提示小于一行时文字居中<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxSubmit"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"确定"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox')"</span> /&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"取消"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox')"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupComponent"</span> <span class="attr">id</span>=<span class="string">"lightBox2"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">class</span>=<span class="string">"popupIframe"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"popupCover"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBox"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxContent"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxWrapper"</span>&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">                 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度 当内容已经超过了一屏的高度<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"lightBoxSubmit"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"确定"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox2')"</span> /&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"取消"</span> <span class="attr">onclick</span>=<span class="string">"hideLayer('lightBox2')"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"lightBoxMaxHeight"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"myPage"</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"text-align:center;"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"位于第一屏的按钮"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox')"</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">option</span>&gt;</span>一个用于测试IE6中是否能覆盖住的select<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">option</span>&gt;</span>又一个用于测试IE6中是否能覆盖住的select<span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"text-align:center;"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"位于第二屏中的按钮"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox')"</span> /&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"当内容已经超过了一屏的高度"</span> <span class="attr">onclick</span>=<span class="string">"showLayer('lightBox2')"</span> /&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line">    假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span>假装很丰富的内容<span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showLayer</span>(<span class="params">id</span>) </span>&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(id).style.display = <span class="string">"block"</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hideLayer</span>(<span class="params">id</span>) </span>&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(id).style.display = <span class="string">"none"</span>;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
