@@ -120,7 +120,7 @@
 <meta property="og:description" content="git 相关技巧
 
 2017-03-22 16:37:53 add git clone 带子模块的项目">
-<meta property="og:updated_time" content="2017-07-21T08:07:35.000Z">
+<meta property="og:updated_time" content="2017-10-23T09:06:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git相关">
 <meta name="twitter:description" content="git 相关技巧
@@ -474,6 +474,24 @@
 </ol>
 <figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">sudo yum <span class="keyword">install</span> libcurl-devel zlib-devel asciidoc xmlto <span class="comment"># 安装依赖</span></div><div class="line">make configure </div><div class="line">./configure --prefix=/usr</div><div class="line">make all</div><div class="line">sudo make <span class="keyword">install</span> <span class="keyword">install</span>-doc <span class="keyword">install</span>-html</div></pre></td></tr></table></figure>
 <p>参考：<a href="http://serverfault.com/questions/448814/yum-doesnt-install-latest-version-of-git-on-centos6" target="_blank" rel="external">http://serverfault.com/questions/448814/yum-doesnt-install-latest-version-of-git-on-centos6</a></p>
+<h2 id="git记住密码"><a class="header-anchor" href="#git记住密码"> </a>git记住密码</h2>
+<ol>
+<li>设置记住密码（默认15分钟）：</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">git config --global credential<span class="selector-class">.helper</span> cache</div></pre></td></tr></table></figure>
+<ol start="2">
+<li>如果想自己设置时间，可以这样做：</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">git config credential<span class="selector-class">.helper</span> <span class="string">'cache --timeout=3600'</span></div></pre></td></tr></table></figure>
+<p>这样就设置一个小时之后失效</p>
+<ol start="3">
+<li>长期存储密码：</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">git config --global credential<span class="selector-class">.helper</span> store</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>增加远程地址的时候带上密码也是可以的。(推荐)</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">git remote add origin http:<span class="regexp">//y</span>ourname:password@git.oschina.net<span class="regexp">/name/</span>project.git</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -793,7 +811,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone-带子模块的项目"><span class="nav-number">1.</span> <span class="nav-text"> git clone 带子模块的项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git添加子模块"><span class="nav-number">2.</span> <span class="nav-text"> git添加子模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建git服务器"><span class="nav-number">3.</span> <span class="nav-text"> 搭建git服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-stash用法"><span class="nav-number">4.</span> <span class="nav-text"> Git Stash用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖更新本地已经修改的代码"><span class="nav-number">5.</span> <span class="nav-text"> 覆盖更新本地已经修改的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gource-一个神奇的软件"><span class="nav-number">6.</span> <span class="nav-text"> Gource 一个神奇的软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决git-clone时报错：the-requested-url-returned-error-401-unauthorized-while-accessing"><span class="nav-number">7.</span> <span class="nav-text"> 解决git clone时报错：The requested URL returned error: 401 Unauthorized while accessing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos-6-5-升级git-2016-12-24-20-08-26补充"><span class="nav-number">8.</span> <span class="nav-text"> centos 6.5 升级git（2016-12-24 20:08:26补充）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone-带子模块的项目"><span class="nav-number">1.</span> <span class="nav-text"> git clone 带子模块的项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git添加子模块"><span class="nav-number">2.</span> <span class="nav-text"> git添加子模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建git服务器"><span class="nav-number">3.</span> <span class="nav-text"> 搭建git服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-stash用法"><span class="nav-number">4.</span> <span class="nav-text"> Git Stash用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖更新本地已经修改的代码"><span class="nav-number">5.</span> <span class="nav-text"> 覆盖更新本地已经修改的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gource-一个神奇的软件"><span class="nav-number">6.</span> <span class="nav-text"> Gource 一个神奇的软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决git-clone时报错：the-requested-url-returned-error-401-unauthorized-while-accessing"><span class="nav-number">7.</span> <span class="nav-text"> 解决git clone时报错：The requested URL returned error: 401 Unauthorized while accessing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centos-6-5-升级git-2016-12-24-20-08-26补充"><span class="nav-number">8.</span> <span class="nav-text"> centos 6.5 升级git（2016-12-24 20:08:26补充）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git记住密码"><span class="nav-number">9.</span> <span class="nav-text"> git记住密码</span></a></li></ol></div>
             
 
           </div>
