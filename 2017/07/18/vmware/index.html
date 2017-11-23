@@ -124,7 +124,8 @@ Bringing up">
 service network restart
 Shutting down loopback insterface:                                                                                                     [  OK  ]
 Bringing up">
-<meta property="og:updated_time" content="2017-07-18T10:15:42.000Z">
+<meta property="og:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/11/06/20171106095732.png">
+<meta property="og:updated_time" content="2017-11-06T02:12:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vmware">
 <meta name="twitter:description" content="拷贝centos虚拟机后无法联网
@@ -132,6 +133,7 @@ Bringing up">
 service network restart
 Shutting down loopback insterface:                                                                                                     [  OK  ]
 Bringing up">
+<meta name="twitter:image" content="http://7xlbo3.com1.z0.glb.clouddn.com/2017/11/06/20171106095732.png">
 
 
 
@@ -435,7 +437,23 @@ Shutting down loopback insterface:                                              
 Bringing up loopback insterface:                                                                                                          [  OK  ]
 Bringing up interface eth0:  Device eth0 does not seem to be present,delaying initialization.                    [FAILED]</p>
 </blockquote>
-<p><a href="http://www.linuxidc.com/Linux/2012-12/76248.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/76248.htm</a></p>
+<h3 id="原因：查看网卡配置文件-etc-udev-rules-d-70-persistent-net-rules-可以发现多了一个虚拟网卡eth1"><a class="header-anchor" href="#原因：查看网卡配置文件-etc-udev-rules-d-70-persistent-net-rules-可以发现多了一个虚拟网卡eth1"> </a>原因：查看网卡配置文件<code>/etc/udev/rules.d/70-persistent-net.rules</code>,可以发现多了一个虚拟网卡eth1</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/11/06/20171106095732.png" alt="rules"><span class="image-caption">rules</span></p>
+<h3 id="解决1："><a class="header-anchor" href="#解决1："> </a>解决1：</h3>
+<ol>
+<li>编辑网卡配置文件<code>/etc/udev/rules.d/70-persistent-net.rules</code>，将eth0的网卡地址修改成eth1的网卡地址，而后删除eth1这一行；</li>
+<li>编辑网卡IP地址配置文件<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>，修改网卡物理地址HWADDR为上面eth0的网卡地址；</li>
+<li>修改完后重启网络</li>
+</ol>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">service network restart</span></div></pre></td></tr></table></figure>
+<h3 id="或者解决2："><a class="header-anchor" href="#或者解决2："> </a>或者解决2：</h3>
+<ol>
+<li>打开打开<code>/etc/udev/rules.d/70-persistent-net.rules</code>记录下eth1的mac地址</li>
+<li>修改<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>将DEVICE=&quot;eth0&quot;改成DEVICE=&quot;eth1&quot;将HWADDR=&quot;xx:xx:xx:xx:xx:xx&quot;改成刚才记录下来的mac地址</li>
+<li>修改完后重启网络</li>
+</ol>
+<p><a href="http://www.linuxidc.com/Linux/2012-12/76248.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/76248.htm</a>
+<a href="http://www.01happy.com/vmware-copy-centos-device-eth0-does-not-seem-to-be-present/" target="_blank" rel="external">http://www.01happy.com/vmware-copy-centos-device-eth0-does-not-seem-to-be-present/</a></p>
 
       
     </div>
@@ -608,7 +626,7 @@ Bringing up interface eth0:  Device eth0 does not seem to be present,delaying in
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">269</span>
+                <span class="site-state-item-count">272</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -619,7 +637,7 @@ Bringing up interface eth0:  Device eth0 does not seem to be present,delaying in
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -630,7 +648,7 @@ Bringing up interface eth0:  Device eth0 does not seem to be present,delaying in
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">170</span>
+                <span class="site-state-item-count">172</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -755,7 +773,7 @@ Bringing up interface eth0:  Device eth0 does not seem to be present,delaying in
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝centos虚拟机后无法联网"><span class="nav-number">1.</span> <span class="nav-text"> 拷贝centos虚拟机后无法联网</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝centos虚拟机后无法联网"><span class="nav-number">1.</span> <span class="nav-text"> 拷贝centos虚拟机后无法联网</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原因：查看网卡配置文件-etc-udev-rules-d-70-persistent-net-rules-可以发现多了一个虚拟网卡eth1"><span class="nav-number">1.1.</span> <span class="nav-text"> 原因：查看网卡配置文件/etc/udev/rules.d/70-persistent-net.rules,可以发现多了一个虚拟网卡eth1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决1："><span class="nav-number">1.2.</span> <span class="nav-text"> 解决1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#或者解决2："><span class="nav-number">1.3.</span> <span class="nav-text"> 或者解决2：</span></a></li></ol></li></ol></div>
             
 
           </div>

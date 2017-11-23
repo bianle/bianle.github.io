@@ -345,6 +345,351 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/18/vmware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/vmware/" itemprop="url">vmware</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="拷贝centos虚拟机后无法联网"><a class="header-anchor" href="#拷贝centos虚拟机后无法联网"> </a>拷贝centos虚拟机后无法联网</h2>
+<blockquote>
+<p>service network restart
+Shutting down loopback insterface:                                                                                                     [  OK  ]
+Bringing up loopback insterface:                                                                                                          [  OK  ]
+Bringing up interface eth0:  Device eth0 does not seem to be present,delaying initialization.                    [FAILED]</p>
+</blockquote>
+<h3 id="原因：查看网卡配置文件-etc-udev-rules-d-70-persistent-net-rules-可以发现多了一个虚拟网卡eth1"><a class="header-anchor" href="#原因：查看网卡配置文件-etc-udev-rules-d-70-persistent-net-rules-可以发现多了一个虚拟网卡eth1"> </a>原因：查看网卡配置文件<code>/etc/udev/rules.d/70-persistent-net.rules</code>,可以发现多了一个虚拟网卡eth1</h3>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/11/06/20171106095732.png" alt="rules"><span class="image-caption">rules</span></p>
+<h3 id="解决1："><a class="header-anchor" href="#解决1："> </a>解决1：</h3>
+<ol>
+<li>编辑网卡配置文件<code>/etc/udev/rules.d/70-persistent-net.rules</code>，将eth0的网卡地址修改成eth1的网卡地址，而后删除eth1这一行；</li>
+<li>编辑网卡IP地址配置文件<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>，修改网卡物理地址HWADDR为上面eth0的网卡地址；</li>
+<li>修改完后重启网络</li>
+</ol>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">service network restart</span></div></pre></td></tr></table></figure>
+<h3 id="或者解决2："><a class="header-anchor" href="#或者解决2："> </a>或者解决2：</h3>
+<ol>
+<li>打开打开<code>/etc/udev/rules.d/70-persistent-net.rules</code>记录下eth1的mac地址</li>
+<li>修改<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>将DEVICE=&quot;eth0&quot;改成DEVICE=&quot;eth1&quot;将HWADDR=&quot;xx:xx:xx:xx:xx:xx&quot;改成刚才记录下来的mac地址</li>
+<li>修改完后重启网络</li>
+</ol>
+<p><a href="http://www.linuxidc.com/Linux/2012-12/76248.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/76248.htm</a>
+<a href="http://www.01happy.com/vmware-copy-centos-device-eth0-does-not-seem-to-be-present/" target="_blank" rel="external">http://www.01happy.com/vmware-copy-centos-device-eth0-does-not-seem-to-be-present/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/18/solr-draft/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/solr-draft/" itemprop="url">solr学习笔记草稿</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>草稿</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/18/solr-draft/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/14/sonar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/14/sonar/" itemprop="url">sonar</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="interruptedexception-should-not-be-ignored"><a class="header-anchor" href="#interruptedexception-should-not-be-ignored"> </a>“InterruptedException” should not be ignored</h2>
+<p>squid:S2142
+InterruptedExceptions should never be ignored in the code, and simply logging the exception counts in this case as “ignoring”. Instead, InterruptedExceptions should either be rethrown - immediately or after cleaning up the method’s state - or the method should be reinterrupted. Any other course of action risks delaying thread shutdown and loses the information that the thread was interrupted - probably without finishing its task.</p>
+<p>Noncompliant Code Example</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123; <span class="comment">// Noncompliant; logging is not enough</span></div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Compliant Solution</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> throws InterruptedException</span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">    <span class="comment">// clean up state...</span></div><div class="line">    <span class="keyword">throw</span> e;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</div><div class="line">      <span class="comment">// do stuff</span></div><div class="line">    &#125;</div><div class="line">  &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    LOGGER.<span class="built_in">log</span>(Level.WARN, <span class="string">"Interrupted!"</span>, e);</div><div class="line">    <span class="comment">// clean up state...</span></div><div class="line">    Thread.currentThread().interrupt();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>See</p>
+<ul>
+<li><a href="http://cwe.mitre.org/data/definitions/391.html" target="_blank" rel="external">MITRE, CWE-391</a> - Unchecked Error Condition</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/12/setup-ssl-cert-for-nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -650,7 +995,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer11" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer11 = new DPlayer({"element":document.getElementById("dplayer11"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC12%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs12.jpg"}});</script>  
+<div id="dplayer10" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer10 = new DPlayer({"element":document.getElementById("dplayer10"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC12%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs12.jpg"}});</script>  
 
           
         
@@ -753,7 +1098,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer7" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer7 = new DPlayer({"element":document.getElementById("dplayer7"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC11%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs11.jpg"}});</script>  
+<div id="dplayer11" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer11 = new DPlayer({"element":document.getElementById("dplayer11"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC11%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs11.jpg"}});</script>  
 
           
         
@@ -1062,316 +1407,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer10" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer10 = new DPlayer({"element":document.getElementById("dplayer10"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC08%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs8.jpg"}});</script>  
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi07/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/shabusi07/" itemprop="url">[网剧]杀不死07</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer6" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer6 = new DPlayer({"element":document.getElementById("dplayer6"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC07%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs7.jpg"}});</script>  
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi06/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/shabusi06/" itemprop="url">[网剧]杀不死06</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer5" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer5 = new DPlayer({"element":document.getElementById("dplayer5"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC06%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs6.jpg"}});</script>  
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/shabusi05/" itemprop="url">[网剧]杀不死05</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer4" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer4 = new DPlayer({"element":document.getElementById("dplayer4"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC05%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs5.jpg"}});</script>  
+<div id="dplayer7" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer7 = new DPlayer({"element":document.getElementById("dplayer7"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC08%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs8.jpg"}});</script>  
 
           
         
@@ -1410,7 +1446,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1455,7 +1491,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">269</span>
+                <span class="site-state-item-count">272</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1466,7 +1502,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1477,7 +1513,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">170</span>
+                <span class="site-state-item-count">172</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
