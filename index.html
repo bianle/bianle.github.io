@@ -345,6 +345,342 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/12/12/solr-ik/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/12/solr-ik/" itemprop="url">solr-ik分词器配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
+<ol>
+<li>下载<a href="http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.zip" target="_blank" rel="external">solr-4.10.4.zip</a></li>
+<li>下载<a href="https://gitee.com/wltea/IK-Analyzer-2012FF.git" target="_blank" rel="external">ik源代码</a></li>
+</ol>
+<h2 id="ik增加solr适配器"><a class="header-anchor" href="#ik增加solr适配器"> </a>ik增加solr适配器</h2>
+<ol>
+<li>导入ik源代码到idea(或eclipse等IDE);</li>
+<li>添加lucene依赖jar包(<code>lucene-analyzers-common-4.10.4.jar</code>,<code>lucene-core-4.10.4.jar</code>,<code>lucene-queryparser-4.10.4.jar</code>)，在<code>solr-4.10.4.zip</code>的<code>dist</code>目录下有个<code>solr-4.10.4.war</code>包，这几个jar包可在<code>solr-4.10.4.war</code>的<code>WEB-INF/lib/</code>目录下可以找到;</li>
+<li>新建类<code>org.wltea.analyzer.solr.IKTokenizerFactory</code>，代码如下：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> org.wltea.analyzer.solr;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.Reader;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.lucene.analysis.Tokenizer;</div><div class="line"><span class="keyword">import</span> org.apache.lucene.analysis.util.TokenizerFactory;</div><div class="line"><span class="keyword">import</span> org.apache.lucene.util.AttributeFactory;</div><div class="line"><span class="keyword">import</span> org.wltea.analyzer.lucene.IKTokenizer;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IKTokenizerFactory</span> <span class="keyword">extends</span> <span class="title">TokenizerFactory</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> useSmart;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IKTokenizerFactory</span><span class="params">(Map&lt;String, String&gt; args)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(args);</div><div class="line">        <span class="keyword">this</span>.setUseSmart(<span class="string">"true"</span>.equals(args.get(<span class="string">"useSmart"</span>)));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Tokenizer <span class="title">create</span><span class="params">(AttributeFactory factory,</span></span></div><div class="line">                            Reader input) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> IKTokenizer(input, <span class="keyword">this</span>.useSmart);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">useSmart</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> useSmart;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUseSmart</span><span class="params">(<span class="keyword">boolean</span> useSmart)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.useSmart = useSmart;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>重新打包ik分词器为<code>IK-Analyzer-2012FF.jar</code>;</li>
+</ol>
+<h2 id="solr添加ik分词器配置"><a class="header-anchor" href="#solr添加ik分词器配置"> </a>solr添加ik分词器配置</h2>
+<ol>
+<li>将<code>IK-Analyzer-2012FF.jar</code>添加到solr的lib文件夹<code>solr-4.10.4/example/solr-webapp/webapp/WEB-INF/lib</code>;</li>
+<li>修改solr自带示例collection1的schema.xml配置文件（位置:<code>solr-4.10.4/example/solr/collection1/schema.xml</code>），增加字段类型如下：</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="code"><pre><div class="line">&lt;fieldType name=<span class="string">"text_ik"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"solr.TextField"</span>&gt;</div><div class="line">  &lt;analyzer <span class="class"><span class="keyword">type</span></span>=<span class="string">"index"</span>&gt;</div><div class="line">    &lt;tokenizer <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.wltea.analyzer.solr.IKTokenizerFactory"</span> useSmart=<span class="string">"false"</span>/&gt;</div><div class="line">      &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"solr.StopFilterFactory"</span> ignoreCase=<span class="string">"true"</span> words=<span class="string">"stopwords.txt"</span> enablePositionIncrements=<span class="string">"true"</span>/&gt;</div><div class="line">      &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"solr.SynonymFilterFactory"</span> synonyms=<span class="string">"synonyms.txt"</span> ignoreCase=<span class="string">"true"</span> expand=<span class="string">"false"</span>/&gt;</div><div class="line">      &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"solr.LowerCaseFilterFactory"</span>/&gt;</div><div class="line">    &lt;/analyzer&gt;</div><div class="line">    &lt;analyzer <span class="class"><span class="keyword">type</span></span>=<span class="string">"query"</span>&gt;</div><div class="line">      &lt;tokenizer <span class="class"><span class="keyword">class</span></span>=<span class="string">"org.wltea.analyzer.solr.IKTokenizerFactory"</span> useSmart=<span class="string">"true"</span>/&gt;</div><div class="line">      &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"solr.StopFilterFactory"</span> ignoreCase=<span class="string">"true"</span> words=<span class="string">"stopwords.txt"</span> enablePositionIncrements=<span class="string">"true"</span>/&gt;</div><div class="line">      &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"solr.SynonymFilterFactory"</span> synonyms=<span class="string">"synonyms.txt"</span> ignoreCase=<span class="string">"true"</span> expand=<span class="string">"true"</span>/&gt;</div><div class="line">      &lt;filter <span class="class"><span class="keyword">class</span></span>=<span class="string">"solr.LowerCaseFilterFactory"</span>/&gt;</div><div class="line">    &lt;/analyzer&gt;</div><div class="line">&lt;/fieldType&gt;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>进入目录<code>/Users/bianle/app/solr-4.10.4/bin</code>执行<code>./solr start</code>启动solr</li>
+<li>访问控制台<code>http://localhost:8983/solr</code>查看分词效果：
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/12/12/20171212190838.png" alt="ik索引分词效果"><span class="image-caption">ik索引分词效果</span>
+<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/12/12/20171212190911.png" alt="ik查询分词效果"><span class="image-caption">ik查询分词效果</span></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/12/05/sb3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/05/sb3/" itemprop="url">sb3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/12/04/mud-tintin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/04/mud-tintin/" itemprop="url">tintin++</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装pcre-perl-compatible-regular-expressions"><a class="header-anchor" href="#安装pcre-perl-compatible-regular-expressions"> </a>安装PCRE(Perl Compatible Regular Expressions)</h2>
+<p><a href="http://mac-dev-env.patrickbougie.com/pcre/" target="_blank" rel="external">http://mac-dev-env.patrickbougie.com/pcre/</a></p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><div class="line"><span class="keyword">cd</span> /usr/<span class="keyword">local</span>/src (<span class="keyword">cd</span> ~/<span class="keyword">app</span>)</div><div class="line">curl --remote-name ftp:<span class="comment">//ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz</span></div><div class="line">tar -xzvf pcre-8.41.tar.gz</div><div class="line"><span class="keyword">cd</span> pcre-8.41</div><div class="line">./configure --prefix=/usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41</div><div class="line">make</div><div class="line">make install (sudo make install )</div><div class="line">sudo ln -s <span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre (sudo ln -s /usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre)</div><div class="line">echo 'export PATH=/usr/<span class="keyword">local</span>/pcre/bin:<span class="variable">$PATH</span>' &gt;&gt; ~/.bash_profile</div><div class="line">source ~/.bash_profile</div><div class="line">pcre-config --<span class="keyword">version</span></div></pre></td></tr></table></figure>
+<p>拷贝<code>pcre.h</code>到<code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include</code></p>
+<h2 id="xkx"><a class="header-anchor" href="#xkx"> </a>xkx</h2>
+<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml">#action </span><span class="template-variable">&#123;http://pkuxkx.net/antirobot/robot.php%1&#125;</span><span class="xml"> </span><span class="template-tag">&#123;#<span class="name">system</span> open http://pkuxkx.com/antirobot/robot.php%1&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/11/23/mybatis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1255,321 +1591,6 @@ git remote set-url origin <a href="https://mirrors.ustc.edu.cn/homebrew-core.git
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/27/python-pandas/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/27/python-pandas/" itemprop="url">python-pandas</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/27/20170727094219.png" alt="python-pandas"><span class="image-caption">python-pandas</span></p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/27/20170727101928.png" alt="python-pandas"><span class="image-caption">python-pandas</span></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/24/solr-study3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/solr-study3/" itemprop="url">solr学习笔记（三）查询参数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>solr基本查询参数</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/solr-study3/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/24/solr-study2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/24/solr-study2/" itemprop="url">solr学习笔记（二）schema配置文件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>schema主要作用是定义文档结构，如果把solr比作数据库，schema类似于数据库的表结构</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/24/solr-study2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1619,7 +1640,7 @@ git remote set-url origin <a href="https://mirrors.ustc.edu.cn/homebrew-core.git
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">273</span>
+                <span class="site-state-item-count">276</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1630,7 +1651,7 @@ git remote set-url origin <a href="https://mirrors.ustc.edu.cn/homebrew-core.git
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1641,7 +1662,7 @@ git remote set-url origin <a href="https://mirrors.ustc.edu.cn/homebrew-core.git
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">173</span>
+                <span class="site-state-item-count">174</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
