@@ -345,6 +345,131 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/11/solr-sort-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/11/solr-sort-function/" itemprop="url">bug修复记-solr排序函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">q=custNo:<span class="number">6054575780</span> <span class="type">AND</span> cmmdtyName:华为nova(4GB+64GB)<span class="type">CAZ</span>-<span class="type">AL10</span>香槟金(白)全网通&amp;<span class="built_in">sort</span>=&#123;!<span class="function"><span class="keyword">func</span>&#125;<span class="title">sum</span><span class="params">(product<span class="params">(sum<span class="params">(<span class="built_in">map</span><span class="params">(query<span class="params">($aaa)</span></span></span></span></span></span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>),<span class="built_in">map</span>(zsPrice,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>)),<span class="number">100000</span>),zsPrice) desc&amp;aaa=inventory:<span class="number">010</span></div></pre></td></tr></table></figure>
+<h3 id="不手动url编码"><a class="header-anchor" href="#不手动url编码"> </a>不手动URL编码</h3>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">CloseableHttpClient client</span> = null;</div><div class="line"><span class="attribute">client</span> = HttpClients.createDefault();</div><div class="line"><span class="attribute">URL url</span> = new URL(urlStr);</div><div class="line"><span class="attribute">URI uri</span> = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), null);</div><div class="line"><span class="attribute">HttpGet httpget</span> = new HttpGet(uri);</div><div class="line"><span class="attribute">HttpResponse response</span> = client.execute(httpget);</div></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">http:<span class="regexp">//gcmssit</span>.service.cnsuning.com/solr/fxnew/<span class="keyword">select</span>?<span class="keyword">q</span>=custNo:<span class="number">6054575780</span>%20AND%20cmmdtyName:华为nova%5C(<span class="number">4</span>GB%5C+<span class="number">64</span>GB%5C)CAZ%5C-AL1<span class="number">0</span>香槟金%5C(白%5C)全网通&amp;wt=json&amp;indent=true&amp;fl=zsPrice&amp;aaa=inventory:<span class="number">000001000137</span>&amp;<span class="keyword">sort</span>=%7B!func%7Dsum(product(sum(<span class="keyword">map</span>(query($aaa),<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>),<span class="keyword">map</span>(zsPrice,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">1</span>)),<span class="number">100000</span>),zsPrice)%20asc</div></pre></td></tr></table></figure>
+<blockquote>
+<p>q:custNo:6054575780 AND cmmdtyName:华为nova(4GB\ 64GB)CAZ-AL10香槟金(白)全网通<br>
+wt:json<br>
+indent:true<br>
+fl:zsPrice<br>
+aaa:inventory:000001000137<br>
+sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),100000),zsPrice) asc</p>
+</blockquote>
+<h3 id="手动对含特殊字符的查询串url编码"><a class="header-anchor" href="#手动对含特殊字符的查询串url编码"> </a>手动对含特殊字符的查询串URL编码</h3>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">String q = <span class="string">"cmmdtyName:华为nova<span class="subst">\\</span>(4GB<span class="subst">\\</span>+64GB<span class="subst">\\</span>)CAZ<span class="subst">\\</span>-AL10香槟金<span class="subst">\\</span>(白<span class="subst">\\</span>)全网通"</span>;</div><div class="line">URLEncoder.encode(q,<span class="string">"utf-8"</span>);</div><div class="line">...</div><div class="line"></div><div class="line">String sort=<span class="string">"&#123;!func&#125;sum(product(sum(map(query($aaa),0,0,0,2),map(zsPrice,0,0,1,4)),100000),zsPrice) desc"</span>;</div><div class="line">URLEncoder.encode(sort,<span class="string">"utf-8"</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">CloseableHttpClient client</span> = null;</div><div class="line"><span class="attribute">client</span> = HttpClients.createDefault();</div><div class="line"><span class="attribute">HttpGet httpget</span> = new HttpGet(urlStr);</div><div class="line"><span class="attribute">HttpResponse response</span> = client.execute(httpget);</div></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">http:<span class="regexp">//gcmssit</span>.service.cnsuning.com/solr/fxnew/<span class="keyword">select</span>?<span class="keyword">q</span>=custNo%3A6054575780+AND+cmmdtyName%3A%E5%8D%8E%E4%B8%BAnova%5C%284GB%5C%2B64GB%5C%29CAZ%5C-AL1<span class="number">0</span>%E9%A6%99%E6%A7%9F%E9%87%91%5C%28%E7%99%BD%5C%29%E5%85%A8%E7%BD%91%E9%80%9A&amp;wt=json&amp;indent=true&amp;fl=zsPrice&amp;aaa=inventory:<span class="number">000001000137</span>&amp;<span class="keyword">sort</span>=%7B%21func%7Dsum%28product%28sum%28map%28query%28%24aaa%29%2C0%2C0%2C2%2C0%29%2Cmap%28zsPrice%2C0%2C0%2C4%2C1%29%29%2C100000%29%2CzsPrice%29+asc</div></pre></td></tr></table></figure>
+<blockquote>
+<p>q:custNo:6054575780 AND cmmdtyName:华为nova(4GB+64GB)CAZ-AL10香槟金(白)全网通<br>
+wt:json<br>
+indent:true<br>
+fl:zsPrice<br>
+aaa:inventory:000001000137<br>
+sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),100000),zsPrice) asc</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi12/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -507,7 +632,7 @@
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer9" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer9 = new DPlayer({"element":document.getElementById("dplayer9"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC11%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs11.jpg"}});</script>  
+<div id="dplayer10" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer10 = new DPlayer({"element":document.getElementById("dplayer10"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC11%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs11.jpg"}});</script>  
 
           
         
@@ -610,7 +735,7 @@
         
           
             <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer10" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer10 = new DPlayer({"element":document.getElementById("dplayer10"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC10%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs10.jpg"}});</script>  
+<div id="dplayer9" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer9 = new DPlayer({"element":document.getElementById("dplayer9"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC10%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs10.jpg"}});</script>  
 
           
         
@@ -1263,109 +1388,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/06/30/shabusi03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/shabusi03/" itemprop="url">[网剧]杀不死03</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>  
-<div id="dplayer2" class="dplayer" style="margin-bottom: 20px;"></div><script>var dplayer2 = new DPlayer({"element":document.getElementById("dplayer2"),"autoplay":false,"theme":"#FADFA3","loop":true,"video":{"url":"http://7xlbo3.com1.z0.glb.clouddn.com/video/%5B%E6%9D%80BS%5D%E7%AC%AC03%E9%9B%86_bd.mp4","pic":"http://7xlbo3.com1.z0.glb.clouddn.com/2017/07/11/sbs3.jpg"}});</script>  
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1415,7 +1437,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">277</span>
+                <span class="site-state-item-count">278</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1437,7 +1459,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">174</span>
+                <span class="site-state-item-count">175</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

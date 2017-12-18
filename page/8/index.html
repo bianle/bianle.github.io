@@ -345,6 +345,118 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/mysql-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/22/mysql-tips/" itemprop="url">小技巧 - mysql篇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="mysql-查询行号"><a class="header-anchor" href="#mysql-查询行号"> </a>mysql 查询行号</h2>
+<figure class="highlight moonscript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">select</span> @rowno:=@rowno+<span class="number">1</span> as rowno,t.* <span class="keyword">from</span> test t,(<span class="built_in">select</span> @rowno:=<span class="number">0</span>) r</div></pre></td></tr></table></figure>
+<h2 id="mysql里int字段插入float会四舍五入"><a class="header-anchor" href="#mysql里int字段插入float会四舍五入"> </a>mysql里int字段插入float会四舍五入</h2>
+<h2 id="关于索引-2016-12-28-15-15-20补充"><a class="header-anchor" href="#关于索引-2016-12-28-15-15-20补充"> </a>关于索引（2016-12-28 15:15:20补充）</h2>
+<ol>
+<li>字符串类型索引字段，查询条件如果传数字，索引不生效</li>
+<li>联合索引，查询条件只有部分字段的话，索引不生效</li>
+</ol>
+<p>以下忽略：
+红掌柜项目优化sql</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">SELECT</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span>,</div><div class="line">	M. NAME,</div><div class="line">	M<span class="selector-class">.MOBILE</span>,</div><div class="line">	M<span class="selector-class">.CARD_DATE</span>,</div><div class="line">	M<span class="selector-class">.MAINTAIN_DATE</span>,</div><div class="line">	M<span class="selector-class">.EMPLOYEE_ID</span>,</div><div class="line">	M<span class="selector-class">.BABY_NAME</span>,</div><div class="line">	M<span class="selector-class">.BABY_BIRTHDAY</span>,</div><div class="line">	M<span class="selector-class">.BABY_SEX</span>,</div><div class="line">	M<span class="selector-class">.MEMBER_SEX</span>,</div><div class="line">	M<span class="selector-class">.IS_OFFLINE</span>,</div><div class="line">	T<span class="selector-class">.TOTAL_CONSUME_AMOUNT</span>,</div><div class="line">	T<span class="selector-class">.TOTAL_ORDER_NUM</span>,</div><div class="line">	T<span class="selector-class">.LAST_CONSUME_DATE</span>,</div><div class="line">	r<span class="selector-class">.connect_status</span>,</div><div class="line">	CASE WHEN r<span class="selector-class">.connect_status</span> = <span class="number">3</span> THEN <span class="number">1</span> WHEN r<span class="selector-class">.connect_status</span> IS NULL THEN <span class="number">3</span> ELSE r<span class="selector-class">.connect_status</span> END remark_type</div><div class="line">FROM</div><div class="line">	RM_MEMBER M</div><div class="line">LEFT JOIN rm_contact_remark r ON r<span class="selector-class">.employee_id</span> = m<span class="selector-class">.employee_id</span></div><div class="line">AND r<span class="selector-class">.member_id</span> = m<span class="selector-class">.member_id</span></div><div class="line">AND act_id =- <span class="number">1</span>,</div><div class="line"> RM_MEMBER_TAG T</div><div class="line">WHERE</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span> = T<span class="selector-class">.MEMBER_ID</span></div><div class="line">AND M<span class="selector-class">.EMPLOYEE_ID</span> = <span class="string">'14082377'</span></div><div class="line">ORDER BY</div><div class="line">	remark_type DESC,</div><div class="line">	M<span class="selector-class">.UPDATE_TIME</span> DESC,</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span></div><div class="line">LIMIT <span class="number">0</span>,</div><div class="line"> <span class="number">20</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/sublime-text-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1375,122 +1487,6 @@ Alternatively, you can use the --charset option:</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/16/python-tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/16/python-tips/" itemprop="url">小技巧 - python篇</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="list获取最后一个元素"><a class="header-anchor" href="#list获取最后一个元素"> </a>list获取最后一个元素</h2>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">li = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">print li[<span class="number">-1</span>]</div></pre></td></tr></table></figure>
-<blockquote>
-<p>3</p>
-</blockquote>
-<h2 id="数字数组转字符串"><a class="header-anchor" href="#数字数组转字符串"> </a>数字数组转字符串</h2>
-<p>我们知道<code>join()</code>可以将字符串数组转字符串，数字数组怎么转呢？</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">a</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b=<span class="string">"-"</span>.join(str(i) <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> a)</div><div class="line">print b</div></pre></td></tr></table></figure>
-<blockquote>
-<p>‘1-2-3’</p>
-</blockquote>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">a</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="selector-tag">b</span> = <span class="string">"-"</span>.join(imap(str,a))</div><div class="line">print b</div></pre></td></tr></table></figure>
-<blockquote>
-<p>‘1-2-3’</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1540,7 +1536,7 @@ Alternatively, you can use the --charset option:</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">277</span>
+                <span class="site-state-item-count">278</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1562,7 +1558,7 @@ Alternatively, you can use the --charset option:</p>
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">174</span>
+                <span class="site-state-item-count">175</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
