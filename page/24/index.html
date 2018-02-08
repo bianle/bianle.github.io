@@ -345,7 +345,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/08/16/web-disable-backspace/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/08/16/web-print-iframe/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -364,7 +364,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/08/16/web-disable-backspace/" itemprop="url">js禁用只读文本框获得焦点时的回格键</a></h1>
+                <a class="post-title-link" href="/2012/08/16/web-print-iframe/" itemprop="url">打印iframe内容</a></h1>
         
 
         <div class="post-meta">
@@ -403,8 +403,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>只读的文本框,当鼠标焦点在文本框里面的时候按回退键(backSpace),会退回到前一个页面,将以下的脚本放入页面中即可。</p>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;script&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">document.documentElement.onkeydown = function(evt)&#123;</div><div class="line">  </div><div class="line">var b = !!evt, oEvent = evt || window.event;</div><div class="line"></div><div class="line">  </div><div class="line">if (oEvent.keyCode == <span class="number">8</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">var <span class="keyword">node</span> <span class="title">= b</span> ? oEvent.target : oEvent.srcElement;</div><div class="line"></div><div class="line">  </div><div class="line">var reg = /^(input|textarea)$/i, regType = /^(text|textarea)$/i;</div><div class="line"></div><div class="line">  </div><div class="line">if (!reg.test(<span class="keyword">node</span>.<span class="title">nodeName</span>) || !regType.test(<span class="keyword">node</span>.<span class="title">type</span>) || <span class="keyword">node</span>.<span class="title">readOnly</span> || <span class="keyword">node</span>.<span class="title">disabled</span>) &#123;</div><div class="line"></div><div class="line">  </div><div class="line">if (b)</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.stopPropagation();</div><div class="line"></div><div class="line">  </div><div class="line">&#125; </div><div class="line"></div><div class="line">  </div><div class="line">else</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.cancelBubble = <span class="literal">true</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.keyCode = <span class="number">0</span>;</div><div class="line"></div><div class="line">  </div><div class="line">oEvent.returnValue = <span class="literal">false</span>;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/script&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>iframe要先获得焦点，window.focus()</p>
 
           
         
@@ -945,6 +944,128 @@ cowsay  不说了，如下所示，哈哈哈。还有xcowsay，你可以自己�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/java-cloud-server-for-java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/12/java-cloud-server-for-java/" itemprop="url">推荐6个可用于托管Java应用的云计算平台</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文列举国外一些支持Java应用托管的云计算平台列表。</p>
+<ol>
+<li>Google App Engine (GAE)
+6 个可用于托管 Java 应用的云计算平台
+这个云服务平台已经提供很长时间了，我在上面运行了两个 Web 应用 (timethetask 和 twikural) ，已经运行一年多了，没碰到任何问题。不过如果你打算将应用部署到GAE上你需要修改你的设计策略来适应 GAE 平台。</li>
+<li>Amazon Web Services / Elastic Computing Cloud (EC2)
+6 个可用于托管 Java 应用的云计算平台
+这不是一个平台，因为你无需SDK来开发 Java 应用，该平台为你提供你可完全控制的机器，这些机器可以预装好Java环境。</li>
+<li>Windows Azure – Java
+6 个可用于托管 Java 应用的云计算平台
+Windows Azure for Java开发套件，使Java开发人员可以利用微软云计算服务平台的优势，在云端整合各种应用，用Java语言与云端链接。</li>
+<li>Jelastic
+6 个可用于托管 Java 应用的云计算平台
+Jelastic平台最大的优点是你不需要学习它的任何API，只需要上传你的Web应用，Jelactic就可自动帮你部署和运行。</li>
+<li>Heroku
+6 个可用于托管 Java 应用的云计算平台
+详情可阅读这篇文章: Heroku runs Java.</li>
+<li>OpenShift by Red Hat
+6 个可用于托管 Java 应用的云计算平台
+这是针对企业的平台，个人还无法使用，据说使用它非常之简单，有用过的朋友可以分享一下。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/php-web-robot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1045,128 +1166,6 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
 03、最后激活WPRobot_3.31破解版就可用了。
 下载地址：（压缩包内两个版本已经包含）
 <a href="http://115.com/file/dpu4vdlt" target="_blank" rel="external">http://115.com/file/dpu4vdlt</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/java-cloud-server-for-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/12/java-cloud-server-for-java/" itemprop="url">推荐6个可用于托管Java应用的云计算平台</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文列举国外一些支持Java应用托管的云计算平台列表。</p>
-<ol>
-<li>Google App Engine (GAE)
-6 个可用于托管 Java 应用的云计算平台
-这个云服务平台已经提供很长时间了，我在上面运行了两个 Web 应用 (timethetask 和 twikural) ，已经运行一年多了，没碰到任何问题。不过如果你打算将应用部署到GAE上你需要修改你的设计策略来适应 GAE 平台。</li>
-<li>Amazon Web Services / Elastic Computing Cloud (EC2)
-6 个可用于托管 Java 应用的云计算平台
-这不是一个平台，因为你无需SDK来开发 Java 应用，该平台为你提供你可完全控制的机器，这些机器可以预装好Java环境。</li>
-<li>Windows Azure – Java
-6 个可用于托管 Java 应用的云计算平台
-Windows Azure for Java开发套件，使Java开发人员可以利用微软云计算服务平台的优势，在云端整合各种应用，用Java语言与云端链接。</li>
-<li>Jelastic
-6 个可用于托管 Java 应用的云计算平台
-Jelastic平台最大的优点是你不需要学习它的任何API，只需要上传你的Web应用，Jelactic就可自动帮你部署和运行。</li>
-<li>Heroku
-6 个可用于托管 Java 应用的云计算平台
-详情可阅读这篇文章: Heroku runs Java.</li>
-<li>OpenShift by Red Hat
-6 个可用于托管 Java 应用的云计算平台
-这是针对企业的平台，个人还无法使用，据说使用它非常之简单，有用过的朋友可以分享一下。</li>
 </ol>
 
           
@@ -1777,7 +1776,7 @@ scroll第一个参数是水平位置，第二个参数是垂直位置，比如�
         <div class="copyright" >
   
   &copy;  2012 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>
