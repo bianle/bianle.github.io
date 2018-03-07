@@ -345,6 +345,380 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/06/blog-jekyll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/06/blog-jekyll/" itemprop="url">jekyll安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="windows安装jekyll"><a class="header-anchor" href="#windows安装jekyll"> </a>windows安装jekyll</h2>
+<ol>
+<li>安装ruby
+<a href="http://rubyinstaller.org/downloads/" target="_blank" rel="external">http://rubyinstaller.org/downloads/</a></li>
+<li>安装RubyDevKit</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">cd C:\RubyDevKit</div><div class="line">ruby dk<span class="selector-class">.rb</span> init</div><div class="line">ruby dk<span class="selector-class">.rb</span> install</div></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">gem <span class="keyword">install</span> jekyll</div></pre></td></tr></table></figure>
+<p>参考：
+<a href="http://jekyll-windows.juthilo.com/1-ruby-and-devkit/" target="_blank" rel="external">http://jekyll-windows.juthilo.com/1-ruby-and-devkit/</a></p>
+<h2 id="jekyll中转义jekyll代码"><a class="header-anchor" href="#jekyll中转义jekyll代码"> </a>jekyll中转义jekyll代码</h2>
+<p>jekyll中使用的Liquid模板引擎，用<code>raw</code>标签可以转义</p>
+<figure class="highlight django"><table><tr><td class="code"><pre><div class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">raw</span> %&#125;</span><span class="xml"> </span></div><div class="line"><span class="tag">&lt;<span class="name">此处为代码块</span>&gt;</span> </div><div class="line"><span class="template-tag">&#123;% <span class="name">endraw</span> %&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure>
+<p>参见：
+<a href="http://stackoverflow.com/questions/22044488/jekyll-code-in-jekyll" target="_blank" rel="external">http://stackoverflow.com/questions/22044488/jekyll-code-in-jekyll</a></p>
+<blockquote>
+<p>The <code>{%...%}</code> syntax used by Jekyll is part of the Liquid templating engine. To escape these tags, and so show them literally, you should use the raw tag.<br>
+You will probably want to combine this with the markdown syntax for code blocks. With Redcarpet you can use the triple backtick syntax. It doesn’t matter if you put the backticks inside the raw tags or the other way round:</p>
+<figure class="highlight django"><table><tr><td class="code"><pre><div class="line"><span class="xml"></span><span class="template-tag">&#123;%<span class="name">raw</span>%&#125;</span><span class="xml"></span></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">for</span></span> post <span class="keyword">in</span> site.posts %&#125;</span><span class="xml"></span></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">if</span></span> post.categories contains '&lt;categoryname&gt;' %&#125;</span><span class="xml"></span></div><div class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"</span></span><span class="template-variable">&#123;&#123; post.url &#125;&#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span><span class="template-variable">&#123;&#123; post.title &#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">endif</span></span> %&#125;</span><span class="xml"></span></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">endfor</span></span> %&#125;</span><span class="xml"></span></div><div class="line"><span class="template-tag">&#123;%<span class="name">endraw</span>%&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="jekyll-themes"><a class="header-anchor" href="#jekyll-themes"> </a>jekyll themes</h2>
+<p><a href="http://jekyllthemes.org/" target="_blank" rel="external">http://jekyllthemes.org/</a></p>
+<h2 id="jekyll-子模块"><a class="header-anchor" href="#jekyll-子模块"> </a>jekyll 子模块</h2>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">git</span> <span class="keyword">submodule </span><span class="keyword">add </span> -<span class="keyword">b </span>master   -- <span class="string">"https://github.com/bianle/HelloWorld.git"</span>  <span class="string">"_post"</span></div></pre></td></tr></table></figure>
+<p><a href="https://github.com/jekyll/jekyll/issues/679" target="_blank" rel="external">https://github.com/jekyll/jekyll/issues/679</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/05/blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/05/blog/" itemprop="url">那些年我用过的博客软件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="写博客初衷"><a class="header-anchor" href="#写博客初衷"> </a>写博客初衷</h2>
+<ul>
+<li>文字，是人类最伟大的发明！</li>
+<li>现在记点东西只是想告诉未来的自己过去曾经做过什么！</li>
+<li>脑子一天比一天不好使</li>
+</ul>
+<h2 id="回忆开始"><a class="header-anchor" href="#回忆开始"> </a>回忆开始</h2>
+<p>大一的时候，才知道有个东西叫博客，那时候注册了一个新浪博客，在网吧一呆就呆一天，不是打游戏，也不看电影，而是为了给博客添加个播放器，换一换布局，然后就打电话给同学说，我有了自己的网站，现在想想<ruby>图样图森破<rp> (</rp><rt>too young too simple</rt><rp>) </rp></ruby>！记得后来注册了一个微博客，就是现在的微博的前身，后来登录名字都被新浪改了，渣浪就是这么<ruby>霸道<rp> (</rp><rt>bú yào liǎn</rt><rp>) </rp></ruby>！</p>
+<p>后来有了电脑，却沉浸在游戏，电影，上网，早不知博客为何物了！</p>
+<p>刚上班的时候，在友邦，跟着王哥学了不少东西，可那时候也不知道记些什么，直到02年，淘宝买了国外的空间，开始捣鼓php，wordpress，注册了人生中第一个域名，搭了第一个属于我的网站，当le5u.net弹出wordpress的第一个文章时，激动的心情不是能用言语形容的，我记的我写的第一篇文章叫<code>开篇</code>,内容很长，为<code>开篇一定要长...</code>，哈哈!然后就东拼西凑<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>，凑了一堆东西，好歹也算个网站了。</p>
+<p>后来，在软通上班期间知道了一个很古老的编辑器叫<code>emacs</code>，并且花了很长时间就是为了弄明白，这么『难』用的编辑器为什么竟然还会有人用，却渐渐被她洗脑！于是我尝试用<code>emacs</code>的<code>org2blog</code>发博客，开始很新奇，后来还是放弃了（不是emacs）!</p>
+<p>再后来，渐渐的知道有个网站叫<code>github</code>，知道有个语法叫<code>markdown</code>，知道了<a href="/2016/11/06/blog-jekyll/">jekyll</a>，让我第一次觉的写博客是一种享受！</p>
+<p>我喜欢尝试不同的东西，尝试过<code>hexo</code>和<code>ghost</code>，每一款都让我欲罢不能，我不是个花心的人，但是个花心的猿！</p>
+<p>我不喜欢对她们评头论足，没有最优秀的，只有最适合的，我现在用的是hexo（在emacs里用hexo.el插件<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>写博客简直爽到飞）并且很多人都喜欢她！</p>
+<h2 id="题外"><a class="header-anchor" href="#题外"> </a>题外</h2>
+<p><a href="http://www.jianshu.com/p/378338f10263" target="_blank" rel="external">sublime text 2 下的Markdown写作</a></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>当时用wordpress的一个自动抓取博客的软件，定时抓取文章，现在想想确实有点不厚道 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="https://github.com/kuanyui/hexo.el" target="_blank" rel="external">https://github.com/kuanyui/hexo.el</a> <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/05/mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/05/mysql/" itemprop="url">mysql</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="mysql-锁"><a class="header-anchor" href="#mysql-锁"> </a>mysql 锁</h2>
+<p><a href="http://blog.csdn.net/xifeijian/article/details/20313977" target="_blank" rel="external">http://blog.csdn.net/xifeijian/article/details/20313977</a></p>
+<h2 id="mysql-索引"><a class="header-anchor" href="#mysql-索引"> </a>mysql 索引</h2>
+<p><a href="http://blog.jobbole.com/24006/" target="_blank" rel="external">http://blog.jobbole.com/24006/</a></p>
+<h2 id="save-or-update"><a class="header-anchor" href="#save-or-update"> </a>save or update</h2>
+<ul>
+<li>
+<p><code>INSERT ... SELECT ... NOT EXISTS</code></p>
+</li>
+<li>
+<p><code>ON DUPLICATE KEY UPDATE</code></p>
+</li>
+<li>
+<p><code>REPLACE</code></p>
+</li>
+</ul>
+<p><a href="http://blog.csdn.net/miraclestar/article/details/6525236" target="_blank" rel="external">http://blog.csdn.net/miraclestar/article/details/6525236</a></p>
+<h2 id="this-version-of-mysql-doesn-t-yet-support-limit-in-all-any-some-subquery-mysql-errno-1235"><a class="header-anchor" href="#this-version-of-mysql-doesn-t-yet-support-limit-in-all-any-some-subquery-mysql-errno-1235"> </a>This version of MySQL doesn’t yet support ‘LIMIT &amp; IN/ALL/ANY/SOME subquery’ MySQL Errno:    1235</h2>
+<p><a href="http://stackoverflow.com/questions/17892762/mysql-this-version-of-mysql-doesnt-yet-support-limit-in-all-any-some-subqu" target="_blank" rel="external">http://stackoverflow.com/questions/17892762/mysql-this-version-of-mysql-doesnt-yet-support-limit-in-all-any-some-subqu</a></p>
+<h2 id="mysql中orderby和limit同时使用的bug"><a class="header-anchor" href="#mysql中orderby和limit同时使用的bug"> </a>mysql中orderby和limit同时使用的bug</h2>
+<p><a href="http://blog.sina.com.cn/s/blog_705cc5dd01012ehb.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_705cc5dd01012ehb.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/05/python-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1155,395 +1529,11 @@ ascii art <a href="http://www.asciiarts.net/" target="_blank" rel="external">htt
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/02/nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/02/nginx/" itemprop="url">nginx</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ul>
-<li>No input file specified</li>
-</ul>
-<p>配置文件里
-SCRIPT_FILENAME
-配置问题</p>
-<h2 id="nginx添加ssl模块"><a class="header-anchor" href="#nginx添加ssl模块"> </a>nginx添加ssl模块</h2>
-<ol>
-<li>进入nginx的sbin目录（这里是/opt/nginx-1.10.0/sbin）查看nginx当前配置</li>
-</ol>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">./nginx -V</div></pre></td></tr></table></figure>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/12/29/20161229130953.png" alt="nginx"><span class="image-caption">nginx</span></p>
-<ol start="2">
-<li>进入nginx的源码包(这里是/opt/download/nginx-1.10.0)重新编译</li>
-</ol>
-<figure class="highlight crystal"><table><tr><td class="code"><pre><div class="line">./configure --prefix=<span class="regexp">/opt/nginx</span>-<span class="number">1.10</span>.<span class="number">0</span> --<span class="keyword">with</span>-http_stub_status_module --<span class="keyword">with</span>-http_ssl_module</div><div class="line"></div><div class="line">make <span class="comment">##这一步之后千万不要`make install`!!!</span></div></pre></td></tr></table></figure>
-<ol start="3">
-<li>进入nginx的sbin目录备份原来的nginx二进制文件</li>
-</ol>
-<figure class="highlight avrasm"><table><tr><td class="code"><pre><div class="line"><span class="keyword">cp</span> nginx nginx.bak</div></pre></td></tr></table></figure>
-<ol start="4">
-<li>停止nginx服务，回到源码目录把重新编译的二进制文件拷贝到nginx的sbin目录替换旧的</li>
-</ol>
-<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">cp objs<span class="regexp">/nginx /</span>opt<span class="regexp">/nginx-1.10.0/</span>sbin<span class="regexp">/</span></div></pre></td></tr></table></figure>
-<ol start="5">
-<li>执行第1步，验证一下</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/01/windows/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/01/windows/" itemprop="url">windows</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="onenote2013-代码语法高亮插件"><a class="header-anchor" href="#onenote2013-代码语法高亮插件"> </a>OneNote2013 代码语法高亮插件</h2>
-<p><a href="http://blog.home-ml.com/wordpress/?p=1" target="_blank" rel="external">http://blog.home-ml.com/wordpress/?p=1</a></p>
-<h2 id="win7文件被占用"><a class="header-anchor" href="#win7文件被占用"> </a>win7文件被占用</h2>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/01/20161101231345.png" alt="win7"><span class="image-caption">win7</span></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/01/linux-centos/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/01/linux-centos/" itemprop="url">linux-centos</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="centos-6-6-yum-安装-nginx"><a class="header-anchor" href="#centos-6-6-yum-安装-nginx"> </a>centos 6.6 yum 安装 nginx</h2>
-<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">rpm -ivh http:<span class="regexp">//</span>nginx.org<span class="regexp">/packages/</span>centos<span class="regexp">/6/</span>noarch<span class="regexp">/RPMS/</span>nginx-release-centos-<span class="number">6</span>-<span class="number">0</span>.el6.ngx.noarch.rpm</div><div class="line">yum install nginx</div></pre></td></tr></table></figure>
-<h2 id="安装nodejs"><a class="header-anchor" href="#安装nodejs"> </a>安装nodejs</h2>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">sudo yum <span class="keyword">install</span> epel-<span class="keyword">release</span></div><div class="line">sudo yum <span class="keyword">install</span> nodejs</div><div class="line">sudo yum <span class="keyword">install</span> npm</div></pre></td></tr></table></figure>
-<h2 id="安装mysql"><a class="header-anchor" href="#安装mysql"> </a>安装mysql</h2>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> mysql-<span class="keyword">server</span></div><div class="line">yum <span class="keyword">install</span> mysql</div><div class="line">service mysqld <span class="keyword">start</span></div><div class="line">mysqladmin -u root <span class="keyword">password</span> xxxx</div><div class="line">mysql -u root -p</div></pre></td></tr></table></figure>
-<h2 id="安装whois"><a class="header-anchor" href="#安装whois"> </a>安装whois</h2>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> jwhois</div></pre></td></tr></table></figure>
-<h2 id="安装ssh服务"><a class="header-anchor" href="#安装ssh服务"> </a>安装ssh服务</h2>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> openssh-<span class="keyword">server</span></div><div class="line">service sshd <span class="keyword">start</span></div></pre></td></tr></table></figure>
-<p>开机启动</p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">chkconfig sshd <span class="keyword">on</span></div></pre></td></tr></table></figure>
-<h2 id="ntfs支持"><a class="header-anchor" href="#ntfs支持"> </a>ntfs支持</h2>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">yum instal fuse-ntfs<span class="number">-3</span>g</div></pre></td></tr></table></figure>
-<h2 id="挂载lvm卷-提示mount-unknown-filesystem-type-lvm2-member-的解决"><a class="header-anchor" href="#挂载lvm卷-提示mount-unknown-filesystem-type-lvm2-member-的解决"> </a>挂载LVM卷，提示mount: unknown filesystem type 'LVM2_member’的解决</h2>
-<p><a href="http://blog.csdn.net/pengyouchuan/article/details/17578189" target="_blank" rel="external">http://blog.csdn.net/pengyouchuan/article/details/17578189</a></p>
-<h2 id="挂载到-media-2失败-结构需要清理"><a class="header-anchor" href="#挂载到-media-2失败-结构需要清理"> </a>挂载到/media/2失败:结构需要清理</h2>
-<p><a href="http://www.cnblogs.com/xiaoyu1005/archive/2013/05/20/3088586.html" target="_blank" rel="external">http://www.cnblogs.com/xiaoyu1005/archive/2013/05/20/3088586.html</a></p>
-<figure class="highlight dts"><table><tr><td class="code"><pre><div class="line">xfs_repair <span class="meta-keyword">/dev/</span>centos/home</div><div class="line">mkfs.ext4 <span class="meta-keyword">/dev/</span>centos/home <span class="meta-keyword">/media/</span><span class="number">2</span></div></pre></td></tr></table></figure>
-<h2 id="centos-7-安装配置-nfs"><a class="header-anchor" href="#centos-7-安装配置-nfs"> </a>CentOS 7 安装配置 NFS</h2>
-<p><a href="http://www.linuxidc.com/Linux/2015-05/117378.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-05/117378.htm</a></p>
-<h2 id="linux-nfs-服务的exportfs命令的简介"><a class="header-anchor" href="#linux-nfs-服务的exportfs命令的简介"> </a>【Linux】nfs 服务的exportfs命令的简介</h2>
-<p><a href="http://blog.itpub.net/22664653/viewspace-709839/" target="_blank" rel="external">http://blog.itpub.net/22664653/viewspace-709839/</a></p>
-<h2 id="centos7安装配置nfs服务和挂载"><a class="header-anchor" href="#centos7安装配置nfs服务和挂载"> </a>Centos7安装配置NFS服务和挂载</h2>
-<p><a href="http://blog.dreamlu.net/blog/67" target="_blank" rel="external">http://blog.dreamlu.net/blog/67</a></p>
-<blockquote>
-<p>systemctl enable nfs-server.service</p>
-</blockquote>
-<blockquote>
-<p>yum install nfs-utils rpcbind
-可能会报冲突：
-file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02.107-5.el7_2.2.x86_64 conflicts with file from package lvm2-7:2.02.105-14.el7.x86_64</p>
-</blockquote>
-<p>解决：<a href="https://bugzilla.redhat.com/show_bug.cgi?id=1294128" target="_blank" rel="external">https://bugzilla.redhat.com/show_bug.cgi?id=1294128</a>
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2016/11/01/20161101230303.png" alt="nfs"><span class="image-caption">nfs</span>
-先更新下lvm2
-<code>yum update lvm2</code></p>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">mount -t nfs <span class="number">10.10</span>.<span class="number">10.2</span><span class="symbol">:/opt/test</span> ./test -o proto=tcp -o nolock</div></pre></td></tr></table></figure>
-<blockquote>
-<p>mount.nfs: an incorrect mount option was specified
-解决：<a href="http://blog.chinaunix.net/xmlrpc.php?id=3988881&amp;r=blog/article&amp;uid=26849186" target="_blank" rel="external">http://blog.chinaunix.net/xmlrpc.php?id=3988881&amp;r=blog/article&amp;uid=26849186</a></p>
-</blockquote>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">mount -o nfsvers=<span class="number">3</span> <span class="number">10.10</span>.<span class="number">10.2</span><span class="symbol">:/opt/test</span> ./test</div></pre></td></tr></table></figure>
-<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">mount -t nfs -o nolock,nfsvers=<span class="number">3</span>,vers=<span class="number">3</span>  -o proto=tcp <span class="number">10.10</span>.<span class="number">10.2</span><span class="symbol">:/opt/test</span> ./test</div></pre></td></tr></table></figure>
-<h2 id="设置时间"><a class="header-anchor" href="#设置时间"> </a>设置时间</h2>
-<p><a href="http://www.3lian.com/edu/2015/04-17/205955.html" target="_blank" rel="external">http://www.3lian.com/edu/2015/04-17/205955.html</a></p>
-<figure class="highlight dsconfig"><table><tr><td class="code"><pre><div class="line"><span class="string">timedatectl </span><span class="built_in">set-time</span> <span class="string">"2016-06-27 11:15:59"</span></div></pre></td></tr></table></figure>
-<h2 id="基于-samba-实现-nas-系统"><a class="header-anchor" href="#基于-samba-实现-nas-系统"> </a>基于 Samba 实现 NAS 系统</h2>
-<p><a href="http://shumeipai.nxez.com/2013/08/24/install-nas-on-raspberrypi.html" target="_blank" rel="external">http://shumeipai.nxez.com/2013/08/24/install-nas-on-raspberrypi.html</a></p>
-<p>setenforce 0 (切记关闭！！！)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1588,7 +1578,7 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">278</span>
+                <span class="site-state-item-count">281</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1599,7 +1589,7 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1610,7 +1600,7 @@ file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">175</span>
+                <span class="site-state-item-count">178</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

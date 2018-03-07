@@ -7,7 +7,7 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -149,7 +149,7 @@
 
 
 
-  <title>Bianle's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Bianle's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -160,7 +160,7 @@
 
 
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+  <script type="text/javascript">
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
@@ -335,6 +335,389 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/linux-vim-plugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/12/linux-vim-plugin/" itemprop="url">Vim插件：增加模糊查找和智能补全功能</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>这里给大家推荐一个Vim配置工具，本工具由fisadev个人开发，并且遵循GPL开源协议，所以你可以放心地使用它！因为这是作者个人使用，所以设置都是按照作者自己的习惯来的，如有不适应，你可以自己修改源代码。废话不多说，先看预览图：</p>
+<p>智能的自动提示</p>
+<p>右侧是“类浏览器 ”</p>
+<p>代码错误检查</p>
+<p>代码模糊匹配
+这里推荐使用Vundle管理插件，安装和卸载插件都非常简单！插件的安装位置在 .Vim/bundle/。更多信息点击<a href="https://github.com/VundleVim/Vundle.vim" target="_blank" rel="external">这里</a>。
+智能的自动填充功能。可以自动填充模块名、实例方法和属性，有时还会提示使用过的文本（比如常用命名）。
+模糊文件和代码查找功能
+,e = 打开文件（就像:e一样）但是增加了递归查询和模糊匹配。例如：如果你输入“mopy”，它匹配到一个分目录下的“<a href="http://models.py" target="_blank" rel="external">models.py</a>”文件，你可以直接使用Ctrl+T打开文件。
+,g = 模糊服务查找 （类、方法、变量、函数，以及等等……）例如：如果你输入“usr”，它可以找到当前文件里的User类定义。
+,f = 模糊文本查找，并且打开文件。 例如：如果你输入“ctm=6”，它能匹配到“current_time = 16”。
+,d = 和 ,g相同 (symbol finder) 但是搜索的是指针下的单词 (sort of “fuzzy go to definition”)。
+,E = 和 ,e相同 (file finder)不过搜索的是光标下的文件 (sort of “fuzzy go to file”)。
+类/模块浏览器。类/模块浏览器里列出了类、函数、方法以及类似文件，敲回车键就可以导航过去。使用F4切换它的状态。
+F2挂起任务浏览器。这会从读取当前文件开始，并且搜索“TODO”和“FIXME”等注释，然后在列表里显示。导航方法和类浏览器类似。
+使用Pyflakes对Python代码进行错误检查。它可以检测出代码里未使用的变量和引用，以及语法错误等等。
+在当前Python文件上运行PEP8验证器，输入“,8” ，就会显示Pyflakes检测出来的Python错误。
+它同时还是一个相当优秀的Python和PHP调试器。这里有一个小教程，我增加了几个键盘快捷键方便使用（这只有在调试器启动后才可以使用）。
+F5 = 单步执行（step over）
+F6 = 插入（step into）
+F7 = 跳出（step out）
+F8 = 执行到断点处停止
+F9 = 设置断点
+F10 = 在表达式窗口计算表达式结果
+F11 = go down on the stack
+F12 = go up on the stack
+推荐你看看视频教程，在这里我无法给出所有用法举例。
+安装步骤
+首先你需要Vim Python编译支持，并且保证安装目录下没有.Vim文件夹。（你可以运行Vim –version | grep +Python来检查你的Vim是否支持Python。）
+软件依赖：</p>
+<p>sudo apt-get install exuberant-ctags git
+sudo pip install dbgp Vim-debug pep8 flake8 pyflakes
+如果你没有安装pip，可以在<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="external">这里</a>下载。
+配置好安装文件
+把下载的.Vimrc文件放到Linux home文件夹下。
+例如我的用户名是fisa，那就把它放到/home/fisa/目录下。
+打开Vim
+在终端打开Vim，它将会自动安装插件到.Vim/bundle目录下。你所需要做的就是等待安装完成，然后就会看到崭新的闪亮的Vim！
+可选：
+如果你喜欢，可以查看<a href="https://github.com/fisadev/fisa-Vim-config/blob/master/README.rst" target="_blank" rel="external">README</a>文件结尾的使用指南。
+项目<a href="https://github.com/fisadev/fisa-Vim-config" target="_blank" rel="external">GitHub地址</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/web-js-totop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">JS返回顶部</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文介绍三款简单的返回页面顶部代码，可以使用简单的HTML锚标记，也可使用Javascript Scroll函数动态返回，其它的还有悬浮脚本等有点复杂了，本文不再介绍，大家根据自己需要选择其中的一种即可，总之简约最美的，能减少代码就减少代码，能不调用的就别调用，要不是天缘博客的文章都是牛长也不会添加这个功能。
+一、使用锚标记返回页面顶部
+使用HTML锚标记最简单，就是看起来有点不好看，点击后会在地址栏显示这个锚标记，其它的倒没什么。
+页面顶部放置：
+<a name="top" id="top"></a>
+放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
+页面底部放置：
+<a href="#top" target="_self">返回顶部</a>
+二、使用Javascript Scroll函数返回顶部
+scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
+方式1：
+1<a href="javascript:scroll(0,0)" target="_blank" rel="external">返回顶部</a>
+scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
+方式2：
+本方式是渐进式返回顶部，要好看一些，代码如下：
+1functionpageScroll() { 2window.scrollBy(0,-10); 3scrolldelay = setTimeout(‘pageScroll()’,100); 4} 56<a href="pageScroll();">返回顶部</a>
+这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
+1if(document.documentElement.scrollTop==0) clearTimeout(scrolldelay);三、使用Onload加上scroll功能实现动态返回顶部
+1、首先在网页BODY标签结束之前加上：</body></p>
+<div id="gotop">返回顶部</div>
+2、再调用以下JS脚本部分（本脚本非天缘原创，早前来源于Z-BLOG官方论坛上收集，源包未带作者链接，如果原作者看到敬请留言添加）：
+01BackTop=function(btnId){ 02 varbtn=document.getElementById(btnId); 03 vard=document.documentElement; 04 window.onscroll=set; 05 btn.onclick=function(){ 06 btn.style.display="none"; 07 window.onscroll=null; 08 this.timer=setInterval(function(){ 09 d.scrollTop-=Math.ceil(d.scrollTop*0.1); 10 if(d.scrollTop==0) clearInterval(btn.timer,window.onscroll=set); 11 },10); 12 }; 13 functionset(){btn.style.display=d.scrollTop?’block':"none"} 14}; 15BackTop(‘gotop’);
+对Z-BLOG而言，可以放到$(document).ready(function(){….函数中，也可以独立存成一个js文件，比如gotop.js，再通过：
+<script src="/js/gotop.js" type="text/javascript"></script>
+来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设路径为JS，其它位置请自行修改。
+补充：
+上述返回顶部代码都是文字式样的，也可以把文字更换为漂亮一点的图标，另外还有悬浮状的返回顶部代码（就是页面滚动时，返回顶部图标也会跟着跑的那种），需要使用到层等，搞的有点复杂了，本文暂不列出。
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/11/java-jdk-and-jre/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/11/java-jdk-and-jre/" itemprop="url">jdk与jre的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
+JDK就是Java Development Kit.简单的说JDK是面向开发人员使用的SDK，它提供了Java的开发环境和运行环境。SDK是Software Development Kit 一般指软件开发包，可以包括函数库、编译程序等。
+JRE是Java Runtime Enviroment是指Java的运行环境，是面向Java程序的使用者，而不是开发者。
+如果安装了JDK，会发同你的电脑有两套JRE，一套位于 \jre 另外一套位于 C:\Program Files\Java\jre1.5.0_15 目录下，后面这套比前面那套少了Server端的Java虚拟机，不过直接将前面那套的Server端Java虚拟机复制过来就行了。而且在安装JDK可以选择是否安装这个位于 C:\Program Files\Java 目录下的JRE。如果你只安装JRE，而不是JDK，那么只会在 C:\Program Files\Java 目录下安装唯一的一套JRE。
+JRE的地位就象一台PC机一样，我们写好的Win32应用程序需要操作系统帮我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。所以当你装完JDK后，如果分别在硬盘上的两个不同地方安装了两套JRE，那么你可以想象你的电脑有两台虚拟的Java PC机，都具有运行Java程序的功能。所以我们可以说，只要你的电脑安装了JRE，就可以正确运行Java应用程序。
+1、为什么Sun要让JDK安装两套相同的JRE？
+这是因为JDK里面有很多用Java所编写的开发工具（如javac.exe、jar.exe等），而且都放置在 \lib\tools.jar 里。从下面例子可以看出，先将tools.jar改名为tools1.jar，然后运行javac.exe，显示如下结果： Exception in thread “main” java.lang.NoClassDefFoundError: com/sun/tools/javac /Main 这个意思是说，你输入javac.exe与输入 java -cp c:\jdk\lib\tools.jar com.sun.tools.javac.Main 是一样的，会得到相同的结果。从这里我们可以证明javac.exe只是一个包装器（Wrapper），而制作的目的是为了让开发者免于输入太长的指命。而且可以发现\lib目录下的程序都很小，不大于2 9K，从这里我们可以得出一个结论。就是JDK里的工具几乎是用Java所编写，所以也是Java应用程序，因此要使用JDK所附的工具来开发Java程序，也必须要自行附一套JRE才行，所以位于C:\Program Files\Java目录下的那套JRE就是用来运行一般Java程序用的。
+2、如果一台电脑安装两套以上的JRE，谁来决定呢？
+这个重大任务就落在java.exe身上。Java.exe的工作就是找到合适的JRE来运行Java程序。 Java.exe依照底下的顺序来查找JRE：自己的目录下有没有JRE；父目录有没有JRE；查询注册表： [HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment] 所以java.exe的运行结果与你的电脑里面哪个JRE被执行有很大的关系。
+ADD：
+1.JVM — java virtual machineJVM就是我们常说的java虚拟机，它是整个java实现跨平台的最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可以在虚拟机上执行，也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。2.JRE — java runtime environmentJRE是指java运行环境。光有JVM还不能成class的执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。在JDK的安装目录里你可以找到jre目录，里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。所以，在你写完java程序编译成.class之后，你可以把这个.class文件和jre一起打包发给朋友，这样你的朋友就可以运行你写程序了。（jre里有运行.class的java.exe）3.JDK — java development kitJDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？让我们看一下JDK的安装目录。在目录下面有六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的是以下四个文件夹：bin、include、lib、 jre。现在我们可以看出这样一个关系，JDK包含JRE，而JRE包含JVM。bin:最主要的是编译器(javac.exe)include:java和JVM交互用的头文件lib：类库jre:java运行环境（注意：这里的bin、lib文件夹和jre里的bin、lib是不同的）总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。
+eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自带的，所以在安装时你会发现他们只要求你选中jre路径就ok了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -561,7 +944,7 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/system-remotedesktop-port/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/linux-cmd-movie/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -580,7 +963,7 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/06/system-remotedesktop-port/" itemprop="url">修改远程桌面服务的默认端口</a></h1>
+                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">在命令行里看电影</a></h1>
         
 
         <div class="post-meta">
@@ -619,12 +1002,7 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
-第一步：在远程计算机（即被访问的计算机）上通过任务栏的“开始-&gt;运行-&gt;输入regedit”，打开注册表编辑器。
-第二步：在注册表中找到Hkey_local_machine\system\currentcontrolset\control\terminal server\wds\repwd\tds\tcp，将其下的portnumber值从3389修改为80，注意10进制和16进制数字的区别。
-第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
-control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修改为80，同样注意10进制和16进制数字的区别。全部修改后重新启动计算机就完成了被访问计算机上的设置。
-第四步：这样我们就可以在网络中任意一台安装了远程桌面登录器的计算机上连接刚刚设置的计算机了，使用的端口是80端口。值得注意的是在输入被访问计算机IP地址时需要使用类似ip:80的形式。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
 
           
         
@@ -993,7 +1371,7 @@ Logout succeeded</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/linux-cmd-movie/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/system-remotedesktop-port/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1012,7 +1390,7 @@ Logout succeeded</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">在命令行里看电影</a></h1>
+                <a class="post-title-link" href="/2012/07/06/system-remotedesktop-port/" itemprop="url">修改远程桌面服务的默认端口</a></h1>
         
 
         <div class="post-meta">
@@ -1051,7 +1429,12 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
+第一步：在远程计算机（即被访问的计算机）上通过任务栏的“开始-&gt;运行-&gt;输入regedit”，打开注册表编辑器。
+第二步：在注册表中找到Hkey_local_machine\system\currentcontrolset\control\terminal server\wds\repwd\tds\tcp，将其下的portnumber值从3389修改为80，注意10进制和16进制数字的区别。
+第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
+control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修改为80，同样注意10进制和16进制数字的区别。全部修改后重新启动计算机就完成了被访问计算机上的设置。
+第四步：这样我们就可以在网络中任意一台安装了远程桌面登录器的计算机上连接刚刚设置的计算机了，使用的端口是80端口。值得注意的是在输入被访问计算机IP地址时需要使用类似ip:80的形式。</p>
 
           
         
@@ -1095,7 +1478,7 @@ Logout succeeded</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-ubuntu-telnet/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-html-disable-copy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1114,7 +1497,7 @@ Logout succeeded</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-telnet/" itemprop="url">如何启动ubuntu下的telnet服务</a></h1>
+                <a class="post-title-link" href="/2012/07/04/web-html-disable-copy/" itemprop="url">网页防止复制</a></h1>
         
 
         <div class="post-meta">
@@ -1153,325 +1536,9 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>以一般用户登录系统
-执行命令 sudo apt-get install xinetd
-系统提示输入用户密码，输入密码后安装xinet软件包
-执行命令 sudo apt-get install telnetd
-系统提示输入用户密码，输入密码后安装telnet软件包
-执行命令 sudo touch /etc/xinetd.d/telnet新
-建一个文件内容如下，并保存
-执行命令 sudo nano -w /etc/xinetd.d/telnet</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><div class="line"><span class="comment"># default: on</span></div><div class="line"></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \</span></div><div class="line"></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.</span></div><div class="line"></div><div class="line">service telnet</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">disable = no</div><div class="line"></div><div class="line">flags = REUSE</div><div class="line"></div><div class="line">socket_type = stream</div><div class="line"></div><div class="line">wait = no</div><div class="line"></div><div class="line">user = root</div><div class="line"></div><div class="line">server = /usr/sbin/in.telnetd</div><div class="line"></div><div class="line">log_on_failure += USERID</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>执行如下命令：sudo nano -w /etc/xinetd.conf 并加入如下内容：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">instances</span> = <span class="number">60</span></div><div class="line"><span class="attr">log_type</span> = SYSLOG authpriv</div><div class="line"></div><div class="line"><span class="attr">log_on_success</span> = HOST PID</div><div class="line"></div><div class="line"><span class="attr">log_on_failure</span> = HOST</div><div class="line"></div><div class="line"><span class="attr">cps</span> = <span class="number">25</span> <span class="number">30</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-ajax-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/04/web-ajax-cache/" itemprop="url">ajax调用第一次成功,以后均失败解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>IE内核的浏览器会自动缓存异步通信处理结果，第一次ajax请求已经被高速缓存，若第二次点击(请求)，IE浏览器会认为这是同一个请求，由于第一次请求已经得到了响应，因此不会再响应第二次、第三次…的请求。
-解决办法：保证每次异步请求的url地址都不相同，即唯一标识每一次请求。具体的解决方案可以在url添加一个参数，参数的值=<code>new Data().getTime()</code>. 即可达到目的。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-js-animate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/04/web-js-animate/" itemprop="url">js渐变效果</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html xmlns="&lt;a href="http://www.w3.org/1999/xhtml"&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span> new document <span class="tag">&lt;/<span class="name">title</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"宽度渐变"</span> <span class="attr">id</span>=<span class="string">"wt-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"高度渐变"</span> <span class="attr">id</span>=<span class="string">"hi-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"透明度渐变"</span> <span class="attr">id</span>=<span class="string">"op-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"边框渐变"</span> <span class="attr">id</span>=<span class="string">"bd-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"综合渐变"</span> <span class="attr">id</span>=<span class="string">"zh-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"demo"</span> <span class="attr">style</span>=<span class="string">"width:370px;height:100px;background-color:#00CC33;border:2px solid #990033; font-size:12px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">center</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animate</span>(<span class="params">el, prop, opts</span>) </span>&#123;   </div><div class="line"><span class="keyword">this</span>.el = el;   </div><div class="line"><span class="keyword">this</span>.prop = prop;   </div><div class="line"><span class="keyword">this</span>.from = opts.from;   </div><div class="line"><span class="keyword">this</span>.to = opts.to;   </div><div class="line"><span class="keyword">this</span>.time = opts.time;   </div><div class="line"><span class="keyword">this</span>.callback = opts.callback;   </div><div class="line"><span class="keyword">this</span>.animDiff = <span class="keyword">this</span>.to - <span class="keyword">this</span>.from;   </div><div class="line">&#125;   </div><div class="line">Animate.prototype._setStyle = <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;   </div><div class="line"><span class="keyword">switch</span>(<span class="keyword">this</span>.prop) &#123;   </div><div class="line"><span class="keyword">case</span> <span class="string">'opacity'</span>:   </div><div class="line"><span class="keyword">this</span>.el.style[<span class="keyword">this</span>.prop] = val;   </div><div class="line"><span class="keyword">this</span>.el.style.filter = <span class="string">'alpha(opacity='</span> + val * <span class="number">100</span> + <span class="string">')'</span>;   </div><div class="line"><span class="keyword">break</span>;   </div><div class="line"><span class="keyword">default</span>:   </div><div class="line"><span class="keyword">this</span>.el.style[<span class="keyword">this</span>.prop] = val + <span class="string">'px'</span>;   </div><div class="line"><span class="keyword">break</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line">Animate.prototype._animate = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> that = <span class="keyword">this</span>;   </div><div class="line"><span class="keyword">this</span>.now = <span class="keyword">new</span> <span class="built_in">Date</span>();   </div><div class="line"><span class="keyword">this</span>.diff = <span class="keyword">this</span>.now - <span class="keyword">this</span>.startTime;   </div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.diff &gt; <span class="keyword">this</span>.time) &#123;   </div><div class="line"><span class="keyword">this</span>._setStyle(<span class="keyword">this</span>.to);   </div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.callback) &#123;   </div><div class="line"><span class="keyword">this</span>.callback.call(<span class="keyword">this</span>);   </div><div class="line">&#125;   </div><div class="line">clearInterval(<span class="keyword">this</span>.timer);   </div><div class="line"><span class="keyword">return</span>;   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">this</span>.percentage = (<span class="built_in">Math</span>.floor((<span class="keyword">this</span>.diff / <span class="keyword">this</span>.time) * <span class="number">100</span>) / <span class="number">100</span>);   </div><div class="line"><span class="keyword">this</span>.val = (<span class="keyword">this</span>.animDiff * <span class="keyword">this</span>.percentage) + <span class="keyword">this</span>.from;   </div><div class="line"><span class="keyword">this</span>._setStyle(<span class="keyword">this</span>.val);   </div><div class="line">&#125;   </div><div class="line">Animate.prototype.start = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> that = <span class="keyword">this</span>;   </div><div class="line"><span class="keyword">this</span>.startTime = <span class="keyword">new</span> <span class="built_in">Date</span>();   </div><div class="line">clearInterval(<span class="keyword">this</span>.timer);   </div><div class="line"><span class="keyword">this</span>.timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">that._animate.call(that);   </div><div class="line">&#125;, <span class="number">4</span>);   </div><div class="line">&#125;   </div><div class="line">Animate.canTransition = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.createElement(<span class="string">'foo'</span>);   </div><div class="line">el.style.cssText = <span class="string">'-webkit-transition: all .5s linear;'</span>;   </div><div class="line"><span class="keyword">return</span> !!el.style.webkitTransitionProperty;   </div><div class="line">&#125;();   </div><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> T$ = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">document</span>.getElementById(id); &#125;   </div><div class="line"><span class="keyword">var</span> T$$ = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">document</span>.getElementsByName(n); &#125;   </div><div class="line"><span class="keyword">var</span> demo = T$(<span class="string">'demo'</span>); <span class="keyword">var</span> btns = T$$(<span class="string">'fx'</span>);   </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">disableButton</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = btns.length; i &lt; len; ++i) &#123;   </div><div class="line">btns[i].disabled = <span class="string">'disabled'</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">resetButton</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = btns.length; i &lt; len; ++i) &#123;   </div><div class="line">btns[i].disabled = <span class="string">''</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 宽度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeWidth</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'width'</span>, <span class="keyword">from</span> = demo.clientWidth, to = <span class="keyword">from</span> - <span class="number">270</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = demo.clientWidth; to = <span class="keyword">from</span> + <span class="number">270</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton &#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 高度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeHeight</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'height'</span>, <span class="keyword">from</span> = demo.clientHeight, to = <span class="keyword">from</span> + <span class="number">100</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = demo.clientHeight; to = <span class="keyword">from</span> - <span class="number">100</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 透明度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeOpacity</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'opacity'</span>, <span class="keyword">from</span> = <span class="number">1</span>, to = <span class="number">0</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = <span class="number">0</span>; to = <span class="number">1</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 边框渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeBorderWidth</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'borderWidth'</span>, <span class="keyword">from</span> = <span class="number">2</span>, to = <span class="number">10</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = <span class="number">10</span>; to = <span class="number">2</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton &#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'wt-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeWidth();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'hi-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeHeight();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'op-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeOpacity();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'bd-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeBorderWidth();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'zh-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeWidth(); changeHeight(); changeOpacity();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">//if (Animate.canTransition) &#123;   </span></div><div class="line"><span class="comment">//demo.style.webkitTransition = 'opacity 3s ease-in';   </span></div><div class="line"><span class="comment">//demo.style.opacity = 0;   </span></div><div class="line"><span class="comment">//&#125; else &#123;   </span></div><div class="line"><span class="comment">//&#125;   </span></div><div class="line">&#125;   </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-gxt-desktop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/04/web-gxt-desktop/" itemprop="url">gxt desktop</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * Ext GWT - Ext for GWT</div><div class="line"> * Copyright(c) 2007-2009, Ext JS, LLC.</div><div class="line"> * licensing@extjs.com</div><div class="line"> *</div><div class="line"> * http://extjs.com/license</div><div class="line"> */</div><div class="line">package com.google.gwt.sample.hello.client;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.<span class="built_in">Date</span>;</div><div class="line"><span class="keyword">import</span> java.util.<span class="built_in">List</span>;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.Desktop;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.Shortcut;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.StartMenu;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.desktop.client.TaskBar;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.Style.Scroll;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.BaseModel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.BaseModelData;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.ModelData;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.<span class="built_in">data</span>.ModelIconProvider;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.event.ComponentEvent;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.event.MenuEvent;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.event.SelectionListener;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.store.GroupingStore;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.store.TreeStore;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.util.IconHelper;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.ContentPanel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.Info;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.TabItem;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.TabPanel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.Window;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.button.Button;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.button.ToolButton;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.ColumnConfig;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.ColumnModel;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.Grid;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.GridGroupRenderer;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.GroupColumnData;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.grid.GroupingView;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.layout.AccordionLayout;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.layout.FitLayout;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.menu.Menu;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.menu.MenuItem;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.toolbar.ToolBar;</div><div class="line"><span class="keyword">import</span> com.extjs.gxt.ui.client.widget.treepanel.TreePanel;</div><div class="line"><span class="keyword">import</span> com.google.gwt.core.client.EntryPoint;</div><div class="line"><span class="keyword">import</span> com.google.gwt.i18n.client.DateTimeFormat;</div><div class="line"><span class="keyword">import</span> com.google.gwt.i18n.client.NumberFormat;</div><div class="line"><span class="keyword">import</span> com.google.gwt.user.client.ui.AbstractImagePrototype;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class Hello implements EntryPoint &#123;</div><div class="line">	<span class="keyword">private</span> Desktop desktop = <span class="literal">new</span> Desktop();</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="literal">void</span> itemSelected(ComponentEvent ce) &#123;</div><div class="line">		Window w;</div><div class="line">		<span class="keyword">if</span> (ce instanceof MenuEvent) &#123;</div><div class="line">			MenuEvent me = (MenuEvent) ce;</div><div class="line">			w = me.getItem().getData(<span class="string">"window"</span>);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			w = ce.getComponent().getData(<span class="string">"window"</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!desktop.getWindows().contains(w)) &#123;</div><div class="line">			desktop.addWindow(w);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (w != <span class="built_in">null</span> &amp;&amp; !w.isVisible()) &#123;</div><div class="line">			w.show();</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			w.toFront();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="literal">void</span> onModuleLoad() &#123;</div><div class="line">		SelectionListener&lt;MenuEvent&gt; menuListener = <span class="literal">new</span> SelectionListener&lt;MenuEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(MenuEvent me) &#123;</div><div class="line">				itemSelected(me);</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		SelectionListener&lt;ComponentEvent&gt; shortcutListener = <span class="literal">new</span> SelectionListener&lt;ComponentEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(ComponentEvent ce) &#123;</div><div class="line">				itemSelected(ce);</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">		Window gridWindow = createGridWindow();</div><div class="line">		Window accordionWindow = createAccordionWindow();</div><div class="line">		Shortcut s1 = <span class="literal">new</span> Shortcut();</div><div class="line">		s1.setText(<span class="string">"Grid Window"</span>);</div><div class="line">		s1.setId(<span class="string">"grid-win-shortcut"</span>);</div><div class="line">		s1.setData(<span class="string">"window"</span>, gridWindow);</div><div class="line">		s1.addSelectionListener(shortcutListener);</div><div class="line">		desktop.addShortcut(s1);</div><div class="line">		Shortcut s2 = <span class="literal">new</span> Shortcut();</div><div class="line">		s2.setText(<span class="string">"Accordion Window"</span>);</div><div class="line">		s2.setId(<span class="string">"acc-win-shortcut"</span>);</div><div class="line">		s2.setData(<span class="string">"window"</span>, accordionWindow);</div><div class="line">		s2.addSelectionListener(shortcutListener);</div><div class="line">		desktop.addShortcut(s2);</div><div class="line">		TaskBar taskBar = desktop.getTaskBar();</div><div class="line">		StartMenu menu = taskBar.getStartMenu();</div><div class="line">		menu.setHeading(<span class="string">"Darrell Meyer"</span>);</div><div class="line">		menu.setIconStyle(<span class="string">"user"</span>);</div><div class="line">		MenuItem menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Grid Window"</span>);</div><div class="line">		menuItem.setData(<span class="string">"window"</span>, gridWindow);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"icon-grid"</span>));</div><div class="line">		menuItem.addSelectionListener(menuListener);</div><div class="line">		menu.add(menuItem);</div><div class="line">		menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Tab Window"</span>);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"tabs"</span>));</div><div class="line">		menuItem.addSelectionListener(menuListener);</div><div class="line">		menuItem.setData(<span class="string">"window"</span>, createTabWindow());</div><div class="line">		menu.add(menuItem);</div><div class="line">		menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Accordion Window"</span>);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"accordion"</span>));</div><div class="line">		menuItem.addSelectionListener(menuListener);</div><div class="line">		menuItem.setData(<span class="string">"window"</span>, accordionWindow);</div><div class="line">		menu.add(menuItem);</div><div class="line">		menuItem = <span class="literal">new</span> MenuItem(<span class="string">"Bogus Submenu"</span>);</div><div class="line">		menuItem.setIcon(IconHelper.createStyle(<span class="string">"bogus"</span>));</div><div class="line">		Menu sub = <span class="literal">new</span> Menu();</div><div class="line">		for (int i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</div><div class="line">			MenuItem item = <span class="literal">new</span> MenuItem(<span class="string">"Bogus Window "</span> + (i + <span class="number">1</span>));</div><div class="line">			item.setData(<span class="string">"window"</span>, createBogusWindow(i));</div><div class="line">			item.addSelectionListener(menuListener);</div><div class="line">			sub.add(item);</div><div class="line">		&#125;</div><div class="line">		menuItem.setSubMenu(sub);</div><div class="line">		menu.add(menuItem);</div><div class="line">		<span class="comment">// tools</span></div><div class="line">		MenuItem tool = <span class="literal">new</span> MenuItem(<span class="string">"Settings"</span>);</div><div class="line">		tool.setIcon(IconHelper.createStyle(<span class="string">"settings"</span>));</div><div class="line">		tool.addSelectionListener(<span class="literal">new</span> SelectionListener&lt;MenuEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(MenuEvent ce) &#123;</div><div class="line">				Info.display(<span class="string">"Event"</span>, <span class="string">"The 'Settings' tool was clicked"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		menu.addTool(tool);</div><div class="line">		menu.addToolSeperator();</div><div class="line">		tool = <span class="literal">new</span> MenuItem(<span class="string">"Logout"</span>);</div><div class="line">		tool.setIcon(IconHelper.createStyle(<span class="string">"logout"</span>));</div><div class="line">		tool.addSelectionListener(<span class="literal">new</span> SelectionListener&lt;MenuEvent&gt;() &#123;</div><div class="line">			@Override</div><div class="line">			<span class="keyword">public</span> <span class="literal">void</span> componentSelected(MenuEvent ce) &#123;</div><div class="line">				Info.display(<span class="string">"Event"</span>, <span class="string">"The 'Logout' tool was clicked"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		menu.addTool(tool);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createAccordionWindow() &#123;</div><div class="line">		final Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"accordion"</span>));</div><div class="line">		w.setHeading(<span class="string">"Accordion Window"</span>);</div><div class="line">		w.setWidth(<span class="number">200</span>);</div><div class="line">		w.setHeight(<span class="number">350</span>);</div><div class="line">		ToolBar toolBar = <span class="literal">new</span> ToolBar();</div><div class="line">		Button item = <span class="literal">new</span> Button();</div><div class="line">		item.setIcon(IconHelper.createStyle(<span class="string">"icon-connect"</span>));</div><div class="line">		toolBar.add(item);</div><div class="line">		toolBar.add(<span class="literal">new</span> SeparatorToolItem());</div><div class="line">		w.setTopComponent(toolBar);</div><div class="line">		item = <span class="literal">new</span> Button();</div><div class="line">		item.setIcon(IconHelper.createStyle(<span class="string">"icon-user-add"</span>));</div><div class="line">		toolBar.add(item);</div><div class="line">		item = <span class="literal">new</span> Button();</div><div class="line">		item.setIcon(IconHelper.createStyle(<span class="string">"icon-user-delete"</span>));</div><div class="line">		toolBar.add(item);</div><div class="line">		w.setLayout(<span class="literal">new</span> AccordionLayout());</div><div class="line">		ContentPanel cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"Online Users"</span>);</div><div class="line">		cp.setScrollMode(Scroll.AUTO);</div><div class="line">		cp.getHeader().addTool(<span class="literal">new</span> ToolButton(<span class="string">"x-tool-refresh"</span>));</div><div class="line">		w.add(cp);</div><div class="line">		TreeStore&lt;ModelData&gt; store = <span class="literal">new</span> TreeStore&lt;ModelData&gt;();</div><div class="line">		TreePanel&lt;ModelData&gt; tree = <span class="literal">new</span> TreePanel&lt;ModelData&gt;(store);</div><div class="line">		tree.setIconProvider(<span class="literal">new</span> ModelIconProvider&lt;ModelData&gt;() &#123;</div><div class="line">			<span class="keyword">public</span> AbstractImagePrototype getIcon(ModelData model) &#123;</div><div class="line">				<span class="keyword">if</span> (model.get(<span class="string">"icon"</span>) != <span class="built_in">null</span>) &#123;</div><div class="line">					<span class="keyword">return</span> IconHelper.createStyle((<span class="built_in">String</span>) model.get(<span class="string">"icon"</span>));</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">return</span> <span class="built_in">null</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		tree.setDisplayProperty(<span class="string">"name"</span>);</div><div class="line">		ModelData m = newItem(<span class="string">"Family"</span>, <span class="built_in">null</span>);</div><div class="line">		store.add(m, <span class="literal">false</span>);</div><div class="line">		tree.setExpanded(m, <span class="literal">true</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Darrell"</span>, <span class="string">"user"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Maro"</span>, <span class="string">"user-girl"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Lia"</span>, <span class="string">"user-kid"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Alec"</span>, <span class="string">"user-kid"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Andrew"</span>, <span class="string">"user-kid"</span>), <span class="literal">false</span>);</div><div class="line">		m = newItem(<span class="string">"Friends"</span>, <span class="built_in">null</span>);</div><div class="line">		store.add(m, <span class="literal">false</span>);</div><div class="line">		tree.setExpanded(m, <span class="literal">true</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Bob"</span>, <span class="string">"user"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Mary"</span>, <span class="string">"user-girl"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Sally"</span>, <span class="string">"user-girl"</span>), <span class="literal">false</span>);</div><div class="line">		store.add(m, newItem(<span class="string">"Jack"</span>, <span class="string">"user"</span>), <span class="literal">false</span>);</div><div class="line">		cp.add(tree);</div><div class="line">		cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"Settings"</span>);</div><div class="line">		cp.setBodyStyleName(<span class="string">"pad-text"</span>);</div><div class="line">		cp.addText(<span class="string">"DUMMY_TEXT_SHORT"</span>);</div><div class="line">		w.add(cp);</div><div class="line">		cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"Stuff"</span>);</div><div class="line">		cp.setBodyStyleName(<span class="string">"pad-text"</span>);</div><div class="line">		cp.addText(<span class="string">"DUMMY_TEXT_SHORT"</span>);</div><div class="line">		w.add(cp);</div><div class="line">		cp = <span class="literal">new</span> ContentPanel();</div><div class="line">		cp.setAnimCollapse(<span class="literal">false</span>);</div><div class="line">		cp.setHeading(<span class="string">"More Stuff"</span>);</div><div class="line">		cp.setBodyStyleName(<span class="string">"pad-text"</span>);</div><div class="line">		cp.addText(<span class="string">"DUMMY_TEXT_SHORT"</span>);</div><div class="line">		w.add(cp);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createGridWindow() &#123;</div><div class="line">		Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"icon-grid"</span>));</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setHeading(<span class="string">"Grid Window"</span>);</div><div class="line">		w.setSize(<span class="number">500</span>, <span class="number">400</span>);</div><div class="line">		w.setLayout(<span class="literal">new</span> FitLayout());</div><div class="line">		GroupingStore&lt;Stock&gt; store = <span class="literal">new</span> GroupingStore&lt;Stock&gt;();</div><div class="line">		store.add(getCompanies());</div><div class="line">		store.groupBy(<span class="string">"industry"</span>);</div><div class="line">		ColumnConfig company = <span class="literal">new</span> ColumnConfig(<span class="string">"name"</span>, <span class="string">"Company"</span>, <span class="number">60</span>);</div><div class="line">		ColumnConfig price = <span class="literal">new</span> ColumnConfig(<span class="string">"open"</span>, <span class="string">"Price"</span>, <span class="number">20</span>);</div><div class="line">		price.setNumberFormat(NumberFormat.getCurrencyFormat());</div><div class="line">		ColumnConfig change = <span class="literal">new</span> ColumnConfig(<span class="string">"change"</span>, <span class="string">"Change"</span>, <span class="number">20</span>);</div><div class="line">		ColumnConfig industry = <span class="literal">new</span> ColumnConfig(<span class="string">"industry"</span>, <span class="string">"Industry"</span>, <span class="number">20</span>);</div><div class="line">		ColumnConfig last = <span class="literal">new</span> ColumnConfig(<span class="string">"date"</span>, <span class="string">"Last Updated"</span>, <span class="number">20</span>);</div><div class="line">		last.setDateTimeFormat(DateTimeFormat.getFormat(<span class="string">"MM/dd/y"</span>));</div><div class="line">		<span class="built_in">List</span>&lt;ColumnConfig&gt; config = <span class="literal">new</span> ArrayList&lt;ColumnConfig&gt;();</div><div class="line">		config.add(company);</div><div class="line">		config.add(price);</div><div class="line">		config.add(change);</div><div class="line">		config.add(industry);</div><div class="line">		config.add(last);</div><div class="line">		final ColumnModel cm = <span class="literal">new</span> ColumnModel(config);</div><div class="line">		GroupingView view = <span class="literal">new</span> GroupingView();</div><div class="line">		view.setForceFit(<span class="literal">true</span>);</div><div class="line">		view.setGroupRenderer(<span class="literal">new</span> GridGroupRenderer() &#123;</div><div class="line">			<span class="keyword">public</span> <span class="built_in">String</span> render(GroupColumnData <span class="built_in">data</span>) &#123;</div><div class="line">				<span class="built_in">String</span> f = cm.getColumnById(<span class="built_in">data</span>.field).getHeader();</div><div class="line">				<span class="built_in">String</span> l = <span class="built_in">data</span>.models.size() == <span class="number">1</span> ? <span class="string">"Item"</span> : <span class="string">"Items"</span>;</div><div class="line">				<span class="keyword">return</span> f + <span class="string">": "</span> + <span class="built_in">data</span>.<span class="keyword">group</span> + <span class="string">" ("</span> + <span class="built_in">data</span>.models.size() + <span class="string">" "</span></div><div class="line">						+ l + <span class="string">")"</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">		Grid&lt;Stock&gt; grid = <span class="literal">new</span> Grid&lt;Stock&gt;(store, cm);</div><div class="line">		grid.setView(view);</div><div class="line">		grid.setBorders(<span class="literal">true</span>);</div><div class="line">		w.add(grid);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createTabWindow() &#123;</div><div class="line">		Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setSize(<span class="number">740</span>, <span class="number">480</span>);</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"tabs"</span>));</div><div class="line">		w.setHeading(<span class="string">"Tab Window"</span>);</div><div class="line">		w.setLayout(<span class="literal">new</span> FitLayout());</div><div class="line">		TabPanel panel = <span class="literal">new</span> TabPanel();</div><div class="line">		for (int i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</div><div class="line">			TabItem item = <span class="literal">new</span> TabItem(<span class="string">"Tab Item "</span> + (i + <span class="number">1</span>));</div><div class="line">			item.addText(<span class="string">"Something useful would be here"</span>);</div><div class="line">			panel.add(item);</div><div class="line">		&#125;</div><div class="line">		w.add(panel);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Window createBogusWindow(int index) &#123;</div><div class="line">		Window w = <span class="literal">new</span> Window();</div><div class="line">		w.setIcon(IconHelper.createStyle(<span class="string">"bogus"</span>));</div><div class="line">		w.setMinimizable(<span class="literal">true</span>);</div><div class="line">		w.setMaximizable(<span class="literal">true</span>);</div><div class="line">		w.setHeading(<span class="string">"Bogus Window "</span> + ++index);</div><div class="line">		w.setSize(<span class="number">400</span>, <span class="number">300</span>);</div><div class="line">		<span class="keyword">return</span> w;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> ModelData newItem(<span class="built_in">String</span> text, <span class="built_in">String</span> iconStyle) &#123;</div><div class="line">		ModelData m = <span class="literal">new</span> BaseModelData();</div><div class="line">		m.<span class="built_in">set</span>(<span class="string">"name"</span>, text);</div><div class="line">		m.<span class="built_in">set</span>(<span class="string">"icon"</span>, iconStyle);</div><div class="line">		<span class="keyword">return</span> m;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> static <span class="built_in">List</span>&lt;Stock&gt; getCompanies() &#123;</div><div class="line">		DateTimeFormat f = DateTimeFormat.getFormat(<span class="string">"M/d h:mma"</span>);</div><div class="line">		<span class="built_in">List</span>&lt;Stock&gt; stocks = <span class="literal">new</span> ArrayList&lt;Stock&gt;();</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"3m Co"</span>, <span class="number">71.72</span>, <span class="number">0.02</span>, <span class="number">0.03</span>,</div><div class="line">				f.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Alcoa Inc"</span>, <span class="number">29.01</span>, <span class="number">0.42</span>, <span class="number">1.47</span>, f</div><div class="line">				.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Altria Group Inc"</span>, <span class="number">83.81</span>, <span class="number">0.28</span>, <span class="number">0.34</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"American Express Company"</span>, <span class="number">52.55</span>, <span class="number">0.01</span>, <span class="number">0.02</span>, f</div><div class="line">				.parse(<span class="string">"4/8 12:00am"</span>), <span class="string">"Finance"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"American International Group, Inc."</span>, <span class="number">64.13</span>, <span class="number">0.31</span>,</div><div class="line">				<span class="number">0.49</span>, f.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Services"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"AT&amp;T Inc."</span>, <span class="number">31.61</span>, <span class="number">-0.48</span>, <span class="number">-1.54</span>, f</div><div class="line">				.parse(<span class="string">"4/8 12:00am"</span>), <span class="string">"Services"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Boeing Co."</span>, <span class="number">75.43</span>, <span class="number">0.53</span>, <span class="number">0.71</span>, f</div><div class="line">				.parse(<span class="string">"4/8 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Caterpillar Inc."</span>, <span class="number">67.27</span>, <span class="number">0.92</span>, <span class="number">1.39</span>, f</div><div class="line">				.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Services"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Citigroup, Inc."</span>, <span class="number">49.37</span>, <span class="number">0.02</span>, <span class="number">0.04</span>, f</div><div class="line">				.parse(<span class="string">"4/4 12:00am"</span>), <span class="string">"Finance"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"E.I. du Pont de Nemours and Company"</span>, <span class="number">40.48</span>,</div><div class="line">				<span class="number">0.51</span>, <span class="number">1.28</span>, f.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Exxon Mobil Corp"</span>, <span class="number">68.1</span>, <span class="number">-0.43</span>, <span class="number">-0.64</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"General Electric Company"</span>, <span class="number">34.14</span>, <span class="number">-0.08</span>, <span class="number">-0.23</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"General Motors Corporation"</span>, <span class="number">30.27</span>, <span class="number">1.09</span>, <span class="number">3.74</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Automotive"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Hewlett-Packard Co."</span>, <span class="number">36.53</span>, <span class="number">-0.03</span>, <span class="number">-0.08</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Computer"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Honeywell Intl Inc"</span>, <span class="number">38.77</span>, <span class="number">0.05</span>, <span class="number">0.13</span>, f</div><div class="line">				.parse(<span class="string">"4/3 12:00am"</span>), <span class="string">"Manufacturing"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Intel Corporation"</span>, <span class="number">19.88</span>, <span class="number">0.31</span>, <span class="number">1.58</span>, f</div><div class="line">				.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Computer"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"International Business Machines"</span>, <span class="number">81.41</span>, <span class="number">0.44</span>,</div><div class="line">				<span class="number">0.54</span>, f.parse(<span class="string">"4/1 12:00am"</span>), <span class="string">"Computer"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"Johnson &amp; Johnson"</span>, <span class="number">64.72</span>, <span class="number">0.06</span>, <span class="number">0.09</span>, f</div><div class="line">				.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Medical"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"JP Morgan &amp; Chase &amp; Co"</span>, <span class="number">45.73</span>, <span class="number">0.07</span>, <span class="number">0.15</span>, f</div><div class="line">				.parse(<span class="string">"4/2 12:00am"</span>), <span class="string">"Finance"</span>));</div><div class="line">		stocks.add(<span class="literal">new</span> Stock(<span class="string">"McDonald/"</span>s Corporation<span class="string">", 36.76, 0.86, 2.40, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">2</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Food<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Merck &amp; Co., Inc.<span class="string">", 40.96, 0.41, 1.01, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">2</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Medical<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Microsoft Corporation<span class="string">", 25.84, 0.14, 0.54, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">2</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Computer<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Pfizer Inc<span class="string">", 27.96, 0.4, 1.45, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">8</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Services<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("The Coca<span class="params">-Cola</span> Company<span class="string">", 45.07, 0.26, 0.58, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Food<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("The Home Depot, Inc.<span class="string">", 34.64, 0.35, 1.02, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">8</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Retail<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("The Procter &amp; Gamble Company<span class="string">", 61.91, 0.01, 0.02,</span></div><div class="line">				f.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Manufacturing<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("United Technologies Corporation<span class="string">", 63.26, 0.55,</span></div><div class="line">				0.88, f.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Computer<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Verizon Communications<span class="string">", 35.57, 0.39, 1.11, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">3</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Services<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Wal<span class="params">-Mart</span> Stores, Inc.<span class="string">", 45.45, 0.73, 1.63, f</span></div><div class="line">				.parse("<span class="number">4</span>/<span class="number">3</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Retail<span class="string">"));</span></div><div class="line">		stocks.add(new Stock("Walt Disney Company (The) (Holding Company)<span class="string">",</span></div><div class="line">				29.89, 0.24, 0.81, f.parse("<span class="number">4</span>/<span class="number">1</span> <span class="number">12</span>:<span class="number">00</span>am<span class="string">"), "</span>Services<span class="string">"));</span></div><div class="line">		return stocks;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Stock extends BaseModel &#123;</div><div class="line">	public Stock() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Stock(String name, String symbol, double open, double last) &#123;</div><div class="line">		set("name<span class="string">", name);</span></div><div class="line">		set("symbol<span class="string">", symbol);</span></div><div class="line">		set("open<span class="string">", open);</span></div><div class="line">		set("last<span class="string">", last);</span></div><div class="line">		set("<span class="built_in">date</span><span class="string">", new Date());</span></div><div class="line">		set("change<span class="string">", last - open);</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Stock(String name, double open, double change, double pctChange,</div><div class="line">			Date date, String industry) &#123;</div><div class="line">		set("name<span class="string">", name);</span></div><div class="line">		set("open<span class="string">", open);</span></div><div class="line">		set("change<span class="string">", change);</span></div><div class="line">		set("percentChange<span class="string">", pctChange);</span></div><div class="line">		set("<span class="built_in">date</span><span class="string">", date);</span></div><div class="line">		set("industry<span class="string">", industry);</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getIndustry() &#123;</div><div class="line">		return get("industry<span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public void setIndustry(String industry) &#123;</div><div class="line">		set("industry<span class="string">", industry);</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public Date getLastTrans() &#123;</div><div class="line">		return (Date) get("<span class="built_in">date</span><span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getName() &#123;</div><div class="line">		return (String) get("name<span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String getSymbol() &#123;</div><div class="line">		return (String) get("symbol<span class="string">");</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getOpen() &#123;</div><div class="line">		Double open = (Double) get("open<span class="string">");</span></div><div class="line">		return open.doubleValue();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getLast() &#123;</div><div class="line">		Double open = (Double) get("last<span class="string">");</span></div><div class="line">		return open.doubleValue();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getChange() &#123;</div><div class="line">		return getLast() - getOpen();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public double getPercentChange() &#123;</div><div class="line">		return getChange() / getOpen();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public String toString() &#123;</div><div class="line">		return getName();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>gxt环境搭建参考http://wenku.baidu.com/view/29dfff030740be1e650e9ae5.html</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在body标签内加上一段代码，禁用右键菜单</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="selector-tag">body</span> oncontextmenu=<span class="string">"return false"</span></div><div class="line">onselectstart=<span class="string">"return false"</span></div><div class="line">ondragstart=<span class="string">"return false"</span></div><div class="line">onbeforecopy=<span class="string">"return false"</span></div><div class="line">oncopy=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>() </div><div class="line">onselect=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>()&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="attr">type="text"</span> <span class="attr">id="username"</span> <span class="attr">name="username"</span> <span class="attr">value="禁止复制"</span> <span class="attr">onpaste="return</span> <span class="literal">false</span><span class="string">" oncontextmenu="</span>return <span class="literal">false</span><span class="string">" oncopy="</span>return <span class="literal">false</span><span class="string">" oncut="</span>return <span class="literal">false</span><span class="string">" &gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1510,7 +1577,7 @@ Logout succeeded</p>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1555,7 +1622,7 @@ Logout succeeded</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">278</span>
+                <span class="site-state-item-count">281</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1566,7 +1633,7 @@ Logout succeeded</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1577,7 +1644,7 @@ Logout succeeded</p>
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">175</span>
+                <span class="site-state-item-count">178</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2175,24 +2242,7 @@ Logout succeeded</p>
         onPopupClose();
       }
     });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script>
 
 
 

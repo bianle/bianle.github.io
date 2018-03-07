@@ -345,6 +345,428 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2015/10/14/python-VideoCapture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/10/14/python-VideoCapture/" itemprop="url">python VideoCapture</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="环境"><a class="header-anchor" href="#环境"> </a>环境</h1>
+<p>win10(64),python2.7</p>
+<h1 id="下载安装videocapture"><a class="header-anchor" href="#下载安装videocapture"> </a>下载安装<code>VideoCapture</code></h1>
+<p>官网:<a href="http://videocapture.sourceforge.net/" target="_blank" rel="external">http://videocapture.sourceforge.net/</a>
+百度云:<a href="http://pan.baidu.com/s/1eQBDqJw" target="_blank" rel="external">http://pan.baidu.com/s/1eQBDqJw</a>
+解压<code>VideoCapture</code>,将<code>pythonXX</code>覆盖<code>python</code>安装目录</p>
+<p>官方提供了一个拍照例子:</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">from VideoCapture <span class="keyword">import</span> Device</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">	cam = Device()</div><div class="line">	cam.saveSnapshot('image.jpg')</div></pre></td></tr></table></figure>
+<h1 id="下载安装pil"><a class="header-anchor" href="#下载安装pil"> </a>下载安装PIL</h1>
+<p>官网:<a href="http://www.pythonware.com/products/pil/" target="_blank" rel="external">http://www.pythonware.com/products/pil/</a>
+百度云:<a href="http://pan.baidu.com/s/1pJEIFYb" target="_blank" rel="external">http://pan.baidu.com/s/1pJEIFYb</a>
+只找到了32位的,安装后报错</p>
+<blockquote>
+<p>ImportError: The _imaging C module is not installed</p>
+</blockquote>
+<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pillow" target="_blank" rel="external">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pillow</a>查找pillow,pil的替代软件,下载对应64位版本whl文件
+通过pip安装</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">pip <span class="keyword">install</span> xxx.whl</div></pre></td></tr></table></figure>
+<p>安装pip参考<a href="http://blog.useasp.net/archive/2014/01/16/install-python-setuptools-pip-and-virtualenv-in-windows.aspx" target="_blank" rel="external">Windows下Python,setuptools,pip,virtualenv的安装</a></p>
+<p>接着报错:</p>
+<blockquote>
+<p>Traceback (most recent call last):
+File “C:\Users\bl\Desktop\python\cam (2).py”, line 4, in <module>
+cam.saveSnapshot(‘image.jpg’)
+File “D:\bl\app\Python27\lib\<a href="http://VideoCapture.py" target="_blank" rel="external">VideoCapture.py</a>”, line 200, in saveSnapshot
+self.getImage(timestamp, boldfont, textpos).save(filename, **keywords)
+File “D:\bl\app\Python27\lib\<a href="http://VideoCapture.py" target="_blank" rel="external">VideoCapture.py</a>”, line 138, in getImage
+im = Image.fromstring(‘RGB’, (width, height), buffer, ‘raw’, ‘BGR’, 0, -1)
+File “D:\bl\app\Python27\lib\site-packages\PIL\<a href="http://Image.py" target="_blank" rel="external">Image.py</a>”, line 2053, in fromstring
+&quot;Please call frombytes() instead.&quot;)
+Exception: fromstring() has been removed. Please call frombytes() instead.</module></p>
+</blockquote>
+<p>明显找到<code>fromstring</code>方法改成<code>frombytes</code></p>
+<h1 id="执行videocapture官方例子会调用本地摄像头抓取图片保存到image-jpg"><a class="header-anchor" href="#执行videocapture官方例子会调用本地摄像头抓取图片保存到image-jpg"> </a>执行<code>VideoCapture</code>官方例子会调用本地摄像头抓取图片保存到<code>image.jpg</code></h1>
+<p>参考:<a href="http://2le.me/2015/06/05/python-50-modules/">python的50个模块满足你各种需求</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2015/10/14/software-collect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/10/14/software-collect/" itemprop="url">软件收集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="windows增强"><a class="header-anchor" href="#windows增强"> </a>windows增强</h1>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>地址</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QTTabBar</td>
+<td><a href="http://qttabbar.wikidot.com/" target="_blank" rel="external">官网</a> <a href="http://pan.baidu.com/s/1c0Av0Jm" target="_blank" rel="external">百度云</a></td>
+<td> </td>
+</tr>
+<tr>
+<td>clover</td>
+<td><a href="http://cn.ejie.me/" target="_blank" rel="external">官网</a> <a href="http://pan.baidu.com/s/1gdoAG7p" target="_blank" rel="external">百度云</a></td>
+<td>win10卡顿</td>
+</tr>
+<tr>
+<td>onenote代码高亮</td>
+<td><a href="http://pan.baidu.com/s/1kTgvxgb" target="_blank" rel="external">百度云</a></td>
+<td> </td>
+</tr>
+<tr>
+<td>cmdMarkdown</td>
+<td><a href="http://pan.baidu.com/s/1eQ79URC" target="_blank" rel="external">百度云</a></td>
+<td> </td>
+</tr>
+<tr>
+<td>qTox</td>
+<td><a href="http://pan.baidu.com/s/1gdEt3v9" target="_blank" rel="external">百度云</a></td>
+<td> </td>
+</tr>
+<tr>
+<td>babun</td>
+<td><a href="http://pan.baidu.com/s/1sjJyM0t" target="_blank" rel="external">百度云</a></td>
+<td></td>
+</tr>
+<tr>
+<td>BeyondCompare</td>
+<td><a href="http://pan.baidu.com/s/1sjJyM0t" target="_blank" rel="external">百度云</a></td>
+<td></td>
+</tr>
+<tr>
+<td>calibre</td>
+<td><a href="http://pan.baidu.com/s/1sjFvdvf" target="_blank" rel="external">百度云</a></td>
+<td></td>
+</tr>
+<tr>
+<td>cygwin</td>
+<td><a href="http://pan.baidu.com/s/1mgw8tLY" target="_blank" rel="external">百度云</a></td>
+<td></td>
+</tr>
+<tr>
+<td>emacs</td>
+<td><a href="http://pan.baidu.com/s/1pJ7r7mV" target="_blank" rel="external">百度云</a></td>
+<td></td>
+</tr>
+<tr>
+<td>whois</td>
+<td><a href="http://pan.baidu.com/s/1qWDxIsG" target="_blank" rel="external">百度云</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2015/09/26/life-yuanmingyuan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/09/26/life-yuanmingyuan/" itemprop="url">圆明园</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox"
+                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/09/26yuanmingyuan.jpeg?imageView2/2/w/1000/h/750" rel="gallery_cjegp6tri009kf9wkbpyyaitg"
+                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/09/26yuanmingyuan.jpeg?imageView2/2/w/1000/h/750" itemprop="contentUrl"/>
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>中秋节前夕,圆明园散步</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2015/09/02/java-maven-nexus-install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -646,7 +1068,7 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao1.JPG?imageView2/2/w/1000/h/750" rel="gallery_cje6ip8vy009h53wkvb3fzyes"
+                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao1.JPG?imageView2/2/w/1000/h/750" rel="gallery_cjegp6trd009df9wkwl6x9wju"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao1.JPG?imageView2/2/w/1000/h/750" itemprop="contentUrl"/>
               </a>
@@ -654,7 +1076,7 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
           
             
               <a class="post-gallery-img fancybox"
-                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao2.JPG?imageView2/2/w/1000/h/750" rel="gallery_cje6ip8vy009h53wkvb3fzyes"
+                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao2.JPG?imageView2/2/w/1000/h/750" rel="gallery_cjegp6trd009df9wkwl6x9wju"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao2.JPG?imageView2/2/w/1000/h/750" itemprop="contentUrl"/>
               </a>
@@ -662,7 +1084,7 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
           
             
               <a class="post-gallery-img fancybox"
-                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao3.JPG?imageView2/2/w/1000/h/750" rel="gallery_cje6ip8vy009h53wkvb3fzyes"
+                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao3.JPG?imageView2/2/w/1000/h/750" rel="gallery_cjegp6trd009df9wkwl6x9wju"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao3.JPG?imageView2/2/w/1000/h/750" itemprop="contentUrl"/>
               </a>
@@ -670,7 +1092,7 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
           
             <div class="post-gallery-row">
               <a class="post-gallery-img fancybox"
-                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao4.JPG?imageView2/2/w/1000/h/750" rel="gallery_cje6ip8vy009h53wkvb3fzyes"
+                 href="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao4.JPG?imageView2/2/w/1000/h/750" rel="gallery_cjegp6trd009df9wkwl6x9wju"
                  itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://7xlbo3.com1.z0.glb.clouddn.com/2015/08/22/langhushao4.JPG?imageView2/2/w/1000/h/750" itemprop="contentUrl"/>
               </a>
@@ -1409,317 +1831,11 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/09/25/db-oracle-connect-by/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/09/25/db-oracle-connect-by/" itemprop="url">CONNECT BY 行转列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">max</span>(a) <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> sys_connect_by_path(outer_name,<span class="string">'    '</span>) a <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Sys_Io_Table_Column t <span class="keyword">where</span> t.table_id = <span class="string">'00000000000000000526512180550341'</span>) </div><div class="line"><span class="keyword">START</span> <span class="keyword">WITH</span> <span class="keyword">NO</span> = <span class="number">1</span>  <span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">NO</span> = <span class="keyword">PRIOR</span> <span class="keyword">NO</span>+<span class="number">1</span>)</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/09/12/java-del-unicode-space/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/09/12/java-del-unicode-space/" itemprop="url">删除unicode空格</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"> </span></div><div class="line">alert(<span class="string">'unicode空格-&gt; &lt;-'</span>.match(<span class="regexp">/^S+$/</span>)); </div><div class="line">alert(<span class="string">'普通空格-&gt; &lt;-'</span>.match(<span class="regexp">/^S+$/</span>)); </div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="string">'删unicode空格-&gt; '</span>.charCodeAt(<span class="string">'删unicode空格-&gt; '</span>.length<span class="number">-1</span>) == <span class="number">160</span>)&#123;     alert(<span class="string">'111 '</span>.substr(<span class="number">0</span>,<span class="string">'111 '</span>.length<span class="number">-1</span>)+<span class="string">""</span>); </div><div class="line">&#125; </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/09/12/web-js-alert/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/09/12/web-js-alert/" itemprop="url">alert</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">  </div><div class="line"><span class="comment">//改写alert</span></div><div class="line"></div><div class="line">  </div><div class="line">window.alert = function(txt)</div><div class="line"></div><div class="line">  </div><div class="line">&#123;</div><div class="line"></div><div class="line">  </div><div class="line">    <span class="keyword">var</span> shield = document.createElement(<span class="string">"DIV"</span>);</div><div class="line"></div><div class="line">  </div><div class="line">    shield.id = <span class="string">"shield"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.position = <span class="string">"absolute"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.left = <span class="string">"0px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.top = <span class="string">"0px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.width = <span class="string">"100%"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.height = document.body.scrollHeight+<span class="string">"px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.background = <span class="string">"#333"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.textAlign = <span class="string">"center"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.zIndex = <span class="string">"10000"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    shield.style.filter = <span class="string">"alpha(opacity=0)"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    <span class="keyword">var</span> alertFram = document.createElement(<span class="string">"DIV"</span>);</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.id=<span class="string">"alertFram"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.position = <span class="string">"absolute"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.left = <span class="string">"50%"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.top = <span class="string">"50%"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.marginLeft = <span class="string">"-225px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.marginTop = <span class="string">"-75px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.width = <span class="string">"450px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.height = <span class="string">"150px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.background = <span class="string">"#ccc"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.textAlign = <span class="string">"center"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.lineHeight = <span class="string">"150px"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.style.zIndex = <span class="string">"10001"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    strHtml = <span class="string">"&lt;ul style="</span>list-style:none;margin:<span class="number">0</span>px;padding:<span class="number">0</span>px;width:<span class="number">100</span>%<span class="string">"&gt;n"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    strHtml += <span class="string">" &lt;li style="</span>background:<span class="meta">#DD828D;text-align:left;padding-left:20px;font-size:14px;font-weight:bold;height:25px;<span class="meta-keyword">line</span>-height:25px;border:1px solid #F9CADE;"&gt;[倍儿忙网系统提示]&lt;/li&gt;n";</span></div><div class="line"></div><div class="line">  </div><div class="line">    strHtml += <span class="string">" &lt;li style="</span>background:<span class="meta">#fff;text-align:center;font-size:12px;height:120px;<span class="meta-keyword">line</span>-height:120px;border-left:1px solid #F9CADE;border-right:1px solid #F9CADE;"&gt;"+txt+"&lt;/li&gt;n";</span></div><div class="line"></div><div class="line">  </div><div class="line">    strHtml += <span class="string">" &lt;li style="</span>background:<span class="meta">#FDEEF4;text-align:center;font-weight:bold;height:25px;<span class="meta-keyword">line</span>-height:25px; border:1px solid #F9CADE;"&gt;&lt;input type="button" value="确 定" onclick="doOk()" /&gt;&lt;/li&gt;n";</span></div><div class="line"></div><div class="line">  </div><div class="line">    strHtml += <span class="string">"&lt;/ul&gt;n"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.innerHTML = strHtml;</div><div class="line"></div><div class="line">  </div><div class="line">    document.body.appendChild(alertFram);</div><div class="line"></div><div class="line">  </div><div class="line">    document.body.appendChild(shield);</div><div class="line"></div><div class="line">  </div><div class="line">    <span class="keyword">var</span> c = <span class="number">0</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    <span class="keyword">this</span>.doAlpha = function()&#123;</div><div class="line"></div><div class="line">  </div><div class="line">        <span class="keyword">if</span> (c++ &gt; <span class="number">20</span>)&#123;clearInterval(ad);<span class="keyword">return</span> <span class="number">0</span>;&#125;</div><div class="line"></div><div class="line">  </div><div class="line">        shield.style.filter = <span class="string">"alpha(opacity="</span>+c+<span class="string">");"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    &#125;</div><div class="line"></div><div class="line">  </div><div class="line">    <span class="keyword">var</span> ad = setInterval(<span class="string">"doAlpha()"</span>,<span class="number">5</span>);</div><div class="line"></div><div class="line">  </div><div class="line">    <span class="keyword">this</span>.doOk = function()&#123;</div><div class="line"></div><div class="line">  </div><div class="line">        alertFram.style.display = <span class="string">"none"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">        shield.style.display = <span class="string">"none"</span>;</div><div class="line"></div><div class="line">  </div><div class="line">    &#125;</div><div class="line"></div><div class="line">  </div><div class="line">    alertFram.focus();</div><div class="line"></div><div class="line">  </div><div class="line">    document.body.onselectstart = function()&#123;<span class="keyword">return</span> <span class="literal">false</span>;&#125;;</div><div class="line"></div><div class="line">  </div><div class="line">&#125; </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&lt;/script&gt; </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"grsz_bottomyuan"</span>&gt;</div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;    </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"main_right"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;script&gt;</div><div class="line"></div><div class="line">  </div><div class="line"><span class="function">function <span class="title">chkpwd</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">  </div><div class="line"><span class="keyword">if</span>(document.getElementById(<span class="string">'title'</span>).<span class="keyword">value</span>==<span class="string">""</span>)&#123;</div><div class="line"></div><div class="line">  </div><div class="line">alert(<span class="string">'标题不能为空'</span>);</div><div class="line"></div><div class="line">  </div><div class="line"><span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;<span class="function"><span class="keyword">else</span> <span class="title">if</span>(<span class="params">document.getElementById(<span class="string">'up_changeimg'</span></span>).<span class="keyword">value</span></span>==<span class="string">""</span>)&#123;</div><div class="line"></div><div class="line">  </div><div class="line">alert(<span class="string">'图片上传不能为空'</span>);</div><div class="line"></div><div class="line">  </div><div class="line"><span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"basic_biaoqian"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;a href=<span class="string">"http://192.168.0.10"</span>&gt;倍儿忙网&lt;/a&gt;&amp;nbsp;&gt;&amp;nbsp;&lt;a href=<span class="string">"http://192.168.0.10/cp.php?do=control"</span>&gt;个人设置&lt;/a&gt;&amp;nbsp;&gt;&amp;nbsp;&lt;a href=<span class="string">"http://192.168.0.10/cp.php?do=control&amp;op=changeimg"</span>&gt;图片轮换&lt;/a&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">           &lt;form action=<span class="string">"http://192.168.0.10/cp.php?do=control&amp;op=changeimg"</span> enctype=<span class="string">"multipart/form-data"</span> method=<span class="string">"post"</span> name=<span class="string">"form_img"</span> id=<span class="string">"form_img"</span> onsubmit=<span class="string">"return chkpwd();"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">            &lt;div <span class="keyword">class</span>=<span class="string">"grsz_contant emial_contant"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"emial lunbojieshi"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"lunbo_title"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">使用必读:</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"lunbo_zizi"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line"><span class="number">1.</span>请填写您想展示的信息标题。&lt;br /&gt;</div><div class="line"></div><div class="line">  </div><div class="line"><span class="number">2.</span>请填写此信息的地址，务必为站内地址，否则将不予审核。&lt;br /&gt;</div><div class="line"></div><div class="line">  </div><div class="line"><span class="number">3.</span>图片大小限制为<span class="number">400</span>*<span class="number">300</span>像素的jpg或gif图片。【图片制作指南】&lt;br /&gt;</div><div class="line"></div><div class="line">  </div><div class="line"><span class="number">4.</span>你所提交的广告图片钭在<span class="number">24</span>小时之内 审核，审核结果将通过站内信息告知您&lt;br /&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"lunhun_ming"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"nicheng"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"username c"</span>&gt;标题：</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"web"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;input type=<span class="string">"text"</span> name=<span class="string">"title"</span> id=<span class="string">"title"</span>  <span class="keyword">value</span>=<span class="string">""</span> <span class="keyword">class</span>=<span class="string">"grsz_wek qianming biankuang"</span>/&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"nicheng"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"username c"</span>&gt;链接：</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"web"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;input type=<span class="string">"text"</span> name=<span class="string">"url"</span> id=<span class="string">"url"</span> <span class="keyword">value</span>=<span class="string">"http://"</span> <span class="keyword">class</span>=<span class="string">"grsz_wek qianming biankuang"</span> /&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"nicheng"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"username c"</span>&gt;图片：</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"web"</span>&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;input type=<span class="string">"file"</span> name=<span class="string">"up_changeimg"</span> <span class="keyword">value</span>=<span class="string">""</span> id=<span class="string">"up_changeimg"</span> <span class="keyword">class</span>=<span class="string">"lunhuan_youlan biankuang"</span>/&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt; </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">&lt;div <span class="keyword">class</span>=<span class="string">"basic_bar"</span>&gt;</div><div class="line">  </div><div class="line">&lt;input type=<span class="string">"submit"</span> name=<span class="string">"savesubmit"</span> id=<span class="string">"savesubmit"</span> <span class="keyword">class</span>=<span class="string">"bar"</span> <span class="keyword">value</span>=<span class="string">"确 认"</span>/&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">           &lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">          &lt;/form&gt;</div><div class="line"></div><div class="line">  </div><div class="line">   &lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">  </div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1764,7 +1880,7 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">278</span>
+                <span class="site-state-item-count">281</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1775,7 +1891,7 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1786,7 +1902,7 @@ nexus-x.x.x-xx/bin/jsw/conf/wrapper.conf</p>
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">175</span>
+                <span class="site-state-item-count">178</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
