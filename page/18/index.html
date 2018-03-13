@@ -345,115 +345,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/linux-rh-unstall-java1-4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/25/linux-rh-unstall-java1-4/" itemprop="url">linux(red hat 5)卸载自带java1.4</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>1.打开终端输入<code>#rpm -qa | grep gcj</code> ，其显示内容有：</p>
-<blockquote>
-<p>java-1.4.2-gci-compat………
-java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java开头的文件)</p>
-</blockquote>
-<p>2.卸载</p>
-<p>'#rpm -e –nodeps java-1.4.2-gci…` (利用rpm -e –nodeps 命令删除上面查找的内容)</p>
-<p>此时jdk1.4已被卸了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/08/20/java-heap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1680,11 +1571,130 @@ Some folks have wondered about the math that underlies these numbers. The root o
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-swt-swing-awt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/01/java-swt-swing-awt/" itemprop="url">SWT,Swing,AWT及最小公分母问题（LCD）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
+<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/02/01/lcd1.gif" alt="lcd"><span class="image-caption">lcd</span></p>
+<p>图里有三个不同的集合，分别代表不同的操作系统，LCD其实指的就是它们三个的交集了，很明显最大公分母就是指它们三的并集喽！</p>
+<p>明白LCD， 最大公分母， 我们再分别看看AWT，SWT，SWING。</p>
+<ol>
+<li>AWT：</li>
+</ol>
+<p>AWT的组件（component）遵循LCD的原则，所以AWT只有所有系统里常用的组件。所以你在AWT里找不到高级的组件如树（tree），因为它在别的系统里没有。对于一些特性AWT也是一样遵循LCD原则。它只支持那些在所有系统里都有的特性。比如：AWT的button里无法加入图像，是因为Motif系统里不支持这个特性。正因为AWT的组件及特性对各系统的很差支持，AWT吸引了很少的用户而被SUN停掉了，它的存在只是为了向后的兼容，并为Swing提供支持。</p>
+<p>最小公分母问题（LCD）：</p>
+<p>读完以上片断大家知道什么是LCD问题了吧！<em>：）</em></p>
+<ol start="2">
+<li>SWT：</li>
+</ol>
+<p>SWT按最大公分母原则建立，及对所有系统里的组件及特性都支持，它的设计想法是如果这个组件在这个系统里存在的话，那么就用java代码对它进行封装并通过JNI调用。如果这个组件不存在那么就模拟生成及通过在SWT的composite上进行画操作。</p>
+<ol start="3">
+<li>Swing:</li>
+</ol>
+<p>不用说，也是按最大公分母，可是在效率上表现不怎么样，可能以后会有改变。因为它也是基于AWT容器的，所以无法实现透明窗体等效果。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1729,7 +1739,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">281</span>
+                <span class="site-state-item-count">280</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1751,7 +1761,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">178</span>
+                <span class="site-state-item-count">177</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
