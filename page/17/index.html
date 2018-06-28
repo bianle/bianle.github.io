@@ -753,7 +753,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/linux-env-vars/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-grant/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -772,7 +772,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/03/25/linux-env-vars/" itemprop="url">linux配置环境变量</a></h1>
+                <a class="post-title-link" href="/2014/03/25/db-oracle-grant/" itemprop="url">ORACLE 创建视图时,提示用户权限不足</a></h1>
         
 
         <div class="post-meta">
@@ -811,119 +811,14 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">\<span class="selector-id">#vi</span>  /etc/profile</div></pre></td></tr></table></figure>
-<p>在该profile文件中添加：</p>
-<blockquote>
-<p>JAVA_HOME=/usr/java/jdk1.6.0_10
-JRE_HOME=/usr/java/jdk1.6.0_10/jre
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib/jt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib(注意：前面的.: ，linux中的；号为：号)
-export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
-</blockquote>
-<p>添加完毕保存退出</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><div class="line">\#<span class="keyword">source</span> <span class="regexp">/etc/</span>profile</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-get-month-days/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">查询本月天数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先使用system帐户进行登录</p>
+<figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">sqlplus <span class="keyword">system</span>/<span class="keyword">pwd</span>[@DB]</div></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">view</span> <span class="keyword">to</span> scott</div></pre></td></tr></table></figure>
+<p>提示：授权成功。
+执行：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
+<p>退出当前system帐户。</p>
 
           
         
@@ -1187,7 +1082,7 @@ Tomcat/5.5.17
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-grant/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-get-month-days/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1206,7 +1101,7 @@ Tomcat/5.5.17
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/03/25/db-oracle-grant/" itemprop="url">ORACLE 创建视图时,提示用户权限不足</a></h1>
+                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">查询本月天数</a></h1>
         
 
         <div class="post-meta">
@@ -1245,14 +1140,119 @@ Tomcat/5.5.17
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先使用system帐户进行登录</p>
-<figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">sqlplus <span class="keyword">system</span>/<span class="keyword">pwd</span>[@DB]</div></pre></td></tr></table></figure>
-<p>然后执行：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">view</span> <span class="keyword">to</span> scott</div></pre></td></tr></table></figure>
-<p>提示：授权成功。
-执行：</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
-<p>退出当前system帐户。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/linux-env-vars/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/03/25/linux-env-vars/" itemprop="url">linux配置环境变量</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">\<span class="selector-id">#vi</span>  /etc/profile</div></pre></td></tr></table></figure>
+<p>在该profile文件中添加：</p>
+<blockquote>
+<p>JAVA_HOME=/usr/java/jdk1.6.0_10
+JRE_HOME=/usr/java/jdk1.6.0_10/jre
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib/jt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib(注意：前面的.: ，linux中的；号为：号)
+export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
+</blockquote>
+<p>添加完毕保存退出</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><div class="line">\#<span class="keyword">source</span> <span class="regexp">/etc/</span>profile</div></pre></td></tr></table></figure>
 
           
         
