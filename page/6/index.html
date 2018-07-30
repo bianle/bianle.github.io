@@ -345,6 +345,144 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/01/06/linux-centos-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/06/linux-centos-1/" itemprop="url">linux-centos</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="最小化安装后需要做的事情"><a class="header-anchor" href="#最小化安装后需要做的事情"> </a>最小化安装后需要做的事情</h2>
+<h3 id="联网"><a class="header-anchor" href="#联网"> </a>联网</h3>
+<p><code>vi /etc/sysconfig/network-script/ifcfg-eth0</code></p>
+<blockquote>
+<p>NM_CONTROLLED=“no”   ##取消Network Manager托管
+ONBOOT=“yes”   ##开机启动
+BOOTPROTO=“dhcp”  ##ip获取方式
+<code>service network start</code></p>
+</blockquote>
+<h2 id="开启sshd"><a class="header-anchor" href="#开启sshd"> </a>开启sshd</h2>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">service sshd <span class="literal">start</span></div></pre></td></tr></table></figure>
+<h2 id="下载wget"><a class="header-anchor" href="#下载wget"> </a>下载wget</h2>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> wget</div></pre></td></tr></table></figure>
+<h2 id="修改为国内源-阿里云为例"><a class="header-anchor" href="#修改为国内源-阿里云为例"> </a>修改为国内源（阿里云为例）</h2>
+<ol>
+<li>备份你的原镜像文件，以免出错后可以恢复。</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">mv /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span> /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span><span class="selector-class">.backup</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载新的CentOS-Base.repo 到/etc/yum.repos.d/
+CentOS 5
+<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-5.repo</code>
+CentOS 6
+<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</code></li>
+<li>运行yum makecache生成缓存</li>
+</ol>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">yum clean <span class="keyword">all</span></div><div class="line">yum makecache</div></pre></td></tr></table></figure>
+<h2 id="安装openssh-clients-scp在这个包"><a class="header-anchor" href="#安装openssh-clients-scp在这个包"> </a>安装openssh-clients(scp在这个包)</h2>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> openssh-clients</div></pre></td></tr></table></figure>
+<h2 id="源码安装node"><a class="header-anchor" href="#源码安装node"> </a>源码安装node</h2>
+<p><a href="https://www.cppfans.org/1719.html" target="_blank" rel="external">https://www.cppfans.org/1719.html</a></p>
+<h2 id="none"><a class="header-anchor" href="#none"> </a></h2>
+<p><a href="http://netStart.sh" target="_blank" rel="external">netStart.sh</a></p>
+<figure class="highlight tp"><table><tr><td class="code"><pre><div class="line">iptables -<span class="keyword">P</span> INPUT <span class="keyword">ACC</span>EPT</div><div class="line">iptables -<span class="keyword">P</span> OUTPUT <span class="keyword">ACC</span>EPT</div></pre></td></tr></table></figure>
+<p><a href="http://netStop.sh" target="_blank" rel="external">netStop.sh</a></p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line">iptables -P INPUT <span class="built_in">DROP</span></div><div class="line">iptables -P <span class="keyword">OUTPUT</span> <span class="built_in">DROP</span></div></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><div class="line"><span class="section">server</span> &#123;</div><div class="line">        <span class="attribute">listen</span>       <span class="number">80</span>;</div><div class="line">        <span class="attribute">server_name</span>  blog.bovod.org panpan.lu;</div><div class="line"></div><div class="line">        <span class="attribute">location</span> / &#123;</div><div class="line">            <span class="attribute">proxy_pass</span>   http://localhost:2368;</div><div class="line">            <span class="attribute">client_max_body_size</span> <span class="number">50m</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/01/06/net-modem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1313,112 +1451,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/12/13/boot2docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/13/boot2docker/" itemprop="url">boot2docker</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>osx下安装boot2docker</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/12/13/boot2docker/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1468,7 +1500,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">281</span>
+                <span class="site-state-item-count">282</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
