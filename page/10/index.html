@@ -1428,8 +1428,23 @@ l2tpnoipsec</p>
 <p>WARN: We can’t create the directory ‘/home/ebay/work/log/terracotta/client-logs’ that you specified for your logs.</p>
 </blockquote>
 <p><a href="http://ju.outofmemory.cn/entry/283070" target="_blank" rel="external">http://ju.outofmemory.cn/entry/283070</a></p>
-<h2 id="macos端口占用"><a class="header-anchor" href="#macos端口占用"> </a>macos端口占用</h2>
+<h2 id="macos-端口占用"><a class="header-anchor" href="#macos-端口占用"> </a>macos 端口占用</h2>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">lsof -i tcp:<span class="tag">&lt;<span class="name">port</span>&gt;</span></div><div class="line">kill -9 <span class="tag">&lt;<span class="name">pid</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="解决-mac-80-端口被占用"><a class="header-anchor" href="#解决-mac-80-端口被占用"> </a>解决 Mac 80 端口被占用</h2>
+<p><a href="https://blog.csdn.net/toocruel/article/details/79987388" target="_blank" rel="external">https://blog.csdn.net/toocruel/article/details/79987388</a></p>
+<ol>
+<li>关闭占用80端口的apache</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">sudo apachectl <span class="built_in">stop</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改/etc/pf.conf，设置端口转发
+<code>sudo vi /etc/pf.conf</code>再<code>rdr-anchor &quot;com.apple/*&quot;</code>后添加</li>
+</ol>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">rdr on lo0 inet proto tcp from any to <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port <span class="number">80</span> -&gt; <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port <span class="number">8080</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>使修改生效，依次执行以下命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">sudo pfctl <span class="_">-d</span></div><div class="line">sudo pfctl <span class="_">-f</span> /etc/pf.conf</div><div class="line">sudo pfctl <span class="_">-e</span></div></pre></td></tr></table></figure>
 <h2 id="键盘控制弹窗"><a class="header-anchor" href="#键盘控制弹窗"> </a>键盘控制弹窗</h2>
 <p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2017/11/27/20171127092110.png" alt="macos-keyboard"><span class="image-caption">macos-keyboard</span></p>
 <h2 id="finder标题显示文件全路径"><a class="header-anchor" href="#finder标题显示文件全路径"> </a>Finder标题显示文件全路径</h2>
