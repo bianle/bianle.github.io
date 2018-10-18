@@ -345,119 +345,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-rsslibj/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/01/java-rsslibj/" itemprop="url">利用RSSLibJ读取RSS</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
-<p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
-<p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
-<p>读取新浪RSS的一个例子，结合Jsf。</p>
-<p>页面：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/core"</span> <span class="attr">prefix</span>=<span class="string">"f"</span>%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/html"</span> <span class="attr">prefix</span>=<span class="string">"h"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%@page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=gb18030"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">f:view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h3</span>&gt;</span>RSS Reader<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"> 			请输入RSS地址：</div><div class="line"> 			<span class="tag">&lt;<span class="name">h:inputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">id</span>=<span class="string">"rssAddress"</span></span></span></div><div class="line">			<span class="attr">converterMessage</span>=<span class="string">"请输入一个正确的Rss地址!"</span> <span class="attr">style</span>=<span class="string">"width:280px;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">h:inputText</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:commandButton</span> <span class="attr">value</span>=<span class="string">"提交"</span> <span class="attr">action</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.readRss &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:commandButton</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:message</span> <span class="attr">for</span>=<span class="string">"rssAddress"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:message</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	从</div><div class="line">	<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">	获取的内容：</div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:dataTable</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.items &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">var</span>=<span class="string">"item"</span> <span class="attr">style</span>=<span class="string">"font-size:13px;"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.title &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputLink</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">				<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">			<span class="tag">&lt;/<span class="name">h:outputLink</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:dataTable</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">f:view</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>RSSReader.java</p>
-<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.rss;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="keyword">BufferedReader</span>;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</div><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.net.URL;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Channel;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Item;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.RSSReader;</div><div class="line"></div><div class="line"><span class="keyword">import</span> electric.xml.ParseException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class RssReader &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> urlString =  <span class="string">"http://rss.sina.com.cn/news/marquee/ddt.xml"</span>;</div><div class="line">	<span class="keyword">private</span> List&lt;Item&gt; items;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> rssAddress;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyHost = <span class="string">"paicproxy2"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyPort = <span class="string">"8080"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getRssAddress() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setRssAddress(<span class="keyword">String</span> rssAddress) &#123;</div><div class="line">		<span class="keyword">this</span>.rssAddress = rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> List&lt;Item&gt; getItems() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxy(<span class="keyword">String</span> proxyHost,<span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		</div><div class="line">		<span class="comment">// 设置代理</span></div><div class="line">		Properties systemSettings = System.getProperties();</div><div class="line">		systemSettings.put(<span class="string">"http.proxyHost"</span>, proxyHost);</div><div class="line">		systemSettings.put(<span class="string">"http.proxyPort"</span>, proxyPort);</div><div class="line">		System.setProperties(systemSettings);</div><div class="line">	&#125;</div><div class="line">	 <span class="comment">/**</span></div><div class="line">     * 读取RSS。</div><div class="line">     * @param url</div><div class="line">     * @throws IOException </div><div class="line">     * @throws ParseException </div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> readRss() <span class="keyword">throws</span> IOException, ParseException &#123;</div><div class="line">    	setProxy(proxyHost, proxyPort);</div><div class="line">    	</div><div class="line">    	URL __url = <span class="keyword">new</span> URL(<span class="keyword">this</span>.rssAddress);</div><div class="line">    	HttpURLConnection conn = (HttpURLConnection) __url.openConnection();</div><div class="line">    	InputStream in = conn.getInputStream();</div><div class="line">    	<span class="keyword">BufferedReader</span> bufReader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(in,<span class="string">"utf-8"</span>));</div><div class="line">    	RSSReader rssReader = <span class="keyword">new</span> RSSReader(bufReader);</div><div class="line">    	Channel channel = rssReader.getChannel();</div><div class="line">    	<span class="keyword">this</span>.items = channel.getItems();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印获取的RSS内容。</div><div class="line">     * @param urlString</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> test(<span class="keyword">String</span> urlString) &#123;</div><div class="line">    	setProxy(urlString, urlString);	</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">			HttpURLConnection conn = (HttpURLConnection) url.openConnection();</div><div class="line">			InputStream is = conn.getInputStream();</div><div class="line">			StringBuilder sBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">			<span class="keyword">String</span> <span class="built_in">line</span> = <span class="keyword">null</span>;</div><div class="line">			</div><div class="line">			<span class="keyword">BufferedReader</span> reader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,<span class="string">"utf-8"</span>));</div><div class="line">			</div><div class="line">			<span class="keyword">while</span> ((<span class="built_in">line</span> = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">				sBuilder.<span class="built_in">append</span>(<span class="built_in">line</span>).<span class="built_in">append</span>(<span class="string">"\n"</span>);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			System.out.<span class="built_in">println</span>(sBuilder.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>faces-config.xml:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></div><div class="line"> <span class="meta">&lt;!DOCTYPE faces-config PUBLIC</span></div><div class="line"> "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"</div><div class="line"> "http://java.sun.com/dtd/web-facesconfig_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">faces-config</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">managed-bean</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-name</span>&gt;</span>rssReader<span class="tag">&lt;/<span class="name">managed-bean-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">			com.rss.RssReader</div><div class="line">		<span class="tag">&lt;/<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-scope</span>&gt;</span>request<span class="tag">&lt;/<span class="name">managed-bean-scope</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">managed-bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">faces-config</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>效果：</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/02/01/rss1.jpg" alt="rss"><span class="image-caption">rss</span></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-swt-swing-awt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -516,8 +403,8 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
-<p><img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/02/01/lcd1.gif" alt="lcd"><span class="image-caption">lcd</span></p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
+<p><img src="http://blimg.bovod.org/2013/02/01/lcd1.gif" alt="lcd"><span class="image-caption">lcd</span></p>
 <p>图里有三个不同的集合，分别代表不同的操作系统，LCD其实指的就是它们三个的交集了，很明显最大公分母就是指它们三的并集喽！</p>
 <p>明白LCD， 最大公分母， 我们再分别看看AWT，SWT，SWING。</p>
 <ol>
@@ -534,6 +421,119 @@
 <li>Swing:</li>
 </ol>
 <p>不用说，也是按最大公分母，可是在效率上表现不怎么样，可能以后会有改变。因为它也是基于AWT容器的，所以无法实现透明窗体等效果。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-rsslibj/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/01/java-rsslibj/" itemprop="url">利用RSSLibJ读取RSS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
+<p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
+<p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
+<p>读取新浪RSS的一个例子，结合Jsf。</p>
+<p>页面：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/core"</span> <span class="attr">prefix</span>=<span class="string">"f"</span>%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/html"</span> <span class="attr">prefix</span>=<span class="string">"h"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%@page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=gb18030"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">f:view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h3</span>&gt;</span>RSS Reader<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"> 			请输入RSS地址：</div><div class="line"> 			<span class="tag">&lt;<span class="name">h:inputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">id</span>=<span class="string">"rssAddress"</span></span></span></div><div class="line">			<span class="attr">converterMessage</span>=<span class="string">"请输入一个正确的Rss地址!"</span> <span class="attr">style</span>=<span class="string">"width:280px;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">h:inputText</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:commandButton</span> <span class="attr">value</span>=<span class="string">"提交"</span> <span class="attr">action</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.readRss &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:commandButton</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:message</span> <span class="attr">for</span>=<span class="string">"rssAddress"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:message</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	从</div><div class="line">	<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">	获取的内容：</div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:dataTable</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.items &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">var</span>=<span class="string">"item"</span> <span class="attr">style</span>=<span class="string">"font-size:13px;"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.title &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputLink</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">				<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">			<span class="tag">&lt;/<span class="name">h:outputLink</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:dataTable</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">f:view</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>RSSReader.java</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.rss;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="keyword">BufferedReader</span>;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</div><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.net.URL;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Channel;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Item;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.RSSReader;</div><div class="line"></div><div class="line"><span class="keyword">import</span> electric.xml.ParseException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class RssReader &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> urlString =  <span class="string">"http://rss.sina.com.cn/news/marquee/ddt.xml"</span>;</div><div class="line">	<span class="keyword">private</span> List&lt;Item&gt; items;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> rssAddress;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyHost = <span class="string">"paicproxy2"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyPort = <span class="string">"8080"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getRssAddress() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setRssAddress(<span class="keyword">String</span> rssAddress) &#123;</div><div class="line">		<span class="keyword">this</span>.rssAddress = rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> List&lt;Item&gt; getItems() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxy(<span class="keyword">String</span> proxyHost,<span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		</div><div class="line">		<span class="comment">// 设置代理</span></div><div class="line">		Properties systemSettings = System.getProperties();</div><div class="line">		systemSettings.put(<span class="string">"http.proxyHost"</span>, proxyHost);</div><div class="line">		systemSettings.put(<span class="string">"http.proxyPort"</span>, proxyPort);</div><div class="line">		System.setProperties(systemSettings);</div><div class="line">	&#125;</div><div class="line">	 <span class="comment">/**</span></div><div class="line">     * 读取RSS。</div><div class="line">     * @param url</div><div class="line">     * @throws IOException </div><div class="line">     * @throws ParseException </div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> readRss() <span class="keyword">throws</span> IOException, ParseException &#123;</div><div class="line">    	setProxy(proxyHost, proxyPort);</div><div class="line">    	</div><div class="line">    	URL __url = <span class="keyword">new</span> URL(<span class="keyword">this</span>.rssAddress);</div><div class="line">    	HttpURLConnection conn = (HttpURLConnection) __url.openConnection();</div><div class="line">    	InputStream in = conn.getInputStream();</div><div class="line">    	<span class="keyword">BufferedReader</span> bufReader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(in,<span class="string">"utf-8"</span>));</div><div class="line">    	RSSReader rssReader = <span class="keyword">new</span> RSSReader(bufReader);</div><div class="line">    	Channel channel = rssReader.getChannel();</div><div class="line">    	<span class="keyword">this</span>.items = channel.getItems();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印获取的RSS内容。</div><div class="line">     * @param urlString</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> test(<span class="keyword">String</span> urlString) &#123;</div><div class="line">    	setProxy(urlString, urlString);	</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">			HttpURLConnection conn = (HttpURLConnection) url.openConnection();</div><div class="line">			InputStream is = conn.getInputStream();</div><div class="line">			StringBuilder sBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">			<span class="keyword">String</span> <span class="built_in">line</span> = <span class="keyword">null</span>;</div><div class="line">			</div><div class="line">			<span class="keyword">BufferedReader</span> reader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,<span class="string">"utf-8"</span>));</div><div class="line">			</div><div class="line">			<span class="keyword">while</span> ((<span class="built_in">line</span> = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">				sBuilder.<span class="built_in">append</span>(<span class="built_in">line</span>).<span class="built_in">append</span>(<span class="string">"\n"</span>);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			System.out.<span class="built_in">println</span>(sBuilder.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>faces-config.xml:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></div><div class="line"> <span class="meta">&lt;!DOCTYPE faces-config PUBLIC</span></div><div class="line"> "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"</div><div class="line"> "http://java.sun.com/dtd/web-facesconfig_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">faces-config</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">managed-bean</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-name</span>&gt;</span>rssReader<span class="tag">&lt;/<span class="name">managed-bean-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">			com.rss.RssReader</div><div class="line">		<span class="tag">&lt;/<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-scope</span>&gt;</span>request<span class="tag">&lt;/<span class="name">managed-bean-scope</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">managed-bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">faces-config</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="http://blimg.bovod.org/2013/02/01/rss1.jpg" alt="rss"><span class="image-caption">rss</span></p>
 
           
         
@@ -635,7 +635,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Tomcat部署Web应用方法总结
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Tomcat部署Web应用方法总结
 在Tomcat中部署Java Web应用程序有两种方式：静态部署和动态部署。
 在下文中$CATALINA_HOME指的是Tomcat根目录。
 一、静态部署
@@ -679,7 +679,7 @@ Xml代码：
 &lt; user username=“role1” password=“tomcat” roles=“role1”/&gt;
 &lt; /tomcat-users&gt;
 然后在浏览器中键入如下地址：<a href="http://localhost:8080/%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%9C%8B%E5%88%B0%E4%B8%80%E4%B8%AAtom%E7%8C%AB%E4%BA%86%E5%90%A7%E3%80%82%E7%82%B9%E5%87%BB%E5%B7%A6%E8%BE%B9%E7%9A%84Tomcat" target="_blank" rel="external">http://localhost:8080/，应该看到一个tom猫了吧。点击左边的Tomcat</a> Manager链接，提示输入用户名和密码，本文都是coresun，然后可以看到以下页面：
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/17/tomcat1.png" alt="tomcat"><span class="image-caption">tomcat</span>
+<img src="http://blimg.bovod.org/2013/01/17/tomcat1.png" alt="tomcat"><span class="image-caption">tomcat</span>
 (1)Context Path(option):中输入/Pet
 (2)XML Configration file URL中要指定一个.xml文件，比如我们在F:/下建立一个Pet.xml文件，内容如下：<context reloadable="false">。docBase不用写了，因为要在下一个文本框中填入。或者更简单点，这个文本框什么都不填。
 (3)WAR or Directory URL:中键入F:/PetWet或者F:/Pet.war都可以，然后点击Deploy按钮，看看上面是不是已经看到了你web应用程序，名字就是你Context Path(option):中的名字。
@@ -800,7 +800,7 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="linux下修改tomcat-jvm内存设置"><a class="header-anchor" href="#linux下修改tomcat-jvm内存设置"> </a>Linux下修改Tomcat JVM内存设置:</h1>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="linux下修改tomcat-jvm内存设置"><a class="header-anchor" href="#linux下修改tomcat-jvm内存设置"> </a>Linux下修改Tomcat JVM内存设置:</h1>
 <p>要添加在Tomcat的bin下catalina.sh里，位置cygwin=false前。注意引号要带上,红色的为新添加的.</p>
 <figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line">\#OSspecificsupport.$var_must_besettoeithertrueorfalse.</div><div class="line"></div><div class="line">JAVA_OPTS=<span class="string">"-Xms256m-Xmx512m-Xss1024K-XX:PermSize=128m-XX:MaxPermSize=256m"</span></div><div class="line"></div><div class="line">cygwin=<span class="literal">false</span></div></pre></td></tr></table></figure>
 <h1 id="windows下修改tomcat-jvm内存设置"><a class="header-anchor" href="#windows下修改tomcat-jvm内存设置"> </a>windows下修改Tomcat JVM内存设置:</h1>
@@ -921,32 +921,32 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程
 <a href="http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx" target="_blank" rel="external">http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx</a>
 1.网上邻居-属性-可以看到在你安装好 VM虚拟机后又多了两个网络连接
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl1.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl1.png" alt="rhl"><span class="image-caption">rhl</span>
 (vmnet1是host-only，也就是说，选择用vmnet1的话就相当于VMware给你提供了一个虚拟交换机，仅将虚拟机和真实系统连上了，虚拟机可以与真实系统相互共享文件，但是虚拟机无法访问外部互联网，而vmnet8是NAT，就是网络地址转换，相当于给你一个虚拟交换机，将虚拟机和真实系统连上去了，同时这台虚拟交换机又和外部互联网相连，这样虚拟机和真是系统可以相互共享，同时又都能访问外部互联网，而且虚拟机是借用真实系统的IP上网的，不会受到IP-MAC绑定的限制。)
 右键VMnet8-属性-tcp/ip协议
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl2.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl2.png" alt="rhl"><span class="image-caption">rhl</span>
 -双击打开 -勾选使用下面的IP地址，
 把IP地址改为192.168.132(这个自己随便设1-224内的数字）.1 /255.255.255.0 网关以及DNS不用设置，点确定。
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl3.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl3.png" alt="rhl"><span class="image-caption">rhl</span>
 2.打开vm虚拟机，点左上方的编辑-虚拟网络设置-nat
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl4.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl4.png" alt="rhl"><span class="image-caption">rhl</span>
 edit—&gt;virtual network editor
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl5.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl5.png" alt="rhl"><span class="image-caption">rhl</span>
 NAT Settings
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl6.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl6.png" alt="rhl"><span class="image-caption">rhl</span>
 OK
 虚拟机的DNS就是这里的网关IP地址192.168.132.2,这个vmnet8相当于局域网里的网关。
 3.编辑-虚拟网络设置-主机虚拟网络映射,在vmnet0下拉框勾选自己的网卡，其余的一般默认即可。
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl7.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl7.png" alt="rhl"><span class="image-caption">rhl</span>
 4.回到win主机,开始-运行-CMD,打开DOS，输入命令ipconfig/all，可以看到相关的IP配置
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl8.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl8.png" alt="rhl"><span class="image-caption">rhl</span>
 5.进入VM虚拟机中的linux系统，主菜单-系统设置-网络-勾选下面的设备eth0-进入以太网设备编辑状态
 system —-&gt;administration—–&gt;network
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl9.png" alt="rhl"><span class="image-caption">rhl</span>
-<img src="http://7xlbo3.com1.z0.glb.clouddn.com/2013/01/10/rhl10.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl9.png" alt="rhl"><span class="image-caption">rhl</span>
+<img src="http://blimg.bovod.org/2013/01/10/rhl10.png" alt="rhl"><span class="image-caption">rhl</span>
 设置完成保存后 主菜单-系统工具-终端 打开后输入：service network restart (重启网络命令)</p>
 
           
@@ -1049,7 +1049,7 @@ system —-&gt;administration—–&gt;network
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>REG文件实际上是一种注册表脚本文件，双击REG文件即可将其中的数据导入到注册表中。利用REG文件我们可以直接对注册表进行任何修改操作，它对注册表的操作可以不受注册表编辑器被禁用的限制，因此功能更为强大、灵活，另外，由于REG文件可以用任何文本文件编辑工具(例如记事本)进行修改，因此通过它对注册表数据进行修改后，如果发生错误，还可以通过改回REG文件中的数据后再导入，从而实现恢复操作，因此它又较之直接用注册表编辑器修改更安全，所以熟练掌握REG文件的运用，有时可以起到事半功倍、意想不到的效果。
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>REG文件实际上是一种注册表脚本文件，双击REG文件即可将其中的数据导入到注册表中。利用REG文件我们可以直接对注册表进行任何修改操作，它对注册表的操作可以不受注册表编辑器被禁用的限制，因此功能更为强大、灵活，另外，由于REG文件可以用任何文本文件编辑工具(例如记事本)进行修改，因此通过它对注册表数据进行修改后，如果发生错误，还可以通过改回REG文件中的数据后再导入，从而实现恢复操作，因此它又较之直接用注册表编辑器修改更安全，所以熟练掌握REG文件的运用，有时可以起到事半功倍、意想不到的效果。
 创建REG文件
 REG文件的创建是非常简单的，可以通过任何一个文本文件编辑工具来实现。我们就以创建一个可以解除注册表禁用限制的REG文件restore.reg为例来介绍一下具体过程。
 打开记事本，在记事本文件中输入以下内容：
@@ -1168,222 +1168,6 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-gwt-code-lv/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/java-gwt-code-lv/" itemprop="url">GWT 项目中代码分四级概念</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
-使用多个 Module 和 EntryPoint 相对都是非常简单的。创建过程同官方的新建一个Module 和 EntryPoint 没什么两样。那么我们，还有一种需求就是需要一些额外的关注：一个 application , 多个 hostpage， 因为 GWT 默认项目就只是一个 Single Host Page 的 Application。其实，我们有很多人已经注意到了这一点，并且有人 open 了一个 gwt module 来帮助大家实现这一点，它就是 gwtmultipage 。
-gwtmultipage 使用起来相当简单，简单三步就可以了：
-1.加载 org.gwtmultipage.gwtmultipage 这个 GWT module java 包到项目中
-2.修改主 Module 的 gwt.xml， EntryPoint 改成&lt;entry -point class=’org.gwtmultipage.client.EntrypointDispatcher’/&gt;
-当然要先加上它所在的 module<inherits name="’org.gwtmultipage.gwtmultipage’/">
-3.在你的 EntryPoint 类名前加 annotation:@UrlPatternEntryPoint(value=”module.html”)
-就可把 前端 jsp 或者 html 文件与 某个 EntryPoint 对应起来了。gwtmultipage 通过 org.gwtmultipage.client.EntrypointDispatcher 把 host page与 EntryPoint 一一对应。
-EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-trim/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">自定义js的trim()方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
-<p>写成类的方法格式如下：（str.trim();）</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>写成函数可以这样：(trim(str))</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-disabled-statebar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1442,7 +1226,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1486,7 +1270,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-reg/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-window-resize/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1505,7 +1289,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-reg/" itemprop="url">js正则</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-js-window-resize/" itemprop="url">改变当前浏览器窗口大小</a></h1>
         
 
         <div class="post-meta">
@@ -1544,56 +1328,216 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="正则表达式符号说明"><a class="header-anchor" href="#正则表达式符号说明"> </a>正则表达式符号说明</h1>
-<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line">“+”元字符规定其前导字符必须在目标对象中连续出现一次或多次。==&#123;1,&#125; </div><div class="line">“*”元字符规定其前导字符必须在目标对象中出现零次或连续多次。==&#123;0,&#125; </div><div class="line">“?”元字符规定其前导对象必须在目标对象中连续出现零次或一次。==&#123;0,1&#125; </div><div class="line"> </div><div class="line">n,m为非负整数,n&lt;m </div><div class="line">&#123;n&#125; 确定匹配n次 如p&#123;2&#125; pp才匹配 </div><div class="line">&#123;n,&#125; 至少匹配n次 如p&#123;2,&#125; pp,ppp,pppp都匹配,p不匹配 </div><div class="line">&#123;n,m&#125; 匹配&gt;=n,&lt;=m次, 如p&#123;2,4&#125; pp,ppp,pppp都匹配, p,ppppp都不匹配 </div><div class="line"> </div><div class="line"> </div><div class="line">s：用于匹配单个空格符，包括tab键和换行符； </div><div class="line">S：用于匹配除单个空格符之外的所有字符； </div><div class="line">d：用于匹配从<span class="number">0</span>到<span class="number">9</span>的数字； </div><div class="line">w：用于匹配字母，数字或下划线字符； </div><div class="line">W：用于匹配所有与w不匹配的字符； </div><div class="line">. ：用于匹配除换行符之外的所有字符。 </div><div class="line"> </div><div class="line"> </div><div class="line">“^”定位符规定匹配模式必须出现在目标字符串的开头 </div><div class="line">/^hell/ 匹配“hell”, “hello”或“hellhound”开头的字符串 </div><div class="line"> </div><div class="line">“$”定位符规定匹配模式必须出现在目标对象的结尾 </div><div class="line">/ar$/　匹配“car”, “bar”或 “ar” 结尾的字符串 </div><div class="line"> </div><div class="line">“b”定位符规定匹配模式必须出现在目标字符串的开头或结尾的两个边界之一(代表着单词的开头或结尾) </div><div class="line">/bbom/　以“b”定位符开头，匹配以 “bomb”, 或 “bom”开头的字符串。 </div><div class="line">/manb/　以“b”定位符结尾，匹配以 “human”, “woman”或 “man”结尾的字符串相 </div><div class="line"> </div><div class="line">“B”匹配不是单词开头或结束的位置 </div><div class="line"> </div><div class="line">()符号包含的内容必须同时出现在目标对象中。 </div><div class="line">如:/([a-z][A-Z][<span class="number">0</span><span class="number">-9</span>])+/  abc不匹配 aA9才匹配 </div><div class="line"> </div><div class="line">|符号表示:或 </div><div class="line">如:/to|too|<span class="number">2</span>/ 与目标对象中的 “to”, “too”, 或 “<span class="number">2</span>” 相匹配 </div><div class="line"> </div><div class="line">[^]符号表示:否定符号(必须放在[]中) </div><div class="line">如:/[^A-<span class="keyword">C</span>]/　上述字符串将会与目标对象中除A，B，和<span class="keyword">C</span>之外的任何字符相匹配 </div><div class="line"> </div><div class="line">符号表示:转义符号</div></pre></td></tr></table></figure>
-<h1 id="正则表达式应用模式参数"><a class="header-anchor" href="#正则表达式应用模式参数"> </a>正则表达式应用模式参数</h1>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">语法 <span class="number">1</span> re = <span class="regexp">/pattern/</span>[flags] </div><div class="line">语法 <span class="number">2</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"pattern"</span>,[<span class="string">"flags"</span>]) </div><div class="line"> </div><div class="line">g （全文查找出现的所有 pattern） </div><div class="line">i （忽略大小写） </div><div class="line">m （多行查找） </div><div class="line"> </div><div class="line">语法<span class="number">1</span>:<span class="keyword">var</span> pattern = <span class="regexp">/Java/g</span>; (用 <span class="string">"/"</span> 字符分隔模式) </div><div class="line">语法<span class="number">2</span>:<span class="keyword">var</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"ain"</span>,<span class="string">"g"</span>); (用引号将模式引起来)</div></pre></td></tr></table></figure>
-<h1 id="一次匹配多少个符合条件的子元素-匹配最大量和最小量"><a class="header-anchor" href="#一次匹配多少个符合条件的子元素-匹配最大量和最小量"> </a>一次匹配多少个符合条件的子元素(匹配最大量和最小量)</h1>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">Greedy: 在能匹配的前提下，取量词的最大值。 </div><div class="line">Reluctant: 在匹配的前提下，取量词的最小值。 </div><div class="line">Possessive: 取量词的最大值，无论匹配与否。 </div><div class="line">如： </div><div class="line">Pattern.compile(<span class="string">"^.*B"</span>).matcher(<span class="string">"AABAABAA"</span>) : <span class="string">"AABAAB"</span> </div><div class="line">Pattern.compile(<span class="string">"^.*?B"</span>).matcher(<span class="string">"AABAABAA"</span>) : <span class="string">"AAB"</span> </div><div class="line">Pattern.compile(<span class="string">"^.*+B"</span>).matcher(<span class="string">"AABAABAA"</span>) : <span class="keyword">null</span></div></pre></td></tr></table></figure>
-<h1 id="处理多个匹配"><a class="header-anchor" href="#处理多个匹配"> </a>处理多个匹配</h1>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment">//第一种</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>,<span class="string">"g"</span>);<span class="comment">//一定要有g不然会死循环</span></div><div class="line"></div><div class="line"><span class="comment">//初始化result数组</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> result = <span class="keyword">null</span>;</div><div class="line"></div><div class="line"><span class="comment">//多次使用RegExp对象pattern2指定的正则表达式匹配不表字符串text,如果返回null,则不再循环下去</span></div><div class="line"></div><div class="line"><span class="keyword">while</span>((result = pattern.exec(text)) != <span class="keyword">null</span>)&#123;</div><div class="line"></div><div class="line">   alert(<span class="string">"返回结果为: "</span>+result);</div><div class="line"></div><div class="line">   <span class="comment">//显示本次匹配的子串的开始位置和下一次匹配开始的位置(result[0]为匹配的字符串)</span></div><div class="line"></div><div class="line">   alert(<span class="string">"Matched '"</span>+ result[<span class="number">0</span>] +<span class="string">"'"</span>+<span class="string">"at Position "</span>+result.index+<span class="string">"; next Search begins at "</span>+ pattern2.lastIndex);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="replace使用正则"><a class="header-anchor" href="#replace使用正则"> </a>replace使用正则</h1>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">//实例化RegExp对象pattern2， 使用g选项匹配所有符合正则表达式的子串</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</div><div class="line"></div><div class="line"><span class="comment">//对目标子串调用replace调用replace方法用另一个字符串替换匹配给定的正则表达式的子串</span></div><div class="line"></div><div class="line">result = text.replace(pattern2, <span class="string">"VB"</span>);</div><div class="line"></div><div class="line"><span class="comment">//显示替换后的字符串</span></div><div class="line"></div><div class="line">alert(<span class="string">"替换后的新串为： "</span>+result);</div><div class="line"></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="comment">//使用方法处理找到匹配的字符串</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">$<span class="number">1</span></span>)</span>&#123;</div><div class="line"></div><div class="line">   <span class="keyword">var</span> gyear=(<span class="keyword">new</span> <span class="built_in">Date</span>()).getYear()-<span class="built_in">parseInt</span>($<span class="number">1</span>)+<span class="number">1</span>;</div><div class="line"></div><div class="line">   <span class="keyword">return</span> $<span class="number">1</span>+<span class="string">"("</span>+gyear+<span class="string">"年出生)"</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> reg=<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"(d+)岁"</span>,<span class="string">"g"</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> newstr=str.replace(reg,test);<span class="comment">//使用方法作为要替代的字符串</span></div><div class="line"></div><div class="line">alert(str);</div><div class="line"></div><div class="line">alert(newstr);</div></pre></td></tr></table></figure>
-<h1 id="split使用正则"><a class="header-anchor" href="#split使用正则"> </a>split使用正则</h1>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</div><div class="line"></div><div class="line"><span class="comment">//对目标字符串调用split方法</span></div><div class="line"></div><div class="line">result = text.split(pattern2);</div><div class="line"></div><div class="line"><span class="comment">//遍历结果集</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;result.length; i++)&#123;</div><div class="line"></div><div class="line">   <span class="comment">//显示拆分后的每一个子串</span></div><div class="line"></div><div class="line">   alert(<span class="string">"拆分后的每一个子串: "</span>+<span class="string">"' "</span>+result+<span class="string">" '"</span>);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="找到首次匹配的子串的开始位置"><a class="header-anchor" href="#找到首次匹配的子串的开始位置"> </a>找到首次匹配的子串的开始位置</h1>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> text = <span class="string">"maybe JavaSript is more fun than Java!"</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> pattern2 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"Java"</span>, <span class="string">"g"</span>);</div><div class="line"></div><div class="line">result = text.search(pattern);</div><div class="line"></div><div class="line"><span class="comment">//显示首次匹配子串的开始位置</span></div><div class="line"></div><div class="line">alert(<span class="string">"匹配子串的开始位置: "</span>+result);</div></pre></td></tr></table></figure>
-<h1 id="exec方法详解"><a class="header-anchor" href="#exec方法详解"> </a>exec方法详解</h1>
-<figure class="highlight hsp"><table><tr><td class="code"><pre><div class="line"><span class="keyword">exec</span>方法返回的其实并不是匹配结果字符串，而是一个对象 </div><div class="line"> </div><div class="line">它的属性: index <span class="keyword">input</span> <span class="number">0</span>。其中index是表示匹配在原字符串中的索引；而<span class="keyword">input</span>则是表示输入的字符串； </div><div class="line"> </div><div class="line">至于<span class="number">0</span>则是表示只有一个匹配结果，可以用下标<span class="number">0</span>来引用这个匹配结果，这个数量可能改变。我们可以通过返回值的<span class="keyword">length</span>属性来得知匹配结果的总数量。</div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>  <span class="title">execReg</span>(<span class="params">reg,str</span>)</span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">var</span> result =  reg.exec(str);</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'index:'</span>+result.index+<span class="string">'&lt;br  /&gt;'</span>+<span class="string">'input:'</span>+result.input+<span class="string">'&lt;br  /&gt;'</span>);</div><div class="line"></div><div class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;result.length;i++)&#123;</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'result['</span>+i+<span class="string">']:'</span>+result[i]+<span class="string">'&lt;br  /&gt;'</span>)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> reg = <span class="regexp">/w/</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span>  str=<span class="string">'bbs.bblueidea.com'</span>;</div><div class="line"></div><div class="line">execReg(reg,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.bblueidea.com result[0]:b</p>
-</blockquote>
-<p><a href="http://xn--bbs-f78dmb268ah3uj63dsoxb.bblueidea.com" target="_blank" rel="external">输入字符串为bbs.bblueidea.com</a>； 匹配的b在原字符串的索引是0。 正则的匹配结果为一个，b；</p>
-<figure class="highlight gcode"><table><tr><td class="code"><pre><div class="line">var reg =  /<span class="comment">(w)</span><span class="comment">(w)</span><span class="comment">(.+)</span>/;</div><div class="line"></div><div class="line">var  str=<span class="string">'bbs.bblueidea.com'</span>;</div><div class="line"></div><div class="line">execReg<span class="comment">(reg,str)</span>;</div></pre></td></tr></table></figure>
-<p>结果为：</p>
-<blockquote>
-<p>index:0 input:bbs.bblueidea.com result[0]:bbs.bblueidea.com result[1]:b result[2]:b result[3]:s.bblueidea.com</p>
-</blockquote>
-<p>由上面两个例子可见，返回对象[0]就是整个正则表达式所匹配的内容。后续的元素则是各个子正则表达式的匹配内容。 //g修饰的区别 exec方法在返回结果对象的同时，还可能会更新原来的正则表达式，这就要看正则表达式是否设置了g修饰符。先来看两个例子吧：</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">reg</span> = /b/;</div><div class="line"></div><div class="line"><span class="keyword">var</span> str =  <span class="number">'bb</span>s<span class="variable">.blueidea</span><span class="variable">.com</span>';</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.blueidea.com result[0]:b index:0 input:bbs.blueidea.com result[0]:b
-也就是说，两次匹配的结果完全一样，从索引可以看出来，匹配的都是字符串首的b字符。 下面看看设置了g的正则表达式表现如何：</p>
-</blockquote>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> <span class="keyword">reg</span> = /b/g;</div><div class="line"></div><div class="line"><span class="keyword">var</span> str =  <span class="number">'bb</span>s<span class="variable">.blueidea</span><span class="variable">.com</span>';</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div><div class="line"></div><div class="line">execReg(<span class="keyword">reg</span>,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.blueidea.com result[0]:b index:1 input:bbs.blueidea.com result[0]:b
-可以看得出来，第二次匹配的是字符串的字符串的第二个b。这也就是g修饰符的作用了，下面来看exec是如何区别对待g和非g正则表达式的。  如果正则表达式没有设置g，那么exec方法不会对正则表达式有任何的影响，如果设置了g，那么exec执行之后会更新正则表达式的lastIndex属性，表示本次匹配后，所匹配字符串的下一个字符的索引，下一次再用这个正则表达式匹配字符串的时候就会从上次的lastIndex属性开始匹配，也就是上面两个例子结果不同的原因了。</p>
-</blockquote>
-<h1 id="test方法"><a class="header-anchor" href="#test方法"> </a>test方法</h1>
-<p>test方法仅仅检查是否能够匹配str，并且返回布尔值以表示是否成功</p>
-<h1 id="match方法"><a class="header-anchor" href="#match方法"> </a>match方法</h1>
-<p>与正则表达式的exec方法类似，该方法同样返回一个类似数组的对象，也有input和index属性。我们定义如下一个函数用来测试：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>  <span class="title">matchReg</span>(<span class="params">reg,str</span>)</span>&#123;</div><div class="line"></div><div class="line"> <span class="keyword">var</span> result =  str.match(reg);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(result )&#123;</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'index:'</span>+result.index+<span class="string">'&lt;br  /&gt;'</span></div><div class="line"></div><div class="line">+<span class="string">'input:'</span>+result.input+<span class="string">'&lt;br  /&gt;'</span></div><div class="line"></div><div class="line">);</div><div class="line"></div><div class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;result.length;i++)&#123;</div><div class="line"></div><div class="line"><span class="built_in">document</span>.write(<span class="string">'result['</span>+i+<span class="string">']:'</span>+result[i]+<span class="string">'&lt;br  /&gt;'</span>)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line"></div><div class="line">alert(<span class="string">'null：匹配失败！'</span>)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> reg = <span class="regexp">/b/</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> str =  <span class="string">'bbs.blueidea.com'</span>;</div><div class="line"></div><div class="line">matchReg(reg,str);</div></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<blockquote>
-<p>index:0 input:bbs.blueidea.com result[0]:b
-可见，和exec的结果一样。 但是如果正则表达式设置了g修饰符，exec和match的行为可就不一样了，见下例： index:undefined input:undefined result[0]:b result[1]:b result[2]:b 设置了g修饰符的正则表达式在完成一次成功匹配后不会停止，而是继续找到所有可以匹配到的字符。返回的结果包括了三个b。不过没有提供input和index这些信息。</p>
-</blockquote>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"JavaScript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    self.resizeTo(200,300)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/system-window-update-disabled/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/system-window-update-disabled/" itemprop="url">自动更新变灰</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>win xp控制面板中系统自动更新变成灰色不能选择
+解决办法如下：</p>
+<p>开始-运行-regedit,打开注册表编辑器,在注册表里找:
+<code>HKEY_LOCAL_MACHINE/SOFTWARE/Policies/Microsoft/Windows</code>,展开Windows,将其下的
+WindowsUpdate删除掉</p>
+<p>另：还有很多方法参见http://hi.baidu.com/xxcxz/item/0e318fb9194495e84ec7fd2f</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-number-check/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">js判断数字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
 
           
         
