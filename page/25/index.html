@@ -345,241 +345,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/web-js-totop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">JS返回顶部</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>本文介绍三款简单的返回页面顶部代码，可以使用简单的HTML锚标记，也可使用Javascript Scroll函数动态返回，其它的还有悬浮脚本等有点复杂了，本文不再介绍，大家根据自己需要选择其中的一种即可，总之简约最美的，能减少代码就减少代码，能不调用的就别调用，要不是天缘博客的文章都是牛长也不会添加这个功能。
-一、使用锚标记返回页面顶部
-使用HTML锚标记最简单，就是看起来有点不好看，点击后会在地址栏显示这个锚标记，其它的倒没什么。
-页面顶部放置：
-<a name="top" id="top"></a>
-放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
-页面底部放置：
-<a href="#top" target="_self">返回顶部</a>
-二、使用Javascript Scroll函数返回顶部
-scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
-方式1：
-1<a href="javascript:scroll(0,0)" target="_blank" rel="external">返回顶部</a>
-scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
-方式2：
-本方式是渐进式返回顶部，要好看一些，代码如下：
-1functionpageScroll() { 2window.scrollBy(0,-10); 3scrolldelay = setTimeout(‘pageScroll()’,100); 4} 56<a href="pageScroll();">返回顶部</a>
-这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
-1if(document.documentElement.scrollTop==0) clearTimeout(scrolldelay);三、使用Onload加上scroll功能实现动态返回顶部
-1、首先在网页BODY标签结束之前加上：</body></p>
-<div id="gotop">返回顶部</div>
-2、再调用以下JS脚本部分（本脚本非天缘原创，早前来源于Z-BLOG官方论坛上收集，源包未带作者链接，如果原作者看到敬请留言添加）：
-01BackTop=function(btnId){ 02 varbtn=document.getElementById(btnId); 03 vard=document.documentElement; 04 window.onscroll=set; 05 btn.onclick=function(){ 06 btn.style.display="none"; 07 window.onscroll=null; 08 this.timer=setInterval(function(){ 09 d.scrollTop-=Math.ceil(d.scrollTop*0.1); 10 if(d.scrollTop==0) clearInterval(btn.timer,window.onscroll=set); 11 },10); 12 }; 13 functionset(){btn.style.display=d.scrollTop?’block':"none"} 14}; 15BackTop(‘gotop’);
-对Z-BLOG而言，可以放到$(document).ready(function(){….函数中，也可以独立存成一个js文件，比如gotop.js，再通过：
-<script src="/js/gotop.js" type="text/javascript"></script>
-来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设路径为JS，其它位置请自行修改。
-补充：
-上述返回顶部代码都是文字式样的，也可以把文字更换为漂亮一点的图标，另外还有悬浮状的返回顶部代码（就是页面滚动时，返回顶部图标也会跟着跑的那种），需要使用到层等，搞的有点复杂了，本文暂不列出。
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/web-chrome-debug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/12/web-chrome-debug/" itemprop="url">Chrome开发工具支持远程调试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Google Chrome开发工具（简称 DevTools）前端界面是作为HTML + CSS + JavaScript的web应用实现的。它采用序列化的信息通道与被审查页面通讯。开发团队建立这个序列化异步交互通道是为了将DevTools前端移出被审查页面的进程。但实现了才发现，甚至能将DevTools前端移出浏览器运行。下面是尝试远程调试的步骤：</p>
-<p>1.使用远程调试命令行开关运行要远程调试的 Chrome 实例：chrome.exe --remote-debugging-port=9222 --user-data-dir=remote-profile。远程会话必须使用不同的 Chrome 实例，所以运行时要加 --user-data-dir 参数。</p>
-<p>2.转到要调试的页面。</p>
-<p>3.现在运行正常的 (客户端) Chrome 实例并转到 <a href="http://localhost:9222" target="_blank" rel="external">http://localhost:9222</a> 那里。</p>
-<p>您将能看到一些链接，指向相应页面的远程调试会话。点击即可开始远程调试Chrome页面：</p>
-<p><img src="http://blimg.bovod.org/2012/07/12/chrome1.png" alt="chrome"><span class="image-caption">chrome</span></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/php-web-robot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -638,7 +403,7 @@ scroll第一个参数是水平位置，第二个参数是垂直位置，比如�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>首先，介绍一下WP Robot ：
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先，介绍一下WP Robot ：
 WP Robot 是一款支持wordpressBlog系统的插件，最受欢迎的自动Blog程序,强大且使用容易。 你可以根据关键词自动生成Blog任何目标文章。
 完美的自动采集发布功能，结合最人性化的功能设置，是你建站群，做外贸，做网赚，SEO优化的必不可少的利器。
 支持根据keywords关键词内容采集，支持RSS内容采集。
@@ -681,6 +446,256 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
 下载地址：（压缩包内两个版本已经包含）
 <a href="http://115.com/file/dpu4vdlt" target="_blank" rel="external">http://115.com/file/dpu4vdlt</a></li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/java-cloud-server-for-java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/12/java-cloud-server-for-java/" itemprop="url">推荐6个可用于托管Java应用的云计算平台</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文列举国外一些支持Java应用托管的云计算平台列表。</p>
+<ol>
+<li>Google App Engine (GAE)
+6 个可用于托管 Java 应用的云计算平台
+这个云服务平台已经提供很长时间了，我在上面运行了两个 Web 应用 (timethetask 和 twikural) ，已经运行一年多了，没碰到任何问题。不过如果你打算将应用部署到GAE上你需要修改你的设计策略来适应 GAE 平台。</li>
+<li>Amazon Web Services / Elastic Computing Cloud (EC2)
+6 个可用于托管 Java 应用的云计算平台
+这不是一个平台，因为你无需SDK来开发 Java 应用，该平台为你提供你可完全控制的机器，这些机器可以预装好Java环境。</li>
+<li>Windows Azure – Java
+6 个可用于托管 Java 应用的云计算平台
+Windows Azure for Java开发套件，使Java开发人员可以利用微软云计算服务平台的优势，在云端整合各种应用，用Java语言与云端链接。</li>
+<li>Jelastic
+6 个可用于托管 Java 应用的云计算平台
+Jelastic平台最大的优点是你不需要学习它的任何API，只需要上传你的Web应用，Jelactic就可自动帮你部署和运行。</li>
+<li>Heroku
+6 个可用于托管 Java 应用的云计算平台
+详情可阅读这篇文章: Heroku runs Java.</li>
+<li>OpenShift by Red Hat
+6 个可用于托管 Java 应用的云计算平台
+这是针对企业的平台，个人还无法使用，据说使用它非常之简单，有用过的朋友可以分享一下。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/12/web-js-totop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/12/web-js-totop/" itemprop="url">JS返回顶部</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文介绍三款简单的返回页面顶部代码，可以使用简单的HTML锚标记，也可使用Javascript Scroll函数动态返回，其它的还有悬浮脚本等有点复杂了，本文不再介绍，大家根据自己需要选择其中的一种即可，总之简约最美的，能减少代码就减少代码，能不调用的就别调用，要不是天缘博客的文章都是牛长也不会添加这个功能。
+一、使用锚标记返回页面顶部
+使用HTML锚标记最简单，就是看起来有点不好看，点击后会在地址栏显示这个锚标记，其它的倒没什么。
+页面顶部放置：
+<a name="top" id="top"></a>
+放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
+页面底部放置：
+<a href="#top" target="_self">返回顶部</a>
+二、使用Javascript Scroll函数返回顶部
+scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
+方式1：
+1<a href="javascript:scroll(0,0)" target="_blank" rel="external">返回顶部</a>
+scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
+方式2：
+本方式是渐进式返回顶部，要好看一些，代码如下：
+1functionpageScroll() { 2window.scrollBy(0,-10); 3scrolldelay = setTimeout(‘pageScroll()’,100); 4} 56<a href="pageScroll();">返回顶部</a>
+这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
+1if(document.documentElement.scrollTop==0) clearTimeout(scrolldelay);三、使用Onload加上scroll功能实现动态返回顶部
+1、首先在网页BODY标签结束之前加上：</body></p>
+<div id="gotop">返回顶部</div>
+2、再调用以下JS脚本部分（本脚本非天缘原创，早前来源于Z-BLOG官方论坛上收集，源包未带作者链接，如果原作者看到敬请留言添加）：
+01BackTop=function(btnId){ 02 varbtn=document.getElementById(btnId); 03 vard=document.documentElement; 04 window.onscroll=set; 05 btn.onclick=function(){ 06 btn.style.display="none"; 07 window.onscroll=null; 08 this.timer=setInterval(function(){ 09 d.scrollTop-=Math.ceil(d.scrollTop*0.1); 10 if(d.scrollTop==0) clearInterval(btn.timer,window.onscroll=set); 11 },10); 12 }; 13 functionset(){btn.style.display=d.scrollTop?’block':"none"} 14}; 15BackTop(‘gotop’);
+对Z-BLOG而言，可以放到$(document).ready(function(){….函数中，也可以独立存成一个js文件，比如gotop.js，再通过：
+<script src="/js/gotop.js" type="text/javascript"></script>
+来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设路径为JS，其它位置请自行修改。
+补充：
+上述返回顶部代码都是文字式样的，也可以把文字更换为漂亮一点的图标，另外还有悬浮状的返回顶部代码（就是页面滚动时，返回顶部图标也会跟着跑的那种），需要使用到层等，搞的有点复杂了，本文暂不列出。
 
           
         
@@ -782,7 +797,7 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600;"</span>&gt;</span></div><div class="line">  </div><div class="line">     <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"color:yellow"</span>&gt;</span>图层背景半透明，字体颜色也半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"></div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600"</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"position:relative;color:yellow"</span>&gt;</span>图层背景半透明，字体颜色不半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600;"</span>&gt;</span></div><div class="line">  </div><div class="line">     <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"color:yellow"</span>&gt;</span>图层背景半透明，字体颜色也半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line"></div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"filter:alpha(opacity=50);background:#ffffff;width:600"</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"position:relative;color:yellow"</span>&gt;</span>图层背景半透明，字体颜色不半透明<span class="tag">&lt;/<span class="name">span</span>&gt;</span> </div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -884,7 +899,7 @@ WP Robot插件官方原价是220美元,加上官方给的促销价优惠,也要1
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
 JDK就是Java Development Kit.简单的说JDK是面向开发人员使用的SDK，它提供了Java的开发环境和运行环境。SDK是Software Development Kit 一般指软件开发包，可以包括函数库、编译程序等。
 JRE是Java Runtime Enviroment是指Java的运行环境，是面向Java程序的使用者，而不是开发者。
 如果安装了JDK，会发同你的电脑有两套JRE，一套位于 \jre 另外一套位于 C:\Program Files\Java\jre1.5.0_15 目录下，后面这套比前面那套少了Server端的Java虚拟机，不过直接将前面那套的Server端Java虚拟机复制过来就行了。而且在安装JDK可以选择是否安装这个位于 C:\Program Files\Java 目录下的JRE。如果你只安装JRE，而不是JDK，那么只会在 C:\Program Files\Java 目录下安装唯一的一套JRE。
@@ -997,7 +1012,7 @@ eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>如果你在人家博客留言时使用邮箱，而没有显示一个比较个性的头像的话，那么我们完全可以说，你已经OUT了。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>如果你在人家博客留言时使用邮箱，而没有显示一个比较个性的头像的话，那么我们完全可以说，你已经OUT了。
 先来普及一下Gravatar全球通用头像：
 Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target="_blank" rel="external">http://www.gravatar.com</a> 推出的一项服务，意为“全球通用头像”。如果在Gravatar的服务器上放置了你自己的头像，那么在任何支持Gravatar的blog或者留言本上留言时，只要提供你与这个头像关联的email地址，就能够显示出你的Gravatar头像来。
 那么Gravatar全球通用头像如何申请呢，下面上教程。
@@ -1010,433 +1025,6 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
 头像上传后，图片要分级的，选择你上传的图片的级数，一般的，如果你上传的图片不太恶劣的话，就选G级，也就是大众都可以看的。
 等待审核，可能需要几分钟短暂审核一下，一般选择了G，而你的图片没什么特别的，很快就通过。一般遇上慢的情况也就10分钟左右。
 到支持Gravatar头像功能的网站，输入申请头像时的邮箱发表评论试试吧，要想改头像的话只需要到http://en.gravatar.com网站里登陆后修改即可。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/life-bt-question-top10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">十大bt问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><ol>
-<li>
-<p>企鹅肉问题：
-一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
-</li>
-<li>
-<p>跳火车问题：
-一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
-</li>
-<li>
-<p>水草问题：
-有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
-</li>
-<li>
-<p>葬礼故事的问题：
-有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
-</li>
-<li>
-<p>半根火柴问题：
-有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
-</li>
-<li>
-<p>满地木屑问题：
-马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
-</li>
-<li>
-<p>夜半敲门问题：
-一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/linux-cmd-movie/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">在命令行里看电影</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/system-dr-com/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/06/system-dr-com/" itemprop="url">校园网使用Dr.com上网</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>很多校园都是使用上网客户端验证的，其中，drcom是比较常见的一种。
-对于初学者来说硬盘安装ubuntu8.04使用drcom上网验证确实是比较痛苦的。
-我当初就是深受其害的一员，这里分享下我使用drcom的一些经验。
-以下是以ubuntu8.04下安装drcom-1.4.4为列
-PS:这个编译安装过程，其实可以全程用命令进行，
-当然，如果要使用下列命令，你需要要足够的经验。</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom ##挂载iso
-sudo apt-cdrom -m -d /cdrom add ##添加cdrom为源
-sudo apt-get update ##刷新列表
-sudo apt-get install build-essential ##安装编译环境
-tar -xzf drcom-1.4.5.tar.gz ##解压命令
-cd drcom-1.4.5
-make
-sudo make install #编译安装
-ifconfig ##查看链接信息
-sudo gedit /etc/drcom.conf
-sudo drcomd
-drcomc login ##登入
-drcomc logout ##登出
-如果你想了解更详细的操作，请请看下文
-首先，我们当然要下载个linux下的drcom源代码，在这里可以下载最新版本的drcom点击进入下载页面</p>
-<p>不建议在windows下解压drcom-1.4.5.tar.gz，最好回到ubuntu解压，以防出错。
-然後就要安装drcom了，但是安装drcom需要编译工具，ubuntuliveCD默认又是不安装的。</p>
-<p>很多人就难倒在这里了，其实，这个编译工具是ISO里面自带的。如果你有CD，直接插上CD就可以使用命令：
-sudo aptitude install build-essential</p>
-<p>安装编译环境。</p>
-<p>如果你是硬盘安装，又没有CDRom的话，可以挂载iso</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom</p>
-<p>其中&quot;ubuntu-*.iso”是你下载的镜像位置，你可以用拖动的方法来拉到终端里都可以。
-挂载好镜像後，要在系统管理-软件源，</p>
-<p>那里把下面的CDrom打上勾，
-clip_image002
-然後close，重新加载源。
-clip_image003
-这时提示找不到源，
-clip_image004
-这个可以不用理，因为你没有上网，不能加载网上的源，能加载cdrom就行。
-或者 使用命令加载和更新：
-sudo apt-cdrom -m -d /cdrom add &amp;&amp; sudo apt-get update
-这样就可以顺利用命令安装编译环境
-sudo apt-get install build-essential
-或者，你可以选择在新立得里查找安装</p>
-<p>clip_image005
-clip_image006
-clip_image007
-编译环境安装完毕，接着就可以把你下载的drcom源代码解压，</p>
-<p>解压方法有很多种，可以图形，可以命令，不过个人偏好把下载的drcom-1.4.4.tar.gz放在桌面，右键解压到此处。
-clip_image008
-clip_image009
-解压完毕後，cd进你解压的目录编译安装
-clip_image010
-make
-sudo make install
-clip_image011
-安装完毕後，就需要编辑/etc/drcom.conf填写你的上网信息。
-clip_image012
-sudo gedit /etc/drcom.conf
-clip_image013
-clip_image014
-clip_image015
-clip_image016
-username=myusername ##填入你登陆的帐号
-password=mypassword ##填入你的密码
-device=eth0 ##指明通往外网的网卡的名字。
-except= ##用“网络地址/网络掩码”的形式列出内网的地址。(不是内网地址就删除)
-dnsp= ##你的首要DNS
-dnss= ##你的次要DNS，如果没有的话，请和首要DNS填的一样
-dhcp= ##你的DHCP服务器，一般不填
-hostip=
-servip=192.168.252.1 ##你的登陆IP，就是在XP下填写登陆服务器那个IP，一般是没有登陆时自动转向的那个页面，就是那个web登陆页面。
-hostport=
-servport=
-hostname=
-winver=
-winbuild=
-servicepack=
-autologout=0
-里面除了帐号密码，其他信息都可以在右上角网卡信息那里看到。</p>
-<p>关于&quot;servip=“地址说明可以参考下面图片，就是网页登录的那个地址IP
-如，下图就要填servip=10.254.200.252
-clip_image017
-感谢xu_connery提供图片
-特别注意的是从1.4.0开始，”/etc/drcom.con&quot;里增加了&quot;device=&quot;和&quot;except=&quot;两项,取消&quot;mac&quot;和&quot;nic&quot;两项。
-配置好帐号信息後，记得保存。
-这样就可以立刻上网了。</p>
-<p>连接命令：
-sudo drcomd ##启动drcom
-drcomc login ##登录
-由于我是用虚拟机截图，以上命令成功应该显示
-Login succeeded
-登出命令：
-drcomc logout
-Logout succeeded</p>
 
           
         
@@ -1538,12 +1126,439 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
 第一步：在远程计算机（即被访问的计算机）上通过任务栏的“开始-&gt;运行-&gt;输入regedit”，打开注册表编辑器。
 第二步：在注册表中找到Hkey_local_machine\system\currentcontrolset\control\terminal server\wds\repwd\tds\tcp，将其下的portnumber值从3389修改为80，注意10进制和16进制数字的区别。
 第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
 control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修改为80，同样注意10进制和16进制数字的区别。全部修改后重新启动计算机就完成了被访问计算机上的设置。
 第四步：这样我们就可以在网络中任意一台安装了远程桌面登录器的计算机上连接刚刚设置的计算机了，使用的端口是80端口。值得注意的是在输入被访问计算机IP地址时需要使用类似ip:80的形式。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/linux-cmd-movie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/06/linux-cmd-movie/" itemprop="url">在命令行里看电影</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/life-bt-question-top10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">十大bt问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>
+<p>企鹅肉问题：
+一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
+</li>
+<li>
+<p>跳火车问题：
+一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
+</li>
+<li>
+<p>水草问题：
+有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
+</li>
+<li>
+<p>葬礼故事的问题：
+有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
+</li>
+<li>
+<p>半根火柴问题：
+有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
+</li>
+<li>
+<p>满地木屑问题：
+马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
+</li>
+<li>
+<p>夜半敲门问题：
+一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/system-dr-com/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/06/system-dr-com/" itemprop="url">校园网使用Dr.com上网</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多校园都是使用上网客户端验证的，其中，drcom是比较常见的一种。
+对于初学者来说硬盘安装ubuntu8.04使用drcom上网验证确实是比较痛苦的。
+我当初就是深受其害的一员，这里分享下我使用drcom的一些经验。
+以下是以ubuntu8.04下安装drcom-1.4.4为列
+PS:这个编译安装过程，其实可以全程用命令进行，
+当然，如果要使用下列命令，你需要要足够的经验。</p>
+<p>sudo mount -o loop ubuntu-*.iso /cdrom ##挂载iso
+sudo apt-cdrom -m -d /cdrom add ##添加cdrom为源
+sudo apt-get update ##刷新列表
+sudo apt-get install build-essential ##安装编译环境
+tar -xzf drcom-1.4.5.tar.gz ##解压命令
+cd drcom-1.4.5
+make
+sudo make install #编译安装
+ifconfig ##查看链接信息
+sudo gedit /etc/drcom.conf
+sudo drcomd
+drcomc login ##登入
+drcomc logout ##登出
+如果你想了解更详细的操作，请请看下文
+首先，我们当然要下载个linux下的drcom源代码，在这里可以下载最新版本的drcom点击进入下载页面</p>
+<p>不建议在windows下解压drcom-1.4.5.tar.gz，最好回到ubuntu解压，以防出错。
+然後就要安装drcom了，但是安装drcom需要编译工具，ubuntuliveCD默认又是不安装的。</p>
+<p>很多人就难倒在这里了，其实，这个编译工具是ISO里面自带的。如果你有CD，直接插上CD就可以使用命令：
+sudo aptitude install build-essential</p>
+<p>安装编译环境。</p>
+<p>如果你是硬盘安装，又没有CDRom的话，可以挂载iso</p>
+<p>sudo mount -o loop ubuntu-*.iso /cdrom</p>
+<p>其中&quot;ubuntu-*.iso”是你下载的镜像位置，你可以用拖动的方法来拉到终端里都可以。
+挂载好镜像後，要在系统管理-软件源，</p>
+<p>那里把下面的CDrom打上勾，
+clip_image002
+然後close，重新加载源。
+clip_image003
+这时提示找不到源，
+clip_image004
+这个可以不用理，因为你没有上网，不能加载网上的源，能加载cdrom就行。
+或者 使用命令加载和更新：
+sudo apt-cdrom -m -d /cdrom add &amp;&amp; sudo apt-get update
+这样就可以顺利用命令安装编译环境
+sudo apt-get install build-essential
+或者，你可以选择在新立得里查找安装</p>
+<p>clip_image005
+clip_image006
+clip_image007
+编译环境安装完毕，接着就可以把你下载的drcom源代码解压，</p>
+<p>解压方法有很多种，可以图形，可以命令，不过个人偏好把下载的drcom-1.4.4.tar.gz放在桌面，右键解压到此处。
+clip_image008
+clip_image009
+解压完毕後，cd进你解压的目录编译安装
+clip_image010
+make
+sudo make install
+clip_image011
+安装完毕後，就需要编辑/etc/drcom.conf填写你的上网信息。
+clip_image012
+sudo gedit /etc/drcom.conf
+clip_image013
+clip_image014
+clip_image015
+clip_image016
+username=myusername ##填入你登陆的帐号
+password=mypassword ##填入你的密码
+device=eth0 ##指明通往外网的网卡的名字。
+except= ##用“网络地址/网络掩码”的形式列出内网的地址。(不是内网地址就删除)
+dnsp= ##你的首要DNS
+dnss= ##你的次要DNS，如果没有的话，请和首要DNS填的一样
+dhcp= ##你的DHCP服务器，一般不填
+hostip=
+servip=192.168.252.1 ##你的登陆IP，就是在XP下填写登陆服务器那个IP，一般是没有登陆时自动转向的那个页面，就是那个web登陆页面。
+hostport=
+servport=
+hostname=
+winver=
+winbuild=
+servicepack=
+autologout=0
+里面除了帐号密码，其他信息都可以在右上角网卡信息那里看到。</p>
+<p>关于&quot;servip=“地址说明可以参考下面图片，就是网页登录的那个地址IP
+如，下图就要填servip=10.254.200.252
+clip_image017
+感谢xu_connery提供图片
+特别注意的是从1.4.0开始，”/etc/drcom.con&quot;里增加了&quot;device=&quot;和&quot;except=&quot;两项,取消&quot;mac&quot;和&quot;nic&quot;两项。
+配置好帐号信息後，记得保存。
+这样就可以立刻上网了。</p>
+<p>连接命令：
+sudo drcomd ##启动drcom
+drcomc login ##登录
+由于我是用虚拟机截图，以上命令成功应该显示
+Login succeeded
+登出命令：
+drcomc logout
+Logout succeeded</p>
 
           
         
