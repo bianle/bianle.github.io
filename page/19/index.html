@@ -89,7 +89,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -103,7 +103,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
 
@@ -124,7 +124,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -135,8 +135,8 @@
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: "",
-      labels: ""
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
 </script>
@@ -284,43 +284,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
   
 </nav>
 
@@ -345,7 +311,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-rsslibj/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/life-learn-from-prison-break/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -364,11 +330,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/02/01/java-rsslibj/" itemprop="url">利用RSSLibJ读取RSS</a></h1>
+                <a class="post-title-link" href="/2013/02/03/life-learn-from-prison-break/" itemprop="url">一个男人从越狱里的人物身上应该学到什么</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-03T15:24:07+08:00">
+                2013-02-03
+              </time>
             
 
             
@@ -376,6 +352,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/生活/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -403,18 +401,30 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
-<p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
-<p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
-<p>读取新浪RSS的一个例子，结合Jsf。</p>
-<p>页面：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/core"</span> <span class="attr">prefix</span>=<span class="string">"f"</span>%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/html"</span> <span class="attr">prefix</span>=<span class="string">"h"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%@page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=gb18030"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">f:view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h3</span>&gt;</span>RSS Reader<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"> 			请输入RSS地址：</div><div class="line"> 			<span class="tag">&lt;<span class="name">h:inputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">id</span>=<span class="string">"rssAddress"</span></span></span></div><div class="line">			<span class="attr">converterMessage</span>=<span class="string">"请输入一个正确的Rss地址!"</span> <span class="attr">style</span>=<span class="string">"width:280px;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">h:inputText</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:commandButton</span> <span class="attr">value</span>=<span class="string">"提交"</span> <span class="attr">action</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.readRss &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:commandButton</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:message</span> <span class="attr">for</span>=<span class="string">"rssAddress"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:message</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	从</div><div class="line">	<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">	获取的内容：</div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:dataTable</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.items &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">var</span>=<span class="string">"item"</span> <span class="attr">style</span>=<span class="string">"font-size:13px;"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.title &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputLink</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">				<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">			<span class="tag">&lt;/<span class="name">h:outputLink</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:dataTable</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">f:view</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>RSSReader.java</p>
-<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.rss;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="keyword">BufferedReader</span>;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</div><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.net.URL;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Channel;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Item;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.RSSReader;</div><div class="line"></div><div class="line"><span class="keyword">import</span> electric.xml.ParseException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class RssReader &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> urlString =  <span class="string">"http://rss.sina.com.cn/news/marquee/ddt.xml"</span>;</div><div class="line">	<span class="keyword">private</span> List&lt;Item&gt; items;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> rssAddress;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyHost = <span class="string">"paicproxy2"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyPort = <span class="string">"8080"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getRssAddress() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setRssAddress(<span class="keyword">String</span> rssAddress) &#123;</div><div class="line">		<span class="keyword">this</span>.rssAddress = rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> List&lt;Item&gt; getItems() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxy(<span class="keyword">String</span> proxyHost,<span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		</div><div class="line">		<span class="comment">// 设置代理</span></div><div class="line">		Properties systemSettings = System.getProperties();</div><div class="line">		systemSettings.put(<span class="string">"http.proxyHost"</span>, proxyHost);</div><div class="line">		systemSettings.put(<span class="string">"http.proxyPort"</span>, proxyPort);</div><div class="line">		System.setProperties(systemSettings);</div><div class="line">	&#125;</div><div class="line">	 <span class="comment">/**</span></div><div class="line">     * 读取RSS。</div><div class="line">     * @param url</div><div class="line">     * @throws IOException </div><div class="line">     * @throws ParseException </div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> readRss() <span class="keyword">throws</span> IOException, ParseException &#123;</div><div class="line">    	setProxy(proxyHost, proxyPort);</div><div class="line">    	</div><div class="line">    	URL __url = <span class="keyword">new</span> URL(<span class="keyword">this</span>.rssAddress);</div><div class="line">    	HttpURLConnection conn = (HttpURLConnection) __url.openConnection();</div><div class="line">    	InputStream in = conn.getInputStream();</div><div class="line">    	<span class="keyword">BufferedReader</span> bufReader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(in,<span class="string">"utf-8"</span>));</div><div class="line">    	RSSReader rssReader = <span class="keyword">new</span> RSSReader(bufReader);</div><div class="line">    	Channel channel = rssReader.getChannel();</div><div class="line">    	<span class="keyword">this</span>.items = channel.getItems();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印获取的RSS内容。</div><div class="line">     * @param urlString</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> test(<span class="keyword">String</span> urlString) &#123;</div><div class="line">    	setProxy(urlString, urlString);	</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">			HttpURLConnection conn = (HttpURLConnection) url.openConnection();</div><div class="line">			InputStream is = conn.getInputStream();</div><div class="line">			StringBuilder sBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">			<span class="keyword">String</span> <span class="built_in">line</span> = <span class="keyword">null</span>;</div><div class="line">			</div><div class="line">			<span class="keyword">BufferedReader</span> reader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,<span class="string">"utf-8"</span>));</div><div class="line">			</div><div class="line">			<span class="keyword">while</span> ((<span class="built_in">line</span> = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">				sBuilder.<span class="built_in">append</span>(<span class="built_in">line</span>).<span class="built_in">append</span>(<span class="string">"\n"</span>);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			System.out.<span class="built_in">println</span>(sBuilder.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>faces-config.xml:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></div><div class="line"> <span class="meta">&lt;!DOCTYPE faces-config PUBLIC</span></div><div class="line"> "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"</div><div class="line"> "http://java.sun.com/dtd/web-facesconfig_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">faces-config</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">managed-bean</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-name</span>&gt;</span>rssReader<span class="tag">&lt;/<span class="name">managed-bean-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">			com.rss.RssReader</div><div class="line">		<span class="tag">&lt;/<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-scope</span>&gt;</span>request<span class="tag">&lt;/<span class="name">managed-bean-scope</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">managed-bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">faces-config</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>效果：</p>
-<p><img src="http://blimg.bovod.org/2013/02/01/rss1.jpg" alt="rss"><span class="image-caption">rss</span></p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><ol>
+<li>MichaelScofield
+头脑。我理解的头脑，应该是智慧+冷静。作为这部戏的主角，导演很慷慨的把两点品质都赋予了Michael，他的智慧和冷静是贯穿始终的，近乎完美。</li>
+<li>LincolnBurrows
+勇气。在整部戏中，Lincoln应该是最有男子汉气质的人了。他明知有圈套还是要去救出儿子；当监狱暴乱他遭遇T-Bag一伙时，在没有退路的情况下勇敢的搏斗，毫无惧色。
+如果你失去了财富，那你失去了一点；如果你失去了名誉，那你失去了很多；如果你失去了勇气，那你把一切都失去了。</li>
+<li>BenjaminFranklin
+责任。作为一名美国军人，当他发现虐囚事件时，勇敢的站出来揭露，结果被迫害（当然在中国，不要学他这一点，否则会死的很难看）；当他为了生计去给别人开偷来的卡车被抓时，为了不让妻子担心和维护在女儿心中的形象，扔谎称在服役，而独自承受坐牢的痛苦；为了和妻女团聚，冒着极大的风险越狱。
+有责任感的男人是值得信赖的，朋友也不会抛弃他，看看那些帮助他妻子和女儿逃亡的黑人铁哥们吧。</li>
+<li>JohnAbruzzi
+尊严。因为那句著名的临终遗言：“我只向上帝下跪，但他不在这里。”当你赢得了尊严，也就赢得了别人的尊重，包括你的对手。</li>
+<li>DavidApolskis
+忠诚。虽然开始David处于对鸡奸的恐惧和汉堡的诱惑，曾经出卖过Michael他们，但当时他并不是他们中的一员，而且Michael警告T-Bag不要打他的主意这件事情，他似乎也并不知道。
+在最后，当他被FBI抓获时，他没有背叛自己的朋友，毅然的选择了忠诚。
+我们都看到了FBI给他开出的价码：不追究他的越狱行为，并送他到一所高级监狱去服刑。的确如果他供出Michael他们，这种“重大立功表现”是很有可能得到这些的。
+我想当他敲开那个同车的漂亮姑娘的家门时，他一定知道这对他意味着什么，毕竟他一共只被判了2年的刑期。</li>
+<li>TheodoreBagwell
+信念。作为最不受欢迎的一个同伴，他一开始就是被越狱小组排斥的，他是以差点杀死JohnAbruzzi为代价才保住了这张票，而且刚逃出监狱，就失去了一只手。
+两次失去左手的是他，两次得到巨款也是他，别人都有朋友、家人帮忙或陪伴，只有他是孤独的，但他就凭着求生的信念，勇敢的活了下来。</li>
+<li>FernandoSucre
+浪漫。作为一个只剩下16个月刑期的犯人，他越狱的理由竟然是怀孕的女友要和别人结婚。当他骑着朋友的大哈雷去拉斯维加斯准备在婚礼上把女友抢回来时，每个女人也许都在想：我要是他的女友该多幸福啊。</li>
+<li>SaraTancredi
+敬业。当监狱开始暴乱的时候，她不顾警卫队长的劝告，执意进去抢救一个中暑的犯人；当生命垂危的JohnAbruzzi被送往直升飞机时，是她陪在旁边焦急但是很不失冷静的不断呼喊：“John，坚持住，呼吸，坚持住，你会没事的。”在那一刻，我觉得这个恶贯满盈的犯人更象她的亲人，那也是Sara最美的时候。大家可以去看看，在第1季第13集一开始，那一刻，Sara就象一个天使。</li>
+</ol>
 
           
         
@@ -483,12 +493,44 @@
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-01T18:09:17+08:00">
+                2013-02-01
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -516,7 +558,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>首先我们来说下什么是最小公分母的问题，及LCD（least common denominator），这是我们听的最多的，也是讨论的最多的，可是细想是什么的时候却答不上来了。相反还有一个最大公分母（greatest common denominator），看下图：</p>
 <p><img src="http://blimg.bovod.org/2013/02/01/lcd1.gif" alt="lcd"><span class="image-caption">lcd</span></p>
 <p>图里有三个不同的集合，分别代表不同的操作系统，LCD其实指的就是它们三个的交集了，很明显最大公分母就是指它们三的并集喽！</p>
 <p>明白LCD， 最大公分母， 我们再分别看看AWT，SWT，SWING。</p>
@@ -534,6 +576,151 @@
 <li>Swing:</li>
 </ol>
 <p>不用说，也是按最大公分母，可是在效率上表现不怎么样，可能以后会有改变。因为它也是基于AWT容器的，所以无法实现透明窗体等效果。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-rsslibj/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/01/java-rsslibj/" itemprop="url">利用RSSLibJ读取RSS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-01T18:09:17+08:00">
+                2013-02-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
+<p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
+<p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
+<p>读取新浪RSS的一个例子，结合Jsf。</p>
+<p>页面：</p>
+<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/core"</span> <span class="attr">prefix</span>=<span class="string">"f"</span>%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/html"</span> <span class="attr">prefix</span>=<span class="string">"h"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%@page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=gb18030"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">f:view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h3</span>&gt;</span>RSS Reader<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"> 			请输入RSS地址：</div><div class="line"> 			<span class="tag">&lt;<span class="name">h:inputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">id</span>=<span class="string">"rssAddress"</span></span></span></div><div class="line">			<span class="attr">converterMessage</span>=<span class="string">"请输入一个正确的Rss地址!"</span> <span class="attr">style</span>=<span class="string">"width:280px;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">h:inputText</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:commandButton</span> <span class="attr">value</span>=<span class="string">"提交"</span> <span class="attr">action</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.readRss &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:commandButton</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:message</span> <span class="attr">for</span>=<span class="string">"rssAddress"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:message</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	从</div><div class="line">	<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">	获取的内容：</div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:dataTable</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.items &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">var</span>=<span class="string">"item"</span> <span class="attr">style</span>=<span class="string">"font-size:13px;"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.title &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputLink</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">				<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">			<span class="tag">&lt;/<span class="name">h:outputLink</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:dataTable</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">f:view</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>RSSReader.java</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.rss;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="keyword">BufferedReader</span>;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</div><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.net.URL;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Channel;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Item;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.RSSReader;</div><div class="line"></div><div class="line"><span class="keyword">import</span> electric.xml.ParseException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class RssReader &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> urlString =  <span class="string">"http://rss.sina.com.cn/news/marquee/ddt.xml"</span>;</div><div class="line">	<span class="keyword">private</span> List&lt;Item&gt; items;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> rssAddress;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyHost = <span class="string">"paicproxy2"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyPort = <span class="string">"8080"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getRssAddress() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setRssAddress(<span class="keyword">String</span> rssAddress) &#123;</div><div class="line">		<span class="keyword">this</span>.rssAddress = rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> List&lt;Item&gt; getItems() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxy(<span class="keyword">String</span> proxyHost,<span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		</div><div class="line">		<span class="comment">// 设置代理</span></div><div class="line">		Properties systemSettings = System.getProperties();</div><div class="line">		systemSettings.put(<span class="string">"http.proxyHost"</span>, proxyHost);</div><div class="line">		systemSettings.put(<span class="string">"http.proxyPort"</span>, proxyPort);</div><div class="line">		System.setProperties(systemSettings);</div><div class="line">	&#125;</div><div class="line">	 <span class="comment">/**</span></div><div class="line">     * 读取RSS。</div><div class="line">     * @param url</div><div class="line">     * @throws IOException </div><div class="line">     * @throws ParseException </div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> readRss() <span class="keyword">throws</span> IOException, ParseException &#123;</div><div class="line">    	setProxy(proxyHost, proxyPort);</div><div class="line">    	</div><div class="line">    	URL __url = <span class="keyword">new</span> URL(<span class="keyword">this</span>.rssAddress);</div><div class="line">    	HttpURLConnection conn = (HttpURLConnection) __url.openConnection();</div><div class="line">    	InputStream in = conn.getInputStream();</div><div class="line">    	<span class="keyword">BufferedReader</span> bufReader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(in,<span class="string">"utf-8"</span>));</div><div class="line">    	RSSReader rssReader = <span class="keyword">new</span> RSSReader(bufReader);</div><div class="line">    	Channel channel = rssReader.getChannel();</div><div class="line">    	<span class="keyword">this</span>.items = channel.getItems();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印获取的RSS内容。</div><div class="line">     * @param urlString</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> test(<span class="keyword">String</span> urlString) &#123;</div><div class="line">    	setProxy(urlString, urlString);	</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">			HttpURLConnection conn = (HttpURLConnection) url.openConnection();</div><div class="line">			InputStream is = conn.getInputStream();</div><div class="line">			StringBuilder sBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">			<span class="keyword">String</span> <span class="built_in">line</span> = <span class="keyword">null</span>;</div><div class="line">			</div><div class="line">			<span class="keyword">BufferedReader</span> reader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,<span class="string">"utf-8"</span>));</div><div class="line">			</div><div class="line">			<span class="keyword">while</span> ((<span class="built_in">line</span> = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">				sBuilder.<span class="built_in">append</span>(<span class="built_in">line</span>).<span class="built_in">append</span>(<span class="string">"\n"</span>);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			System.out.<span class="built_in">println</span>(sBuilder.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>faces-config.xml:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></div><div class="line"> <span class="meta">&lt;!DOCTYPE faces-config PUBLIC</span></div><div class="line"> "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"</div><div class="line"> "http://java.sun.com/dtd/web-facesconfig_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">faces-config</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">managed-bean</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-name</span>&gt;</span>rssReader<span class="tag">&lt;/<span class="name">managed-bean-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">			com.rss.RssReader</div><div class="line">		<span class="tag">&lt;/<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-scope</span>&gt;</span>request<span class="tag">&lt;/<span class="name">managed-bean-scope</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">managed-bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">faces-config</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="http://blimg.bovod.org/2013/02/01/rss1.jpg" alt="rss"><span class="image-caption">rss</span></p>
 
           
         
@@ -602,12 +789,44 @@
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-17T21:30:00+08:00">
+                2013-01-17
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -635,7 +854,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Tomcat部署Web应用方法总结
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Tomcat部署Web应用方法总结
 在Tomcat中部署Java Web应用程序有两种方式：静态部署和动态部署。
 在下文中$CATALINA_HOME指的是Tomcat根目录。
 一、静态部署
@@ -767,12 +986,44 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-17T18:09:17+08:00">
+                2013-01-17
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -800,7 +1051,7 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="linux下修改tomcat-jvm内存设置"><a class="header-anchor" href="#linux下修改tomcat-jvm内存设置"> </a>Linux下修改Tomcat JVM内存设置:</h1>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="linux下修改tomcat-jvm内存设置"><a class="header-anchor" href="#linux下修改tomcat-jvm内存设置"> </a>Linux下修改Tomcat JVM内存设置:</h1>
 <p>要添加在Tomcat的bin下catalina.sh里，位置cygwin=false前。注意引号要带上,红色的为新添加的.</p>
 <figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line">\#OSspecificsupport.$var_must_besettoeithertrueorfalse.</div><div class="line"></div><div class="line">JAVA_OPTS=<span class="string">"-Xms256m-Xmx512m-Xss1024K-XX:PermSize=128m-XX:MaxPermSize=256m"</span></div><div class="line"></div><div class="line">cygwin=<span class="literal">false</span></div></pre></td></tr></table></figure>
 <h1 id="windows下修改tomcat-jvm内存设置"><a class="header-anchor" href="#windows下修改tomcat-jvm内存设置"> </a>windows下修改Tomcat JVM内存设置:</h1>
@@ -888,12 +1139,44 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T21:26:00+08:00">
+                2013-01-10
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -921,7 +1204,7 @@ Tomcat中webapps目录下不能直接存放网页格式的文件，否则无法�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>本操作参考VMWare虚拟机下安装RedHat 9.0linux联网教程
 <a href="http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx" target="_blank" rel="external">http://blog.csdn.net/Charistain_huang/archive/2009/12/14/5006861.aspx</a>
 1.网上邻居-属性-可以看到在你安装好 VM虚拟机后又多了两个网络连接
 <img src="http://blimg.bovod.org/2013/01/10/rhl1.png" alt="rhl"><span class="image-caption">rhl</span>
@@ -1016,12 +1299,44 @@ system —-&gt;administration—–&gt;network
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T20:53:00+08:00">
+                2013-01-10
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1049,7 +1364,7 @@ system —-&gt;administration—–&gt;network
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>REG文件实际上是一种注册表脚本文件，双击REG文件即可将其中的数据导入到注册表中。利用REG文件我们可以直接对注册表进行任何修改操作，它对注册表的操作可以不受注册表编辑器被禁用的限制，因此功能更为强大、灵活，另外，由于REG文件可以用任何文本文件编辑工具(例如记事本)进行修改，因此通过它对注册表数据进行修改后，如果发生错误，还可以通过改回REG文件中的数据后再导入，从而实现恢复操作，因此它又较之直接用注册表编辑器修改更安全，所以熟练掌握REG文件的运用，有时可以起到事半功倍、意想不到的效果。
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>REG文件实际上是一种注册表脚本文件，双击REG文件即可将其中的数据导入到注册表中。利用REG文件我们可以直接对注册表进行任何修改操作，它对注册表的操作可以不受注册表编辑器被禁用的限制，因此功能更为强大、灵活，另外，由于REG文件可以用任何文本文件编辑工具(例如记事本)进行修改，因此通过它对注册表数据进行修改后，如果发生错误，还可以通过改回REG文件中的数据后再导入，从而实现恢复操作，因此它又较之直接用注册表编辑器修改更安全，所以熟练掌握REG文件的运用，有时可以起到事半功倍、意想不到的效果。
 创建REG文件
 REG文件的创建是非常简单的，可以通过任何一个文本文件编辑工具来实现。我们就以创建一个可以解除注册表禁用限制的REG文件restore.reg为例来介绍一下具体过程。
 打开记事本，在记事本文件中输入以下内容：
@@ -1168,210 +1483,6 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-number-check/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">js判断数字</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-disabled-statebar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">禁止状态栏显示链接</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-eclipse-console/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1397,12 +1508,44 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1430,7 +1573,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Eclipse 的控制台必须用GBK编码。
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Eclipse 的控制台必须用GBK编码。
 条件1，Window | Preferences | Workspace | Text file encoding | GBK编码。
 这样定义的是整个工作区间的编码。
 这样就把整个工作空间的编码格式定死了，但是如果某一个工程用的是不同的编码格式的话这样单独再解决。如下：
@@ -1484,7 +1627,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-radio/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-1px-table/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1503,11 +1646,21 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-radio/" itemprop="url">js取radio值</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">1像素表格</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
             
 
             
@@ -1515,6 +1668,28 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1542,7 +1717,149 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="function">function <span class="title">ok</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">var</span> temp=document.getElementsByName(<span class="string">"radio"</span>);</div><div class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;temp.length;i++)&#123;</div><div class="line">  <span class="comment">//遍历Radio</span></div><div class="line">    <span class="keyword">if</span>(temp[i].<span class="keyword">checked</span>)</div><div class="line">      &#123;alert(<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>);</div><div class="line">      <span class="comment">//获取Radio的值</span></div><div class="line">      document.form2.textfield.<span class="keyword">value</span>=<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>;</div><div class="line">      <span class="comment">//传递给另外一个表单</span></div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line"> <span class="selector-tag">table</span>&#123;</div><div class="line">       <span class="attribute">background</span>:black; </div><div class="line">       <span class="attribute">width</span>:<span class="number">600</span>;      </div><div class="line">       <span class="attribute">height</span>:<span class="number">100</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; </div><div class="line">     <span class="attribute">background</span>:white;</div><div class="line"> &#125; </div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">1</span> <span class="attr">cellspacing</span>=<span class="string">1</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-gwt-code-lv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/java-gwt-code-lv/" itemprop="url">GWT 项目中代码分四级概念</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
+使用多个 Module 和 EntryPoint 相对都是非常简单的。创建过程同官方的新建一个Module 和 EntryPoint 没什么两样。那么我们，还有一种需求就是需要一些额外的关注：一个 application , 多个 hostpage， 因为 GWT 默认项目就只是一个 Single Host Page 的 Application。其实，我们有很多人已经注意到了这一点，并且有人 open 了一个 gwt module 来帮助大家实现这一点，它就是 gwtmultipage 。
+gwtmultipage 使用起来相当简单，简单三步就可以了：
+1.加载 org.gwtmultipage.gwtmultipage 这个 GWT module java 包到项目中
+2.修改主 Module 的 gwt.xml， EntryPoint 改成&lt;entry -point class=’org.gwtmultipage.client.EntrypointDispatcher’/&gt;
+当然要先加上它所在的 module<inherits name="’org.gwtmultipage.gwtmultipage’/">
+3.在你的 EntryPoint 类名前加 annotation:@UrlPatternEntryPoint(value=”module.html”)
+就可把 前端 jsp 或者 html 文件与 某个 EntryPoint 对应起来了。gwtmultipage 通过 org.gwtmultipage.client.EntrypointDispatcher 把 host page与 EntryPoint 一一对应。
+EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
 
           
         
@@ -1626,7 +1943,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">282</span>
+                <span class="site-state-item-count">283</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1782,11 +2099,22 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
   &copy;  2012 - 
   <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">bianle</span>
 </div>
 
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
 
 
         
@@ -1875,21 +2203,21 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
 
 
 
   
-  
-
   
 
   
 
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
 
 
 
@@ -1917,336 +2245,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
         target: "cloud-tie-wrapper"
       };
     </script>
-    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
-  
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (search_path.endsWith("json")) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === '') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -2264,6 +2263,18 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
 
 
 

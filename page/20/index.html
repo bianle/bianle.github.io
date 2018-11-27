@@ -89,7 +89,7 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -103,7 +103,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
 
@@ -124,7 +124,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -135,8 +135,8 @@
       applicationID: '',
       apiKey: '',
       indexName: '',
-      hits: "",
-      labels: ""
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
 </script>
@@ -284,43 +284,9 @@
       
 
       
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
   
 </nav>
 
@@ -345,7 +311,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-gwt-code-lv/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-number-check/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -364,11 +330,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/java-gwt-code-lv/" itemprop="url">GWT 项目中代码分四级概念</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">js判断数字</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
             
 
             
@@ -376,6 +352,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -403,15 +401,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
-使用多个 Module 和 EntryPoint 相对都是非常简单的。创建过程同官方的新建一个Module 和 EntryPoint 没什么两样。那么我们，还有一种需求就是需要一些额外的关注：一个 application , 多个 hostpage， 因为 GWT 默认项目就只是一个 Single Host Page 的 Application。其实，我们有很多人已经注意到了这一点，并且有人 open 了一个 gwt module 来帮助大家实现这一点，它就是 gwtmultipage 。
-gwtmultipage 使用起来相当简单，简单三步就可以了：
-1.加载 org.gwtmultipage.gwtmultipage 这个 GWT module java 包到项目中
-2.修改主 Module 的 gwt.xml， EntryPoint 改成&lt;entry -point class=’org.gwtmultipage.client.EntrypointDispatcher’/&gt;
-当然要先加上它所在的 module<inherits name="’org.gwtmultipage.gwtmultipage’/">
-3.在你的 EntryPoint 类名前加 annotation:@UrlPatternEntryPoint(value=”module.html”)
-就可把 前端 jsp 或者 html 文件与 某个 EntryPoint 对应起来了。gwtmultipage 通过 org.gwtmultipage.client.EntrypointDispatcher 把 host page与 EntryPoint 一一对应。
-EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -455,7 +445,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-1px-table/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-disabled-statebar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -474,11 +464,21 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">1像素表格</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">禁止状态栏显示链接</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
             
 
             
@@ -486,6 +486,28 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -513,424 +535,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line"> <span class="selector-tag">table</span>&#123;</div><div class="line">       <span class="attribute">background</span>:black; </div><div class="line">       <span class="attribute">width</span>:<span class="number">600</span>;      </div><div class="line">       <span class="attribute">height</span>:<span class="number">100</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; </div><div class="line">     <span class="attribute">background</span>:white;</div><div class="line"> &#125; </div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">1</span> <span class="attr">cellspacing</span>=<span class="string">1</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/system-window-update-disabled/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/system-window-update-disabled/" itemprop="url">自动更新变灰</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>win xp控制面板中系统自动更新变成灰色不能选择
-解决办法如下：</p>
-<p>开始-运行-regedit,打开注册表编辑器,在注册表里找:
-<code>HKEY_LOCAL_MACHINE/SOFTWARE/Policies/Microsoft/Windows</code>,展开Windows,将其下的
-WindowsUpdate删除掉</p>
-<p>另：还有很多方法参见http://hi.baidu.com/xxcxz/item/0e318fb9194495e84ec7fd2f</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-trim/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">自定义js的trim()方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
-<p>写成类的方法格式如下：（str.trim();）</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>写成函数可以这样：(trim(str))</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-window-resize/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-window-resize/" itemprop="url">改变当前浏览器窗口大小</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"JavaScript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    self.resizeTo(200,300)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-mode-window/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">可拖动模式窗口</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>可拖动模式窗口<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"> </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertWin</span>(<span class="params">title, msg, w, h</span>)</span>&#123;  </div><div class="line">    <span class="keyword">var</span> titleheight = <span class="string">"22px"</span>; <span class="comment">// 提示窗口标题高度  </span></div><div class="line">    <span class="keyword">var</span> bordercolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的边框颜色  </span></div><div class="line">    <span class="keyword">var</span> titlecolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示窗口的标题颜色  </span></div><div class="line">    <span class="keyword">var</span> titlebgcolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的标题背景色 </span></div><div class="line">    <span class="keyword">var</span> bgcolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示内容的背景色 </span></div><div class="line">     </div><div class="line">    <span class="keyword">var</span> iWidth = <span class="built_in">document</span>.documentElement.clientWidth;  </div><div class="line">    <span class="keyword">var</span> iHeight = <span class="built_in">document</span>.documentElement.clientHeight;  </div><div class="line">    <span class="keyword">var</span> bgObj = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);  </div><div class="line">    bgObj.style.cssText = <span class="string">"position:absolute;left:0px;top:0px;width:"</span>+iWidth+<span class="string">"px;height:"</span>+<span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, iHeight)+<span class="string">"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(bgObj);  </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> msgObj=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>); </div><div class="line">    msgObj.style.cssText = <span class="string">"position:absolute;font:11px ‘宋体’;top:"</span>+(iHeight-h)/<span class="number">2</span>+<span class="string">"px;left:"</span>+(iWidth-w)/<span class="number">2</span>+<span class="string">"px;width:"</span>+w+<span class="string">"px;height:"</span>+h+<span class="string">"px;text-align:center;border:1px solid "</span>+bordercolor+<span class="string">";background-color:"</span>+bgcolor+<span class="string">";padding:1px;line-height:22px;z-index:102;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(msgObj); </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>); </div><div class="line">    msgObj.appendChild(table); </div><div class="line">    table.style.cssText = <span class="string">"margin:0px;border:0px;padding:0px;"</span>; </div><div class="line">    table.cellSpacing = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> tr = table.insertRow(<span class="number">-1</span>); </div><div class="line">    <span class="keyword">var</span> titleBar = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    titleBar.style.cssText = <span class="string">"width:100%;height:"</span>+titleheight+<span class="string">"px;text-align:left;padding:3px;margin:0px;font:bold 13px ‘宋体’;color:"</span>+titlecolor+<span class="string">";border:1px solid "</span> + bordercolor + <span class="string">";cursor:move;background-color:"</span> + titlebgcolor; </div><div class="line">    titleBar.style.paddingLeft = <span class="string">"10px"</span>; </div><div class="line">    titleBar.innerHTML = title; </div><div class="line">    <span class="keyword">var</span> moveX = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveY = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveTop = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveLeft = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveable = <span class="literal">false</span>; </div><div class="line">    <span class="keyword">var</span> docMouseMoveEvent = <span class="built_in">document</span>.onmousemove; </div><div class="line">    <span class="keyword">var</span> docMouseUpEvent = <span class="built_in">document</span>.onmouseup; </div><div class="line">    titleBar.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">var</span> evt = getEvent(); </div><div class="line">        moveable = <span class="literal">true</span>;  </div><div class="line">        moveX = evt.clientX; </div><div class="line">        moveY = evt.clientY; </div><div class="line">        moveTop = <span class="built_in">parseInt</span>(msgObj.style.top); </div><div class="line">        moveLeft = <span class="built_in">parseInt</span>(msgObj.style.left); </div><div class="line">         </div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">if</span> (moveable) &#123; </div><div class="line">                <span class="keyword">var</span> evt = getEvent(); </div><div class="line">                <span class="keyword">var</span> x = moveLeft + evt.clientX – moveX; </div><div class="line">                <span class="keyword">var</span> y = moveTop + evt.clientY – moveY; </div><div class="line">                <span class="keyword">if</span> ( x &gt; <span class="number">0</span> &amp;&amp;( x + w &lt; iWidth) &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; (y + h &lt; iHeight) ) &#123; </div><div class="line">                    msgObj.style.left = x + <span class="string">"px"</span>; </div><div class="line">                    msgObj.style.top = y + <span class="string">"px"</span>; </div><div class="line">                &#125; </div><div class="line">            &#125;     </div><div class="line">        &#125;; </div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">            <span class="keyword">if</span> (moveable) &#123;  </div><div class="line">                <span class="built_in">document</span>.onmousemove = docMouseMoveEvent; </div><div class="line">                <span class="built_in">document</span>.onmouseup = docMouseUpEvent; </div><div class="line">                moveable = <span class="literal">false</span>;  </div><div class="line">                moveX = <span class="number">0</span>; </div><div class="line">                moveY = <span class="number">0</span>; </div><div class="line">                moveTop = <span class="number">0</span>; </div><div class="line">                moveLeft = <span class="number">0</span>; </div><div class="line">            &#125;  </div><div class="line">        &#125;; </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> closeBtn = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    closeBtn.style.cssText = <span class="string">"cursor:pointer; padding:2px;background-color:"</span> + titlebgcolor; </div><div class="line">    closeBtn.innerHTML = <span class="string">"&lt;span style=’font-size:15pt; color:"</span>+titlecolor+<span class="string">";’&gt;×&lt;/span&gt;"</span>; </div><div class="line">    closeBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(bgObj);  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(msgObj);  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">var</span> msgBox = table.insertRow(<span class="number">-1</span>).insertCell(<span class="number">-1</span>); </div><div class="line">    msgBox.style.cssText = <span class="string">"font:10pt ‘宋体’;"</span>; </div><div class="line">    msgBox.colSpan  = <span class="number">2</span>; </div><div class="line">    msgBox.innerHTML = msg; </div><div class="line">     </div><div class="line">    <span class="comment">// 获得事件Event对象，用于兼容IE和FireFox </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.event || <span class="built_in">arguments</span>.callee.caller.arguments[<span class="number">0</span>]; </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点这里"</span> <span class="attr">onclick</span>=<span class="string">"alertWin(‘标题’,'这里是内容’,300,200);"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -999,12 +604,44 @@ WindowsUpdate删除掉</p>
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1032,7 +669,7 @@ WindowsUpdate删除掉</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
 在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序
 已知的原因：</p>
 <ol>
@@ -1047,6 +684,551 @@ WindowsUpdate删除掉</p>
 <li>ALTER 声明中有语法错误</li>
 <li>要连接的两个表的编码格式不同</li>
 </ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/system-window-update-disabled/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/system-window-update-disabled/" itemprop="url">自动更新变灰</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>win xp控制面板中系统自动更新变成灰色不能选择
+解决办法如下：</p>
+<p>开始-运行-regedit,打开注册表编辑器,在注册表里找:
+<code>HKEY_LOCAL_MACHINE/SOFTWARE/Policies/Microsoft/Windows</code>,展开Windows,将其下的
+WindowsUpdate删除掉</p>
+<p>另：还有很多方法参见http://hi.baidu.com/xxcxz/item/0e318fb9194495e84ec7fd2f</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-window-resize/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-window-resize/" itemprop="url">改变当前浏览器窗口大小</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"JavaScript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    self.resizeTo(200,300)</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-trim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">自定义js的trim()方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
+<p>写成类的方法格式如下：（str.trim();）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>写成函数可以这样：(trim(str))</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-mode-window/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">可拖动模式窗口</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>可拖动模式窗口<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"> </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertWin</span>(<span class="params">title, msg, w, h</span>)</span>&#123;  </div><div class="line">    <span class="keyword">var</span> titleheight = <span class="string">"22px"</span>; <span class="comment">// 提示窗口标题高度  </span></div><div class="line">    <span class="keyword">var</span> bordercolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的边框颜色  </span></div><div class="line">    <span class="keyword">var</span> titlecolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示窗口的标题颜色  </span></div><div class="line">    <span class="keyword">var</span> titlebgcolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的标题背景色 </span></div><div class="line">    <span class="keyword">var</span> bgcolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示内容的背景色 </span></div><div class="line">     </div><div class="line">    <span class="keyword">var</span> iWidth = <span class="built_in">document</span>.documentElement.clientWidth;  </div><div class="line">    <span class="keyword">var</span> iHeight = <span class="built_in">document</span>.documentElement.clientHeight;  </div><div class="line">    <span class="keyword">var</span> bgObj = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);  </div><div class="line">    bgObj.style.cssText = <span class="string">"position:absolute;left:0px;top:0px;width:"</span>+iWidth+<span class="string">"px;height:"</span>+<span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, iHeight)+<span class="string">"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(bgObj);  </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> msgObj=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>); </div><div class="line">    msgObj.style.cssText = <span class="string">"position:absolute;font:11px ‘宋体’;top:"</span>+(iHeight-h)/<span class="number">2</span>+<span class="string">"px;left:"</span>+(iWidth-w)/<span class="number">2</span>+<span class="string">"px;width:"</span>+w+<span class="string">"px;height:"</span>+h+<span class="string">"px;text-align:center;border:1px solid "</span>+bordercolor+<span class="string">";background-color:"</span>+bgcolor+<span class="string">";padding:1px;line-height:22px;z-index:102;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(msgObj); </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>); </div><div class="line">    msgObj.appendChild(table); </div><div class="line">    table.style.cssText = <span class="string">"margin:0px;border:0px;padding:0px;"</span>; </div><div class="line">    table.cellSpacing = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> tr = table.insertRow(<span class="number">-1</span>); </div><div class="line">    <span class="keyword">var</span> titleBar = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    titleBar.style.cssText = <span class="string">"width:100%;height:"</span>+titleheight+<span class="string">"px;text-align:left;padding:3px;margin:0px;font:bold 13px ‘宋体’;color:"</span>+titlecolor+<span class="string">";border:1px solid "</span> + bordercolor + <span class="string">";cursor:move;background-color:"</span> + titlebgcolor; </div><div class="line">    titleBar.style.paddingLeft = <span class="string">"10px"</span>; </div><div class="line">    titleBar.innerHTML = title; </div><div class="line">    <span class="keyword">var</span> moveX = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveY = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveTop = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveLeft = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveable = <span class="literal">false</span>; </div><div class="line">    <span class="keyword">var</span> docMouseMoveEvent = <span class="built_in">document</span>.onmousemove; </div><div class="line">    <span class="keyword">var</span> docMouseUpEvent = <span class="built_in">document</span>.onmouseup; </div><div class="line">    titleBar.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">var</span> evt = getEvent(); </div><div class="line">        moveable = <span class="literal">true</span>;  </div><div class="line">        moveX = evt.clientX; </div><div class="line">        moveY = evt.clientY; </div><div class="line">        moveTop = <span class="built_in">parseInt</span>(msgObj.style.top); </div><div class="line">        moveLeft = <span class="built_in">parseInt</span>(msgObj.style.left); </div><div class="line">         </div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">if</span> (moveable) &#123; </div><div class="line">                <span class="keyword">var</span> evt = getEvent(); </div><div class="line">                <span class="keyword">var</span> x = moveLeft + evt.clientX – moveX; </div><div class="line">                <span class="keyword">var</span> y = moveTop + evt.clientY – moveY; </div><div class="line">                <span class="keyword">if</span> ( x &gt; <span class="number">0</span> &amp;&amp;( x + w &lt; iWidth) &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; (y + h &lt; iHeight) ) &#123; </div><div class="line">                    msgObj.style.left = x + <span class="string">"px"</span>; </div><div class="line">                    msgObj.style.top = y + <span class="string">"px"</span>; </div><div class="line">                &#125; </div><div class="line">            &#125;     </div><div class="line">        &#125;; </div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">            <span class="keyword">if</span> (moveable) &#123;  </div><div class="line">                <span class="built_in">document</span>.onmousemove = docMouseMoveEvent; </div><div class="line">                <span class="built_in">document</span>.onmouseup = docMouseUpEvent; </div><div class="line">                moveable = <span class="literal">false</span>;  </div><div class="line">                moveX = <span class="number">0</span>; </div><div class="line">                moveY = <span class="number">0</span>; </div><div class="line">                moveTop = <span class="number">0</span>; </div><div class="line">                moveLeft = <span class="number">0</span>; </div><div class="line">            &#125;  </div><div class="line">        &#125;; </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> closeBtn = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    closeBtn.style.cssText = <span class="string">"cursor:pointer; padding:2px;background-color:"</span> + titlebgcolor; </div><div class="line">    closeBtn.innerHTML = <span class="string">"&lt;span style=’font-size:15pt; color:"</span>+titlecolor+<span class="string">";’&gt;×&lt;/span&gt;"</span>; </div><div class="line">    closeBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(bgObj);  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(msgObj);  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">var</span> msgBox = table.insertRow(<span class="number">-1</span>).insertCell(<span class="number">-1</span>); </div><div class="line">    msgBox.style.cssText = <span class="string">"font:10pt ‘宋体’;"</span>; </div><div class="line">    msgBox.colSpan  = <span class="number">2</span>; </div><div class="line">    msgBox.innerHTML = msg; </div><div class="line">     </div><div class="line">    <span class="comment">// 获得事件Event对象，用于兼容IE和FireFox </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.event || <span class="built_in">arguments</span>.callee.caller.arguments[<span class="number">0</span>]; </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点这里"</span> <span class="attr">onclick</span>=<span class="string">"alertWin(‘标题’,'这里是内容’,300,200);"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1115,12 +1297,44 @@ WindowsUpdate删除掉</p>
         <div class="post-meta">
           <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
 
             
 
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1148,7 +1362,7 @@ WindowsUpdate删除掉</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="正则表达式符号说明"><a class="header-anchor" href="#正则表达式符号说明"> </a>正则表达式符号说明</h1>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="正则表达式符号说明"><a class="header-anchor" href="#正则表达式符号说明"> </a>正则表达式符号说明</h1>
 <figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line">“+”元字符规定其前导字符必须在目标对象中连续出现一次或多次。==&#123;1,&#125; </div><div class="line">“*”元字符规定其前导字符必须在目标对象中出现零次或连续多次。==&#123;0,&#125; </div><div class="line">“?”元字符规定其前导对象必须在目标对象中连续出现零次或一次。==&#123;0,1&#125; </div><div class="line"> </div><div class="line">n,m为非负整数,n&lt;m </div><div class="line">&#123;n&#125; 确定匹配n次 如p&#123;2&#125; pp才匹配 </div><div class="line">&#123;n,&#125; 至少匹配n次 如p&#123;2,&#125; pp,ppp,pppp都匹配,p不匹配 </div><div class="line">&#123;n,m&#125; 匹配&gt;=n,&lt;=m次, 如p&#123;2,4&#125; pp,ppp,pppp都匹配, p,ppppp都不匹配 </div><div class="line"> </div><div class="line"> </div><div class="line">s：用于匹配单个空格符，包括tab键和换行符； </div><div class="line">S：用于匹配除单个空格符之外的所有字符； </div><div class="line">d：用于匹配从<span class="number">0</span>到<span class="number">9</span>的数字； </div><div class="line">w：用于匹配字母，数字或下划线字符； </div><div class="line">W：用于匹配所有与w不匹配的字符； </div><div class="line">. ：用于匹配除换行符之外的所有字符。 </div><div class="line"> </div><div class="line"> </div><div class="line">“^”定位符规定匹配模式必须出现在目标字符串的开头 </div><div class="line">/^hell/ 匹配“hell”, “hello”或“hellhound”开头的字符串 </div><div class="line"> </div><div class="line">“$”定位符规定匹配模式必须出现在目标对象的结尾 </div><div class="line">/ar$/　匹配“car”, “bar”或 “ar” 结尾的字符串 </div><div class="line"> </div><div class="line">“b”定位符规定匹配模式必须出现在目标字符串的开头或结尾的两个边界之一(代表着单词的开头或结尾) </div><div class="line">/bbom/　以“b”定位符开头，匹配以 “bomb”, 或 “bom”开头的字符串。 </div><div class="line">/manb/　以“b”定位符结尾，匹配以 “human”, “woman”或 “man”结尾的字符串相 </div><div class="line"> </div><div class="line">“B”匹配不是单词开头或结束的位置 </div><div class="line"> </div><div class="line">()符号包含的内容必须同时出现在目标对象中。 </div><div class="line">如:/([a-z][A-Z][<span class="number">0</span><span class="number">-9</span>])+/  abc不匹配 aA9才匹配 </div><div class="line"> </div><div class="line">|符号表示:或 </div><div class="line">如:/to|too|<span class="number">2</span>/ 与目标对象中的 “to”, “too”, 或 “<span class="number">2</span>” 相匹配 </div><div class="line"> </div><div class="line">[^]符号表示:否定符号(必须放在[]中) </div><div class="line">如:/[^A-<span class="keyword">C</span>]/　上述字符串将会与目标对象中除A，B，和<span class="keyword">C</span>之外的任何字符相匹配 </div><div class="line"> </div><div class="line">符号表示:转义符号</div></pre></td></tr></table></figure>
 <h1 id="正则表达式应用模式参数"><a class="header-anchor" href="#正则表达式应用模式参数"> </a>正则表达式应用模式参数</h1>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">语法 <span class="number">1</span> re = <span class="regexp">/pattern/</span>[flags] </div><div class="line">语法 <span class="number">2</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"pattern"</span>,[<span class="string">"flags"</span>]) </div><div class="line"> </div><div class="line">g （全文查找出现的所有 pattern） </div><div class="line">i （忽略大小写） </div><div class="line">m （多行查找） </div><div class="line"> </div><div class="line">语法<span class="number">1</span>:<span class="keyword">var</span> pattern = <span class="regexp">/Java/g</span>; (用 <span class="string">"/"</span> 字符分隔模式) </div><div class="line">语法<span class="number">2</span>:<span class="keyword">var</span> re = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"ain"</span>,<span class="string">"g"</span>); (用引号将模式引起来)</div></pre></td></tr></table></figure>
@@ -1241,7 +1455,7 @@ WindowsUpdate删除掉</p>
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-scrollxxx/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-radio/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1260,11 +1474,21 @@ WindowsUpdate删除掉</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/web-scrollxxx/" itemprop="url">scrollLeft,scrollTop等等详解</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-js-radio/" itemprop="url">js取radio值</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
             
 
             
@@ -1272,6 +1496,28 @@ WindowsUpdate删除掉</p>
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1299,7 +1545,141 @@ WindowsUpdate删除掉</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>一张图</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="function">function <span class="title">ok</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">var</span> temp=document.getElementsByName(<span class="string">"radio"</span>);</div><div class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;temp.length;i++)&#123;</div><div class="line">  <span class="comment">//遍历Radio</span></div><div class="line">    <span class="keyword">if</span>(temp[i].<span class="keyword">checked</span>)</div><div class="line">      &#123;alert(<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>);</div><div class="line">      <span class="comment">//获取Radio的值</span></div><div class="line">      document.form2.textfield.<span class="keyword">value</span>=<span class="string">"你选择了"</span>+temp[i].<span class="keyword">value</span>;</div><div class="line">      <span class="comment">//传递给另外一个表单</span></div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-scrollxxx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-scrollxxx/" itemprop="url">scrollLeft,scrollTop等等详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T15:39:00+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>一张图</p>
 <p>image
 网页可见区域宽： document.body.clientWidth;
 网页可见区域高： document.body.clientHeight;
@@ -1471,167 +1851,6 @@ clientWidth、offsetWidth 和 scrollWidth 的解释与上面相同，只是把�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/08/linux-bt5-wlan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/08/linux-bt5-wlan/" itemprop="url">bt5破解无线网络教程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>第一部分 虚拟机的安装
-下载完后，先安装虚拟机，解压
-<img src="http://blimg.bovod.org/2013/01/08/bt5_1.png" alt="bt5"><span class="image-caption">bt5</span>
-2．进入虚拟机目录，打开
-<img src="http://blimg.bovod.org/2013/01/08/bt5_2.png" alt="bt5"><span class="image-caption">bt5</span>
-等一下就出现这个，下来就是Next下一步点起走就行了
-<img src="http://blimg.bovod.org/2013/01/08/bt5_3.png" alt="bt5"><span class="image-caption">bt5</span>
-这一步注册，
-<img src="http://blimg.bovod.org/2013/01/08/bt5_4.png" alt="bt5"><span class="image-caption">bt5</span>
-打开虚拟机目录下New.keygen.exe
-<img src="http://blimg.bovod.org/2013/01/08/bt5_5.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_6.png" alt="bt5"><span class="image-caption">bt5</span>
-复制注册码
-<img src="http://blimg.bovod.org/2013/01/08/bt5_7.png" alt="bt5"><span class="image-caption">bt5</span>
-下一步，即可！
-<img src="http://blimg.bovod.org/2013/01/08/bt5_8.png" alt="bt5"><span class="image-caption">bt5</span>
-最后问是否重启，点No，完成安装！
-需要汉化的朋友可以运行目录下setup.exe
-<img src="http://blimg.bovod.org/2013/01/08/bt5_9.png" alt="bt5"><span class="image-caption">bt5</span>
-汉化很简单，下一步就是，不过需要注意
-汉化过程中注册有捆绑软件，不需要的，不打勾即可！
-第二部分 虚拟机设置，加载ISO文件
-启动桌面上的VMware Workstation!
-<img src="http://blimg.bovod.org/2013/01/08/bt5_10.png" alt="bt5"><span class="image-caption">bt5</span>
-先新建 &gt; 虚拟机
-<img src="http://blimg.bovod.org/2013/01/08/bt5_11.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_12.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_13.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_14.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_15.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_16.png" alt="bt5"><span class="image-caption">bt5</span>
-完成以后，主窗口就多一个选项，就是刚刚建立的
-<img src="http://blimg.bovod.org/2013/01/08/bt5_17.png" alt="bt5"><span class="image-caption">bt5</span>
-点编辑虚拟机设置
-<img src="http://blimg.bovod.org/2013/01/08/bt5_18.png" alt="bt5"><span class="image-caption">bt5</span>
-选CD-ROM,右下角，使用ISO镜像
-<img src="http://blimg.bovod.org/2013/01/08/bt5_19.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_20.png" alt="bt5"><span class="image-caption">bt5</span>
-选中，bt5.iso
-<img src="http://blimg.bovod.org/2013/01/08/bt5_21.png" alt="bt5"><span class="image-caption">bt5</span>
-确定后，点启动虚拟机
-<img src="http://blimg.bovod.org/2013/01/08/bt5_22.png" alt="bt5"><span class="image-caption">bt5</span>
-启动时间大约40秒，看你计算机的配置怎么样
-<img src="http://blimg.bovod.org/2013/01/08/bt5_23.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_24.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_25.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_26.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_27.png" alt="bt5"><span class="image-caption">bt5</span>
-解决办法：
-虚拟机 &gt; 可移动设备 &gt; USB设备  &gt; Realtek Usb设备
-选的是你的网卡，有可能名字不一样，选择你的那个网卡就可以了！
-<img src="http://blimg.bovod.org/2013/01/08/bt5_28.png" alt="bt5"><span class="image-caption">bt5</span>
-<img src="http://blimg.bovod.org/2013/01/08/bt5_29.png" alt="bt5"><span class="image-caption">bt5</span>
-再次启动软件就不会提供没有网卡了不
-<img src="http://blimg.bovod.org/2013/01/08/bt5_30.png" alt="bt5"><span class="image-caption">bt5</span>
-提示：破解的时候把方式选择那里的所有方式都选上，这样可以提供破解成功率！
-<img src="http://blimg.bovod.org/2013/01/08/bt5_31.png" alt="bt5"><span class="image-caption">bt5</span>
-****密码出来了
-<img src="http://blimg.bovod.org/2013/01/08/bt5_32.png" alt="bt5"><span class="image-caption">bt5</span>
-Hex key就是密码 6161613132 成功了！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1681,7 +1900,7 @@ Hex key就是密码 6161613132 成功了！</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">282</span>
+                <span class="site-state-item-count">283</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1837,11 +2056,22 @@ Hex key就是密码 6161613132 成功了！</p>
   &copy;  2012 - 
   <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">bianle</span>
 </div>
 
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
 
 
         
@@ -1930,21 +2160,21 @@ Hex key就是密码 6161613132 成功了！</p>
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
 
 
 
   
-  
-
   
 
   
 
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
 
 
 
@@ -1972,336 +2202,7 @@ Hex key就是密码 6161613132 成功了！</p>
         target: "cloud-tie-wrapper"
       };
     </script>
-    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
-  
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (search_path.endsWith("json")) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === '') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -2319,6 +2220,18 @@ Hex key就是密码 6161613132 成功了！</p>
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
 
 
 
