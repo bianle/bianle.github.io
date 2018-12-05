@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2018-12-04T03:37:06.155Z</updated>
+  <updated>2018-12-04T06:50:31.905Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -16,28 +16,65 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>qiniu-qshell</title>
+    <title>markdown-preview</title>
+    <link href="http://2le.me/2018/12/04/markdown-previewer/"/>
+    <id>http://2le.me/2018/12/04/markdown-previewer/</id>
+    <published>2018-12-04T06:26:01.000Z</published>
+    <updated>2018-12-04T06:50:31.905Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="异常"><a class="header-anchor" href="#异常"> </a>异常</h2>
+<blockquote>
+<p>perl: warning: Setting locale failed. perl: warning: Please check that your locale settings: LC_ALL = (unset), LC_CTYPE = “en_CN.UTF-8”, LANG = “en_CN.UTF-8” are supported and installed on your system. perl: warning: Falling back to the standard locale (“C”).</p>
+</blockquote>
+<p><sub>环境变量添加</sub></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line"><span class="keyword">export</span> LC_ALL=C</div></pre></td></tr></table></figure>
+<p>然鹅没什么卵用</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;异常&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+    
+    </summary>
+    
+      <category term="markdown" scheme="http://2le.me/categories/markdown/"/>
+    
+    
+      <category term="markdown" scheme="http://2le.me/tags/markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用qshell同步文件到七牛</title>
     <link href="http://2le.me/2018/12/03/qiniu-qshell/"/>
     <id>http://2le.me/2018/12/03/qiniu-qshell/</id>
     <published>2018-12-03T13:59:21.000Z</published>
-    <updated>2018-12-04T03:37:06.155Z</updated>
+    <updated>2018-12-05T03:56:42.529Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="下载"><a class="header-anchor" href="#下载"> </a>下载</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="下载"><a class="header-anchor" href="#下载"> </a>下载</h2>
 <p><a href="https://github.com/qiniu/qshell" target="_blank" rel="external">github</a></p>
 <h2 id="添加到path"><a class="header-anchor" href="#添加到path"> </a>添加到path</h2>
-<h2 id="使用"><a class="header-anchor" href="#使用"> </a>使用</h2>
+<p>你懂的</p>
+<h2 id="添加帐号"><a class="header-anchor" href="#添加帐号"> </a>添加帐号</h2>
+<p>AK、SK登录七牛后台找，Name可以随便起，起的很响亮</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">qshell account <span class="tag">&lt;<span class="name">Your</span> <span class="attr">AccessKey</span>&gt;</span> <span class="tag">&lt;<span class="name">Your</span> <span class="attr">SecretKey</span>&gt;</span> <span class="tag">&lt;<span class="name">Your</span> <span class="attr">Name</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="qupload"><a class="header-anchor" href="#qupload"> </a>qupload</h2>
+<h2 id="qupload同步文件"><a class="header-anchor" href="#qupload同步文件"> </a>qupload同步文件</h2>
 <h3 id="配置文件"><a class="header-anchor" href="#配置文件"> </a>配置文件</h3>
+<p>任意目录写个配置文件，文件名不限，配置如下：<br>
+src_dir:要同步的本地目录<br>
+bucket:同步到哪个bucket<br>
+rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添加文件，扫到怀疑人生也扫描不到</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"src_dir"</span>:<span class="string">"/Users/bianle/.qiniu/bianle"</span>,</div><div class="line">    <span class="attr">"bucket"</span>:<span class="string">"bianle"</span>,</div><div class="line">    <span class="attr">"rescan_local"</span>:<span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="开始同步"><a class="header-anchor" href="#开始同步"> </a>开始同步</h3>
 <figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">qshell qupload <span class="regexp">/Users/</span>bianle<span class="regexp">/.qshell/u</span>pload.conf</div></pre></td></tr></table></figure>
+<h3 id="其他参数"><a class="header-anchor" href="#其他参数"> </a>其他参数</h3>
+<p><code>-c 10</code>,多线程</p>
 <p><img src="http://blimg.bovod.org/2018/12/04/20181204112340.png" alt="qiniu"><span class="image-caption">qiniu</span></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;下载&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;下载&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
     
     </summary>
     
@@ -55,12 +92,12 @@
     <published>2018-11-30T09:29:58.000Z</published>
     <updated>2018-11-30T09:30:13.624Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><a href="https://blog.csdn.net/u013063153/article/details/70800381" target="_blank" rel="external">海量数据解决思路之BitMap - CSDN博客</a></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><a href="https://blog.csdn.net/u013063153/article/details/70800381" target="_blank" rel="external">海量数据解决思路之BitMap - CSDN博客</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/u01306
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/u01306
     
     </summary>
     
@@ -78,12 +115,12 @@
     <published>2018-11-30T08:26:11.000Z</published>
     <updated>2018-11-30T08:26:29.503Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><a href="https://www.jianshu.com/p/418b47be77c1" target="_blank" rel="external">Spring Boot + MyBatis + SQLite 基于注解快速开发 - 简书</a></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><a href="https://www.jianshu.com/p/418b47be77c1" target="_blank" rel="external">Spring Boot + MyBatis + SQLite 基于注解快速开发 - 简书</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/41
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/41
     
     </summary>
     
@@ -101,7 +138,7 @@
     <published>2018-11-30T01:31:49.000Z</published>
     <updated>2018-11-30T07:49:38.058Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="arrays-aslist-返回的list没有add-remove等方法"><a class="header-anchor" href="#arrays-aslist-返回的list没有add-remove等方法"> </a>Arrays.asList()返回的List没有add、remove等方法</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="arrays-aslist-返回的list没有add-remove等方法"><a class="header-anchor" href="#arrays-aslist-返回的list没有add-remove等方法"> </a>Arrays.asList()返回的List没有add、remove等方法</h2>
 <p>查看asList源码返回一个ArrayList</p>
 <figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span>(<span class="params">T... a</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(a);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>此ArrayList(java.util.Arrays$ArrayList)非彼ArrayList(java.util.ArrayList),这是Arrays的一个内部类，没有覆盖add、remove等方法</p>
@@ -114,7 +151,7 @@
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;arrays-aslist-返回的list没有add-remov
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;arrays-aslist-返回的list没有add-remov
     
     </summary>
     
@@ -132,12 +169,12 @@
     <published>2018-11-26T13:46:14.000Z</published>
     <updated>2018-12-04T05:14:41.928Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/12/04/20181204115042.png" alt="svn"><span class="image-caption">svn</span></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/12/04/20181204115042.png" alt="svn"><span class="image-caption">svn</span></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
     
     </summary>
     
@@ -155,13 +192,13 @@
     <published>2018-06-28T09:47:20.000Z</published>
     <updated>2018-06-28T09:47:57.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="webpy-gzip"><a class="header-anchor" href="#webpy-gzip"> </a>webpy gzip</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="webpy-gzip"><a class="header-anchor" href="#webpy-gzip"> </a>webpy gzip</h2>
 <p><a href="http://yanghao.org/blog/archives/171" target="_blank" rel="external">http://yanghao.org/blog/archives/171</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;webpy-gzip&quot;&gt;&lt;a class=&quot;header-anc
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;webpy-gzip&quot;&gt;&lt;a class=&quot;header-anc
     
     </summary>
     
@@ -179,7 +216,7 @@
     <published>2018-04-17T16:34:18.000Z</published>
     <updated>2018-04-17T16:35:32.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="aaa"><a class="header-anchor" href="#aaa"> </a>aaa</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="aaa"><a class="header-anchor" href="#aaa"> </a>aaa</h2>
 <p>bbbwq5</p>
 <h2 id="dsfdsf"><a class="header-anchor" href="#dsfdsf"> </a>dsfdsf</h2>
 <p>sss</p>
@@ -188,7 +225,7 @@
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;aaa&quot;&gt;&lt;a class=&quot;header-anchor&quot; hr
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;aaa&quot;&gt;&lt;a class=&quot;header-anchor&quot; hr
     
     </summary>
     
@@ -206,7 +243,7 @@
     <published>2018-03-07T06:22:59.000Z</published>
     <updated>2018-03-07T06:23:45.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><div id="articlecontent">
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><div id="articlecontent">
         <span class="Apple-style-span" style="WORD-SPACING: 0px; FONT: 13px/19px Verdana; TEXT-TRANSFORM: none; COLOR: rgb(75,75,75); TEXT-INDENT: 0px; WHITE-SPACE: normal; LETTER-SPACING: normal; BORDER-COLLAPSE: separate; orphans: 2; widows: 2; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0"><br class="Apple-interchange-newline">
 <table class=" FCK__ShowTableBorders" cellspacing="1" cellpadding="1" width="100%" bgcolor="#999999" border="0" _fckxhtmljob="1">
 <tbody _fckxhtmljob="1">
@@ -568,7 +605,7 @@
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;div id=&quot;articlecontent&quot;&gt;
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;div id=&quot;articlecontent&quot;&gt;
         &lt;span 
     
     </summary>
@@ -587,12 +624,12 @@
     <published>2018-03-05T07:55:07.000Z</published>
     <updated>2018-10-18T06:44:24.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/03/05/20180305155535.png" alt="五笔字根表_2560x1600"><span class="image-caption">五笔字根表_2560x1600</span></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/03/05/20180305155535.png" alt="五笔字根表_2560x1600"><span class="image-caption">五笔字根表_2560x1600</span></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
     
     </summary>
     
@@ -610,7 +647,7 @@
     <published>2017-12-18T03:42:37.000Z</published>
     <updated>2018-11-12T01:53:39.872Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="sublime-text-3-2017年12月18日亲测"><a class="header-anchor" href="#sublime-text-3-2017年12月18日亲测"> </a>sublime text 3 (2017年12月18日亲测)</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="sublime-text-3-2017年12月18日亲测"><a class="header-anchor" href="#sublime-text-3-2017年12月18日亲测"> </a>sublime text 3 (2017年12月18日亲测)</h2>
 <figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">—– BEGIN LICENSE —– </div><div class="line">TwitterInc </div><div class="line"><span class="number">200</span> User License </div><div class="line">EA7E<span class="number">-890007</span> </div><div class="line"><span class="number">1</span>D77F72E <span class="number">390</span>CDD93 <span class="number">4</span>DCBA022 FAF60790 </div><div class="line"><span class="number">61</span>AA12C0 A37081C5 D0316412 <span class="number">4584</span>D136 </div><div class="line"><span class="number">94</span>D7F7D4 <span class="number">95</span>BC8C1C <span class="number">527</span>DA828 <span class="number">560</span>BB037 </div><div class="line">D1EDDD8C AE7B379F <span class="number">50</span>C9D69D B35179EF </div><div class="line"><span class="number">2</span>FE898C4 <span class="number">8E4277</span>A8 <span class="number">555</span>CE714 E1FB0E43 </div><div class="line">D5D52613 C3D12E98 BC49967F <span class="number">7652</span>EED2 </div><div class="line"><span class="number">9</span>D2D2E61 <span class="number">67610860</span> <span class="number">6</span>D338B72 <span class="number">5</span>CF95C69 </div><div class="line">E36B85CC <span class="number">84991</span>F19 <span class="number">7575</span>D828 <span class="number">470</span>A92AB </div><div class="line">—— END LICENSE ——</div></pre></td></tr></table></figure>
 <h2 id="mac-adobe-cc-2015"><a class="header-anchor" href="#mac-adobe-cc-2015"> </a>mac adobe cc 2015</h2>
 <p>Adobe CC 2015 亲测可用
@@ -642,7 +679,7 @@ Part B: 00985</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;sublime-text-3-2017年12月18日亲测&quot;&gt;&lt;a
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;sublime-text-3-2017年12月18日亲测&quot;&gt;&lt;a
     
     </summary>
     
@@ -660,7 +697,7 @@ Part B: 00985</p>
     <published>2017-12-14T07:17:13.000Z</published>
     <updated>2017-12-14T11:34:49.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="xdef"><a class="header-anchor" href="#xdef"> </a>xdef</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="xdef"><a class="header-anchor" href="#xdef"> </a>xdef</h2>
 <h3 id="模板内容"><a class="header-anchor" href="#模板内容"> </a>模板内容</h3>
 <figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line"><span class="variable">@XStreamAlias</span>(<span class="string">"$xfield$"</span>)</div><div class="line">private String <span class="variable">$field</span><span class="variable">$;</span><span class="variable">$END</span>$</div></pre></td></tr></table></figure>
 <h3 id="变量"><a class="header-anchor" href="#变量"> </a>变量</h3>
@@ -676,7 +713,7 @@ field : 表达式 camelCase(clipboard())</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;xdef&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;xdef&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
     
     </summary>
     
@@ -694,7 +731,7 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-12-12T07:36:28.000Z</published>
     <updated>2018-10-18T06:44:24.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
 <ol>
 <li>下载<a href="http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.zip" target="_blank" rel="external">solr-4.10.4.zip</a></li>
 <li>下载<a href="https://gitee.com/wltea/IK-Analyzer-2012FF.git" target="_blank" rel="external">ik源代码</a></li>
@@ -725,7 +762,7 @@ field : 表达式 camelCase(clipboard())</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
     
     </summary>
     
@@ -743,11 +780,11 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-12-05T08:03:19.000Z</published>
     <updated>2018-06-28T02:51:43.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script>]]></content>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script>]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;
     
     </summary>
     
@@ -761,7 +798,7 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-12-04T08:12:12.000Z</published>
     <updated>2017-12-05T12:52:17.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="安装pcre-perl-compatible-regular-expressions"><a class="header-anchor" href="#安装pcre-perl-compatible-regular-expressions"> </a>安装PCRE(Perl Compatible Regular Expressions)</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装pcre-perl-compatible-regular-expressions"><a class="header-anchor" href="#安装pcre-perl-compatible-regular-expressions"> </a>安装PCRE(Perl Compatible Regular Expressions)</h2>
 <p><a href="http://mac-dev-env.patrickbougie.com/pcre/" target="_blank" rel="external">http://mac-dev-env.patrickbougie.com/pcre/</a></p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><div class="line"><span class="keyword">cd</span> /usr/<span class="keyword">local</span>/src (<span class="keyword">cd</span> ~/<span class="keyword">app</span>)</div><div class="line">curl --remote-name ftp:<span class="comment">//ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz</span></div><div class="line">tar -xzvf pcre-8.41.tar.gz</div><div class="line"><span class="keyword">cd</span> pcre-8.41</div><div class="line">./configure --prefix=/usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41</div><div class="line">make</div><div class="line">make install (sudo make install )</div><div class="line">sudo ln -s <span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre (sudo ln -s /usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre)</div><div class="line">echo 'export PATH=/usr/<span class="keyword">local</span>/pcre/bin:<span class="variable">$PATH</span>' &gt;&gt; ~/.bash_profile</div><div class="line">source ~/.bash_profile</div><div class="line">pcre-config --<span class="keyword">version</span></div></pre></td></tr></table></figure>
 <p>拷贝<code>pcre.h</code>到<code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include</code></p>
@@ -771,7 +808,7 @@ field : 表达式 camelCase(clipboard())</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;安装pcre-perl-compatible-regular-e
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;安装pcre-perl-compatible-regular-e
     
     </summary>
     
@@ -789,7 +826,7 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-11-23T06:04:45.000Z</published>
     <updated>2017-11-23T06:14:54.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="springmvc3-2-mybatis3-2集成报错"><a class="header-anchor" href="#springmvc3-2-mybatis3-2集成报错"> </a>SpringMVC3.2+Mybatis3.2集成报错</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="springmvc3-2-mybatis3-2集成报错"><a class="header-anchor" href="#springmvc3-2-mybatis3-2集成报错"> </a>SpringMVC3.2+Mybatis3.2集成报错</h2>
 <blockquote>
 <p>Exception in thread “main” java.lang.AbstractMethodError: org.mybatis.spring.transaction.SpringManagedTransactionFactory.newTransaction(Ljava/sql/Connection;)Lorg/apache/ibatis/transaction/Transaction;
 at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSessionFromConnection(DefaultSqlSessionFactory.java:98)
@@ -807,7 +844,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;springmvc3-2-mybatis3-2集成报错&quot;&gt;&lt;a 
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;springmvc3-2-mybatis3-2集成报错&quot;&gt;&lt;a 
     
     </summary>
     
@@ -825,7 +862,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
     <published>2017-11-23T02:10:56.000Z</published>
     <updated>2017-11-23T02:37:37.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="from表达回车键自动提交"><a class="header-anchor" href="#from表达回车键自动提交"> </a>from表达回车键自动提交</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="from表达回车键自动提交"><a class="header-anchor" href="#from表达回车键自动提交"> </a>from表达回车键自动提交</h2>
 <ul>
 <li>form内有且仅有一个非隐藏input输入框焦点在输入框内回车自动提交</li>
 </ul>
@@ -844,7 +881,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;from表达回车键自动提交&quot;&gt;&lt;a class=&quot;header-
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;from表达回车键自动提交&quot;&gt;&lt;a class=&quot;header-
     
     </summary>
     
@@ -862,7 +899,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
     <published>2017-11-22T08:08:16.000Z</published>
     <updated>2017-11-22T08:09:22.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="fiddler无法抓取chrome解决方法"><a class="header-anchor" href="#fiddler无法抓取chrome解决方法"> </a>fiddler无法抓取chrome解决方法</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="fiddler无法抓取chrome解决方法"><a class="header-anchor" href="#fiddler无法抓取chrome解决方法"> </a>fiddler无法抓取chrome解决方法</h2>
 <blockquote>
 <p>由于我的chrome安装了代理管理的插件SwitchySharp，无论选择直接连接还是选择使用代理连接，插件都会屏蔽fiddler的设置。</p>
 </blockquote>
@@ -871,7 +908,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;fiddler无法抓取chrome解决方法&quot;&gt;&lt;a class=
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;fiddler无法抓取chrome解决方法&quot;&gt;&lt;a class=
     
     </summary>
     
@@ -889,7 +926,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
     <published>2017-11-09T07:29:18.000Z</published>
     <updated>2017-11-20T09:23:30.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="第1题"><a class="header-anchor" href="#第1题"> </a>第1题</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="第1题"><a class="header-anchor" href="#第1题"> </a>第1题</h2>
 <h3 id="题目"><a class="header-anchor" href="#题目"> </a>题目</h3>
 <p>假设有一个池塘，里面有无穷多的水。现有2个空水壶，容积分别为5升和6升。问题是如何只用这2个水壶从池塘里取得3升的水。</p>
 <h3 id="答案"><a class="header-anchor" href="#答案"> </a>答案</h3>
@@ -1013,7 +1050,7 @@ B的5项共9分,其中百米第一5分,其它4项全是1分,9=5 1=1 1 1.即B除�
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;第1题&quot;&gt;&lt;a class=&quot;header-anchor&quot; hr
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;第1题&quot;&gt;&lt;a class=&quot;header-anchor&quot; hr
     
     </summary>
     
@@ -1031,7 +1068,7 @@ B的5项共9分,其中百米第一5分,其它4项全是1分,9=5 1=1 1 1.即B除�
     <published>2017-08-23T09:30:21.000Z</published>
     <updated>2017-11-01T07:08:46.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="brew"><a class="header-anchor" href="#brew"> </a>brew</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="brew"><a class="header-anchor" href="#brew"> </a>brew</h2>
 <h3 id="安装"><a class="header-anchor" href="#安装"> </a>安装</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ruby <span class="_">-e</span> <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></div></pre></td></tr></table></figure>
 <h3 id="brew-缓存位置"><a class="header-anchor" href="#brew-缓存位置"> </a>brew 缓存位置</h3>
@@ -1074,7 +1111,7 @@ git remote set-url origin <a href="https://mirrors.ustc.edu.cn/homebrew-core.git
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;brew&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;brew&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
     
     </summary>
     
@@ -1082,47 +1119,6 @@ git remote set-url origin <a href="https://mirrors.ustc.edu.cn/homebrew-core.git
     
     
       <category term="macos,brew" scheme="http://2le.me/tags/macos-brew/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iterm2 ssh 自动登录</title>
-    <link href="http://2le.me/2017/08/23/macos-iterm2-ssh-autologin/"/>
-    <id>http://2le.me/2017/08/23/macos-iterm2-ssh-autologin/</id>
-    <published>2017-08-23T09:10:26.000Z</published>
-    <updated>2018-10-18T06:44:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><ol>
-<li>在<code>$PATH</code>目录(如:/usr/local/bin)新建expect脚本(如:iterm2ssh.sh)</li>
-</ol>
-<p>内容如下：</p>
-<figure class="highlight tcl"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/expect  </span></div><div class="line">  </div><div class="line"><span class="keyword">set</span> timeout <span class="number">30</span>  </div><div class="line">spawn ssh [<span class="keyword">lindex</span> $argv <span class="number">0</span>]@[<span class="keyword">lindex</span> $argv <span class="number">1</span>]  </div><div class="line">expect &#123;  </div><div class="line">        <span class="string">"(yes/no)?"</span>  </div><div class="line">        &#123;send <span class="string">"yes\n"</span>;exp_continue&#125;  </div><div class="line">        <span class="string">"password:"</span>  </div><div class="line">        &#123;send <span class="string">"[lindex $argv 2]\n"</span>&#125;  </div><div class="line">&#125;  </div><div class="line">interact</div></pre></td></tr></table></figure>
-<p>并设置可执行</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">chmod</span> +<span class="selector-tag">x</span> <span class="selector-tag">iterm2ssh</span><span class="selector-class">.sh</span></div></pre></td></tr></table></figure>
-<ol start="2">
-<li>iterm2添加profile</li>
-</ol>
-<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">o</kbd>打开profiles列表窗口，点击`edit profiles`按钮打开profiles编辑窗口，点击左侧`+`按钮新增profile，设置名称，`send text at start`
-<p>设置为<code>iterm2ssh.ssh &lt;用户名&gt; &lt;服务器地址&gt; &lt;密码&gt;</code></p>
-<ol start="3">
-<li>右键 new tab 选择刚才新增的profile即可</li>
-</ol>
-<p><img src="http://blimg.bovod.org/2017/07/31/iterm2ssh.gif" alt="iterm2 ssh"><span class="image-caption">iterm2 ssh</span></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;ol&gt;
-&lt;li&gt;在&lt;code&gt;$PATH&lt;/code&gt;目录(如:/usr/lo
-    
-    </summary>
-    
-      <category term="macos" scheme="http://2le.me/categories/macos/"/>
-    
-    
-      <category term="macos" scheme="http://2le.me/tags/macos/"/>
-    
-      <category term="iterm2" scheme="http://2le.me/tags/iterm2/"/>
     
   </entry>
   

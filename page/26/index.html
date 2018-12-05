@@ -358,6 +358,169 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/11/java-jdk-and-jre/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/11/java-jdk-and-jre/" itemprop="url">jdk与jre的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-07-11T18:09:17+08:00">
+                2012-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/07/11/java-jdk-and-jre/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/11/java-jdk-and-jre/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多程序员已经干了一段时间java了依然不明白jdk与jre的区别。
+JDK就是Java Development Kit.简单的说JDK是面向开发人员使用的SDK，它提供了Java的开发环境和运行环境。SDK是Software Development Kit 一般指软件开发包，可以包括函数库、编译程序等。
+JRE是Java Runtime Enviroment是指Java的运行环境，是面向Java程序的使用者，而不是开发者。
+如果安装了JDK，会发同你的电脑有两套JRE，一套位于 \jre 另外一套位于 C:\Program Files\Java\jre1.5.0_15 目录下，后面这套比前面那套少了Server端的Java虚拟机，不过直接将前面那套的Server端Java虚拟机复制过来就行了。而且在安装JDK可以选择是否安装这个位于 C:\Program Files\Java 目录下的JRE。如果你只安装JRE，而不是JDK，那么只会在 C:\Program Files\Java 目录下安装唯一的一套JRE。
+JRE的地位就象一台PC机一样，我们写好的Win32应用程序需要操作系统帮我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。所以当你装完JDK后，如果分别在硬盘上的两个不同地方安装了两套JRE，那么你可以想象你的电脑有两台虚拟的Java PC机，都具有运行Java程序的功能。所以我们可以说，只要你的电脑安装了JRE，就可以正确运行Java应用程序。
+1、为什么Sun要让JDK安装两套相同的JRE？
+这是因为JDK里面有很多用Java所编写的开发工具（如javac.exe、jar.exe等），而且都放置在 \lib\tools.jar 里。从下面例子可以看出，先将tools.jar改名为tools1.jar，然后运行javac.exe，显示如下结果： Exception in thread “main” java.lang.NoClassDefFoundError: com/sun/tools/javac /Main 这个意思是说，你输入javac.exe与输入 java -cp c:\jdk\lib\tools.jar com.sun.tools.javac.Main 是一样的，会得到相同的结果。从这里我们可以证明javac.exe只是一个包装器（Wrapper），而制作的目的是为了让开发者免于输入太长的指命。而且可以发现\lib目录下的程序都很小，不大于2 9K，从这里我们可以得出一个结论。就是JDK里的工具几乎是用Java所编写，所以也是Java应用程序，因此要使用JDK所附的工具来开发Java程序，也必须要自行附一套JRE才行，所以位于C:\Program Files\Java目录下的那套JRE就是用来运行一般Java程序用的。
+2、如果一台电脑安装两套以上的JRE，谁来决定呢？
+这个重大任务就落在java.exe身上。Java.exe的工作就是找到合适的JRE来运行Java程序。 Java.exe依照底下的顺序来查找JRE：自己的目录下有没有JRE；父目录有没有JRE；查询注册表： [HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Runtime Environment] 所以java.exe的运行结果与你的电脑里面哪个JRE被执行有很大的关系。
+ADD：
+1.JVM — java virtual machineJVM就是我们常说的java虚拟机，它是整个java实现跨平台的最核心的部分，所有的java程序会首先被编译为.class的类文件，这种类文件可以在虚拟机上执行，也就是说class并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。2.JRE — java runtime environmentJRE是指java运行环境。光有JVM还不能成class的执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。在JDK的安装目录里你可以找到jre目录，里面有两个文件夹bin和lib,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。所以，在你写完java程序编译成.class之后，你可以把这个.class文件和jre一起打包发给朋友，这样你的朋友就可以运行你写程序了。（jre里有运行.class的java.exe）3.JDK — java development kitJDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？让我们看一下JDK的安装目录。在目录下面有六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的是以下四个文件夹：bin、include、lib、 jre。现在我们可以看出这样一个关系，JDK包含JRE，而JRE包含JVM。bin:最主要的是编译器(javac.exe)include:java和JVM交互用的头文件lib：类库jre:java运行环境（注意：这里的bin、lib文件夹和jre里的bin、lib是不同的）总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。
+eclipse、idea等其他IDE有自己的编译器而不是用JDK bin目录中自带的，所以在安装时你会发现他们只要求你选中jre路径就ok了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/10/php-gravatar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -461,7 +624,7 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>如果你在人家博客留言时使用邮箱，而没有显示一个比较个性的头像的话，那么我们完全可以说，你已经OUT了。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>如果你在人家博客留言时使用邮箱，而没有显示一个比较个性的头像的话，那么我们完全可以说，你已经OUT了。
 先来普及一下Gravatar全球通用头像：
 Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target="_blank" rel="external">http://www.gravatar.com</a> 推出的一项服务，意为“全球通用头像”。如果在Gravatar的服务器上放置了你自己的头像，那么在任何支持Gravatar的blog或者留言本上留言时，只要提供你与这个头像关联的email地址，就能够显示出你的Gravatar头像来。
 那么Gravatar全球通用头像如何申请呢，下面上教程。
@@ -522,7 +685,7 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/life-bt-question-top10/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/system-dr-com/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -541,7 +704,7 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">十大bt问题</a></h1>
+                <a class="post-title-link" href="/2012/07/06/system-dr-com/" itemprop="url">校园网使用Dr.com上网</a></h1>
         
 
         <div class="post-meta">
@@ -576,8 +739,8 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/生活/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
                   </a>
                 </span>
 
@@ -594,8 +757,8 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/07/06/life-bt-question-top10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/06/life-bt-question-top10/" itemprop="commentCount"></span>
+                <a href="/2012/07/06/system-dr-com/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/06/system-dr-com/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -625,36 +788,99 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><ol>
-<li>
-<p>企鹅肉问题：
-一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
-</li>
-<li>
-<p>跳火车问题：
-一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
-</li>
-<li>
-<p>水草问题：
-有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
-</li>
-<li>
-<p>葬礼故事的问题：
-有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
-</li>
-<li>
-<p>半根火柴问题：
-有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
-</li>
-<li>
-<p>满地木屑问题：
-马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
-</li>
-<li>
-<p>夜半敲门问题：
-一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
-</li>
-</ol>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>很多校园都是使用上网客户端验证的，其中，drcom是比较常见的一种。
+对于初学者来说硬盘安装ubuntu8.04使用drcom上网验证确实是比较痛苦的。
+我当初就是深受其害的一员，这里分享下我使用drcom的一些经验。
+以下是以ubuntu8.04下安装drcom-1.4.4为列
+PS:这个编译安装过程，其实可以全程用命令进行，
+当然，如果要使用下列命令，你需要要足够的经验。</p>
+<p>sudo mount -o loop ubuntu-*.iso /cdrom ##挂载iso
+sudo apt-cdrom -m -d /cdrom add ##添加cdrom为源
+sudo apt-get update ##刷新列表
+sudo apt-get install build-essential ##安装编译环境
+tar -xzf drcom-1.4.5.tar.gz ##解压命令
+cd drcom-1.4.5
+make
+sudo make install #编译安装
+ifconfig ##查看链接信息
+sudo gedit /etc/drcom.conf
+sudo drcomd
+drcomc login ##登入
+drcomc logout ##登出
+如果你想了解更详细的操作，请请看下文
+首先，我们当然要下载个linux下的drcom源代码，在这里可以下载最新版本的drcom点击进入下载页面</p>
+<p>不建议在windows下解压drcom-1.4.5.tar.gz，最好回到ubuntu解压，以防出错。
+然後就要安装drcom了，但是安装drcom需要编译工具，ubuntuliveCD默认又是不安装的。</p>
+<p>很多人就难倒在这里了，其实，这个编译工具是ISO里面自带的。如果你有CD，直接插上CD就可以使用命令：
+sudo aptitude install build-essential</p>
+<p>安装编译环境。</p>
+<p>如果你是硬盘安装，又没有CDRom的话，可以挂载iso</p>
+<p>sudo mount -o loop ubuntu-*.iso /cdrom</p>
+<p>其中&quot;ubuntu-*.iso”是你下载的镜像位置，你可以用拖动的方法来拉到终端里都可以。
+挂载好镜像後，要在系统管理-软件源，</p>
+<p>那里把下面的CDrom打上勾，
+clip_image002
+然後close，重新加载源。
+clip_image003
+这时提示找不到源，
+clip_image004
+这个可以不用理，因为你没有上网，不能加载网上的源，能加载cdrom就行。
+或者 使用命令加载和更新：
+sudo apt-cdrom -m -d /cdrom add &amp;&amp; sudo apt-get update
+这样就可以顺利用命令安装编译环境
+sudo apt-get install build-essential
+或者，你可以选择在新立得里查找安装</p>
+<p>clip_image005
+clip_image006
+clip_image007
+编译环境安装完毕，接着就可以把你下载的drcom源代码解压，</p>
+<p>解压方法有很多种，可以图形，可以命令，不过个人偏好把下载的drcom-1.4.4.tar.gz放在桌面，右键解压到此处。
+clip_image008
+clip_image009
+解压完毕後，cd进你解压的目录编译安装
+clip_image010
+make
+sudo make install
+clip_image011
+安装完毕後，就需要编辑/etc/drcom.conf填写你的上网信息。
+clip_image012
+sudo gedit /etc/drcom.conf
+clip_image013
+clip_image014
+clip_image015
+clip_image016
+username=myusername ##填入你登陆的帐号
+password=mypassword ##填入你的密码
+device=eth0 ##指明通往外网的网卡的名字。
+except= ##用“网络地址/网络掩码”的形式列出内网的地址。(不是内网地址就删除)
+dnsp= ##你的首要DNS
+dnss= ##你的次要DNS，如果没有的话，请和首要DNS填的一样
+dhcp= ##你的DHCP服务器，一般不填
+hostip=
+servip=192.168.252.1 ##你的登陆IP，就是在XP下填写登陆服务器那个IP，一般是没有登陆时自动转向的那个页面，就是那个web登陆页面。
+hostport=
+servport=
+hostname=
+winver=
+winbuild=
+servicepack=
+autologout=0
+里面除了帐号密码，其他信息都可以在右上角网卡信息那里看到。</p>
+<p>关于&quot;servip=“地址说明可以参考下面图片，就是网页登录的那个地址IP
+如，下图就要填servip=10.254.200.252
+clip_image017
+感谢xu_connery提供图片
+特别注意的是从1.4.0开始，”/etc/drcom.con&quot;里增加了&quot;device=&quot;和&quot;except=&quot;两项,取消&quot;mac&quot;和&quot;nic&quot;两项。
+配置好帐号信息後，记得保存。
+这样就可以立刻上网了。</p>
+<p>连接命令：
+sudo drcomd ##启动drcom
+drcomc login ##登录
+由于我是用虚拟机截图，以上命令成功应该显示
+Login succeeded
+登出命令：
+drcomc logout
+Logout succeeded</p>
 
           
         
@@ -806,7 +1032,7 @@ Globally Recognized Avatar的缩写,是 <a href="http://www.gravatar.com" target
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>大家应该知道远程桌面连接默认使用的端口是3389，一旦公司在服务器或路由器上将3389端口进行了封锁，我们就没有一点办法了。其实远程桌面的使用端口是可以进行修改的，我们可以修改为公司没有禁止的端口，如21或80等。这样就可以再次轻松管理远程计算机了。将3389端口修改为80端口的方法如下：
 第一步：在远程计算机（即被访问的计算机）上通过任务栏的“开始-&gt;运行-&gt;输入regedit”，打开注册表编辑器。
 第二步：在注册表中找到Hkey_local_machine\system\currentcontrolset\control\terminal server\wds\repwd\tds\tcp，将其下的portnumber值从3389修改为80，注意10进制和16进制数字的区别。
 第三步：还需要在注册表中找到hkey_local_machine\system\currentcontrolset\
@@ -963,7 +1189,7 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><code>telnet towel.blinkenlights.nl</code></p>
 
           
         
@@ -1012,7 +1238,7 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/system-dr-com/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/06/life-bt-question-top10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1031,7 +1257,7 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/07/06/system-dr-com/" itemprop="url">校园网使用Dr.com上网</a></h1>
+                <a class="post-title-link" href="/2012/07/06/life-bt-question-top10/" itemprop="url">十大bt问题</a></h1>
         
 
         <div class="post-meta">
@@ -1066,8 +1292,8 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
+                  <a href="/categories/生活/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
                   </a>
                 </span>
 
@@ -1084,8 +1310,8 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/07/06/system-dr-com/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/06/system-dr-com/" itemprop="commentCount"></span>
+                <a href="/2012/07/06/life-bt-question-top10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/06/life-bt-question-top10/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1115,99 +1341,216 @@ control\terminal server\WINSTATIONS\RDP-TCP,将其下的portnumber值从3389修�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>很多校园都是使用上网客户端验证的，其中，drcom是比较常见的一种。
-对于初学者来说硬盘安装ubuntu8.04使用drcom上网验证确实是比较痛苦的。
-我当初就是深受其害的一员，这里分享下我使用drcom的一些经验。
-以下是以ubuntu8.04下安装drcom-1.4.4为列
-PS:这个编译安装过程，其实可以全程用命令进行，
-当然，如果要使用下列命令，你需要要足够的经验。</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom ##挂载iso
-sudo apt-cdrom -m -d /cdrom add ##添加cdrom为源
-sudo apt-get update ##刷新列表
-sudo apt-get install build-essential ##安装编译环境
-tar -xzf drcom-1.4.5.tar.gz ##解压命令
-cd drcom-1.4.5
-make
-sudo make install #编译安装
-ifconfig ##查看链接信息
-sudo gedit /etc/drcom.conf
-sudo drcomd
-drcomc login ##登入
-drcomc logout ##登出
-如果你想了解更详细的操作，请请看下文
-首先，我们当然要下载个linux下的drcom源代码，在这里可以下载最新版本的drcom点击进入下载页面</p>
-<p>不建议在windows下解压drcom-1.4.5.tar.gz，最好回到ubuntu解压，以防出错。
-然後就要安装drcom了，但是安装drcom需要编译工具，ubuntuliveCD默认又是不安装的。</p>
-<p>很多人就难倒在这里了，其实，这个编译工具是ISO里面自带的。如果你有CD，直接插上CD就可以使用命令：
-sudo aptitude install build-essential</p>
-<p>安装编译环境。</p>
-<p>如果你是硬盘安装，又没有CDRom的话，可以挂载iso</p>
-<p>sudo mount -o loop ubuntu-*.iso /cdrom</p>
-<p>其中&quot;ubuntu-*.iso”是你下载的镜像位置，你可以用拖动的方法来拉到终端里都可以。
-挂载好镜像後，要在系统管理-软件源，</p>
-<p>那里把下面的CDrom打上勾，
-clip_image002
-然後close，重新加载源。
-clip_image003
-这时提示找不到源，
-clip_image004
-这个可以不用理，因为你没有上网，不能加载网上的源，能加载cdrom就行。
-或者 使用命令加载和更新：
-sudo apt-cdrom -m -d /cdrom add &amp;&amp; sudo apt-get update
-这样就可以顺利用命令安装编译环境
-sudo apt-get install build-essential
-或者，你可以选择在新立得里查找安装</p>
-<p>clip_image005
-clip_image006
-clip_image007
-编译环境安装完毕，接着就可以把你下载的drcom源代码解压，</p>
-<p>解压方法有很多种，可以图形，可以命令，不过个人偏好把下载的drcom-1.4.4.tar.gz放在桌面，右键解压到此处。
-clip_image008
-clip_image009
-解压完毕後，cd进你解压的目录编译安装
-clip_image010
-make
-sudo make install
-clip_image011
-安装完毕後，就需要编辑/etc/drcom.conf填写你的上网信息。
-clip_image012
-sudo gedit /etc/drcom.conf
-clip_image013
-clip_image014
-clip_image015
-clip_image016
-username=myusername ##填入你登陆的帐号
-password=mypassword ##填入你的密码
-device=eth0 ##指明通往外网的网卡的名字。
-except= ##用“网络地址/网络掩码”的形式列出内网的地址。(不是内网地址就删除)
-dnsp= ##你的首要DNS
-dnss= ##你的次要DNS，如果没有的话，请和首要DNS填的一样
-dhcp= ##你的DHCP服务器，一般不填
-hostip=
-servip=192.168.252.1 ##你的登陆IP，就是在XP下填写登陆服务器那个IP，一般是没有登陆时自动转向的那个页面，就是那个web登陆页面。
-hostport=
-servport=
-hostname=
-winver=
-winbuild=
-servicepack=
-autologout=0
-里面除了帐号密码，其他信息都可以在右上角网卡信息那里看到。</p>
-<p>关于&quot;servip=“地址说明可以参考下面图片，就是网页登录的那个地址IP
-如，下图就要填servip=10.254.200.252
-clip_image017
-感谢xu_connery提供图片
-特别注意的是从1.4.0开始，”/etc/drcom.con&quot;里增加了&quot;device=&quot;和&quot;except=&quot;两项,取消&quot;mac&quot;和&quot;nic&quot;两项。
-配置好帐号信息後，记得保存。
-这样就可以立刻上网了。</p>
-<p>连接命令：
-sudo drcomd ##启动drcom
-drcomc login ##登录
-由于我是用虚拟机截图，以上命令成功应该显示
-Login succeeded
-登出命令：
-drcomc logout
-Logout succeeded</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>
+<p>企鹅肉问题：
+一个女孩有一天给一个男孩做了一道菜,男孩吃完了,但是觉得味道怪怪的,于是他问那女孩,这是什么肉啊？女孩说,这是企鹅肉,男孩沉思了一会儿……痛哭了起来，自杀了，为什么？</p>
+</li>
+<li>
+<p>跳火车问题：
+一个人坐火车去邻镇看病，看完之后病全好了。回来的路上火车经过一个隧道，这个人就跳车自杀了，为什么?</p>
+</li>
+<li>
+<p>水草问题：
+有个男子跟他女友去河边散步，突然他的女友掉进河里了，那个男子就急忙跳到水里去找，可没找到他的女友，他伤心的离开了这里。过了几年后，他故地重游，这时看到有个老人家在钓鱼，可那老人家钓上来的鱼身上没有水草，他就问那老人家为什么鱼身上没有沾到一点水草，那老人家说：“你不知道啊，这河从没有长过水草。”说到这时那男子突然跳到水里，自杀了，为什么？</p>
+</li>
+<li>
+<p>葬礼故事的问题：
+有母女三人，母亲死了，姐妹俩去参加葬礼，妹妹在葬礼上遇见了一个很型的男子，并对他一见倾心。但是葬礼后那个男子就不见了，妹妹怎么找也找不到他。后来过了一个月，妹妹把姐姐杀了，为什么？</p>
+</li>
+<li>
+<p>半根火柴问题：
+有一个人在沙漠中，头朝下死了，身边散落着几个行李箱子，而这个人手里紧紧地抓着半个火柴，推理这个人是怎么死的？</p>
+</li>
+<li>
+<p>满地木屑问题：
+马戏团里有两个侏儒,瞎子侏儒比另一个侏儒矮,马戏团只需要一个侏儒,马戏团里的侏儒当然是越矮越好了。两个侏儒决定比谁的个子矮,个子高的就去自杀。可是,在约定比个子的前一天,瞎子侏儒也就是那个矮的侏儒已经在家里自杀死了。在他的家里只发现木头做的家具和满地的木屑。问他为什么自杀？</p>
+</li>
+<li>
+<p>夜半敲门问题：
+一个人住在山顶的小屋里，半夜听见有敲门声音，但是他打开门却没有人，于是去睡了，等了一会儿又有敲门声，去开门，还是没人，如是者几次。第二天，有人在山脚下发现死尸一具，警察来把山顶的那人带走了。为什么？</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/java-http-download/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/04/java-http-download/" itemprop="url">java实现http文件下载</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-07-04T18:09:17+08:00">
+                2012-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/07/04/java-http-download/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/04/java-http-download/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>许多用户可能会遇到这样的情况：在网站上发现一个很好的资源，但是这个资源是分成
+了很多个文件存放的，如果想把它保存到本地，只有靠用户点击另存来完成保存，如果资源
+分了几百甚至上千上万，那简直是个灾难。
+　　在Internet上很多的资源分成多个文件存放时，它的文件命名是有一定的规则的；正因
+如此，我们就可以用程序来完成这个资源的完全下载。
+　　1. 基础知识
+　　在Internet上，我们要下载网站上的某个资源，我们会获得一个URL（Uniform Resource
+Locator），它是一个服务器资源定位的描述，下载的过程总是如下步骤:
+　　步骤1:客户端发起连接请求一个URL
+　　步骤2:服务器解析URL，并将指定的资源返回一个输入流给客户
+　　步骤3:客户端接收输入流，将流中的内容存到文件
+　　2. 网络连接的建立
+　　Java提供了对URL访问和大量的流操作的的API，我们可以很容易的完成对网络上资源的
+存取,下面的代码段就完成了对一个网站的资源进行访问:</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">destUrl</span>=<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span><span class="comment">;</span></div><div class="line"><span class="attribute">url</span> = new URL(destUrl)<span class="comment">;</span></div><div class="line"><span class="attribute">httpUrl</span> = (HttpURLConnection) url.openConnection()<span class="comment">;</span></div><div class="line">//连接指定的网络资源</div><div class="line">httpUrl.connect()<span class="comment">;</span></div><div class="line">//获取网络输入流</div><div class="line"><span class="attribute">bis</span> = new BufferedInputStream(httpUrl.getInputStream())<span class="comment">;</span></div></pre></td></tr></table></figure>
+<ol start="3">
+<li>代理的访问
+　　Java 中通过代理服务器访问外网的方法已经是世人皆知的秘密了。这里就不再多描述了
+，访问的JAVA代码如下:</li>
+</ol>
+<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line"><span class="comment">//设置代理服务器</span></div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyHost"</span>, <span class="string">"10.154.134.110"</span>);</div><div class="line"><span class="keyword">System</span>.getProperties().<span class="keyword">put</span>(<span class="string">"proxyPort"</span>, <span class="string">"8080"</span>);</div></pre></td></tr></table></figure>
+<ol start="4">
+<li>网络资源的保存
+　　在上节中，我们已经获取了指定网络资源的输入流，接下来我们要完成的就是读取输入
+流中的所以内容，并将其保存在文件中。示例代码:</li>
+</ol>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line">fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line"><span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span> +</div><div class="line">fileName +<span class="string">"]"</span>);</div><div class="line"><span class="comment">//保存文件</span></div><div class="line"><span class="built_in">while</span> ( (<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+<p>上面的示例代码就将网络资源的内容保存到了本地指定的文件中。</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;</div><div class="line"><span class="keyword">import</span> java.net.*;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * ＜p＞Description: 将指定的HTTP网络资源在本地以文件形式存放＜/p＞</div><div class="line"> **/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SaveFile &#123;</div><div class="line">	<span class="keyword">public</span> final <span class="keyword">static</span> <span class="keyword">boolean</span> DEBUG = true; <span class="comment">// 调试用</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> BUFFER_SIZE = <span class="number">8096</span>; <span class="comment">// 缓冲区大小</span></div><div class="line">	<span class="keyword">private</span> Vector vDownLoad = <span class="keyword">new</span> Vector(); <span class="comment">// URL列表</span></div><div class="line">	<span class="keyword">private</span> Vector vFileList = <span class="keyword">new</span> Vector(); <span class="comment">// 下载后的保存文件名列表</span></div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 构造方法 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> SaveFile() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 清除下载列表 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> resetList() &#123;</div><div class="line">		vDownLoad.<span class="built_in">clear</span>();</div><div class="line">		vFileList.<span class="built_in">clear</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 增加下载列表项 　* 　* @param url String 　* @param filename String 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> addItem(<span class="keyword">String</span> url, <span class="keyword">String</span> filename) &#123;</div><div class="line">		vDownLoad.add(url);</div><div class="line">		vFileList.add(filename);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 　* 根据列表下载资源 　</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> downLoadByList() &#123;</div><div class="line">		<span class="keyword">String</span> url = null;</div><div class="line">		<span class="keyword">String</span> filename = null;</div><div class="line">		<span class="comment">// 按列表顺序保存资源</span></div><div class="line">		<span class="built_in">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vDownLoad.<span class="built_in">size</span>(); i++) &#123;</div><div class="line">			url = (<span class="keyword">String</span>) vDownLoad.<span class="built_in">get</span>(i);</div><div class="line">			filename = (<span class="keyword">String</span>) vFileList.<span class="built_in">get</span>(i);</div><div class="line">			<span class="built_in">try</span> &#123;</div><div class="line">				saveToFile(url, filename);</div><div class="line">			&#125; <span class="built_in">catch</span> (IOException err) &#123;</div><div class="line">				<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">					System.out.<span class="built_in">println</span>(<span class="string">"资源["</span> + url + <span class="string">"]下载失败!!!"</span>);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span> (DEBUG) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"下载完成!!!"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将HTTP资源另存为文件</div><div class="line">	 * </div><div class="line">	 * @param destUrl</div><div class="line">	 *            String</div><div class="line">	 * @param fileName</div><div class="line">	 *            String</div><div class="line">	 * @throws Exception</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> saveToFile2(<span class="keyword">String</span> destUrl, <span class="keyword">String</span> fileName) throws IOException &#123;</div><div class="line">		FileOutputStream fos = null;</div><div class="line">		BufferedInputStream bis = null;</div><div class="line">		HttpURLConnection httpUrl = null;</div><div class="line">		URL url = null;</div><div class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFFER_SIZE];</div><div class="line">		<span class="keyword">int</span> <span class="built_in">size</span> = <span class="number">0</span>;</div><div class="line">		<span class="comment">// 建立链接</span></div><div class="line">		url = <span class="keyword">new</span> URL(destUrl);</div><div class="line">		httpUrl = (HttpURLConnection) url.openConnection();</div><div class="line">		<span class="comment">// String authString = "username" + ":" + "password";</span></div><div class="line">		<span class="keyword">String</span> authString = <span class="string">"50301"</span> + <span class="string">":"</span> + <span class="string">"88888888"</span>;</div><div class="line">		<span class="keyword">String</span> auth = <span class="string">"Basic "</span></div><div class="line">				+ <span class="keyword">new</span> sun.misc.BASE64Encoder().encode(authString.getBytes());</div><div class="line">		httpUrl.setRequestProperty(<span class="string">"Proxy-Authorization"</span>, auth);</div><div class="line">		<span class="comment">// 连接指定的资源</span></div><div class="line">		httpUrl.<span class="built_in">connect</span>();</div><div class="line">		<span class="comment">// 获取网络输入流</span></div><div class="line">		bis = <span class="keyword">new</span> BufferedInputStream(httpUrl.getInputStream());</div><div class="line">		<span class="comment">// 建立文件</span></div><div class="line">		fos = <span class="keyword">new</span> FileOutputStream(fileName);</div><div class="line">		<span class="built_in">if</span> (<span class="keyword">this</span>.DEBUG)</div><div class="line">			System.out.<span class="built_in">println</span>(<span class="string">"正在获取链接["</span> + destUrl + <span class="string">"]的内容.../n将其保存为文件["</span></div><div class="line">					+ fileName + <span class="string">"]"</span>);</div><div class="line">		<span class="comment">// 保存文件</span></div><div class="line">		<span class="built_in">while</span> ((<span class="built_in">size</span> = bis.<span class="built_in">read</span>(buf)) != <span class="number">-1</span>)</div><div class="line">			fos.<span class="built_in">write</span>(buf, <span class="number">0</span>, <span class="built_in">size</span>);</div><div class="line">		fos.<span class="built_in">close</span>();</div><div class="line">		bis.<span class="built_in">close</span>();</div><div class="line">		httpUrl.<span class="built_in">disconnect</span>();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理服务器</div><div class="line">	 * </div><div class="line">	 * @param proxy</div><div class="line">	 *            String</div><div class="line">	 * @param proxyPort</div><div class="line">	 *            String</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxyServer(<span class="keyword">String</span> proxy, <span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		<span class="comment">// 设置代理服务器</span></div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxySet"</span>, <span class="string">"true"</span>);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyHost"</span>, proxy);</div><div class="line">		System.getProperties().<span class="built_in">put</span>(<span class="string">"proxyPort"</span>, proxyPort);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setAuthenticator(<span class="keyword">String</span> uid, <span class="keyword">String</span> pwd) &#123;</div><div class="line">		Authenticator.setDefault(<span class="keyword">new</span> MyAuthenticator());</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 主方法(用于测试)</div><div class="line">	 * </div><div class="line">	 * @param argv</div><div class="line">	 *            String[]</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> argv[]) &#123;</div><div class="line">		HttpGet oInstance = <span class="keyword">new</span> HttpGet();</div><div class="line">		<span class="built_in">try</span> &#123;</div><div class="line">			<span class="comment">// //增加下载列表（此处用户可以写入自己代码来增加下载列表）</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程001.zip","./网络编程1.zip");//</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程002.zip","./网络编程2.zip");</span></div><div class="line">			<span class="comment">// oInstance.addItem("http://www.ebook.com/java/网络编程003.zip","./网络编程3.zip");</span></div><div class="line">			<span class="comment">// //开始下载</span></div><div class="line">			<span class="comment">// oInstance.downLoadByList();</span></div><div class="line">			oInstance.saveToFile(<span class="string">"http://www.ebook.com/java/网络编程001.zip"</span>,</div><div class="line">					<span class="string">"./down.zip"</span>);</div><div class="line">		&#125; <span class="built_in">catch</span> (Exception err) &#123;</div><div class="line">			System.out.<span class="built_in">println</span>(err.getMessage());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1359,492 +1702,8 @@ Logout succeeded</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>输入序列号会将序列号分成好几段输入，模拟序列号输入方式，输入框自动跳转到下一个输入框。 下面是代码：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">script</span>   <span class="attr">language</span>=<span class="string">JavaScript</span>&gt;</span><span class="javascript">  </span></div><div class="line">  <span class="function"><span class="keyword">function</span>   <span class="title">toNext</span>(<span class="params">obj,str</span>)</span>&#123;      </div><div class="line">    <span class="keyword">if</span>(obj.value.length==str&amp;&amp;obj.nextSibling.nextSibling.type==<span class="string">"text"</span>)  </div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).select() </div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> c=<span class="built_in">window</span>.clipboardData.getData(<span class="string">'text'</span>); </div><div class="line">    carray=c.split(<span class="string">" "</span>);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes1"</span>).value=carray[<span class="number">0</span>];</div><div class="line">    alert(carray[<span class="number">0</span>]);</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"yes2"</span>).value=carray[<span class="number">1</span>];</div><div class="line">    <span class="built_in">window</span>.clipboardData.clearData();</div><div class="line">  &#125;  </div><div class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span>  </div><div class="line">      <span class="tag">&lt;<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes1"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span> <span class="attr">onbeforepaste</span>=<span class="string">"abc()"</span>&gt;</span>SN1  </div><div class="line">  —  </div><div class="line">      <span class="tag">&lt;<span class="name">input</span>   <span class="attr">name</span>=<span class="string">"yes2"</span>   <span class="attr">type</span>=<span class="string">"text"</span>   <span class="attr">size</span>=<span class="string">"4"</span>   <span class="attr">maxlength</span>=<span class="string">"4"</span>   <span class="attr">onkeyup</span>=<span class="string">"toNext(this,4)"</span>&gt;</span>SN2</div><div class="line">      <span class="tag">&lt;/<span class="name">body</span>&gt;</span>  </div><div class="line">  <span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-js-animate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/04/web-js-animate/" itemprop="url">js渐变效果</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-07-04T18:09:17+08:00">
-                2012-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/07/04/web-js-animate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/04/web-js-animate/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html xmlns="&lt;a href="http://www.w3.org/1999/xhtml"&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span> new document <span class="tag">&lt;/<span class="name">title</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"宽度渐变"</span> <span class="attr">id</span>=<span class="string">"wt-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"高度渐变"</span> <span class="attr">id</span>=<span class="string">"hi-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"透明度渐变"</span> <span class="attr">id</span>=<span class="string">"op-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"边框渐变"</span> <span class="attr">id</span>=<span class="string">"bd-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">"fx"</span> <span class="attr">value</span>=<span class="string">"综合渐变"</span> <span class="attr">id</span>=<span class="string">"zh-cg"</span>/&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"demo"</span> <span class="attr">style</span>=<span class="string">"width:370px;height:100px;background-color:#00CC33;border:2px solid #990033; font-size:12px;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">center</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animate</span>(<span class="params">el, prop, opts</span>) </span>&#123;   </div><div class="line"><span class="keyword">this</span>.el = el;   </div><div class="line"><span class="keyword">this</span>.prop = prop;   </div><div class="line"><span class="keyword">this</span>.from = opts.from;   </div><div class="line"><span class="keyword">this</span>.to = opts.to;   </div><div class="line"><span class="keyword">this</span>.time = opts.time;   </div><div class="line"><span class="keyword">this</span>.callback = opts.callback;   </div><div class="line"><span class="keyword">this</span>.animDiff = <span class="keyword">this</span>.to - <span class="keyword">this</span>.from;   </div><div class="line">&#125;   </div><div class="line">Animate.prototype._setStyle = <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;   </div><div class="line"><span class="keyword">switch</span>(<span class="keyword">this</span>.prop) &#123;   </div><div class="line"><span class="keyword">case</span> <span class="string">'opacity'</span>:   </div><div class="line"><span class="keyword">this</span>.el.style[<span class="keyword">this</span>.prop] = val;   </div><div class="line"><span class="keyword">this</span>.el.style.filter = <span class="string">'alpha(opacity='</span> + val * <span class="number">100</span> + <span class="string">')'</span>;   </div><div class="line"><span class="keyword">break</span>;   </div><div class="line"><span class="keyword">default</span>:   </div><div class="line"><span class="keyword">this</span>.el.style[<span class="keyword">this</span>.prop] = val + <span class="string">'px'</span>;   </div><div class="line"><span class="keyword">break</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line">Animate.prototype._animate = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> that = <span class="keyword">this</span>;   </div><div class="line"><span class="keyword">this</span>.now = <span class="keyword">new</span> <span class="built_in">Date</span>();   </div><div class="line"><span class="keyword">this</span>.diff = <span class="keyword">this</span>.now - <span class="keyword">this</span>.startTime;   </div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.diff &gt; <span class="keyword">this</span>.time) &#123;   </div><div class="line"><span class="keyword">this</span>._setStyle(<span class="keyword">this</span>.to);   </div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.callback) &#123;   </div><div class="line"><span class="keyword">this</span>.callback.call(<span class="keyword">this</span>);   </div><div class="line">&#125;   </div><div class="line">clearInterval(<span class="keyword">this</span>.timer);   </div><div class="line"><span class="keyword">return</span>;   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">this</span>.percentage = (<span class="built_in">Math</span>.floor((<span class="keyword">this</span>.diff / <span class="keyword">this</span>.time) * <span class="number">100</span>) / <span class="number">100</span>);   </div><div class="line"><span class="keyword">this</span>.val = (<span class="keyword">this</span>.animDiff * <span class="keyword">this</span>.percentage) + <span class="keyword">this</span>.from;   </div><div class="line"><span class="keyword">this</span>._setStyle(<span class="keyword">this</span>.val);   </div><div class="line">&#125;   </div><div class="line">Animate.prototype.start = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> that = <span class="keyword">this</span>;   </div><div class="line"><span class="keyword">this</span>.startTime = <span class="keyword">new</span> <span class="built_in">Date</span>();   </div><div class="line">clearInterval(<span class="keyword">this</span>.timer);   </div><div class="line"><span class="keyword">this</span>.timer = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">that._animate.call(that);   </div><div class="line">&#125;, <span class="number">4</span>);   </div><div class="line">&#125;   </div><div class="line">Animate.canTransition = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> el = <span class="built_in">document</span>.createElement(<span class="string">'foo'</span>);   </div><div class="line">el.style.cssText = <span class="string">'-webkit-transition: all .5s linear;'</span>;   </div><div class="line"><span class="keyword">return</span> !!el.style.webkitTransitionProperty;   </div><div class="line">&#125;();   </div><div class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> T$ = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">document</span>.getElementById(id); &#125;   </div><div class="line"><span class="keyword">var</span> T$$ = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">document</span>.getElementsByName(n); &#125;   </div><div class="line"><span class="keyword">var</span> demo = T$(<span class="string">'demo'</span>); <span class="keyword">var</span> btns = T$$(<span class="string">'fx'</span>);   </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">disableButton</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = btns.length; i &lt; len; ++i) &#123;   </div><div class="line">btns[i].disabled = <span class="string">'disabled'</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">resetButton</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = btns.length; i &lt; len; ++i) &#123;   </div><div class="line">btns[i].disabled = <span class="string">''</span>;   </div><div class="line">&#125;   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 宽度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeWidth</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'width'</span>, <span class="keyword">from</span> = demo.clientWidth, to = <span class="keyword">from</span> - <span class="number">270</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = demo.clientWidth; to = <span class="keyword">from</span> + <span class="number">270</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton &#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 高度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeHeight</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'height'</span>, <span class="keyword">from</span> = demo.clientHeight, to = <span class="keyword">from</span> + <span class="number">100</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = demo.clientHeight; to = <span class="keyword">from</span> - <span class="number">100</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 透明度渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeOpacity</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'opacity'</span>, <span class="keyword">from</span> = <span class="number">1</span>, to = <span class="number">0</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = <span class="number">0</span>; to = <span class="number">1</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">// 边框渐变   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeBorderWidth</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">var</span> fx = <span class="string">'borderWidth'</span>, <span class="keyword">from</span> = <span class="number">2</span>, to = <span class="number">10</span>, time = <span class="number">1000</span>;   </div><div class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line"><span class="keyword">from</span> = <span class="number">10</span>; to = <span class="number">2</span>;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123; <span class="attr">from</span>: <span class="keyword">from</span>, <span class="attr">to</span>: to, <span class="attr">time</span>: time, <span class="attr">callback</span>: resetButton &#125;).start();   </div><div class="line">&#125;   </div><div class="line"><span class="keyword">new</span> Animate(demo, fx, &#123;   </div><div class="line"><span class="attr">from</span>: <span class="keyword">from</span>,   </div><div class="line"><span class="attr">to</span>: to,   </div><div class="line"><span class="attr">time</span>: time,   </div><div class="line"><span class="attr">callback</span>: callback   </div><div class="line">&#125;).start();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'wt-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeWidth();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'hi-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeHeight();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'op-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeOpacity();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'bd-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeBorderWidth();   </div><div class="line">&#125;   </div><div class="line">T$(<span class="string">'zh-cg'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;   </div><div class="line">disableButton(); changeWidth(); changeHeight(); changeOpacity();   </div><div class="line">&#125;   </div><div class="line"><span class="comment">//if (Animate.canTransition) &#123;   </span></div><div class="line"><span class="comment">//demo.style.webkitTransition = 'opacity 3s ease-in';   </span></div><div class="line"><span class="comment">//demo.style.opacity = 0;   </span></div><div class="line"><span class="comment">//&#125; else &#123;   </span></div><div class="line"><span class="comment">//&#125;   </span></div><div class="line">&#125;   </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/java-jdbc-demo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/04/java-jdbc-demo/" itemprop="url">jdbc连接demo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-07-04T18:09:17+08:00">
-                2012-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/07/04/java-jdbc-demo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/04/java-jdbc-demo/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>jdbc连接参数</p>
-<blockquote>
-<p>oracle
-driver=&quot;oracle.jdbc.driver.OracleDriver&quot;
-url=&quot;jdbc:oracle:thin:@localhost:1521:数据库名&quot;
-sqlserver
-driver=&quot;com.microsoft.jdbc.sqlserver.SQLServerDriver&quot;
-url=&quot;jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=数据库名&quot;
-mysql
-driver=&quot;com.mysql.jdbc.Driver&quot;
-url=&quot;jdbc:mysql://localhost/数据库名?[后接参数]&quot;
-db2
-driver=&quot;com.ibm.db2.jdbc.app.DB2Driver&quot;
-url=&quot;jdbc:db2://localhost:5000/数据库名&quot;
-sybase
-driver=&quot;com.sybase.jdbc.SybDriver&quot;
-url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
-</blockquote>
-<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.sql.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class JdbcDemo &#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 加载驱动</div><div class="line">	 * */</div><div class="line">	<span class="keyword">static</span> &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取数据库连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Connection getConnection() &#123;</div><div class="line">		<span class="keyword">String</span> url = <span class="string">"jdbc:mysql:172.0.0.1:3306/test"</span>;</div><div class="line">		<span class="keyword">String</span> username = <span class="string">"root"</span>;</div><div class="line">		<span class="keyword">String</span> password = <span class="string">"1234"</span>;</div><div class="line">		Connection con = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			con = DriverManager.getConnection(url, username, password);</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> con;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 获取statement对象，操作数据库，处理返回结果</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> process() &#123;</div><div class="line">		Connection con = getConnection();</div><div class="line">		PreparedStatement ps = <span class="keyword">null</span>;</div><div class="line">		ResultSet rs = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">String</span> sql = <span class="string">""</span>;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ps = con.prepareStatement(sql);</div><div class="line">			<span class="keyword">if</span> (ps.execute()) &#123;</div><div class="line">				rs = ps.getResultSet();</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">int</span> i = ps.getUpdateCount();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">finally</span> &#123;</div><div class="line">			close(rs, ps, con);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 处理返回结果集</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> printResultSet(ResultSet rs) &#123;</div><div class="line">		<span class="keyword">if</span> (rs == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			ResultSetMetaData meta = rs.getMetaData();</div><div class="line">			<span class="built_in">int</span> cols = meta.getColumnCount();</div><div class="line">			StringBuffer b = <span class="keyword">new</span> StringBuffer();</div><div class="line">			<span class="keyword">while</span> (rs.next()) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt;= cols; i++) &#123;</div><div class="line">					b.<span class="built_in">append</span>(meta.getColumnName(i) + <span class="string">"="</span>);</div><div class="line">					b.<span class="built_in">append</span>(rs.getString(i) + <span class="string">"/t"</span>);</div><div class="line">				&#125;</div><div class="line">				b.<span class="built_in">append</span>(<span class="string">"/n"</span>);</div><div class="line">			&#125;</div><div class="line">			System.out.<span class="built_in">print</span>(b.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 关闭连接</div><div class="line">	 * */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> close(ResultSet rs, Statement stm, Connection con) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stm != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</div><div class="line">				rs.close();</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/linux-ubuntu-telnet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/07/04/linux-ubuntu-telnet/" itemprop="url">如何启动ubuntu下的telnet服务</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-07-04T18:09:17+08:00">
-                2012-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/07/04/linux-ubuntu-telnet/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/04/linux-ubuntu-telnet/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>以一般用户登录系统
-执行命令 sudo apt-get install xinetd
-系统提示输入用户密码，输入密码后安装xinet软件包
-执行命令 sudo apt-get install telnetd
-系统提示输入用户密码，输入密码后安装telnet软件包
-执行命令 sudo touch /etc/xinetd.d/telnet新
-建一个文件内容如下，并保存
-执行命令 sudo nano -w /etc/xinetd.d/telnet</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><div class="line"><span class="comment"># default: on</span></div><div class="line"></div><div class="line"><span class="comment"># description: The telnet server serves telnet sessions; it uses \</span></div><div class="line"></div><div class="line"><span class="comment"># unencrypted username/password pairs for authentication.</span></div><div class="line"></div><div class="line">service telnet</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">disable = no</div><div class="line"></div><div class="line">flags = REUSE</div><div class="line"></div><div class="line">socket_type = stream</div><div class="line"></div><div class="line">wait = no</div><div class="line"></div><div class="line">user = root</div><div class="line"></div><div class="line">server = /usr/sbin/in.telnetd</div><div class="line"></div><div class="line">log_on_failure += USERID</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>执行如下命令：sudo nano -w /etc/xinetd.conf 并加入如下内容：</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><div class="line"><span class="attr">instances</span> = <span class="number">60</span></div><div class="line"><span class="attr">log_type</span> = SYSLOG authpriv</div><div class="line"></div><div class="line"><span class="attr">log_on_success</span> = HOST PID</div><div class="line"></div><div class="line"><span class="attr">log_on_failure</span> = HOST</div><div class="line"></div><div class="line"><span class="attr">cps</span> = <span class="number">25</span> <span class="number">30</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1996,8 +1855,162 @@ url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>IE内核的浏览器会自动缓存异步通信处理结果，第一次ajax请求已经被高速缓存，若第二次点击(请求)，IE浏览器会认为这是同一个请求，由于第一次请求已经得到了响应，因此不会再响应第二次、第三次…的请求。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>IE内核的浏览器会自动缓存异步通信处理结果，第一次ajax请求已经被高速缓存，若第二次点击(请求)，IE浏览器会认为这是同一个请求，由于第一次请求已经得到了响应，因此不会再响应第二次、第三次…的请求。
 解决办法：保证每次异步请求的url地址都不相同，即唯一标识每一次请求。具体的解决方案可以在url添加一个参数，参数的值=<code>new Data().getTime()</code>. 即可达到目的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/07/04/web-html-disable-copy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/07/04/web-html-disable-copy/" itemprop="url">网页防止复制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-07-04T18:09:17+08:00">
+                2012-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/07/04/web-html-disable-copy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/07/04/web-html-disable-copy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在body标签内加上一段代码，禁用右键菜单</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="selector-tag">body</span> oncontextmenu=<span class="string">"return false"</span></div><div class="line">onselectstart=<span class="string">"return false"</span></div><div class="line">ondragstart=<span class="string">"return false"</span></div><div class="line">onbeforecopy=<span class="string">"return false"</span></div><div class="line">oncopy=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>() </div><div class="line">onselect=document<span class="selector-class">.selection</span><span class="selector-class">.empty</span>()&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="attr">type="text"</span> <span class="attr">id="username"</span> <span class="attr">name="username"</span> <span class="attr">value="禁止复制"</span> <span class="attr">onpaste="return</span> <span class="literal">false</span><span class="string">" oncontextmenu="</span>return <span class="literal">false</span><span class="string">" oncopy="</span>return <span class="literal">false</span><span class="string">" oncut="</span>return <span class="literal">false</span><span class="string">" &gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -2087,7 +2100,7 @@ url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">287</span>
+                  <span class="site-state-item-count">288</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2098,7 +2111,7 @@ url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2109,7 +2122,7 @@ url=“jdbc:sybase:Tds:localhost:5007/数据库名”</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">180</span>
+                  <span class="site-state-item-count">181</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

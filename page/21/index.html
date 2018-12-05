@@ -358,172 +358,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/db-mysql-err150/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/db-mysql-err150/" itemprop="url">mysql errno:150</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
-                2013-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/01/10/db-mysql-err150/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/db-mysql-err150/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
-在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序
-已知的原因：</p>
-<ol>
-<li>两个字段的类型或者大小不严格匹配，例如，如果一个是INT(10), 那么外键也必须设置成INT(10), 而不是 INT(11) 也不能是 TINYINT. 你得使用 SHOW 命令来查看字段的大小，因为一些查询浏览器有时候把 int(10) 和int(11) 都显示为integer。另外，你还必须确定两个字段是否一个为 SIGNED,而另一个又是UNSIGNED, 这两字段必须严格地一致匹配，更多关于signed 和 unsigned 的信息，请参阅：<a href="http://www.verysimple.com/blog/?p=57" target="_blank" rel="external">http://www.verysimple.com/blog/?p=57</a></li>
-<li>你试图引用的其中一个外键没有建立起索引，或者不是一个primary key , 如果其中一个不是primary key 的放，你必须为它创建一个索引。</li>
-<li>外键的名字是一个已经存在的一个键值了，这个时候，你应该检查你的数据库以确保外健名字是唯一的，或者你在键名后面加上几个随机的字符以测试是否是这个原因。</li>
-<li>其中一个或者两个表是MyISAM引擎的表，若想要使用外键约束，必须是InnoDB引擎，（实际上，如果两个表都是MyISAM 引擎的，这个错误根本不会发生，但也不会产生外键），你可以通过查询浏览器来设置表的引擎类型</li>
-<li>你可能设置了ON DELETE SET NULL, 但是相关的键的字段又设置成了NOTS NULL 值。你可能通过修改cascade 的属性值或者把字段属性设置成 allow null 来搞定这个bug.</li>
-<li>请确定你的Charset 和 Collate 选项在表级和字段级上的一致</li>
-<li>你可能设置为外键设置了一个默认值，如 default=0</li>
-<li>在这个关系里面，其中的一个字段是一个混合键值中的一个，它没有自己独立的索引，这时，你必须为它创建一个独立的索引。</li>
-<li>ALTER 声明中有语法错误</li>
-<li>要连接的两个表的编码格式不同</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-gwt-code-lv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -627,7 +461,7 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>GWT 项目中代码分四级概念：Application, Host Page, Module 和 EntryPoint。理论上讲：一个 Application, 有多个 Host Page, 一个 Host Page 有多个 Module，则一个 Module 有多个 EntryPoint,但是，实际上基本就是一个页面一个应用，也就是一个 GWT 工程。一般在 Hello World 应用中，整个一个工程是：一个页面，一个 Module，在一个EntryPoint。当然实际应用中，一般还是一个页面，而为个复用，就会为多个 Module， 而一个Module 也会有多个 EntryPoint。
 使用多个 Module 和 EntryPoint 相对都是非常简单的。创建过程同官方的新建一个Module 和 EntryPoint 没什么两样。那么我们，还有一种需求就是需要一些额外的关注：一个 application , 多个 hostpage， 因为 GWT 默认项目就只是一个 Single Host Page 的 Application。其实，我们有很多人已经注意到了这一点，并且有人 open 了一个 gwt module 来帮助大家实现这一点，它就是 gwtmultipage 。
 gwtmultipage 使用起来相当简单，简单三步就可以了：
 1.加载 org.gwtmultipage.gwtmultipage 这个 GWT module java 包到项目中
@@ -684,7 +518,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/system-window-update-disabled/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/db-mysql-err150/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -703,7 +537,7 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/system-window-update-disabled/" itemprop="url">自动更新变灰</a></h1>
+                <a class="post-title-link" href="/2013/01/10/db-mysql-err150/" itemprop="url">mysql errno:150</a></h1>
         
 
         <div class="post-meta">
@@ -738,8 +572,8 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/系统/" itemprop="url" rel="index">
-                    <span itemprop="name">系统</span>
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
                   </a>
                 </span>
 
@@ -756,8 +590,8 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/01/10/system-window-update-disabled/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/system-window-update-disabled/" itemprop="commentCount"></span>
+                <a href="/2013/01/10/db-mysql-err150/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/db-mysql-err150/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -787,12 +621,329 @@ EntrypointDispatcher 在这里就是一个单入口分发器。</inherits></p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>win xp控制面板中系统自动更新变成灰色不能选择
-解决办法如下：</p>
-<p>开始-运行-regedit,打开注册表编辑器,在注册表里找:
-<code>HKEY_LOCAL_MACHINE/SOFTWARE/Policies/Microsoft/Windows</code>,展开Windows,将其下的
-WindowsUpdate删除掉</p>
-<p>另：还有很多方法参见http://hi.baidu.com/xxcxz/item/0e318fb9194495e84ec7fd2f</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>当你试图在mysql中创建一个外键的时候，这个出错会经常发生，这是非常令人沮丧的。像这种不能创建一个.frm 文件的报错好像暗示着操作系统的文件的权限错误或者其它原因，但实际上，这些都不是的，事实上，这个mysql报错已经被报告是一个mysql本身的bug并出现在mysql 开发者列表当中很多年了，然而这似乎又是一种误导。
+在很多实例中，这种错误的发生都是因为mysql一直以来都不能很好的支持的关系的问题， 更不幸的是它也并没有指明到底是哪一个问题会导致上面那种错误，下面我把导致这个可怕 的150错误的常见原因列出来了，并且我以可能性的大小作了排序
+已知的原因：</p>
+<ol>
+<li>两个字段的类型或者大小不严格匹配，例如，如果一个是INT(10), 那么外键也必须设置成INT(10), 而不是 INT(11) 也不能是 TINYINT. 你得使用 SHOW 命令来查看字段的大小，因为一些查询浏览器有时候把 int(10) 和int(11) 都显示为integer。另外，你还必须确定两个字段是否一个为 SIGNED,而另一个又是UNSIGNED, 这两字段必须严格地一致匹配，更多关于signed 和 unsigned 的信息，请参阅：<a href="http://www.verysimple.com/blog/?p=57" target="_blank" rel="external">http://www.verysimple.com/blog/?p=57</a></li>
+<li>你试图引用的其中一个外键没有建立起索引，或者不是一个primary key , 如果其中一个不是primary key 的放，你必须为它创建一个索引。</li>
+<li>外键的名字是一个已经存在的一个键值了，这个时候，你应该检查你的数据库以确保外健名字是唯一的，或者你在键名后面加上几个随机的字符以测试是否是这个原因。</li>
+<li>其中一个或者两个表是MyISAM引擎的表，若想要使用外键约束，必须是InnoDB引擎，（实际上，如果两个表都是MyISAM 引擎的，这个错误根本不会发生，但也不会产生外键），你可以通过查询浏览器来设置表的引擎类型</li>
+<li>你可能设置了ON DELETE SET NULL, 但是相关的键的字段又设置成了NOTS NULL 值。你可能通过修改cascade 的属性值或者把字段属性设置成 allow null 来搞定这个bug.</li>
+<li>请确定你的Charset 和 Collate 选项在表级和字段级上的一致</li>
+<li>你可能设置为外键设置了一个默认值，如 default=0</li>
+<li>在这个关系里面，其中的一个字段是一个混合键值中的一个，它没有自己独立的索引，这时，你必须为它创建一个独立的索引。</li>
+<li>ALTER 声明中有语法错误</li>
+<li>要连接的两个表的编码格式不同</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-trim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">自定义js的trim()方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/web-js-trim/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/web-js-trim/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
+<p>写成类的方法格式如下：（str.trim();）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>写成函数可以这样：(trim(str))</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-disabled-statebar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">禁止状态栏显示链接</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/web-disabled-statebar/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/web-disabled-statebar/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -944,7 +1095,7 @@ WindowsUpdate删除掉</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>一张图</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>一张图</p>
 <p>image
 网页可见区域宽： document.body.clientWidth;
 网页可见区域高： document.body.clientHeight;
@@ -1233,7 +1384,7 @@ clientWidth、offsetWidth 和 scrollWidth 的解释与上面相同，只是把�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>第一部分 虚拟机的安装
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>第一部分 虚拟机的安装
 下载完后，先安装虚拟机，解压
 <img src="http://blimg.bovod.org/2013/01/08/bt5_1.png" alt="bt5"><span class="image-caption">bt5</span>
 2．进入虚拟机目录，打开
@@ -1444,7 +1595,7 @@ Hex key就是密码 6161613132 成功了！</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在<code>&lt;many-to-on&gt;</code>中这错误很常见，字面意义就是不能被初始化，因为<code>session</code>已经关闭了。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在<code>&lt;many-to-on&gt;</code>中这错误很常见，字面意义就是不能被初始化，因为<code>session</code>已经关闭了。
 简单理解就是因为，你使用了<code>lazy=true</code>，这样hibernate在从数据库中调数据的时候是不会把关联的对象查出来的，而是保存一个获取值得方法，在你使用getXXX()调用的时候，hiberante会利用这个保存的方法去从数据库中取数据。而往往我们在jsp页面中使用getXXX()准备展示数据的时候，session早已经在dao中就关闭了，我们该如何解决这种异常呢？
 简单的说有三种：</p>
 <ol>
@@ -1689,7 +1840,7 @@ Interceptor的配置:</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="问题提出"><a class="header-anchor" href="#问题提出"> </a>问题提出</h1>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="问题提出"><a class="header-anchor" href="#问题提出"> </a>问题提出</h1>
 <p>金山词霸、网络蚂蚁等软件安装后会向IE的工具条添加自己的按钮。按下按钮后还会作出相应的动作，这种功能是如何实现的呢？读完本文，您也可以将自己应用程序的按钮添加到IE的工具条中。</p>
 <h1 id="基本原理"><a class="header-anchor" href="#基本原理"> </a>基本原理</h1>
 <p>从IE5开始便允许我们向工具栏添加自己的按钮，其本质就是修改注册表，添加创建此按钮所需的信息。</p>
@@ -1928,7 +2079,7 @@ void CIEButtonDlg::OnAdd()
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：
 sudo apt-get install openssh-server
 Ubuntu缺省安装了openssh-client,所以在这里就不安装了，如果你的系统没有安装的话，再用apt-get安装上即可。
 然后确认sshserver是否启动了：
@@ -1999,7 +2150,7 @@ $ ssh -l hyx 192.168.0.103
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/db-sqlserver-return-autogen-id/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/java-simple-web-server/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -2018,7 +2169,7 @@ $ ssh -l hyx 192.168.0.103
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例</a></h1>
+                <a class="post-title-link" href="/2013/01/05/java-simple-web-server/" itemprop="url">Here is a tutorial on how to whip up a simple web server in Java? with working runnable code; sourcecode and bytecode files.</a></h1>
         
 
         <div class="post-meta">
@@ -2053,8 +2204,8 @@ $ ssh -l hyx 192.168.0.103
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -2071,8 +2222,8 @@ $ ssh -l hyx 192.168.0.103
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentCount"></span>
+                <a href="/2013/01/05/java-simple-web-server/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/java-simple-web-server/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2102,413 +2253,355 @@ $ ssh -l hyx 192.168.0.103
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
-<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
-<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
-<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
-<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
-<p>使用示例：</p>
-<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
-<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
-<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
-<ol>
-<li>
-<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
-</li>
-<li>
-<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
-</li>
-</ol>
-<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/software-editplus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/05/software-editplus/" itemprop="url">使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-05T18:09:17+08:00">
-                2013-01-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/软件/" itemprop="url" rel="index">
-                    <span itemprop="name">软件</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/01/05/software-editplus/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/software-editplus/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>除了windows操作系统，EditPlus可以说是我最经常使用的软件了。无论是编写xhtml页面，还是css、js文件，甚至随笔记记这样的事情，我都会使用EditPlus（现在使用的是EditPlus2.31英文版），感觉它不仅功能强大，更难得的是：绿色、轻量级、启动速度快、稳定性高……反正，我个人是爱死她了！</p>
-<p>在使用中，我个人也总结了一些使用经验。可能作为高手的你，看来只是“相当肤浅”，但是没有关系，因为我相信，只要把知识共享出来，总能帮助到一些还在进步中的朋友。下面就让我们来开始配置出符合你自己使用习惯的EditPlus吧！</p>
-<p>2008-05-08补充：同时推荐大家阅读这篇《“阿一web标准学堂”选修课：EditPlus高级使用技巧（附视频、课件、代码下载）》，有视频哦。</p>
-<p>一边阅读，一边动手吧！</p>
-<p>为了达到更好的效果，请你先下载我打包的这个 EditPlus压缩包文件（压缩包文件为绿色的EditPlus2.31英文版,含自动完成文件,高亮语法文件和剪切板代码片断文件，这些文件在解压目录下的&quot;yzyFile&quot;目录下），这样就可以一边看着这篇文章，一边亲自动手，从而达到更好的效果了。</p>
-<p>设置EditPlus的配置文件路径</p>
-<p>因为EditPlus是可以绿色使用的（直接解压那个EditPlus压缩包文件即可直接使用，不用安装），所以，当我们对EditPlus进行一系列的配置以后，保存下这些配置文件。以后当我们重装系统，或者换台电脑使用的时候，只要重新加载一下那些配置文件，以前的配置就都重新回来了，很是方便。所以，在讲其他配置和技巧之前，我们先设置好EditPlus的配置文件路径。</p>
-<p>打开EditPlus → 【Tools】→ 【INI File Directory…】 → 在弹出的对话框中设置配置文件的保存位置（压缩包内的配置保存文件在解压目录下的&quot;yzyFileINIFiles&quot;目录下）。这里你可能要重新设置一下目录，因为，我喜欢把EditPlus放在&quot;D:GreenSoftEditPlus 2&quot;下（把所有的绿色软件装在一个目录下，每次重装系统的时候，可以直接把绿色软件拷回去，就能直接使用了，从而避免了每次都安装那么多软件）。所以，就请你重新设置一下，根据你的习惯，把配置文件存放在某个目录下吧。</p>
-<p>web标准设计
-图1：设置EditPlus的配置文件保存路径</p>
-<p>保护视力，从EditPlus做起</p>
-<p>“最近眼睛好痛呀！”、“靠～眼睛简直要瞎了！”……不知道作为程序员的你是否也经常抱怨这样的事情，每天对着电脑看，的确对视力的伤害很大，所以能不能采取一些措施来为眼睛减减压呢？我在EditPlus里面是这样做的（因为EditPlus是我最长使用的工具，所以以EditPlus为例）——编辑区的背景设为灰色而不是默认的白色，使用较大字号的字体。效果如下图所示：</p>
-<p>web标准设计
-图2：灰色的背景，12号的雅黑字体，构造“爱眼”环境</p>
-<p>你可以这样设置EditPlus编辑环境的背景颜色和字体。菜单【Tools】→ 【Preperences】→ 【General】→ 【fonts】和【colors】。需要说明一下的是：可以设置多种fonts，这样就可以很方便地切换fonts了（参看图2所示），这招对日企这样的朋友很方便哦。中文的字体设置几个，日文的字体设置几个，出现乱码的时候，切换一下字体就可以了。</p>
-<p>web标准设计
-图3：设置EditPlus的字体和颜色</p>
-<p>配置文件模板，告别重复的体力劳动</p>
-<p>设置好EditPlus的配置文件，就让我们开始EditPlus的使用技巧吧。第一个技巧当然就是和“新建”有关的啦。如果我们经常建立一种文件，而这种文件总会包含一些重复的文字或者代码的话，我们就可以建立模板，然后通过模板建立文件。从而摆脱每次都要重复的体力劳动。</p>
-<p>我们就从建立一个属于自己的xhtml文件开始吧。菜单【File】→ 【New】→ 【Configure templates…】→ 在打开的对话框中“填上”菜单中显示的文字，已经模板文件的路径，就可以了。下次当你再次选择【File】→ 【New】的时候，就能够看到你建立的模板了。</p>
-<p>web标准设计
-图4：EditPlus中建立自己的模板</p>
-<p>模板文件要怎么建立呢？其实很简单呀。举个很简单的例子，如果我想建立一个我自己的xhtml页面，模板文件就可以写成这样——</p>
-<p>我的XHTML模板页面</p>
-<!DOCTYPE html public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-<meta name="Keywords" content="YES!B/S!,JustinYoung,web标准设计"> 
-<meta name="Description" content="This page is from http://Justinyoung.cnblogs.com"> 
-<title>简单的XHTML页面</title> 
-</head> 
-<body> 
-^!<!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end --> 
-</body> 
-</html>
-<p>显然里面的Keywords和Description，意见title的内容都已经变成我常用的了。还有一点，请大家注意第10行的“^!”标签。这个标签在EditPlus中表示光标所在位置。显然，这里的意思就是：当你用这个模板建立一个新的文件的时候，光标就会自动停留在<body>和</body>之间，从而方便你的直接输入。</p>
-<p>关于模板文件再说两句：</p>
-<p>1：在我提供的那个 EditPlus压缩包文件中，模板文件存放在解压目录下的“yzyFileTemplates”文件夹下。</p>
-<p>2：我们知道使用快捷键“Ctrl + Shift + N”可以快速的建立一个html页面，而这个可以快速的建立html的模板，位于EditPlus目录下的，文件名为“templatex.html”。你可以通过修改这个模板文件，来达到你个性化html页面的目的。</p>
-<p>顺手的侧边栏</p>
-<p>如果你看不到侧边栏，可以使用快捷键（Alt + Shift + 1）。侧边栏包含了“快速目录路径”和“快速剪贴板”功能。“快速目录路径”就不说了，重点来说说“快速剪贴板”功能吧。其实说白了，就是一个地方，这个地方可以存放一些代码片断、常用文言等等文字。当你需要这些文字的时候，只要双击，就可以方便的添加到光标所在位置了。默认情况下会有一些html，css代码，但是，说实话，我是不太经常使用那些东西的，那么多，找到都累死了。所以，我喜欢建立一个自己最常用的“剪贴板”库，因为是自己建的，所以用着就会比较顺手了。</p>
-<p>你可以通过这种方式来建立自己的“剪贴板”库文件。在Cliptext侧边栏上的下拉列表框上点击右键 → 新建 → 填写文件名和显示标题→ 在新建的空白侧边栏上点击右键 → 新建 → 填入显示文本和代码即可。</p>
-<p>关于“剪贴板”库文件再说两句：</p>
-<p>1：在我提供的那个 EditPlus压缩包文件中“剪贴板”库文件存放在解压目录下的“yzyFileCliptextLibrary”文件夹下。</p>
-<p>2：你可以通过直接编辑，解压目录下的“yzyFileCliptextLibrary”文件夹下的“剪贴板”库文件，来快速的建立自己的常用代码库（用EditPlus就可以打开，格式看一下就懂了。编辑好以后要重新“Reload”一下，或者重新启动一下才能刷新哦）。</p>
-<p>3：侧边栏可以放在左边，也可以放在右面。设置的方法是：在侧边栏点击鼠标右键 → 选择【Location】菜单内的left或者right。</p>
-<p>华丽的自动完成功能</p>
-<ul> 
-<li><a href="" title=""></a></li> 
-<li><a href="" title=""></a></li> 
-<li><a href="" title=""></a></li> 
-<li><a href="" title=""></a></li> 
-<li><a href="" title=""></a></li> 
-</ul>
-<p>可以说是俺最喜欢的功能了。想象一下，作为一个经常制作网页的人来所，当你打一个“ua”字，然后按下空格，编辑器里面就出现了右边的代码，而且鼠标就停留在第一个href的双引号之间。那是多么愉快的事情。这就是EditPlus的自动完成功能，使用EditPlus的自动完成功能将会极大的提高你的工作效率。而且我们可以根据不同的文件类型，建立不同的“自动完成”，例如，如果是xhtml文件，打“b”+ 空格”，就是 <strong></strong>，而在css文件中，“b”+ 空格”，就是 “border:1px solid red;”。非常的人性化。</p>
-<p>你可以通过这样的设置，来使用EditPlus的自动完成功能。【Tools】→【Preperences】→ 【Files】→ 【Settings &amp; syntax】 → 在【File types】中设置一下文件类型，然后再【Auto completion】中选择自动完成文件即可（如果你使用的是我那个 EditPlus压缩包文件，请注意调整这里的自动完成文件的路径）。自动完成文件我们可以自己进行编辑，这里我举个简单的例子，展开下面的代码，这个便是我css文件自动完成的文件内容，以第11行的“#T=bor”为例，它的意思就是如果输入bor然后按空格，就在光标所在位置插入“border:1px solid red;”</p>
-<p>css自动完成例子
-#TITLE=CSS
-; EditPlus Auto-completion file v1.0 written by Justin Young(<a href="http://justinyoung.cnblogs.com" target="_blank" rel="external">http://justinyoung.cnblogs.com</a>).
-; This file is provided as a default auto-completion file for CSS.</p>
-<p>#T=*</p>
-<ul>
-<li>{}{margin:0; padding:0; list-style:none; }
-^!
-#T=bo
-border:1px solid #^!;
-#T=bor
-border:1px solid red;
-^!
-#T=fl
-float:left;
-#T=fr
-float:right;
-#T=poa
-position:absolute;
-#T=por
-position:relative;
-#T=bg
-background:url(‘…/Images/^!.gif’) no-repeat;
-#T=bgc
-background-color:^!;
-#T=he
-height:^!px;
-#T=wi
-width:^!px;
-#T=ml
-margin-left:^!px;
-#T=mr
-margin-right:^!px;
-#T=mt
-margin-top:^!px;
-#T=mb
-margin-bottom:^!px;
-#T=pt
-padding-top:^!px;
-#T=pr
-padding-right:^!px;
-#T=pl
-padding-left:^!px;
-#T=pb
-padding-bottom:^!px;
-#T=bt
-border-top:1px solid ^!;
-#T=br
-border-right:1px solid ^!;
-#T=bl
-border-left:1px solid ^!;
-#T=bb
-border-bottom:1px solid ^!;
-#T=
-;</li>
-</ul>
-<p>关于“自动完成”文件再说两句：</p>
-<p>1：在我提供的那个 EditPlus压缩包文件中“自动完成”文件存放在解压目录下的“yzyFileAutoCompletion”文件夹下。</p>
-<p>2：你可以通过直接编辑，解压目录下的“yzyFileAutoCompletion”文件夹下的EditPlus自动完成文件，来快速的建立自己的EditPlus自动完成文件。</p>
-<p>EditPlus自动完成
-图5：“自动完成”和“高亮语法”设置对话框</p>
-<p>彩色的文件，高亮语法文件</p>
-<p>很多的开发工具都有语法高亮显示功能，EditPlus虽小，但是也有这个功能哦。设置方法可以参考图片5所示。和“自动完成”功能一样，只要为不同的文件类型指定“高亮语法”文件即可。css、html等常用的文件类型，EditPlus已经自带了高亮语法文件。如果自带的高亮语法文件没有你需要的，你可以去EditPlus官方网站的文件下载频道去看看，来自全球各地的朋友，贡献了很多的不同文件类型的高亮语法文件。可以很方便地免费下载到。</p>
-<p>这里就稍微列举一下比较常用的EditPlus的高亮语法文件，更多的请到EditPlus的官方网站下载，EditPlus的官方地址为： <a href="http://www.editplus.com/files.html" target="_blank" rel="external">http://www.editplus.com/files.html</a></p>
-<p>EditPlus SQL 高亮语法文件
-EditPlus C ++ 高亮语法文件
-EditPlus C#高亮语法文件
-EditPlus Java 高亮语法文件
-EditPlus PHP 高亮语法文件
-EditPlus CSS HTML高亮语法文件
-EditPlus正则表达式</p>
-<p>EditPlus中的查找（替换）功能，支持正则表达式。使用正则表达式可以极大的提高查找（替换）的强悍程度。因为正则表达式这东西不是一句话就能说完的，而且偏离此篇文章主题，所以这里只列举几个常用的例子。对此有兴趣的可以参考正则表达式资料，或者在EditPlus的help中“Regular Expression”关键字进行索引查找。</p>
-<p>EditPlus正则表达式
-图6：在查找（替换）对话框中使用正则表达式</p>
-<p>使用正则表达式进行查找（替换）的方法如上图所示，选择查找（替换）对话框中“Regular Expression”前面checkbox。点击查找（替换）文本框后的“倒三角”可以选择常用的正则表达式。</p>
-<p>正则表达式实例</p>
-<p>需求说明
-正则表达式写法
-备注</p>
-<p>替换指定内容（以abc为例）到行尾
-abc.*
-“.”表示匹配任意字符；“*”表示匹配0次或更多</p>
-<p>给所有的数字加上引号
-查找[0-9]替换为&quot;&quot;
-表示正则表达式匹配的对象</p>
-<p>删除空白行
-查找nn 替换为n
-把连续的2个换行符，替换成一个换行符</p>
-<p>矩形选区</p>
-<p>看到这个词，好像是说图像处理工具，其实非也，不管是VS还是EditPlus，其实都是支持矩形选区的。这对处理一些形如：去掉文章前端行号的情况有特效，矩形全区的选取方式就是按住Alt键，然后用鼠标划矩形选区(如图7所示)。需要注意到是在“自动换行”的情况下，是不能使用“矩形选区”的。你可以使用Ctrl+Shift +W来切换“自动换行”或者“不自动换行”视图。</p>
-<p>在EditPlus中选取矩形选区
-图7：在EditPlus中选取矩形选区（注意红色框内的“自动换行图标”）</p>
-<p>提高工作效率，EditPlus 快捷键的使用</p>
-<p>如果一个来你们公司面试程序员，连Ctrl + C 和Ctrl + V 都不用，而是使用“选中文本”→ 鼠标右键 → 【复制】，然后再鼠标右键→ 【粘贴】。你会不会录用他呢？（你还别笑，以前我们公司还真面试过一个这样的，所谓的“<a href="http://xn--asp-837h493f.net" target="_blank" rel="external">精通asp.net</a>”的程序员）。所以熟练的使用软件的快捷键，不仅仅能够极大的提高工作效率，也从一个侧面表现出一个人对此软件的使用能力。EditPlus同样也有很多的快捷键，下面是一些我经常使用的EditPlus特有的快捷键（Ctrl +C 、Ctrl+H这样的通用快捷键就不介绍了），略举一二，更多的请参看文章《EditPlus快捷键》</p>
-<p>以浏览器模式预览文件
-Ctrl + B</p>
-<p>开始编辑“以浏览器模式预览的文件”
-Ctrl + E</p>
-<p>新建html文件
-Ctrl+Shift+N</p>
-<p>新建浏览器窗口（类似于在EditPlus中打开ie）
-Ctrl+Shift+B</p>
-<p>选中的字母切换为小写
-Ctrl+L</p>
-<p>选中的字母切换为大写
-Ctrl+U</p>
-<p>选中的词组首字母大写
-Ctrl+Shift+U</p>
-<p>复制选定文本并追加到剪贴板中
-Ctrl+Shift+C</p>
-<p>剪切选定文本并追加到剪贴板中
-Ctrl+Shift+X</p>
-<p>创建当前行的副本
-Ctrl+J</p>
-<p>复制上一行的一个字符到当前行
-Ctrl±</p>
-<p>剪切选定文本并追加到剪贴板中
-Ctrl+Shift+X</p>
-<p>合并选定行
-Ctrl+Shift+J</p>
-<p>反转选定文本的大小写
-Ctrl+K</p>
-<p>开始/结束选择区域
-Alt+Shift+B</p>
-<p>选择当前行
-Ctrl+R</p>
-<p>全屏模式开/关
-Ctrl+K</p>
-<p>显示或隐藏标尺
-Alt+Shift+R</p>
-<p>显示或隐藏制表符与空格
-Alt+Shift+I</p>
-<p>显示函数列表
-Ctrl+F11</p>
-<p>转到当前文档的指定行
-Ctrl + G</p>
-<p>设置或清除当前行的标记
-F9</p>
-<p>转到下一个标记位置
-F4</p>
-<p>转到上一个标记位置
-Shift+F4</p>
-<p>清除当前文档中的所有标记
-Ctrl+Shift+F9</p>
-<p>搜索一对匹配的括号
-Ctrl+]</p>
-<p>搜索一对匹配的括号并选择该文本
-Ctrl+Shift+]</p>
-<p>切换当前文档的自动换行功能
-Ctrl+Shift+W</p>
-<p>编辑当前 HTML 页面的源文件
-Ctrl+E</p>
-<p>我写博客的模板</p>
-<p>好像这个不应该放在这篇文章中来写，但是因为我写博文一直在EditPlus中写，所以就顺便放在这篇文章中吧。</p>
-<p>有一些朋友问我，你一篇那么花里胡哨的博文需要多长时间吧，关排版就要不少时间吧。其实，排版还真就没用多少时间，因为我已经编辑好一个通用的博文模板了，这个模板包含了我所有博文文章中可能出现的排版情况。每次写博文只要套用模板就可以了，无非就是换换字，换换图片链接地址而且。因为还蛮能提高写博文的效率和排版效果的，所以现在就共享出来供大家使用，希望大家也一样能够写出漂亮的文章。</p>
-<p>EditPlus模板下载YES!B/S!文章模板下载
-EditPlus模板下载</p>
-<p>感谢未注册用户初学者1，提供EditPlus2.31版本的代码折叠功能的使用方法。</p>
-<p>初学者1: CTRL+Shift+F 可以打开代码折叠开关。
-菜单在：查看－代码折叠－使用代码折叠
-我的版本是：2.31（488）</p>
-<p>俺补充一下：html标签，如果要想折叠，必须注意便签内的代码要用tab缩进。
-因为快捷键是使用小键盘的 &quot;+“和”-&quot;所以使用笔记本的会比较郁闷。可以通过设置快捷键达到你的使用习惯。
-设置快捷键的方法：。【Tools】→【Preperences】→ 【Tools】→【KeyBorad】→选择类型为【view】然后在右面列表框中找到展开和收缩。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>This is the window that comes up when you run the program, just a little motivator so you can see what��s in the end of the tunnel.</p>
+<p>Note to get the maximum out of this tutorial it is recommended that you have a basic grasp on how HTTP works. If the little man inside your head says what tha H is HTTP, you should go to the bottom and check some of the pointers. There you will find some nice text to explain the basic concept.</p>
+<p>Let��s get started!
+When making a program nowadays the first thing you should think about is the GUI (graphical user interface). If the program dosen��t look fancy, you can just press all the cancel buttons on the project. Ok that was meant as a joke, but there is some truth in it. People tend to judge a program a lot on its look, even though the real coding job is in making the stuff that goes on behind the scenes.</p>
+<p>The good news is that we are making this in Java, and since Java is such a friendly programming language it��s real easy to get some interface going. Comments are in green.</p>
+<p>//file: webserver_starter.java
+//declare a class wich inherit JFrame
+public classwebserver_starter
+extendsJFrame {
+//declare some panel, scrollpanel, textarea for gui
+JPanel jPanel1 = newJPanel();
+JScrollPane jScrollPane1 = newJScrollPane();
+JTextArea jTextArea2 = newJTextArea();
+staticInteger listen_port = null;
+//basic class constructor
+publicwebserver_starter() {
+try{
+jbInit();
+}
+catch(Exception e) {
+e.printStackTrace();
+}
+}
+//the JavaAPI entry point
+//where it starts this class if run
+public staticvoidmain(String[] args) {
+//start server on port x, default 80
+//use argument to main for what port to start on
+try{
+listen_port = newInteger(args[0]);
+//catch parse error
+}
+catch(Exception e) {
+listen_port = newInteger(80);
+}
+//create an instance of this class
+webserver_starter webserver = newwebserver_starter();
+}
+//set up the user interface
+privatevoidjbInit() throwsException {
+//oh the pretty colors
+jTextArea2.setBackground(newColor(16, 12, 66));
+jTextArea2.setForeground(newColor(151, 138, 255));
+jTextArea2.setBorder(BorderFactory.createLoweredBevelBorder());
+jTextArea2.setToolTipText(&quot;&quot;);
+jTextArea2.setEditable(false);
+jTextArea2.setColumns(30);
+jTextArea2.setRows(15);
+//change this to impress your friends
+this.setTitle(“Jon��s fancy prancy webserver”);
+//ugly inline listener, it��s for handling closing of the window
+this.addWindowListener(newjava.awt.event.WindowAdapter() {
+publicvoidwindowClosing(WindowEvent e) {
+this_windowClosed(e);
+}
+});
+//add the various to the proper containers
+jScrollPane1.getViewport().add(jTextArea2);
+jPanel1.add(jScrollPane1);
+this.getContentPane().add(jPanel1, BorderLayout.EAST);
+//tveak the apearance
+this.setVisible(true);
+this.setSize(420, 350);
+this.setResizable(false);
+//make sure it is drawn
+this.validate();
+//create the actual serverstuff,
+//all that is implemented in another class
+newserver(listen_port.intValue(), this);
+}
+//exit program when “X” is pressed.
+voidthis_windowClosed(WindowEvent e) {
+System.exit(1);
+}
+//this is a method to get messages from the actual
+//server to the window
+publicvoidsend_message_to_window(String s) {
+jTextArea2.append(s);
+}
+} //class end</p>
+<p>In a nutshell this code sets up the window and makes everything look good. If you look at the picture of the program on top of this page. This code makes that!</p>
+<p>Ok, enough time wasted on the look. Lets get down with the fun stuff, making the actual httpserver.</p>
+<p>//file: server.java
+//the real (http) serverclass
+//it extends thread so the server is run in a different
+//thread than the gui, that is to make it responsive.
+//it��s really just a macho coding thing.
+public classserver
+extendsThread {
+//the constructor method
+//the parameters it takes is what port to bind to, the default tcp port
+//for a httpserver is port 80. the other parameter is a reference to
+//the gui, this is to pass messages to our nice interface
+publicserver(intlisten_port, webserver_starter to_send_message_to) {
+message_to = to_send_message_to;
+port = listen_port;
+//this makes a new thread, as mentioned before,it��s to keep gui in
+//one thread, server in another. You may argue that this is totally
+//unnecessary, but we are gonna have this on the web so it needs to
+//be a bit macho! Another thing is that real pro webservers handles
+//each request in a new thread. This server dosen��t, it handles each
+//request one after another in the same thread. This can be a good
+//assignment!! To redo this code so that each request to the server
+//is handled in its own thread. The way it is now it blocks while
+//one client access the server, ex if it transferres a big file the
+//client have to wait real long before it gets any response.
+this.start();
+}
+privatevoids(String s2) { //an alias to avoid typing so much!
+message_to.send_message_to_window(s2);
+}
+privatewebserver_starter message_to; //the starter class, needed for gui
+privateintport; //port we are going to listen to
+//this is a overridden method from the Thread class we extended from
+publicvoidrun() {
+//we are now inside our own thread separated from the gui.
+ServerSocket serversocket = null;
+//To easily pick up lots of girls, change this to your name!!!
+s(“The simple httpserver v. 0000000000nCoded by Jon Berg” +
+&quot;&lt;jon.berg[on server]<a href="http://turtlemeat.com" target="_blank" rel="external">turtlemeat.com</a>&gt;nn&quot;);
+//Pay attention, this is where things starts to cook!
+try{
+//print/send message to the guiwindow
+s(“Trying to bind to localhost on port &quot; + Integer.toString(port) + “��”);
+//make a ServerSocket and bind it to given port,
+serversocket = newServerSocket(port);
+}
+catch(Exception e) { //catch any errors and print errors to gui
+s(“nFatal Error:” + e.getMessage());
+return;
+}
+s(“OK!n”);
+//go in a infinite loop, wait for connections, process request, send response
+while(true) {
+s(“nReady, Waiting for requests��n”);
+try{
+//this call waits/blocks until someone connects to the port we
+//are listening to
+Socket connectionsocket = serversocket.accept();
+//figure out what ipaddress the client commes from, just for show!
+InetAddress client = connectionsocket.getInetAddress();
+//and print it to gui
+s(client.getHostName() + &quot; connected to server.n”);
+//Read the http request from the client from the socket interface
+//into a buffer.
+BufferedReader input =
+newBufferedReader(newInputStreamReader(connectionsocket.
+getInputStream()));
+//Prepare a outputstream from us to the client,
+//this will be used sending back our response
+//(header + requested file) to the client.
+DataOutputStream output =
+newDataOutputStream(connectionsocket.getOutputStream());
+//as the name suggest this method handles the http request, see further down.
+//abstraction rules
+http_handler(input, output);
+}
+catch(Exception e) { //catch any errors, and print them
+s(“nError:” + e.getMessage());
+}
+} //go back in loop, wait for next request
+}
+//our implementation of the hypertext transfer protocol
+//its very basic and stripped down
+privatevoidhttp_handler(BufferedReader input, DataOutputStream output) {
+intmethod = 0; //1 get, 2 head, 0 not supported
+String http = newString(); //a bunch of strings to hold
+String path = newString(); //the various things, what http v, what path,
+String file = newString(); //what file
+String user_agent = newString(); //what user_agent
+try{
+//This is the two types of request we can handle
+//GET /index.html HTTP/1.0
+//HEAD /index.html HTTP/1.0
+String tmp = input.readLine(); //read from the stream
+String tmp2 = newString(tmp);
+tmp.toUpperCase(); //convert it to uppercase
+if(tmp.startsWith(“GET”)) { //compare it is it GET
+method = 1;
+} //if we set it to method 1
+if(tmp.startsWith(“HEAD”)) { //same here is it HEAD
+method = 2;
+} //set method to 2
+if(method == 0) { // not supported
+try{
+output.writeBytes(construct_http_header(501, 0));
+output.close();
+return;
+}
+catch(Exception e3) { //if some error happened catch it
+s(“error:” + e3.getMessage());
+} //and display error
+}
+//}
+//tmp contains “GET /index.html HTTP/1.0 ����.”
+//find first space
+//find next space
+//copy whats between minus slash, then you get “index.html”
+//it��s a bit of dirty code, but bear with me��
+intstart = 0;
+intend = 0;
+for(inta = 0; a &lt; tmp2.length(); a++) {
+if(tmp2.charAt(a) == �� �� &amp;&amp; start != 0) {
+end = a;
+break;
+}
+if(tmp2.charAt(a) == �� �� &amp;&amp; start == 0) {
+start = a;
+}
+}
+path = tmp2.substring(start + 2, end); //fill in the path
+}
+catch(Exception e) {
+s(“errorr” + e.getMessage());
+} //catch any exception
+//path do now have the filename to what to the file it wants to open
+s(“nClient requested:” + newFile(path).getAbsolutePath() + “n”);
+FileInputStream requestedfile = null;
+try{
+//NOTE that there are several security consideration when passing
+//the untrusted string “path” to FileInputStream.
+//You can access all files the current user has read access to!!!
+//current user is the user running the javaprogram.
+//you can do this by passing “…/” in the url or specify absoulute path
+//or change drive (win)
+//try to open the file,
+requestedfile = newFileInputStream(path);
+}
+catch(Exception e) {
+try{
+//if you could not open the file send a 404
+output.writeBytes(construct_http_header(404, 0));
+//close the stream
+output.close();
+}
+catch(Exception e2) {}
+;
+s(“error” + e.getMessage());
+} //print error to gui
+//happy day scenario
+try{
+inttype_is = 0;
+//find out what the filename ends with,
+//so you can construct a the right content type
+if(path.endsWith(&quot;.zip&quot;
+) {
+type_is = 3;
+}
+if(path.endsWith(&quot;.jpg&quot;) || path.endsWith(&quot;.jpeg&quot;)) {
+type_is = 1;
+}
+if(path.endsWith(&quot;.gif&quot;)) {
+type_is = 2;
+//write out the header, 200 -&gt;everything is ok we are all happy.
+}
+output.writeBytes(construct_http_header(200, 5));
+//if it was a HEAD request, we don��t print any BODY
+if(method == 1) { //1 is GET 2 is head and skips the body
+while(true) {
+//read the file from filestream, and print out through the
+//client-outputstream on a byte per byte base.
+intb = requestedfile.read();
+if(b == -1) {
+break; //end of file
+}
+output.write(b);
+}
+}
+//clean up the files, close open handles
+output.close();
+requestedfile.close();
+}
+catch(Exception e) {}
+}
+//this method makes the HTTP header for the response
+//the headers job is to tell the browser the result of the request
+//among if it was successful or not.
+privateString construct_http_header(intreturn_code, intfile_type) {
+String s = &quot;HTTP/1.0 &quot;;
+//you probably have seen these if you have been surfing the web a while
+switch(return_code) {
+case200:
+s = s + “200 OK”;
+break;
+case400:
+s = s + “400 Bad Request”;
+break;
+case403:
+s = s + “403 Forbidden”;
+break;
+case404:
+s = s + “404 Not Found”;
+break;
+case500:
+s = s + “500 Internal Server Error”;
+break;
+case501:
+s = s + “501 Not Implemented”;
+break;
+}
+s = s + “rn”; //other header fields,
+s = s + “Connection: closern”; //we can��t handle persistent connections
+s = s + “Server: SimpleHTTPtutorial v0rn”; //server name
+//Construct the right Content-Type for the header.
+//This is so the browser knows what to do with the
+//file, you may know the browser dosen��t look on the file
+//extension, it is the servers job to let the browser know
+//what kind of file is being transmitted. You may have experienced
+//if the server is miss configured it may result in
+//pictures displayed as text!
+switch(file_type) {
+//plenty of types for you to fill in
+case0:
+break;
+case1:
+s = s + “Content-Type: image/jpegrn”;
+break;
+case2:
+s = s + “Content-Type: image/gifrn”;
+case3:
+s = s + “Content-Type: application/x-zip-compressedrn”;
+default:
+s = s + “Content-Type: text/htmlrn”;
+break;
+}
+////so on and so on����
+s = s + “rn”; //this marks the end of the httpheader
+//and the start of the body
+//ok return our newly created header!
+returns;
+}
+} //class phhew caffeine yes please!</p>
+<p>BEWARE! When you run the web server you are potentially opening for all your files to be red by the entire Internet! The httpserver is only ment to be used for testing. If you absoulutely want to run this httpserver for longer periods of time; consider creating a new user with only read access to the files you want to share and running it only with this user!</p>
+<p>Download the tutorial files! this zipfile contains both sourcecode and compiled javabytecode files. So you can test the program without having the javacompiler. It also contains a sample index.html and a jpg file.</p>
+<p>How to run the program? Get into commandline, cd to the dir where you extracted the files (webserver_starter.class and the other files). Then type: java webserver_starter</p>
+<p>Then the window you see on top of this page should pop up. To test if this httpserver is really functioning, you open your browser, and in the location line you type: <a href="http://localhost/index.html" target="_blank" rel="external">http://localhost/index.html</a> ,this will bring up a sample html file that is in the zipfile.</p>
+<p>If you want to test the httpserver from another machine on the Internet, then you need to know the ip-address or hostname the httpserver is running on, then you type that in the location line in the browser, like <a href="http://123.123.123.123/index.html" target="_blank" rel="external">http://123.123.123.123/index.html</a> .Note, it may not work if you are behind a firewall or a NAT router, but that��s not the programs�� fault!</p>
+<p>Update: Oct 2011. This code is not actively updated, but I changed a few things mainly due to many people are referencing this. The switch (file_type) was missing breaks. requestedfile.read() and output.write() now reads and writes a byte array which speeds things up. And added favicon support since somebody asked about it.</p>
+<p>How to compile: Open command line. cd to directory where you unpacked it. javac *.java
+How to run: Open command line. cd to directory where you unpacked it. java -cp . webserver_starter</p>
+<p>Pointers to related stuff on the hypertext transfer protocol (http) and web servers:</p>
+<p>HowStuffWorks This is a very basic introduction for the novice on how web servers works. Has also other text about Internet and Routers, in easy to understandable language. Nice if you are starting out learning.</p>
+<p>HTTP Made Really Easy Here is some nice text that goes through the main points in HTTP. A little more technical. It��s recommended that you know these things to understand the above tutorial.
+Apache the best and most widely used web server on the Internet today, check it out. If you want to run your own web server this is the one to get, you can get binaries for both Windows and Unix. You can download the entire sourcecode if you want to check how it was made.</p>
+<p>Mozilla / Netscape is a nice web browser. Get rid of the Explorer, there are some rumors that Internet Explorer secretly collects all the pages you are visiting and sends it to <a href="http://microsoft.com" target="_blank" rel="external">microsoft.com</a>.</p>
+<p>RFC-1945 RFC describing Hypertext Transfer Protocol �� HTTP/1.0</p>
+<p>RFC-2616 RFC describing Hypertext Transfer Protocol �� HTTP/1.1</p>
+<p>RFC webpage The Request For Comment webpage, RFC are technical documents describing all sorts of protocols on the Internet.</p>
+<p>Java2 Runtime / SDK Download site for the Java Runtime (needed for running Java programs) and Java Software Development Kit (needed for making Java programs).</p>
 
           
         
@@ -2598,7 +2691,7 @@ EditPlus模板下载</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">287</span>
+                  <span class="site-state-item-count">288</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2609,7 +2702,7 @@ EditPlus模板下载</p>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2620,7 +2713,7 @@ EditPlus模板下载</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">180</span>
+                  <span class="site-state-item-count">181</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -3259,7 +3352,24 @@ EditPlus模板下载</p>
         onPopupClose();
       }
     });
-  </script>
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 

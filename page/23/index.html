@@ -358,6 +358,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/25/system-bt5-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/25/system-bt5-guide/" itemprop="url">BackTrack5(BT5)硬盘安装完美教程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-25T21:01:00+08:00">
+                2012-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/12/25/system-bt5-guide/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/25/system-bt5-guide/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>BackTrack5的硬盘安装分两步走，第一步是BT5的硬盘引导，第二步是BT5的硬盘安装。过程中用到BT5的LIVE镜像，可以在这里下载BackTrack5发布，提供多种镜像下载 。</p>
+<p>第一部分 BackTrack5(BT5)硬盘引导
+BackTrack5 （BT5）的硬盘引导我们是借助grub4dos来完成的，grub跟grub2下还木有测试。grub4dos在xp跟win7下可以都用 boot.ini的方法来完成，win7也认识boot.ini，如果你是xp，直接修改boot.ini，如果你是win7，在系统盘根目录下新建 boot.ini。
+写入内容：
+c:\grldr=&quot;GRUB4DOS Menu&quot;
+xp是在文件最后加上上面这行，win7在空白文件中只写这行就可以了。当然，win7也可以用easyBCD来安装grub4dos，可以参考的文章ubuntu11.04硬盘安装详细教程，xp、win7完美支持
+下面你需要下载grub4dos的配置文件：点此下载配置文件 将此文件解压缩到系统盘根目录即可。
+其实如果你对grub的menu.lst比较熟悉的话，可以看下menu.lst引导BT5的内容
+title BackTrack5 Text - Default Boot Text Mode
+root (hd0,0)
+kernel /casper/vmlinuz file=/preseed/custom.seed boot=casper text splash vga=791–
+initrd /casper/initrd.gz
+boot
+下载好CD镜像后，用UltraISO将全部文件解压缩到系统盘根目录（你的系统盘）下即可。
+重启时选择引导，会进入BackTrack5的引导。这一步完成后你就已经完成了硬盘引导工作，可以正常进入BT5的LIVE了。默认账户是root，密码是toor，进入图形化桌面是startx。</p>
+<p>第二部分 BackTrack5(BT5)硬盘安装
+这一部分，说说missing filesystem.size错误的产生原因，missing filesystem.size是因为install.sh那个文件无法找到安装所需要的filesystem.size，而这个文件就在/cdrom中，而当你运行了umount -l /cdrom之后，该目录变成了空目录，所以系统无法找到原来我们拷贝过去的文件filesystem.size，因此会报错。那么如何解决呢？方案有两个，一个是将iso镜像中的所有文件都重新拷贝到/cdrom文件夹中，当然，这是不太可行的，至少2G内存是木有搞定，呵呵，说不定你是4G内存可以搞定呢~~~这个方法我们pass掉，现在说说真正的方法，用loop将iso文件挂载到/cdrom目录下。具体做法：
+1.准备好你的bt5的安装iso，最好是放在你的系统盘也就是sda1中，如果放不开当然放别的盘里也可以的，命名全部用英文，免得有不必要的麻烦。打开一个终端，终端在程序的附件中。
+在终端中运行
+cd /
+sudo mkdir nenew
+sudo umount -l /cdrom
+sudo mount /dev/sda1 /nenew
+ls /nenew | grep iso
+运行到这一步的时候，看看回显的结果中是否有你的镜像文件，如果你放到了第一个分区中，应该可以看到你的镜像名称，可以继续第二步了。如果你没有放到系统根目录下，就执行下面的命令，将sda的数字依次递增，直到ls 的结果有你的镜像为止。
+sudo umount -l /nenew
+sudo mount /dev/sda2 /nenew
+ls /nenew | grep iso
+好了，到此我们假设你已经看到了你的BackTrack5的iso镜像文件，如果你没有看到，自己找找原因吧，不解释。
+2.执行下列命令
+sudo modprobe loop
+sudo mount -o loop /nenew/BT5-GNOME-32.iso /cdrom
+这里的BT5-GNOME-32.iso为你的BT5的镜像名称。
+sudo umount -l /nenew
+ls /cdrom
+这时候会回显cdrom目录下的文件，自己确定下跟iso文件中是否一致，如果一致，ok，你的操作正确了，可以进行安装了，如果不一致，sorry，回头继续看教程找原因。
+3.运行桌面上的install来安装即可，安装过程可以参考ubuntu的安装过程，这里就不熬述了。最后安装结束，提示是否重启，选择reboot重启，当出现提示让输入enter的时候回车，这个地方没法过去，当然这并没有什么影响，直接关掉电源就可以了，因为该关闭的东东已经都关闭了。如果你是笔记本就长按开机按钮就可以关机的。重新开机就可以进入系统了。当然，你没有看到windows的启动项。启动正常后，用户名root密码toor进入系统，startx进入图形，打开终端，sudo update-grub就有windows的启动项了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/25/db-sql-convert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -461,7 +649,7 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>格式:
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>格式:
 <code>CONVERT(data_type,expression[,style])</code>
 说明:
 此样式一般在时间类型(datetime,smalldatetime)与字符串类型(nchar,nvarchar,char,varchar)
@@ -683,7 +871,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>方法如下：
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>方法如下：
 1、在.gwt.xml文件里加入</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">inherits</span> <span class="attr">name</span>=<span class="string">”com.google.gwt.i18n.I18N”/</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">extend-property</span> <span class="attr">name</span>=<span class="string">”locale”</span> <span class="attr">values</span>=<span class="string">”zh_CN”/</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">extend-property</span> <span class="attr">name</span>=<span class="string">”locale”</span> <span class="attr">values</span>=<span class="string">”en”/</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>这里是在告诉gwt，现在需要使用中文和英文两种方法了
@@ -841,7 +1029,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight vbscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">on</span> <span class="keyword">error</span> <span class="keyword">resume</span> <span class="keyword">next</span></div><div class="line"><span class="keyword">dim</span> WSHshellA</div><div class="line"><span class="keyword">set</span> WSHshellA = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshellA.run <span class="string">"cmd.exe /c shutdown -r -t 120 -c ""说我是猪，不说就2分钟关你机，不信，试试···"" "</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="keyword">dim</span> a</div><div class="line"><span class="keyword">do</span> <span class="keyword">while</span>(a &lt;&gt; <span class="string">"我是猪"</span>)</div><div class="line">a = <span class="built_in">inputbox</span> (<span class="string">"说我是猪,就不关机，快撒，说 ""我是猪"" "</span>,<span class="string">"说不说"</span>,<span class="string">"不说"</span>,<span class="number">8000</span>,<span class="number">7000</span>)</div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + a,<span class="number">0</span>,<span class="string">"MsgBox"</span></div><div class="line"><span class="keyword">loop</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"早说就行了嘛"</span></div><div class="line"><span class="keyword">dim</span> WSHshell</div><div class="line"><span class="keyword">set</span> WSHshell = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshell.run <span class="string">"cmd.exe /c shutdown -a"</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"哈哈哈哈，真过瘾"</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight vbscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">on</span> <span class="keyword">error</span> <span class="keyword">resume</span> <span class="keyword">next</span></div><div class="line"><span class="keyword">dim</span> WSHshellA</div><div class="line"><span class="keyword">set</span> WSHshellA = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshellA.run <span class="string">"cmd.exe /c shutdown -r -t 120 -c ""说我是猪，不说就2分钟关你机，不信，试试···"" "</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="keyword">dim</span> a</div><div class="line"><span class="keyword">do</span> <span class="keyword">while</span>(a &lt;&gt; <span class="string">"我是猪"</span>)</div><div class="line">a = <span class="built_in">inputbox</span> (<span class="string">"说我是猪,就不关机，快撒，说 ""我是猪"" "</span>,<span class="string">"说不说"</span>,<span class="string">"不说"</span>,<span class="number">8000</span>,<span class="number">7000</span>)</div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + a,<span class="number">0</span>,<span class="string">"MsgBox"</span></div><div class="line"><span class="keyword">loop</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"早说就行了嘛"</span></div><div class="line"><span class="keyword">dim</span> WSHshell</div><div class="line"><span class="keyword">set</span> WSHshell = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshell.run <span class="string">"cmd.exe /c shutdown -a"</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"哈哈哈哈，真过瘾"</span></div></pre></td></tr></table></figure>
 
           
         
@@ -993,7 +1181,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight erb"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby">@page contentType=<span class="string">"text/html"</span> pageEncoding=<span class="string">"UTF-8"</span></span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"</span></div><div class="line">"http://www.w3.org/TR/html4/loose.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>JVM memory<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"></span></div><div class="line">double total = (Runtime.getRuntime().totalMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double max = (Runtime.getRuntime().maxMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double free = (Runtime.getRuntime().freeMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double useable = max - total + free;</div><div class="line"><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">"3"</span>&gt;</span>JVM信息<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>参数<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>值<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>描述<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>maxMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">max </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机试图使用的最大内存量(当前JVM的最大可用内存)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>totalMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">total </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机中的内存总量(当前JVM占用的内存总数)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>freeMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">free </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机中的空闲内存量(当前JVM空闲内存)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span> maxMemory()-totalMemory()+freeMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">useable </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>因为JVM只有在需要内存时才占用物理内存使用，所以freeMemory()的值一般情况下都很小，而JVM实际可用内存并不等于freeMemory()，而应该等于 maxMemory()-totalMemory()+freeMemory()。<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight erb"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby">@page contentType=<span class="string">"text/html"</span> pageEncoding=<span class="string">"UTF-8"</span></span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"</span></div><div class="line">"http://www.w3.org/TR/html4/loose.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>JVM memory<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"></span></div><div class="line">double total = (Runtime.getRuntime().totalMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double max = (Runtime.getRuntime().maxMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double free = (Runtime.getRuntime().freeMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double useable = max - total + free;</div><div class="line"><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">"3"</span>&gt;</span>JVM信息<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>参数<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>值<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>描述<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>maxMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">max </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机试图使用的最大内存量(当前JVM的最大可用内存)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>totalMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">total </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机中的内存总量(当前JVM占用的内存总数)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>freeMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">free </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机中的空闲内存量(当前JVM空闲内存)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span> maxMemory()-totalMemory()+freeMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">useable </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>因为JVM只有在需要内存时才占用物理内存使用，所以freeMemory()的值一般情况下都很小，而JVM实际可用内存并不等于freeMemory()，而应该等于 maxMemory()-totalMemory()+freeMemory()。<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1145,7 +1333,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line">		(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="comment">//选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> sel = $(<span class="string">"#div"</span>+name);</div><div class="line">				sel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).hide();</div><div class="line">				$(<span class="string">"#a2"</span>+name).show();</div><div class="line">				$(<span class="string">"#selected"</span>).append(sel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//取消选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doUnSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> unSel = $(<span class="string">"#div"</span>+name);</div><div class="line">				unSel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).show();</div><div class="line">				$(<span class="string">"#a2"</span>+name).hide();</div><div class="line">				$(<span class="string">"#unselected"</span>).append(unSel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//获得选中项</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">getSelectVals</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> selDiv = $(<span class="string">"#selected"</span>);</div><div class="line">				<span class="keyword">var</span> ids = <span class="string">""</span>;</div><div class="line">				$(<span class="string">"div"</span>,selDiv).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">					ids+=$(<span class="keyword">this</span>).attr(<span class="string">"name"</span>)+<span class="string">","</span>;</div><div class="line">				&#125;);</div><div class="line"></div><div class="line">				alert(<span class="string">"选中"</span>+ids);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">hoverIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#E7EFFC"</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">outIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">			&#125;</div><div class="line">			$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">				<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">					<span class="keyword">var</span> v = <span class="string">"00"</span>+i;</div><div class="line">					<span class="keyword">var</span> n = <span class="string">"北京"</span>+i;</div><div class="line">					<span class="keyword">var</span> div = $(<span class="string">"&lt;div&gt;&lt;/div&gt;"</span>);</div><div class="line">					div.attr(<span class="string">"id"</span>,<span class="string">"div"</span>+v);</div><div class="line">					div.attr(<span class="string">"name"</span>,v)</div><div class="line">					<span class="keyword">var</span> a1 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a1.attr(<span class="string">"id"</span>,<span class="string">"a1"</span>+v);</div><div class="line">					a1.attr(<span class="string">"name"</span>,v);</div><div class="line">					a1.html(<span class="string">"&lt;img src='add.png' /&gt;"</span>);</div><div class="line">					a1.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a2 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a2.attr(<span class="string">"id"</span>,<span class="string">"a2"</span>+v);</div><div class="line">					a2.attr(<span class="string">"name"</span>,v);</div><div class="line">					a2.html(<span class="string">"&lt;img src='delete.png' /&gt;"</span>);</div><div class="line">					a2.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"display"</span>:<span class="string">"none"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a0 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a0.html(n);</div><div class="line">					a0.css(&#123;<span class="string">"width"</span>:<span class="string">"120px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>&#125;);</div><div class="line">					div.append(a0);</div><div class="line">					div.append(a1);</div><div class="line">					div.append(a2);</div><div class="line">					div.css(&#123;<span class="string">"padding"</span>:<span class="string">"3"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"margin"</span>:<span class="string">"0"</span>&#125;);</div><div class="line">					div.mouseover(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						hoverIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					div.mouseout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						outIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					$(<span class="string">"#unselected"</span>).append(div);</div><div class="line">					a1.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					a2.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doUnSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line"></div><div class="line">				&#125;</div><div class="line"></div><div class="line">				$(<span class="string">"#selBtn"</span>).bind(<span class="string">"click"</span>,getSelectVals);</div><div class="line"></div><div class="line">			&#125;);</div><div class="line">		&#125;)(jQuery)</div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">HEAD</span>&gt;</span></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">BODY</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TABLE</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>已选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>未选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"selected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span>	</div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"unselected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"selBtn"</span> <span class="attr">value</span>=<span class="string">"保存"</span> /&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TABLE</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">BODY</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">HTML</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line">		(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="comment">//选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> sel = $(<span class="string">"#div"</span>+name);</div><div class="line">				sel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).hide();</div><div class="line">				$(<span class="string">"#a2"</span>+name).show();</div><div class="line">				$(<span class="string">"#selected"</span>).append(sel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//取消选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doUnSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> unSel = $(<span class="string">"#div"</span>+name);</div><div class="line">				unSel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).show();</div><div class="line">				$(<span class="string">"#a2"</span>+name).hide();</div><div class="line">				$(<span class="string">"#unselected"</span>).append(unSel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//获得选中项</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">getSelectVals</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> selDiv = $(<span class="string">"#selected"</span>);</div><div class="line">				<span class="keyword">var</span> ids = <span class="string">""</span>;</div><div class="line">				$(<span class="string">"div"</span>,selDiv).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">					ids+=$(<span class="keyword">this</span>).attr(<span class="string">"name"</span>)+<span class="string">","</span>;</div><div class="line">				&#125;);</div><div class="line"></div><div class="line">				alert(<span class="string">"选中"</span>+ids);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">hoverIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#E7EFFC"</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">outIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">			&#125;</div><div class="line">			$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">				<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">					<span class="keyword">var</span> v = <span class="string">"00"</span>+i;</div><div class="line">					<span class="keyword">var</span> n = <span class="string">"北京"</span>+i;</div><div class="line">					<span class="keyword">var</span> div = $(<span class="string">"&lt;div&gt;&lt;/div&gt;"</span>);</div><div class="line">					div.attr(<span class="string">"id"</span>,<span class="string">"div"</span>+v);</div><div class="line">					div.attr(<span class="string">"name"</span>,v)</div><div class="line">					<span class="keyword">var</span> a1 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a1.attr(<span class="string">"id"</span>,<span class="string">"a1"</span>+v);</div><div class="line">					a1.attr(<span class="string">"name"</span>,v);</div><div class="line">					a1.html(<span class="string">"&lt;img src='add.png' /&gt;"</span>);</div><div class="line">					a1.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a2 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a2.attr(<span class="string">"id"</span>,<span class="string">"a2"</span>+v);</div><div class="line">					a2.attr(<span class="string">"name"</span>,v);</div><div class="line">					a2.html(<span class="string">"&lt;img src='delete.png' /&gt;"</span>);</div><div class="line">					a2.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"display"</span>:<span class="string">"none"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a0 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a0.html(n);</div><div class="line">					a0.css(&#123;<span class="string">"width"</span>:<span class="string">"120px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>&#125;);</div><div class="line">					div.append(a0);</div><div class="line">					div.append(a1);</div><div class="line">					div.append(a2);</div><div class="line">					div.css(&#123;<span class="string">"padding"</span>:<span class="string">"3"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"margin"</span>:<span class="string">"0"</span>&#125;);</div><div class="line">					div.mouseover(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						hoverIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					div.mouseout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						outIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					$(<span class="string">"#unselected"</span>).append(div);</div><div class="line">					a1.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					a2.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doUnSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line"></div><div class="line">				&#125;</div><div class="line"></div><div class="line">				$(<span class="string">"#selBtn"</span>).bind(<span class="string">"click"</span>,getSelectVals);</div><div class="line"></div><div class="line">			&#125;);</div><div class="line">		&#125;)(jQuery)</div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">HEAD</span>&gt;</span></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">BODY</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TABLE</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>已选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>未选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"selected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span>	</div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"unselected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"selBtn"</span> <span class="attr">value</span>=<span class="string">"保存"</span> /&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TABLE</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">BODY</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">HTML</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1297,7 +1485,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>SSL (Secure Socket Layer – 安全套接字层)
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SSL (Secure Socket Layer – 安全套接字层)
 功能：保障在Internet上数据传输之安全，利用数据加密(Encryption)技术，确保数据在网络上之传输过程中不会被截取及窃听，防止篡改。
 如何让我们的WEB应用程序应用SSL安全保障？经过几天摸索，终于实现 TOMCAT+SSL 双向认证，也就是说，首先，客户端将要认证服务器的安全性，确保访问的是正确的服务器，而非假冒的钓鱼网站；其次，服务器也要认证客户端的安全性，只有那些拥有服务器授权证书的客户端才可以访问。
 下面请遵循详细步骤
@@ -1386,7 +1574,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-reflex/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/web-extjs-encodeuri/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1405,7 +1593,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/12/05/java-reflex/" itemprop="url">JAVA反射机制-class类的获取</a></h1>
+                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">ext中文传参乱码</a></h1>
         
 
         <div class="post-meta">
@@ -1440,8 +1628,8 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -1458,8 +1646,8 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/12/05/java-reflex/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/java-reflex/" itemprop="commentCount"></span>
+                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/web-extjs-encodeuri/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1489,64 +1677,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
-信息。
-当一个类或接口被装入的JVM 时便会产生一个与之关联的java.lang.Class 对象，可以通过
-这个Class 对象对被装入类的详细信息进行访问。
-简单的说，获取某一个类所对应的Class 对象可以通过如下三种途径：</p>
-<ol>
-<li>Object 的getClass 方法
-java.lang.Object 中定义有getClass 方法：
-public final Class getClass()
-所有Java 对象都具备这个方
-法。该方法用于返回与调用该方法对象所属类关联的Class 对象，
-例如：</li>
-</ol>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line"><span class="built_in">Date</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">Class c1 = date1.getClass();</div><div class="line">Class c2 = date2.getClass();</div><div class="line"><span class="keyword">System</span>.out.println(c1.<span class="built_in">getName</span>()); <span class="comment">// java.util.Date</span></div><div class="line"><span class="keyword">System</span>.out.println(c1 == c2); <span class="comment">// true</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，调用Date 对象date1 的getClass 方法将返回用于封装Date 类信息的Class
-对象。这里调用了Class 类的getName 方法：</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">String</span> getName()</div></pre></td></tr></table></figure>
-<p>这个方法的含义很直观，即返回所封装的类的名称。
-需要注意的是，代码中的date1 和date2 的getClass 方法返回了相同的Class 对象（c1==c2
-的值为true）。这是因为，对于相同的类，JVM 只会载入一次，而与该类对应的Class 对象
-也只会存在一个，无论该类实例化了多少对象。
-另外，需要强调的是，当一个对象被其父类的引用或其实现的接口类型的引用所指向的时，
-getClass 方法返回的是与对象实际所属类关联的Class 对象。例如：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">List</span> <span class="built_in">list</span> = <span class="literal">new</span> ArrayList();</div><div class="line">System.out.println(<span class="built_in">list</span>.getClass().getName()); <span class="comment">// java.util.ArrayList</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，语句list.getClass()方法返回的是list 所指向对象实际所属类java.util.ArrayList
-对应的Class 对象而并未java.util.List 所对应的Class 对象。有些时候可以通过这个方法了解
-一个对象的运行时类型，例如：</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line">HashSet <span class="keyword">set</span> = new <span class="comment">HashSet()</span>;</div><div class="line">Iterator it = <span class="keyword">set</span>.iterator();</div><div class="line"><span class="keyword">System</span>.out.println(it.getClass().getName()); <span class="comment">//java.util.HashMap$KeyIterator</span></div></pre></td></tr></table></figure>
-<p>从代码可以看出，HashSet 的iterator 方法返回的是实现了Iterator 接口的HashMap 内部类
-（KeyIterator）对象。
-因为抽象类和接口不可能实例化对象，因此不能通过Object 的getClass 方法获得与抽象类
-和接口关联的Class 对象。</p>
-<ol start="2">
-<li>使用.class 的方式
-使用类名加“.class”的方式即会返回与该类对应的Class 对象。例如：</li>
-</ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">Class</span> clazz = <span class="keyword">String</span>.<span class="keyword">class</span>;</div><div class="line">System.<span class="keyword">out</span>.println(clazz.getName()); <span class="comment">// java.lang.String</span></div></pre></td></tr></table></figure>
-<p>这个方法可以直接获得与指定类关联的Class 对象，而并不需要有该类的对象存在。</p>
-<ol start="3">
-<li>使用Class.forName 方法
-Class 有一个著名的static 方法forName：</li>
-</ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">Class</span> forName(<span class="keyword">String</span> className) throws ClassNotFoundException</div></pre></td></tr></table></figure>
-<p>该方法可以根据字符串参数所指定的类名获取与该类关联的Class 对象。如果该类还没有被
-装入，该方法会将该类装入JVM。
-该方法声明抛出ClassNotFoundException 异常。顾名思义，当该方法无法获取需要装入的类
-时（例如，在当前类路径中不存在这个类），就会抛出这个异常。
-例如，如果当前类路径中存在Foo 类：</p>
-<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">package org.whatisjava.reflect;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> &#123;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo()"</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo is initialized"</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行下面的代码：控制台会有如下输出：
-Class clazz = Class.forName(“org.whatisjava.reflect.Foo”);
-Foo is initialized
-Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装入JVM，并返回与之
-关联的Class 对象。JVM 装入Foo 类后对其进行初始化，调用了其static 块中的代码。需要
-注意的是：forName 方法的参数是类的完整限定名（即包含包名）。
-区别于前面两种获取Class 对象的方法。使用Class.forName 方法所要获取的与之对应的Class
-对象的类可以通过字符串的方式给定。该方法通常用于在程序运行时根据类名动态的载入该
-类并获得与之对应的Class 对象。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -1698,7 +1829,7 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
 在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
 由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
 但是在ie下此问题就浮出水面了。
@@ -1728,192 +1859,6 @@ menubar，scrollbars 表示菜单栏和滚动栏。
 resizable=no 是否允许改变窗口大小，yes为允许；
 location=no 是否显示地址栏，yes为允许；
 status=no 是否显示状态栏内的信息，yes为允许；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-hibernate-object-name-validate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/05/java-hibernate-object-name-validate/" itemprop="url">Hibernate 使用 SQL 查询时报错 “对象名 XX 无效”的解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-05T18:09:17+08:00">
-                2012-12-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/05/java-hibernate-object-name-validate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/java-hibernate-object-name-validate/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
-询语言。后者是Hibernate支持的底层数据库查询语言，说白了就是支持以前我们使用
-的SQL语句。
-前2天试着用Hibernate提供的SQL查询数据库，得到的确实不友好的错误提示。
-错误信息如下：
-Caused by: java.sql.SQLException: [Microsoft][SQLServer 2000 Driver for
-JDBC][SQLServer]对象名 ‘ 实际操作的表名 ‘ 无效。
-Hibernate提供的SQL查询语句格式及我检索的条件如下：
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-sQuery.addEntity(Classes.class);
-分析：
-1、查看自己写的语句，没有丝毫的错误。放到SQL查询分析器执行。也能检索出数据。
-这确保了这条语句是没错的。
-提示：Hibernate中的SQL语句是不区分大小写的，即便是你查询的表名。比如你写成这
-样也是合法的 “SEleCt * fRoM ClaSSes “。那么Hibernate怎样操作对象？问题的关键
-是这里sQuery.addEntity(Classes.class);这条语句， 你要正确填写你要检索的表的
-实体，它必须是你存在的POJO。
-2、使用Hibernate官方推荐的HQL查询，同样的数据库，同样的表。结果是正确的。这
-确保了数据库链接是绝对没有问题的。
-3、仔细检查我写的SQL查询方法，没有发现什么语法错误。
-4、检查我查询表的POJO对象的映射文件.XXX.hbm.xml ，主键生成方式是 native 。似
-乎也没有错误。
-5、检查数据库检索表的主键，也已经设成自动增长。
-疑问：
-既然上面都有保证，为什么Hibernate还是检索不到我查询的对象（表）呢，记起POJO
-对象映射文件的class元素中，有这么一段 schema=”dbo” catalog=”HibernateTest”
-。
-提示：schema：数据库所有者。catalog：目录，也就是此对象映射的表属于那个数据
-库。
-和它有关吗？
-修改
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-为
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
-执行查询类，OK了。问题解决了。</p>
 
           
         
@@ -2065,7 +2010,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
 Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
 ”，不含引号，
 然后直接将其文件夹拉到桌面或复制剪切都行。</p>
@@ -2158,7 +2103,7 @@ Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">287</span>
+                  <span class="site-state-item-count">288</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2169,7 +2114,7 @@ Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">68</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2180,7 +2125,7 @@ Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">180</span>
+                  <span class="site-state-item-count">181</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
