@@ -358,6 +358,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/01/linux-centos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/01/linux-centos/" itemprop="url">linux-centos</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-01T22:50:40+08:00">
+                2016-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/01/linux-centos/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2016/11/01/linux-centos/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="centos-6-6-yum-安装-nginx"><a class="header-anchor" href="#centos-6-6-yum-安装-nginx"> </a>centos 6.6 yum 安装 nginx</h2>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">rpm -ivh http:<span class="regexp">//</span>nginx.org<span class="regexp">/packages/</span>centos<span class="regexp">/6/</span>noarch<span class="regexp">/RPMS/</span>nginx-release-centos-<span class="number">6</span>-<span class="number">0</span>.el6.ngx.noarch.rpm</div><div class="line">yum install nginx</div></pre></td></tr></table></figure>
+<h2 id="安装nodejs"><a class="header-anchor" href="#安装nodejs"> </a>安装nodejs</h2>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">sudo yum <span class="keyword">install</span> epel-<span class="keyword">release</span></div><div class="line">sudo yum <span class="keyword">install</span> nodejs</div><div class="line">sudo yum <span class="keyword">install</span> npm</div></pre></td></tr></table></figure>
+<h2 id="安装mysql"><a class="header-anchor" href="#安装mysql"> </a>安装mysql</h2>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> mysql-<span class="keyword">server</span></div><div class="line">yum <span class="keyword">install</span> mysql</div><div class="line">service mysqld <span class="keyword">start</span></div><div class="line">mysqladmin -u root <span class="keyword">password</span> xxxx</div><div class="line">mysql -u root -p</div></pre></td></tr></table></figure>
+<h2 id="安装whois"><a class="header-anchor" href="#安装whois"> </a>安装whois</h2>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> jwhois</div></pre></td></tr></table></figure>
+<h2 id="安装ssh服务"><a class="header-anchor" href="#安装ssh服务"> </a>安装ssh服务</h2>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> openssh-<span class="keyword">server</span></div><div class="line">service sshd <span class="keyword">start</span></div></pre></td></tr></table></figure>
+<p>开机启动</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">chkconfig sshd <span class="keyword">on</span></div></pre></td></tr></table></figure>
+<h2 id="ntfs支持"><a class="header-anchor" href="#ntfs支持"> </a>ntfs支持</h2>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">yum instal fuse-ntfs<span class="number">-3</span>g</div></pre></td></tr></table></figure>
+<h2 id="挂载lvm卷-提示mount-unknown-filesystem-type-lvm2-member-的解决"><a class="header-anchor" href="#挂载lvm卷-提示mount-unknown-filesystem-type-lvm2-member-的解决"> </a>挂载LVM卷，提示mount: unknown filesystem type 'LVM2_member’的解决</h2>
+<p><a href="http://blog.csdn.net/pengyouchuan/article/details/17578189" target="_blank" rel="external">http://blog.csdn.net/pengyouchuan/article/details/17578189</a></p>
+<h2 id="挂载到-media-2失败-结构需要清理"><a class="header-anchor" href="#挂载到-media-2失败-结构需要清理"> </a>挂载到/media/2失败:结构需要清理</h2>
+<p><a href="http://www.cnblogs.com/xiaoyu1005/archive/2013/05/20/3088586.html" target="_blank" rel="external">http://www.cnblogs.com/xiaoyu1005/archive/2013/05/20/3088586.html</a></p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><div class="line">xfs_repair <span class="meta-keyword">/dev/</span>centos/home</div><div class="line">mkfs.ext4 <span class="meta-keyword">/dev/</span>centos/home <span class="meta-keyword">/media/</span><span class="number">2</span></div></pre></td></tr></table></figure>
+<h2 id="centos-7-安装配置-nfs"><a class="header-anchor" href="#centos-7-安装配置-nfs"> </a>CentOS 7 安装配置 NFS</h2>
+<p><a href="http://www.linuxidc.com/Linux/2015-05/117378.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-05/117378.htm</a></p>
+<h2 id="linux-nfs-服务的exportfs命令的简介"><a class="header-anchor" href="#linux-nfs-服务的exportfs命令的简介"> </a>【Linux】nfs 服务的exportfs命令的简介</h2>
+<p><a href="http://blog.itpub.net/22664653/viewspace-709839/" target="_blank" rel="external">http://blog.itpub.net/22664653/viewspace-709839/</a></p>
+<h2 id="centos7安装配置nfs服务和挂载"><a class="header-anchor" href="#centos7安装配置nfs服务和挂载"> </a>Centos7安装配置NFS服务和挂载</h2>
+<p><a href="http://blog.dreamlu.net/blog/67" target="_blank" rel="external">http://blog.dreamlu.net/blog/67</a></p>
+<blockquote>
+<p>systemctl enable nfs-server.service</p>
+</blockquote>
+<blockquote>
+<p>yum install nfs-utils rpcbind
+可能会报冲突：
+file /usr/share/man/man8/blkdeactivate.8.gz from install of device-mapper-7:1.02.107-5.el7_2.2.x86_64 conflicts with file from package lvm2-7:2.02.105-14.el7.x86_64</p>
+</blockquote>
+<p>解决：<a href="https://bugzilla.redhat.com/show_bug.cgi?id=1294128" target="_blank" rel="external">https://bugzilla.redhat.com/show_bug.cgi?id=1294128</a>
+<img src="http://blimg.bovod.org/2016/11/01/20161101230303.png" alt="nfs"><span class="image-caption">nfs</span>
+先更新下lvm2
+<code>yum update lvm2</code></p>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">mount -t nfs <span class="number">10.10</span>.<span class="number">10.2</span><span class="symbol">:/opt/test</span> ./test -o proto=tcp -o nolock</div></pre></td></tr></table></figure>
+<blockquote>
+<p>mount.nfs: an incorrect mount option was specified
+解决：<a href="http://blog.chinaunix.net/xmlrpc.php?id=3988881&amp;r=blog/article&amp;uid=26849186" target="_blank" rel="external">http://blog.chinaunix.net/xmlrpc.php?id=3988881&amp;r=blog/article&amp;uid=26849186</a></p>
+</blockquote>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">mount -o nfsvers=<span class="number">3</span> <span class="number">10.10</span>.<span class="number">10.2</span><span class="symbol">:/opt/test</span> ./test</div></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">mount -t nfs -o nolock,nfsvers=<span class="number">3</span>,vers=<span class="number">3</span>  -o proto=tcp <span class="number">10.10</span>.<span class="number">10.2</span><span class="symbol">:/opt/test</span> ./test</div></pre></td></tr></table></figure>
+<h2 id="设置时间"><a class="header-anchor" href="#设置时间"> </a>设置时间</h2>
+<p><a href="http://www.3lian.com/edu/2015/04-17/205955.html" target="_blank" rel="external">http://www.3lian.com/edu/2015/04-17/205955.html</a></p>
+<figure class="highlight dsconfig"><table><tr><td class="code"><pre><div class="line"><span class="string">timedatectl </span><span class="built_in">set-time</span> <span class="string">"2016-06-27 11:15:59"</span></div></pre></td></tr></table></figure>
+<h2 id="基于-samba-实现-nas-系统"><a class="header-anchor" href="#基于-samba-实现-nas-系统"> </a>基于 Samba 实现 NAS 系统</h2>
+<p><a href="http://shumeipai.nxez.com/2013/08/24/install-nas-on-raspberrypi.html" target="_blank" rel="external">http://shumeipai.nxez.com/2013/08/24/install-nas-on-raspberrypi.html</a></p>
+<p>setenforce 0 (切记关闭！！！)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/01/redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1808,186 +1987,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/10/31/python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/31/python/" itemprop="url">python</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-31T16:33:24+08:00">
-                2016-10-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/10/31/python/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2016/10/31/python/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="windows非官方python插件包"><a class="header-anchor" href="#windows非官方python插件包"> </a>windows非官方python插件包</h2>
-<p><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pil" target="_blank" rel="external">Unofficial Windows Binaries for Python Extension Packages</a></p>
-<h2 id="python-爬虫利器-beautiful-soup"><a class="header-anchor" href="#python-爬虫利器-beautiful-soup"> </a>python 爬虫利器 <a href="https://www.crummy.com/software/BeautifulSoup/" target="_blank" rel="external">Beautiful Soup</a></h2>
-<p><a href="http://cuiqingcai.com/1319.html" target="_blank" rel="external">http://cuiqingcai.com/1319.html</a></p>
-<h2 id="centos-安装-mysqldb-python"><a class="header-anchor" href="#centos-安装-mysqldb-python"> </a>centos 安装 mysqldb-python</h2>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yun <span class="keyword">install</span> python-devel</div><div class="line">yum <span class="keyword">install</span> mysqldb-python</div></pre></td></tr></table></figure>
-<h2 id="python二维码"><a class="header-anchor" href="#python二维码"> </a>python二维码</h2>
-<p><a href="https://pypi.python.org/pypi/qrcode/5.1" target="_blank" rel="external">https://pypi.python.org/pypi/qrcode/5.1</a></p>
-<p><a href="http://www.cnblogs.com/linjiqin/p/4140455.html" target="_blank" rel="external">http://www.cnblogs.com/linjiqin/p/4140455.html</a></p>
-<h2 id="python-正则表达式"><a class="header-anchor" href="#python-正则表达式"> </a>python 正则表达式</h2>
-<p><a href="http://www.cnblogs.com/sevenyuan/archive/2010/12/06/1898075.html" target="_blank" rel="external">http://www.cnblogs.com/sevenyuan/archive/2010/12/06/1898075.html</a></p>
-<h2 id="windows安装python-setuptools-pip-virtualenv"><a class="header-anchor" href="#windows安装python-setuptools-pip-virtualenv"> </a>windows安装python,setuptools,pip,virtualenv</h2>
-<p><a href="http://blog.useasp.net/archive/2014/01/16/install-python-setuptools-pip-and-virtualenv-in-windows.aspx" target="_blank" rel="external">http://blog.useasp.net/archive/2014/01/16/install-python-setuptools-pip-and-virtualenv-in-windows.aspx</a></p>
-<h2 id="windows安装python插件时找不到python"><a class="header-anchor" href="#windows安装python插件时找不到python"> </a>windows安装python插件时找不到python</h2>
-<p><a href="http://blog.csdn.net/zdnlp/article/details/12171687" target="_blank" rel="external">Python version 2.7 required, which was not found in the registry</a></p>
-<h2 id="python-教程"><a class="header-anchor" href="#python-教程"> </a>python 教程</h2>
-<p><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="external">廖雪峰</a></p>
-<h2 id="python-orm"><a class="header-anchor" href="#python-orm"> </a>python orm</h2>
-<p><a href="http://www.w2bc.com/Article/8693" target="_blank" rel="external">http://www.w2bc.com/Article/8693</a></p>
-<p><a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001402228705570c9506d546a3349c6b7d64135127672fe000" target="_blank" rel="external">http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001402228705570c9506d546a3349c6b7d64135127672fe000</a></p>
-<h2 id="python3-和-python2-里的round"><a class="header-anchor" href="#python3-和-python2-里的round"> </a>python3 和 python2 里的round</h2>
-<p>round(2.5)
-python3返回2
-python2返回3
-python2使用的四舍五入算法
-python3使用的<a href="http://baike.baidu.com/item/%E5%9B%9B%E8%88%8D%E5%85%AD%E5%85%A5%E4%BA%94%E6%88%90%E5%8F%8C" target="_blank" rel="external">四舍六入五成双</a>算法
-类似的<a href="https://www.zybang.com/question/e80c81d8de4aacecd79ab73565d7856e.html" target="_blank" rel="external">Round(1.5)=2,Round(2.5)=2,DELPHI里怎么做四舍五入</a></p>
-<h2 id="for循环"><a class="header-anchor" href="#for循环"> </a>for循环</h2>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">for</span> <span class="keyword">index</span>,val <span class="keyword">in</span> enumerate(arr):</div><div class="line">        print <span class="keyword">index</span>,<span class="keyword">in</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2042,7 +2041,7 @@ python3使用的<a href="http://baike.baidu.com/item/%E5%9B%9B%E8%88%8D%E5%85%AD
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">288</span>
+                  <span class="site-state-item-count">289</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
