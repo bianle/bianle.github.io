@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://2le.me/"/>
-  <updated>2018-12-10T06:20:13.216Z</updated>
+  <updated>2018-12-10T06:31:18.793Z</updated>
   <id>http://2le.me/</id>
   
   <author>
@@ -20,14 +20,14 @@
     <link href="http://2le.me/2018/12/10/nginx-config/"/>
     <id>http://2le.me/2018/12/10/nginx-config/</id>
     <published>2018-12-10T06:18:49.000Z</published>
-    <updated>2018-12-10T06:20:13.216Z</updated>
+    <updated>2018-12-10T06:31:18.793Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight nginx"><table><tr><td class="code"><pre><div class="line"><span class="comment">#定义Nginx运行的用户和用户组</span></div><div class="line"><span class="attribute">user</span> www www;</div><div class="line"></div><div class="line"><span class="comment">#nginx进程数，建议设置为等于CPU总核心数。</span></div><div class="line"><span class="attribute">worker_processes</span> <span class="number">8</span>;</div><div class="line"></div><div class="line"><span class="comment">#全局错误日志定义类型，[ debug | info | notice | warn | error | crit ]</span></div><div class="line"><span class="attribute">error_log</span> /var/log/nginx/error.log <span class="literal">info</span>;</div><div class="line"></div><div class="line"><span class="comment">#进程文件</span></div><div class="line"><span class="attribute">pid</span> /var/run/nginx.pid;</div><div class="line"></div><div class="line"><span class="comment">#一个nginx进程打开的最多文件描述符数目，理论值应该是最多打开文件数（系统的值ulimit -n）与nginx进程数相除，但是nginx分配请求并不均匀，所以建议与ulimit -n的值保持一致。</span></div><div class="line"><span class="attribute">worker_rlimit_nofile</span> <span class="number">65535</span>;</div><div class="line"></div><div class="line"><span class="comment">#工作模式与连接数上限</span></div><div class="line"><span class="section">events</span></div><div class="line">&#123;</div><div class="line"><span class="comment">#参考事件模型，use [ kqueue | rtsig | epoll | /dev/poll | select | poll ]; epoll模型是Linux 2.6以上版本内核中的高性能网络I/O模型，如果跑在FreeBSD上面，就用kqueue模型。</span></div><div class="line"><span class="attribute">use</span> <span class="literal">epoll</span>;</div><div class="line"><span class="comment">#单个进程最大连接数（最大连接数=连接数*进程数）</span></div><div class="line"><span class="attribute">worker_connections</span> <span class="number">65535</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#设定http服务器</span></div><div class="line"><span class="section">http</span></div><div class="line">&#123;</div><div class="line"><span class="attribute">include</span> mime.types; <span class="comment">#文件扩展名与文件类型映射表</span></div><div class="line"><span class="attribute">default_type</span> application/octet-stream; <span class="comment">#默认文件类型</span></div><div class="line"><span class="comment">#charset utf-8; #默认编码</span></div><div class="line"><span class="attribute">server_names_hash_bucket_size</span> <span class="number">128</span>; <span class="comment">#服务器名字的hash表大小</span></div><div class="line"><span class="attribute">client_header_buffer_size</span> <span class="number">32k</span>; <span class="comment">#上传文件大小限制</span></div><div class="line"><span class="attribute">large_client_header_buffers</span> <span class="number">4</span> <span class="number">64k</span>; <span class="comment">#设定请求缓</span></div><div class="line"><span class="attribute">client_max_body_size</span> <span class="number">8m</span>; <span class="comment">#设定请求缓</span></div><div class="line"><span class="attribute">sendfile</span> <span class="literal">on</span>; <span class="comment">#开启高效文件传输模式，sendfile指令指定nginx是否调用sendfile函数来输出文件，对于普通应用设为 on，如果用来进行下载等应用磁盘IO重负载应用，可设置为off，以平衡磁盘与网络I/O处理速度，降低系统的负载。注意：如果图片显示不正常把这个改成off。</span></div><div class="line"><span class="attribute">autoindex</span> <span class="literal">on</span>; <span class="comment">#开启目录列表访问，合适下载服务器，默认关闭。</span></div><div class="line"><span class="attribute">tcp_nopush</span> <span class="literal">on</span>; <span class="comment">#防止网络阻塞</span></div><div class="line"><span class="attribute">tcp_nodelay</span> <span class="literal">on</span>; <span class="comment">#防止网络阻塞</span></div><div class="line"><span class="attribute">keepalive_timeout</span> <span class="number">120</span>; <span class="comment">#长连接超时时间，单位是秒</span></div><div class="line"></div><div class="line"><span class="comment">#FastCGI相关参数是为了改善网站的性能：减少资源占用，提高访问速度。下面参数看字面意思都能理解。</span></div><div class="line"><span class="attribute">fastcgi_connect_timeout</span> <span class="number">300</span>;</div><div class="line"><span class="attribute">fastcgi_send_timeout</span> <span class="number">300</span>;</div><div class="line"><span class="attribute">fastcgi_read_timeout</span> <span class="number">300</span>;</div><div class="line"><span class="attribute">fastcgi_buffer_size</span> <span class="number">64k</span>;</div><div class="line"><span class="attribute">fastcgi_buffers</span> <span class="number">4</span> <span class="number">64k</span>;</div><div class="line"><span class="attribute">fastcgi_busy_buffers_size</span> <span class="number">128k</span>;</div><div class="line"><span class="attribute">fastcgi_temp_file_write_size</span> <span class="number">128k</span>;</div><div class="line"></div><div class="line"><span class="comment">#gzip模块设置</span></div><div class="line"><span class="attribute">gzip</span> <span class="literal">on</span>; <span class="comment">#开启gzip压缩输出</span></div><div class="line"><span class="attribute">gzip_min_length</span> <span class="number">1k</span>; <span class="comment">#最小压缩文件大小</span></div><div class="line"><span class="attribute">gzip_buffers</span> <span class="number">4</span> <span class="number">16k</span>; <span class="comment">#压缩缓冲区</span></div><div class="line"><span class="attribute">gzip_http_version</span> <span class="number">1</span>.<span class="number">0</span>; <span class="comment">#压缩版本（默认1.1，前端如果是squid2.5请使用1.0）</span></div><div class="line"><span class="attribute">gzip_comp_level</span> <span class="number">2</span>; <span class="comment">#压缩等级</span></div><div class="line"><span class="attribute">gzip_types</span> text/plain application/x-javascript text/css application/xml;</div><div class="line"><span class="comment">#压缩类型，默认就已经包含text/html，所以下面就不用再写了，写上去也不会有问题，但是会有一个warn。</span></div><div class="line"><span class="attribute">gzip_vary</span> <span class="literal">on</span>;</div><div class="line"><span class="comment">#limit_zone crawler $binary_remote_addr 10m; #开启限制IP连接数的时候需要使用</span></div><div class="line"></div><div class="line"><span class="attribute">upstream</span> blog.ha97.com &#123;</div><div class="line"><span class="comment">#upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。</span></div><div class="line"><span class="attribute">server</span> <span class="number">192.168.80.121:80</span> weight=<span class="number">3</span>;</div><div class="line"><span class="attribute">server</span> <span class="number">192.168.80.122:80</span> weight=<span class="number">2</span>;</div><div class="line"><span class="attribute">server</span> <span class="number">192.168.80.123:80</span> weight=<span class="number">3</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#虚拟主机的配置</span></div><div class="line"><span class="section">server</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">#监听端口</span></div><div class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="comment">#域名可以有多个，用空格隔开</span></div><div class="line">    <span class="attribute">server_name</span> www.ha97.com ha97.com;</div><div class="line">    <span class="attribute">index</span> index.html index.htm index.php;</div><div class="line">    <span class="attribute">root</span> /data/www/ha97;</div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.(php|php5)?$</span></div><div class="line">    &#123;</div><div class="line">    <span class="attribute">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</div><div class="line">    <span class="attribute">fastcgi_index</span> index.php;</div><div class="line">    <span class="attribute">include</span> fastcgi.conf;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#图片缓存时间设置</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.(gif|jpg|jpeg|png|bmp|swf)$</span></div><div class="line">    &#123;</div><div class="line">    <span class="attribute">expires</span> <span class="number">10d</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#JS和CSS缓存时间设置</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.(js|css)?$</span></div><div class="line">    &#123;</div><div class="line">    <span class="attribute">expires</span> <span class="number">1h</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#日志格式设定</span></div><div class="line">    <span class="attribute">log_format</span> access <span class="string">'<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] "<span class="variable">$request</span>" '</span></div><div class="line">    <span class="string">'<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> "<span class="variable">$http_referer</span>" '</span></div><div class="line">    <span class="string">'"<span class="variable">$http_user_agent</span>" <span class="variable">$http_x_forwarded_for</span>'</span>;</div><div class="line">    <span class="comment">#定义本虚拟主机的访问日志</span></div><div class="line">    <span class="attribute">access_log</span> /var/log/nginx/ha97access.log access;</div><div class="line"></div><div class="line">    <span class="comment">#对 "/" 启用反向代理</span></div><div class="line">    <span class="attribute">location</span> / &#123;</div><div class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:88;</div><div class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</div><div class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">    <span class="comment">#后端的Web服务器可以通过X-Forwarded-For获取用户真实IP</span></div><div class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    <span class="comment">#以下是一些反向代理的配置，可选。</span></div><div class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</div><div class="line">    <span class="attribute">client_max_body_size</span> <span class="number">10m</span>; <span class="comment">#允许客户端请求的最大单文件字节数</span></div><div class="line">    <span class="attribute">client_body_buffer_size</span> <span class="number">128k</span>; <span class="comment">#缓冲区代理缓冲用户端请求的最大字节数，</span></div><div class="line">    <span class="attribute">proxy_connect_timeout</span> <span class="number">90</span>; <span class="comment">#nginx跟后端服务器连接超时时间(代理连接超时)</span></div><div class="line">    <span class="attribute">proxy_send_timeout</span> <span class="number">90</span>; <span class="comment">#后端服务器数据回传时间(代理发送超时)</span></div><div class="line">    <span class="attribute">proxy_read_timeout</span> <span class="number">90</span>; <span class="comment">#连接成功后，后端服务器响应时间(代理接收超时)</span></div><div class="line">    <span class="attribute">proxy_buffer_size</span> <span class="number">4k</span>; <span class="comment">#设置代理服务器（nginx）保存用户头信息的缓冲区大小</span></div><div class="line">    <span class="attribute">proxy_buffers</span> <span class="number">4</span> <span class="number">32k</span>; <span class="comment">#proxy_buffers缓冲区，网页平均在32k以下的设置</span></div><div class="line">    <span class="attribute">proxy_busy_buffers_size</span> <span class="number">64k</span>; <span class="comment">#高负荷下缓冲大小（proxy_buffers*2）</span></div><div class="line">    <span class="attribute">proxy_temp_file_write_size</span> <span class="number">64k</span>;</div><div class="line">    <span class="comment">#设定缓存文件夹大小，大于这个值，将从upstream服务器传</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">#设定查看Nginx状态的地址</span></div><div class="line">    <span class="attribute">location</span> /NginxStatus &#123;</div><div class="line">    <span class="attribute">stub_status</span> <span class="literal">on</span>;</div><div class="line">    <span class="attribute">access_log</span> <span class="literal">on</span>;</div><div class="line">    <span class="attribute">auth_basic</span> <span class="string">"NginxStatus"</span>;</div><div class="line">    <span class="attribute">auth_basic_user_file</span> conf/htpasswd;</div><div class="line">    <span class="comment">#htpasswd文件的内容可以用apache提供的htpasswd工具来产生。</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">#本地动静分离反向代理配置</span></div><div class="line">    <span class="comment">#所有jsp的页面均交由tomcat或resin处理</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .(jsp|jspx|do)?$</span> &#123;</div><div class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</div><div class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#所有静态文件由nginx直接读取不经过tomcat或resin</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$</span></div><div class="line">    &#123; <span class="attribute">expires</span> <span class="number">15d</span>; &#125;</div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*.(js|css)?$</span></div><div class="line">    &#123; <span class="attribute">expires</span> <span class="number">1h</span>; &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight nginx"><table><tr><td class="code"><pre><div class="line"><span class="comment">#定义Nginx运行的用户和用户组</span></div><div class="line"><span class="attribute">user</span> www www;</div><div class="line"></div><div class="line"><span class="comment">#nginx进程数，建议设置为等于CPU总核心数。</span></div><div class="line"><span class="attribute">worker_processes</span> <span class="number">8</span>;</div><div class="line"></div><div class="line"><span class="comment">#全局错误日志定义类型，[ debug | info | notice | warn | error | crit ]</span></div><div class="line"><span class="attribute">error_log</span> /var/log/nginx/error.log <span class="literal">info</span>;</div><div class="line"></div><div class="line"><span class="comment">#进程文件</span></div><div class="line"><span class="attribute">pid</span> /var/run/nginx.pid;</div><div class="line"></div><div class="line"><span class="comment">#一个nginx进程打开的最多文件描述符数目，理论值应该是最多打开文件数（系统的值ulimit -n）与nginx进程数相除，但是nginx分配请求并不均匀，所以建议与ulimit -n的值保持一致。</span></div><div class="line"><span class="attribute">worker_rlimit_nofile</span> <span class="number">65535</span>;</div><div class="line"></div><div class="line"><span class="comment">#工作模式与连接数上限</span></div><div class="line"><span class="section">events</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">#参考事件模型，use [ kqueue | rtsig | epoll | /dev/poll | select | poll ]; epoll模型是Linux 2.6以上版本内核中的高性能网络I/O模型，如果跑在FreeBSD上面，就用kqueue模型。</span></div><div class="line">    <span class="attribute">use</span> <span class="literal">epoll</span>;</div><div class="line">    <span class="comment">#单个进程最大连接数（最大连接数=连接数*进程数）</span></div><div class="line">    <span class="attribute">worker_connections</span> <span class="number">65535</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#设定http服务器</span></div><div class="line"><span class="section">http</span></div><div class="line">&#123;</div><div class="line">    <span class="attribute">include</span> mime.types; <span class="comment">#文件扩展名与文件类型映射表</span></div><div class="line">    <span class="attribute">default_type</span> application/octet-stream; <span class="comment">#默认文件类型</span></div><div class="line">    <span class="comment">#charset utf-8; #默认编码</span></div><div class="line">    <span class="attribute">server_names_hash_bucket_size</span> <span class="number">128</span>; <span class="comment">#服务器名字的hash表大小</span></div><div class="line">    <span class="attribute">client_header_buffer_size</span> <span class="number">32k</span>; <span class="comment">#上传文件大小限制</span></div><div class="line">    <span class="attribute">large_client_header_buffers</span> <span class="number">4</span> <span class="number">64k</span>; <span class="comment">#设定请求缓</span></div><div class="line">    <span class="attribute">client_max_body_size</span> <span class="number">8m</span>; <span class="comment">#设定请求缓</span></div><div class="line">    <span class="attribute">sendfile</span> <span class="literal">on</span>; <span class="comment">#开启高效文件传输模式，sendfile指令指定nginx是否调用sendfile函数来输出文件，对于普通应用设为 on，如果用来进行下载等应用磁盘IO重负载应用，可设置为off，以平衡磁盘与网络I/O处理速度，降低系统的负载。注意：如果图片显示不正常把这个改成off。</span></div><div class="line">    <span class="attribute">autoindex</span> <span class="literal">on</span>; <span class="comment">#开启目录列表访问，合适下载服务器，默认关闭。</span></div><div class="line">    <span class="attribute">tcp_nopush</span> <span class="literal">on</span>; <span class="comment">#防止网络阻塞</span></div><div class="line">    <span class="attribute">tcp_nodelay</span> <span class="literal">on</span>; <span class="comment">#防止网络阻塞</span></div><div class="line">    <span class="attribute">keepalive_timeout</span> <span class="number">120</span>; <span class="comment">#长连接超时时间，单位是秒</span></div><div class="line"></div><div class="line">    <span class="comment">#FastCGI相关参数是为了改善网站的性能：减少资源占用，提高访问速度。下面参数看字面意思都能理解。</span></div><div class="line">    <span class="attribute">fastcgi_connect_timeout</span> <span class="number">300</span>;</div><div class="line">    <span class="attribute">fastcgi_send_timeout</span> <span class="number">300</span>;</div><div class="line">    <span class="attribute">fastcgi_read_timeout</span> <span class="number">300</span>;</div><div class="line">    <span class="attribute">fastcgi_buffer_size</span> <span class="number">64k</span>;</div><div class="line">    <span class="attribute">fastcgi_buffers</span> <span class="number">4</span> <span class="number">64k</span>;</div><div class="line">    <span class="attribute">fastcgi_busy_buffers_size</span> <span class="number">128k</span>;</div><div class="line">    <span class="attribute">fastcgi_temp_file_write_size</span> <span class="number">128k</span>;</div><div class="line"></div><div class="line">    <span class="comment">#gzip模块设置</span></div><div class="line">    <span class="attribute">gzip</span> <span class="literal">on</span>; <span class="comment">#开启gzip压缩输出</span></div><div class="line">    <span class="attribute">gzip_min_length</span> <span class="number">1k</span>; <span class="comment">#最小压缩文件大小</span></div><div class="line">    <span class="attribute">gzip_buffers</span> <span class="number">4</span> <span class="number">16k</span>; <span class="comment">#压缩缓冲区</span></div><div class="line">    <span class="attribute">gzip_http_version</span> <span class="number">1</span>.<span class="number">0</span>; <span class="comment">#压缩版本（默认1.1，前端如果是squid2.5请使用1.0）</span></div><div class="line">    <span class="attribute">gzip_comp_level</span> <span class="number">2</span>; <span class="comment">#压缩等级</span></div><div class="line">    <span class="attribute">gzip_types</span> text/plain application/x-javascript text/css application/xml;</div><div class="line">    <span class="comment">#压缩类型，默认就已经包含text/html，所以下面就不用再写了，写上去也不会有问题，但是会有一个warn。</span></div><div class="line">    <span class="attribute">gzip_vary</span> <span class="literal">on</span>;</div><div class="line">    <span class="comment">#limit_zone crawler $binary_remote_addr 10m; #开启限制IP连接数的时候需要使用</span></div><div class="line"></div><div class="line">    <span class="attribute">upstream</span> blog.ha97.com &#123;</div><div class="line">    <span class="comment">#upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。</span></div><div class="line">    <span class="attribute">server</span> <span class="number">192.168.80.121:80</span> weight=<span class="number">3</span>;</div><div class="line">    <span class="attribute">server</span> <span class="number">192.168.80.122:80</span> weight=<span class="number">2</span>;</div><div class="line">    <span class="attribute">server</span> <span class="number">192.168.80.123:80</span> weight=<span class="number">3</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#虚拟主机的配置</span></div><div class="line"><span class="section">server</span></div><div class="line">&#123;</div><div class="line">    <span class="comment">#监听端口</span></div><div class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="comment">#域名可以有多个，用空格隔开</span></div><div class="line">    <span class="attribute">server_name</span> www.ha97.com ha97.com;</div><div class="line">    <span class="attribute">index</span> index.html index.htm index.php;</div><div class="line">    <span class="attribute">root</span> /data/www/ha97;</div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.(php|php5)?$</span></div><div class="line">    &#123;</div><div class="line">        <span class="attribute">fastcgi_pass</span> <span class="number">127.0.0.1:9000</span>;</div><div class="line">        <span class="attribute">fastcgi_index</span> index.php;</div><div class="line">        <span class="attribute">include</span> fastcgi.conf;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#图片缓存时间设置</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.(gif|jpg|jpeg|png|bmp|swf)$</span></div><div class="line">    &#123;</div><div class="line">        <span class="attribute">expires</span> <span class="number">10d</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#JS和CSS缓存时间设置</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*\.(js|css)?$</span></div><div class="line">    &#123;</div><div class="line">        <span class="attribute">expires</span> <span class="number">1h</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#日志格式设定</span></div><div class="line">    <span class="attribute">log_format</span> access <span class="string">'<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] "<span class="variable">$request</span>" '</span></div><div class="line">    <span class="string">'<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> "<span class="variable">$http_referer</span>" '</span></div><div class="line">    <span class="string">'"<span class="variable">$http_user_agent</span>" <span class="variable">$http_x_forwarded_for</span>'</span>;</div><div class="line">    <span class="comment">#定义本虚拟主机的访问日志</span></div><div class="line">    <span class="attribute">access_log</span> /var/log/nginx/ha97access.log access;</div><div class="line"></div><div class="line">    <span class="comment">#对 "/" 启用反向代理</span></div><div class="line">    <span class="attribute">location</span> / &#123;</div><div class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:88;</div><div class="line">        <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</div><div class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="comment">#后端的Web服务器可以通过X-Forwarded-For获取用户真实IP</span></div><div class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="comment">#以下是一些反向代理的配置，可选。</span></div><div class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</div><div class="line">        <span class="attribute">client_max_body_size</span> <span class="number">10m</span>; <span class="comment">#允许客户端请求的最大单文件字节数</span></div><div class="line">        <span class="attribute">client_body_buffer_size</span> <span class="number">128k</span>; <span class="comment">#缓冲区代理缓冲用户端请求的最大字节数，</span></div><div class="line">        <span class="attribute">proxy_connect_timeout</span> <span class="number">90</span>; <span class="comment">#nginx跟后端服务器连接超时时间(代理连接超时)</span></div><div class="line">        <span class="attribute">proxy_send_timeout</span> <span class="number">90</span>; <span class="comment">#后端服务器数据回传时间(代理发送超时)</span></div><div class="line">        <span class="attribute">proxy_read_timeout</span> <span class="number">90</span>; <span class="comment">#连接成功后，后端服务器响应时间(代理接收超时)</span></div><div class="line">        <span class="attribute">proxy_buffer_size</span> <span class="number">4k</span>; <span class="comment">#设置代理服务器（nginx）保存用户头信息的缓冲区大小</span></div><div class="line">        <span class="attribute">proxy_buffers</span> <span class="number">4</span> <span class="number">32k</span>; <span class="comment">#proxy_buffers缓冲区，网页平均在32k以下的设置</span></div><div class="line">        <span class="attribute">proxy_busy_buffers_size</span> <span class="number">64k</span>; <span class="comment">#高负荷下缓冲大小（proxy_buffers*2）</span></div><div class="line">        <span class="attribute">proxy_temp_file_write_size</span> <span class="number">64k</span>;</div><div class="line">        <span class="comment">#设定缓存文件夹大小，大于这个值，将从upstream服务器传</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">#设定查看Nginx状态的地址</span></div><div class="line">    <span class="attribute">location</span> /NginxStatus &#123;</div><div class="line">        <span class="attribute">stub_status</span> <span class="literal">on</span>;</div><div class="line">        <span class="attribute">access_log</span> <span class="literal">on</span>;</div><div class="line">        <span class="attribute">auth_basic</span> <span class="string">"NginxStatus"</span>;</div><div class="line">        <span class="attribute">auth_basic_user_file</span> conf/htpasswd;</div><div class="line">        <span class="comment">#htpasswd文件的内容可以用apache提供的htpasswd工具来产生。</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">#本地动静分离反向代理配置</span></div><div class="line">    <span class="comment">#所有jsp的页面均交由tomcat或resin处理</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .(jsp|jspx|do)?$</span> &#123;</div><div class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</div><div class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8080;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">#所有静态文件由nginx直接读取不经过tomcat或resin</span></div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$</span></div><div class="line">    &#123; <span class="attribute">expires</span> <span class="number">15d</span>; &#125;</div><div class="line">    <span class="attribute">location</span> <span class="regexp">~ .*.(js|css)?$</span></div><div class="line">    &#123; <span class="attribute">expires</span> <span class="number">1h</span>; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;
     
     </summary>
     
@@ -45,7 +45,7 @@
     <published>2018-12-10T03:33:07.000Z</published>
     <updated>2018-12-10T03:40:33.096Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><img src="http://img.bovod.org/50ae0000f81fa0840875.gif" alt="">
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://img.bovod.org/50ae0000f81fa0840875.gif" alt="">
 <img src="http://img.bovod.org/53e5000079cc92eecdb9.gif" alt="">
 <img src="http://img.bovod.org/50ab00046ce5ad6ece76.gif" alt="">
 <img src="http://img.bovod.org/50ad000404c66117bfcb.gif" alt="">
@@ -72,7 +72,7 @@
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://img.bovod.org/50ae00
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://img.bovod.org/50ae00
     
     </summary>
     
@@ -90,7 +90,7 @@
     <published>2018-12-07T09:19:56.000Z</published>
     <updated>2018-12-07T09:43:31.930Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><a id="more"></a>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
 <h2 id="查看登录成功日志"><a class="header-anchor" href="#查看登录成功日志"> </a>查看登录成功日志</h2>
 <figure class="highlight stata"><table><tr><td class="code"><pre><div class="line">grep <span class="string">"Accepted password for root"</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/auth.<span class="keyword">log</span> | awk '&#123;<span class="keyword">print</span> <span class="variable">$11&#125;</span>' | <span class="keyword">sort</span> | uniq -c | <span class="keyword">sort</span> -nr | <span class="keyword">more</span></div></pre></td></tr></table></figure>
 <h2 id="查看登录失败日志"><a class="header-anchor" href="#查看登录失败日志"> </a>查看登录失败日志</h2>
@@ -103,7 +103,7 @@
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;查看登录成功日志&quot;&gt;&lt;a c
     
     </summary>
@@ -124,7 +124,7 @@
     <published>2018-12-05T05:23:45.000Z</published>
     <updated>2018-12-05T11:56:24.674Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="solr服务端安装配置"><a class="header-anchor" href="#solr服务端安装配置"> </a>solr服务端安装配置</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="solr服务端安装配置"><a class="header-anchor" href="#solr服务端安装配置"> </a>solr服务端安装配置</h2>
 <h3 id="下载gcs代码"><a class="header-anchor" href="#下载gcs代码"> </a>下载GCS代码</h3>
 <h3 id="修改环境变量"><a class="header-anchor" href="#修改环境变量"> </a>修改环境变量</h3>
 <p><img src="http://blimg.bovod.org/2018/12/05/20181205142457.png" alt="环境变量配置"><span class="image-caption">环境变量配置</span></p>
@@ -156,7 +156,7 @@
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;solr服务端安装配置&quot;&gt;&lt;a class=&quot;header-an
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;solr服务端安装配置&quot;&gt;&lt;a class=&quot;header-an
     
     </summary>
     
@@ -174,7 +174,7 @@
     <published>2018-12-04T06:26:01.000Z</published>
     <updated>2018-12-04T06:50:31.905Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="异常"><a class="header-anchor" href="#异常"> </a>异常</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="异常"><a class="header-anchor" href="#异常"> </a>异常</h2>
 <blockquote>
 <p>perl: warning: Setting locale failed. perl: warning: Please check that your locale settings: LC_ALL = (unset), LC_CTYPE = “en_CN.UTF-8”, LANG = “en_CN.UTF-8” are supported and installed on your system. perl: warning: Falling back to the standard locale (“C”).</p>
 </blockquote>
@@ -185,7 +185,7 @@
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;异常&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;异常&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
     
     </summary>
     
@@ -203,7 +203,7 @@
     <published>2018-12-03T13:59:21.000Z</published>
     <updated>2018-12-05T03:56:42.529Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="下载"><a class="header-anchor" href="#下载"> </a>下载</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="下载"><a class="header-anchor" href="#下载"> </a>下载</h2>
 <p><a href="https://github.com/qiniu/qshell" target="_blank" rel="external">github</a></p>
 <h2 id="添加到path"><a class="header-anchor" href="#添加到path"> </a>添加到path</h2>
 <p>你懂的</p>
@@ -226,7 +226,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;下载&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;下载&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
     
     </summary>
     
@@ -244,12 +244,12 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-11-30T09:29:58.000Z</published>
     <updated>2018-11-30T09:30:13.624Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><a href="https://blog.csdn.net/u013063153/article/details/70800381" target="_blank" rel="external">海量数据解决思路之BitMap - CSDN博客</a></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><a href="https://blog.csdn.net/u013063153/article/details/70800381" target="_blank" rel="external">海量数据解决思路之BitMap - CSDN博客</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/u01306
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/u01306
     
     </summary>
     
@@ -267,12 +267,12 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-11-30T08:26:11.000Z</published>
     <updated>2018-11-30T08:26:29.503Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><a href="https://www.jianshu.com/p/418b47be77c1" target="_blank" rel="external">Spring Boot + MyBatis + SQLite 基于注解快速开发 - 简书</a></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><a href="https://www.jianshu.com/p/418b47be77c1" target="_blank" rel="external">Spring Boot + MyBatis + SQLite 基于注解快速开发 - 简书</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/41
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;a href=&quot;https://www.jianshu.com/p/41
     
     </summary>
     
@@ -290,7 +290,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-11-30T01:31:49.000Z</published>
     <updated>2018-11-30T07:49:38.058Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="arrays-aslist-返回的list没有add-remove等方法"><a class="header-anchor" href="#arrays-aslist-返回的list没有add-remove等方法"> </a>Arrays.asList()返回的List没有add、remove等方法</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="arrays-aslist-返回的list没有add-remove等方法"><a class="header-anchor" href="#arrays-aslist-返回的list没有add-remove等方法"> </a>Arrays.asList()返回的List没有add、remove等方法</h2>
 <p>查看asList源码返回一个ArrayList</p>
 <figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span>(<span class="params">T... a</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(a);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>此ArrayList(java.util.Arrays$ArrayList)非彼ArrayList(java.util.ArrayList),这是Arrays的一个内部类，没有覆盖add、remove等方法</p>
@@ -303,7 +303,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;arrays-aslist-返回的list没有add-remov
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;arrays-aslist-返回的list没有add-remov
     
     </summary>
     
@@ -321,12 +321,12 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-11-26T13:46:14.000Z</published>
     <updated>2018-12-04T05:14:41.928Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/12/04/20181204115042.png" alt="svn"><span class="image-caption">svn</span></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/12/04/20181204115042.png" alt="svn"><span class="image-caption">svn</span></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
     
     </summary>
     
@@ -344,13 +344,13 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-06-28T09:47:20.000Z</published>
     <updated>2018-12-07T09:58:45.546Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="webpy-gzip"><a class="header-anchor" href="#webpy-gzip"> </a>webpy gzip</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="webpy-gzip"><a class="header-anchor" href="#webpy-gzip"> </a>webpy gzip</h2>
 <p><a href="http://yanghao.org/blog/archives/171" target="_blank" rel="external">http://yanghao.org/blog/archives/171</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;webpy-gzip&quot;&gt;&lt;a class=&quot;header-anc
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;webpy-gzip&quot;&gt;&lt;a class=&quot;header-anc
     
     </summary>
     
@@ -370,7 +370,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-04-17T16:34:18.000Z</published>
     <updated>2018-04-17T16:35:32.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="aaa"><a class="header-anchor" href="#aaa"> </a>aaa</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="aaa"><a class="header-anchor" href="#aaa"> </a>aaa</h2>
 <p>bbbwq5</p>
 <h2 id="dsfdsf"><a class="header-anchor" href="#dsfdsf"> </a>dsfdsf</h2>
 <p>sss</p>
@@ -379,7 +379,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;aaa&quot;&gt;&lt;a class=&quot;header-anchor&quot; hr
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;aaa&quot;&gt;&lt;a class=&quot;header-anchor&quot; hr
     
     </summary>
     
@@ -397,7 +397,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-03-07T06:22:59.000Z</published>
     <updated>2018-03-07T06:23:45.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><div id="articlecontent">
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><div id="articlecontent">
         <span class="Apple-style-span" style="WORD-SPACING: 0px; FONT: 13px/19px Verdana; TEXT-TRANSFORM: none; COLOR: rgb(75,75,75); TEXT-INDENT: 0px; WHITE-SPACE: normal; LETTER-SPACING: normal; BORDER-COLLAPSE: separate; orphans: 2; widows: 2; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0"><br class="Apple-interchange-newline">
 <table class=" FCK__ShowTableBorders" cellspacing="1" cellpadding="1" width="100%" bgcolor="#999999" border="0" _fckxhtmljob="1">
 <tbody _fckxhtmljob="1">
@@ -759,7 +759,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;div id=&quot;articlecontent&quot;&gt;
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;div id=&quot;articlecontent&quot;&gt;
         &lt;span 
     
     </summary>
@@ -778,12 +778,12 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2018-03-05T07:55:07.000Z</published>
     <updated>2018-10-18T06:44:24.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/03/05/20180305155535.png" alt="五笔字根表_2560x1600"><span class="image-caption">五笔字根表_2560x1600</span></p>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/03/05/20180305155535.png" alt="五笔字根表_2560x1600"><span class="image-caption">五笔字根表_2560x1600</span></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;&lt;img src=&quot;http://blimg.bovod.org/2018
     
     </summary>
     
@@ -801,7 +801,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
     <published>2017-12-18T03:42:37.000Z</published>
     <updated>2018-11-12T01:53:39.872Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="sublime-text-3-2017年12月18日亲测"><a class="header-anchor" href="#sublime-text-3-2017年12月18日亲测"> </a>sublime text 3 (2017年12月18日亲测)</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="sublime-text-3-2017年12月18日亲测"><a class="header-anchor" href="#sublime-text-3-2017年12月18日亲测"> </a>sublime text 3 (2017年12月18日亲测)</h2>
 <figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">—– BEGIN LICENSE —– </div><div class="line">TwitterInc </div><div class="line"><span class="number">200</span> User License </div><div class="line">EA7E<span class="number">-890007</span> </div><div class="line"><span class="number">1</span>D77F72E <span class="number">390</span>CDD93 <span class="number">4</span>DCBA022 FAF60790 </div><div class="line"><span class="number">61</span>AA12C0 A37081C5 D0316412 <span class="number">4584</span>D136 </div><div class="line"><span class="number">94</span>D7F7D4 <span class="number">95</span>BC8C1C <span class="number">527</span>DA828 <span class="number">560</span>BB037 </div><div class="line">D1EDDD8C AE7B379F <span class="number">50</span>C9D69D B35179EF </div><div class="line"><span class="number">2</span>FE898C4 <span class="number">8E4277</span>A8 <span class="number">555</span>CE714 E1FB0E43 </div><div class="line">D5D52613 C3D12E98 BC49967F <span class="number">7652</span>EED2 </div><div class="line"><span class="number">9</span>D2D2E61 <span class="number">67610860</span> <span class="number">6</span>D338B72 <span class="number">5</span>CF95C69 </div><div class="line">E36B85CC <span class="number">84991</span>F19 <span class="number">7575</span>D828 <span class="number">470</span>A92AB </div><div class="line">—— END LICENSE ——</div></pre></td></tr></table></figure>
 <h2 id="mac-adobe-cc-2015"><a class="header-anchor" href="#mac-adobe-cc-2015"> </a>mac adobe cc 2015</h2>
 <p>Adobe CC 2015 亲测可用
@@ -833,7 +833,7 @@ Part B: 00985</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;sublime-text-3-2017年12月18日亲测&quot;&gt;&lt;a
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;sublime-text-3-2017年12月18日亲测&quot;&gt;&lt;a
     
     </summary>
     
@@ -851,7 +851,7 @@ Part B: 00985</p>
     <published>2017-12-14T07:17:13.000Z</published>
     <updated>2017-12-14T11:34:49.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="xdef"><a class="header-anchor" href="#xdef"> </a>xdef</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="xdef"><a class="header-anchor" href="#xdef"> </a>xdef</h2>
 <h3 id="模板内容"><a class="header-anchor" href="#模板内容"> </a>模板内容</h3>
 <figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line"><span class="variable">@XStreamAlias</span>(<span class="string">"$xfield$"</span>)</div><div class="line">private String <span class="variable">$field</span><span class="variable">$;</span><span class="variable">$END</span>$</div></pre></td></tr></table></figure>
 <h3 id="变量"><a class="header-anchor" href="#变量"> </a>变量</h3>
@@ -867,7 +867,7 @@ field : 表达式 camelCase(clipboard())</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;xdef&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;xdef&quot;&gt;&lt;a class=&quot;header-anchor&quot; h
     
     </summary>
     
@@ -885,7 +885,7 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-12-12T07:36:28.000Z</published>
     <updated>2018-10-18T06:44:24.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="准备"><a class="header-anchor" href="#准备"> </a>准备</h2>
 <ol>
 <li>下载<a href="http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.zip" target="_blank" rel="external">solr-4.10.4.zip</a></li>
 <li>下载<a href="https://gitee.com/wltea/IK-Analyzer-2012FF.git" target="_blank" rel="external">ik源代码</a></li>
@@ -916,7 +916,7 @@ field : 表达式 camelCase(clipboard())</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; hre
     
     </summary>
     
@@ -934,11 +934,11 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-12-05T08:03:19.000Z</published>
     <updated>2018-06-28T02:51:43.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script>]]></content>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script>]]></content>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;
     
     </summary>
     
@@ -952,7 +952,7 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-12-04T08:12:12.000Z</published>
     <updated>2017-12-05T12:52:17.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="安装pcre-perl-compatible-regular-expressions"><a class="header-anchor" href="#安装pcre-perl-compatible-regular-expressions"> </a>安装PCRE(Perl Compatible Regular Expressions)</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装pcre-perl-compatible-regular-expressions"><a class="header-anchor" href="#安装pcre-perl-compatible-regular-expressions"> </a>安装PCRE(Perl Compatible Regular Expressions)</h2>
 <p><a href="http://mac-dev-env.patrickbougie.com/pcre/" target="_blank" rel="external">http://mac-dev-env.patrickbougie.com/pcre/</a></p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><div class="line"><span class="keyword">cd</span> /usr/<span class="keyword">local</span>/src (<span class="keyword">cd</span> ~/<span class="keyword">app</span>)</div><div class="line">curl --remote-name ftp:<span class="comment">//ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz</span></div><div class="line">tar -xzvf pcre-8.41.tar.gz</div><div class="line"><span class="keyword">cd</span> pcre-8.41</div><div class="line">./configure --prefix=/usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41</div><div class="line">make</div><div class="line">make install (sudo make install )</div><div class="line">sudo ln -s <span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre (sudo ln -s /usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre)</div><div class="line">echo 'export PATH=/usr/<span class="keyword">local</span>/pcre/bin:<span class="variable">$PATH</span>' &gt;&gt; ~/.bash_profile</div><div class="line">source ~/.bash_profile</div><div class="line">pcre-config --<span class="keyword">version</span></div></pre></td></tr></table></figure>
 <p>拷贝<code>pcre.h</code>到<code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include</code></p>
@@ -962,7 +962,7 @@ field : 表达式 camelCase(clipboard())</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;安装pcre-perl-compatible-regular-e
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;安装pcre-perl-compatible-regular-e
     
     </summary>
     
@@ -980,7 +980,7 @@ field : 表达式 camelCase(clipboard())</p>
     <published>2017-11-23T06:04:45.000Z</published>
     <updated>2017-11-23T06:14:54.000Z</updated>
     
-    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="springmvc3-2-mybatis3-2集成报错"><a class="header-anchor" href="#springmvc3-2-mybatis3-2集成报错"> </a>SpringMVC3.2+Mybatis3.2集成报错</h2>
+    <content type="html"><![CDATA[<script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="springmvc3-2-mybatis3-2集成报错"><a class="header-anchor" href="#springmvc3-2-mybatis3-2集成报错"> </a>SpringMVC3.2+Mybatis3.2集成报错</h2>
 <blockquote>
 <p>Exception in thread “main” java.lang.AbstractMethodError: org.mybatis.spring.transaction.SpringManagedTransactionFactory.newTransaction(Ljava/sql/Connection;)Lorg/apache/ibatis/transaction/Transaction;
 at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSessionFromConnection(DefaultSqlSessionFactory.java:98)
@@ -998,7 +998,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
     
     <summary type="html">
     
-      &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;springmvc3-2-mybatis3-2集成报错&quot;&gt;&lt;a 
+      &lt;script src=&quot;/assets/js/DPlayer.min.js&quot;&gt; &lt;/script&gt;&lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;h2 id=&quot;springmvc3-2-mybatis3-2集成报错&quot;&gt;&lt;a 
     
     </summary>
     
