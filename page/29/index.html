@@ -358,6 +358,385 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/04/java-jsoup-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/06/04/java-jsoup-guide/" itemprop="url">使用 jsoup 对 HTML 文档进行解析和操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-06-04T14:02:56+08:00">
+                2012-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/06/04/java-jsoup-guide/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/06/04/java-jsoup-guide/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="jsoup-简介"><a class="header-anchor" href="#jsoup-简介"> </a>jsoup 简介</h1>
+<p>jsoup 是一款 Java 的 HTML 解析器，可直接解析某个 URL 地址、HTML 文本内容。它提供了一套非常省力的 API，可通过 DOM，CSS 以及类似于 jQuery 的操作方法来取出和操作数据。
+jsoup 的主要功能如下：</p>
+<ol>
+<li>从一个 URL，文件或字符串中解析 HTML；</li>
+<li>使用 DOM 或 CSS 选择器来查找、取出数据；</li>
+<li>可操作 HTML 元素、属性、文本；
+jsoup 是基于 MIT 协议发布的，可放心使用于商业项目。
+jsoup 的主要类层次结构如图 1 所示：</li>
+</ol>
+<p><img src="http://blimg.bovod.org/2015/08/27/jsoup1.jpg" alt="图1 jsoup 结构图"><span class="image-caption">图1 jsoup 结构图</span></p>
+<p>接下来我们专门针对几种常见的应用场景举例说明 jsoup 是如何优雅的进行 HTML 文档处理的。</p>
+<h1 id="文档输入"><a class="header-anchor" href="#文档输入"> </a>文档输入</h1>
+<p>jsoup 可以从包括字符串、URL 地址以及本地文件来加载 HTML 文档，并生成 Document 对象实例。
+下面是相关代码：</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 直接从字符串中输入 HTML 文档</span></div><div class="line"> <span class="keyword">String</span> html = <span class="string">"&lt;html&gt;&lt;head&gt;&lt;title&gt; 开源中国社区 &lt;/title&gt;&lt;/head&gt;"</span></div><div class="line">  + <span class="string">"&lt;body&gt;&lt;p&gt; 这里是 jsoup 项目的相关文章 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"</span>; </div><div class="line"> Document doc = Jsoup.parse(html); </div><div class="line"></div><div class="line"> <span class="comment">// 从 URL 直接加载 HTML 文档</span></div><div class="line"> Document doc = Jsoup.<span class="built_in">connect</span>(<span class="string">"http://www.oschina.net/"</span>).<span class="built_in">get</span>(); </div><div class="line"> <span class="keyword">String</span> title = doc.title(); </div><div class="line"></div><div class="line"> Document doc = Jsoup.<span class="built_in">connect</span>(<span class="string">"http://www.oschina.net/"</span>) </div><div class="line">  .data(<span class="string">"query"</span>, <span class="string">"Java"</span>)   <span class="comment">// 请求参数</span></div><div class="line">  .userAgent(<span class="string">"I ’ m jsoup"</span>) <span class="comment">// 设置 User-Agent </span></div><div class="line">  .cookie(<span class="string">"auth"</span>, <span class="string">"token"</span>) <span class="comment">// 设置 cookie </span></div><div class="line">  .timeout(<span class="number">3000</span>)           <span class="comment">// 设置连接超时时间</span></div><div class="line">  .post();                 <span class="comment">// 使用 POST 方法访问 URL </span></div><div class="line"></div><div class="line"> <span class="comment">// 从文件中加载 HTML 文档</span></div><div class="line"> <span class="built_in">File</span> input = <span class="keyword">new</span> <span class="built_in">File</span>(<span class="string">"D:/test.html"</span>); </div><div class="line"> Document doc = Jsoup.parse(input,<span class="string">"UTF-8"</span>,<span class="string">"http://www.oschina.net/"</span>);</div></pre></td></tr></table></figure>
+<p>请大家注意最后一种 HTML 文档输入方式中的 parse 的第三个参数，为什么需要在这里指定一个网址呢（虽然可以不指定，如第一种方法）？因为 HTML 文档中会有很多例如链接、图片以及所引用的外部脚本、css 文件等，而第三个名为 baseURL 的参数的意思就是当 HTML 文档使用相对路径方式引用外部文件时，jsoup 会自动为这些 URL 加上一个前缀，也就是这个 baseURL。
+例如<code>&lt;a href=/project&gt; 开源软件 &lt;/a&gt;</code>会被转换成<code>&lt;a href=http://www.oschina.net/project&gt; 开源软件 &lt;/a&gt;</code>。</p>
+<h1 id="解析并提取-html-元素"><a class="header-anchor" href="#解析并提取-html-元素"> </a>解析并提取 HTML 元素</h1>
+<p>这部分涉及一个 HTML 解析器最基本的功能，但 jsoup 使用一种有别于其他开源项目的方式——选择器，我们将在最后一部分详细介绍 jsoup 选择器，本节中你将看到 jsoup 是如何用最简单的代码实现。
+不过 jsoup 也提供了传统的 DOM 方式的元素解析，看看下面的代码：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><div class="line">File input = new File(<span class="string">"D:/test.html"</span>)<span class="comment">; </span></div><div class="line"> Document doc = <span class="keyword">Jsoup.parse(input, </span><span class="string">"UTF-8"</span>, <span class="string">"http://www.oschina.net/"</span>)<span class="comment">; </span></div><div class="line"></div><div class="line"> Element content = doc.getElementById(<span class="string">"content"</span>)<span class="comment">; </span></div><div class="line"> Elements links = content.getElementsByTag(<span class="string">"a"</span>)<span class="comment">; </span></div><div class="line"> for (Element link : links) &#123; </div><div class="line">  String linkHref = link.attr(<span class="string">"href"</span>)<span class="comment">; </span></div><div class="line">  String linkText = link<span class="meta">.text</span>()<span class="comment">; </span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>你可能会觉得 jsoup 的方法似曾相识，没错，像 getElementById 和 getElementsByTag 方法跟 JavaScript 的方法名称是一样的，功能也完全一致。你可以根据节点名称或者是 HTML 元素的 id 来获取对应的元素或者元素列表。
+与 htmlparser 项目不同的是，jsoup 并没有为 HTML 元素定义一个对应的类，一般一个 HTML 元素的组成部分包括：节点名、属性和文本，jsoup 提供简单的方法供你自己检索这些数据，这也是 jsoup 保持瘦身的原因。
+而在元素检索方面，jsoup 的选择器简直无所不能，</p>
+<figure class="highlight ceylon"><table><tr><td class="code"><pre><div class="line">File input = <span class="keyword">new</span> File(<span class="string">"D:\test.html"</span>); </div><div class="line"> Document <span class="meta">doc</span> = Jsoup.parse(input,<span class="string">"UTF-8"</span>,<span class="string">"http://www.oschina.net/"</span>); </div><div class="line"></div><div class="line"> Elements links = <span class="meta">doc</span>.select(<span class="string">"a[href]"</span>); <span class="comment">// 具有 href 属性的链接</span></div><div class="line"> Elements pngs = <span class="meta">doc</span>.select(<span class="string">"img[src$=.png]"</span>);<span class="comment">// 所有引用 png 图片的元素</span></div><div class="line"></div><div class="line"></div><div class="line"> Element masthead = <span class="meta">doc</span>.select(<span class="string">"div.masthead"</span>).first(); </div><div class="line"> <span class="comment">// 找出定义了 class=masthead 的元素</span></div><div class="line"></div><div class="line"> Elements resultLinks = <span class="meta">doc</span>.select(<span class="string">"h3.r &gt; a"</span>); <span class="comment">// direct a after h3</span></div></pre></td></tr></table></figure>
+<p>这是 jsoup 真正让我折服的地方，jsoup 使用跟 jQuery 一模一样的选择器对元素进行检索，以上的检索方法如果换成是其他的 HTML 解释器，至少都需要很多行代码，而 jsoup 只需要一行代码即可完成。
+jsoup 的选择器还支持表达式功能，我们将在最后一节介绍这个超强的选择器。</p>
+<p>修改数据</p>
+<p>在解析文档的同时，我们可能会需要对文档中的某些元素进行修改，例如我们可以为文档中的所有图片增加可点击链接、修改链接地址或者是修改文本等。
+下面是一些简单的例子：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"div.comments a"</span>)<span class="selector-class">.attr</span>(<span class="string">"rel"</span>, <span class="string">"nofollow"</span>); </div><div class="line"> <span class="comment">// 为所有链接增加 rel=nofollow 属性</span></div><div class="line"> <span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"div.comments a"</span>)<span class="selector-class">.addClass</span>(<span class="string">"mylinkclass"</span>); </div><div class="line"> <span class="comment">// 为所有链接增加 class=mylinkclass 属性</span></div><div class="line"> <span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"img"</span>)<span class="selector-class">.removeAttr</span>(<span class="string">"onclick"</span>); <span class="comment">// 删除所有图片的 onclick 属性</span></div><div class="line"> <span class="selector-tag">doc</span><span class="selector-class">.select</span>(<span class="string">"input[type=text]"</span>)<span class="selector-class">.val</span>(<span class="string">""</span>); <span class="comment">// 清空所有文本输入框中的文本</span></div></pre></td></tr></table></figure>
+<p>道理很简单，你只需要利用 jsoup 的选择器找出元素，然后就可以通过以上的方法来进行修改，除了无法修改标签名外（可以删除后再插入新的元素），包括元素的属性和文本都可以修改。
+修改完直接调用 Element(s) 的 html() 方法就可以获取修改完的 HTML 文档。</p>
+<h1 id="html-文档清理"><a class="header-anchor" href="#html-文档清理"> </a>HTML 文档清理</h1>
+<p>jsoup 在提供强大的 API 同时，人性化方面也做得非常好。在做网站的时候，经常会提供用户评论的功能。有些用户比较淘气，会搞一些脚本到评论内容中，而这些脚本可能会破坏整个页面的行为，更严重的是获取一些机要信息，例如 XSS 跨站点攻击之类的。
+jsoup 对这方面的支持非常强大，使用非常简单。看看下面这段代码：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">String unsafe = "<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'http://www.oschina.net/'</span> <span class="attr">onclick</span>=<span class="string">'stealCookies()'</span>&gt;</span> </div><div class="line"> 开源中国社区 <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span>"; </div><div class="line"> String safe = Jsoup.clean(unsafe, Whitelist.basic()); </div><div class="line"> // 输出 : </div><div class="line"> // <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.oschina.net/"</span> <span class="attr">rel</span>=<span class="string">"nofollow"</span>&gt;</span> 开源中国社区 <span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>jsoup 使用一个 Whitelist 类用来对 HTML 文档进行过滤，该类提供几个常用方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none()</td>
+<td>只允许包含文本信息</td>
+</tr>
+<tr>
+<td>basic()</td>
+<td>允许的标签包括：a, b, blockquote, br, cite, code, dd, dl, dt, em, i, li, ol, p, pre, q, small, strike, strong, sub, sup, u, ul, 以及合适的属性</td>
+</tr>
+<tr>
+<td>simpleText()</td>
+<td>只允许 b, em, i, strong, u 这些标签</td>
+</tr>
+<tr>
+<td>basicWithImages()</td>
+<td>在 basic() 的基础上增加了图片</td>
+</tr>
+<tr>
+<td>relaxed()</td>
+<td>这个过滤器允许的标签最多，包括：a, b, blockquote, br, caption, cite, code, col, colgroup, dd, dl, dt, em, h1, h2, h3, h4, h5, h6, i, img, li, ol, p, pre, q, small, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, u, ul</td>
+</tr>
+</tbody>
+</table>
+<p>如果这五个过滤器都无法满足你的要求呢，例如你允许用户插入 flash 动画，没关系，Whitelist 提供扩展功能，例如 whitelist.addTags(“embed”,“object”,“param”,“span”,“div”); 也可调用 addAttributes 为某些元素增加属性。</p>
+<h1 id="jsoup-的过人之处-选择器"><a class="header-anchor" href="#jsoup-的过人之处-选择器"> </a>jsoup 的过人之处——选择器</h1>
+<p>前面我们已经简单的介绍了 jsoup 是如何使用选择器来对元素进行检索的。本节我们把重点放在选择器本身强大的语法上。下表是 jsoup 选择器的所有语法详细列表。</p>
+<p>基本用法</p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tagname</td>
+<td>使用标签名来定位，例如 a</td>
+</tr>
+<tr>
+<td>ns¦tag</td>
+<td>使用命名空间的标签定位，例如 fb:name 来查找 &lt;fb:name&gt; 元素</td>
+</tr>
+<tr>
+<td>#id</td>
+<td>使用元素 id 定位，例如 #logo</td>
+</tr>
+<tr>
+<td>.class</td>
+<td>使用元素的 class 属性定位，例如 .head</td>
+</tr>
+<tr>
+<td>[attribute]</td>
+<td>使用元素的属性进行定位，例如 [href] 表示检索具有 href 属性的所有元素</td>
+</tr>
+<tr>
+<td>[^attr]</td>
+<td>使用元素的属性名前缀进行定位，例如 [^data-] 用来查找 HTML5 的 dataset 属性</td>
+</tr>
+<tr>
+<td>[attr=value]</td>
+<td>使用属性值进行定位，例如 [width=500] 定位所有 width 属性值为 500 的元素</td>
+</tr>
+<tr>
+<td>[attr^=value], [attr$=value], [attr*=value]</td>
+<td>这三个语法分别代表，属性以 value 开头、结尾以及包含</td>
+</tr>
+<tr>
+<td>[attr~=regex]</td>
+<td>使用正则表达式进行属性值的过滤，例如 img[src~=(?i).(png¦jpe?g)]</td>
+</tr>
+<tr>
+<td>*</td>
+<td>定位所有元素</td>
+</tr>
+</tbody>
+</table>
+<p>组合用法</p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>el#id</td>
+<td>定位 id 值某个元素，例如 <code>a#logo</code> -&gt; <code>&lt;a id=logo href= … &gt;</code></td>
+</tr>
+<tr>
+<td>el.class</td>
+<td>定位 class 为指定值的元素，例如 <code>div.head</code> -&gt; <code>&lt;div class=head&gt;xxxx&lt;/div&gt;</code></td>
+</tr>
+<tr>
+<td>el[attr]</td>
+<td>定位所有定义了某属性的元素，例如 <code>a[href]</code></td>
+</tr>
+<tr>
+<td>以上三个任意组合</td>
+<td>例如 a[href]#logo 、a[name].outerlink</td>
+</tr>
+<tr>
+<td>ancestor child</td>
+<td>这五种都是元素之间组合关系的选择器语法，其中包括父子关系、合并关系和层次关系。</td>
+</tr>
+<tr>
+<td>parent &gt; child</td>
+<td></td>
+</tr>
+<tr>
+<td>siblingA + siblingB</td>
+<td></td>
+</tr>
+<tr>
+<td>siblingA ~ siblingX</td>
+<td></td>
+</tr>
+<tr>
+<td>el, el, el</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>除了一些基本的语法以及这些语法进行组合外，jsoup 还支持使用表达式进行元素过滤选择。下面是 jsoup 支持的所有表达式一览表：</p>
+<p>表达式：</p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:lt(n)</td>
+<td>例如 td:lt(3) 表示 小于三列</td>
+</tr>
+<tr>
+<td>:gt(n)</td>
+<td>div p:gt(2) 表示 div 中包含 2 个以上的 p</td>
+</tr>
+<tr>
+<td>:eq(n)</td>
+<td>form input:eq(1) 表示只包含一个 input 的表单</td>
+</tr>
+<tr>
+<td>:has(seletor)</td>
+<td>div:has§ 表示包含了 p 元素的 div</td>
+</tr>
+<tr>
+<td>:not(selector)</td>
+<td>div:not(.logo) 表示不包含 class=logo 元素的所有 div 列表</td>
+</tr>
+<tr>
+<td>:contains(text)</td>
+<td>包含某文本的元素，不区分大小写，例如 p:contains(oschina)</td>
+</tr>
+<tr>
+<td>:containsOwn(text)</td>
+<td>文本信息完全等于指定条件的过滤</td>
+</tr>
+<tr>
+<td>:matches(regex)</td>
+<td>使用正则表达式进行文本过滤：div:matches((?i)login)</td>
+</tr>
+<tr>
+<td>:matchesOwn(regex)</td>
+<td>使用正则表达式找到自身的文本</td>
+</tr>
+</tbody>
+</table>
+<h1 id="总结"><a class="header-anchor" href="#总结"> </a>总结</h1>
+<p>jsoup 的基本功能到这里就介绍完毕，但由于 jsoup 良好的可扩展性 API 设计，你可以通过选择器的定义来开发出非常强大的 HTML 解析功能。再加上 jsoup 项目本身的开发也非常活跃，因此如果你正在使用 Java ，需要对 HTML 进行处理，不妨试试。</p>
+<h1 id="参考资料"><a class="header-anchor" href="#参考资料"> </a>参考资料</h1>
+<p>jsoup 官方网站：<a href="http://jsoup.org" target="_blank" rel="external">http://jsoup.org</a>
+开源中国社区上 jsoup 的一些代码片段：<a href="http://www.oschina.net/code/list_by_project?id=12689" target="_blank" rel="external">http://www.oschina.net/code/list_by_project?id=12689</a>
+Htmlparser 项目介绍：<a href="http://www.oschina.net/p/htmlparser" target="_blank" rel="external">http://www.oschina.net/p/htmlparser</a>
+jQuery 项目介绍：<a href="http://www.oschina.net/p/jquery" target="_blank" rel="external">http://www.oschina.net/p/jquery</a>
+更多开源项目的介绍来自开源中国社区：<a href="http://www.oschina.net" target="_blank" rel="external">http://www.oschina.net</a>
+<a href="http://www.ibm.com/developerworks/cn/java/" target="_blank" rel="external">developerWorks Java 技术专区</a>： 这里有数百篇关于 Java 编程每个方面的文章。
+查看 <a href="http://www.ibm.com/developerworks/cn/web/lp/html5/" target="_blank" rel="external">HTML5 专题</a>，了解更多和 HTML5 相关的知识和动向。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/04/web-css3-transition/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -461,7 +840,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>曾经也尝试过css3的一些新属性，比如圆角、多边框、文字投影、边框阴影，在很大程度上加快了前端开发的速度（—_—如果不考虑IE的话），今天见到了一个新东东，transition，试了一下，太强大了，几行简单的css，就实现了酷炫的动画效果，真是cool！关于transition的更多，请点击http://www.w3.org/TR/css3-transitions/</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>曾经也尝试过css3的一些新属性，比如圆角、多边框、文字投影、边框阴影，在很大程度上加快了前端开发的速度（—_—如果不考虑IE的话），今天见到了一个新东东，transition，试了一下，太强大了，几行简单的css，就实现了酷炫的动画效果，真是cool！关于transition的更多，请点击http://www.w3.org/TR/css3-transitions/</p>
 <ol>
 <li>先看圆角、阴影（Border-radius）
 Border-radius：Apx Bpx Cpx Dpx;分别是左上角，右上角，右下角，左下角的圆角半径！
@@ -650,7 +1029,7 @@ transition还支持CSS伪类。
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>涉及到的一些主要类库，方便大家下载：
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>涉及到的一些主要类库，方便大家下载：
 编码lib：Qrcode_swetake.jar   （官网介绍– <a href="http://www.swetake.com/qr/index-e.html%EF%BC%89" target="_blank" rel="external">http://www.swetake.com/qr/index-e.html）</a>
 解码lib：qrcode.jar                 （官网介绍– <a href="http://sourceforge.jp/projects/qrcode/%EF%BC%89" target="_blank" rel="external">http://sourceforge.jp/projects/qrcode/）</a></p>
 <ol>
@@ -823,7 +1202,7 @@ Twitter [ @suncto ]
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight vim"><table><tr><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"jquery.js"</span>&gt;&lt;/script&gt;</div><div class="line"> <span class="symbol">&lt;script&gt;</span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">show</span><span class="params">()</span>&#123;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;</div><div class="line"> lef<span class="variable">t:200</span>,</div><div class="line"> top:<span class="number">150</span>,</div><div class="line"> heigh<span class="variable">t:400</span>,</div><div class="line"> width:<span class="number">600</span>,</div><div class="line"> opacity:<span class="number">1</span></div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);</span></div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">hide</span><span class="params">()</span>&#123;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;</div><div class="line"> lef<span class="variable">t:0</span>,</div><div class="line"> top:<span class="number">0</span>,</div><div class="line"> heigh<span class="variable">t:0</span>,</div><div class="line"> width:<span class="number">0</span>,</div><div class="line"> opacity:<span class="number">0</span></div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);</span></div><div class="line"> &#125;</div><div class="line"> &lt;/script&gt;</div><div class="line"> &lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">"button"</span> onclick=<span class="string">"show()"</span> value=<span class="string">"show"</span>/&gt;</div><div class="line"> &lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">"button"</span> onclick=<span class="string">"hide()"</span> value=<span class="string">"hide"</span>/&gt;</div><div class="line"> &lt;div id=<span class="string">"pop"</span> style=<span class="string">"display:block;width:600px ;height:400px;position:absolute;left:200px;top:150px;border:0px solid red;background:blue;z-index:-1;color:#FFFFFF"</span>&gt;</div><div class="line"> <span class="symbol">&lt;h3&gt;</span><span class="keyword">a</span> demo of jquery animate&lt;/h3&gt;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">show</span><span class="params">()</span>&#123;&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> lef<span class="variable">t:200</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> top:<span class="number">200</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> heigh<span class="variable">t:400</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> width:<span class="number">600</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> opacity:<span class="number">1</span>&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> &#125;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">hide</span><span class="params">()</span>&#123;&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> lef<span class="variable">t:0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> top:<span class="number">0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> heigh<span class="variable">t:0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> width:<span class="number">0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> opacity:<span class="number">0</span>&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> &#125;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &lt;/div&gt;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight vim"><table><tr><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"jquery.js"</span>&gt;&lt;/script&gt;</div><div class="line"> <span class="symbol">&lt;script&gt;</span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">show</span><span class="params">()</span>&#123;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;</div><div class="line"> lef<span class="variable">t:200</span>,</div><div class="line"> top:<span class="number">150</span>,</div><div class="line"> heigh<span class="variable">t:400</span>,</div><div class="line"> width:<span class="number">600</span>,</div><div class="line"> opacity:<span class="number">1</span></div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);</span></div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">hide</span><span class="params">()</span>&#123;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;</div><div class="line"> lef<span class="variable">t:0</span>,</div><div class="line"> top:<span class="number">0</span>,</div><div class="line"> heigh<span class="variable">t:0</span>,</div><div class="line"> width:<span class="number">0</span>,</div><div class="line"> opacity:<span class="number">0</span></div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);</span></div><div class="line"> &#125;</div><div class="line"> &lt;/script&gt;</div><div class="line"> &lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">"button"</span> onclick=<span class="string">"show()"</span> value=<span class="string">"show"</span>/&gt;</div><div class="line"> &lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">"button"</span> onclick=<span class="string">"hide()"</span> value=<span class="string">"hide"</span>/&gt;</div><div class="line"> &lt;div id=<span class="string">"pop"</span> style=<span class="string">"display:block;width:600px ;height:400px;position:absolute;left:200px;top:150px;border:0px solid red;background:blue;z-index:-1;color:#FFFFFF"</span>&gt;</div><div class="line"> <span class="symbol">&lt;h3&gt;</span><span class="keyword">a</span> demo of jquery animate&lt;/h3&gt;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">show</span><span class="params">()</span>&#123;&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> lef<span class="variable">t:200</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> top:<span class="number">200</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> heigh<span class="variable">t:400</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> width:<span class="number">600</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> opacity:<span class="number">1</span>&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> &#125;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">hide</span><span class="params">()</span>&#123;&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> $(<span class="string">"#pop"</span>).animate(&#123;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> lef<span class="variable">t:0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> top:<span class="number">0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> heigh<span class="variable">t:0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> width:<span class="number">0</span>,&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> opacity:<span class="number">0</span>&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &#125;,<span class="number">500</span>,<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;&#125;);&lt;/<span class="title">br</span>&gt;</span></div><div class="line"> &#125;&lt;/<span class="keyword">br</span>&gt;</div><div class="line"> &lt;/div&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -975,7 +1354,7 @@ Twitter [ @suncto ]
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="引言"><a class="header-anchor" href="#引言"> </a>引言</h1>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="引言"><a class="header-anchor" href="#引言"> </a>引言</h1>
 <p>近年来，随着Internet/Intranet建网技术的飞速发展和在世界范围内的迅速普及，计算机应用程序已从传统的桌面应用转到Web应用。基于B/S（Browser/Server）架构的3层开发模式逐渐取代C/S（Client/Server）架构的开发模式，成为开发企业级应用和电子商务普遍采用的技术。在Web应用开发的早期，主要使用的技术是CGI﹑ASP﹑PHP等。之后，Sun公司推出了基于Java语言的Servlet+Jsp+JavaBean技术。相比传统的开发技术，它具有跨平台﹑安全﹑有效﹑可移植等特性，这使其更便于使用和开发。</p>
 <h1 id="java应用程序访问数据库的基本原理"><a class="header-anchor" href="#java应用程序访问数据库的基本原理"> </a>Java应用程序访问数据库的基本原理</h1>
 <p>在Java语言中，JDBC（Java DataBase Connection）是应用程序与数据库沟通的桥梁,即Java语言通过JDBC技术访问数据库。JDBC是一种“开放”的方案，它为数据库应用开发人员﹑数据库前台工具开发人员提供了一种标准的应用程序设计接口，使开发人员可以用纯Java语言编写完整的数据库应用程序。JDBC提供两种API，分别是面向开发人员的API和面向底层的JDBC驱动程序API，底层主要通过直接的JDBC驱动和JDBC-ODBC桥驱动实现与数据库的连接。</p>
@@ -1207,7 +1586,7 @@ Twitter [ @suncto ]
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * native2ascii.exe Java code implementation.</div><div class="line"> * </div><div class="line"> * @author</div><div class="line"> * @version 1.0</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> class Native2Ascii &#123;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * prefix of ascii string of native character</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">String</span> PREFIX = <span class="string">"\u"</span>;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Native to ascii string. It's same as execut native2ascii.exe.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            native string</div><div class="line">	 * @return ascii string</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> native2Ascii(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		<span class="built_in">char</span>[] chars = <span class="built_in">str</span>.toCharArray();</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">		<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; chars.length; i++) &#123;</div><div class="line">			sb.<span class="built_in">append</span>(char2Ascii(chars[i]));</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Native character to ascii string.</div><div class="line">	 * </div><div class="line">	 * @param c</div><div class="line">	 *            native character</div><div class="line">	 * @return ascii string</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">String</span> char2Ascii(<span class="built_in">char</span> c) &#123;</div><div class="line">		<span class="keyword">if</span> (c &gt; <span class="number">255</span>) &#123;</div><div class="line">			StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">			sb.<span class="built_in">append</span>(PREFIX);</div><div class="line">			<span class="built_in">int</span> code = (c &gt;&gt; <span class="number">8</span>);</div><div class="line">			<span class="keyword">String</span> tmp = Integer.toHexString(code);</div><div class="line">			<span class="keyword">if</span> (tmp.length() == <span class="number">1</span>) &#123;</div><div class="line">				sb.<span class="built_in">append</span>(<span class="string">"0"</span>);</div><div class="line">			&#125;</div><div class="line">			sb.<span class="built_in">append</span>(tmp);</div><div class="line">			code = (c &amp; <span class="number">0xFF</span>);</div><div class="line">			tmp = Integer.toHexString(code);</div><div class="line">			<span class="keyword">if</span> (tmp.length() == <span class="number">1</span>) &#123;</div><div class="line">				sb.<span class="built_in">append</span>(<span class="string">"0"</span>);</div><div class="line">			&#125;</div><div class="line">			sb.<span class="built_in">append</span>(tmp);</div><div class="line">			<span class="keyword">return</span> sb.toString();</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> Character.toString(c);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Ascii to native string. It's same as execut native2ascii.exe -reverse.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            ascii string</div><div class="line">	 * @return native string</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> ascii2Native(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">		<span class="built_in">int</span> begin = <span class="number">0</span>;</div><div class="line">		<span class="built_in">int</span> index = <span class="built_in">str</span>.indexOf(PREFIX);</div><div class="line">		<span class="keyword">while</span> (index != <span class="number">-1</span>) &#123;</div><div class="line">			sb.<span class="built_in">append</span>(<span class="built_in">str</span>.substring(begin, index));</div><div class="line">			sb.<span class="built_in">append</span>(ascii2Char(<span class="built_in">str</span>.substring(index, index + <span class="number">6</span>)));</div><div class="line">			begin = index + <span class="number">6</span>;</div><div class="line">			index = <span class="built_in">str</span>.indexOf(PREFIX, begin);</div><div class="line">		&#125;</div><div class="line">		sb.<span class="built_in">append</span>(<span class="built_in">str</span>.substring(begin));</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Ascii to native character.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            ascii string</div><div class="line">	 * @return native character</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">char</span> ascii2Char(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="built_in">str</span>.length() != <span class="number">6</span>) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">					<span class="string">"Ascii string of a native character must be 6 character."</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!PREFIX.equals(<span class="built_in">str</span>.substring(<span class="number">0</span>, <span class="number">2</span>))) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">					<span class="string">"Ascii string of a native character must start with "</span>\u<span class="string">"."</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">String</span> tmp = <span class="built_in">str</span>.substring(<span class="number">2</span>, <span class="number">4</span>);</div><div class="line">		<span class="built_in">int</span> code = Integer.parseInt(tmp, <span class="number">16</span>) &lt;&lt; <span class="number">8</span>;</div><div class="line">		tmp = <span class="built_in">str</span>.substring(<span class="number">4</span>, <span class="number">6</span>);</div><div class="line">		code += Integer.parseInt(tmp, <span class="number">16</span>);</div><div class="line">		<span class="keyword">return</span> (<span class="built_in">char</span>) code;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * native2ascii.exe Java code implementation.</div><div class="line"> * </div><div class="line"> * @author</div><div class="line"> * @version 1.0</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> class Native2Ascii &#123;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * prefix of ascii string of native character</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">String</span> PREFIX = <span class="string">"\u"</span>;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Native to ascii string. It's same as execut native2ascii.exe.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            native string</div><div class="line">	 * @return ascii string</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> native2Ascii(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		<span class="built_in">char</span>[] chars = <span class="built_in">str</span>.toCharArray();</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">		<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; chars.length; i++) &#123;</div><div class="line">			sb.<span class="built_in">append</span>(char2Ascii(chars[i]));</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Native character to ascii string.</div><div class="line">	 * </div><div class="line">	 * @param c</div><div class="line">	 *            native character</div><div class="line">	 * @return ascii string</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">String</span> char2Ascii(<span class="built_in">char</span> c) &#123;</div><div class="line">		<span class="keyword">if</span> (c &gt; <span class="number">255</span>) &#123;</div><div class="line">			StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">			sb.<span class="built_in">append</span>(PREFIX);</div><div class="line">			<span class="built_in">int</span> code = (c &gt;&gt; <span class="number">8</span>);</div><div class="line">			<span class="keyword">String</span> tmp = Integer.toHexString(code);</div><div class="line">			<span class="keyword">if</span> (tmp.length() == <span class="number">1</span>) &#123;</div><div class="line">				sb.<span class="built_in">append</span>(<span class="string">"0"</span>);</div><div class="line">			&#125;</div><div class="line">			sb.<span class="built_in">append</span>(tmp);</div><div class="line">			code = (c &amp; <span class="number">0xFF</span>);</div><div class="line">			tmp = Integer.toHexString(code);</div><div class="line">			<span class="keyword">if</span> (tmp.length() == <span class="number">1</span>) &#123;</div><div class="line">				sb.<span class="built_in">append</span>(<span class="string">"0"</span>);</div><div class="line">			&#125;</div><div class="line">			sb.<span class="built_in">append</span>(tmp);</div><div class="line">			<span class="keyword">return</span> sb.toString();</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> Character.toString(c);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Ascii to native string. It's same as execut native2ascii.exe -reverse.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            ascii string</div><div class="line">	 * @return native string</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> ascii2Native(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">		<span class="built_in">int</span> begin = <span class="number">0</span>;</div><div class="line">		<span class="built_in">int</span> index = <span class="built_in">str</span>.indexOf(PREFIX);</div><div class="line">		<span class="keyword">while</span> (index != <span class="number">-1</span>) &#123;</div><div class="line">			sb.<span class="built_in">append</span>(<span class="built_in">str</span>.substring(begin, index));</div><div class="line">			sb.<span class="built_in">append</span>(ascii2Char(<span class="built_in">str</span>.substring(index, index + <span class="number">6</span>)));</div><div class="line">			begin = index + <span class="number">6</span>;</div><div class="line">			index = <span class="built_in">str</span>.indexOf(PREFIX, begin);</div><div class="line">		&#125;</div><div class="line">		sb.<span class="built_in">append</span>(<span class="built_in">str</span>.substring(begin));</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Ascii to native character.</div><div class="line">	 * </div><div class="line">	 * @param str</div><div class="line">	 *            ascii string</div><div class="line">	 * @return native character</div><div class="line">	 */</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">char</span> ascii2Char(<span class="keyword">String</span> <span class="built_in">str</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="built_in">str</span>.length() != <span class="number">6</span>) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">					<span class="string">"Ascii string of a native character must be 6 character."</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!PREFIX.equals(<span class="built_in">str</span>.substring(<span class="number">0</span>, <span class="number">2</span>))) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(</div><div class="line">					<span class="string">"Ascii string of a native character must start with "</span>\u<span class="string">"."</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">String</span> tmp = <span class="built_in">str</span>.substring(<span class="number">2</span>, <span class="number">4</span>);</div><div class="line">		<span class="built_in">int</span> code = Integer.parseInt(tmp, <span class="number">16</span>) &lt;&lt; <span class="number">8</span>;</div><div class="line">		tmp = <span class="built_in">str</span>.substring(<span class="number">4</span>, <span class="number">6</span>);</div><div class="line">		code += Integer.parseInt(tmp, <span class="number">16</span>);</div><div class="line">		<span class="keyword">return</span> (<span class="built_in">char</span>) code;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1359,7 +1738,7 @@ Twitter [ @suncto ]
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">log4j.rootCategory=DEBUG, stdout, R</div><div class="line"></div><div class="line">#Console config </div><div class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div><div class="line"></div><div class="line">#File config </div><div class="line">log4j.appender.R=org.apache.log4j.RollingFileAppender </div><div class="line">log4j.appender.R.File=c:/jmsLog.<span class="keyword">log</span> </div><div class="line">#log4j.appender.R.File=<span class="comment">//oracle/icdc/instance/lib/jmsLog.log </span></div><div class="line">log4j.appender.R.MaxFileSize=<span class="number">100</span>KB </div><div class="line">log4j.appender.R.MaxBackupIndex=<span class="number">0</span> </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">log4j.rootCategory=DEBUG, stdout, R</div><div class="line"></div><div class="line">#Console config </div><div class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.stdout.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div><div class="line"></div><div class="line">#File config </div><div class="line">log4j.appender.R=org.apache.log4j.RollingFileAppender </div><div class="line">log4j.appender.R.File=c:/jmsLog.<span class="keyword">log</span> </div><div class="line">#log4j.appender.R.File=<span class="comment">//oracle/icdc/instance/lib/jmsLog.log </span></div><div class="line">log4j.appender.R.MaxFileSize=<span class="number">100</span>KB </div><div class="line">log4j.appender.R.MaxBackupIndex=<span class="number">0</span> </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>=org.apache.log4j.PatternLayout </div><div class="line">log4j.appender.R.<span class="keyword">layout</span>.ConversionPattern=&lt;%d&gt; &lt;%-<span class="number">5</span>p&gt; &lt;%c&gt; – %n%m(%F:%M:%L)%n</div></pre></td></tr></table></figure>
 
           
         
@@ -1511,7 +1890,7 @@ Twitter [ @suncto ]
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。</p>
 <ol>
 <li>
 <p>修改数据库配置文件，如果你在同一主机同一空间上更改域名，这步可以省掉，如果数据库不同，还得要打开wp-config.php将数据库配置正确才可以正常访问新域名。</p>
@@ -1677,250 +2056,10 @@ Twitter [ @suncto ]
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>一直都想在博客文章中实现这个功能，也曾经尝试过把代码加入到PHP页面中去，但总不是太方便，今天，看到了这个功能，被告之是用的一个WordPress文章运行代码插件实现，这个插件就是<a href="http://blog.sunshow.net/" target="_blank" rel="external">Sunshow</a>写的WordPress RunCode插件。</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>一直都想在博客文章中实现这个功能，也曾经尝试过把代码加入到PHP页面中去，但总不是太方便，今天，看到了这个功能，被告之是用的一个WordPress文章运行代码插件实现，这个插件就是<a href="http://blog.sunshow.net/" target="_blank" rel="external">Sunshow</a>写的WordPress RunCode插件。</p>
 <p>WordPress RunCode插件对于做网站前端开发的朋友来说，非常有用。可以在文章中及时地展示自己的一些前端的设计效果，包括CSS、Javascript等等。</p>
 <p>使用方法：</p>
 <p><runcode>……</runcode>之间加入你要运行的代码即可。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/01/10/db-sqlserver-Error-establishing-socket/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/01/10/db-sqlserver-Error-establishing-socket/" itemprop="url">Error_establishing_socket的解决方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-01-10T18:09:17+08:00">
-                2012-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/01/10/db-sqlserver-Error-establishing-socket/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/01/10/db-sqlserver-Error-establishing-socket/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Error establishing socket的解决方法</p>
-<p>如果你在测试连接SQL Server 2000 JDBC连接时出现错误Error establishing socket.请参考如下：</p>
-<p>用 CMD 命令NETSTAT查1433(这是默认的端口,可能被占用,你可以重新设一个新的端口)的端口可是居然没有没有打开,先看看你的服务器有没有打开,如果都大开了那就说明你没有装SQL的sp3或sp4的补丁.</p>
-<p>还有一个方法看你是不是要打补丁,那就是看看你的版本号:</p>
-<p>可以用如下的方式查看MSSQL的版本：</p>
-<p>打开企业管理器-〉工具-〉SQL查询分析器-〉帮助-〉关于</p>
-<p>查看MSSQL的详细版本号</p>
-<p>如果 是 8.00.194 就是还没打补丁</p>
-<p>8.00.760 就是SP3</p>
-<p>8.00.2039 就是SP4</p>
-<p>如果你的版本号是对的,但NETSTAT查1433没有,那可能你的1433端口被占了,换一个端口应该就可以了.</p>
-<p>换端口的方法是:</p>
-<ol>
-<li>
-<p>打开企业管理器，依次在控制台根目录 -&gt;Microsoft SQL Servers-&gt;SQL Server 组，列出一部分数据库服务器。</p>
-</li>
-<li>
-<p>右击我们要连接的数据库服务器，选择属性，在常规选项卡点击网络配置弹出新窗口。</p>
-</li>
-<li>
-<p>在启用的协议区域我们选择 TCP/IP ，点击属性按钮，弹出新窗口。在这个窗口有网络协议默认值设置，一般默认端口是：1433。</p>
-</li>
-</ol>
-<p>另有一篇网上的方法，供参考：</p>
-<p>如运行程序时出现 “Error establishing socket” 错误,则应进行如下调试:</p>
-<ol>
-<li>检查SQL SERVER 是否允许远程访问.具体步骤:</li>
-</ol>
-<ul>
-<li>打开&quot;企业管理器&quot;,打开控制台根目录&gt;SQL Server 组&gt;数据库</li>
-<li>在相应&quot;数据库&quot;上单击右键,选择&quot;属性&quot;</li>
-<li>选择&quot;连接&quot;选项卡,检查&quot;远程服务器连接&quot;下,RPC服务是否选择.</li>
-</ul>
-<ol start="2">
-<li>使用telnet IP地址 1433,系统是否提示连接出错,如系统提示出错</li>
-</ol>
-<p>检查是否防火墙屏蔽了SQL SERVER 或 java IDE 的网络访问端口</p>
-<p>如果是,关闭防火墙,重新启动SQL SERVER和java IDE,进行测试,</p>
-<p>如果系统仍提示上述错误,尝试下列步骤</p>
-<ol start="3">
-<li>检查SQL SERVER 端口号及是否启用了TCP/IP协议,具体步骤:</li>
-</ol>
-<ul>
-<li>
-<p>打开&quot;企业管理器&quot;,打开控制台根目录&gt;SQL Server 组&gt;数据库</p>
-</li>
-<li>
-<p>在相应&quot;数据库&quot;上单击右键,选择&quot;属性&quot;</p>
-</li>
-<li>
-<p>选择&quot;常规&quot;选项卡,点击&quot;网络配置&quot;,如启用的协议中无&quot;TCP/IP协议&quot;将其加入</p>
-</li>
-<li>
-<p>选择&quot;TCP/IP协议&quot;,点击&quot;属性&quot;,检查其端口号是否为1433</p>
-</li>
-<li>
-<p>如端口号为1433将其修改为其它端口号,修改jdbc连接语句,将端口号同样改为新启用的端口号,如jdbc:microsoft:sqlserver://server_name:1400(假设新端口号为 1400)</p>
-</li>
-</ul>
-<p>以下的方法你每种的去试试:</p>
-<ol>
-<li>
-<p>检查一下sql server的connection有没有full.</p>
-</li>
-<li>
-<p>如果是认证的问题.</p>
-</li>
-</ol>
-<p>可到sql enterprice manager-&gt;指定server-&gt;内容-&gt;安全性.</p>
-<p>把验证改为 SQL server 及 windows.</p>
-<ol start="3">
-<li>
-<p>点选属性检查一下port是否正确.</p>
-</li>
-<li>
-<p>执行%MSSQL_HOME%/80/Tools/Binn/SVRNETCN.exe</p>
-</li>
-</ol>
-<p>把TCP/IP启用.</p>
-<ol start="5">
-<li>
-<p>关掉防火墙.</p>
-</li>
-<li>
-<p>把SQL server update到sp3:</p>
-</li>
-</ol>
-<p><a href="http://www.microsoft.com/sql/downloads/2000/sp3.asp" target="_blank" rel="external">http://www.microsoft.com/sql/downloads/2000/sp3.asp</a></p>
-<p>经我验证，一般升级到sp3就好用了！</p>
 
           
         
@@ -2072,7 +2211,7 @@ Twitter [ @suncto ]
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>有时候我们需要知道字符串的实际占用长度，比如汉字“一”实际占用两个阿拉伯“1”的长度</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>有时候我们需要知道字符串的实际占用长度，比如汉字“一”实际占用两个阿拉伯“1”的长度</p>
 <figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> getStrSize = <span class="function"><span class="keyword">function</span><span class="params">(str)</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> realLength = <span class="number">0</span>, len = str.length, charCode = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">        charCode = str.charCodeAt(i);</div><div class="line">        <span class="keyword">if</span> (charCode &gt;= <span class="number">0</span> &amp;&amp; charCode &lt;= <span class="number">128</span>) realLength += <span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span> realLength += <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> realLength;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>则“123四五六”实际长度为9.</p>
 
@@ -2164,7 +2303,7 @@ Twitter [ @suncto ]
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">291</span>
+                  <span class="site-state-item-count">292</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

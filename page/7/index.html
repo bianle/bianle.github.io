@@ -358,6 +358,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/01/06/linux-centos-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/06/linux-centos-1/" itemprop="url">linux-centos</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-06T15:58:57+08:00">
+                2017-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/06/linux-centos-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/01/06/linux-centos-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="最小化安装后需要做的事情"><a class="header-anchor" href="#最小化安装后需要做的事情"> </a>最小化安装后需要做的事情</h2>
+<h3 id="联网"><a class="header-anchor" href="#联网"> </a>联网</h3>
+<p><code>vi /etc/sysconfig/network-script/ifcfg-eth0</code></p>
+<blockquote>
+<p>NM_CONTROLLED=“no”   ##取消Network Manager托管
+ONBOOT=“yes”   ##开机启动
+BOOTPROTO=“dhcp”  ##ip获取方式
+<code>service network start</code></p>
+</blockquote>
+<h2 id="开启sshd"><a class="header-anchor" href="#开启sshd"> </a>开启sshd</h2>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">service sshd <span class="literal">start</span></div></pre></td></tr></table></figure>
+<h2 id="下载wget"><a class="header-anchor" href="#下载wget"> </a>下载wget</h2>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> wget</div></pre></td></tr></table></figure>
+<h2 id="修改为国内源-阿里云为例"><a class="header-anchor" href="#修改为国内源-阿里云为例"> </a>修改为国内源（阿里云为例）</h2>
+<ol>
+<li>备份你的原镜像文件，以免出错后可以恢复。</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">mv /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span> /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span><span class="selector-class">.backup</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载新的CentOS-Base.repo 到/etc/yum.repos.d/
+CentOS 5
+<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-5.repo</code>
+CentOS 6
+<code>wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</code></li>
+<li>运行yum makecache生成缓存</li>
+</ol>
+<figure class="highlight ada"><table><tr><td class="code"><pre><div class="line">yum clean <span class="keyword">all</span></div><div class="line">yum makecache</div></pre></td></tr></table></figure>
+<h2 id="安装openssh-clients-scp在这个包"><a class="header-anchor" href="#安装openssh-clients-scp在这个包"> </a>安装openssh-clients(scp在这个包)</h2>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><div class="line">yum <span class="keyword">install</span> openssh-clients</div></pre></td></tr></table></figure>
+<h2 id="源码安装node"><a class="header-anchor" href="#源码安装node"> </a>源码安装node</h2>
+<p><a href="https://www.cppfans.org/1719.html" target="_blank" rel="external">https://www.cppfans.org/1719.html</a></p>
+<h2 id="none"><a class="header-anchor" href="#none"> </a></h2>
+<p><a href="http://netStart.sh" target="_blank" rel="external">netStart.sh</a></p>
+<figure class="highlight tp"><table><tr><td class="code"><pre><div class="line">iptables -<span class="keyword">P</span> INPUT <span class="keyword">ACC</span>EPT</div><div class="line">iptables -<span class="keyword">P</span> OUTPUT <span class="keyword">ACC</span>EPT</div></pre></td></tr></table></figure>
+<p><a href="http://netStop.sh" target="_blank" rel="external">netStop.sh</a></p>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line">iptables -P INPUT <span class="built_in">DROP</span></div><div class="line">iptables -P <span class="keyword">OUTPUT</span> <span class="built_in">DROP</span></div></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><div class="line"><span class="section">server</span> &#123;</div><div class="line">        <span class="attribute">listen</span>       <span class="number">80</span>;</div><div class="line">        <span class="attribute">server_name</span>  blog.bovod.org panpan.lu;</div><div class="line"></div><div class="line">        <span class="attribute">location</span> / &#123;</div><div class="line">            <span class="attribute">proxy_pass</span>   http://localhost:2368;</div><div class="line">            <span class="attribute">client_max_body_size</span> <span class="number">50m</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/01/06/net-modem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -461,7 +649,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><ol>
 <li>访问 <a href="http://192.168.1.1/logoffaccount.html%EF%BC%8C%E9%9A%90%E8%97%8F%E7%94%A8%E6%88%B7%E6%94%B9%E4%B8%BA%E5%90%AF%E7%94%A8%EF%BC%8C" target="_blank" rel="external">http://192.168.1.1/logoffaccount.html，隐藏用户改为启用，</a>  
 这样就可以用工程账号登陆了。
 <img src="http://blimg.bovod.org/2017/01/06/20170106130014.png" alt="net"></li>
@@ -625,7 +813,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>2016就这么过去了，新的一年又开始了，愿我的家人身体健康，一生平安！儿子在睡觉，媳妇在(貌似)看跨年晚会吧，我在学习下服务器架构。还要造个轮子，写个工具！</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>2016就这么过去了，新的一年又开始了，愿我的家人身体健康，一生平安！儿子在睡觉，媳妇在(貌似)看跨年晚会吧，我在学习下服务器架构。还要造个轮子，写个工具！</p>
 
           
         
@@ -934,7 +1122,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="2017-03-14-17-49-00"><a class="header-anchor" href="#2017-03-14-17-49-00"> </a>2017-03-14 17:49:00</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="2017-03-14-17-49-00"><a class="header-anchor" href="#2017-03-14-17-49-00"> </a>2017-03-14 17:49:00</h2>
 <h3 id="修改域名为bianle-blog"><a class="header-anchor" href="#修改域名为bianle-blog"> </a>修改域名为<code>bianle.blog</code></h3>
 <h2 id="2016-12-26-19-15-36"><a class="header-anchor" href="#2016-12-26-19-15-36"> </a>2016-12-26 19:15:36</h2>
 <h3 id="添加不蒜子统计"><a class="header-anchor" href="#添加不蒜子统计"> </a>添加<code>不蒜子</code>统计</h3>
@@ -1095,7 +1283,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="背景"><a class="header-anchor" href="#背景"> </a>背景</h2>
 <p>nginx + centos6</p>
 <h2 id="生成证书"><a class="header-anchor" href="#生成证书"> </a>生成证书</h2>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><div class="line">wget https:<span class="comment">//dl.eff.org/certbot-auto</span></div><div class="line">chmod a+x certbot-<span class="keyword">auto</span></div><div class="line">./certbot-<span class="keyword">auto</span> certonly</div></pre></td></tr></table></figure>
@@ -1254,7 +1442,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装"><a class="header-anchor" href="#安装"> </a>安装</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="安装"><a class="header-anchor" href="#安装"> </a>安装</h2>
 <ol>
 <li><code>yum install java</code></li>
 <li><code>rpm -ivh http://ftp.tsukuba.wide.ad.jp/software/jenkins/redhat-stable/jenkins-2.7.4-1.1.noarch.rpm</code></li>
@@ -1772,162 +1960,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/12/13/boot2docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/13/boot2docker/" itemprop="url">boot2docker</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-13T08:31:44+08:00">
-                2016-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/12/13/boot2docker/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2016/12/13/boot2docker/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>osx下安装boot2docker</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/12/13/boot2docker/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1982,7 +2014,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">291</span>
+                  <span class="site-state-item-count">292</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

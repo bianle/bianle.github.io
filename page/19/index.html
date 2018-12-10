@@ -358,6 +358,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-trunc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/03/25/db-oracle-trunc/" itemprop="url">Oracle trunc()函数的用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-03-25T15:25:59+08:00">
+                2014-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/03/25/db-oracle-trunc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2014/03/25/db-oracle-trunc/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**************日期********************/</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>  今天的日期为<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mm’)   <span class="keyword">from</span>   dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-1</span>    返回当月第一天. </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>       返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’dd’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>    返回当前年月日 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yyyy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>   返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’d’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-13</span> (星期天)返回当前星期的第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘hh’) <span class="keyword">from</span> dual   –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span>   当前时间为<span class="number">14</span>:<span class="number">41</span>   </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mi’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">41</span>:<span class="number">00</span>   TRUNC()函数没有秒的精确 </div><div class="line"><span class="comment">/***************数字********************/</span> </div><div class="line"><span class="comment">/* </span></div><div class="line">TRUNC（number,num_digits） </div><div class="line">Number 需要截尾取整的数字。 </div><div class="line">Num_digits 用于指定取整精度的数字。Num_digits 的默认值为 0。 </div><div class="line">TRUNC()函数截取时不进行四舍五入 </div><div class="line">*/ </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">0</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123.4</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-4</span>) <span class="keyword">from</span> dual –<span class="number">0</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">4</span>) <span class="keyword">from</span> dual  –<span class="number">123.458</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>) <span class="keyword">from</span> dual  –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/linux-rh-unstall-java1-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -461,7 +613,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>1.打开终端输入<code>#rpm -qa | grep gcj</code> ，其显示内容有：</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>1.打开终端输入<code>#rpm -qa | grep gcj</code> ，其显示内容有：</p>
 <blockquote>
 <p>java-1.4.2-gci-compat………
 java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java开头的文件)</p>
@@ -620,7 +772,7 @@ java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文作者Pierre是一名有10多年经验的高级系统架构师，他的主要专业领域是Java EE、中间件和JVM技术。根据他多年的工作实践经验，他发现许多性能问题都是由Java堆容量不足和调优引起的。下面他将和大家分享非常实用的5个Java堆优化技巧。
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>本文作者Pierre是一名有10多年经验的高级系统架构师，他的主要专业领域是Java EE、中间件和JVM技术。根据他多年的工作实践经验，他发现许多性能问题都是由Java堆容量不足和调优引起的。下面他将和大家分享非常实用的5个Java堆优化技巧。
 1.JVM：对难以理解的东西产生恐惧感
 千万不要以为，通过配置，调优，就可以排除那些你所不明白的问题。有些人认为Java程序员不需要知道内部JVM内存管理。毫无疑问，这种观点明显是错误的，如果想拓宽知识面和提升排除故障能力，你就必须要了解和学习一下JVM内存管理。
 对于Java或者是Java EE新手来说，Java Heap调优和故障排除是一项非常有挑战的工作。下面会提供一些典型的案例场景：
@@ -843,7 +995,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="快速排序"><a class="header-anchor" href="#快速排序"> </a>快速排序</h1>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="快速排序"><a class="header-anchor" href="#快速排序"> </a>快速排序</h1>
 <h2 id="介绍："><a class="header-anchor" href="#介绍："> </a>介绍：</h2>
 <p>快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要Ο(n log n)次比较。在最坏状况下则需要Ο(n2)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他Ο(n log n) 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来，且在大部分真实世界的数据，可以决定设计的选择，减少所需时间的二次方项之可能性。</p>
 <h2 id="步骤："><a class="header-anchor" href="#步骤："> </a>步骤：</h2>
@@ -1106,7 +1258,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -1258,7 +1410,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
 
           
         
@@ -1410,7 +1562,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
 <p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
 <p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
 <p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
@@ -1425,186 +1577,6 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
 <li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
 </ol>
 <p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-ie-css-limit/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">IE中样式表、选择符的数量限制记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-03T18:09:17+08:00">
-                2013-02-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/02/03/web-ie-css-limit/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/03/web-ie-css-limit/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
-<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
-<blockquote>
-<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 4095 rules</li>
-<li>A sheet may @import up to 31 sheets</li>
-<li>@import nesting supports up to 4 levels deep
-Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>There’s a simple test page for the limits here.</p>
-</blockquote>
-<blockquote>
-<p>-Eric</p>
-</blockquote>
-<blockquote>
-<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 65534 rules</li>
-<li>A document may use up to 4095 stylesheets</li>
-<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
-</ul>
-</blockquote>
 
           
         
@@ -1756,7 +1728,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
 验证n位的数字：^d{n}$
 验证至少n位数字：^d{n,}$
 验证m-n位的数字：^d{m,n}$
@@ -1816,6 +1788,186 @@ Some folks have wondered about the math that underlies these numbers. The root o
 </li>
 </ol>
 </section>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-ie-css-limit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">IE中样式表、选择符的数量限制记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-03T18:09:17+08:00">
+                2013-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/02/03/web-ie-css-limit/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/03/web-ie-css-limit/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
+<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
+<blockquote>
+<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 4095 rules</li>
+<li>A sheet may @import up to 31 sheets</li>
+<li>@import nesting supports up to 4 levels deep
+Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>There’s a simple test page for the limits here.</p>
+</blockquote>
+<blockquote>
+<p>-Eric</p>
+</blockquote>
+<blockquote>
+<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 65534 rules</li>
+<li>A document may use up to 4095 stylesheets</li>
+<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
+</ul>
+</blockquote>
 
           
         
@@ -1967,7 +2119,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><ol>
 <li>MichaelScofield
 头脑。我理解的头脑，应该是智慧+冷静。作为这部戏的主角，导演很慷慨的把两点品质都赋予了Michael，他的智慧和冷静是贯穿始终的，近乎完美。</li>
 <li>LincolnBurrows
@@ -1991,169 +2143,6 @@ Some folks have wondered about the math that underlies these numbers. The root o
 <li>SaraTancredi
 敬业。当监狱开始暴乱的时候，她不顾警卫队长的劝告，执意进去抢救一个中暑的犯人；当生命垂危的JohnAbruzzi被送往直升飞机时，是她陪在旁边焦急但是很不失冷静的不断呼喊：“John，坚持住，呼吸，坚持住，你会没事的。”在那一刻，我觉得这个恶贯满盈的犯人更象她的亲人，那也是Sara最美的时候。大家可以去看看，在第1季第13集一开始，那一刻，Sara就象一个天使。</li>
 </ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/01/java-rsslibj/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/01/java-rsslibj/" itemprop="url">利用RSSLibJ读取RSS</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-01T18:09:17+08:00">
-                2013-02-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/02/01/java-rsslibj/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/01/java-rsslibj/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>RSS是一个标准的XML文件，Rss阅读器可以读取这个XML文件获得文章的信息，使用户可以通过Rss阅读器而非浏览器阅读Blog，我们只要动态生成这个XML文件便可以了。RSSLibJ是一个专门读取和生成RSS的小巧实用的Java库，大小仅25k，可以下载rsslibj-1_0RC2.jar和它需要的EXMLjar两个文件，然后复制到/WEB-INF/lib/下。</p>
-<p>rsslibj-1_0RC2.jar下载地址：<a href="http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931" target="_blank" rel="external">http://sourceforge.net/project/downloading.php?group_id=71153&amp;use_mirror=nchc&amp;filename=rsslibj-1_0RC2.jar&amp;27763931</a></p>
-<p>EXML.jar下载地址：<a href="http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log" target="_blank" rel="external">http://rsslibj.cvs.sourceforge.net/rsslibj/rsslibj/lib/EXML.jar?view=log</a></p>
-<p>读取新浪RSS的一个例子，结合Jsf。</p>
-<p>页面：</p>
-<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/core"</span> <span class="attr">prefix</span>=<span class="string">"f"</span>%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%@taglib</span> <span class="attr">uri</span>=<span class="string">"http://java.sun.com/jsf/html"</span> <span class="attr">prefix</span>=<span class="string">"h"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%@page</span> <span class="attr">contentType</span>=<span class="string">"text/html;charset=gb18030"</span>%&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">f:view</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h3</span>&gt;</span>RSS Reader<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></div><div class="line"> 			请输入RSS地址：</div><div class="line"> 			<span class="tag">&lt;<span class="name">h:inputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">id</span>=<span class="string">"rssAddress"</span></span></span></div><div class="line">			<span class="attr">converterMessage</span>=<span class="string">"请输入一个正确的Rss地址!"</span> <span class="attr">style</span>=<span class="string">"width:280px;"</span>&gt;</div><div class="line">		<span class="tag">&lt;/<span class="name">h:inputText</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:commandButton</span> <span class="attr">value</span>=<span class="string">"提交"</span> <span class="attr">action</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.readRss &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:commandButton</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">h:message</span> <span class="attr">for</span>=<span class="string">"rssAddress"</span> <span class="attr">style</span>=<span class="string">"color:red;"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:message</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	从</div><div class="line">	<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.rssAddress &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">	获取的内容：</div><div class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h:dataTable</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;rssReader.items &#125;</span><span class="xml"><span class="tag"><span class="string">"</span> <span class="attr">var</span>=<span class="string">"item"</span> <span class="attr">style</span>=<span class="string">"font-size:13px;"</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.title &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">h:column</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">h:outputLink</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span></span></div><div class="line">				<span class="tag">&lt;<span class="name">h:outputText</span> <span class="attr">value</span>=<span class="string">"#</span></span><span class="template-variable">&#123;item.link &#125;</span><span class="xml"><span class="tag"><span class="string">"</span>&gt;</span><span class="tag">&lt;/<span class="name">h:outputText</span>&gt;</span></span></div><div class="line">			<span class="tag">&lt;/<span class="name">h:outputLink</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">h:column</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:dataTable</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">h:form</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">f:view</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>RSSReader.java</p>
-<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> com.rss;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.<span class="keyword">BufferedReader</span>;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;</div><div class="line"><span class="keyword">import</span> java.net.HttpURLConnection;</div><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.net.URL;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Channel;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.Item;</div><div class="line"><span class="keyword">import</span> com.rsslibj.elements.RSSReader;</div><div class="line"></div><div class="line"><span class="keyword">import</span> electric.xml.ParseException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> class RssReader &#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> urlString =  <span class="string">"http://rss.sina.com.cn/news/marquee/ddt.xml"</span>;</div><div class="line">	<span class="keyword">private</span> List&lt;Item&gt; items;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> rssAddress;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyHost = <span class="string">"paicproxy2"</span>;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> proxyPort = <span class="string">"8080"</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getRssAddress() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setRssAddress(<span class="keyword">String</span> rssAddress) &#123;</div><div class="line">		<span class="keyword">this</span>.rssAddress = rssAddress;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> List&lt;Item&gt; getItems() &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 设置代理</div><div class="line">	 */</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> setProxy(<span class="keyword">String</span> proxyHost,<span class="keyword">String</span> proxyPort) &#123;</div><div class="line">		</div><div class="line">		<span class="comment">// 设置代理</span></div><div class="line">		Properties systemSettings = System.getProperties();</div><div class="line">		systemSettings.put(<span class="string">"http.proxyHost"</span>, proxyHost);</div><div class="line">		systemSettings.put(<span class="string">"http.proxyPort"</span>, proxyPort);</div><div class="line">		System.setProperties(systemSettings);</div><div class="line">	&#125;</div><div class="line">	 <span class="comment">/**</span></div><div class="line">     * 读取RSS。</div><div class="line">     * @param url</div><div class="line">     * @throws IOException </div><div class="line">     * @throws ParseException </div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> readRss() <span class="keyword">throws</span> IOException, ParseException &#123;</div><div class="line">    	setProxy(proxyHost, proxyPort);</div><div class="line">    	</div><div class="line">    	URL __url = <span class="keyword">new</span> URL(<span class="keyword">this</span>.rssAddress);</div><div class="line">    	HttpURLConnection conn = (HttpURLConnection) __url.openConnection();</div><div class="line">    	InputStream in = conn.getInputStream();</div><div class="line">    	<span class="keyword">BufferedReader</span> bufReader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(in,<span class="string">"utf-8"</span>));</div><div class="line">    	RSSReader rssReader = <span class="keyword">new</span> RSSReader(bufReader);</div><div class="line">    	Channel channel = rssReader.getChannel();</div><div class="line">    	<span class="keyword">this</span>.items = channel.getItems();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 打印获取的RSS内容。</div><div class="line">     * @param urlString</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> test(<span class="keyword">String</span> urlString) &#123;</div><div class="line">    	setProxy(urlString, urlString);	</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			URL url = <span class="keyword">new</span> URL(urlString);</div><div class="line">			HttpURLConnection conn = (HttpURLConnection) url.openConnection();</div><div class="line">			InputStream is = conn.getInputStream();</div><div class="line">			StringBuilder sBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">			<span class="keyword">String</span> <span class="built_in">line</span> = <span class="keyword">null</span>;</div><div class="line">			</div><div class="line">			<span class="keyword">BufferedReader</span> reader = <span class="keyword">new</span> <span class="keyword">BufferedReader</span>(<span class="keyword">new</span> InputStreamReader(is,<span class="string">"utf-8"</span>));</div><div class="line">			</div><div class="line">			<span class="keyword">while</span> ((<span class="built_in">line</span> = reader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">				sBuilder.<span class="built_in">append</span>(<span class="built_in">line</span>).<span class="built_in">append</span>(<span class="string">"\n"</span>);</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			System.out.<span class="built_in">println</span>(sBuilder.toString());</div><div class="line">		&#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>faces-config.xml:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span><span class="meta">?&gt;</span></span></div><div class="line"> <span class="meta">&lt;!DOCTYPE faces-config PUBLIC</span></div><div class="line"> "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"</div><div class="line"> "http://java.sun.com/dtd/web-facesconfig_1_0.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">faces-config</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">managed-bean</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-name</span>&gt;</span>rssReader<span class="tag">&lt;/<span class="name">managed-bean-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">			com.rss.RssReader</div><div class="line">		<span class="tag">&lt;/<span class="name">managed-bean-class</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">managed-bean-scope</span>&gt;</span>request<span class="tag">&lt;/<span class="name">managed-bean-scope</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">managed-bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">faces-config</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>效果：</p>
-<p><img src="http://blimg.bovod.org/2013/02/01/rss1.jpg" alt="rss"><span class="image-caption">rss</span></p>
 
           
         
@@ -2243,7 +2232,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">291</span>
+                  <span class="site-state-item-count">292</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

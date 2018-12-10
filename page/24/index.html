@@ -358,7 +358,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-reflex/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/06/java-tomcat-ssl/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -377,7 +377,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/12/05/java-reflex/" itemprop="url">JAVA反射机制-class类的获取</a></h1>
+                <a class="post-title-link" href="/2012/12/06/java-tomcat-ssl/" itemprop="url">TOMCAT-SSL双向认证-配置实例</a></h1>
         
 
         <div class="post-meta">
@@ -389,8 +389,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-05T18:09:17+08:00">
-                2012-12-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-06T18:09:17+08:00">
+                2012-12-06
               </time>
             
 
@@ -430,8 +430,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/12/05/java-reflex/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/java-reflex/" itemprop="commentCount"></span>
+                <a href="/2012/12/06/java-tomcat-ssl/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/06/java-tomcat-ssl/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -461,64 +461,47 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
-信息。
-当一个类或接口被装入的JVM 时便会产生一个与之关联的java.lang.Class 对象，可以通过
-这个Class 对象对被装入类的详细信息进行访问。
-简单的说，获取某一个类所对应的Class 对象可以通过如下三种途径：</p>
-<ol>
-<li>Object 的getClass 方法
-java.lang.Object 中定义有getClass 方法：
-public final Class getClass()
-所有Java 对象都具备这个方
-法。该方法用于返回与调用该方法对象所属类关联的Class 对象，
-例如：</li>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>SSL (Secure Socket Layer – 安全套接字层)
+功能：保障在Internet上数据传输之安全，利用数据加密(Encryption)技术，确保数据在网络上之传输过程中不会被截取及窃听，防止篡改。
+如何让我们的WEB应用程序应用SSL安全保障？经过几天摸索，终于实现 TOMCAT+SSL 双向认证，也就是说，首先，客户端将要认证服务器的安全性，确保访问的是正确的服务器，而非假冒的钓鱼网站；其次，服务器也要认证客户端的安全性，只有那些拥有服务器授权证书的客户端才可以访问。
+下面请遵循详细步骤
+1.在D盘建立目录：mykeys
+2.启动命令行，并转移到 d:/mykeys
+a)创建服务器密钥，其密钥库为 d:/mykeys/server.ks，注意keypass和storepass保持一致，它们分别代表 密钥密码和密钥库密码，注意 CN=localhost 中，localhost表示要配置SSL的主机名，不能任意指定
+D:/mykeys&gt;keytool -genkey -v -alias serverKey -dname “CN=localhost” -keyalg RSA -keypass rwm258 -keystore server.ks -storepass rwm258
+b)创建客户端密钥，其密钥库为 d:/mykeys/client.p12，注意这个密钥库的后缀名，注意密钥库类型PKCS12
+D:/mykeys&gt;keytool -genkey -v -alias clientKey -dname “CN=SomeOne” -keyalg RSA -keypass lyl147 -keystore client.p12 -storepass lyl147 -storetype PKCS12
+c)        将客户端密钥导出为证书文件
+D:/mykeys&gt;keytool -export -alias clientKey -file clientKey.cer -keystore client.p12 -storepass lyl147 -storetype PKCS12
+d)        将上述客户端密钥文件导入服务器证书库，并设置为信任证书；注意会问你是否信任该证书，回答 y 即可
+D:/mykeys&gt;keytool -import -v -alias clientKey -file clientKey.cer -keystore server.ks -storepass rwm258
+3.为了在本机浏览器中进行SSL访问，请：双击 d:/mykeys/client.p12 ，将启动证书向导
+a)要导入的文件 文件名  D:/mykeys/client.p12
+b)为私钥键入密码lyl147 ，勾选：标志此密钥为可导出的
+c)证书存储，选：将所有的证书放入下列存储区，然后，浏览-个人
+d)现在，打开IE，查看证书：工具-Internet选项-内容-证书-个人，可以看到 SomeOne 证书已被安装</p>
+<ol start="4">
+<li>配置TOMCAT服务器，以支持SSL认证，编辑文件：%tomcat_home%/conf/server.xml，下面这段配置代码本来是被屏蔽的，现在请取消其屏蔽，并相应增加密钥库的配置，其中clientAuth=“true” 用以启动双向认证，否则，只有客户端认证服务器-单向
+&lt;Connector port=“8443” protocol=“HTTP/1.1” SSLEnabled=“true”</li>
 </ol>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line"><span class="built_in">Date</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">Class c1 = date1.getClass();</div><div class="line">Class c2 = date2.getClass();</div><div class="line"><span class="keyword">System</span>.out.println(c1.<span class="built_in">getName</span>()); <span class="comment">// java.util.Date</span></div><div class="line"><span class="keyword">System</span>.out.println(c1 == c2); <span class="comment">// true</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，调用Date 对象date1 的getClass 方法将返回用于封装Date 类信息的Class
-对象。这里调用了Class 类的getName 方法：</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">String</span> getName()</div></pre></td></tr></table></figure>
-<p>这个方法的含义很直观，即返回所封装的类的名称。
-需要注意的是，代码中的date1 和date2 的getClass 方法返回了相同的Class 对象（c1==c2
-的值为true）。这是因为，对于相同的类，JVM 只会载入一次，而与该类对应的Class 对象
-也只会存在一个，无论该类实例化了多少对象。
-另外，需要强调的是，当一个对象被其父类的引用或其实现的接口类型的引用所指向的时，
-getClass 方法返回的是与对象实际所属类关联的Class 对象。例如：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">List</span> <span class="built_in">list</span> = <span class="literal">new</span> ArrayList();</div><div class="line">System.out.println(<span class="built_in">list</span>.getClass().getName()); <span class="comment">// java.util.ArrayList</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，语句list.getClass()方法返回的是list 所指向对象实际所属类java.util.ArrayList
-对应的Class 对象而并未java.util.List 所对应的Class 对象。有些时候可以通过这个方法了解
-一个对象的运行时类型，例如：</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line">HashSet <span class="keyword">set</span> = new <span class="comment">HashSet()</span>;</div><div class="line">Iterator it = <span class="keyword">set</span>.iterator();</div><div class="line"><span class="keyword">System</span>.out.println(it.getClass().getName()); <span class="comment">//java.util.HashMap$KeyIterator</span></div></pre></td></tr></table></figure>
-<p>从代码可以看出，HashSet 的iterator 方法返回的是实现了Iterator 接口的HashMap 内部类
-（KeyIterator）对象。
-因为抽象类和接口不可能实例化对象，因此不能通过Object 的getClass 方法获得与抽象类
-和接口关联的Class 对象。</p>
-<ol start="2">
-<li>使用.class 的方式
-使用类名加“.class”的方式即会返回与该类对应的Class 对象。例如：</li>
+<p>maxThreads=“150” scheme=“https” secure=“true”</p>
+<p>clientAuth=“true” sslProtocol=“TLS”</p>
+<p>keystoreFile=“D:/mykeys/server.ks” keystorePass=“rwm258”</p>
+<p>truststoreFile=“D:/mykeys/server.ks &quot; truststorePass=” rwm258&quot; /&gt;</p>
+<ol start="5">
+<li>启动 TOMCAT，然后在IE浏览器中访问：<a href="https://localhost:8443/" target="_blank" rel="external">https://localhost:8443/</a>
+a) 将弹出一个消息框，这是要客户端认证服务器，查看证书可看到服务器证书为 localhost ，回顾前面的步骤，正是我们创建的那个服务器证书；这里点 是
+b) 页面出现，说明客户端被允许访问</li>
+<li>现在，再次打开IE，工具-Internet选项-内容-证书-个人 ，删除那个 SomeOne 证书
+a) 现在，再次在IE浏览器中访问：<a href="https://localhost:8443/" target="_blank" rel="external">https://localhost:8443/</a> 你会发现，回顾前面的 3 步骤，你会明白为什么要将客户端证书导入 IE 浏览器；
+7.请再次重复 3 步骤，之后再尝试访问
+OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一台电脑来访问本机服务器如何处理呢？很简单，把 d:/mykeys/client.p12 复制到该机器，然后执行 3 步骤，将这个证书导入到该机器的 IE 浏览器个人证书中，记得密码是：lyl147；当然，在那台电脑上访问时，要将localhost修改为本机主机名或IP地址
+——————————————————————-
+要使你自己的WEB程序应用SSL安全访问，请遵循如下配置
+在你应用的 web.xml 文件的 <web-app></web-app> 中加入如下配置</li>
 </ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">Class</span> clazz = <span class="keyword">String</span>.<span class="keyword">class</span>;</div><div class="line">System.<span class="keyword">out</span>.println(clazz.getName()); <span class="comment">// java.lang.String</span></div></pre></td></tr></table></figure>
-<p>这个方法可以直接获得与指定类关联的Class 对象，而并不需要有该类的对象存在。</p>
-<ol start="3">
-<li>使用Class.forName 方法
-Class 有一个著名的static 方法forName：</li>
-</ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">Class</span> forName(<span class="keyword">String</span> className) throws ClassNotFoundException</div></pre></td></tr></table></figure>
-<p>该方法可以根据字符串参数所指定的类名获取与该类关联的Class 对象。如果该类还没有被
-装入，该方法会将该类装入JVM。
-该方法声明抛出ClassNotFoundException 异常。顾名思义，当该方法无法获取需要装入的类
-时（例如，在当前类路径中不存在这个类），就会抛出这个异常。
-例如，如果当前类路径中存在Foo 类：</p>
-<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">package org.whatisjava.reflect;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> &#123;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo()"</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo is initialized"</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行下面的代码：控制台会有如下输出：
-Class clazz = Class.forName(“org.whatisjava.reflect.Foo”);
-Foo is initialized
-Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装入JVM，并返回与之
-关联的Class 对象。JVM 装入Foo 类后对其进行初始化，调用了其static 块中的代码。需要
-注意的是：forName 方法的参数是类的完整限定名（即包含包名）。
-区别于前面两种获取Class 对象的方法。使用Class.forName 方法所要获取的与之对应的Class
-对象的类可以通过字符串的方式给定。该方法通常用于在程序运行时根据类名动态的载入该
-类并获得与之对应的Class 对象。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">login-config</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">auth-method</span>&gt;</span>CLIENT-CERT<span class="tag">&lt;/<span class="name">auth-method</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">realm-name</span>&gt;</span>Client Cert Users-only Area<span class="tag">&lt;/<span class="name">realm-name</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">login-config</span>&gt;</span> </div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">security-constraint</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">web-resource-collection</span> &gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">web-resource-name</span> &gt;</span>SSL<span class="tag">&lt;/<span class="name">web-resource-name</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">web-resource-collection</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">transport-guarantee</span>&gt;</span>CONFIDENTIAL<span class="tag">&lt;/<span class="name">transport-guarantee</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">security-constraint</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>你会发现，即使使用 http://….:8080 来访问你的应用程序，它也会重定向为 https://….8443 访问，也就是说，你的应用已经强制使用SSL安全访问层</p>
 
           
         
@@ -670,7 +653,7 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
 Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
 ”，不含引号，
 然后直接将其文件夹拉到桌面或复制剪切都行。</p>
@@ -825,7 +808,7 @@ Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
 询语言。后者是Hibernate支持的底层数据库查询语言，说白了就是支持以前我们使用
 的SQL语句。
 前2天试着用Hibernate提供的SQL查询数据库，得到的确实不友好的错误提示。
@@ -860,6 +843,215 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
 为
 SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
 执行查询类，OK了。问题解决了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-reflex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/05/java-reflex/" itemprop="url">JAVA反射机制-class类的获取</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-05T18:09:17+08:00">
+                2012-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/12/05/java-reflex/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/java-reflex/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
+信息。
+当一个类或接口被装入的JVM 时便会产生一个与之关联的java.lang.Class 对象，可以通过
+这个Class 对象对被装入类的详细信息进行访问。
+简单的说，获取某一个类所对应的Class 对象可以通过如下三种途径：</p>
+<ol>
+<li>Object 的getClass 方法
+java.lang.Object 中定义有getClass 方法：
+public final Class getClass()
+所有Java 对象都具备这个方
+法。该方法用于返回与调用该方法对象所属类关联的Class 对象，
+例如：</li>
+</ol>
+<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line"><span class="built_in">Date</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">Class c1 = date1.getClass();</div><div class="line">Class c2 = date2.getClass();</div><div class="line"><span class="keyword">System</span>.out.println(c1.<span class="built_in">getName</span>()); <span class="comment">// java.util.Date</span></div><div class="line"><span class="keyword">System</span>.out.println(c1 == c2); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>上面的代码中，调用Date 对象date1 的getClass 方法将返回用于封装Date 类信息的Class
+对象。这里调用了Class 类的getName 方法：</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">String</span> getName()</div></pre></td></tr></table></figure>
+<p>这个方法的含义很直观，即返回所封装的类的名称。
+需要注意的是，代码中的date1 和date2 的getClass 方法返回了相同的Class 对象（c1==c2
+的值为true）。这是因为，对于相同的类，JVM 只会载入一次，而与该类对应的Class 对象
+也只会存在一个，无论该类实例化了多少对象。
+另外，需要强调的是，当一个对象被其父类的引用或其实现的接口类型的引用所指向的时，
+getClass 方法返回的是与对象实际所属类关联的Class 对象。例如：</p>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">List</span> <span class="built_in">list</span> = <span class="literal">new</span> ArrayList();</div><div class="line">System.out.println(<span class="built_in">list</span>.getClass().getName()); <span class="comment">// java.util.ArrayList</span></div></pre></td></tr></table></figure>
+<p>上面的代码中，语句list.getClass()方法返回的是list 所指向对象实际所属类java.util.ArrayList
+对应的Class 对象而并未java.util.List 所对应的Class 对象。有些时候可以通过这个方法了解
+一个对象的运行时类型，例如：</p>
+<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line">HashSet <span class="keyword">set</span> = new <span class="comment">HashSet()</span>;</div><div class="line">Iterator it = <span class="keyword">set</span>.iterator();</div><div class="line"><span class="keyword">System</span>.out.println(it.getClass().getName()); <span class="comment">//java.util.HashMap$KeyIterator</span></div></pre></td></tr></table></figure>
+<p>从代码可以看出，HashSet 的iterator 方法返回的是实现了Iterator 接口的HashMap 内部类
+（KeyIterator）对象。
+因为抽象类和接口不可能实例化对象，因此不能通过Object 的getClass 方法获得与抽象类
+和接口关联的Class 对象。</p>
+<ol start="2">
+<li>使用.class 的方式
+使用类名加“.class”的方式即会返回与该类对应的Class 对象。例如：</li>
+</ol>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">Class</span> clazz = <span class="keyword">String</span>.<span class="keyword">class</span>;</div><div class="line">System.<span class="keyword">out</span>.println(clazz.getName()); <span class="comment">// java.lang.String</span></div></pre></td></tr></table></figure>
+<p>这个方法可以直接获得与指定类关联的Class 对象，而并不需要有该类的对象存在。</p>
+<ol start="3">
+<li>使用Class.forName 方法
+Class 有一个著名的static 方法forName：</li>
+</ol>
+<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">Class</span> forName(<span class="keyword">String</span> className) throws ClassNotFoundException</div></pre></td></tr></table></figure>
+<p>该方法可以根据字符串参数所指定的类名获取与该类关联的Class 对象。如果该类还没有被
+装入，该方法会将该类装入JVM。
+该方法声明抛出ClassNotFoundException 异常。顾名思义，当该方法无法获取需要装入的类
+时（例如，在当前类路径中不存在这个类），就会抛出这个异常。
+例如，如果当前类路径中存在Foo 类：</p>
+<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">package org.whatisjava.reflect;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> &#123;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo()"</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo is initialized"</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行下面的代码：控制台会有如下输出：
+Class clazz = Class.forName(“org.whatisjava.reflect.Foo”);
+Foo is initialized
+Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装入JVM，并返回与之
+关联的Class 对象。JVM 装入Foo 类后对其进行初始化，调用了其static 块中的代码。需要
+注意的是：forName 方法的参数是类的完整限定名（即包含包名）。
+区别于前面两种获取Class 对象的方法。使用Class.forName 方法所要获取的与之对应的Class
+对象的类可以通过字符串的方式给定。该方法通常用于在程序运行时根据类名动态的载入该
+类并获得与之对应的Class 对象。</p>
 
           
         
@@ -1011,7 +1203,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -1163,7 +1355,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
 在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
 由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
 但是在ie下此问题就浮出水面了。
@@ -1344,351 +1536,8 @@ status=no 是否显示状态栏内的信息，yes为允许；</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><a href="http://wp.qq.com/index.html" target="_blank" rel="external">http://wp.qq.com/index.html</a></p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><a href="http://wp.qq.com/index.html" target="_blank" rel="external">http://wp.qq.com/index.html</a></p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="selector-tag">a</span> target=<span class="string">"_blank"</span> href=<span class="string">"http://wpa.qq.com/msgrd?v=3&amp;uin=229371515&amp;site=qq&amp;menu=yes"</span> mce_href=<span class="string">"http://wpa.qq.com/msgrd?v=3&amp;uin=229371515&amp;site=qq&amp;menu=yes"</span>&gt;</div><div class="line">  &lt;<span class="selector-tag">img</span> <span class="attribute">border</span>=<span class="string">"0"</span> src=<span class="string">"http://wpa.qq.com/pa?p=2:229371515:42"</span> mce_src=<span class="string">"http://wpa.qq.com/pa?p=2:229371515:42"</span> alt=<span class="string">"给我留言"</span> title=<span class="string">"给我留言"</span> /&gt;</div><div class="line">&lt;/a&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/10/16/java-socket-demo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">java socket小demo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-10-16T18:09:17+08:00">
-                2012-10-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/10/16/java-socket-demo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/10/16/java-socket-demo/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">2222</span>);</div><div class="line">			System.out.println(<span class="string">"Server已经启动。。。"</span>);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">				Socket so = ss.accept();<span class="comment">//等待客户连接</span></div><div class="line">				<span class="keyword">new</span> ServerThread(so).start();</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			Socket so = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">2222</span>);</div><div class="line">			DataInputStream dis = <span class="keyword">new</span> </div><div class="line">			  DataInputStream(so.getInputStream());</div><div class="line">			DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">			  DataOutputStream(so.getOutputStream());</div><div class="line">			InputStreamReader isr = <span class="keyword">new</span> </div><div class="line">			  InputStreamReader(System.in);</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">			    String str = br.readLine();</div><div class="line">			    <span class="comment">//1 没有通知服务器</span></div><div class="line">			    dos.writeUTF(str);</div><div class="line">			    <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(str)) <span class="keyword">break</span>;</div><div class="line">			    String s = dis.readUTF();</div><div class="line">			    System.out.println(s);</div><div class="line">			&#125;</div><div class="line">			dis.close();dos.close();</div><div class="line">			so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataInputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataOutputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> Socket so;</div><div class="line">	<span class="keyword">public</span> ServerThread(Socket so)&#123;</div><div class="line">		<span class="keyword">this</span>.so = so;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run()&#123;</div><div class="line">		<span class="keyword">try</span>&#123;		   </div><div class="line">		    DataInputStream dis = <span class="keyword">new</span> </div><div class="line">		      DataInputStream(so.getInputStream());</div><div class="line">		    DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">		      DataOutputStream(so.getOutputStream());</div><div class="line">		    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		        String s = dis.readUTF();</div><div class="line">		        <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(s)) <span class="keyword">break</span>;</div><div class="line">		        dos.writeUTF(<span class="string">"from server:"</span>+s);</div><div class="line">		    &#125;</div><div class="line">		    dis.close();dos.close();</div><div class="line">		    so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/10/16/web-jquery/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/10/16/web-jquery/" itemprop="url">Jquery的$命名冲突</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-10-16T18:09:17+08:00">
-                2012-10-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/10/16/web-jquery/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/10/16/web-jquery/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在Jquery中，$是JQuery的别名，所有使用$的地方也都可以使用JQuery来替换，如$(‘#msg’)等同于JQuery(‘#msg’)的写法。然而，当我们引入多个js库后，在另外一个js库中也定义了$符号的话，那么我们在使用$符号时就发生了冲突。下面以引入两个库文件jquery.js和prototype.js为例来进行说明。
-第一种情况：jquery.js在prototype.js之后进行引入,如：</p>
-<script src="prototype.js" type="text/javascript"><script src="jquery.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$永远代表的是jquery中定义的$符号，也可以写成JQuery(‘#msg’).hide();如果想要使用prototype.js中定义的$,我们在后面再介绍。
-第二种情况：jquery.js在prototype.js之前进行引入,如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/>
- 
-在这种情况下,我们在自己的js代码中如下写的话：
-$('#msg').hide(); 
- 
-$此时代表的prototype.js中定义的$符号，如果我们想要调用jquery.js中的工厂选择函数功能的话，只能用全称写法JQuery(‘#msg’).hide().
-下面先介绍在第一种引入js库文件顺序的情况下，如何正确的使用不同的js库中定义的$符号。
-一.使用JQuery.noConflict()
-该方法的作用就是让Jquery放弃对$的所有权，将$的控制权交还给prototype.js,因为jquery.js是后引入的，所以最后拥有$控制权的是jquery。它的返回值是JQuery。当在代码中调用了该 方法以后，我们就不可以使用$来调用jquery的方法了，此时$就代表在prototype.js库中定义的$了。如下：
-JQuery.noConflict(); //此处不可以再写成$('#msg').hide(),此时的$代表prototype.js中定义的$符号。 
-JQuey('#msg').hide(); 
- 
-自此以后$就代表prototype.js中定义的$,jquery.js中的$无法再使用,只能使用jquery.js中$的全称JQuery了。
-二.自定义JQuery的别名 
-如果觉得第一种方法中使用了JQuery.noConflict()方法以后,只能使用JQuery全称比较麻烦的话，我们还可以为JQuery重定义别名。如下：
-var $j=JQuery.noConflict(); $j('#msg').hide();//此处$j就代表JQuery 
- 
-自此以后$就代表prototype.js中定义的$,jquey.js中的$无法再使用,只能使用$j来作为jquey.js中JQuery的别名了。
-三.使用语句块，在语句块中仍然使用jquery.js中定义的$，如下：
-JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此时在整个ready事件的方法中使用的$都是jquery.js中定义的$. 
-});
- 
- 
-或者使用如下语句块：
-(function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery)
- 
-如果在第二种引入js库文件顺序的情况下,如何使用jquery.js中的$,我们还是可以使用上面介绍的语句块的方法，如：
-<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
-})(JQuery) </script>
-<p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
 
           
         
@@ -1840,7 +1689,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1889,7 +1738,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/10/16/web-js-cal/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/10/16/java-socket-demo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1908,7 +1757,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/10/16/web-js-cal/" itemprop="url">js精确计算</a></h1>
+                <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">java socket小demo</a></h1>
         
 
         <div class="post-meta">
@@ -1920,7 +1769,159 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-10-16T17:30:33+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-10-16T18:09:17+08:00">
+                2012-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/10/16/java-socket-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/10/16/java-socket-demo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">2222</span>);</div><div class="line">			System.out.println(<span class="string">"Server已经启动。。。"</span>);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">				Socket so = ss.accept();<span class="comment">//等待客户连接</span></div><div class="line">				<span class="keyword">new</span> ServerThread(so).start();</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			Socket so = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">2222</span>);</div><div class="line">			DataInputStream dis = <span class="keyword">new</span> </div><div class="line">			  DataInputStream(so.getInputStream());</div><div class="line">			DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">			  DataOutputStream(so.getOutputStream());</div><div class="line">			InputStreamReader isr = <span class="keyword">new</span> </div><div class="line">			  InputStreamReader(System.in);</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">			    String str = br.readLine();</div><div class="line">			    <span class="comment">//1 没有通知服务器</span></div><div class="line">			    dos.writeUTF(str);</div><div class="line">			    <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(str)) <span class="keyword">break</span>;</div><div class="line">			    String s = dis.readUTF();</div><div class="line">			    System.out.println(s);</div><div class="line">			&#125;</div><div class="line">			dis.close();dos.close();</div><div class="line">			so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataInputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataOutputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> Socket so;</div><div class="line">	<span class="keyword">public</span> ServerThread(Socket so)&#123;</div><div class="line">		<span class="keyword">this</span>.so = so;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run()&#123;</div><div class="line">		<span class="keyword">try</span>&#123;		   </div><div class="line">		    DataInputStream dis = <span class="keyword">new</span> </div><div class="line">		      DataInputStream(so.getInputStream());</div><div class="line">		    DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">		      DataOutputStream(so.getOutputStream());</div><div class="line">		    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		        String s = dis.readUTF();</div><div class="line">		        <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(s)) <span class="keyword">break</span>;</div><div class="line">		        dos.writeUTF(<span class="string">"from server:"</span>+s);</div><div class="line">		    &#125;</div><div class="line">		    dis.close();dos.close();</div><div class="line">		    so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/10/16/web-jquery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/10/16/web-jquery/" itemprop="url">Jquery的$命名冲突</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-10-16T18:09:17+08:00">
                 2012-10-16
               </time>
             
@@ -1961,8 +1962,8 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/10/16/web-js-cal/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/10/16/web-js-cal/" itemprop="commentCount"></span>
+                <a href="/2012/10/16/web-jquery/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/10/16/web-jquery/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1992,7 +1993,46 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">//说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。</span></div><div class="line"><span class="comment">//调用：accAdd(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1加上arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accAdd</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> r1, r2, m;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		r1 = (<span class="number">1</span> * arg1).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">		r1 = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		r2 = (<span class="number">1</span> * arg2).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">		r2 = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	m = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="built_in">Math</span>.max(r1, r2));</div><div class="line">	<span class="keyword">return</span> (arg1 * m + arg2 * m) / m;</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的减法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的减法结果。</span></div><div class="line"><span class="comment">//调用：accSub(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1减上arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accSub</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> accAdd(arg1, -arg2);</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的乘法结果会有误差，在两个浮点数相乘的时候会比较明显。这个函数返回较为精确的乘法结果。</span></div><div class="line"><span class="comment">//调用：accMul(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1乘以arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accMul</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> m = <span class="number">0</span>, s1 = (<span class="number">1</span> * arg1).toString(), s2 = (<span class="number">1</span> * arg2).toString();</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		m += s1.split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		m += s2.split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">var</span> ss = <span class="built_in">Number</span>(s1.replace(<span class="string">"."</span>, <span class="string">""</span>)) * <span class="built_in">Number</span>(s2.replace(<span class="string">"."</span>, <span class="string">""</span>)) / <span class="built_in">Math</span>.pow(<span class="number">10</span>, m);</div><div class="line">	<span class="keyword">return</span> <span class="built_in">Math</span>.round(ss * <span class="number">100</span>) / <span class="number">100</span>;</div><div class="line">&#125;    </div><div class="line"></div><div class="line"><span class="comment">//说明：javascript的除法结果会有误差，在两个浮点数相除的时候会比较明显。这个函数返回较为精确的除法结果。</span></div><div class="line"><span class="comment">//调用：accDiv(arg1,arg2)</span></div><div class="line"><span class="comment">//返回值：arg1除以arg2的精确结果    </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accDiv</span>(<span class="params">arg1, arg2</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> t1 = <span class="number">0</span>, t2 = <span class="number">0</span>, r1, r2;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		t1 = (<span class="number">1</span> * arg1).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		t2 = (<span class="number">1</span> * arg2).toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (e) &#123;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">with</span> (<span class="built_in">Math</span>) &#123;</div><div class="line">		r1 = <span class="built_in">Number</span>((<span class="number">1</span> * arg1).toString().replace(<span class="string">"."</span>, <span class="string">""</span>));</div><div class="line">		r2 = <span class="built_in">Number</span>((<span class="number">1</span> * arg2).toString().replace(<span class="string">"."</span>, <span class="string">""</span>));</div><div class="line">		<span class="keyword">var</span> ss = (r1 / r2) * pow(<span class="number">10</span>, t2 - t1);</div><div class="line">		<span class="keyword">return</span> <span class="built_in">Math</span>.round(ss * <span class="number">100</span>) / <span class="number">100</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//金额大小写转换</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertCurrency</span>(<span class="params">currencyDigits</span>) </span>&#123;</div><div class="line"><span class="comment">// Constants:</span></div><div class="line"><span class="keyword">var</span> MAXIMUM_NUMBER = <span class="number">99999999999.99</span>;</div><div class="line"><span class="comment">// Predefine the radix characters and currency symbols for output:</span></div><div class="line"><span class="keyword">var</span> CN_ZERO = <span class="string">"零"</span>;</div><div class="line"><span class="keyword">var</span> CN_ONE = <span class="string">"壹"</span>;</div><div class="line"><span class="keyword">var</span> CN_TWO = <span class="string">"贰"</span>;</div><div class="line"><span class="keyword">var</span> CN_THREE = <span class="string">"叁"</span>;</div><div class="line"><span class="keyword">var</span> CN_FOUR = <span class="string">"肆"</span>;</div><div class="line"><span class="keyword">var</span> CN_FIVE = <span class="string">"伍"</span>;</div><div class="line"><span class="keyword">var</span> CN_SIX = <span class="string">"陆"</span>;</div><div class="line"><span class="keyword">var</span> CN_SEVEN = <span class="string">"柒"</span>;</div><div class="line"><span class="keyword">var</span> CN_EIGHT = <span class="string">"捌"</span>;</div><div class="line"><span class="keyword">var</span> CN_NINE = <span class="string">"玖"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN = <span class="string">"拾"</span>;</div><div class="line"><span class="keyword">var</span> CN_HUNDRED = <span class="string">"佰"</span>;</div><div class="line"><span class="keyword">var</span> CN_THOUSAND = <span class="string">"仟"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN_THOUSAND = <span class="string">"万"</span>;</div><div class="line"><span class="keyword">var</span> CN_HUNDRED_MILLION = <span class="string">"亿"</span>;</div><div class="line"><span class="keyword">var</span> CN_SYMBOL = <span class="string">"人民币"</span>;</div><div class="line"><span class="keyword">var</span> CN_DOLLAR = <span class="string">"元"</span>;</div><div class="line"><span class="keyword">var</span> CN_TEN_CENT = <span class="string">"角"</span>;</div><div class="line"><span class="keyword">var</span> CN_CENT = <span class="string">"分"</span>;</div><div class="line"><span class="keyword">var</span> CN_INTEGER = <span class="string">"整"</span>;</div><div class="line"></div><div class="line"><span class="comment">// Variables:</span></div><div class="line"><span class="keyword">var</span> integral; <span class="comment">// Represent integral part of digit number. </span></div><div class="line"><span class="keyword">var</span> decimal; <span class="comment">// Represent decimal part of digit number.</span></div><div class="line"><span class="keyword">var</span> outputCharacters; <span class="comment">// The output result.</span></div><div class="line"><span class="keyword">var</span> parts;</div><div class="line"><span class="keyword">var</span> digits, radices, bigRadices, decimals;</div><div class="line"><span class="keyword">var</span> zeroCount;</div><div class="line"><span class="keyword">var</span> i, p, d;</div><div class="line"><span class="keyword">var</span> quotient, modulus;</div><div class="line"></div><div class="line"><span class="comment">// Validate input string:</span></div><div class="line">currencyDigits = currencyDigits.toString();</div><div class="line"><span class="keyword">if</span> (currencyDigits == <span class="string">""</span>) &#123;</div><div class="line">  alert(<span class="string">"Empty input!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (currencyDigits.match(<span class="regexp">/[^,.d]/</span>) != <span class="literal">null</span>) &#123;</div><div class="line">  alert(<span class="string">"Invalid characters in the input string!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> ((currencyDigits).match(<span class="regexp">/^((d&#123;1,3&#125;(,d&#123;3&#125;)*(.((d&#123;3&#125;,)*d&#123;1,3&#125;))?)|(d+(.d+)?))$/</span>) == <span class="literal">null</span>) &#123;</div><div class="line">  alert(<span class="string">"Illegal format of digit number!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Normalize the format of input digits:</span></div><div class="line">currencyDigits = currencyDigits.replace(<span class="regexp">/,/g</span>, <span class="string">""</span>); <span class="comment">// Remove comma delimiters.</span></div><div class="line">currencyDigits = currencyDigits.replace(<span class="regexp">/^0+/</span>, <span class="string">""</span>); <span class="comment">// Trim zeros at the beginning. </span></div><div class="line"><span class="comment">// Assert the number is not greater than the maximum number.</span></div><div class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(currencyDigits) &gt; MAXIMUM_NUMBER) &#123;</div><div class="line">  alert(<span class="string">"Too large a number to convert!"</span>);</div><div class="line">  <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// http://www.knowsky.com/ Process the coversion from currency digits to characters:</span></div><div class="line"><span class="comment">// Separate integral and decimal parts before processing coversion:</span></div><div class="line">parts = currencyDigits.split(<span class="string">"."</span>);</div><div class="line"><span class="keyword">if</span> (parts.length &gt; <span class="number">1</span>) &#123;</div><div class="line">  integral = parts[<span class="number">0</span>];</div><div class="line">  decimal = parts[<span class="number">1</span>];</div><div class="line">  <span class="comment">// Cut down redundant decimal digits that are after the second.</span></div><div class="line">  decimal = decimal.substr(<span class="number">0</span>, <span class="number">2</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line">  integral = parts[<span class="number">0</span>];</div><div class="line">  decimal = <span class="string">""</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prepare the characters corresponding to the digits:</span></div><div class="line">digits = <span class="keyword">new</span> <span class="built_in">Array</span>(CN_ZERO, CN_ONE, CN_TWO, CN_THREE, CN_FOUR, CN_FIVE, CN_SIX, CN_SEVEN, CN_EIGHT,CN_NINE);</div><div class="line">radices = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">""</span>, CN_TEN, CN_HUNDRED, CN_THOUSAND);</div><div class="line">bigRadices = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">""</span>, CN_TEN_THOUSAND, CN_HUNDRED_MILLION);</div><div class="line">decimals = <span class="keyword">new</span> <span class="built_in">Array</span>(CN_TEN_CENT, CN_CENT);</div><div class="line"><span class="comment">// Start processing:</span></div><div class="line">outputCharacters = <span class="string">""</span>;</div><div class="line"><span class="comment">// Process integral part if it is larger than 0:</span></div><div class="line"><span class="keyword">if</span> (<span class="built_in">Number</span>(integral) &gt; <span class="number">0</span>) &#123;</div><div class="line">  zeroCount = <span class="number">0</span>;</div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; integral.length; i++) &#123;</div><div class="line">   p = integral.length - i - <span class="number">1</span>;</div><div class="line">   d = integral.substr(i, <span class="number">1</span>);</div><div class="line">   quotient = p / <span class="number">4</span>;</div><div class="line">   modulus = p % <span class="number">4</span>;</div><div class="line">   <span class="keyword">if</span> (d == <span class="string">"0"</span>) &#123;</div><div class="line">    zeroCount++;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">if</span> (zeroCount &gt; <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">     outputCharacters += digits[<span class="number">0</span>];</div><div class="line">    &#125;</div><div class="line">    zeroCount = <span class="number">0</span>;</div><div class="line">    outputCharacters += digits[<span class="built_in">Number</span>(d)] + radices[modulus];</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">if</span> (modulus == <span class="number">0</span> &amp;&amp; zeroCount &lt; <span class="number">4</span>) &#123; </div><div class="line"></div><div class="line">    outputCharacters += bigRadices[quotient];</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">  outputCharacters += CN_DOLLAR;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Process decimal part if there is:</span></div><div class="line"><span class="keyword">if</span> (decimal != <span class="string">""</span>) &#123;</div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; decimal.length; i++) &#123;</div><div class="line">   d = decimal.substr(i, <span class="number">1</span>);</div><div class="line">   <span class="keyword">if</span> (d != <span class="string">"0"</span>) &#123;</div><div class="line">    outputCharacters += digits[<span class="built_in">Number</span>(d)] + decimals[i];</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// Confirm and return the final output string:</span></div><div class="line"><span class="keyword">if</span> (outputCharacters == <span class="string">""</span>) &#123;</div><div class="line">  outputCharacters = CN_ZERO + CN_DOLLAR;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (decimal == <span class="string">""</span>) &#123;</div><div class="line">  outputCharacters += CN_INTEGER;</div><div class="line">&#125;</div><div class="line"><span class="comment">//outputCharacters = CN_SYMBOL + outputCharacters;</span></div><div class="line">outputCharacters = outputCharacters;</div><div class="line"><span class="keyword">return</span> outputCharacters;</div><div class="line">&#125;<span class="comment">// </span></div><div class="line"><span class="comment">//还原金额   </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmoney</span>(<span class="params">s</span>)</span>&#123; </div><div class="line">	<span class="keyword">return</span> <span class="built_in">parseFloat</span>(s.replace(<span class="regexp">/[^d.-]/g</span>,<span class="string">""</span>));  </div><div class="line">&#125; 	</div><div class="line"></div><div class="line"><span class="comment">//金额合计的格式化s为要格式化的参数（浮点型），n为小数点后保留的位数	</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fmoney</span>(<span class="params">s,n</span>)</span>&#123;</div><div class="line">	n = n&gt;<span class="number">0</span> &amp;&amp; n&lt;=<span class="number">20</span> ? n : <span class="number">2</span>;</div><div class="line">	s = <span class="built_in">parseFloat</span>((s+<span class="string">""</span>).replace(<span class="regexp">/[^d.-]/g</span>,<span class="string">""</span>)).toFixed(n)+<span class="string">""</span>;</div><div class="line">	<span class="keyword">var</span> l = s.split(<span class="string">"."</span>)[<span class="number">0</span>].split(<span class="string">""</span>).reverse(), </div><div class="line">	r = s.split(<span class="string">"."</span>)[<span class="number">1</span>]; </div><div class="line">	t = <span class="string">""</span>;</div><div class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i&lt;l.length;i++)&#123;</div><div class="line">		t+=l[i]+((i+<span class="number">1</span>)%<span class="number">3</span>==<span class="number">0</span> &amp;&amp; (i+<span class="number">1</span>) != l.length ? <span class="string">","</span> : <span class="string">""</span>); </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> t.split(<span class="string">""</span>).reverse().join(<span class="string">""</span>)+<span class="string">"."</span>+r;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在Jquery中，$是JQuery的别名，所有使用$的地方也都可以使用JQuery来替换，如$(‘#msg’)等同于JQuery(‘#msg’)的写法。然而，当我们引入多个js库后，在另外一个js库中也定义了$符号的话，那么我们在使用$符号时就发生了冲突。下面以引入两个库文件jquery.js和prototype.js为例来进行说明。
+第一种情况：jquery.js在prototype.js之后进行引入,如：</p>
+<script src="prototype.js" type="text/javascript"><script src="jquery.js" type="text/javascript"/>
+ 
+在这种情况下,我们在自己的js代码中如下写的话：
+$('#msg').hide(); 
+ 
+$永远代表的是jquery中定义的$符号，也可以写成JQuery(‘#msg’).hide();如果想要使用prototype.js中定义的$,我们在后面再介绍。
+第二种情况：jquery.js在prototype.js之前进行引入,如：
+<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/>
+ 
+在这种情况下,我们在自己的js代码中如下写的话：
+$('#msg').hide(); 
+ 
+$此时代表的prototype.js中定义的$符号，如果我们想要调用jquery.js中的工厂选择函数功能的话，只能用全称写法JQuery(‘#msg’).hide().
+下面先介绍在第一种引入js库文件顺序的情况下，如何正确的使用不同的js库中定义的$符号。
+一.使用JQuery.noConflict()
+该方法的作用就是让Jquery放弃对$的所有权，将$的控制权交还给prototype.js,因为jquery.js是后引入的，所以最后拥有$控制权的是jquery。它的返回值是JQuery。当在代码中调用了该 方法以后，我们就不可以使用$来调用jquery的方法了，此时$就代表在prototype.js库中定义的$了。如下：
+JQuery.noConflict(); //此处不可以再写成$('#msg').hide(),此时的$代表prototype.js中定义的$符号。 
+JQuey('#msg').hide(); 
+ 
+自此以后$就代表prototype.js中定义的$,jquery.js中的$无法再使用,只能使用jquery.js中$的全称JQuery了。
+二.自定义JQuery的别名 
+如果觉得第一种方法中使用了JQuery.noConflict()方法以后,只能使用JQuery全称比较麻烦的话，我们还可以为JQuery重定义别名。如下：
+var $j=JQuery.noConflict(); $j('#msg').hide();//此处$j就代表JQuery 
+ 
+自此以后$就代表prototype.js中定义的$,jquey.js中的$无法再使用,只能使用$j来作为jquey.js中JQuery的别名了。
+三.使用语句块，在语句块中仍然使用jquery.js中定义的$，如下：
+JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此时在整个ready事件的方法中使用的$都是jquery.js中定义的$. 
+});
+ 
+ 
+或者使用如下语句块：
+(function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
+})(JQuery)
+ 
+如果在第二种引入js库文件顺序的情况下,如何使用jquery.js中的$,我们还是可以使用上面介绍的语句块的方法，如：
+<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
+})(JQuery) </script>
+<p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
 
           
         
@@ -2082,7 +2122,7 @@ JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">291</span>
+                  <span class="site-state-item-count">292</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
