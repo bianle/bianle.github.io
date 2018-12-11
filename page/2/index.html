@@ -358,6 +358,318 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2018/11/30/java-keng/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/30/java-keng/" itemprop="url">java坑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-30T09:31:49+08:00">
+                2018-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/30/java-keng/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/30/java-keng/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="arrays-aslist-返回的list没有add-remove等方法"><a class="header-anchor" href="#arrays-aslist-返回的list没有add-remove等方法"> </a>Arrays.asList()返回的List没有add、remove等方法</h2>
+<p>查看asList源码返回一个ArrayList</p>
+<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span>(<span class="params">T... a</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(a);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此ArrayList(java.util.Arrays$ArrayList)非彼ArrayList(java.util.ArrayList),这是Arrays的一个内部类，没有覆盖add、remove等方法</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><div class="line"><span class="keyword">private</span> static <span class="class"><span class="keyword">class</span> <span class="title">ArrayList&lt;E&gt;</span> <span class="keyword">extends</span> <span class="title">AbstractList&lt;E&gt;</span></span></div><div class="line">        implements <span class="type">RandomAccess</span>, java.io.<span class="type">Serializable</span></div></pre></td></tr></table></figure>
+<p>看下AbstractList中这俩方法，直接不支持此操作</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="built_in">boolean</span> <span class="built_in">add</span>(E e) &#123;</div><div class="line">    <span class="built_in">add</span>(<span class="built_in">size</span>(), e);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="built_in">add</span>(<span class="built_in">int</span> index, E element) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> E remove(<span class="built_in">int</span> index) &#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>终于知道方法名为啥是asList（当做List）而不是toList(转成List)，老外诚不欺我！</p>
+<p>坑人指数：★☆☆☆☆</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2018/11/26/svn-shelves-changes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/26/svn-shelves-changes/" itemprop="url">svn-shelves-changes</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T21:46:14+08:00">
+                2018-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/26/svn-shelves-changes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/26/svn-shelves-changes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/12/04/20181204115042.png" alt="svn"><span class="image-caption">svn</span></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2018/06/28/webpy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1964,328 +2276,6 @@ field : 表达式 camelCase(clipboard())</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/12/04/mud-tintin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/04/mud-tintin/" itemprop="url">tintin++</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-04T16:12:12+08:00">
-                2017-12-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mud/" itemprop="url" rel="index">
-                    <span itemprop="name">mud</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/04/mud-tintin/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/12/04/mud-tintin/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="安装pcre-perl-compatible-regular-expressions"><a class="header-anchor" href="#安装pcre-perl-compatible-regular-expressions"> </a>安装PCRE(Perl Compatible Regular Expressions)</h2>
-<p><a href="http://mac-dev-env.patrickbougie.com/pcre/" target="_blank" rel="external">http://mac-dev-env.patrickbougie.com/pcre/</a></p>
-<figure class="highlight stata"><table><tr><td class="code"><pre><div class="line"><span class="keyword">cd</span> /usr/<span class="keyword">local</span>/src (<span class="keyword">cd</span> ~/<span class="keyword">app</span>)</div><div class="line">curl --remote-name ftp:<span class="comment">//ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.41.tar.gz</span></div><div class="line">tar -xzvf pcre-8.41.tar.gz</div><div class="line"><span class="keyword">cd</span> pcre-8.41</div><div class="line">./configure --prefix=/usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41</div><div class="line">make</div><div class="line">make install (sudo make install )</div><div class="line">sudo ln -s <span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre (sudo ln -s /usr/<span class="keyword">local</span>/<span class="keyword">mac</span>-dev-env/pcre-8.41 /usr/<span class="keyword">local</span>/pcre)</div><div class="line">echo 'export PATH=/usr/<span class="keyword">local</span>/pcre/bin:<span class="variable">$PATH</span>' &gt;&gt; ~/.bash_profile</div><div class="line">source ~/.bash_profile</div><div class="line">pcre-config --<span class="keyword">version</span></div></pre></td></tr></table></figure>
-<p>拷贝<code>pcre.h</code>到<code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include</code></p>
-<h2 id="xkx"><a class="header-anchor" href="#xkx"> </a>xkx</h2>
-<figure class="highlight dust"><table><tr><td class="code"><pre><div class="line"><span class="xml">#action </span><span class="template-variable">&#123;http://pkuxkx.net/antirobot/robot.php%1&#125;</span><span class="xml"> </span><span class="template-tag">&#123;#<span class="name">system</span> open http://pkuxkx.com/antirobot/robot.php%1&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/11/23/mybatis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/23/mybatis/" itemprop="url">mybatis</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T14:04:45+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/23/mybatis/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/11/23/mybatis/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="springmvc3-2-mybatis3-2集成报错"><a class="header-anchor" href="#springmvc3-2-mybatis3-2集成报错"> </a>SpringMVC3.2+Mybatis3.2集成报错</h2>
-<blockquote>
-<p>Exception in thread “main” java.lang.AbstractMethodError: org.mybatis.spring.transaction.SpringManagedTransactionFactory.newTransaction(Ljava/sql/Connection;)Lorg/apache/ibatis/transaction/Transaction;
-at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSessionFromConnection(DefaultSqlSessionFactory.java:98)
-at org.apache.ibatis.session.defaults.DefaultSqlSessionFactory.openSession(DefaultSqlSessionFactory.java:71)
-at org.mybatis.spring.SqlSessionUtils.getSqlSession(SqlSessionUtils.java:135)
-at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:345)
-at com.sun.proxy.$Proxy1.selectOne(Unknown Source)
-at org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:155)
-at im.le.hello.dao.TestDao.select(TestDao.java:13)
-at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
-</blockquote>
-<p>降低mybatis-springmvc插件版本1.0.2-》1.1.1</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2340,7 +2330,7 @@ at im.le.hello.dao.TestDao.main(TestDao.java:19)</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">292</span>
+                  <span class="site-state-item-count">294</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
