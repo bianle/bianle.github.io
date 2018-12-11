@@ -358,7 +358,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-ie-css-limit/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-num-reg/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -377,7 +377,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">IE中样式表、选择符的数量限制记录</a></h1>
+                <a class="post-title-link" href="/2013/02/03/web-num-reg/" itemprop="url">数字正则</a></h1>
         
 
         <div class="post-meta">
@@ -430,8 +430,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/02/03/web-ie-css-limit/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/03/web-ie-css-limit/" itemprop="commentCount"></span>
+                <a href="/2013/02/03/web-num-reg/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/03/web-num-reg/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -461,35 +461,66 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
-<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
-<blockquote>
-<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 4095 rules</li>
-<li>A sheet may @import up to 31 sheets</li>
-<li>@import nesting supports up to 4 levels deep
-Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>There’s a simple test page for the limits here.</p>
-</blockquote>
-<blockquote>
-<p>-Eric</p>
-</blockquote>
-<blockquote>
-<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>A sheet may contain up to 65534 rules</li>
-<li>A document may use up to 4095 stylesheets</li>
-<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
-</ul>
-</blockquote>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>验证数字：<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><em>$
+验证n位的数字：^d{n}$
+验证至少n位数字：^d{n,}$
+验证m-n位的数字：^d{m,n}$
+验证零和非零开头的数字：^(0|[1-9][0-9]</em>)$
+验证有两位小数的正实数：<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>+(.[0-9]{2})?$
+验证有1-3位小数的正实数：<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>+(.[0-9]{1,3})?$
+验证非零的正整数：^+?[1-9][0-9]<em>$
+验证非零的负整数：^-[1-9][0-9]</em>$
+验证非负整数（正整数 + 0） ^d+$
+验证非正整数（负整数 + 0） ^((-d+)|(0+))$
+验证长度为3的字符：^.{3}$
+验证由26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>+$
+验证由26个大写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>+$
+验证由26个小写英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>+$
+验证由数字和26个英文字母组成的字符串：<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>+$
+验证由数字、26个英文字母或者下划线组成的字符串：^w+$
+验证用户密码:<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
+验证是否含有 ^%&amp;’,;=?$&quot; 等字符：[^%&amp;’,;=?$x22]+
+验证汉字：<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>,{0,}$
+验证Email地址：^w+[-+.]w+)<em>@w+([-.]w+)</em>.w+([-.]w+)<em>$
+验证InternetURL：^http://([w-]+.)+[w-]+(/[w-./?%&amp;=]</em>)?$ ；<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>+://(w+(-w+)<em>)(.(w+(-w+)</em>))<em>(?S</em>)?$
+验证电话号码：^((d{3,4})|d{3,4}-)?d{7,8}$：–正确格式为：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。
+验证身份证号（15位或18位数字）：^d{15}|d{}18$
+验证一年的12个月：^(0?[1-9]|1[0-2])$ 正确格式为：“01”-“09”和“1”“12”
+验证一个月的31天：^((0?[1-9])|((1|2)[0-9])|30|31)$ 正确格式为：01、09和1、31。
+整数：^-?d+$
+非负浮点数（正浮点数 + 0）：^d+(.d+)?$
+正浮点数 ^(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>))$
+非正浮点数（负浮点数 + 0） ^((-d+(.d+)?)|(0+(.0+)?))$
+负浮点数 ^(-(([0-9]+.[0-9]<em>[1-9][0-9]</em>)|([0-9]<em>[1-9][0-9]</em>.[0-9]+)|([0-9]<em>[1-9][0-9]</em>)))$
+浮点数 ^(-?d+)(.d+)?</p>
+<p>验证货币格式 <sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>{1,3}(,[0-9]{3})*(.[0-9]{2})?$  –正确格式为123,456.00</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>0-9 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>0-9 <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>0-9 <a href="#fnref3" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>A-Za-z <a href="#fnref4" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>A-Z <a href="#fnref5" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>a-z <a href="#fnref6" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>A-Za-z0-9 <a href="#fnref7" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>a-zA-Z <a href="#fnref8" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>u4e00-u9fa5 <a href="#fnref9" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>a-zA-z <a href="#fnref10" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>0-9 <a href="#fnref11" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
 
           
         
@@ -1836,7 +1867,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-mode-window/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-number-check/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1855,7 +1886,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/web-js-mode-window/" itemprop="url">可拖动模式窗口</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-js-number-check/" itemprop="url">js判断数字</a></h1>
         
 
         <div class="post-meta">
@@ -1908,8 +1939,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/01/10/web-js-mode-window/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/web-js-mode-window/" itemprop="commentCount"></span>
+                <a href="/2013/01/10/web-js-number-check/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/web-js-number-check/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1939,7 +1970,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns</span>=<span class="string">"http://www.w3.org/1999/xhtml"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=gb2312"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>可拖动模式窗口<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"> </span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">alertWin</span>(<span class="params">title, msg, w, h</span>)</span>&#123;  </div><div class="line">    <span class="keyword">var</span> titleheight = <span class="string">"22px"</span>; <span class="comment">// 提示窗口标题高度  </span></div><div class="line">    <span class="keyword">var</span> bordercolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的边框颜色  </span></div><div class="line">    <span class="keyword">var</span> titlecolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示窗口的标题颜色  </span></div><div class="line">    <span class="keyword">var</span> titlebgcolor = <span class="string">"#666699"</span>; <span class="comment">// 提示窗口的标题背景色 </span></div><div class="line">    <span class="keyword">var</span> bgcolor = <span class="string">"#FFFFFF"</span>; <span class="comment">// 提示内容的背景色 </span></div><div class="line">     </div><div class="line">    <span class="keyword">var</span> iWidth = <span class="built_in">document</span>.documentElement.clientWidth;  </div><div class="line">    <span class="keyword">var</span> iHeight = <span class="built_in">document</span>.documentElement.clientHeight;  </div><div class="line">    <span class="keyword">var</span> bgObj = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);  </div><div class="line">    bgObj.style.cssText = <span class="string">"position:absolute;left:0px;top:0px;width:"</span>+iWidth+<span class="string">"px;height:"</span>+<span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, iHeight)+<span class="string">"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(bgObj);  </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> msgObj=<span class="built_in">document</span>.createElement(<span class="string">"div"</span>); </div><div class="line">    msgObj.style.cssText = <span class="string">"position:absolute;font:11px ‘宋体’;top:"</span>+(iHeight-h)/<span class="number">2</span>+<span class="string">"px;left:"</span>+(iWidth-w)/<span class="number">2</span>+<span class="string">"px;width:"</span>+w+<span class="string">"px;height:"</span>+h+<span class="string">"px;text-align:center;border:1px solid "</span>+bordercolor+<span class="string">";background-color:"</span>+bgcolor+<span class="string">";padding:1px;line-height:22px;z-index:102;"</span>; </div><div class="line">    <span class="built_in">document</span>.body.appendChild(msgObj); </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> table = <span class="built_in">document</span>.createElement(<span class="string">"table"</span>); </div><div class="line">    msgObj.appendChild(table); </div><div class="line">    table.style.cssText = <span class="string">"margin:0px;border:0px;padding:0px;"</span>; </div><div class="line">    table.cellSpacing = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> tr = table.insertRow(<span class="number">-1</span>); </div><div class="line">    <span class="keyword">var</span> titleBar = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    titleBar.style.cssText = <span class="string">"width:100%;height:"</span>+titleheight+<span class="string">"px;text-align:left;padding:3px;margin:0px;font:bold 13px ‘宋体’;color:"</span>+titlecolor+<span class="string">";border:1px solid "</span> + bordercolor + <span class="string">";cursor:move;background-color:"</span> + titlebgcolor; </div><div class="line">    titleBar.style.paddingLeft = <span class="string">"10px"</span>; </div><div class="line">    titleBar.innerHTML = title; </div><div class="line">    <span class="keyword">var</span> moveX = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveY = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveTop = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveLeft = <span class="number">0</span>; </div><div class="line">    <span class="keyword">var</span> moveable = <span class="literal">false</span>; </div><div class="line">    <span class="keyword">var</span> docMouseMoveEvent = <span class="built_in">document</span>.onmousemove; </div><div class="line">    <span class="keyword">var</span> docMouseUpEvent = <span class="built_in">document</span>.onmouseup; </div><div class="line">    titleBar.onmousedown = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">var</span> evt = getEvent(); </div><div class="line">        moveable = <span class="literal">true</span>;  </div><div class="line">        moveX = evt.clientX; </div><div class="line">        moveY = evt.clientY; </div><div class="line">        moveTop = <span class="built_in">parseInt</span>(msgObj.style.top); </div><div class="line">        moveLeft = <span class="built_in">parseInt</span>(msgObj.style.left); </div><div class="line">         </div><div class="line">        <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">            <span class="keyword">if</span> (moveable) &#123; </div><div class="line">                <span class="keyword">var</span> evt = getEvent(); </div><div class="line">                <span class="keyword">var</span> x = moveLeft + evt.clientX – moveX; </div><div class="line">                <span class="keyword">var</span> y = moveTop + evt.clientY – moveY; </div><div class="line">                <span class="keyword">if</span> ( x &gt; <span class="number">0</span> &amp;&amp;( x + w &lt; iWidth) &amp;&amp; y &gt; <span class="number">0</span> &amp;&amp; (y + h &lt; iHeight) ) &#123; </div><div class="line">                    msgObj.style.left = x + <span class="string">"px"</span>; </div><div class="line">                    msgObj.style.top = y + <span class="string">"px"</span>; </div><div class="line">                &#125; </div><div class="line">            &#125;     </div><div class="line">        &#125;; </div><div class="line">        <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  </div><div class="line">            <span class="keyword">if</span> (moveable) &#123;  </div><div class="line">                <span class="built_in">document</span>.onmousemove = docMouseMoveEvent; </div><div class="line">                <span class="built_in">document</span>.onmouseup = docMouseUpEvent; </div><div class="line">                moveable = <span class="literal">false</span>;  </div><div class="line">                moveX = <span class="number">0</span>; </div><div class="line">                moveY = <span class="number">0</span>; </div><div class="line">                moveTop = <span class="number">0</span>; </div><div class="line">                moveLeft = <span class="number">0</span>; </div><div class="line">            &#125;  </div><div class="line">        &#125;; </div><div class="line">    &#125; </div><div class="line">     </div><div class="line">    <span class="keyword">var</span> closeBtn = tr.insertCell(<span class="number">-1</span>); </div><div class="line">    closeBtn.style.cssText = <span class="string">"cursor:pointer; padding:2px;background-color:"</span> + titlebgcolor; </div><div class="line">    closeBtn.innerHTML = <span class="string">"&lt;span style=’font-size:15pt; color:"</span>+titlecolor+<span class="string">";’&gt;×&lt;/span&gt;"</span>; </div><div class="line">    closeBtn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(bgObj);  </div><div class="line">        <span class="built_in">document</span>.body.removeChild(msgObj);  </div><div class="line">    &#125;  </div><div class="line">    <span class="keyword">var</span> msgBox = table.insertRow(<span class="number">-1</span>).insertCell(<span class="number">-1</span>); </div><div class="line">    msgBox.style.cssText = <span class="string">"font:10pt ‘宋体’;"</span>; </div><div class="line">    msgBox.colSpan  = <span class="number">2</span>; </div><div class="line">    msgBox.innerHTML = msg; </div><div class="line">     </div><div class="line">    <span class="comment">// 获得事件Event对象，用于兼容IE和FireFox </span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params"></span>) </span>&#123; </div><div class="line">        <span class="keyword">return</span> <span class="built_in">window</span>.event || <span class="built_in">arguments</span>.callee.caller.arguments[<span class="number">0</span>]; </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"点这里"</span> <span class="attr">onclick</span>=<span class="string">"alertWin(‘标题’,'这里是内容’,300,200);"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -1988,7 +2019,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/java-eclipse-console/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-1px-table/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -2007,7 +2038,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/10/java-eclipse-console/" itemprop="url">Eclipse 的控制台console乱码</a></h1>
+                <a class="post-title-link" href="/2013/01/10/web-1px-table/" itemprop="url">1像素表格</a></h1>
         
 
         <div class="post-meta">
@@ -2042,8 +2073,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -2060,8 +2091,8 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/01/10/java-eclipse-console/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/java-eclipse-console/" itemprop="commentCount"></span>
+                <a href="/2013/01/10/web-1px-table/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/web-1px-table/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2091,17 +2122,7 @@ DWORD（64-位）值Q表示: “DWORD（64-位）”=hex(b):00,00,00,00,00,00,00
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Eclipse 的控制台必须用GBK编码。
-条件1，Window | Preferences | Workspace | Text file encoding | GBK编码。
-这样定义的是整个工作区间的编码。
-这样就把整个工作空间的编码格式定死了，但是如果某一个工程用的是不同的编码格式的话这样单独再解决。如下：
-条件2，工程上 右键 | Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是整个工程的编码。
-这样就把整个工程的编码格式定死了，但是如果某一个文件用的是不同的编码格式的话这样单独再解决。如下：
-条件3，在某个文件上 右键| Properties | Resource | Text file encoding | UTF-8编码。或者适合的编码格式。这样定义的是单独某个文件的编码。
-这里要说的是文件的实际编码格式优先用的是：第3个，其次再用2，最后先用1。有时候是123，必须满足条件。无论怎样这几种编码格式试一试就全知道了。
-条件4，还有运行时编码设置如下：菜单：Run Configuration | 右侧的选项卡Common 的 Console Encoding 选择GBK编码。这个是用来控制console控制台显示，必须是GBK，就不会乱码。尽管1，2，3条件都不是GBK，只要4是GBK。控制台就不会乱码。</p>
-<p>这样保证了工作空间和工程代码编程方式和工程里的单独文件的编码格式的不冲突。</p>
-<p>我们想改变别人的代码的编码格式的话用如下方法：1：用记事本打开，2:改变下面的编码格式如UTF-8，3：另存为xxx.java。这样另存的编码格式就变成自己想要的编码格式了。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></div><div class="line"> <span class="selector-tag">table</span>&#123;</div><div class="line">       <span class="attribute">background</span>:black; </div><div class="line">       <span class="attribute">width</span>:<span class="number">600</span>;      </div><div class="line">       <span class="attribute">height</span>:<span class="number">100</span>; </div><div class="line">&#125;</div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; </div><div class="line">     <span class="attribute">background</span>:white;</div><div class="line"> &#125; </div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">cellpadding</span>=<span class="string">1</span> <span class="attr">cellspacing</span>=<span class="string">1</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>     </div><div class="line"> <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span>      </div><div class="line"><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
