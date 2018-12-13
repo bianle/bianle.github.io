@@ -461,7 +461,7 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="oracle-分页查询"><a class="header-anchor" href="#oracle-分页查询"> </a>oracle 分页查询</h1>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="oracle-分页查询"><a class="header-anchor" href="#oracle-分页查询"> </a>oracle 分页查询</h1>
 <figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ( <span class="keyword">SELECT</span> A.*, <span class="keyword">ROWNUM</span> RN <span class="keyword">FROM</span> ([<span class="keyword">sql</span>语句]) A <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= [lineSize*currentPage] ) <span class="keyword">WHERE</span> RN &gt;=[((currentPage<span class="number">-1</span>)*lineSize+<span class="number">1</span>)];</div></pre></td></tr></table></figure>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line"><span class="keyword">WITH</span> t <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ‘remoteAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,protocol:HTTP/<span class="number">1.1</span>,localAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,mac:<span class="number">44</span>-<span class="number">37</span>-E6-<span class="number">86</span>-C4-<span class="number">6</span>A,Cookie:%<span class="number">2</span>Fclient6%<span class="number">2</span>F=<span class="number">1361081051064</span>;logoin=<span class="number">1361081051064</span>;’ id</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> dual),</div><div class="line"></div><div class="line">        t1 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> REPLACE(id, ‘logoin=’, ‘logoin:’) id1 <span class="keyword">FROM</span> t),</div><div class="line"></div><div class="line">        t2 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ’<span class="number">1</span>′ num0,</div><div class="line"></div><div class="line">                 rownum num1,</div><div class="line"></div><div class="line">                 regexp_substr(id1, ‘[^,|;|:]+’, <span class="number">1</span>, LEVEL) t1a</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> t1</div><div class="line"></div><div class="line">          CONNECT <span class="keyword">BY</span> LEVEL &lt;= regexp_count(id1, ‘,’) + regexp_count(id1, ‘;’) +</div><div class="line"></div><div class="line">                     regexp_count(id1, ‘:’))</div><div class="line"></div><div class="line">        <span class="keyword">SELECT</span> *</div><div class="line"></div><div class="line">          <span class="keyword">FROM</span> t2 pivot(MAX(t1a) <span class="keyword">FOR</span> num1 <span class="keyword">IN</span>(</div><div class="line"></div><div class="line">                                             </div><div class="line">                                             <span class="number">2</span> remoteaddr,</div><div class="line"></div><div class="line">                                             <span class="number">4</span> protocol,</div><div class="line"></div><div class="line">                                             <span class="number">6</span> localaddr,</div><div class="line"></div><div class="line">                                             <span class="number">8</span> mac,</div><div class="line"></div><div class="line">                                             <span class="number">10</span> cookie,</div><div class="line"></div><div class="line"><span class="number">12</span> logoin))</div></pre></td></tr></table></figure>
 <h1 id="oracle-正则表达式"><a class="header-anchor" href="#oracle-正则表达式"> </a>oracle 正则表达式</h1>
@@ -516,7 +516,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/linux-env-vars/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-grant/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -535,7 +535,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2014/03/25/linux-env-vars/" itemprop="url">linux配置环境变量</a></h1>
+                <a class="post-title-link" href="/2014/03/25/db-oracle-grant/" itemprop="url">ORACLE 创建视图时,提示用户权限不足</a></h1>
         
 
         <div class="post-meta">
@@ -570,8 +570,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
                   </a>
                 </span>
 
@@ -588,8 +588,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2014/03/25/linux-env-vars/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2014/03/25/linux-env-vars/" itemprop="commentCount"></span>
+                <a href="/2014/03/25/db-oracle-grant/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2014/03/25/db-oracle-grant/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -619,17 +619,166 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">\<span class="selector-id">#vi</span>  /etc/profile</div></pre></td></tr></table></figure>
-<p>在该profile文件中添加：</p>
-<blockquote>
-<p>JAVA_HOME=/usr/java/jdk1.6.0_10
-JRE_HOME=/usr/java/jdk1.6.0_10/jre
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib/jt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib(注意：前面的.: ，linux中的；号为：号)
-export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
-</blockquote>
-<p>添加完毕保存退出</p>
-<figure class="highlight gradle"><table><tr><td class="code"><pre><div class="line">\#<span class="keyword">source</span> <span class="regexp">/etc/</span>profile</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>首先使用system帐户进行登录</p>
+<figure class="highlight mel"><table><tr><td class="code"><pre><div class="line">sqlplus <span class="keyword">system</span>/<span class="keyword">pwd</span>[@DB]</div></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">view</span> <span class="keyword">to</span> scott</div></pre></td></tr></table></figure>
+<p>提示：授权成功。
+执行：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="keyword">exit</span></div></pre></td></tr></table></figure>
+<p>退出当前system帐户。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2014/03/25/db-oracle-get-month-days/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2014/03/25/db-oracle-get-month-days/" itemprop="url">查询本月天数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-03-25T18:09:17+08:00">
+                2014-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/03/25/db-oracle-get-month-days/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2014/03/25/db-oracle-get-month-days/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">ROWNUM</span> rn </div><div class="line">  <span class="keyword">FROM</span> DUAL </div><div class="line"><span class="keyword">CONNECT</span> <span class="keyword">BY</span> <span class="keyword">ROWNUM</span> &lt;= TO_CHAR(TRUNC(ADD_MONTHS(<span class="keyword">SYSDATE</span>, <span class="number">1</span>), ‘mm’) – <span class="number">1</span>, ‘dd’)</div></pre></td></tr></table></figure>
 
           
         
@@ -781,7 +930,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**************日期********************/</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>  今天的日期为<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mm’)   <span class="keyword">from</span>   dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-1</span>    返回当月第一天. </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>       返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’dd’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>    返回当前年月日 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yyyy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>   返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’d’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-13</span> (星期天)返回当前星期的第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘hh’) <span class="keyword">from</span> dual   –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span>   当前时间为<span class="number">14</span>:<span class="number">41</span>   </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mi’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">41</span>:<span class="number">00</span>   TRUNC()函数没有秒的精确 </div><div class="line"><span class="comment">/***************数字********************/</span> </div><div class="line"><span class="comment">/* </span></div><div class="line">TRUNC（number,num_digits） </div><div class="line">Number 需要截尾取整的数字。 </div><div class="line">Num_digits 用于指定取整精度的数字。Num_digits 的默认值为 0。 </div><div class="line">TRUNC()函数截取时不进行四舍五入 </div><div class="line">*/ </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">0</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123.4</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-4</span>) <span class="keyword">from</span> dual –<span class="number">0</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">4</span>) <span class="keyword">from</span> dual  –<span class="number">123.458</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>) <span class="keyword">from</span> dual  –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**************日期********************/</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>  今天的日期为<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mm’)   <span class="keyword">from</span>   dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-1</span>    返回当月第一天. </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>       返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’dd’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span>    返回当前年月日 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’yyyy’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-1</span><span class="number">-1</span>   返回当年第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,’d’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-13</span> (星期天)返回当前星期的第一天 </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘hh’) <span class="keyword">from</span> dual   –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span>   当前时间为<span class="number">14</span>:<span class="number">41</span>   </div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>, ‘mi’) <span class="keyword">from</span> dual  –<span class="number">2011</span><span class="number">-3</span><span class="number">-18</span> <span class="number">14</span>:<span class="number">41</span>:<span class="number">00</span>   TRUNC()函数没有秒的精确 </div><div class="line"><span class="comment">/***************数字********************/</span> </div><div class="line"><span class="comment">/* </span></div><div class="line">TRUNC（number,num_digits） </div><div class="line">Number 需要截尾取整的数字。 </div><div class="line">Num_digits 用于指定取整精度的数字。Num_digits 的默认值为 0。 </div><div class="line">TRUNC()函数截取时不进行四舍五入 </div><div class="line">*/ </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">0</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123.4</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">-4</span>) <span class="keyword">from</span> dual –<span class="number">0</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,<span class="number">4</span>) <span class="keyword">from</span> dual  –<span class="number">123.458</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>) <span class="keyword">from</span> dual  –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">1</span>) <span class="keyword">from</span> dual –<span class="number">123</span> </div><div class="line"><span class="keyword">select</span> trunc(<span class="number">123</span>,<span class="number">-1</span>) <span class="keyword">from</span> dual –<span class="number">120</span></div></pre></td></tr></table></figure>
 
           
         
@@ -933,7 +1082,7 @@ export JAVA_HOME JRE_HOME PATH CLASSPATH</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>1.打开终端输入<code>#rpm -qa | grep gcj</code> ，其显示内容有：</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>1.打开终端输入<code>#rpm -qa | grep gcj</code> ，其显示内容有：</p>
 <blockquote>
 <p>java-1.4.2-gci-compat………
 java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java开头的文件)</p>
@@ -1092,7 +1241,7 @@ java-1.4.2-gcj-compat-devel……(具体忘了是什么了，反正有两个java
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>本文作者Pierre是一名有10多年经验的高级系统架构师，他的主要专业领域是Java EE、中间件和JVM技术。根据他多年的工作实践经验，他发现许多性能问题都是由Java堆容量不足和调优引起的。下面他将和大家分享非常实用的5个Java堆优化技巧。
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>本文作者Pierre是一名有10多年经验的高级系统架构师，他的主要专业领域是Java EE、中间件和JVM技术。根据他多年的工作实践经验，他发现许多性能问题都是由Java堆容量不足和调优引起的。下面他将和大家分享非常实用的5个Java堆优化技巧。
 1.JVM：对难以理解的东西产生恐惧感
 千万不要以为，通过配置，调优，就可以排除那些你所不明白的问题。有些人认为Java程序员不需要知道内部JVM内存管理。毫无疑问，这种观点明显是错误的，如果想拓宽知识面和提升排除故障能力，你就必须要了解和学习一下JVM内存管理。
 对于Java或者是Java EE新手来说，Java Heap调优和故障排除是一项非常有挑战的工作。下面会提供一些典型的案例场景：
@@ -1315,7 +1464,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="快速排序"><a class="header-anchor" href="#快速排序"> </a>快速排序</h1>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="快速排序"><a class="header-anchor" href="#快速排序"> </a>快速排序</h1>
 <h2 id="介绍："><a class="header-anchor" href="#介绍："> </a>介绍：</h2>
 <p>快速排序是由东尼·霍尔所发展的一种排序算法。在平均状况下，排序 n 个项目要Ο(n log n)次比较。在最坏状况下则需要Ο(n2)次比较，但这种状况并不常见。事实上，快速排序通常明显比其他Ο(n log n) 算法更快，因为它的内部循环（inner loop）可以在大部分的架构上很有效率地被实现出来，且在大部分真实世界的数据，可以决定设计的选择，减少所需时间的二次方项之可能性。</p>
 <h2 id="步骤："><a class="header-anchor" href="#步骤："> </a>步骤：</h2>
@@ -1578,7 +1727,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</div><div class="line">&lt;mx:Application xmlns:mx=<span class="string">"http://www.adobe.com/2006/mxml"</span> layout=<span class="string">"absolute"</span> initialize=<span class="string">"init()"</span> backgroundColor=<span class="string">"#ffffff"</span>&gt;</div><div class="line">	&lt;mx:Script&gt;</div><div class="line">		&lt;![CDATA[</div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.skins.halo.ProgressIndeterminateSkin;</span></div><div class="line">			<span class="meta"><span class="meta-keyword">import</span> mx.controls.Alert;</span></div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> sud:Sound;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> scn:SoundChannel;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> position:Number = <span class="number">0</span>;</div><div class="line">			<span class="keyword">private</span> <span class="keyword">var</span> running:Boolean = <span class="literal">false</span>;</div><div class="line">			<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> lab:String = Application.application.parameters.label;</div><div class="line">				<span class="keyword">var</span> url:String = Application.application.parameters.url;</div><div class="line">				<span class="keyword">if</span>(lab==<span class="literal">null</span>)&#123;</div><div class="line">					lab = <span class="string">"default"</span>;<span class="comment">//默认Label</span></div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span>(url==<span class="literal">null</span>)&#123;</div><div class="line">					url = <span class="string">"http://le5u.net/sound/1.mp3"</span>;<span class="comment">//默认播放路径</span></div><div class="line">				&#125;</div><div class="line">				sud = <span class="keyword">new</span> Sound(<span class="keyword">new</span> URLRequest(url));</div><div class="line">				pb.label=lab;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pl</span><span class="params">()</span>:void</span>&#123;</div><div class="line">				<span class="keyword">if</span>(!running)&#123;</div><div class="line">					scn = sud.play(position);</div><div class="line">					scn.addEventListener(Event.SOUND_COMPLETE,sdComplete);</div><div class="line">					pb.addEventListener(Event.ENTER_FRAME,ud);</div><div class="line">					running = <span class="literal">true</span>;</div><div class="line">				&#125;<span class="keyword">else</span>&#123;</div><div class="line">					position = scn.position;</div><div class="line">					scn.stop();</div><div class="line">					running = <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">sdComplete</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				running = <span class="literal">false</span>;</div><div class="line">				position = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//更新进度条</span></div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">ud</span><span class="params">(event:Event)</span>:void</span>&#123;</div><div class="line">				<span class="keyword">var</span> pos:Number = scn.position;</div><div class="line">				<span class="keyword">var</span> len:Number = sud.length;</div><div class="line">				<span class="keyword">var</span> percent:Number = Math.round(pos*<span class="number">100</span>/len);</div><div class="line">				<span class="keyword">if</span>(isNaN(percent))&#123;</div><div class="line">					percent = <span class="number">0</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="comment">//trace("position is "+pos +"n" +"length is " + len + "n" +"percent is  "+percent);</span></div><div class="line">				pb.setProgress(pos,len);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">pbInit</span><span class="params">()</span>:void</span>&#123;</div><div class="line">      			<span class="comment">//pb.setStyle("barSkin", ProgressIndeterminateSkin);</span></div><div class="line">      			pb.setStyle(<span class="string">"trackColors"</span>, [ <span class="number">0xffffff</span>, <span class="number">0xf3efee</span> ]);</div><div class="line">      			pb.setStyle(<span class="string">"barColor"</span>, <span class="number">0x66FF66</span>);</div><div class="line">      			<span class="comment">//pb.setStyle("borderColor", 0xf3efee);</span></div><div class="line">			&#125;</div><div class="line">		]]&gt;</div><div class="line">	&lt;/mx:Script&gt;</div><div class="line">	&lt;mx:Style&gt;</div><div class="line">		ProgressBar&#123;</div><div class="line">			font-size:<span class="number">14</span>px;</div><div class="line">			font-weight:normal;</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&lt;/mx:Style&gt;</div><div class="line">	</div><div class="line">	&lt;mx:ProgressBar id=<span class="string">"pb"</span> useHandCursor=<span class="string">"true"</span> buttonMode=<span class="string">"true"</span> mouseChildren=<span class="string">"false"</span> initialize=<span class="string">"pbInit()"</span> click=<span class="string">"pl()"</span> minimum=<span class="string">"0"</span> maximum=<span class="string">"100"</span> width=<span class="string">"100%"</span> height=<span class="string">"100%"</span> labelPlacement=<span class="string">"center"</span> mode=<span class="string">"manual"</span>&gt;</div><div class="line">	&lt;/mx:ProgressBar&gt;</div><div class="line">&lt;/mx:Application&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -1730,7 +1879,7 @@ Java分析器和堆转储分析工具允许你理解和验证应用程序内存�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
 <a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
 <blockquote>
 <p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
@@ -1759,158 +1908,6 @@ Some folks have wondered about the math that underlies these numbers. The root o
 <li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
 </ul>
 </blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/python-caps-util/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/03/python-caps-util/" itemprop="url">python 小写转大写</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-03T18:09:17+08:00">
-                2013-02-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/02/03/python-caps-util/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/03/python-caps-util/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line">-*- coding: gbk -*- </div><div class="line"><span class="keyword">import</span> win32clipboard as wincb </div><div class="line"><span class="keyword">import</span> win32con</div><div class="line"></div><div class="line">running = True </div><div class="line"><span class="keyword">while</span> running: </div><div class="line">    s=raw_input(<span class="string">"输入小写英文："</span>) </div><div class="line">    ss = s.upper() </div><div class="line">    print ss </div><div class="line">    wincb.OpenClipboard() </div><div class="line">    wincb.EmptyClipboard() </div><div class="line">    wincb.SetClipboardData(win32con.CF_TEXT, ss) </div><div class="line">    running = <span class="string">"q"</span>!=s</div></pre></td></tr></table></figure>
 
           
         
@@ -2062,7 +2059,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
 <p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
 <p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
 <p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
@@ -2166,7 +2163,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">294</span>
+                  <span class="site-state-item-count">295</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2177,7 +2174,7 @@ Some folks have wondered about the math that underlies these numbers. The root o
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
