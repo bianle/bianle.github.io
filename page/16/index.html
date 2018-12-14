@@ -654,19 +654,30 @@
 <figure class="highlight dts"><table><tr><td class="code"><pre><div class="line">nohup bin/ngrokd -domain=<span class="string">"tunnel.ink"</span> -httpAddr=<span class="string">":80"</span>   &gt; <span class="meta-keyword">/dev/</span>null <span class="number">2</span>&gt;<span class="variable">&amp;1</span> &amp;</div></pre></td></tr></table></figure>
 <h3 id="编译windows客户端"><a class="header-anchor" href="#编译windows客户端"> </a>编译windows客户端</h3>
 <figure class="highlight nix"><table><tr><td class="code"><pre><div class="line">cd /usr/local/go/src/</div><div class="line"><span class="attr">GOOS=windows</span> <span class="attr">GOARCH=amd64</span> <span class="attr">CGO_ENABLED=0</span> ./make.bash</div><div class="line">cd -</div><div class="line"><span class="attr">GOOS=windows</span> <span class="attr">GOARCH=amd64</span> make release-server release-client</div></pre></td></tr></table></figure>
+<blockquote>
+<p>各平台的GOOS和GOARCH参考<br>
+OS ARCH OS version<br>
+linux 386 / amd64 / arm &gt;= Linux 2.6<br>
+darwin 386 / amd64 OS X (Snow Leopard + Lion)<br>
+freebsd 386 / amd64 &gt;= FreeBSD 7<br>
+windows 386 / amd64 &gt;= Windows 2000</p>
+<p><code>$ cd /usr/local/go/src</code><br>
+<code>$ sudo CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ./make.bash</code><br>
+这里并不是重新编译Go，因为安装Go的时候，只是编译了本地系统需要的东西；而需要跨平台交叉编译，需要在Go中增加对其他平台的支持。所以，有 ./make.bash 这么一个过程。</p>
+</blockquote>
 <h3 id="客户端配置文件ngrok-conf"><a class="header-anchor" href="#客户端配置文件ngrok-conf"> </a>客户端配置文件ngrok.conf</h3>
 <blockquote>
-<p>server_addr: &quot;tunnel.ink:4443&quot;
+<p>server_addr: &quot;tunnel.ink:4443&quot;<br>
 trust_host_root_certs: false</p>
 </blockquote>
 <h3 id="启动客户端"><a class="header-anchor" href="#启动客户端"> </a>启动客户端</h3>
 <figure class="highlight mipsasm"><table><tr><td class="code"><pre><div class="line">ngrok -<span class="keyword">subdomain </span>dev -<span class="built_in">config</span>=ngrok.conf <span class="number">80</span></div></pre></td></tr></table></figure>
 <h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="https://github.com/inconshreveable/ngrok/blob/master/docs/SELFHOSTING.md" target="_blank" rel="external">官方文档</a>
-<a href="http://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/" target="_blank" rel="external">Sebastian的博客</a>
-<a href="http://www.haiyun.me/archives/1012.html" target="_blank" rel="external">海运博客</a>
+<p><a href="https://github.com/inconshreveable/ngrok/blob/master/docs/SELFHOSTING.md" target="_blank" rel="external">官方文档</a><br>
+<a href="http://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/" target="_blank" rel="external">Sebastian的博客</a><br>
+<a href="http://www.haiyun.me/archives/1012.html" target="_blank" rel="external">海运博客</a><br>
 <a href="https://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/" target="_blank" rel="external">Run Ngrok on Your Own Server Using Self-Signed SSL Certificate</a></p>
-<h2 id="它山之石"><a class="header-anchor" href="#它山之石"> </a>它山之石</h2>
+<h2 id="忘掉上边的-直接用这个"><a class="header-anchor" href="#忘掉上边的-直接用这个"> </a>忘掉上边的，直接用这个</h2>
 <p><a href="https://www.sunnyos.com/article-show-66.html" target="_blank" rel="external">ngrok一键安装脚本，适于centos版本服务器</a></p>
 
           

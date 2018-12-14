@@ -147,7 +147,7 @@ go安装地址被墙(为啥?问方校长)!需要安装vpn客户端翻墙下载,c
  yum安装
 刚开始yum安装,后来在交叉编译window客户端时失败后改为源码安装)
 yum install golang">
-<meta property="og:updated_time" content="2016-11-23T07:38:59.000Z">
+<meta property="og:updated_time" content="2018-12-14T09:39:07.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里云上搭建ngrok服务器">
 <meta name="twitter:description" content="环境
@@ -520,19 +520,30 @@ yum install golang">
 <figure class="highlight dts"><table><tr><td class="code"><pre><div class="line">nohup bin/ngrokd -domain=<span class="string">"tunnel.ink"</span> -httpAddr=<span class="string">":80"</span>   &gt; <span class="meta-keyword">/dev/</span>null <span class="number">2</span>&gt;<span class="variable">&amp;1</span> &amp;</div></pre></td></tr></table></figure>
 <h3 id="编译windows客户端"><a class="header-anchor" href="#编译windows客户端"> </a>编译windows客户端</h3>
 <figure class="highlight nix"><table><tr><td class="code"><pre><div class="line">cd /usr/local/go/src/</div><div class="line"><span class="attr">GOOS=windows</span> <span class="attr">GOARCH=amd64</span> <span class="attr">CGO_ENABLED=0</span> ./make.bash</div><div class="line">cd -</div><div class="line"><span class="attr">GOOS=windows</span> <span class="attr">GOARCH=amd64</span> make release-server release-client</div></pre></td></tr></table></figure>
+<blockquote>
+<p>各平台的GOOS和GOARCH参考<br>
+OS ARCH OS version<br>
+linux 386 / amd64 / arm &gt;= Linux 2.6<br>
+darwin 386 / amd64 OS X (Snow Leopard + Lion)<br>
+freebsd 386 / amd64 &gt;= FreeBSD 7<br>
+windows 386 / amd64 &gt;= Windows 2000</p>
+<p><code>$ cd /usr/local/go/src</code><br>
+<code>$ sudo CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ./make.bash</code><br>
+这里并不是重新编译Go，因为安装Go的时候，只是编译了本地系统需要的东西；而需要跨平台交叉编译，需要在Go中增加对其他平台的支持。所以，有 ./make.bash 这么一个过程。</p>
+</blockquote>
 <h3 id="客户端配置文件ngrok-conf"><a class="header-anchor" href="#客户端配置文件ngrok-conf"> </a>客户端配置文件ngrok.conf</h3>
 <blockquote>
-<p>server_addr: &quot;tunnel.ink:4443&quot;
+<p>server_addr: &quot;tunnel.ink:4443&quot;<br>
 trust_host_root_certs: false</p>
 </blockquote>
 <h3 id="启动客户端"><a class="header-anchor" href="#启动客户端"> </a>启动客户端</h3>
 <figure class="highlight mipsasm"><table><tr><td class="code"><pre><div class="line">ngrok -<span class="keyword">subdomain </span>dev -<span class="built_in">config</span>=ngrok.conf <span class="number">80</span></div></pre></td></tr></table></figure>
 <h2 id="参考"><a class="header-anchor" href="#参考"> </a>参考</h2>
-<p><a href="https://github.com/inconshreveable/ngrok/blob/master/docs/SELFHOSTING.md" target="_blank" rel="external">官方文档</a>
-<a href="http://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/" target="_blank" rel="external">Sebastian的博客</a>
-<a href="http://www.haiyun.me/archives/1012.html" target="_blank" rel="external">海运博客</a>
+<p><a href="https://github.com/inconshreveable/ngrok/blob/master/docs/SELFHOSTING.md" target="_blank" rel="external">官方文档</a><br>
+<a href="http://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/" target="_blank" rel="external">Sebastian的博客</a><br>
+<a href="http://www.haiyun.me/archives/1012.html" target="_blank" rel="external">海运博客</a><br>
 <a href="https://www.svenbit.com/2014/09/run-ngrok-on-your-own-server/" target="_blank" rel="external">Run Ngrok on Your Own Server Using Self-Signed SSL Certificate</a></p>
-<h2 id="它山之石"><a class="header-anchor" href="#它山之石"> </a>它山之石</h2>
+<h2 id="忘掉上边的-直接用这个"><a class="header-anchor" href="#忘掉上边的-直接用这个"> </a>忘掉上边的，直接用这个</h2>
 <p><a href="https://www.sunnyos.com/article-show-66.html" target="_blank" rel="external">ngrok一键安装脚本，适于centos版本服务器</a></p>
 
       
@@ -836,7 +847,7 @@ trust_host_root_certs: false</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text"> 环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装vpn客户端pptp"><span class="nav-number">2.</span> <span class="nav-text"> 安装vpn客户端pptp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装golang"><span class="nav-number">3.</span> <span class="nav-text"> 安装golang</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yum安装"><span class="nav-number">3.1.</span> <span class="nav-text"> yum安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码安装"><span class="nav-number">3.2.</span> <span class="nav-text"> 源码安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">4.</span> <span class="nav-text"> 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载ngrok源码并设置环境变量"><span class="nav-number">4.1.</span> <span class="nav-text"> 下载ngrok源码并设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成自签名ssl证书"><span class="nav-number">4.2.</span> <span class="nav-text"> 生成自签名SSL证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译客户端和服务端"><span class="nav-number">4.3.</span> <span class="nav-text"> 编译客户端和服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动服务端"><span class="nav-number">4.4.</span> <span class="nav-text"> 启动服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译windows客户端"><span class="nav-number">4.5.</span> <span class="nav-text"> 编译windows客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端配置文件ngrok-conf"><span class="nav-number">4.6.</span> <span class="nav-text"> 客户端配置文件ngrok.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动客户端"><span class="nav-number">4.7.</span> <span class="nav-text"> 启动客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text"> 参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#它山之石"><span class="nav-number">6.</span> <span class="nav-text"> 它山之石</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text"> 环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装vpn客户端pptp"><span class="nav-number">2.</span> <span class="nav-text"> 安装vpn客户端pptp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装golang"><span class="nav-number">3.</span> <span class="nav-text"> 安装golang</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yum安装"><span class="nav-number">3.1.</span> <span class="nav-text"> yum安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码安装"><span class="nav-number">3.2.</span> <span class="nav-text"> 源码安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">4.</span> <span class="nav-text"> 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载ngrok源码并设置环境变量"><span class="nav-number">4.1.</span> <span class="nav-text"> 下载ngrok源码并设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成自签名ssl证书"><span class="nav-number">4.2.</span> <span class="nav-text"> 生成自签名SSL证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译客户端和服务端"><span class="nav-number">4.3.</span> <span class="nav-text"> 编译客户端和服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动服务端"><span class="nav-number">4.4.</span> <span class="nav-text"> 启动服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译windows客户端"><span class="nav-number">4.5.</span> <span class="nav-text"> 编译windows客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端配置文件ngrok-conf"><span class="nav-number">4.6.</span> <span class="nav-text"> 客户端配置文件ngrok.conf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动客户端"><span class="nav-number">4.7.</span> <span class="nav-text"> 启动客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text"> 参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#忘掉上边的-直接用这个"><span class="nav-number">6.</span> <span class="nav-text"> 忘掉上边的，直接用这个</span></a></li></ol></div>
             
 
           </div>
