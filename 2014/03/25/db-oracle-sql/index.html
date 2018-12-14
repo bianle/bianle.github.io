@@ -175,6 +175,10 @@ WITH t AS        (SELECT ‘remoteAddr:10.">
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"/>
+<script src="http://blimg.bovod.org/lib/live2d-widget/autoload.js?v=1"></script>
+
 
   <title>oracle sql整理 | Bianle's Blog</title>
   
@@ -471,7 +475,7 @@ WITH t AS        (SELECT ‘remoteAddr:10.">
       
 
       
-        <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="oracle-分页查询"><a class="header-anchor" href="#oracle-分页查询"> </a>oracle 分页查询</h1>
+        <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="oracle-分页查询"><a class="header-anchor" href="#oracle-分页查询"> </a>oracle 分页查询</h1>
 <figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> ( <span class="keyword">SELECT</span> A.*, <span class="keyword">ROWNUM</span> RN <span class="keyword">FROM</span> ([<span class="keyword">sql</span>语句]) A <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= [lineSize*currentPage] ) <span class="keyword">WHERE</span> RN &gt;=[((currentPage<span class="number">-1</span>)*lineSize+<span class="number">1</span>)];</div></pre></td></tr></table></figure>
 <figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line"><span class="keyword">WITH</span> t <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ‘remoteAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,protocol:HTTP/<span class="number">1.1</span>,localAddr:<span class="number">10.176</span>.<span class="number">27.94</span>,mac:<span class="number">44</span>-<span class="number">37</span>-E6-<span class="number">86</span>-C4-<span class="number">6</span>A,Cookie:%<span class="number">2</span>Fclient6%<span class="number">2</span>F=<span class="number">1361081051064</span>;logoin=<span class="number">1361081051064</span>;’ id</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> dual),</div><div class="line"></div><div class="line">        t1 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> REPLACE(id, ‘logoin=’, ‘logoin:’) id1 <span class="keyword">FROM</span> t),</div><div class="line"></div><div class="line">        t2 <span class="keyword">AS</span></div><div class="line"></div><div class="line">        (<span class="keyword">SELECT</span> ’<span class="number">1</span>′ num0,</div><div class="line"></div><div class="line">                 rownum num1,</div><div class="line"></div><div class="line">                 regexp_substr(id1, ‘[^,|;|:]+’, <span class="number">1</span>, LEVEL) t1a</div><div class="line"></div><div class="line">            <span class="keyword">FROM</span> t1</div><div class="line"></div><div class="line">          CONNECT <span class="keyword">BY</span> LEVEL &lt;= regexp_count(id1, ‘,’) + regexp_count(id1, ‘;’) +</div><div class="line"></div><div class="line">                     regexp_count(id1, ‘:’))</div><div class="line"></div><div class="line">        <span class="keyword">SELECT</span> *</div><div class="line"></div><div class="line">          <span class="keyword">FROM</span> t2 pivot(MAX(t1a) <span class="keyword">FOR</span> num1 <span class="keyword">IN</span>(</div><div class="line"></div><div class="line">                                             </div><div class="line">                                             <span class="number">2</span> remoteaddr,</div><div class="line"></div><div class="line">                                             <span class="number">4</span> protocol,</div><div class="line"></div><div class="line">                                             <span class="number">6</span> localaddr,</div><div class="line"></div><div class="line">                                             <span class="number">8</span> mac,</div><div class="line"></div><div class="line">                                             <span class="number">10</span> cookie,</div><div class="line"></div><div class="line"><span class="number">12</span> logoin))</div></pre></td></tr></table></figure>
 <h1 id="oracle-正则表达式"><a class="header-anchor" href="#oracle-正则表达式"> </a>oracle 正则表达式</h1>
@@ -539,8 +543,8 @@ WITH t AS        (SELECT ‘remoteAddr:10.">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/03/25/db-oracle-get-month-days/" rel="next" title="查询本月天数">
-                <i class="fa fa-chevron-left"></i> 查询本月天数
+              <a href="/2014/03/25/db-oracle-grant/" rel="next" title="ORACLE 创建视图时,提示用户权限不足">
+                <i class="fa fa-chevron-left"></i> ORACLE 创建视图时,提示用户权限不足
               </a>
             
           </div>
@@ -549,8 +553,8 @@ WITH t AS        (SELECT ‘remoteAddr:10.">
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/09/12/web-js-uuid/" rel="prev" title="Math.uuid">
-                Math.uuid <i class="fa fa-chevron-right"></i>
+              <a href="/2014/03/25/db-oracle-get-month-days/" rel="prev" title="查询本月天数">
+                查询本月天数 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -644,7 +648,7 @@ WITH t AS        (SELECT ‘remoteAddr:10.">
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">295</span>
+                  <span class="site-state-item-count">296</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -655,7 +659,7 @@ WITH t AS        (SELECT ‘remoteAddr:10.">
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
