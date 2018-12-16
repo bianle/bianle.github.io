@@ -362,7 +362,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-flex-formmater/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/02/03/web-ie-css-limit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -381,7 +381,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/02/03/web-flex-formmater/" itemprop="url">Flex-代码格式化eclipse插件:Flex Formatter</a></h1>
+                <a class="post-title-link" href="/2013/02/03/web-ie-css-limit/" itemprop="url">IE中样式表、选择符的数量限制记录</a></h1>
         
 
         <div class="post-meta">
@@ -434,8 +434,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/02/03/web-flex-formmater/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/03/web-flex-formmater/" itemprop="commentCount"></span>
+                <a href="/2013/02/03/web-ie-css-limit/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/02/03/web-ie-css-limit/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -465,21 +465,35 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Flex Formatter is an extremely useful plugin for FlexBuilder / FlashBuilder that formats your ActionScript code (AS3) and MXML according to a broad range of settings, and helps you to generate ASDoc comments automatically. It is free, and open source.</p>
-<p>It’s code formatting is quite robust and configurable, handling things like brace settings (cuddling versus next line), white space around parameters and operators, sorting imports, and a ton more. Thankfully, you can export your settings to a file and share it with your whole team. You can also have it automatically update settings from a file that you can share over the network or via SVN / GIT.</p>
-<p>Unfortunately, it’s ASDoc features are much more rudimentary, and do not have any configuration options. They serve as an acceptable starting point, and save some time, but I would love to see some additional support here (for example, an option to mark private and or protected members as @private, which is a very common requirement).</p>
-<p>Regrettably, Flex Formatter does not seem to come with installation instructions. If you are not familiar with installing Eclipse plugins, it can take a lot of work to figure it out, but it’s very simple if you know how to do it:</p>
-<ol>
-<li>Start up FlexBuilder / FlashBuilder.</li>
-<li>From the Help menu, select ‘Software Updates &gt; Find and Install…’</li>
-<li>Select ‘Search for new features to install’ and click ‘Next &gt;’</li>
-<li>Click ‘New Remote Site…’</li>
-<li>Use name: ‘Flex Formatter’ and url: ‘<a href="http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/%E2%80%99" target="_blank" rel="external">http://flexformatter.googlecode.com/svn/trunk/FlexFormatter/FlexPrettyPrintCommandUpdateSite/’</a></li>
-<li>Click OK</li>
-<li>Make sure only ‘Flex Formatter’ is selected in the ‘Sites to search’ list, and click ‘Finish’</li>
-<li>Follow the prompts to install Flex Formatter, and restart the IDE</li>
-</ol>
-<p>Once you’ve restarted, you should see the Flex Formatter bar with buttons to ASDoc, format, and rearrange your code. You should also have a ‘Flex Formatting’ entry in preferences.</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>项目中css样式过多之前前面引入的样式“生效”，后面的无效
+<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/05/14/10164546.aspx" target="_blank" rel="external">有关IE浏览器中对样式表的最大量的限制内容</a></p>
+<blockquote>
+<p>KB 262161 outlines the maximum number of stylesheets and rules supported by Internet Explorer 6 to 9.</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 4095 rules</li>
+<li>A sheet may @import up to 31 sheets</li>
+<li>@import nesting supports up to 4 levels deep
+Some folks have wondered about the math that underlies these numbers. The root of the limitations is that Internet Explorer uses a 32bit integer to identify, sort, and apply the cascading rules. The integer’s 32bits are split into five fields: four sheetIDs of 5 bits each, and one 12bit ruleID. The 5 bit sheetIDs results in the 31 @import limit, and the 12 bit ruleID results in the 4095 rules-per-sheet limitation. While these limits are entirely sufficient for most sites, there are some sites (particularly when using frameworks and controls) that can encounter the limits, requiring workarounds.</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>There’s a simple test page for the limits here.</p>
+</blockquote>
+<blockquote>
+<p>-Eric</p>
+</blockquote>
+<blockquote>
+<p>Update: IE10 Platform Preview #2 significantly raises the limits described above. In IE10 (any browser/document mode):</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>A sheet may contain up to 65534 rules</li>
+<li>A document may use up to 4095 stylesheets</li>
+<li>@import nesting is limited to 4095 levels (due to the 4095 stylesheet limit)</li>
+</ul>
+</blockquote>
 
           
         
