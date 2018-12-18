@@ -362,6 +362,173 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/08/23/macos-iterm2-ssh-autologin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/23/macos-iterm2-ssh-autologin/" itemprop="url">iterm2 ssh 自动登录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-23T17:10:26+08:00">
+                2017-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/macos/" itemprop="url" rel="index">
+                    <span itemprop="name">macos</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/23/macos-iterm2-ssh-autologin/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/08/23/macos-iterm2-ssh-autologin/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><ol>
+<li>在<code>$PATH</code>目录(如:/usr/local/bin)新建expect脚本(如:iterm2ssh.sh)</li>
+</ol>
+<p>内容如下：</p>
+<figure class="highlight tcl"><table><tr><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/expect  </span></div><div class="line">  </div><div class="line"><span class="keyword">set</span> timeout <span class="number">30</span>  </div><div class="line">spawn ssh [<span class="keyword">lindex</span> $argv <span class="number">0</span>]@[<span class="keyword">lindex</span> $argv <span class="number">1</span>]  </div><div class="line">expect &#123;  </div><div class="line">        <span class="string">"(yes/no)?"</span>  </div><div class="line">        &#123;send <span class="string">"yes\n"</span>;exp_continue&#125;  </div><div class="line">        <span class="string">"password:"</span>  </div><div class="line">        &#123;send <span class="string">"[lindex $argv 2]\n"</span>&#125;  </div><div class="line">&#125;  </div><div class="line">interact</div></pre></td></tr></table></figure>
+<p>并设置可执行</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">chmod</span> +<span class="selector-tag">x</span> <span class="selector-tag">iterm2ssh</span><span class="selector-class">.sh</span></div></pre></td></tr></table></figure>
+<ol start="2">
+<li>iterm2添加profile</li>
+</ol>
+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">Command⌘</kbd>+<kbd style="border:1px solid gray;font-size:1.2em;box-shadow:1px 0 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #444;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin:2px 3px;padding:1px 5px;">o</kbd>打开profiles列表窗口，点击`edit profiles`按钮打开profiles编辑窗口，点击左侧`+`按钮新增profile，设置名称，`send text at start`
+<p>设置为<code>iterm2ssh.ssh &lt;用户名&gt; &lt;服务器地址&gt; &lt;密码&gt;</code></p>
+<ol start="3">
+<li>右键 new tab 选择刚才新增的profile即可</li>
+</ol>
+<p><img src="http://blimg.bovod.org/2017/07/31/iterm2ssh.gif" alt="iterm2 ssh"><span class="image-caption">iterm2 ssh</span></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2017/08/09/regular-expression/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1790,181 +1957,6 @@ InterruptedExceptions should never be ignored in the code, and simply logging th
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2017/07/11/solr-sort-function/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/11/solr-sort-function/" itemprop="url">bug修复记-solr排序函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T20:09:58+08:00">
-                2017-07-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/solr/" itemprop="url" rel="index">
-                    <span itemprop="name">solr</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/11/solr-sort-function/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/07/11/solr-sort-function/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">q=custNo:<span class="number">6054575780</span> <span class="type">AND</span> cmmdtyName:华为nova(4GB+64GB)<span class="type">CAZ</span>-<span class="type">AL10</span>香槟金(白)全网通&amp;<span class="built_in">sort</span>=&#123;!<span class="function"><span class="keyword">func</span>&#125;<span class="title">sum</span><span class="params">(product<span class="params">(sum<span class="params">(<span class="built_in">map</span><span class="params">(query<span class="params">($aaa)</span></span></span></span></span></span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>),<span class="built_in">map</span>(zsPrice,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>)),<span class="number">100000</span>),zsPrice) desc&amp;aaa=inventory:<span class="number">010</span></div></pre></td></tr></table></figure>
-<h3 id="不手动url编码"><a class="header-anchor" href="#不手动url编码"> </a>不手动URL编码</h3>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">CloseableHttpClient client</span> = null;</div><div class="line"><span class="attribute">client</span> = HttpClients.createDefault();</div><div class="line"><span class="attribute">URL url</span> = new URL(urlStr);</div><div class="line"><span class="attribute">URI uri</span> = new URI(url.getProtocol(), url.getHost(), url.getPath(), url.getQuery(), null);</div><div class="line"><span class="attribute">HttpGet httpget</span> = new HttpGet(uri);</div><div class="line"><span class="attribute">HttpResponse response</span> = client.execute(httpget);</div></pre></td></tr></table></figure>
-<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">http:<span class="regexp">//gcmssit</span>.service.cnsuning.com/solr/fxnew/<span class="keyword">select</span>?<span class="keyword">q</span>=custNo:<span class="number">6054575780</span>%20AND%20cmmdtyName:华为nova%5C(<span class="number">4</span>GB%5C+<span class="number">64</span>GB%5C)CAZ%5C-AL1<span class="number">0</span>香槟金%5C(白%5C)全网通&amp;wt=json&amp;indent=true&amp;fl=zsPrice&amp;aaa=inventory:<span class="number">000001000137</span>&amp;<span class="keyword">sort</span>=%7B!func%7Dsum(product(sum(<span class="keyword">map</span>(query($aaa),<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>),<span class="keyword">map</span>(zsPrice,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">1</span>)),<span class="number">100000</span>),zsPrice)%20asc</div></pre></td></tr></table></figure>
-<blockquote>
-<p>q:custNo:6054575780 AND cmmdtyName:华为nova(4GB\ 64GB)CAZ-AL10香槟金(白)全网通<br>
-wt:json<br>
-indent:true<br>
-fl:zsPrice<br>
-aaa:inventory:000001000137<br>
-sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),100000),zsPrice) asc</p>
-</blockquote>
-<h3 id="手动对含特殊字符的查询串url编码"><a class="header-anchor" href="#手动对含特殊字符的查询串url编码"> </a>手动对含特殊字符的查询串URL编码</h3>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">String q = <span class="string">"cmmdtyName:华为nova<span class="subst">\\</span>(4GB<span class="subst">\\</span>+64GB<span class="subst">\\</span>)CAZ<span class="subst">\\</span>-AL10香槟金<span class="subst">\\</span>(白<span class="subst">\\</span>)全网通"</span>;</div><div class="line">URLEncoder.encode(q,<span class="string">"utf-8"</span>);</div><div class="line">...</div><div class="line"></div><div class="line">String sort=<span class="string">"&#123;!func&#125;sum(product(sum(map(query($aaa),0,0,0,2),map(zsPrice,0,0,1,4)),100000),zsPrice) desc"</span>;</div><div class="line">URLEncoder.encode(sort,<span class="string">"utf-8"</span>);</div></pre></td></tr></table></figure>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><div class="line"><span class="attribute">CloseableHttpClient client</span> = null;</div><div class="line"><span class="attribute">client</span> = HttpClients.createDefault();</div><div class="line"><span class="attribute">HttpGet httpget</span> = new HttpGet(urlStr);</div><div class="line"><span class="attribute">HttpResponse response</span> = client.execute(httpget);</div></pre></td></tr></table></figure>
-<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">http:<span class="regexp">//gcmssit</span>.service.cnsuning.com/solr/fxnew/<span class="keyword">select</span>?<span class="keyword">q</span>=custNo%3A6054575780+AND+cmmdtyName%3A%E5%8D%8E%E4%B8%BAnova%5C%284GB%5C%2B64GB%5C%29CAZ%5C-AL1<span class="number">0</span>%E9%A6%99%E6%A7%9F%E9%87%91%5C%28%E7%99%BD%5C%29%E5%85%A8%E7%BD%91%E9%80%9A&amp;wt=json&amp;indent=true&amp;fl=zsPrice&amp;aaa=inventory:<span class="number">000001000137</span>&amp;<span class="keyword">sort</span>=%7B%21func%7Dsum%28product%28sum%28map%28query%28%24aaa%29%2C0%2C0%2C2%2C0%29%2Cmap%28zsPrice%2C0%2C0%2C4%2C1%29%29%2C100000%29%2CzsPrice%29+asc</div></pre></td></tr></table></figure>
-<blockquote>
-<p>q:custNo:6054575780 AND cmmdtyName:华为nova(4GB+64GB)CAZ-AL10香槟金(白)全网通<br>
-wt:json<br>
-indent:true<br>
-fl:zsPrice<br>
-aaa:inventory:000001000137<br>
-sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),100000),zsPrice) asc</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2019,7 +2011,7 @@ sort:{!func}sum(product(sum(map(query($aaa),0,0,2,0),map(zsPrice,0,0,4,1)),10000
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">297</span>
+                  <span class="site-state-item-count">298</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

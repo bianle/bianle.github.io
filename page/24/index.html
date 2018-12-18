@@ -362,6 +362,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/25/system-bt5-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/25/system-bt5-guide/" itemprop="url">BackTrack5(BT5)硬盘安装完美教程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-25T21:01:00+08:00">
+                2012-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/12/25/system-bt5-guide/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/25/system-bt5-guide/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>BackTrack5的硬盘安装分两步走，第一步是BT5的硬盘引导，第二步是BT5的硬盘安装。过程中用到BT5的LIVE镜像，可以在这里下载BackTrack5发布，提供多种镜像下载 。</p>
+<p>第一部分 BackTrack5(BT5)硬盘引导
+BackTrack5 （BT5）的硬盘引导我们是借助grub4dos来完成的，grub跟grub2下还木有测试。grub4dos在xp跟win7下可以都用 boot.ini的方法来完成，win7也认识boot.ini，如果你是xp，直接修改boot.ini，如果你是win7，在系统盘根目录下新建 boot.ini。
+写入内容：
+c:\grldr=&quot;GRUB4DOS Menu&quot;
+xp是在文件最后加上上面这行，win7在空白文件中只写这行就可以了。当然，win7也可以用easyBCD来安装grub4dos，可以参考的文章ubuntu11.04硬盘安装详细教程，xp、win7完美支持
+下面你需要下载grub4dos的配置文件：点此下载配置文件 将此文件解压缩到系统盘根目录即可。
+其实如果你对grub的menu.lst比较熟悉的话，可以看下menu.lst引导BT5的内容
+title BackTrack5 Text - Default Boot Text Mode
+root (hd0,0)
+kernel /casper/vmlinuz file=/preseed/custom.seed boot=casper text splash vga=791–
+initrd /casper/initrd.gz
+boot
+下载好CD镜像后，用UltraISO将全部文件解压缩到系统盘根目录（你的系统盘）下即可。
+重启时选择引导，会进入BackTrack5的引导。这一步完成后你就已经完成了硬盘引导工作，可以正常进入BT5的LIVE了。默认账户是root，密码是toor，进入图形化桌面是startx。</p>
+<p>第二部分 BackTrack5(BT5)硬盘安装
+这一部分，说说missing filesystem.size错误的产生原因，missing filesystem.size是因为install.sh那个文件无法找到安装所需要的filesystem.size，而这个文件就在/cdrom中，而当你运行了umount -l /cdrom之后，该目录变成了空目录，所以系统无法找到原来我们拷贝过去的文件filesystem.size，因此会报错。那么如何解决呢？方案有两个，一个是将iso镜像中的所有文件都重新拷贝到/cdrom文件夹中，当然，这是不太可行的，至少2G内存是木有搞定，呵呵，说不定你是4G内存可以搞定呢~~~这个方法我们pass掉，现在说说真正的方法，用loop将iso文件挂载到/cdrom目录下。具体做法：
+1.准备好你的bt5的安装iso，最好是放在你的系统盘也就是sda1中，如果放不开当然放别的盘里也可以的，命名全部用英文，免得有不必要的麻烦。打开一个终端，终端在程序的附件中。
+在终端中运行
+cd /
+sudo mkdir nenew
+sudo umount -l /cdrom
+sudo mount /dev/sda1 /nenew
+ls /nenew | grep iso
+运行到这一步的时候，看看回显的结果中是否有你的镜像文件，如果你放到了第一个分区中，应该可以看到你的镜像名称，可以继续第二步了。如果你没有放到系统根目录下，就执行下面的命令，将sda的数字依次递增，直到ls 的结果有你的镜像为止。
+sudo umount -l /nenew
+sudo mount /dev/sda2 /nenew
+ls /nenew | grep iso
+好了，到此我们假设你已经看到了你的BackTrack5的iso镜像文件，如果你没有看到，自己找找原因吧，不解释。
+2.执行下列命令
+sudo modprobe loop
+sudo mount -o loop /nenew/BT5-GNOME-32.iso /cdrom
+这里的BT5-GNOME-32.iso为你的BT5的镜像名称。
+sudo umount -l /nenew
+ls /cdrom
+这时候会回显cdrom目录下的文件，自己确定下跟iso文件中是否一致，如果一致，ok，你的操作正确了，可以进行安装了，如果不一致，sorry，回头继续看教程找原因。
+3.运行桌面上的install来安装即可，安装过程可以参考ubuntu的安装过程，这里就不熬述了。最后安装结束，提示是否重启，选择reboot重启，当出现提示让输入enter的时候回车，这个地方没法过去，当然这并没有什么影响，直接关掉电源就可以了，因为该关闭的东东已经都关闭了。如果你是笔记本就长按开机按钮就可以关机的。重新开机就可以进入系统了。当然，你没有看到windows的启动项。启动正常后，用户名root密码toor进入系统，startx进入图形，打开终端，sudo update-grub就有windows的启动项了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/25/db-sql-convert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1390,7 +1578,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-reflex/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/web-extjs-encodeuri/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1409,7 +1597,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/12/05/java-reflex/" itemprop="url">JAVA反射机制-class类的获取</a></h1>
+                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">ext中文传参乱码</a></h1>
         
 
         <div class="post-meta">
@@ -1444,8 +1632,8 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -1462,8 +1650,8 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/12/05/java-reflex/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/java-reflex/" itemprop="commentCount"></span>
+                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/web-extjs-encodeuri/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1493,64 +1681,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
-信息。
-当一个类或接口被装入的JVM 时便会产生一个与之关联的java.lang.Class 对象，可以通过
-这个Class 对象对被装入类的详细信息进行访问。
-简单的说，获取某一个类所对应的Class 对象可以通过如下三种途径：</p>
-<ol>
-<li>Object 的getClass 方法
-java.lang.Object 中定义有getClass 方法：
-public final Class getClass()
-所有Java 对象都具备这个方
-法。该方法用于返回与调用该方法对象所属类关联的Class 对象，
-例如：</li>
-</ol>
-<figure class="highlight gauss"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Date</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line"><span class="built_in">Date</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">Class c1 = date1.getClass();</div><div class="line">Class c2 = date2.getClass();</div><div class="line"><span class="keyword">System</span>.out.println(c1.<span class="built_in">getName</span>()); <span class="comment">// java.util.Date</span></div><div class="line"><span class="keyword">System</span>.out.println(c1 == c2); <span class="comment">// true</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，调用Date 对象date1 的getClass 方法将返回用于封装Date 类信息的Class
-对象。这里调用了Class 类的getName 方法：</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">String</span> getName()</div></pre></td></tr></table></figure>
-<p>这个方法的含义很直观，即返回所封装的类的名称。
-需要注意的是，代码中的date1 和date2 的getClass 方法返回了相同的Class 对象（c1==c2
-的值为true）。这是因为，对于相同的类，JVM 只会载入一次，而与该类对应的Class 对象
-也只会存在一个，无论该类实例化了多少对象。
-另外，需要强调的是，当一个对象被其父类的引用或其实现的接口类型的引用所指向的时，
-getClass 方法返回的是与对象实际所属类关联的Class 对象。例如：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line"><span class="built_in">List</span> <span class="built_in">list</span> = <span class="literal">new</span> ArrayList();</div><div class="line">System.out.println(<span class="built_in">list</span>.getClass().getName()); <span class="comment">// java.util.ArrayList</span></div></pre></td></tr></table></figure>
-<p>上面的代码中，语句list.getClass()方法返回的是list 所指向对象实际所属类java.util.ArrayList
-对应的Class 对象而并未java.util.List 所对应的Class 对象。有些时候可以通过这个方法了解
-一个对象的运行时类型，例如：</p>
-<figure class="highlight gams"><table><tr><td class="code"><pre><div class="line">HashSet <span class="keyword">set</span> = new <span class="comment">HashSet()</span>;</div><div class="line">Iterator it = <span class="keyword">set</span>.iterator();</div><div class="line"><span class="keyword">System</span>.out.println(it.getClass().getName()); <span class="comment">//java.util.HashMap$KeyIterator</span></div></pre></td></tr></table></figure>
-<p>从代码可以看出，HashSet 的iterator 方法返回的是实现了Iterator 接口的HashMap 内部类
-（KeyIterator）对象。
-因为抽象类和接口不可能实例化对象，因此不能通过Object 的getClass 方法获得与抽象类
-和接口关联的Class 对象。</p>
-<ol start="2">
-<li>使用.class 的方式
-使用类名加“.class”的方式即会返回与该类对应的Class 对象。例如：</li>
-</ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">Class</span> clazz = <span class="keyword">String</span>.<span class="keyword">class</span>;</div><div class="line">System.<span class="keyword">out</span>.println(clazz.getName()); <span class="comment">// java.lang.String</span></div></pre></td></tr></table></figure>
-<p>这个方法可以直接获得与指定类关联的Class 对象，而并不需要有该类的对象存在。</p>
-<ol start="3">
-<li>使用Class.forName 方法
-Class 有一个著名的static 方法forName：</li>
-</ol>
-<figure class="highlight delphi"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">Class</span> forName(<span class="keyword">String</span> className) throws ClassNotFoundException</div></pre></td></tr></table></figure>
-<p>该方法可以根据字符串参数所指定的类名获取与该类关联的Class 对象。如果该类还没有被
-装入，该方法会将该类装入JVM。
-该方法声明抛出ClassNotFoundException 异常。顾名思义，当该方法无法获取需要装入的类
-时（例如，在当前类路径中不存在这个类），就会抛出这个异常。
-例如，如果当前类路径中存在Foo 类：</p>
-<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line">package org.whatisjava.reflect;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> &#123;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo()"</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">System.<span class="keyword">out</span>.println(<span class="string">"Foo is initialized"</span>);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行下面的代码：控制台会有如下输出：
-Class clazz = Class.forName(“org.whatisjava.reflect.Foo”);
-Foo is initialized
-Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装入JVM，并返回与之
-关联的Class 对象。JVM 装入Foo 类后对其进行初始化，调用了其static 块中的代码。需要
-注意的是：forName 方法的参数是类的完整限定名（即包含包名）。
-区别于前面两种获取Class 对象的方法。使用Class.forName 方法所要获取的与之对应的Class
-对象的类可以通过字符串的方式给定。该方法通常用于在程序运行时根据类名动态的载入该
-类并获得与之对应的Class 对象。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -1732,158 +1863,6 @@ menubar，scrollbars 表示菜单栏和滚动栏。
 resizable=no 是否允许改变窗口大小，yes为允许；
 location=no 是否显示地址栏，yes为允许；
 status=no 是否显示状态栏内的信息，yes为允许；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/web-extjs-encodeuri/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/05/web-extjs-encodeuri/" itemprop="url">ext中文传参乱码</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-05T18:09:17+08:00">
-                2012-12-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/05/web-extjs-encodeuri/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/web-extjs-encodeuri/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -2159,7 +2138,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">297</span>
+                  <span class="site-state-item-count">298</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
