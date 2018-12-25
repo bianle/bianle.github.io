@@ -1089,7 +1089,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="python-version-2-7-required-which-was-not-found-in-the-registry"><a class="header-anchor" href="#python-version-2-7-required-which-was-not-found-in-the-registry"> </a>Python version 2.7 required, which was not found in the registry</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="python-version-2-7-required-which-was-not-found-in-the-registry"><a class="header-anchor" href="#python-version-2-7-required-which-was-not-found-in-the-registry"> </a>Python version 2.7 required, which was not found in the registry</h2>
 <p><a href="http://blog.csdn.net/zdnlp/article/details/12171687" target="_blank" rel="external">http://blog.csdn.net/zdnlp/article/details/12171687</a></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># script to register Python 2.0 or later for use with win32all</span></div><div class="line"><span class="comment"># and other extensions that require Python registry settings</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># written by Joakim Loew for Secret Labs AB / PythonWare</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># source:</span></div><div class="line"><span class="comment"># http://www.pythonware.com/products/works/articles/regpy20.htm</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># modified by Valentine Gogichashvili as described in http://www.mail-archive.com/distutils-sig@python.org/msg10512.html</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> sys</div><div class="line"> </div><div class="line"><span class="keyword">from</span> _winreg <span class="keyword">import</span> *</div><div class="line"> </div><div class="line"><span class="comment"># tweak as necessary</span></div><div class="line">version = sys.version[:<span class="number">3</span>]</div><div class="line">installpath = sys.prefix</div><div class="line"> </div><div class="line">regpath = <span class="string">"SOFTWARE\\Python\\Pythoncore\\%s\\"</span> % (version)</div><div class="line">installkey = <span class="string">"InstallPath"</span></div><div class="line">pythonkey = <span class="string">"PythonPath"</span></div><div class="line">pythonpath = <span class="string">"%s;%s\\Lib\\;%s\\DLLs\\"</span> % (</div><div class="line">    installpath, installpath, installpath</div><div class="line">)</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">RegisterPy</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        reg = OpenKey(HKEY_CURRENT_USER, regpath)</div><div class="line">    <span class="keyword">except</span> EnvironmentError <span class="keyword">as</span> e:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            reg = CreateKey(HKEY_CURRENT_USER, regpath)</div><div class="line">            SetValue(reg, installkey, REG_SZ, installpath)</div><div class="line">            SetValue(reg, pythonkey, REG_SZ, pythonpath)</div><div class="line">            CloseKey(reg)</div><div class="line">        <span class="keyword">except</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"*** Unable to register!"</span></div><div class="line">            <span class="keyword">return</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"--- Python"</span>, version, <span class="string">"is now registered!"</span></div><div class="line">        <span class="keyword">return</span></div><div class="line">    <span class="keyword">if</span> (QueryValue(reg, installkey) == installpath <span class="keyword">and</span></div><div class="line">        QueryValue(reg, pythonkey) == pythonpath):</div><div class="line">        CloseKey(reg)</div><div class="line">        <span class="keyword">print</span> <span class="string">"=== Python"</span>, version, <span class="string">"is already registered!"</span></div><div class="line">        <span class="keyword">return</span></div><div class="line">    CloseKey(reg)</div><div class="line">    <span class="keyword">print</span> <span class="string">"*** Unable to register!"</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"*** You probably have another Python installation!"</span></div><div class="line"> </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    RegisterPy()</div></pre></td></tr></table></figure>
 
@@ -1243,7 +1243,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="mysql-查询行号"><a class="header-anchor" href="#mysql-查询行号"> </a>mysql 查询行号</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="mysql-查询行号"><a class="header-anchor" href="#mysql-查询行号"> </a>mysql 查询行号</h2>
 <figure class="highlight moonscript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">select</span> @rowno:=@rowno+<span class="number">1</span> as rowno,t.* <span class="keyword">from</span> test t,(<span class="built_in">select</span> @rowno:=<span class="number">0</span>) r</div></pre></td></tr></table></figure>
 <h2 id="mysql里int字段插入float会四舍五入"><a class="header-anchor" href="#mysql里int字段插入float会四舍五入"> </a>mysql里int字段插入float会四舍五入</h2>
 <h2 id="关于索引-2016-12-28-15-15-20补充"><a class="header-anchor" href="#关于索引-2016-12-28-15-15-20补充"> </a>关于索引（2016-12-28 15:15:20补充）</h2>
@@ -1561,7 +1561,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="如何流畅得在所有linux发行版上跑android的apk程序"><a class="header-anchor" href="#如何流畅得在所有linux发行版上跑android的apk程序"> </a>如何流畅得在所有linux发行版上跑android的apk程序。</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="如何流畅得在所有linux发行版上跑android的apk程序"><a class="header-anchor" href="#如何流畅得在所有linux发行版上跑android的apk程序"> </a>如何流畅得在所有linux发行版上跑android的apk程序。</h2>
 <p><a href="http://tieba.baidu.com/p/3308520670" target="_blank" rel="external">http://tieba.baidu.com/p/3308520670</a></p>
 <h2 id="chrome运行apk问题：无法加载以下来源的扩展程序：-there-is-no-message-element-for-key-extname"><a class="header-anchor" href="#chrome运行apk问题：无法加载以下来源的扩展程序：-there-is-no-message-element-for-key-extname"> </a>chrome运行apk问题：无法加载以下来源的扩展程序： There is no “message” element for key extName.</h2>
 <blockquote>
@@ -1719,7 +1719,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="tree-command-output-with-pure-7-bit-ascii-output"><a class="header-anchor" href="#tree-command-output-with-pure-7-bit-ascii-output"> </a>“tree” command output with “pure” (7-bit) ASCII output</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="tree-command-output-with-pure-7-bit-ascii-output"><a class="header-anchor" href="#tree-command-output-with-pure-7-bit-ascii-output"> </a>“tree” command output with “pure” (7-bit) ASCII output</h2>
 <blockquote>
 <p>I’m not sure about this but I think all you need is</p>
 <p>tree | sed ‘s/├/+/g; s/─/-/g; s/└/\/g’		<br>
@@ -1904,7 +1904,7 @@ Alternatively, you can use the --charset option:</p>
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="公众号平台开发文档"><a class="header-anchor" href="#公众号平台开发文档"> </a>公众号平台开发文档</h2>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h2 id="公众号平台开发文档"><a class="header-anchor" href="#公众号平台开发文档"> </a>公众号平台开发文档</h2>
 <p><a href="http://mp.weixin.qq.com/wiki/home/index.html" target="_blank" rel="external">http://mp.weixin.qq.com/wiki/home/index.html</a></p>
 <h2 id="使用python一步一步搭建微信公众平台"><a class="header-anchor" href="#使用python一步一步搭建微信公众平台"> </a>使用python一步一步搭建微信公众平台</h2>
 <p><a href="https://my.oschina.net/yangyanxing/blog/159215" target="_blank" rel="external">https://my.oschina.net/yangyanxing/blog/159215</a></p>

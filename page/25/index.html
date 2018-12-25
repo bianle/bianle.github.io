@@ -465,7 +465,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line">		(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="comment">//选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> sel = $(<span class="string">"#div"</span>+name);</div><div class="line">				sel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).hide();</div><div class="line">				$(<span class="string">"#a2"</span>+name).show();</div><div class="line">				$(<span class="string">"#selected"</span>).append(sel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//取消选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doUnSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> unSel = $(<span class="string">"#div"</span>+name);</div><div class="line">				unSel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).show();</div><div class="line">				$(<span class="string">"#a2"</span>+name).hide();</div><div class="line">				$(<span class="string">"#unselected"</span>).append(unSel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//获得选中项</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">getSelectVals</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> selDiv = $(<span class="string">"#selected"</span>);</div><div class="line">				<span class="keyword">var</span> ids = <span class="string">""</span>;</div><div class="line">				$(<span class="string">"div"</span>,selDiv).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">					ids+=$(<span class="keyword">this</span>).attr(<span class="string">"name"</span>)+<span class="string">","</span>;</div><div class="line">				&#125;);</div><div class="line"></div><div class="line">				alert(<span class="string">"选中"</span>+ids);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">hoverIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#E7EFFC"</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">outIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">			&#125;</div><div class="line">			$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">				<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">					<span class="keyword">var</span> v = <span class="string">"00"</span>+i;</div><div class="line">					<span class="keyword">var</span> n = <span class="string">"北京"</span>+i;</div><div class="line">					<span class="keyword">var</span> div = $(<span class="string">"&lt;div&gt;&lt;/div&gt;"</span>);</div><div class="line">					div.attr(<span class="string">"id"</span>,<span class="string">"div"</span>+v);</div><div class="line">					div.attr(<span class="string">"name"</span>,v)</div><div class="line">					<span class="keyword">var</span> a1 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a1.attr(<span class="string">"id"</span>,<span class="string">"a1"</span>+v);</div><div class="line">					a1.attr(<span class="string">"name"</span>,v);</div><div class="line">					a1.html(<span class="string">"&lt;img src='add.png' /&gt;"</span>);</div><div class="line">					a1.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a2 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a2.attr(<span class="string">"id"</span>,<span class="string">"a2"</span>+v);</div><div class="line">					a2.attr(<span class="string">"name"</span>,v);</div><div class="line">					a2.html(<span class="string">"&lt;img src='delete.png' /&gt;"</span>);</div><div class="line">					a2.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"display"</span>:<span class="string">"none"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a0 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a0.html(n);</div><div class="line">					a0.css(&#123;<span class="string">"width"</span>:<span class="string">"120px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>&#125;);</div><div class="line">					div.append(a0);</div><div class="line">					div.append(a1);</div><div class="line">					div.append(a2);</div><div class="line">					div.css(&#123;<span class="string">"padding"</span>:<span class="string">"3"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"margin"</span>:<span class="string">"0"</span>&#125;);</div><div class="line">					div.mouseover(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						hoverIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					div.mouseout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						outIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					$(<span class="string">"#unselected"</span>).append(div);</div><div class="line">					a1.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					a2.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doUnSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line"></div><div class="line">				&#125;</div><div class="line"></div><div class="line">				$(<span class="string">"#selBtn"</span>).bind(<span class="string">"click"</span>,getSelectVals);</div><div class="line"></div><div class="line">			&#125;);</div><div class="line">		&#125;)(jQuery)</div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">HEAD</span>&gt;</span></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">BODY</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TABLE</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>已选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>未选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"selected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span>	</div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"unselected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"selBtn"</span> <span class="attr">value</span>=<span class="string">"保存"</span> /&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TABLE</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">BODY</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">HTML</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line"></div><div class="line">		(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="comment">//选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> sel = $(<span class="string">"#div"</span>+name);</div><div class="line">				sel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).hide();</div><div class="line">				$(<span class="string">"#a2"</span>+name).show();</div><div class="line">				$(<span class="string">"#selected"</span>).append(sel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//取消选中</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">doUnSelect</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> name = $(<span class="string">"#"</span>+id).attr(<span class="string">"name"</span>);</div><div class="line">				<span class="keyword">var</span> unSel = $(<span class="string">"#div"</span>+name);</div><div class="line">				unSel.css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">				$(<span class="string">"#a1"</span>+name).show();</div><div class="line">				$(<span class="string">"#a2"</span>+name).hide();</div><div class="line">				$(<span class="string">"#unselected"</span>).append(unSel);</div><div class="line">			&#125;</div><div class="line">			<span class="comment">//获得选中项</span></div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">getSelectVals</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				<span class="keyword">var</span> selDiv = $(<span class="string">"#selected"</span>);</div><div class="line">				<span class="keyword">var</span> ids = <span class="string">""</span>;</div><div class="line">				$(<span class="string">"div"</span>,selDiv).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">					ids+=$(<span class="keyword">this</span>).attr(<span class="string">"name"</span>)+<span class="string">","</span>;</div><div class="line">				&#125;);</div><div class="line"></div><div class="line">				alert(<span class="string">"选中"</span>+ids);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">hoverIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#E7EFFC"</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="function"><span class="keyword">function</span> <span class="title">outIt</span>(<span class="params">id</span>)</span>&#123;</div><div class="line">				$(<span class="string">"#"</span>+id).css(<span class="string">"background"</span>,<span class="string">"#FFFFFF"</span>);</div><div class="line">			&#125;</div><div class="line">			$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">				<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">					<span class="keyword">var</span> v = <span class="string">"00"</span>+i;</div><div class="line">					<span class="keyword">var</span> n = <span class="string">"北京"</span>+i;</div><div class="line">					<span class="keyword">var</span> div = $(<span class="string">"&lt;div&gt;&lt;/div&gt;"</span>);</div><div class="line">					div.attr(<span class="string">"id"</span>,<span class="string">"div"</span>+v);</div><div class="line">					div.attr(<span class="string">"name"</span>,v)</div><div class="line">					<span class="keyword">var</span> a1 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a1.attr(<span class="string">"id"</span>,<span class="string">"a1"</span>+v);</div><div class="line">					a1.attr(<span class="string">"name"</span>,v);</div><div class="line">					a1.html(<span class="string">"&lt;img src='add.png' /&gt;"</span>);</div><div class="line">					a1.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a2 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a2.attr(<span class="string">"id"</span>,<span class="string">"a2"</span>+v);</div><div class="line">					a2.attr(<span class="string">"name"</span>,v);</div><div class="line">					a2.html(<span class="string">"&lt;img src='delete.png' /&gt;"</span>);</div><div class="line">					a2.css(&#123;<span class="string">"width"</span>:<span class="string">"20px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"display"</span>:<span class="string">"none"</span>,<span class="string">"cursor"</span>:<span class="string">"pointer"</span>&#125;);</div><div class="line">					<span class="keyword">var</span> a0 = $(<span class="string">"&lt;a&gt;&lt;/a&gt;"</span>);</div><div class="line">					a0.html(n);</div><div class="line">					a0.css(&#123;<span class="string">"width"</span>:<span class="string">"120px"</span>,<span class="string">"display"</span>:<span class="string">"block"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>&#125;);</div><div class="line">					div.append(a0);</div><div class="line">					div.append(a1);</div><div class="line">					div.append(a2);</div><div class="line">					div.css(&#123;<span class="string">"padding"</span>:<span class="string">"3"</span>,<span class="string">"float"</span>:<span class="string">"left"</span>,<span class="string">"margin"</span>:<span class="string">"0"</span>&#125;);</div><div class="line">					div.mouseover(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						hoverIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					div.mouseout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						outIt(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					$(<span class="string">"#unselected"</span>).append(div);</div><div class="line">					a1.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line">					a2.bind(<span class="string">"click"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">						doUnSelect(<span class="keyword">this</span>.id);</div><div class="line">					&#125;);</div><div class="line"></div><div class="line">				&#125;</div><div class="line"></div><div class="line">				$(<span class="string">"#selBtn"</span>).bind(<span class="string">"click"</span>,getSelectVals);</div><div class="line"></div><div class="line">			&#125;);</div><div class="line">		&#125;)(jQuery)</div><div class="line">	<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">HEAD</span>&gt;</span></div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">BODY</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TABLE</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>已选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span>&gt;</span>未选择<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">TR</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"selected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span>	</div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">TD</span> <span class="attr">valign</span>=<span class="string">"top"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"unselected"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:200px;overflow-y:scroll;overflow-x:auto;border:1px solid #B5B8C8;padding:5px; "</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">TD</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TR</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"selBtn"</span> <span class="attr">value</span>=<span class="string">"保存"</span> /&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">TABLE</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">BODY</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">HTML</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -617,7 +617,7 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SSL (Secure Socket Layer – 安全套接字层)
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>SSL (Secure Socket Layer – 安全套接字层)
 功能：保障在Internet上数据传输之安全，利用数据加密(Encryption)技术，确保数据在网络上之传输过程中不会被截取及窃听，防止篡改。
 如何让我们的WEB应用程序应用SSL安全保障？经过几天摸索，终于实现 TOMCAT+SSL 双向认证，也就是说，首先，客户端将要认证服务器的安全性，确保访问的是正确的服务器，而非假冒的钓鱼网站；其次，服务器也要认证客户端的安全性，只有那些拥有服务器授权证书的客户端才可以访问。
 下面请遵循详细步骤
@@ -658,6 +658,192 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
 </ol>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">login-config</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">auth-method</span>&gt;</span>CLIENT-CERT<span class="tag">&lt;/<span class="name">auth-method</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">realm-name</span>&gt;</span>Client Cert Users-only Area<span class="tag">&lt;/<span class="name">realm-name</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">login-config</span>&gt;</span> </div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">security-constraint</span>&gt;</span> </div><div class="line">    <span class="comment">&lt;!-- Authorization setting for SSL --&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">web-resource-collection</span> &gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">web-resource-name</span> &gt;</span>SSL<span class="tag">&lt;/<span class="name">web-resource-name</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">web-resource-collection</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">transport-guarantee</span>&gt;</span>CONFIDENTIAL<span class="tag">&lt;/<span class="name">transport-guarantee</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">user-data-constraint</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">security-constraint</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>你会发现，即使使用 http://….:8080 来访问你的应用程序，它也会重定向为 https://….8443 访问，也就是说，你的应用已经强制使用SSL安全访问层</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-hibernate-object-name-validate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/05/java-hibernate-object-name-validate/" itemprop="url">Hibernate 使用 SQL 查询时报错 “对象名 XX 无效”的解决办法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-05T18:09:17+08:00">
+                2012-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/12/05/java-hibernate-object-name-validate/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/java-hibernate-object-name-validate/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
+询语言。后者是Hibernate支持的底层数据库查询语言，说白了就是支持以前我们使用
+的SQL语句。
+前2天试着用Hibernate提供的SQL查询数据库，得到的确实不友好的错误提示。
+错误信息如下：
+Caused by: java.sql.SQLException: [Microsoft][SQLServer 2000 Driver for
+JDBC][SQLServer]对象名 ‘ 实际操作的表名 ‘ 无效。
+Hibernate提供的SQL查询语句格式及我检索的条件如下：
+SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
+sQuery.addEntity(Classes.class);
+分析：
+1、查看自己写的语句，没有丝毫的错误。放到SQL查询分析器执行。也能检索出数据。
+这确保了这条语句是没错的。
+提示：Hibernate中的SQL语句是不区分大小写的，即便是你查询的表名。比如你写成这
+样也是合法的 “SEleCt * fRoM ClaSSes “。那么Hibernate怎样操作对象？问题的关键
+是这里sQuery.addEntity(Classes.class);这条语句， 你要正确填写你要检索的表的
+实体，它必须是你存在的POJO。
+2、使用Hibernate官方推荐的HQL查询，同样的数据库，同样的表。结果是正确的。这
+确保了数据库链接是绝对没有问题的。
+3、仔细检查我写的SQL查询方法，没有发现什么语法错误。
+4、检查我查询表的POJO对象的映射文件.XXX.hbm.xml ，主键生成方式是 native 。似
+乎也没有错误。
+5、检查数据库检索表的主键，也已经设成自动增长。
+疑问：
+既然上面都有保证，为什么Hibernate还是检索不到我查询的对象（表）呢，记起POJO
+对象映射文件的class元素中，有这么一段 schema=”dbo” catalog=”HibernateTest”
+。
+提示：schema：数据库所有者。catalog：目录，也就是此对象映射的表属于那个数据
+库。
+和它有关吗？
+修改
+SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
+为
+SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
+执行查询类，OK了。问题解决了。</p>
 
           
         
@@ -809,7 +995,7 @@ OK，至此，我们在本机上SSL双向配置已经成功，那么，换另一
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在桌面以外的磁盘，新建一文件夹（记住是文件夹），取名为“
 Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
 ”，不含引号，
 然后直接将其文件夹拉到桌面或复制剪切都行。</p>
@@ -964,7 +1150,7 @@ Internet Explorer.{871C5380-42A0-1069-A2EA-08002B30309D}
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>java.lang.Class 是一个比较特殊的类，它用于封装被装入到JVM 中的类（包括类和接口）的
 信息。
 当一个类或接口被装入的JVM 时便会产生一个与之关联的java.lang.Class 对象，可以通过
 这个Class 对象对被装入类的详细信息进行访问。
@@ -1173,7 +1359,7 @@ Class.forName(“org.whatisjava.reflect.Foo”)首先会将reflection.Foo 类装
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在gwt项目中，需要在新窗口打开url时，最简单的就是使用window对象的open方法。
 在项目开发中，遇到这样一个问题，以新窗口打开的页面缺少菜单、地址栏、工具栏等，简单的说法就是模态窗口。
 由于一直是在firefox中进行测试，导致这个问题没有被察觉，firefox是将新窗口在新标签中打开，因此不存在模态的情况，
 但是在ie下此问题就浮出水面了。
@@ -1203,192 +1389,6 @@ menubar，scrollbars 表示菜单栏和滚动栏。
 resizable=no 是否允许改变窗口大小，yes为允许；
 location=no 是否显示地址栏，yes为允许；
 status=no 是否显示状态栏内的信息，yes为允许；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/05/java-hibernate-object-name-validate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/05/java-hibernate-object-name-validate/" itemprop="url">Hibernate 使用 SQL 查询时报错 “对象名 XX 无效”的解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-05T18:09:17+08:00">
-                2012-12-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/05/java-hibernate-object-name-validate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/05/java-hibernate-object-name-validate/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>Hibernate提供3种检索数据的方式，HQL，QBC，SQL。前2者为Hibernate框架自带的查
-询语言。后者是Hibernate支持的底层数据库查询语言，说白了就是支持以前我们使用
-的SQL语句。
-前2天试着用Hibernate提供的SQL查询数据库，得到的确实不友好的错误提示。
-错误信息如下：
-Caused by: java.sql.SQLException: [Microsoft][SQLServer 2000 Driver for
-JDBC][SQLServer]对象名 ‘ 实际操作的表名 ‘ 无效。
-Hibernate提供的SQL查询语句格式及我检索的条件如下：
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-sQuery.addEntity(Classes.class);
-分析：
-1、查看自己写的语句，没有丝毫的错误。放到SQL查询分析器执行。也能检索出数据。
-这确保了这条语句是没错的。
-提示：Hibernate中的SQL语句是不区分大小写的，即便是你查询的表名。比如你写成这
-样也是合法的 “SEleCt * fRoM ClaSSes “。那么Hibernate怎样操作对象？问题的关键
-是这里sQuery.addEntity(Classes.class);这条语句， 你要正确填写你要检索的表的
-实体，它必须是你存在的POJO。
-2、使用Hibernate官方推荐的HQL查询，同样的数据库，同样的表。结果是正确的。这
-确保了数据库链接是绝对没有问题的。
-3、仔细检查我写的SQL查询方法，没有发现什么语法错误。
-4、检查我查询表的POJO对象的映射文件.XXX.hbm.xml ，主键生成方式是 native 。似
-乎也没有错误。
-5、检查数据库检索表的主键，也已经设成自动增长。
-疑问：
-既然上面都有保证，为什么Hibernate还是检索不到我查询的对象（表）呢，记起POJO
-对象映射文件的class元素中，有这么一段 schema=”dbo” catalog=”HibernateTest”
-。
-提示：schema：数据库所有者。catalog：目录，也就是此对象映射的表属于那个数据
-库。
-和它有关吗？
-修改
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes”);
-为
-SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest].[dbo].Classes”);
-执行查询类，OK了。问题解决了。</p>
 
           
         
@@ -1540,7 +1540,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>encodeURI(“中文参数”)</p>
 
           
         
@@ -1692,7 +1692,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><a href="http://wp.qq.com/index.html" target="_blank" rel="external">http://wp.qq.com/index.html</a></p>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p><a href="http://wp.qq.com/index.html" target="_blank" rel="external">http://wp.qq.com/index.html</a></p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="selector-tag">a</span> target=<span class="string">"_blank"</span> href=<span class="string">"http://wpa.qq.com/msgrd?v=3&amp;uin=229371515&amp;site=qq&amp;menu=yes"</span> mce_href=<span class="string">"http://wpa.qq.com/msgrd?v=3&amp;uin=229371515&amp;site=qq&amp;menu=yes"</span>&gt;</div><div class="line">  &lt;<span class="selector-tag">img</span> <span class="attribute">border</span>=<span class="string">"0"</span> src=<span class="string">"http://wpa.qq.com/pa?p=2:229371515:42"</span> mce_src=<span class="string">"http://wpa.qq.com/pa?p=2:229371515:42"</span> alt=<span class="string">"给我留言"</span> title=<span class="string">"给我留言"</span> /&gt;</div><div class="line">&lt;/a&gt;</div></pre></td></tr></table></figure>
 
           
@@ -1845,7 +1845,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口滚动条高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>/</div><div class="line">function getScrollTop()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> scrollTop=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.documentElement&amp;&amp;<span class="built_in">document</span>.documentElement.scrollTop)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.documentElement.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.body)</div><div class="line">    &#123;</div><div class="line">        scrollTop=<span class="built_in">document</span>.body.scrollTop;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> scrollTop;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取窗口可视范围的高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getClientHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">var</span> clientHeight=<span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">document</span>.body.clientHeight&amp;&amp;<span class="built_in">document</span>.documentElement.clientHeight)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&lt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;        </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">var</span> clientHeight = (<span class="built_in">document</span>.body.clientHeight&gt;<span class="built_in">document</span>.documentElement.clientHeight)?<span class="built_in">document</span>.body.clientHeight:<span class="built_in">document</span>.documentElement.clientHeight;    </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> clientHeight;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"><span class="markdown">/<span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span></span></div><div class="line"> * 取文档内容实际高度 </div><div class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="emphasis">***</span>*/</div><div class="line">function getScrollHeight()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> Math.max(<span class="built_in">document</span>.body.scrollHeight,<span class="built_in">document</span>.documentElement.scrollHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1894,7 +1894,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/10/16/java-socket-demo/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/10/16/web-jquery/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1913,7 +1913,7 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/10/16/java-socket-demo/" itemprop="url">java socket小demo</a></h1>
+                <a class="post-title-link" href="/2012/10/16/web-jquery/" itemprop="url">Jquery的$命名冲突</a></h1>
         
 
         <div class="post-meta">
@@ -1948,8 +1948,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
                   </a>
                 </span>
 
@@ -1966,8 +1966,8 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/10/16/java-socket-demo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/10/16/java-socket-demo/" itemprop="commentCount"></span>
+                <a href="/2012/10/16/web-jquery/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/10/16/web-jquery/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1997,7 +1997,46 @@ SQLQuery sQuery = session.createSQLQuery(“select * from Classes [hibernatetest
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">2222</span>);</div><div class="line">			System.out.println(<span class="string">"Server已经启动。。。"</span>);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">				Socket so = ss.accept();<span class="comment">//等待客户连接</span></div><div class="line">				<span class="keyword">new</span> ServerThread(so).start();</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.*;</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			Socket so = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">2222</span>);</div><div class="line">			DataInputStream dis = <span class="keyword">new</span> </div><div class="line">			  DataInputStream(so.getInputStream());</div><div class="line">			DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">			  DataOutputStream(so.getOutputStream());</div><div class="line">			InputStreamReader isr = <span class="keyword">new</span> </div><div class="line">			  InputStreamReader(System.in);</div><div class="line">			BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">			<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">			    String str = br.readLine();</div><div class="line">			    <span class="comment">//1 没有通知服务器</span></div><div class="line">			    dos.writeUTF(str);</div><div class="line">			    <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(str)) <span class="keyword">break</span>;</div><div class="line">			    String s = dis.readUTF();</div><div class="line">			    System.out.println(s);</div><div class="line">			&#125;</div><div class="line">			dis.close();dos.close();</div><div class="line">			so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataInputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.io.DataOutputStream;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.ServerSocket;</span></div><div class="line"><span class="meta"><span class="meta-keyword">import</span> java.net.Socket;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> Socket so;</div><div class="line">	<span class="keyword">public</span> ServerThread(Socket so)&#123;</div><div class="line">		<span class="keyword">this</span>.so = so;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run()&#123;</div><div class="line">		<span class="keyword">try</span>&#123;		   </div><div class="line">		    DataInputStream dis = <span class="keyword">new</span> </div><div class="line">		      DataInputStream(so.getInputStream());</div><div class="line">		    DataOutputStream dos = <span class="keyword">new</span> </div><div class="line">		      DataOutputStream(so.getOutputStream());</div><div class="line">		    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</div><div class="line">		        String s = dis.readUTF();</div><div class="line">		        <span class="keyword">if</span>(<span class="string">"bye"</span>.equalsIgnoreCase(s)) <span class="keyword">break</span>;</div><div class="line">		        dos.writeUTF(<span class="string">"from server:"</span>+s);</div><div class="line">		    &#125;</div><div class="line">		    dis.close();dos.close();</div><div class="line">		    so.close();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception ee)&#123;</div><div class="line">			ee.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在Jquery中，$是JQuery的别名，所有使用$的地方也都可以使用JQuery来替换，如$(‘#msg’)等同于JQuery(‘#msg’)的写法。然而，当我们引入多个js库后，在另外一个js库中也定义了$符号的话，那么我们在使用$符号时就发生了冲突。下面以引入两个库文件jquery.js和prototype.js为例来进行说明。
+第一种情况：jquery.js在prototype.js之后进行引入,如：</p>
+<script src="prototype.js" type="text/javascript"><script src="jquery.js" type="text/javascript"/>
+ 
+在这种情况下,我们在自己的js代码中如下写的话：
+$('#msg').hide(); 
+ 
+$永远代表的是jquery中定义的$符号，也可以写成JQuery(‘#msg’).hide();如果想要使用prototype.js中定义的$,我们在后面再介绍。
+第二种情况：jquery.js在prototype.js之前进行引入,如：
+<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/>
+ 
+在这种情况下,我们在自己的js代码中如下写的话：
+$('#msg').hide(); 
+ 
+$此时代表的prototype.js中定义的$符号，如果我们想要调用jquery.js中的工厂选择函数功能的话，只能用全称写法JQuery(‘#msg’).hide().
+下面先介绍在第一种引入js库文件顺序的情况下，如何正确的使用不同的js库中定义的$符号。
+一.使用JQuery.noConflict()
+该方法的作用就是让Jquery放弃对$的所有权，将$的控制权交还给prototype.js,因为jquery.js是后引入的，所以最后拥有$控制权的是jquery。它的返回值是JQuery。当在代码中调用了该 方法以后，我们就不可以使用$来调用jquery的方法了，此时$就代表在prototype.js库中定义的$了。如下：
+JQuery.noConflict(); //此处不可以再写成$('#msg').hide(),此时的$代表prototype.js中定义的$符号。 
+JQuey('#msg').hide(); 
+ 
+自此以后$就代表prototype.js中定义的$,jquery.js中的$无法再使用,只能使用jquery.js中$的全称JQuery了。
+二.自定义JQuery的别名 
+如果觉得第一种方法中使用了JQuery.noConflict()方法以后,只能使用JQuery全称比较麻烦的话，我们还可以为JQuery重定义别名。如下：
+var $j=JQuery.noConflict(); $j('#msg').hide();//此处$j就代表JQuery 
+ 
+自此以后$就代表prototype.js中定义的$,jquey.js中的$无法再使用,只能使用$j来作为jquey.js中JQuery的别名了。
+三.使用语句块，在语句块中仍然使用jquery.js中定义的$，如下：
+JQuery.noConflict(); JQuery(document).ready(function($){ $('#msg').hide();//此时在整个ready事件的方法中使用的$都是jquery.js中定义的$. 
+});
+ 
+ 
+或者使用如下语句块：
+(function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
+})(JQuery)
+ 
+如果在第二种引入js库文件顺序的情况下,如何使用jquery.js中的$,我们还是可以使用上面介绍的语句块的方法，如：
+<script src="jquery.js" type="text/javascript"/><script src="prototype.js" type="text/javascript"/><script type="text/javascript"> (function($){ ..... $('#msg').hide();//此时在这个语句块中使用的都是jquery.js中定义的$. 
+})(JQuery) </script>
+<p>这种使用语句块的方法非常有用，在我们自己写jquery插件时,应该都使用这种写法，因为我们不知道具体工作过程中是如何顺序引入各种js库的,而这种语句块的写法却能屏蔽冲突。</p>
 
           
         
