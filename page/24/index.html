@@ -362,6 +362,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/java-httpclient-xml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/05/java-httpclient-xml/" itemprop="url">httpclient发送xml字符串（推送）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-05T18:09:17+08:00">
+                2013-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/05/java-httpclient-xml/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/java-httpclient-xml/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight swift"><table><tr><td class="code"><pre><div class="line">package test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"><span class="keyword">import</span> java.rmi.UnexpectedException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpClient; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.HttpException; </div><div class="line"><span class="keyword">import</span> org.apache.commons.httpclient.methods.PostMethod; </div><div class="line"><span class="keyword">import</span> org.jdom.Document; </div><div class="line"><span class="keyword">import</span> org.jdom.JDOMException; </div><div class="line"><span class="keyword">import</span> org.jdom.input.SAXBuilder; </div><div class="line"><span class="keyword">import</span> org.xml.sax.InputSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientDemo</span> </span>&#123; </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> void main(<span class="type">String</span>[] args) &#123; </div><div class="line">        <span class="type">String</span> xml = <span class="string">"&lt;?xml version="</span> </div><div class="line">                + <span class="string">""</span><span class="number">1.0</span><span class="string">""</span> </div><div class="line">                + <span class="string">" encoding="</span> </div><div class="line">                + <span class="string">""</span><span class="type">UTF</span>-<span class="number">8</span><span class="string">""</span> </div><div class="line">                + <span class="string">"?&gt;&lt;SDRequest&gt;&lt;TransactionName&gt;CreateDataFileComplete&lt;/TransactionName&gt;&lt;IdentityInfo&gt;&lt;Code&gt;"</span> </div><div class="line">                + <span class="number">1</span> + <span class="string">"&lt;/Code&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Timestamp&gt;"</span> </div><div class="line">                + <span class="string">"20100315140542"</span> + <span class="string">"&lt;/Timestamp&gt;&lt;/IdentityInfo&gt;&lt;/SDRequest&gt;"</span>;<span class="comment">// 新接的一个项目接口，非要用xml请求，找不到别的post方式，最终选用这种方式，将参数拼成xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// File input = new File("test.xml");//如果是xml文件，可以这样写 </span></div><div class="line">        <span class="type">PostMethod</span> post = new <span class="type">PostMethod</span>(<span class="string">"http://localhost/site/forXls.do"</span>);<span class="comment">// 请求地址</span></div><div class="line"></div><div class="line">        <span class="comment">// 设置请求的内容直接从文件中读取 </span></div><div class="line">        <span class="comment">// post.setRequestBody( new FileInputStream(input)); </span></div><div class="line">        <span class="comment">// if (input.length() &lt; Integer.MAX_VALUE) </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(input.length()); </span></div><div class="line">        <span class="comment">// else </span></div><div class="line">        <span class="comment">// post.setRequestContentLength(EntityEnclosingMethod.CONTENT_LENGTH_CHUNKED);</span></div><div class="line"></div><div class="line">        post.setRequestBody(xml);<span class="comment">// 这里添加xml字符串</span></div><div class="line"></div><div class="line">        <span class="comment">// 指定请求内容的类型 </span></div><div class="line">        post.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"text/xml; charset=GBK"</span>); </div><div class="line">        <span class="type">HttpClient</span> httpclient = new <span class="type">HttpClient</span>();<span class="comment">// 创建 HttpClient 的实例 </span></div><div class="line">        int result; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            result = httpclient.executeMethod(post); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response status code: "</span> + result);<span class="comment">// 返回200为成功 </span></div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(<span class="string">"Response body: "</span>); </div><div class="line">            <span class="type">System</span>.out.<span class="built_in">println</span>(post.getResponseBodyAsString());<span class="comment">// 返回的内容 </span></div><div class="line">            post.releaseConnection();<span class="comment">// 释放连接 </span></div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">HttpException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            <span class="comment">// TODO Auto-generated catch block </span></div><div class="line">            e.printStackTrace(); </div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 以上就是发送请求的代码，对方接收到数据可以直接解析成xml</span></div><div class="line"></div><div class="line">    <span class="comment">// 读取xml </span></div><div class="line">    <span class="keyword">private</span> <span class="type">Document</span> getClientRequestMessage(<span class="type">HttpServletRequest</span> _request) </div><div class="line">            <span class="keyword">throws</span> <span class="type">UnexpectedException</span> &#123; </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="type">SAXBuilder</span> builder = new <span class="type">SAXBuilder</span>(); </div><div class="line">            <span class="type">InputSource</span> <span class="keyword">is</span> = new <span class="type">InputSource</span>(); <span class="comment">// create an input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="keyword">is</span>.setByteStream(_request.getInputStream()); <span class="comment">// set the input </span></div><div class="line">            <span class="comment">// stream mandated </span></div><div class="line">            <span class="comment">// to UTF-8 </span></div><div class="line">            <span class="keyword">is</span>.setEncoding(<span class="string">"UTF-8"</span>); <span class="comment">// set the mandate </span></div><div class="line">            <span class="comment">// encoding to the input </span></div><div class="line">            <span class="comment">// source </span></div><div class="line">            <span class="type">Document</span> document = builder.build(<span class="keyword">is</span>); </div><div class="line">            <span class="keyword">return</span> document; </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IOException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"IOException exception when getInputStream from http request"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">JDOMException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"JDOMException when build document form inputstream"</span>, e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">NullPointerException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"NullPointerException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">ClassCastException</span> e) &#123; </div><div class="line">            e.printStackTrace(); </div><div class="line">            <span class="keyword">throw</span> new <span class="type">UnexpectedException</span>( </div><div class="line">                    <span class="string">"ClassCastException when build document form inputstream"</span>, </div><div class="line">                    e); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要jar包：</p>
+<ol>
+<li>
+<p>jdom.jar</p>
+</li>
+<li>
+<p>commons-httpclient.jar</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/web-js-change-css/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -465,7 +626,7 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>document.getElementById(“xx”).style.xxx中的所有属性是什么</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>document.getElementById(“xx”).style.xxx中的所有属性是什么</p>
 <p>盒子标签和属性对照
 CSS语法（不区分大小写）|JavaScript语法（区分大小写）
 border| border
@@ -536,158 +697,6 @@ text-indent|	textIndent
 text-justify|	textJustify
 text-transform|	textTransform
 vertical-align|	xverticalAlign</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/web-frameset-fixed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/27/web-frameset-fixed/" itemprop="url">frameset固定宽度并且居中显示</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-27T18:09:17+08:00">
-                2012-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/27/web-frameset-fixed/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/27/web-frameset-fixed/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">其实就再套了一个框架，多了红色部分的代码而已；这样就可以使得框架居中了……..</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">"*,1024,*"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"130,*,40"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"top.html"</span> <span class="attr">name</span>=<span class="string">"topFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"topFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"center.html"</span> <span class="attr">name</span>=<span class="string">"mainFrame"</span> <span class="attr">id</span>=<span class="string">"mainFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"bottom.html"</span> <span class="attr">name</span>=<span class="string">"bottomFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"bottomFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -839,7 +848,7 @@ vertical-align|	xverticalAlign</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>DB2跟ORACLE还是挺大的区别的.习惯了用ORACLE.用起DB2,觉得简直不可理喻.但是,实际上.DB2是很强大的.不过.这些可不是我要讨论的问题.现在.来看看DB2下ORACLE的一些命令如何实现.</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>DB2跟ORACLE还是挺大的区别的.习惯了用ORACLE.用起DB2,觉得简直不可理喻.但是,实际上.DB2是很强大的.不过.这些可不是我要讨论的问题.现在.来看看DB2下ORACLE的一些命令如何实现.</p>
 <ol>
 <li>DB2下<code>CREATE TABLE TableName AS</code></li>
 </ol>
@@ -1047,7 +1056,7 @@ Number of rows committed = 0</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>每次在eclipse中保存Flex源文件是就弹出报错框“The attribute value type is com.adobe.flexbuilder.project.compiler.internal.ProblemManager and expected is one of java.lang.String, Boolean, Integer”，原来是ProblemManager补丁没打上。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>每次在eclipse中保存Flex源文件是就弹出报错框“The attribute value type is com.adobe.flexbuilder.project.compiler.internal.ProblemManager and expected is one of java.lang.String, Boolean, Integer”，原来是ProblemManager补丁没打上。</p>
 <p>解决办法：</p>
 <ol>
 <li>
@@ -1066,6 +1075,158 @@ Number of rows committed = 0</p>
 <p>如果eclipse已经打开的话先关掉，将刚才下载解压的文件目录 com拖到winrar中完成压缩</p>
 </li>
 </ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/web-frameset-fixed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/27/web-frameset-fixed/" itemprop="url">frameset固定宽度并且居中显示</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-27T18:09:17+08:00">
+                2012-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/12/27/web-frameset-fixed/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/27/web-frameset-fixed/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">其实就再套了一个框架，多了红色部分的代码而已；这样就可以使得框架居中了……..</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">"*,1024,*"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"130,*,40"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"top.html"</span> <span class="attr">name</span>=<span class="string">"topFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"topFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"center.html"</span> <span class="attr">name</span>=<span class="string">"mainFrame"</span> <span class="attr">id</span>=<span class="string">"mainFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"bottom.html"</span> <span class="attr">name</span>=<span class="string">"bottomFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"bottomFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1217,7 +1378,7 @@ Number of rows committed = 0</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在SQLSERVER 2000中ID字段怎样在数据库中设为自动编号，sql语句该怎么写？</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在SQLSERVER 2000中ID字段怎样在数据库中设为自动编号，sql语句该怎么写？</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> [<span class="keyword">test</span>] ( </div><div class="line">[<span class="keyword">id</span>] [<span class="built_in">int</span>] <span class="keyword">IDENTITY</span> (<span class="number">1</span>, <span class="number">1</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> , </div><div class="line">) <span class="keyword">ON</span> [PRIMARY] TEXTIMAGE_ON [PRIMARY] </div><div class="line"><span class="keyword">GO</span></div></pre></td></tr></table></figure>
 <p>怎样清除数据后,可以把ID再从1开始计算呢?</p>
 <p>如把数据表users中的自增ID改成从1开始的记录</p>
@@ -1373,7 +1534,7 @@ Number of rows committed = 0</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>BackTrack5的硬盘安装分两步走，第一步是BT5的硬盘引导，第二步是BT5的硬盘安装。过程中用到BT5的LIVE镜像，可以在这里下载BackTrack5发布，提供多种镜像下载 。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>BackTrack5的硬盘安装分两步走，第一步是BT5的硬盘引导，第二步是BT5的硬盘安装。过程中用到BT5的LIVE镜像，可以在这里下载BackTrack5发布，提供多种镜像下载 。</p>
 <p>第一部分 BackTrack5(BT5)硬盘引导
 BackTrack5 （BT5）的硬盘引导我们是借助grub4dos来完成的，grub跟grub2下还木有测试。grub4dos在xp跟win7下可以都用 boot.ini的方法来完成，win7也认识boot.ini，如果你是xp，直接修改boot.ini，如果你是win7，在系统盘根目录下新建 boot.ini。
 写入内容：
@@ -1561,7 +1722,7 @@ ls /cdrom
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>格式:
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>格式:
 <code>CONVERT(data_type,expression[,style])</code>
 说明:
 此样式一般在时间类型(datetime,smalldatetime)与字符串类型(nchar,nvarchar,char,varchar)
@@ -1632,158 +1793,6 @@ SELECT CONVERT(varchar(100), GETDATE(), 113): 16 05 2006 10:57:49:513
 SELECT CONVERT(varchar(100), GETDATE(), 114): 10:57:49:547
 SELECT CONVERT(varchar(100), GETDATE(), 120): 2006-05-16 10:57:49
 SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/15/vbs-joke/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/15/vbs-joke/" itemprop="url">恶搞小程序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-15T18:09:17+08:00">
-                2012-12-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vbs/" itemprop="url" rel="index">
-                    <span itemprop="name">vbs</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/15/vbs-joke/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/15/vbs-joke/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight vbscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">on</span> <span class="keyword">error</span> <span class="keyword">resume</span> <span class="keyword">next</span></div><div class="line"><span class="keyword">dim</span> WSHshellA</div><div class="line"><span class="keyword">set</span> WSHshellA = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshellA.run <span class="string">"cmd.exe /c shutdown -r -t 120 -c ""说我是猪，不说就2分钟关你机，不信，试试···"" "</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="keyword">dim</span> a</div><div class="line"><span class="keyword">do</span> <span class="keyword">while</span>(a &lt;&gt; <span class="string">"我是猪"</span>)</div><div class="line">a = <span class="built_in">inputbox</span> (<span class="string">"说我是猪,就不关机，快撒，说 ""我是猪"" "</span>,<span class="string">"说不说"</span>,<span class="string">"不说"</span>,<span class="number">8000</span>,<span class="number">7000</span>)</div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + a,<span class="number">0</span>,<span class="string">"MsgBox"</span></div><div class="line"><span class="keyword">loop</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"早说就行了嘛"</span></div><div class="line"><span class="keyword">dim</span> WSHshell</div><div class="line"><span class="keyword">set</span> WSHshell = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshell.run <span class="string">"cmd.exe /c shutdown -a"</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"哈哈哈哈，真过瘾"</span></div></pre></td></tr></table></figure>
 
           
         
@@ -1935,7 +1944,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>方法如下：
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>方法如下：
 1、在.gwt.xml文件里加入</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">inherits</span> <span class="attr">name</span>=<span class="string">”com.google.gwt.i18n.I18N”/</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">extend-property</span> <span class="attr">name</span>=<span class="string">”locale”</span> <span class="attr">values</span>=<span class="string">”zh_CN”/</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">extend-property</span> <span class="attr">name</span>=<span class="string">”locale”</span> <span class="attr">values</span>=<span class="string">”en”/</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>这里是在告诉gwt，现在需要使用中文和英文两种方法了
@@ -1990,7 +1999,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/11/java-web-view-jvm-vars/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/15/vbs-joke/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -2009,7 +2018,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/12/11/java-web-view-jvm-vars/" itemprop="url">java-web系统查看jvm内存使用情况</a></h1>
+                <a class="post-title-link" href="/2012/12/15/vbs-joke/" itemprop="url">恶搞小程序</a></h1>
         
 
         <div class="post-meta">
@@ -2021,8 +2030,8 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-11T18:09:17+08:00">
-                2012-12-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-15T18:09:17+08:00">
+                2012-12-15
               </time>
             
 
@@ -2044,8 +2053,8 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/vbs/" itemprop="url" rel="index">
+                    <span itemprop="name">vbs</span>
                   </a>
                 </span>
 
@@ -2062,8 +2071,8 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/12/11/java-web-view-jvm-vars/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/11/java-web-view-jvm-vars/" itemprop="commentCount"></span>
+                <a href="/2012/12/15/vbs-joke/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/15/vbs-joke/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2093,7 +2102,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight erb"><table><tr><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">%</span></span></span><span class="ruby">@page contentType=<span class="string">"text/html"</span> pageEncoding=<span class="string">"UTF-8"</span></span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"</span></div><div class="line">"http://www.w3.org/TR/html4/loose.dtd"&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>JVM memory<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"></span></div><div class="line">double total = (Runtime.getRuntime().totalMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double max = (Runtime.getRuntime().maxMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double free = (Runtime.getRuntime().freeMemory()) / (<span class="number">1024.0</span> * <span class="number">1024</span>);</div><div class="line">double useable = max - total + free;</div><div class="line"><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span> <span class="attr">colspan</span>=<span class="string">"3"</span>&gt;</span>JVM信息<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>参数<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>值<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>描述<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>maxMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">max </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机试图使用的最大内存量(当前JVM的最大可用内存)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>totalMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">total </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机中的内存总量(当前JVM占用的内存总数)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>freeMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">free </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>Java 虚拟机中的空闲内存量(当前JVM空闲内存)<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span> maxMemory()-totalMemory()+freeMemory()<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby">useable </span><span class="xml"><span class="tag">%&gt;</span>MB<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span></div><div class="line">		<span class="tag">&lt;<span class="name">td</span>&gt;</span>因为JVM只有在需要内存时才占用物理内存使用，所以freeMemory()的值一般情况下都很小，而JVM实际可用内存并不等于freeMemory()，而应该等于 maxMemory()-totalMemory()+freeMemory()。<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight vbscript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">on</span> <span class="keyword">error</span> <span class="keyword">resume</span> <span class="keyword">next</span></div><div class="line"><span class="keyword">dim</span> WSHshellA</div><div class="line"><span class="keyword">set</span> WSHshellA = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshellA.run <span class="string">"cmd.exe /c shutdown -r -t 120 -c ""说我是猪，不说就2分钟关你机，不信，试试···"" "</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="keyword">dim</span> a</div><div class="line"><span class="keyword">do</span> <span class="keyword">while</span>(a &lt;&gt; <span class="string">"我是猪"</span>)</div><div class="line">a = <span class="built_in">inputbox</span> (<span class="string">"说我是猪,就不关机，快撒，说 ""我是猪"" "</span>,<span class="string">"说不说"</span>,<span class="string">"不说"</span>,<span class="number">8000</span>,<span class="number">7000</span>)</div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + a,<span class="number">0</span>,<span class="string">"MsgBox"</span></div><div class="line"><span class="keyword">loop</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"早说就行了嘛"</span></div><div class="line"><span class="keyword">dim</span> WSHshell</div><div class="line"><span class="keyword">set</span> WSHshell = wscript.<span class="built_in">createobject</span>(<span class="string">"wscript.shell"</span>)</div><div class="line">WSHshell.run <span class="string">"cmd.exe /c shutdown -a"</span>,<span class="number">0</span> ,<span class="literal">true</span></div><div class="line"><span class="built_in">msgbox</span> <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="built_in">chr</span>(<span class="number">13</span>) + <span class="string">"哈哈哈哈，真过瘾"</span></div></pre></td></tr></table></figure>
 
           
         
@@ -2183,7 +2192,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">303</span>
+                  <span class="site-state-item-count">304</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2325,7 +2334,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2012 &mdash; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2012 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
