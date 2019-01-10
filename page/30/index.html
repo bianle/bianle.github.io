@@ -362,6 +362,372 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/05/java-xpath-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/06/05/java-xpath-api/" itemprop="url">Java 语言的 XPath API</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-06-05T17:58:51+08:00">
+                2012-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/06/05/java-xpath-api/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/06/05/java-xpath-api/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>如果要告诉别人买一加仑牛奶，您会怎么说？“请去买一加仑牛奶回来” 还是 “从前门出去，向左转，走三个街区向右转，再走半个街区向右转进入商店。走向四号通道，沿通道走五米向左，拿一瓶一加仑装的牛奶然后到收银台付款。再沿原路回家。” 简直太可笑了。只要在 “请去买一加仑牛奶回来” 的基础上稍加指示，多数成人都能自己买回牛奶来。
+查询语言和计算机搜索与此类似。直接说 “找一个 Cryptonomicon 的副本” 要比编写搜索某个数据库的详细逻辑容易得多。由于搜索操作的逻辑非常相似，可以发明一种通用语言让您使用 “找到 Neal Stephenson 的所有著作” 这样的命令，然后编写对特定数据存储执行此类查询的引擎。</p>
+<h1 id="xpath"><a class="header-anchor" href="#xpath"> </a>XPath</h1>
+<p>在众多查询语言之中，结构化查询语言（SQL）是一种针对查询特定类型的关系库而设计和优化的语言。其他不那么常见的查询语言还有对象查询语言（OQL）和 XQuery。但本文的主题是 XPath，一种为查询 XML 文档而设计的查询语言。比如，下面这个简单的 XPath 查询可以在文档中找到作者为 Neal Stephenson 的所有图书的标题：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="regexp">//</span>book[author=<span class="string">"Neal Stephenson"</span>]<span class="regexp">/title</span></div></pre></td></tr></table></figure>
+<p>作为对照，查询同样信息的纯 DOM 搜索代码如下所示：</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line">ArrayList result = <span class="keyword">new</span> ArrayList();</div><div class="line">NodeList books = doc.getElementsByTagName(<span class="string">"book"</span>);</div><div class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; books.getLength(); i++) &#123;</div><div class="line">    <span class="built_in">Element</span> book = (<span class="built_in">Element</span>) books.item(i);</div><div class="line">    NodeList authors = book.getElementsByTagName(<span class="string">"author"</span>);</div><div class="line">    boolean stephenson = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; authors.getLength(); j++) &#123;</div><div class="line">        <span class="built_in">Element</span> author = (<span class="built_in">Element</span>) authors.item(j);</div><div class="line">        NodeList children = author.getChildNodes();</div><div class="line">        <span class="built_in">StringBuffer</span> sb = <span class="keyword">new</span> <span class="built_in">StringBuffer</span>();</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> k = <span class="number">0</span>; k &lt; children.getLength(); k++) &#123;</div><div class="line">            Node child = children.item(k);</div><div class="line">            <span class="comment">// really should to do this recursively</span></div><div class="line">            <span class="keyword">if</span> (child.getNodeType() == Node.TEXT_NODE) &#123;</div><div class="line">                sb.append(child.getNodeValue());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (sb.toString().equals(<span class="string">"Neal Stephenson"</span>)) &#123;</div><div class="line">            stephenson = <span class="keyword">true</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (stephenson) &#123;</div><div class="line">        NodeList titles = book.getElementsByTagName(<span class="string">"title"</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">0</span>; j &lt; titles.getLength(); j++) &#123;</div><div class="line">            result.add(titles.item(j));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不论您是否相信，以上代码中的 DOM 显然不如简单的 XPath 表达式通用或者健壮。您愿意编写、调试和维护哪一个？我想答案很明显。
+但是虽然有很强的表达能力，XPath 并不是 Java 语言，事实上 XPath 不是一种完整的编程语言。有很多东西用 XPath 表达不出来，甚至有些查询也无法表达。比方说，XPath 不能查找国际标准图书编码（ISBN）检验码不匹配的所有图书，或者找出境外帐户数据库显示欠帐的所有作者。幸运的是，可以把 XPath 结合到 Java 程序中，这样就能发挥两者的优势了：Java 做 Java 所擅长的，XPath 做 XPath 所擅长的。
+直到最近，Java 程序执行 XPath 查询所需要的应用程序编程接口（API）还因形形色色的 XPath 引擎而各不相同。Xalan 有一种 API，Saxon 使用另一种，其他引擎则使用其他的 API。这意味着代码往往把您限制到一种产品上。理想情况下，最好能够试验具有不同性能特点的各种引擎，而不会带来不适当的麻烦或者重新编写代码。
+于是，Java 5 推出了 javax.xml.xpath 包，提供一个引擎和对象模型独立的 XPath 库。这个包也可用于 Java 1.3 及以后的版本，但需要单独安装 Java API for XML Processing (JAXP) 1.3。Xalan 2.7 和 Saxon 8 以及其他产品包含了这个库的实现。</p>
+<p>一个简单的例子
+我将举例说明如何使用它。然后再讨论一些细节问题。假设要查询一个图书列表，寻找 Neal Stephenson 的著作。具体来说，这个图书列表的形式如 清单 2 所示：
+清单 2. 包含图书信息的 XML 文档</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">inventory</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">book</span> <span class="attr">year</span>=<span class="string">"2000"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Snow Crash<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">author</span>&gt;</span>Neal Stephenson<span class="tag">&lt;/<span class="name">author</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">publisher</span>&gt;</span>Spectra<span class="tag">&lt;/<span class="name">publisher</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">isbn</span>&gt;</span>0553380958<span class="tag">&lt;/<span class="name">isbn</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">price</span>&gt;</span>14.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">book</span>&gt;</span></div><div class="line"> </div><div class="line">    <span class="tag">&lt;<span class="name">book</span> <span class="attr">year</span>=<span class="string">"2005"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Burning Tower<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">author</span>&gt;</span>Larry Niven<span class="tag">&lt;/<span class="name">author</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">author</span>&gt;</span>Jerry Pournelle<span class="tag">&lt;/<span class="name">author</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">publisher</span>&gt;</span>Pocket<span class="tag">&lt;/<span class="name">publisher</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">isbn</span>&gt;</span>0743416910<span class="tag">&lt;/<span class="name">isbn</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">price</span>&gt;</span>5.99<span class="tag">&lt;/<span class="name">price</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">book</span>&gt;</span></div><div class="line"> </div><div class="line">    <span class="tag">&lt;<span class="name">book</span> <span class="attr">year</span>=<span class="string">"1995"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Zodiac<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">author</span>&gt;</span>Neal Stephenson<span class="tag">&lt;<span class="name">author</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">publisher</span>&gt;</span>Spectra<span class="tag">&lt;/<span class="name">publisher</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">isbn</span>&gt;</span>0553573862<span class="tag">&lt;/<span class="name">isbn</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">price</span>&gt;</span>7.50<span class="tag">&lt;/<span class="name">price</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">book</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- more books... --&gt;</span></div><div class="line"> </div><div class="line"><span class="tag">&lt;/<span class="name">inventory</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>查找所有图书的 XPath 查询非常简单：//book[author=“Neal Stephenson”]。为了找出这些图书的标题，只要增加一步，表达式就变成了 //book[author=“Neal Stephenson”]/title。最后，真正需要的是 title 元素的文本节点孩子。这就要求再增加一步，完整的表达式就是 //book[author=“Neal Stephenson”]/title/text()。
+现在我提供一个简单的程序，它从 Java 语言中执行这个查询，然后把找到的所有图书的标题打印出来。首先，需要将文档加载到一个 DOM Document 对象中。为了简化起见，假设该文档在当前工作目录的 books.xml 文件中。下面的简单代码片段解析文档并建立对应的 Document 对象：
+清单 3. 用 JAXP 解析文档</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line">DocumentBuilderFactory <span class="keyword">factory</span> = DocumentBuilderFactory.newInstance();</div><div class="line">        <span class="keyword">factory</span>.setNamespaceAware(<span class="keyword">true</span>); <span class="comment">// never forget this!</span></div><div class="line">        DocumentBuilder builder = <span class="keyword">factory</span>.newDocumentBuilder();</div><div class="line">        Document doc = builder.parse(<span class="string">"books.xml"</span>);</div></pre></td></tr></table></figure>
+<p>到目前为止，这仅仅是标准的 JAXP 和 DOM，没有什么新鲜的。
+接下来创建 XPathFactory：
+XPathFactory factory = XPathFactory.newInstance();
+然后使用这个工厂创建 XPath 对象：
+XPath xpath = factory.newXPath();
+XPath 对象编译 XPath 表达式：
+PathExpression expr = xpath.compile(&quot;//book[author=‘Neal Stephenson’]/title/text()&quot;);
+直接求值
+如果 XPath 表达式只使用一次，可以跳过编译步骤直接对 XPath 对象调用 evaluate() 方法。但是，如果同一个表达式要重复使用多次，编译可能更快一些。
+最后，计算 XPath 表达式得到结果。表达式是针对特定的上下文节点计算的，在这个例子中是整个文档。还必须指定返回类型。这里要求返回一个节点集：
+Object result = expr.evaluate(doc, XPathConstants.NODESET);
+可以将结果强制转化成 DOM NodeList，然后遍历列表得到所有的标题：
+NodeList nodes = (NodeList) result;
+for (int i = 0; i &lt; nodes.getLength(); i++) {
+System.out.println(nodes.item(i).getNodeValue());
+}
+清单 4 把上述片段组合到了一个程序中。还要注意，这些方法可能抛出一些检查异常，这些异常必须在 throws 子句中声明，但是我在上面把它们掩盖起来了：
+清单 4. 用固定的 XPath 表达式查询 XML 文档的完整程序
+import java.io.IOException;
+import org.w3c.dom.<em>;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.</em>;
+import javax.xml.xpath.*;</p>
+<p>public class XPathExample {</p>
+<p>public static void main(String[] args)
+throws ParserConfigurationException, SAXException,
+IOException, XPathExpressionException {</p>
+<pre><code>DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+domFactory.setNamespaceAware(true); // never forget this!
+DocumentBuilder builder = domFactory.newDocumentBuilder();
+Document doc = builder.parse(&quot;books.xml&quot;);
+
+XPathFactory factory = XPathFactory.newInstance();
+XPath xpath = factory.newXPath();
+XPathExpression expr 
+ = xpath.compile(&quot;//book[author='Neal Stephenson']/title/text()&quot;);
+
+Object result = expr.evaluate(doc, XPathConstants.NODESET);
+NodeList nodes = (NodeList) result;
+for (int i = 0; i &lt; nodes.getLength(); i++) {
+    System.out.println(nodes.item(i).getNodeValue()); 
+}
+</code></pre>
+<p>}</p>
+<p>}
+XPath 数据模型
+每当混合使用诸如 XPath 和 Java 这样两种不同的语言时，必定会有某些将两者粘合在一起的明显接缝。并非一切都很合拍。XPath 和 Java 语言没有同样的类型系统。XPath 1.0 只有四种基本数据类型：
+node-set
+number
+boolean
+string
+当然，Java 语言有更多的数据类型，包括用户定义的对象类型。
+多数 XPath 表达式，特别是位置路径，都返回节点集。但是还有其他可能。比如，XPath 表达式 count(//book) 返回文档中的图书数量。XPath 表达式 count(//book[@author=“Neal Stephenson”]) &gt; 10 返回一个布尔值：如果文档中 Neal Stephenson 的著作超过 10 本则返回 true，否则返回 false。
+evaluate() 方法被声明为返回 Object。实际返回什么依赖于 XPath 表达式的结果以及要求的类型。一般来说，XPath 的
+number 映射为 java.lang.Double
+string 映射为 java.lang.String
+boolean 映射为 java.lang.Boolean
+node-set 映射为 org.w3c.dom.NodeList
+XPath 2
+前面一直假设您使用的是 XPath 1.0。XPath 2 大大扩展和修改了类型系统。Java XPath API 支持 XPath 2 所需的主要修改是为返回 XPath 2 新数据类型增加常量。
+在 Java 中计算 XPath 表达式时，第二个参数指定需要的返回类型。有五种可能，都在 javax.xml.xpath.XPathConstants 类中命名了常量：
+XPathConstants.NODESET
+XPathConstants.BOOLEAN
+XPathConstants.NUMBER
+XPathConstants.STRING
+XPathConstants.NODE
+最后一个 XPathConstants.NODE 实际上没有匹配的 XPath 类型。只有知道 XPath 表达式只返回一个节点或者只需要一个节点时才使用它。如果 XPath 表达式返回了多个节点并且指定了 XPathConstants.NODE，则 evaluate() 按照文档顺序返回第一个节点。如果 XPath 表达式选择了一个空集并指定了 XPathConstants.NODE，则 evaluate() 返回 null。
+如果不能完成要求的转换，evaluate() 将抛出 XPathException。
+回页首
+名称空间上下文
+若 XML 文档中的元素在名称空间中，查询该文档的 XPath 表达式必须使用相同的名称空间。XPath 表达式不一定要使用相同的前缀，只需要名称空间 URI 相同即可。事实上，如果 XML 文档使用默认名称空间，那么尽管目标文档没有使用前缀，XPath 表达式也必须使用前缀。
+但是，Java 程序不是 XML 文档，因此不能用一般的名称空间解析。必须提供一个对象将前缀映射到名称空间 URI。该对象是 javax.xml.namespace.NamespaceContext 接口的实例。比如，假设图书文档放在 <a href="http://www.example.com/books" target="_blank" rel="external">http://www.example.com/books</a> 名称空间中，如 清单 5 所示：
+清单 5. 使用默认名称空间的 XML 文档
+<inventory xmlns="http://www.example.com/books">
+<book year="2000">
+<title>Snow Crash</title>
+<author>Neal Stephenson</author>
+<publisher>Spectra</publisher>
+<isbn>0553380958</isbn>
+<price>14.95<price>
+</price></price></book></inventory></p>
+<pre><code>&lt;!-- more books... --&gt;
+</code></pre>
+<inventory>
+查找 Neal Stephenson 全部著作标题的 XPath 表达式就要改为 //pre:book[pre:author="Neal Stephenson"]/pre:title/text()。但是，必须将前缀 pre 映射到 URI http://www.example.com/books。NamespaceContext 接口在 Java 软件开发工具箱（JDK）或 JAXP 中没有默认实现似乎有点笨，但确实如此。不过，自己实现也不难。清单 6 对一个名称空间给出了简单的实现。还需要映射 xml 前缀。
+清单 6. 绑定一个名称空间和默认名称空间的简单上下文
+import java.util.Iterator;
+import javax.xml.*;
+import javax.xml.namespace.NamespaceContext;
+<p>public class PersonalNamespaceContext implements NamespaceContext {</p>
+<pre><code>public String getNamespaceURI(String prefix) {
+    if (prefix == null) throw new NullPointerException(&quot;Null prefix&quot;);
+    else if (&quot;pre&quot;.equals(prefix)) return &quot;http://www.example.org/books&quot;;
+    else if (&quot;xml&quot;.equals(prefix)) return XMLConstants.XML_NS_URI;
+    return XMLConstants.NULL_NS_URI;
+}
+
+// This method isn't necessary for XPath processing.
+public String getPrefix(String uri) {
+    throw new UnsupportedOperationException();
+}
+
+// This method isn't necessary for XPath processing either.
+public Iterator getPrefixes(String uri) {
+    throw new UnsupportedOperationException();
+}
+</code></pre>
+<p>}
+使用映射存储绑定和增加 setter 方法实现名称空间上下文的重用也不难。
+创建 NamespaceContext 对象后，在编译表达式之前将其安装到 XPath 对象上。以后就可以像以前一样是用这些前缀查询了。比如：
+清单 7. 使用名称空间的 XPath 查询
+XPathFactory factory = XPathFactory.newInstance();
+XPath xpath = factory.newXPath();
+xpath.setNamespaceContext(new PersonalNamespaceContext());
+XPathExpression expr
+= xpath.compile(&quot;//pre:book[pre:author=‘Neal Stephenson’]/pre:title/text()&quot;);</p>
+<p>Object result = expr.evaluate(doc, XPathConstants.NODESET);
+NodeList nodes = (NodeList) result;
+for (int i = 0; i &lt; nodes.getLength(); i++) {
+System.out.println(nodes.item(i).getNodeValue());
+}
+回页首
+函数求解器
+有时候，在 Java 语言中定义用于 XPath 表达式的扩展函数很有用。这些函数可以执行用纯 XPath 很难或者无法执行的任务。不过必须是真正的函数，而不是随意的方法。就是说不能有副作用。（XPath 函数可以按照任意的顺序求值任意多次。）
+通过 Java XPath API 访问的扩展函数必须实现 javax.xml.xpath.XPathFunction 接口。这个接口只声明了一个方法 evaluate：
+public Object evaluate(List args) throws XPathFunctionException
+该方法必须返回 Java 语言能够转换到 XPath 的五种类型之一：
+String
+Double
+Boolean
+Nodelist
+Node
+比如，清单 8 显示了一个扩展函数，它检查 ISBN 的校验和并返回 Boolean。这个校验和的基本规则是前九位数的每一位乘上它的位置（即第一位数乘上 1，第二位数乘上 2，依次类推）。将这些数加起来然后取除以 11 的余数。如果余数是 10，那么最后一位数就是 X。
+清单 8. 检查 ISBN 的 XPath 扩展函数
+import java.util.List;
+import javax.xml.xpath.<em>;
+import org.w3c.dom.</em>;</p>
+<p>public class ISBNValidator implements XPathFunction {</p>
+<p>// This class could easily be implemented as a Singleton.</p>
+<p>public Object evaluate(List args) throws XPathFunctionException {</p>
+<pre><code>if (args.size() != 1) {
+  throw new XPathFunctionException(&quot;Wrong number of arguments to valid-isbn()&quot;);
+}
+
+String isbn;
+Object o = args.get(0);
+
+// perform conversions
+if (o instanceof String) isbn = (String) args.get(0);
+else if (o instanceof Boolean) isbn = o.toString();
+else if (o instanceof Double) isbn = o.toString();
+else if (o instanceof NodeList) {
+    NodeList list = (NodeList) o;
+    Node node = list.item(0);
+    // getTextContent is available in Java 5 and DOM 3.
+    // In Java 1.4 and DOM 2, you'd need to recursively 
+    // accumulate the content.
+    isbn= node.getTextContent();
+}
+else {
+    throw new XPathFunctionException(&quot;Could not convert argument type&quot;);
+}
+
+char[] data = isbn.toCharArray();
+if (data.length != 10) return Boolean.FALSE;
+int checksum = 0;
+for (int i = 0; i &lt; 9; i++) {
+    checksum += (i+1) * (data[i]-'0');
+}
+int checkdigit = checksum % 11;
+
+if (checkdigit + '0' == data[9] || (data[9] == 'X' &amp;&amp; checkdigit == 10)) {
+    return Boolean.TRUE;
+}
+return Boolean.FALSE;
+</code></pre>
+<p>}</p>
+<p>}
+下一步让这个扩展函数能够在 Java 程序中使用。为此，需要在编译表达式之前向 XPath 对象安装 javax.xml.xpath.XPathFunctionResolver。函数求解器将函数的 XPath 名称和名称空间 URI 映射到实现该函数的 Java 类。清单 9 是一个简单的函数求解器，将扩展函数 valid-isbn 和名称空间 <a href="http://www.example.org/books" target="_blank" rel="external">http://www.example.org/books</a> 映射到 清单 8 中的类。比如，XPath 表达式 //book[not(pre:valid-isbn(isbn))] 可以找到 ISBN 校验和不匹配的所有图书。
+清单 9. 识别 valid-isbn 扩展函数的上下文
+iimport javax.xml.namespace.QName;
+import javax.xml.xpath.*;</p>
+<p>public class ISBNFunctionContext implements XPathFunctionResolver {</p>
+<p>private static final QName name
+= new QName(“<a href="http://www.example.org/books" target="_blank" rel="external">http://www.example.org/books</a>”, “valid-isbn”);</p>
+<p>public XPathFunction resolveFunction(QName name, int arity) {
+if (name.equals(<a href="http://ISBNFunctionContext.name" target="_blank" rel="external">ISBNFunctionContext.name</a>) &amp;&amp; arity == 1) {
+return new ISBNValidator();
+}
+return null;
+}</p>
+<p>}
+由于扩展函数必须有名称空间，所以计算包含扩展函数的表达式时必须使用 NamespaceResolver，即便查询的文档没有使用任何名称空间。由于 XPathFunctionResolver、XPathFunction 和 NamespaceResolver 都是接口，如果方便的话可以将它们放在所有的类中。
+回页首
+结束语
+用 SQL 和 XPath 这样的声明性语言编写查询，要比使用 Java 和 C 这样的命令式语言容易得多。但是，用 Java 和 C 这样的图灵完整语言编写复杂的逻辑，又比 SQL 和 XPath 这样的声明性语言容易得多。所幸的是，通过使用 Java Database Connectivity (JDBC) 和 javax.xml.xpath 之类的 API 可以将两者结合起来。随着世界上越来越多的数据转向 XML，javax.xml.xpath 将与 java.sql 一样变得越来越重要。</p>
+</inventory>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/06/05/linux-wget-guide/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2146,172 +2512,6 @@ Twitter [ @suncto ]
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/02/01/php-wp-domain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/02/01/php-wp-domain/" itemprop="url">WordPress如何更换域名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-02-01T18:09:17+08:00">
-                2012-02-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/php/" itemprop="url" rel="index">
-                    <span itemprop="name">php</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/02/01/php-wp-domain/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/02/01/php-wp-domain/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>wordpress后台更换域名但不换主机时，怎么才能使以前数据库中的地址变成新域名呢？下面将会介绍wordpress数据库新老域名批量替换的方法。</p>
-<ol>
-<li>
-<p>修改数据库配置文件，如果你在同一主机同一空间上更改域名，这步可以省掉，如果数据库不同，还得要打开wp-config.php将数据库配置正确才可以正常访问新域名。</p>
-</li>
-<li>
-<p>更改博客的安装地址和博客地址，首先用phpmyadmin打开你的数据库，然后找到wp-options这个数据表，找到第一条记录也就是siteurl这条，还有第39条home，这两条将地址改成你更换后的最域名即可。只有完成这一步后，才可以顺利进入后台，否则即使你输入密码，也会自动跳转到原来的老域名。PHP My管理中选择数据库，—-&gt;点击 SQL 在输入栏中输入如下代码：</p>
-</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_options <span class="keyword">SET</span> option_value = <span class="keyword">replace</span>( option_value, ‘<span class="keyword">http</span>://老域名’, ’<span class="keyword">http</span>://新域名’) <span class="keyword">WHERE</span> option_name = ‘home’ <span class="keyword">OR</span> option_name =’siteurl’ ;</div></pre></td></tr></table></figure>
-<ol start="3">
-<li>修改文章内部所有的链接为新域名，相信大家在以前发表的文章中一定加了不少内链吧，域名更换了，老的内链也就没有意义了。此时得要将文章内链的旧域名修改为新域名。如果从后台文章编辑里一个一个找那是不现实的，方法有一个，通用phpmyadmin进入你所在的数据库，执行以下语句就可以把文章内的所有内链旧域名批量改为新域名：</li>
-</ol>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> post_content = <span class="keyword">replace</span>(post_content, ‘<span class="keyword">http</span>://老域名’, ‘<span class="keyword">http</span>://新域名’); </div><div class="line"><span class="keyword">UPDATE</span> wp_posts <span class="keyword">SET</span> guid = <span class="keyword">replace</span>( guid, ‘<span class="keyword">http</span>://老域名’ , ’<span class="keyword">http</span>://新域名’ ) ;</div></pre></td></tr></table></figure>
-<p>好了进入后台用以前的账号密码登陆就好了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2366,7 +2566,7 @@ Twitter [ @suncto ]
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">304</span>
+                  <span class="site-state-item-count">305</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
