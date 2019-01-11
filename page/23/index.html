@@ -362,6 +362,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-trim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/10/web-js-trim/" itemprop="url">自定义js的trim()方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
+                2013-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/10/web-js-trim/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/web-js-trim/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>去除字符串左右两端的空格，在vbscript里面可以轻松地使用 trim、ltrim 或 rtrim，但在js中却没有这3个内置方法，需要手工编写。下面的实现方法是用到了正则表达式，效率不错，并把这三个方法加入String对象的内置方法中去。</p>
+<p>写成类的方法格式如下：（str.trim();）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">language</span>=<span class="string">"javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="built_in">String</span>.prototype.trim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.ltrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="built_in">String</span>.prototype.rtrim=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>写成函数可以这样：(trim(str))</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">trim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左右两端的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)|(s*$)/g</span>, <span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">ltrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除左边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(^s*)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">rtrim</span>(<span class="params">str</span>)</span>&#123; <span class="comment">//删除右边的空格</span></div><div class="line">      <span class="keyword">return</span> str.replace(<span class="regexp">/(s*$)/g</span>,<span class="string">""</span>);</div><div class="line"> &#125;</div><div class="line"> <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-js-number-check/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -465,159 +621,7 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/10/web-disabled-statebar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/10/web-disabled-statebar/" itemprop="url">禁止状态栏显示链接</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-10T18:09:17+08:00">
-                2013-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/01/10/web-disabled-statebar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/10/web-disabled-statebar/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>禁止状态栏显示链接<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onMouseOver</span>=<span class="string">"window.status='你看不到我看不到我';return true"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/"</span>&gt;</span>不知道写什么<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight scilab"><table><tr><td class="code"><pre><div class="line">&lt;input <span class="built_in">type</span>=<span class="string">"text"</span> id=<span class="string">"int"</span> name=<span class="string">"int"</span> onkeyup=<span class="string">"if(isNaN(this.value))&#123;alert('</span>只能输入数字！<span class="string">');this.value='';&#125;"</span>&gt;</div></pre></td></tr></table></figure>
 
           
         
@@ -769,7 +773,7 @@
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>一张图</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>一张图</p>
 <p>image
 网页可见区域宽： document.body.clientWidth;
 网页可见区域高： document.body.clientHeight;
@@ -1058,7 +1062,7 @@ clientWidth、offsetWidth 和 scrollWidth 的解释与上面相同，只是把�
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>第一部分 虚拟机的安装
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>第一部分 虚拟机的安装
 下载完后，先安装虚拟机，解压
 <img src="http://blimg.bovod.org/2013/01/08/bt5_1.png" alt="bt5"><span class="image-caption">bt5</span>
 2．进入虚拟机目录，打开
@@ -1118,251 +1122,6 @@ clientWidth、offsetWidth 和 scrollWidth 的解释与上面相同，只是把�
 ****密码出来了
 <img src="http://blimg.bovod.org/2013/01/08/bt5_32.png" alt="bt5"><span class="image-caption">bt5</span>
 Hex key就是密码 6161613132 成功了！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/07/java-hibernate-could-not-initialize-proxy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/07/java-hibernate-could-not-initialize-proxy/" itemprop="url">could not initialize proxy – no Session</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-07T18:09:17+08:00">
-                2013-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/01/07/java-hibernate-could-not-initialize-proxy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/07/java-hibernate-could-not-initialize-proxy/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>在<code>&lt;many-to-on&gt;</code>中这错误很常见，字面意义就是不能被初始化，因为<code>session</code>已经关闭了。
-简单理解就是因为，你使用了<code>lazy=true</code>，这样hibernate在从数据库中调数据的时候是不会把关联的对象查出来的，而是保存一个获取值得方法，在你使用getXXX()调用的时候，hiberante会利用这个保存的方法去从数据库中取数据。而往往我们在jsp页面中使用getXXX()准备展示数据的时候，session早已经在dao中就关闭了，我们该如何解决这种异常呢？
-简单的说有三种：</p>
-<ol>
-<li>把lazy设成false,最简单。</li>
-<li>我没试过，但听说过</li>
-</ol>
-<p>在web.xml中加入</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="attribute">filter</span>&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-class&gt; </div><div class="line">     org<span class="selector-class">.springframework</span><span class="selector-class">.orm</span><span class="selector-class">.hibernate3</span><span class="selector-class">.support</span><span class="selector-class">.OpenSessionInViewFilter</span> </div><div class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>&gt; </div><div class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</div></pre></td></tr></table></figure>
-<ol start="3">
-<li>我用的方法，也是我认为比较不错的方法，灵活性更好。用left join fetch或inner join fetch语法。
-例如：from Item i left join fetch i.parentItem ii
-解释一下Item表是一个自关联的表，它的关联关系在hbm.xml中配置好了。
-如下：</li>
-</ol>
-<p>程序代码</p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">&lt;many-<span class="keyword">to</span>-one <span class="built_in">name</span>=<span class="string">"parentItem"</span> lazy=<span class="string">"false"</span> fetch=<span class="string">"join"</span> <span class="built_in">class</span>=<span class="string">"cn.sports.matchs.model.Item"</span>&gt; </div><div class="line">             &lt;column <span class="built_in">name</span>=<span class="string">"PARENT_ID"</span>&gt;&lt;/column&gt; </div><div class="line">&lt;/many-<span class="keyword">to</span>-one&gt;</div></pre></td></tr></table></figure>
-<p>在Item类中</p>
-<p>程序代码</p>
-<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line">private Item parentItem<span class="comment">;</span></div></pre></td></tr></table></figure>
-<p>关于lazy机制：
-延迟初始化错误是运用Hibernate开发项目时最常见的错误。如果对一个类或者集合配置了延迟检索策略，那么必须当代理类实例或代理集合处于持久化状态（即处于Session范围内）时，才能初始化它。如果在游离状态时才初始化它，就会产生延迟初始化错误。</p>
-<p>下面把Customer.hbm.xml文件的<class>元素的lazy属性设为true，表示使用延迟检索策略：</class></p>
-<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">&lt;<span class="built_in">class</span> <span class="built_in">name</span>=<span class="string">"mypack.Customer"</span> table=<span class="string">"CUSTOMERS"</span> lazy=<span class="string">"true"</span>&gt;</div></pre></td></tr></table></figure>
-<p>当执行Session的load()方法时，Hibernate不会立即执行查询CUSTOMERS表的select语句，仅仅返回Customer类的代理类的实例，这个代理类具由以下特征：
-（1）由Hibernate在运行时动态生成，它扩展了Customer类，因此它继承了Customer类的所有属性和方法，但它的实现对于应用程序是透明的。
-（2）当Hibernate创建Customer代理类实例时，仅仅初始化了它的OID属性，其他属性都为null，因此这个代理类实例占用的内存很少。
-（3）当应用程序第一次访问Customer代理类实例时（例如调用customer.getXXX()或customer.setXXX()方法）， Hibernate会初始化代理类实例，在初始化过程中执行select语句，真正从数据库中加载Customer对象的所有数据。但有个例外，那就是当应用程序访问Customer代理类实例的getId()方法时，Hibernate不会初始化代理类实例，因为在创建代理类实例时OID就存在了，不必到数据库中去查询。
-提示：Hibernate采用CGLIB工具来生成持久化类的代理类。CGLIB是一个功能强大的Java字节码生成工具，它能够在程序运行时动态生成扩展 Java类或者实现Java接口的代理类。关于CGLIB的更多知识，请参考：<a href="http://cglib.sourceforge.net/%E3%80%82" target="_blank" rel="external">http://cglib.sourceforge.net/。</a>
-以下代码先通过Session的load()方法加载Customer对象，然后访问它的name属性：</p>
-<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>(); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>();</div></pre></td></tr></table></figure>
-<p>在运行session.load()方法时Hibernate不执行任何select语句，仅仅返回Customer类的代理类的实例，它的OID为1，这是由load()方法的第二个参数指定的。当应用程序调用customer.getName()方法时，Hibernate会初始化Customer代理类实例，从数据库中加载Customer对象的数据，执行以下select语句：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> CUSTOMERS <span class="keyword">where</span> <span class="keyword">ID</span>=<span class="number">1</span>; </div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> orDERS <span class="keyword">where</span> CUSTOMER_ID=<span class="number">1</span>;</div></pre></td></tr></table></figure>
-<p>当<class>元素的lazy属性为true，会影响Session的load()方法的各种运行时行为，下面举例说明。
-1．如果加载的Customer对象在数据库中不存在，Session的load()方法不会抛出异常，只有当运行customer.getName()方法时才会抛出以下异常：</class></p>
-<blockquote>
-<p>ERROR LazyInitializer:63 -Exception initializing proxy
-net.sf.hibernate.ObjectNotFoundException: No row with thegiven identifier exists: 1, of class:
-mypack.Customer
-2．如果在整个Session范围内，应用程序没有访问过Customer对象，那么Customer代理类的实例一直不会被初始化，Hibernate不会执行任何select语句。以下代码试图在关闭Session后访问Customer游离对象：</p>
-</blockquote>
-<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
-<p>由于引用变量customer引用的Customer代理类的实例在Session范围内始终没有被初始化，因此在执行customer.getName()方法时，Hibernate会抛出以下异常：
-ERROR LazyInitializer:63 -Exception initializing proxy
-net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed
-由此可见，Customer代理类的实例只有在当前Session范围内才能被初始化。</p>
-<p>3．net.sf.hibernate.Hibernate类的initialize()静态方法用于在Session范围内显式初始化代理类实例，isInitialized()方法用于判断代理类实例是否已经被初始化。例如：</p>
-<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">if</span>(!<span class="type">Hibernate</span>.isInitialized(customer)) </div><div class="line"><span class="title">Hibernate</span>.<span class="title">initialize</span>(customer); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
-<p>以上代码在Session范围内通过Hibernate类的initialize()方法显式初始化了Customer代理类实例，因此当Session关闭后，可以正常访问Customer游离对象。</p>
-<p>4．当应用程序访问代理类实例的getId()方法时，不会触发Hibernate初始化代理类实例的行为，例如：</p>
-<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">customer</span>.<span class="title">getId</span>(); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
-<p>当应用程序访问customer.getId()方法时，该方法直接返回Customer代理类实例的OID值，无需查询数据库。由于引用变量 customer始终引用的是没有被初始化的Customer代理类实例，因此当Session关闭后再执行customer.getName()方法， Hibernate会抛出以下异常：</p>
-<blockquote>
-<p>ERROR LazyInitializer:63 -Exception initializing proxy
-net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed</p>
-</blockquote>
-<p>解决方法：
-由于hibernate采用了lazy=true,这样当你用hibernate查询时,返回实际为利用cglib增强的代理类,但其并没有实际填充;当你在前端,利用它来取值(getXXX)时,这时Hibernate才会到数据库执行查询,并填充对象,但此时如果和这个代理类相关的session已关闭掉,就会产生种错误.
-在做一对多时，有时会出现&quot;could not initialize proxy – clothe owning Session was sed,这个好像是hibernate的缓存问题.问题解决:需要在<many-to-one>里设置lazy=“false”. 但有可能会引发另一个异常叫
-failed to lazily initialize a collection of role: XXXXXXXX, no session or session was closed
-解决方法:在web.xml中加入</many-to-one></p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="attribute">filter</span>&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-class&gt; </div><div class="line">     org<span class="selector-class">.springframework</span><span class="selector-class">.orm</span><span class="selector-class">.hibernate3</span><span class="selector-class">.support</span><span class="selector-class">.OpenSessionInViewFilter</span> </div><div class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </div><div class="line">&lt;/<span class="attribute">filter</span> &gt; </div><div class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</div></pre></td></tr></table></figure>
-<p>就可以了;</p>
-<p>参考了:
-Hibernate与延迟加载：
-Hibernate对象关系映射提供延迟的与非延迟的对象初始化。非延迟加载在读取一个对象的时候会将与这个对象所有相关的其他对象一起读取出来。这有时会导致成百的（如果不是成千的话）select语句在读取对象的时候执行。这个问题有时出现在使用双向关系的时候，经常会导致整个数据库都在初始化的阶段被读出来了。当然，你可以不厌其烦地检查每一个对象与其他对象的关系，并把那些最昂贵的删除，但是到最后，我们可能会因此失去了本想在ORM工具中获得的便利。
-一个明显的解决方法是使用Hibernate提供的延迟加载机制。这种初始化策略只在一个对象调用它的一对多或多对多关系时才将关系对象读取出来。这个过程对开发者来说是透明的，而且只进行了很少的数据库操作请求，因此会得到比较明显的性能提升。这项技术的一个缺陷是延迟加载技术要求一个Hibernate会话要在对象使用的时候一直开着。这会成为通过使用DAO模式将持久层抽象出来时的一个主要问题。为了将持久化机制完全地抽象出来，所有的数据库逻辑，包括打开或关闭会话，都不能在应用层出现。最常见的是，一些实现了简单接口的DAO实现类将数据库逻辑完全封装起来了。一种快速但是笨拙的解决方法是放弃DAO模式，将数据库连接逻辑加到应用层中来。这可能对一些小的应用程序有效，但是在大的系统中，这是一个严重的设计缺陷，妨碍了系统的可扩展性。
-在Web层进行延迟加载
-幸运的是，Spring框架为Hibernate延迟加载与DAO模式的整合提供了一种方便的解决方法。对那些不熟悉Spring与Hibernate集成使用的人，我不会在这里讨论过多的细节，但是我建议你去了解Hibernate与Spring集成的数据访问。以一个Web应用为例，Spring提供了OpenSessionInViewFilter和OpenSessionInViewInterceptor。我们可以随意选择一个类来实现相同的功能。两种方法唯一的不同就在于interceptor在Spring容器中运行并被配置在web应用的上下文中，而Filter在Spring之前运行并被配置在web.xml中。不管用哪个，他们都在请求将当前会话与当前（数据库）线程绑定时打开Hibernate会话。一旦已绑定到线程，这个打开了的Hibernate会话可以在DAO实现类中透明地使用。这个会话会为延迟加载数据库中值对象的视图保持打开状态。一旦这个逻辑视图完成了，Hibernate会话会在Filter的doFilter方法或者Interceptor的postHandle方法中被关闭。下面是每个组件的配置示例：
-Interceptor的配置:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">&lt;bean name=<span class="string">"openSessionInViewInterceptor"</span> </div><div class="line"><span class="class"><span class="keyword">class</span></span>=<span class="string">"org.springframework.orm.hibernate.support.OpenSessionInViewInterceptor"</span>&gt; </div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"sessionFactory"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line">&lt;<span class="regexp">/beans&gt;</span></div></pre></td></tr></table></figure>
-<p>Filter的配置</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hibernateFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-class</span>&gt;</span> </div><div class="line">org.springframework.orm.hibernate.support.OpenSessionInViewFilter </div><div class="line"><span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hibernateFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*. spring <span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>实现Hibernate的Dao接口来使用打开的会话是很容易的。事实上，如果你已经使用了Spring框架来实现你的Hibernate Dao,很可能你不需要改变任何东西。方便的HibernateTemplate公用组件使访问数据库变成小菜一碟，而DAO接口只有通过这个组件才可以访问到数据库。下面是一个示例的DAO：</p>
-<figure class="highlight fortran"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> HibernateProductDAO <span class="keyword">extends</span> HibernateDaoSupport implements ProductDAO &#123;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="built_in">Product</span> getProduct(<span class="keyword">Integer</span> productId) &#123; </div><div class="line">       <span class="keyword">return</span> (<span class="built_in">Product</span>)getHibernateTemplate().load(<span class="built_in">Product</span>.<span class="keyword">class</span>, productId); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">Integer</span> saveProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </div><div class="line">       <span class="keyword">return</span> (<span class="keyword">Integer</span>) getHibernateTemplate().<span class="keyword">save</span>(<span class="built_in">product</span>); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> void updateProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </div><div class="line">       getHibernateTemplate().update(<span class="built_in">product</span>); </div><div class="line">&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在业务逻辑层中使用延迟加载
-即使在视图外面，Spring框架也通过使用AOP 拦截器 HibernateInterceptor来使得延迟加载变得很容易实现。这个Hibernate 拦截器透明地将调用配置在Spring应用程序上下文中的业务对象中方法的请求拦截下来，在调用方法之前打开一个Hibernate会话，然后在方法执行完之后将会话关闭。让我们来看一个简单的例子，假设我们有一个接口BussinessObject：</p>
-<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span>     <span class="keyword">interface</span>     <span class="title">BusinessObject</span>     &#123; </div><div class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span>(<span class="params"></span>)</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>类BusinessObjectImpl实现了BusinessObject接口:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span>     <span class="class"><span class="keyword">class</span>     <span class="title">BusinessObjectImpl</span>     <span class="keyword">implements</span>     <span class="title">BusinessObject</span>     </span>&#123; </div><div class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span><span class="params">()</span>     </span>&#123; </div><div class="line"><span class="comment">//     lots of logic that calls </span></div><div class="line"><span class="comment">//     DAO classes Which access </span></div><div class="line"><span class="comment">//     data objects lazily  </span></div><div class="line">&#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>通过在Spring应用程序上下文中的一些配置，我们可以让将调用BusinessObject的方法拦截下来，再令它的方法支持延迟加载。看看下面的一个程序片段：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"hibernateInterceptor"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate.HibernateInterceptor"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"sessionFactory"</span>/&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"businessObjectTarget"</span> <span class="attr">class</span>=<span class="string">"com.acompany.BusinessObjectImpl"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"someDAO"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"someDAO"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"businessObject"</span> <span class="attr">class</span>=<span class="string">"org.springframework.aop.framework.ProxyFactoryBean"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"target"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"businessObjectTarget"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"proxyInterfaces"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>com.acompany.BusinessObject<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"interceptorNames"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">list</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>hibernateInterceptor<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">list</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>当businessObject被调用的时候，HibernateInterceptor打开一个Hibernate会话，并将调用请求传递给BusinessObjectImpl对象。当BusinessObjectImpl执行完成后，HibernateInterceptor透明地关闭了会话。应用层的代码不用了解任何持久层逻辑，还是实现了延迟加载。
-在单元测试中测试延迟加载
-最后，我们需要用J-Unit来测试我们的延迟加载程序。我们可以轻易地通过重写TestCase类中的setUp和tearDown方法来实现这个要求。我比较喜欢用这个方便的抽象类作为我所有测试类的基类。</p>
-<figure class="highlight scala"><table><tr><td class="code"><pre><div class="line">public <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLazyTestCase</span> <span class="keyword">extends</span> <span class="title">TestCase</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="type">SessionFactory</span> sessionFactory; </div><div class="line"><span class="keyword">private</span> <span class="type">Session</span> session;</div><div class="line"></div><div class="line">public void setUp() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </div><div class="line"><span class="keyword">super</span>.setUp(); </div><div class="line"><span class="type">SessionFactory</span> sessionFactory = (<span class="type">SessionFactory</span>) getBean(<span class="string">"sessionFactory"</span>); </div><div class="line">session = <span class="type">SessionFactoryUtils</span>.getSession(sessionFactory, <span class="literal">true</span>); </div><div class="line"><span class="type">Session</span> s = sessionFactory.openSession(); </div><div class="line"><span class="type">TransactionSynchronizationManager</span>.bindResource(sessionFactory, <span class="keyword">new</span> <span class="type">SessionHolder</span>(s));</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">protected</span> <span class="type">Object</span> getBean(<span class="type">String</span> beanName) &#123; </div><div class="line"><span class="comment">//Code to get objects from Spring application context </span></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void tearDown() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </div><div class="line"><span class="keyword">super</span>.tearDown(); </div><div class="line"><span class="type">SessionHolder</span> holder = (<span class="type">SessionHolder</span>) <span class="type">TransactionSynchronizationManager</span>.getResource(sessionFactory); </div><div class="line"><span class="type">Session</span> s = holder.getSession(); </div><div class="line">s.flush(); </div><div class="line"><span class="type">TransactionSynchronizationManager</span>.unbindResource(sessionFactory); </div><div class="line"><span class="type">SessionFactoryUtils</span>.closeSessionIfNecessary(s, sessionFactory); </div><div class="line">&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们首先说利用lazy=false来解决问题，这种方法是很好用，但是在实际的过程并不实用，如果你某个对象关联好几个甚至十几个自对象，那么每次加载一个的话要执行很多HQL语句，可想而知这个效率问题啦，特别是在使用列表的时候。所以不实用，而在上述所说的“在业务逻辑层中使用延迟加载” 也是这种情况吧。
-很多使用WEB的朋友都喜欢利用openSessionView来加载这个问题。不错我也喜欢用，简单方便。但是说几种情况：</p>
-<ol>
-<li>在quartz中总不能使用openSessionView模式吧</li>
-<li>在spring后拦截的过程中，如果取拦截对象中的子对象利用openSessionView也不行
-还有很多情况是不能用的，那么怎么解决呢。有人说那就lazy=False吧，你想在单纯的解决一个quartz的时候调整整个WEB工程的加载好像不合适吧。
-那怎么办呢，我觉得这个时候就可以考虑利用SQL语句使用这个重新加载一遍这个代理类，这样在想调用的时候才手动加载比较合适和方便吧，但是估计要多几行代码，好好考虑</li>
-</ol>
 
           
         
@@ -1514,7 +1273,7 @@ Interceptor的配置:</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><h1 id="问题提出"><a class="header-anchor" href="#问题提出"> </a>问题提出</h1>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h1 id="问题提出"><a class="header-anchor" href="#问题提出"> </a>问题提出</h1>
 <p>金山词霸、网络蚂蚁等软件安装后会向IE的工具条添加自己的按钮。按下按钮后还会作出相应的动作，这种功能是如何实现的呢？读完本文，您也可以将自己应用程序的按钮添加到IE的工具条中。</p>
 <h1 id="基本原理"><a class="header-anchor" href="#基本原理"> </a>基本原理</h1>
 <p>从IE5开始便允许我们向工具栏添加自己的按钮，其本质就是修改注册表，添加创建此按钮所需的信息。</p>
@@ -1603,6 +1362,251 @@ void CIEButtonDlg::OnAdd()
 －－reg.SetValue("http://www.vckbase.com/","Exec");///打开网页 
 }
 </script>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/07/java-hibernate-could-not-initialize-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/07/java-hibernate-could-not-initialize-proxy/" itemprop="url">could not initialize proxy – no Session</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-07T18:09:17+08:00">
+                2013-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/07/java-hibernate-could-not-initialize-proxy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/07/java-hibernate-could-not-initialize-proxy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>在<code>&lt;many-to-on&gt;</code>中这错误很常见，字面意义就是不能被初始化，因为<code>session</code>已经关闭了。
+简单理解就是因为，你使用了<code>lazy=true</code>，这样hibernate在从数据库中调数据的时候是不会把关联的对象查出来的，而是保存一个获取值得方法，在你使用getXXX()调用的时候，hiberante会利用这个保存的方法去从数据库中取数据。而往往我们在jsp页面中使用getXXX()准备展示数据的时候，session早已经在dao中就关闭了，我们该如何解决这种异常呢？
+简单的说有三种：</p>
+<ol>
+<li>把lazy设成false,最简单。</li>
+<li>我没试过，但听说过</li>
+</ol>
+<p>在web.xml中加入</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="attribute">filter</span>&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-class&gt; </div><div class="line">     org<span class="selector-class">.springframework</span><span class="selector-class">.orm</span><span class="selector-class">.hibernate3</span><span class="selector-class">.support</span><span class="selector-class">.OpenSessionInViewFilter</span> </div><div class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>&gt; </div><div class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>我用的方法，也是我认为比较不错的方法，灵活性更好。用left join fetch或inner join fetch语法。
+例如：from Item i left join fetch i.parentItem ii
+解释一下Item表是一个自关联的表，它的关联关系在hbm.xml中配置好了。
+如下：</li>
+</ol>
+<p>程序代码</p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">&lt;many-<span class="keyword">to</span>-one <span class="built_in">name</span>=<span class="string">"parentItem"</span> lazy=<span class="string">"false"</span> fetch=<span class="string">"join"</span> <span class="built_in">class</span>=<span class="string">"cn.sports.matchs.model.Item"</span>&gt; </div><div class="line">             &lt;column <span class="built_in">name</span>=<span class="string">"PARENT_ID"</span>&gt;&lt;/column&gt; </div><div class="line">&lt;/many-<span class="keyword">to</span>-one&gt;</div></pre></td></tr></table></figure>
+<p>在Item类中</p>
+<p>程序代码</p>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><div class="line">private Item parentItem<span class="comment">;</span></div></pre></td></tr></table></figure>
+<p>关于lazy机制：
+延迟初始化错误是运用Hibernate开发项目时最常见的错误。如果对一个类或者集合配置了延迟检索策略，那么必须当代理类实例或代理集合处于持久化状态（即处于Session范围内）时，才能初始化它。如果在游离状态时才初始化它，就会产生延迟初始化错误。</p>
+<p>下面把Customer.hbm.xml文件的<class>元素的lazy属性设为true，表示使用延迟检索策略：</class></p>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><div class="line">&lt;<span class="built_in">class</span> <span class="built_in">name</span>=<span class="string">"mypack.Customer"</span> table=<span class="string">"CUSTOMERS"</span> lazy=<span class="string">"true"</span>&gt;</div></pre></td></tr></table></figure>
+<p>当执行Session的load()方法时，Hibernate不会立即执行查询CUSTOMERS表的select语句，仅仅返回Customer类的代理类的实例，这个代理类具由以下特征：
+（1）由Hibernate在运行时动态生成，它扩展了Customer类，因此它继承了Customer类的所有属性和方法，但它的实现对于应用程序是透明的。
+（2）当Hibernate创建Customer代理类实例时，仅仅初始化了它的OID属性，其他属性都为null，因此这个代理类实例占用的内存很少。
+（3）当应用程序第一次访问Customer代理类实例时（例如调用customer.getXXX()或customer.setXXX()方法）， Hibernate会初始化代理类实例，在初始化过程中执行select语句，真正从数据库中加载Customer对象的所有数据。但有个例外，那就是当应用程序访问Customer代理类实例的getId()方法时，Hibernate不会初始化代理类实例，因为在创建代理类实例时OID就存在了，不必到数据库中去查询。
+提示：Hibernate采用CGLIB工具来生成持久化类的代理类。CGLIB是一个功能强大的Java字节码生成工具，它能够在程序运行时动态生成扩展 Java类或者实现Java接口的代理类。关于CGLIB的更多知识，请参考：<a href="http://cglib.sourceforge.net/%E3%80%82" target="_blank" rel="external">http://cglib.sourceforge.net/。</a>
+以下代码先通过Session的load()方法加载Customer对象，然后访问它的name属性：</p>
+<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>(); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>();</div></pre></td></tr></table></figure>
+<p>在运行session.load()方法时Hibernate不执行任何select语句，仅仅返回Customer类的代理类的实例，它的OID为1，这是由load()方法的第二个参数指定的。当应用程序调用customer.getName()方法时，Hibernate会初始化Customer代理类实例，从数据库中加载Customer对象的数据，执行以下select语句：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> CUSTOMERS <span class="keyword">where</span> <span class="keyword">ID</span>=<span class="number">1</span>; </div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> orDERS <span class="keyword">where</span> CUSTOMER_ID=<span class="number">1</span>;</div></pre></td></tr></table></figure>
+<p>当<class>元素的lazy属性为true，会影响Session的load()方法的各种运行时行为，下面举例说明。
+1．如果加载的Customer对象在数据库中不存在，Session的load()方法不会抛出异常，只有当运行customer.getName()方法时才会抛出以下异常：</class></p>
+<blockquote>
+<p>ERROR LazyInitializer:63 -Exception initializing proxy
+net.sf.hibernate.ObjectNotFoundException: No row with thegiven identifier exists: 1, of class:
+mypack.Customer
+2．如果在整个Session范围内，应用程序没有访问过Customer对象，那么Customer代理类的实例一直不会被初始化，Hibernate不会执行任何select语句。以下代码试图在关闭Session后访问Customer游离对象：</p>
+</blockquote>
+<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
+<p>由于引用变量customer引用的Customer代理类的实例在Session范围内始终没有被初始化，因此在执行customer.getName()方法时，Hibernate会抛出以下异常：
+ERROR LazyInitializer:63 -Exception initializing proxy
+net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed
+由此可见，Customer代理类的实例只有在当前Session范围内才能被初始化。</p>
+<p>3．net.sf.hibernate.Hibernate类的initialize()静态方法用于在Session范围内显式初始化代理类实例，isInitialized()方法用于判断代理类实例是否已经被初始化。例如：</p>
+<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">if</span>(!<span class="type">Hibernate</span>.isInitialized(customer)) </div><div class="line"><span class="title">Hibernate</span>.<span class="title">initialize</span>(customer); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
+<p>以上代码在Session范围内通过Hibernate类的initialize()方法显式初始化了Customer代理类实例，因此当Session关闭后，可以正常访问Customer游离对象。</p>
+<p>4．当应用程序访问代理类实例的getId()方法时，不会触发Hibernate初始化代理类实例的行为，例如：</p>
+<figure class="highlight pony"><table><tr><td class="code"><pre><div class="line">tx = session.beginTransaction(); </div><div class="line"><span class="type">Customer</span> customer=(<span class="type">Customer</span>)session.load(<span class="type">Customer</span>.<span class="keyword">class</span>,<span class="function"><span class="keyword">new</span> <span class="title">Long</span>(<span class="number">1</span>)); </span></div><div class="line"><span class="title">customer</span>.<span class="title">getId</span>(); </div><div class="line"><span class="title">tx</span>.<span class="title">commit</span>(); </div><div class="line"><span class="title">session</span>.<span class="title">close</span>(); </div><div class="line"><span class="title">customer</span>.<span class="title">getName</span>();</div></pre></td></tr></table></figure>
+<p>当应用程序访问customer.getId()方法时，该方法直接返回Customer代理类实例的OID值，无需查询数据库。由于引用变量 customer始终引用的是没有被初始化的Customer代理类实例，因此当Session关闭后再执行customer.getName()方法， Hibernate会抛出以下异常：</p>
+<blockquote>
+<p>ERROR LazyInitializer:63 -Exception initializing proxy
+net.sf.hibernate.HibernateException: Couldnotinitializeproxy-theowningSessionwasclosed</p>
+</blockquote>
+<p>解决方法：
+由于hibernate采用了lazy=true,这样当你用hibernate查询时,返回实际为利用cglib增强的代理类,但其并没有实际填充;当你在前端,利用它来取值(getXXX)时,这时Hibernate才会到数据库执行查询,并填充对象,但此时如果和这个代理类相关的session已关闭掉,就会产生种错误.
+在做一对多时，有时会出现&quot;could not initialize proxy – clothe owning Session was sed,这个好像是hibernate的缓存问题.问题解决:需要在<many-to-one>里设置lazy=“false”. 但有可能会引发另一个异常叫
+failed to lazily initialize a collection of role: XXXXXXXX, no session or session was closed
+解决方法:在web.xml中加入</many-to-one></p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;<span class="attribute">filter</span>&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-class&gt; </div><div class="line">     org<span class="selector-class">.springframework</span><span class="selector-class">.orm</span><span class="selector-class">.hibernate3</span><span class="selector-class">.support</span><span class="selector-class">.OpenSessionInViewFilter</span> </div><div class="line">     &lt;/<span class="attribute">filter</span>-class&gt; </div><div class="line">&lt;/<span class="attribute">filter</span> &gt; </div><div class="line">&lt;<span class="attribute">filter</span>-mapping&gt; </div><div class="line">     &lt;<span class="attribute">filter</span>-name&gt;hibernateFilter&lt;/filter-name&gt; </div><div class="line">     &lt;url-pattern&gt;*.do&lt;/url-pattern&gt; </div><div class="line">&lt;/<span class="attribute">filter</span>-mapping&gt;</div></pre></td></tr></table></figure>
+<p>就可以了;</p>
+<p>参考了:
+Hibernate与延迟加载：
+Hibernate对象关系映射提供延迟的与非延迟的对象初始化。非延迟加载在读取一个对象的时候会将与这个对象所有相关的其他对象一起读取出来。这有时会导致成百的（如果不是成千的话）select语句在读取对象的时候执行。这个问题有时出现在使用双向关系的时候，经常会导致整个数据库都在初始化的阶段被读出来了。当然，你可以不厌其烦地检查每一个对象与其他对象的关系，并把那些最昂贵的删除，但是到最后，我们可能会因此失去了本想在ORM工具中获得的便利。
+一个明显的解决方法是使用Hibernate提供的延迟加载机制。这种初始化策略只在一个对象调用它的一对多或多对多关系时才将关系对象读取出来。这个过程对开发者来说是透明的，而且只进行了很少的数据库操作请求，因此会得到比较明显的性能提升。这项技术的一个缺陷是延迟加载技术要求一个Hibernate会话要在对象使用的时候一直开着。这会成为通过使用DAO模式将持久层抽象出来时的一个主要问题。为了将持久化机制完全地抽象出来，所有的数据库逻辑，包括打开或关闭会话，都不能在应用层出现。最常见的是，一些实现了简单接口的DAO实现类将数据库逻辑完全封装起来了。一种快速但是笨拙的解决方法是放弃DAO模式，将数据库连接逻辑加到应用层中来。这可能对一些小的应用程序有效，但是在大的系统中，这是一个严重的设计缺陷，妨碍了系统的可扩展性。
+在Web层进行延迟加载
+幸运的是，Spring框架为Hibernate延迟加载与DAO模式的整合提供了一种方便的解决方法。对那些不熟悉Spring与Hibernate集成使用的人，我不会在这里讨论过多的细节，但是我建议你去了解Hibernate与Spring集成的数据访问。以一个Web应用为例，Spring提供了OpenSessionInViewFilter和OpenSessionInViewInterceptor。我们可以随意选择一个类来实现相同的功能。两种方法唯一的不同就在于interceptor在Spring容器中运行并被配置在web应用的上下文中，而Filter在Spring之前运行并被配置在web.xml中。不管用哪个，他们都在请求将当前会话与当前（数据库）线程绑定时打开Hibernate会话。一旦已绑定到线程，这个打开了的Hibernate会话可以在DAO实现类中透明地使用。这个会话会为延迟加载数据库中值对象的视图保持打开状态。一旦这个逻辑视图完成了，Hibernate会话会在Filter的doFilter方法或者Interceptor的postHandle方法中被关闭。下面是每个组件的配置示例：
+Interceptor的配置:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">&lt;bean name=<span class="string">"openSessionInViewInterceptor"</span> </div><div class="line"><span class="class"><span class="keyword">class</span></span>=<span class="string">"org.springframework.orm.hibernate.support.OpenSessionInViewInterceptor"</span>&gt; </div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"sessionFactory"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line">&lt;<span class="regexp">/beans&gt;</span></div></pre></td></tr></table></figure>
+<p>Filter的配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hibernateFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-class</span>&gt;</span> </div><div class="line">org.springframework.orm.hibernate.support.OpenSessionInViewFilter </div><div class="line"><span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>hibernateFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*. spring <span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>实现Hibernate的Dao接口来使用打开的会话是很容易的。事实上，如果你已经使用了Spring框架来实现你的Hibernate Dao,很可能你不需要改变任何东西。方便的HibernateTemplate公用组件使访问数据库变成小菜一碟，而DAO接口只有通过这个组件才可以访问到数据库。下面是一个示例的DAO：</p>
+<figure class="highlight fortran"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> HibernateProductDAO <span class="keyword">extends</span> HibernateDaoSupport implements ProductDAO &#123;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="built_in">Product</span> getProduct(<span class="keyword">Integer</span> productId) &#123; </div><div class="line">       <span class="keyword">return</span> (<span class="built_in">Product</span>)getHibernateTemplate().load(<span class="built_in">Product</span>.<span class="keyword">class</span>, productId); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">Integer</span> saveProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </div><div class="line">       <span class="keyword">return</span> (<span class="keyword">Integer</span>) getHibernateTemplate().<span class="keyword">save</span>(<span class="built_in">product</span>); </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> void updateProduct(<span class="built_in">Product</span> <span class="built_in">product</span>) &#123; </div><div class="line">       getHibernateTemplate().update(<span class="built_in">product</span>); </div><div class="line">&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在业务逻辑层中使用延迟加载
+即使在视图外面，Spring框架也通过使用AOP 拦截器 HibernateInterceptor来使得延迟加载变得很容易实现。这个Hibernate 拦截器透明地将调用配置在Spring应用程序上下文中的业务对象中方法的请求拦截下来，在调用方法之前打开一个Hibernate会话，然后在方法执行完之后将会话关闭。让我们来看一个简单的例子，假设我们有一个接口BussinessObject：</p>
+<figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span>     <span class="keyword">interface</span>     <span class="title">BusinessObject</span>     &#123; </div><div class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span>(<span class="params"></span>)</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>类BusinessObjectImpl实现了BusinessObject接口:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span>     <span class="class"><span class="keyword">class</span>     <span class="title">BusinessObjectImpl</span>     <span class="keyword">implements</span>     <span class="title">BusinessObject</span>     </span>&#123; </div><div class="line"><span class="function"><span class="keyword">public</span>     <span class="keyword">void</span>     <span class="title">doSomethingThatInvolvesDaos</span><span class="params">()</span>     </span>&#123; </div><div class="line"><span class="comment">//     lots of logic that calls </span></div><div class="line"><span class="comment">//     DAO classes Which access </span></div><div class="line"><span class="comment">//     data objects lazily  </span></div><div class="line">&#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过在Spring应用程序上下文中的一些配置，我们可以让将调用BusinessObject的方法拦截下来，再令它的方法支持延迟加载。看看下面的一个程序片段：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"hibernateInterceptor"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate.HibernateInterceptor"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"sessionFactory"</span>/&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"businessObjectTarget"</span> <span class="attr">class</span>=<span class="string">"com.acompany.BusinessObjectImpl"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"someDAO"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"someDAO"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"businessObject"</span> <span class="attr">class</span>=<span class="string">"org.springframework.aop.framework.ProxyFactoryBean"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"target"</span>&gt;</span><span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"businessObjectTarget"</span>/&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"proxyInterfaces"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>com.acompany.BusinessObject<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"interceptorNames"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">list</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>hibernateInterceptor<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">list</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>当businessObject被调用的时候，HibernateInterceptor打开一个Hibernate会话，并将调用请求传递给BusinessObjectImpl对象。当BusinessObjectImpl执行完成后，HibernateInterceptor透明地关闭了会话。应用层的代码不用了解任何持久层逻辑，还是实现了延迟加载。
+在单元测试中测试延迟加载
+最后，我们需要用J-Unit来测试我们的延迟加载程序。我们可以轻易地通过重写TestCase类中的setUp和tearDown方法来实现这个要求。我比较喜欢用这个方便的抽象类作为我所有测试类的基类。</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><div class="line">public <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLazyTestCase</span> <span class="keyword">extends</span> <span class="title">TestCase</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="type">SessionFactory</span> sessionFactory; </div><div class="line"><span class="keyword">private</span> <span class="type">Session</span> session;</div><div class="line"></div><div class="line">public void setUp() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </div><div class="line"><span class="keyword">super</span>.setUp(); </div><div class="line"><span class="type">SessionFactory</span> sessionFactory = (<span class="type">SessionFactory</span>) getBean(<span class="string">"sessionFactory"</span>); </div><div class="line">session = <span class="type">SessionFactoryUtils</span>.getSession(sessionFactory, <span class="literal">true</span>); </div><div class="line"><span class="type">Session</span> s = sessionFactory.openSession(); </div><div class="line"><span class="type">TransactionSynchronizationManager</span>.bindResource(sessionFactory, <span class="keyword">new</span> <span class="type">SessionHolder</span>(s));</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">protected</span> <span class="type">Object</span> getBean(<span class="type">String</span> beanName) &#123; </div><div class="line"><span class="comment">//Code to get objects from Spring application context </span></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void tearDown() <span class="keyword">throws</span> <span class="type">Exception</span> &#123; </div><div class="line"><span class="keyword">super</span>.tearDown(); </div><div class="line"><span class="type">SessionHolder</span> holder = (<span class="type">SessionHolder</span>) <span class="type">TransactionSynchronizationManager</span>.getResource(sessionFactory); </div><div class="line"><span class="type">Session</span> s = holder.getSession(); </div><div class="line">s.flush(); </div><div class="line"><span class="type">TransactionSynchronizationManager</span>.unbindResource(sessionFactory); </div><div class="line"><span class="type">SessionFactoryUtils</span>.closeSessionIfNecessary(s, sessionFactory); </div><div class="line">&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们首先说利用lazy=false来解决问题，这种方法是很好用，但是在实际的过程并不实用，如果你某个对象关联好几个甚至十几个自对象，那么每次加载一个的话要执行很多HQL语句，可想而知这个效率问题啦，特别是在使用列表的时候。所以不实用，而在上述所说的“在业务逻辑层中使用延迟加载” 也是这种情况吧。
+很多使用WEB的朋友都喜欢利用openSessionView来加载这个问题。不错我也喜欢用，简单方便。但是说几种情况：</p>
+<ol>
+<li>在quartz中总不能使用openSessionView模式吧</li>
+<li>在spring后拦截的过程中，如果取拦截对象中的子对象利用openSessionView也不行
+还有很多情况是不能用的，那么怎么解决呢。有人说那就lazy=False吧，你想在单纯的解决一个quartz的时候调整整个WEB工程的加载好像不合适吧。
+那怎么办呢，我觉得这个时候就可以考虑利用SQL语句使用这个重新加载一遍这个代理类，这样在想调用的时候才手动加载比较合适和方便吧，但是估计要多几行代码，好好考虑</li>
+</ol>
+
           
         
       
@@ -1753,7 +1757,7 @@ void CIEButtonDlg::OnAdd()
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>网上有很多介绍在Ubuntu下开启SSH服务的文章，但大多数介绍的方法测试后都不太理想，均不能实现远程登录到Ubuntu上，最后分析原因是都没有真正开启ssh-server服务。最终成功的方法如下：
 sudo apt-get install openssh-server
 Ubuntu缺省安装了openssh-client,所以在这里就不安装了，如果你的系统没有安装的话，再用apt-get安装上即可。
 然后确认sshserver是否启动了：
@@ -1927,7 +1931,7 @@ $ ssh -l hyx 192.168.0.103
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
 <p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
 <p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
 <p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
@@ -1945,171 +1949,6 @@ $ ssh -l hyx 192.168.0.103
 </li>
 </ol>
 <figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-ubuntu-update-grub/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">安装Ubuntu后找不到windows sudo update-grub</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-05T18:09:17+08:00">
-                2013-01-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/linux-ubuntu-update-grub/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
-<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
-<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
-<p>menuentry “Windows 7” {
-insmod ntfs
-set root=(hd0,1)
-drivemap -s (hd0) ${root}</p>
-<p>chainloader +1
-}</p>
-<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
-<p>grub&gt;root (hd0,0)
-grub&gt;chainloader /bootmgr
-grub&gt;boot</p>
-<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
 
           
         
@@ -2261,7 +2100,7 @@ grub&gt;boot</p>
       
         
           
-            <script src="/assets/js/APlayer.min.js"> </script><script src="/assets/js/DPlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
 <p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
 <p>假如我们需要确定谁占用了我们的9050端口</p>
 <p>1、Windows平台
@@ -2270,6 +2109,395 @@ grub&gt;boot</p>
 <p>看到了吗，端口被进程号为2016的进程占用，继续执行下面命令：</p>
 <figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line"><span class="keyword">C</span>:&gt;tasklist|findstr <span class="string">"2016"</span></div><div class="line"></div><div class="line">tor.exe                     <span class="number">2016</span> Console                 <span class="number">0</span>     <span class="number">16</span>,<span class="number">064</span> <span class="keyword">K</span></div></pre></td></tr></table></figure>
 <p>很清楚吧，tor占用了你的端口。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/software-editplus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/05/software-editplus/" itemprop="url">使用EditPlus技巧，提高工作效率(附英文版、自动完成文件、语法文件下载)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-05T18:09:17+08:00">
+                2013-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/软件/" itemprop="url" rel="index">
+                    <span itemprop="name">软件</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/05/software-editplus/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/software-editplus/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>除了windows操作系统，EditPlus可以说是我最经常使用的软件了。无论是编写xhtml页面，还是css、js文件，甚至随笔记记这样的事情，我都会使用EditPlus（现在使用的是EditPlus2.31英文版），感觉它不仅功能强大，更难得的是：绿色、轻量级、启动速度快、稳定性高……反正，我个人是爱死她了！</p>
+<p>在使用中，我个人也总结了一些使用经验。可能作为高手的你，看来只是“相当肤浅”，但是没有关系，因为我相信，只要把知识共享出来，总能帮助到一些还在进步中的朋友。下面就让我们来开始配置出符合你自己使用习惯的EditPlus吧！</p>
+<p>2008-05-08补充：同时推荐大家阅读这篇《“阿一web标准学堂”选修课：EditPlus高级使用技巧（附视频、课件、代码下载）》，有视频哦。</p>
+<p>一边阅读，一边动手吧！</p>
+<p>为了达到更好的效果，请你先下载我打包的这个 EditPlus压缩包文件（压缩包文件为绿色的EditPlus2.31英文版,含自动完成文件,高亮语法文件和剪切板代码片断文件，这些文件在解压目录下的&quot;yzyFile&quot;目录下），这样就可以一边看着这篇文章，一边亲自动手，从而达到更好的效果了。</p>
+<p>设置EditPlus的配置文件路径</p>
+<p>因为EditPlus是可以绿色使用的（直接解压那个EditPlus压缩包文件即可直接使用，不用安装），所以，当我们对EditPlus进行一系列的配置以后，保存下这些配置文件。以后当我们重装系统，或者换台电脑使用的时候，只要重新加载一下那些配置文件，以前的配置就都重新回来了，很是方便。所以，在讲其他配置和技巧之前，我们先设置好EditPlus的配置文件路径。</p>
+<p>打开EditPlus → 【Tools】→ 【INI File Directory…】 → 在弹出的对话框中设置配置文件的保存位置（压缩包内的配置保存文件在解压目录下的&quot;yzyFileINIFiles&quot;目录下）。这里你可能要重新设置一下目录，因为，我喜欢把EditPlus放在&quot;D:GreenSoftEditPlus 2&quot;下（把所有的绿色软件装在一个目录下，每次重装系统的时候，可以直接把绿色软件拷回去，就能直接使用了，从而避免了每次都安装那么多软件）。所以，就请你重新设置一下，根据你的习惯，把配置文件存放在某个目录下吧。</p>
+<p>web标准设计
+图1：设置EditPlus的配置文件保存路径</p>
+<p>保护视力，从EditPlus做起</p>
+<p>“最近眼睛好痛呀！”、“靠～眼睛简直要瞎了！”……不知道作为程序员的你是否也经常抱怨这样的事情，每天对着电脑看，的确对视力的伤害很大，所以能不能采取一些措施来为眼睛减减压呢？我在EditPlus里面是这样做的（因为EditPlus是我最长使用的工具，所以以EditPlus为例）——编辑区的背景设为灰色而不是默认的白色，使用较大字号的字体。效果如下图所示：</p>
+<p>web标准设计
+图2：灰色的背景，12号的雅黑字体，构造“爱眼”环境</p>
+<p>你可以这样设置EditPlus编辑环境的背景颜色和字体。菜单【Tools】→ 【Preperences】→ 【General】→ 【fonts】和【colors】。需要说明一下的是：可以设置多种fonts，这样就可以很方便地切换fonts了（参看图2所示），这招对日企这样的朋友很方便哦。中文的字体设置几个，日文的字体设置几个，出现乱码的时候，切换一下字体就可以了。</p>
+<p>web标准设计
+图3：设置EditPlus的字体和颜色</p>
+<p>配置文件模板，告别重复的体力劳动</p>
+<p>设置好EditPlus的配置文件，就让我们开始EditPlus的使用技巧吧。第一个技巧当然就是和“新建”有关的啦。如果我们经常建立一种文件，而这种文件总会包含一些重复的文字或者代码的话，我们就可以建立模板，然后通过模板建立文件。从而摆脱每次都要重复的体力劳动。</p>
+<p>我们就从建立一个属于自己的xhtml文件开始吧。菜单【File】→ 【New】→ 【Configure templates…】→ 在打开的对话框中“填上”菜单中显示的文字，已经模板文件的路径，就可以了。下次当你再次选择【File】→ 【New】的时候，就能够看到你建立的模板了。</p>
+<p>web标准设计
+图4：EditPlus中建立自己的模板</p>
+<p>模板文件要怎么建立呢？其实很简单呀。举个很简单的例子，如果我想建立一个我自己的xhtml页面，模板文件就可以写成这样——</p>
+<p>我的XHTML模板页面</p>
+<!DOCTYPE html public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<meta name="Keywords" content="YES!B/S!,JustinYoung,web标准设计"> 
+<meta name="Description" content="This page is from http://Justinyoung.cnblogs.com"> 
+<title>简单的XHTML页面</title> 
+</head> 
+<body> 
+^!<!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --> 
+</body> 
+</html>
+<p>显然里面的Keywords和Description，意见title的内容都已经变成我常用的了。还有一点，请大家注意第10行的“^!”标签。这个标签在EditPlus中表示光标所在位置。显然，这里的意思就是：当你用这个模板建立一个新的文件的时候，光标就会自动停留在<body>和</body>之间，从而方便你的直接输入。</p>
+<p>关于模板文件再说两句：</p>
+<p>1：在我提供的那个 EditPlus压缩包文件中，模板文件存放在解压目录下的“yzyFileTemplates”文件夹下。</p>
+<p>2：我们知道使用快捷键“Ctrl + Shift + N”可以快速的建立一个html页面，而这个可以快速的建立html的模板，位于EditPlus目录下的，文件名为“templatex.html”。你可以通过修改这个模板文件，来达到你个性化html页面的目的。</p>
+<p>顺手的侧边栏</p>
+<p>如果你看不到侧边栏，可以使用快捷键（Alt + Shift + 1）。侧边栏包含了“快速目录路径”和“快速剪贴板”功能。“快速目录路径”就不说了，重点来说说“快速剪贴板”功能吧。其实说白了，就是一个地方，这个地方可以存放一些代码片断、常用文言等等文字。当你需要这些文字的时候，只要双击，就可以方便的添加到光标所在位置了。默认情况下会有一些html，css代码，但是，说实话，我是不太经常使用那些东西的，那么多，找到都累死了。所以，我喜欢建立一个自己最常用的“剪贴板”库，因为是自己建的，所以用着就会比较顺手了。</p>
+<p>你可以通过这种方式来建立自己的“剪贴板”库文件。在Cliptext侧边栏上的下拉列表框上点击右键 → 新建 → 填写文件名和显示标题→ 在新建的空白侧边栏上点击右键 → 新建 → 填入显示文本和代码即可。</p>
+<p>关于“剪贴板”库文件再说两句：</p>
+<p>1：在我提供的那个 EditPlus压缩包文件中“剪贴板”库文件存放在解压目录下的“yzyFileCliptextLibrary”文件夹下。</p>
+<p>2：你可以通过直接编辑，解压目录下的“yzyFileCliptextLibrary”文件夹下的“剪贴板”库文件，来快速的建立自己的常用代码库（用EditPlus就可以打开，格式看一下就懂了。编辑好以后要重新“Reload”一下，或者重新启动一下才能刷新哦）。</p>
+<p>3：侧边栏可以放在左边，也可以放在右面。设置的方法是：在侧边栏点击鼠标右键 → 选择【Location】菜单内的left或者right。</p>
+<p>华丽的自动完成功能</p>
+<ul> 
+<li><a href="" title=""></a></li> 
+<li><a href="" title=""></a></li> 
+<li><a href="" title=""></a></li> 
+<li><a href="" title=""></a></li> 
+<li><a href="" title=""></a></li> 
+</ul>
+<p>可以说是俺最喜欢的功能了。想象一下，作为一个经常制作网页的人来所，当你打一个“ua”字，然后按下空格，编辑器里面就出现了右边的代码，而且鼠标就停留在第一个href的双引号之间。那是多么愉快的事情。这就是EditPlus的自动完成功能，使用EditPlus的自动完成功能将会极大的提高你的工作效率。而且我们可以根据不同的文件类型，建立不同的“自动完成”，例如，如果是xhtml文件，打“b”+ 空格”，就是 <strong></strong>，而在css文件中，“b”+ 空格”，就是 “border:1px solid red;”。非常的人性化。</p>
+<p>你可以通过这样的设置，来使用EditPlus的自动完成功能。【Tools】→【Preperences】→ 【Files】→ 【Settings &amp; syntax】 → 在【File types】中设置一下文件类型，然后再【Auto completion】中选择自动完成文件即可（如果你使用的是我那个 EditPlus压缩包文件，请注意调整这里的自动完成文件的路径）。自动完成文件我们可以自己进行编辑，这里我举个简单的例子，展开下面的代码，这个便是我css文件自动完成的文件内容，以第11行的“#T=bor”为例，它的意思就是如果输入bor然后按空格，就在光标所在位置插入“border:1px solid red;”</p>
+<p>css自动完成例子
+#TITLE=CSS
+; EditPlus Auto-completion file v1.0 written by Justin Young(<a href="http://justinyoung.cnblogs.com" target="_blank" rel="external">http://justinyoung.cnblogs.com</a>).
+; This file is provided as a default auto-completion file for CSS.</p>
+<p>#T=*</p>
+<ul>
+<li>{}{margin:0; padding:0; list-style:none; }
+^!
+#T=bo
+border:1px solid #^!;
+#T=bor
+border:1px solid red;
+^!
+#T=fl
+float:left;
+#T=fr
+float:right;
+#T=poa
+position:absolute;
+#T=por
+position:relative;
+#T=bg
+background:url(‘…/Images/^!.gif’) no-repeat;
+#T=bgc
+background-color:^!;
+#T=he
+height:^!px;
+#T=wi
+width:^!px;
+#T=ml
+margin-left:^!px;
+#T=mr
+margin-right:^!px;
+#T=mt
+margin-top:^!px;
+#T=mb
+margin-bottom:^!px;
+#T=pt
+padding-top:^!px;
+#T=pr
+padding-right:^!px;
+#T=pl
+padding-left:^!px;
+#T=pb
+padding-bottom:^!px;
+#T=bt
+border-top:1px solid ^!;
+#T=br
+border-right:1px solid ^!;
+#T=bl
+border-left:1px solid ^!;
+#T=bb
+border-bottom:1px solid ^!;
+#T=
+;</li>
+</ul>
+<p>关于“自动完成”文件再说两句：</p>
+<p>1：在我提供的那个 EditPlus压缩包文件中“自动完成”文件存放在解压目录下的“yzyFileAutoCompletion”文件夹下。</p>
+<p>2：你可以通过直接编辑，解压目录下的“yzyFileAutoCompletion”文件夹下的EditPlus自动完成文件，来快速的建立自己的EditPlus自动完成文件。</p>
+<p>EditPlus自动完成
+图5：“自动完成”和“高亮语法”设置对话框</p>
+<p>彩色的文件，高亮语法文件</p>
+<p>很多的开发工具都有语法高亮显示功能，EditPlus虽小，但是也有这个功能哦。设置方法可以参考图片5所示。和“自动完成”功能一样，只要为不同的文件类型指定“高亮语法”文件即可。css、html等常用的文件类型，EditPlus已经自带了高亮语法文件。如果自带的高亮语法文件没有你需要的，你可以去EditPlus官方网站的文件下载频道去看看，来自全球各地的朋友，贡献了很多的不同文件类型的高亮语法文件。可以很方便地免费下载到。</p>
+<p>这里就稍微列举一下比较常用的EditPlus的高亮语法文件，更多的请到EditPlus的官方网站下载，EditPlus的官方地址为： <a href="http://www.editplus.com/files.html" target="_blank" rel="external">http://www.editplus.com/files.html</a></p>
+<p>EditPlus SQL 高亮语法文件
+EditPlus C ++ 高亮语法文件
+EditPlus C#高亮语法文件
+EditPlus Java 高亮语法文件
+EditPlus PHP 高亮语法文件
+EditPlus CSS HTML高亮语法文件
+EditPlus正则表达式</p>
+<p>EditPlus中的查找（替换）功能，支持正则表达式。使用正则表达式可以极大的提高查找（替换）的强悍程度。因为正则表达式这东西不是一句话就能说完的，而且偏离此篇文章主题，所以这里只列举几个常用的例子。对此有兴趣的可以参考正则表达式资料，或者在EditPlus的help中“Regular Expression”关键字进行索引查找。</p>
+<p>EditPlus正则表达式
+图6：在查找（替换）对话框中使用正则表达式</p>
+<p>使用正则表达式进行查找（替换）的方法如上图所示，选择查找（替换）对话框中“Regular Expression”前面checkbox。点击查找（替换）文本框后的“倒三角”可以选择常用的正则表达式。</p>
+<p>正则表达式实例</p>
+<p>需求说明
+正则表达式写法
+备注</p>
+<p>替换指定内容（以abc为例）到行尾
+abc.*
+“.”表示匹配任意字符；“*”表示匹配0次或更多</p>
+<p>给所有的数字加上引号
+查找[0-9]替换为&quot;&quot;
+表示正则表达式匹配的对象</p>
+<p>删除空白行
+查找nn 替换为n
+把连续的2个换行符，替换成一个换行符</p>
+<p>矩形选区</p>
+<p>看到这个词，好像是说图像处理工具，其实非也，不管是VS还是EditPlus，其实都是支持矩形选区的。这对处理一些形如：去掉文章前端行号的情况有特效，矩形全区的选取方式就是按住Alt键，然后用鼠标划矩形选区(如图7所示)。需要注意到是在“自动换行”的情况下，是不能使用“矩形选区”的。你可以使用Ctrl+Shift +W来切换“自动换行”或者“不自动换行”视图。</p>
+<p>在EditPlus中选取矩形选区
+图7：在EditPlus中选取矩形选区（注意红色框内的“自动换行图标”）</p>
+<p>提高工作效率，EditPlus 快捷键的使用</p>
+<p>如果一个来你们公司面试程序员，连Ctrl + C 和Ctrl + V 都不用，而是使用“选中文本”→ 鼠标右键 → 【复制】，然后再鼠标右键→ 【粘贴】。你会不会录用他呢？（你还别笑，以前我们公司还真面试过一个这样的，所谓的“<a href="http://xn--asp-837h493f.net" target="_blank" rel="external">精通asp.net</a>”的程序员）。所以熟练的使用软件的快捷键，不仅仅能够极大的提高工作效率，也从一个侧面表现出一个人对此软件的使用能力。EditPlus同样也有很多的快捷键，下面是一些我经常使用的EditPlus特有的快捷键（Ctrl +C 、Ctrl+H这样的通用快捷键就不介绍了），略举一二，更多的请参看文章《EditPlus快捷键》</p>
+<p>以浏览器模式预览文件
+Ctrl + B</p>
+<p>开始编辑“以浏览器模式预览的文件”
+Ctrl + E</p>
+<p>新建html文件
+Ctrl+Shift+N</p>
+<p>新建浏览器窗口（类似于在EditPlus中打开ie）
+Ctrl+Shift+B</p>
+<p>选中的字母切换为小写
+Ctrl+L</p>
+<p>选中的字母切换为大写
+Ctrl+U</p>
+<p>选中的词组首字母大写
+Ctrl+Shift+U</p>
+<p>复制选定文本并追加到剪贴板中
+Ctrl+Shift+C</p>
+<p>剪切选定文本并追加到剪贴板中
+Ctrl+Shift+X</p>
+<p>创建当前行的副本
+Ctrl+J</p>
+<p>复制上一行的一个字符到当前行
+Ctrl±</p>
+<p>剪切选定文本并追加到剪贴板中
+Ctrl+Shift+X</p>
+<p>合并选定行
+Ctrl+Shift+J</p>
+<p>反转选定文本的大小写
+Ctrl+K</p>
+<p>开始/结束选择区域
+Alt+Shift+B</p>
+<p>选择当前行
+Ctrl+R</p>
+<p>全屏模式开/关
+Ctrl+K</p>
+<p>显示或隐藏标尺
+Alt+Shift+R</p>
+<p>显示或隐藏制表符与空格
+Alt+Shift+I</p>
+<p>显示函数列表
+Ctrl+F11</p>
+<p>转到当前文档的指定行
+Ctrl + G</p>
+<p>设置或清除当前行的标记
+F9</p>
+<p>转到下一个标记位置
+F4</p>
+<p>转到上一个标记位置
+Shift+F4</p>
+<p>清除当前文档中的所有标记
+Ctrl+Shift+F9</p>
+<p>搜索一对匹配的括号
+Ctrl+]</p>
+<p>搜索一对匹配的括号并选择该文本
+Ctrl+Shift+]</p>
+<p>切换当前文档的自动换行功能
+Ctrl+Shift+W</p>
+<p>编辑当前 HTML 页面的源文件
+Ctrl+E</p>
+<p>我写博客的模板</p>
+<p>好像这个不应该放在这篇文章中来写，但是因为我写博文一直在EditPlus中写，所以就顺便放在这篇文章中吧。</p>
+<p>有一些朋友问我，你一篇那么花里胡哨的博文需要多长时间吧，关排版就要不少时间吧。其实，排版还真就没用多少时间，因为我已经编辑好一个通用的博文模板了，这个模板包含了我所有博文文章中可能出现的排版情况。每次写博文只要套用模板就可以了，无非就是换换字，换换图片链接地址而且。因为还蛮能提高写博文的效率和排版效果的，所以现在就共享出来供大家使用，希望大家也一样能够写出漂亮的文章。</p>
+<p>EditPlus模板下载YES!B/S!文章模板下载
+EditPlus模板下载</p>
+<p>感谢未注册用户初学者1，提供EditPlus2.31版本的代码折叠功能的使用方法。</p>
+<p>初学者1: CTRL+Shift+F 可以打开代码折叠开关。
+菜单在：查看－代码折叠－使用代码折叠
+我的版本是：2.31（488）</p>
+<p>俺补充一下：html标签，如果要想折叠，必须注意便签内的代码要用tab缩进。
+因为快捷键是使用小键盘的 &quot;+“和”-&quot;所以使用笔记本的会比较郁闷。可以通过设置快捷键达到你的使用习惯。
+设置快捷键的方法：。【Tools】→【Preperences】→ 【Tools】→【KeyBorad】→选择类型为【view】然后在右面列表框中找到展开和收缩。</p>
 
           
         
@@ -3020,24 +3248,7 @@ grub&gt;boot</p>
         onPopupClose();
       }
     });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script>
 
 
 
