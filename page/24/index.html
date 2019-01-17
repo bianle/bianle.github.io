@@ -523,7 +523,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-ubuntu-update-grub/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/db-sqlserver-return-autogen-id/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -542,7 +542,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">安装Ubuntu后找不到windows sudo update-grub</a></h1>
+                <a class="post-title-link" href="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="url">在SQL Server 2000中insert的时候返回自动编号的id 存储过程示例</a></h1>
         
 
         <div class="post-meta">
@@ -577,8 +577,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/db/" itemprop="url" rel="index">
+                    <span itemprop="name">db</span>
                   </a>
                 </span>
 
@@ -595,8 +595,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/linux-ubuntu-update-grub/" itemprop="commentCount"></span>
+                <a href="/2013/01/05/db-sqlserver-return-autogen-id/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/db-sqlserver-return-autogen-id/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -626,20 +626,184 @@
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
-<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
-<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
-<p>menuentry “Windows 7” {
-insmod ntfs
-set root=(hd0,1)
-drivemap -s (hd0) ${root}</p>
-<p>chainloader +1
-}</p>
-<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
-<p>grub&gt;root (hd0,0)
-grub&gt;chainloader /bootmgr
-grub&gt;boot</p>
-<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>SQL Server 2000中，insert数据的时候返回自动编号的id，有三种方法实现S<code>COPE_IDENTITY、IDENT_CURRENT</code> 和 <code>@@IDENTITY</code>，它们都返回插入到 IDENTITY 列中的值。</p>
+<p><code>IDENT_CURRENT</code>：返回为任何会话和任何作用域中的特定表最后生成的标识值。IDENT_CURRENT 不受作用域和会话的限制，而受限于指定的表。IDENT_CURRENT 返回为任何会话和作用域中的特定表所生成的值。</p>
+<p><code>@@IDENTITY</code>： 返回为当前会话的所有作用域中的任何表最后生成的标识值。</p>
+<p><code>SCOPE_IDENTITY</code> ：返回为当前会话和当前作用域中的任何表最后生成的标识值</p>
+<p><code>SCOPE_IDENTITY</code> 和 <code>@@IDENTITY</code> 返回在当前会话中的任何表内所生成的最后一个标识值。但是，SCOPE_IDENTITY 只返回插入到当前作用域中的值；@@IDENTITY 不受限于特定的作用域。</p>
+<p>使用示例：</p>
+<figure class="highlight dart"><table><tr><td class="code"><pre><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=SCOPE_IDENTITY()</div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=@<span class="meta">@IDENTITY</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> <span class="meta">@NewID</span>=IDENT_CURRENT(‘表名’)</div></pre></td></tr></table></figure>
+<p>例如，有两个表 T1 和 T2，在 T1 上定义了一个 INSERT 触发器。当将某行插入 T1 时，触发器被激发，并在 T2 中插入一行。此例说明了两个作用域：一个是在 T1 上的插入，另一个是作为触发器的结果在 T2 上的插入。假设 T1 和 T2 都有 IDENTITY 列，@@IDENTITY 和 SCOPE_IDENTITY 将在 T1 上的 INSERT 语句的最后返回不同的值。@@IDENTITY 返回插入到当前会话中任何作用域内的最后一个 IDENTITY 列值，该值是插入 T2 中的值。SCOPE_IDENTITY() 返回插入 T1 中的 IDENTITY 值，该值是发生在相同作用域中的最后一个 INSERT。如果在作用域中发生插入语句到标识列之前唤醒调用 SCOPE_IDENTITY() 函数，则该函数将返回 NULL 值。而IDENT_CURRENT(‘T1′) 和 IDENT_CURRENT(‘T2′) 返回的值分别是这两个表最后自增的值。</p>
+<p>ajqc的实验:(40条本地线程,40+40条远程线程同时并发测试,插入1200W行),得出的结论是:</p>
+<ol>
+<li>
+<p>在典型的级联应用中.不能用@@IDENTITY,在CII850,256M SD的机器上1W多行时就会并发冲突.在P42.8C,512M DDR上,才6000多行时就并发冲突.</p>
+</li>
+<li>
+<p>SCOPE_IDENTITY()是绝对可靠的,可以用在存储过程中,连触发器也不用建,没并发冲突</p>
+</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">–创建存储过程 </div><div class="line">CREATE PROCEDURE prc_insertfacecontrol </div><div class="line">@controltype nvarchar (<span class="number">10</span>), </div><div class="line">@controlwidth nvarchar (<span class="number">10</span>), </div><div class="line">@controlheight nvarchar (<span class="number">10</span>), </div><div class="line">@controlsize <span class="keyword">int</span> , </div><div class="line">@controldata nvarchar (<span class="number">255</span>), </div><div class="line">@contenttype nvarchar (<span class="number">255</span>), </div><div class="line">@kjid <span class="keyword">int</span> , </div><div class="line">@userid <span class="keyword">int</span>, </div><div class="line">@controlid <span class="keyword">int</span> output </div><div class="line">AS </div><div class="line"> </div><div class="line">BEGIN </div><div class="line">INSERT INTO facecontrol ( </div><div class="line">controltype, </div><div class="line">controlwidth, </div><div class="line">controlheight, </div><div class="line">controlsize, </div><div class="line">controldata, </div><div class="line">contenttype, </div><div class="line">kjid, </div><div class="line">userid </div><div class="line">) </div><div class="line">VALUES </div><div class="line">( </div><div class="line">@controltype, </div><div class="line">@controlwidth, </div><div class="line">@controlheight, </div><div class="line">@controlsize , </div><div class="line">@controldata , </div><div class="line">@contenttype , </div><div class="line">@kjid , </div><div class="line">@userid </div><div class="line">) </div><div class="line"><span class="keyword">select</span> @controlid=IDENT_CURRENT(‘facecontrol’) —返回自动编号的id </div><div class="line">END </div><div class="line">GO </div><div class="line"> </div><div class="line">–执行存储过程: </div><div class="line">declare @controlid <span class="keyword">int</span> </div><div class="line"><span class="keyword">exec</span> prc_insertfacecontrol ’<span class="number">1</span>′,’<span class="number">800</span>′,’<span class="number">600</span>′,<span class="number">71189</span>,’asdfadfadfasdfadfafd’,<span class="string">'image/pjpeg’,2,1,@controlid=@controlid output </span></div><div class="line">–打印输出参数: </div><div class="line">print @controlid</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-port-view/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/05/linux-port-view/" itemprop="url">怎么查看端口占用情况</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-05T18:09:17+08:00">
+                2013-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统/" itemprop="url" rel="index">
+                    <span itemprop="name">系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2013/01/05/linux-port-view/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/linux-port-view/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>开始–运行–cmd 进入命令提示符 输入netstat -ano 即可看到所有连接的PID 之后在任务管理器中找到这个PID所对应的程序如果任务管理器中没有PID这一项,可以在任务管理器中选&quot;查看&quot;-“选择列”</p>
+<p>经常，我们在启动应用的时候发现系统需要的端口被别的程序占用，如何知道谁占有了我们需要的端口，很多人都比较头疼，下面就介绍一种非常简单的方法，希望对大家有用</p>
+<p>假如我们需要确定谁占用了我们的9050端口</p>
+<p>1、Windows平台
+在windows命令行窗口下执行：</p>
+<figure class="highlight x86asm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">C:</span>&gt;netstat -aon|findstr <span class="string">"9050"</span></div><div class="line"></div><div class="line">TCP    <span class="number">127.0</span><span class="meta">.0</span><span class="meta">.1</span>:<span class="number">9050</span>         <span class="number">0.0</span><span class="meta">.0</span><span class="meta">.0</span>:<span class="number">0</span>              LISTENING       <span class="number">2016</span></div></pre></td></tr></table></figure>
+<p>看到了吗，端口被进程号为2016的进程占用，继续执行下面命令：</p>
+<figure class="highlight mathematica"><table><tr><td class="code"><pre><div class="line"><span class="keyword">C</span>:&gt;tasklist|findstr <span class="string">"2016"</span></div><div class="line"></div><div class="line">tor.exe                     <span class="number">2016</span> Console                 <span class="number">0</span>     <span class="number">16</span>,<span class="number">064</span> <span class="keyword">K</span></div></pre></td></tr></table></figure>
+<p>很清楚吧，tor占用了你的端口。</p>
 
           
         
@@ -1188,7 +1352,7 @@ Apache the best and most widely used web server on the Internet today, check it 
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/java-eclipse-problem-manager/">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2013/01/05/linux-ubuntu-update-grub/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="bianle">
@@ -1207,7 +1371,7 @@ Apache the best and most widely used web server on the Internet today, check it 
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2012/12/27/java-eclipse-problem-manager/" itemprop="url">解决eclipse中Flex的ProblemManager 错误</a></h1>
+                <a class="post-title-link" href="/2013/01/05/linux-ubuntu-update-grub/" itemprop="url">安装Ubuntu后找不到windows sudo update-grub</a></h1>
         
 
         <div class="post-meta">
@@ -1219,8 +1383,8 @@ Apache the best and most widely used web server on the Internet today, check it 
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-27T18:09:17+08:00">
-                2012-12-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-05T18:09:17+08:00">
+                2013-01-05
               </time>
             
 
@@ -1242,8 +1406,8 @@ Apache the best and most widely used web server on the Internet today, check it 
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -1260,8 +1424,8 @@ Apache the best and most widely used web server on the Internet today, check it 
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2012/12/27/java-eclipse-problem-manager/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/27/java-eclipse-problem-manager/" itemprop="commentCount"></span>
+                <a href="/2013/01/05/linux-ubuntu-update-grub/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2013/01/05/linux-ubuntu-update-grub/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1291,25 +1455,20 @@ Apache the best and most widely used web server on the Internet today, check it 
       
         
           
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>每次在eclipse中保存Flex源文件是就弹出报错框“The attribute value type is com.adobe.flexbuilder.project.compiler.internal.ProblemManager and expected is one of java.lang.String, Boolean, Integer”，原来是ProblemManager补丁没打上。</p>
-<p>解决办法：</p>
-<ol>
-<li>
-<p>下载补丁包[ProblemManager]</p>
-</li>
-<li>
-<p>解压下载的文件</p>
-</li>
-<li>
-<p>到 Flex Builder安装目录</p>
-</li>
-<li>
-<p>用winrar打开eclipse安装目录下/plugins/com.adobe.flexbuilder.project_3.0.204732/zornproject.jar文件</p>
-</li>
-<li>
-<p>如果eclipse已经打开的话先关掉，将刚才下载解压的文件目录 com拖到winrar中完成压缩</p>
-</li>
-</ol>
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>我已经在Ubuntu 9.10里通过终端sudo update-grub两次了，结果还是一样不能启动XP和Windows 7。以下是在一位好心的网友的热心帮助下，经过本人亲身试验，而且行之有效的解决方法：</p>
+<p>原因是采用了硬盘安装方式安装Ubuntu后，把那个引导工具grldr破坏了</p>
+<p>修改Ubuntu 9.10里的/boot/grub/grub.cfg文件中Windows 7的启动选项，或者直接复制增加以下这个Windows 7选项吧。</p>
+<p>menuentry “Windows 7” {
+insmod ntfs
+set root=(hd0,1)
+drivemap -s (hd0) ${root}</p>
+<p>chainloader +1
+}</p>
+<p>这个应该就可以进入grub4dos 的菜单，然后按 C 进入GRUB的DOS状态 ，在grub&gt;提示符下输入以下三条命令来修复引导工具grldr即可</p>
+<p>grub&gt;root (hd0,0)
+grub&gt;chainloader /bootmgr
+grub&gt;boot</p>
+<p>进入Windows 7后要重新激活Windows 7，然后就正式恢复了Ubuntu 9.10和Windows 7的双系统启动菜单了，至于XP是在Windows 7的启动菜单里的，一样正常了。哈哈！</p>
 
           
         
@@ -1566,158 +1725,6 @@ Number of rows committed = 0</p>
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/web-frameset-fixed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/27/web-frameset-fixed/" itemprop="url">frameset固定宽度并且居中显示</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-27T18:09:17+08:00">
-                2012-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web前端/" itemprop="url" rel="index">
-                    <span itemprop="name">web前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/27/web-frameset-fixed/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/27/web-frameset-fixed/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">其实就再套了一个框架，多了红色部分的代码而已；这样就可以使得框架居中了……..</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">"*,1024,*"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"130,*,40"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"top.html"</span> <span class="attr">name</span>=<span class="string">"topFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"topFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"center.html"</span> <span class="attr">name</span>=<span class="string">"mainFrame"</span> <span class="attr">id</span>=<span class="string">"mainFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"bottom.html"</span> <span class="attr">name</span>=<span class="string">"bottomFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"bottomFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/db-sqlserver-autogen-id/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1826,6 +1833,328 @@ Number of rows committed = 0</p>
 <p>怎样清除数据后,可以把ID再从1开始计算呢?</p>
 <p>如把数据表users中的自增ID改成从1开始的记录</p>
 <figure class="highlight less"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">DBCC</span> <span class="selector-tag">CHECKIDENT</span> (‘users’, RESEED,<span class="number">1</span>)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/java-eclipse-problem-manager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/27/java-eclipse-problem-manager/" itemprop="url">解决eclipse中Flex的ProblemManager 错误</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-27T18:09:17+08:00">
+                2012-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/12/27/java-eclipse-problem-manager/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/27/java-eclipse-problem-manager/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>每次在eclipse中保存Flex源文件是就弹出报错框“The attribute value type is com.adobe.flexbuilder.project.compiler.internal.ProblemManager and expected is one of java.lang.String, Boolean, Integer”，原来是ProblemManager补丁没打上。</p>
+<p>解决办法：</p>
+<ol>
+<li>
+<p>下载补丁包[ProblemManager]</p>
+</li>
+<li>
+<p>解压下载的文件</p>
+</li>
+<li>
+<p>到 Flex Builder安装目录</p>
+</li>
+<li>
+<p>用winrar打开eclipse安装目录下/plugins/com.adobe.flexbuilder.project_3.0.204732/zornproject.jar文件</p>
+</li>
+<li>
+<p>如果eclipse已经打开的话先关掉，将刚才下载解压的文件目录 com拖到winrar中完成压缩</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/27/web-frameset-fixed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/12/27/web-frameset-fixed/" itemprop="url">frameset固定宽度并且居中显示</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-27T18:09:17+08:00">
+                2012-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2012/12/27/web-frameset-fixed/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/27/web-frameset-fixed/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">其实就再套了一个框架，多了红色部分的代码而已；这样就可以使得框架居中了……..</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">"*,1024,*"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"130,*,40"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"top.html"</span> <span class="attr">name</span>=<span class="string">"topFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"topFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"center.html"</span> <span class="attr">name</span>=<span class="string">"mainFrame"</span> <span class="attr">id</span>=<span class="string">"mainFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"bottom.html"</span> <span class="attr">name</span>=<span class="string">"bottomFrame"</span> <span class="attr">scrolling</span>=<span class="string">"No"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span> <span class="attr">id</span>=<span class="string">"bottomFrame"</span> /&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"about:blank"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">noframes</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 
           
         
@@ -2083,416 +2412,6 @@ vertical-align|	xverticalAlign</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/25/system-bt5-guide/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/25/system-bt5-guide/" itemprop="url">BackTrack5(BT5)硬盘安装完美教程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-25T21:01:00+08:00">
-                2012-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/25/system-bt5-guide/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/25/system-bt5-guide/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>BackTrack5的硬盘安装分两步走，第一步是BT5的硬盘引导，第二步是BT5的硬盘安装。过程中用到BT5的LIVE镜像，可以在这里下载BackTrack5发布，提供多种镜像下载 。</p>
-<p>第一部分 BackTrack5(BT5)硬盘引导
-BackTrack5 （BT5）的硬盘引导我们是借助grub4dos来完成的，grub跟grub2下还木有测试。grub4dos在xp跟win7下可以都用 boot.ini的方法来完成，win7也认识boot.ini，如果你是xp，直接修改boot.ini，如果你是win7，在系统盘根目录下新建 boot.ini。
-写入内容：
-c:\grldr=&quot;GRUB4DOS Menu&quot;
-xp是在文件最后加上上面这行，win7在空白文件中只写这行就可以了。当然，win7也可以用easyBCD来安装grub4dos，可以参考的文章ubuntu11.04硬盘安装详细教程，xp、win7完美支持
-下面你需要下载grub4dos的配置文件：点此下载配置文件 将此文件解压缩到系统盘根目录即可。
-其实如果你对grub的menu.lst比较熟悉的话，可以看下menu.lst引导BT5的内容
-title BackTrack5 Text - Default Boot Text Mode
-root (hd0,0)
-kernel /casper/vmlinuz file=/preseed/custom.seed boot=casper text splash vga=791–
-initrd /casper/initrd.gz
-boot
-下载好CD镜像后，用UltraISO将全部文件解压缩到系统盘根目录（你的系统盘）下即可。
-重启时选择引导，会进入BackTrack5的引导。这一步完成后你就已经完成了硬盘引导工作，可以正常进入BT5的LIVE了。默认账户是root，密码是toor，进入图形化桌面是startx。</p>
-<p>第二部分 BackTrack5(BT5)硬盘安装
-这一部分，说说missing filesystem.size错误的产生原因，missing filesystem.size是因为install.sh那个文件无法找到安装所需要的filesystem.size，而这个文件就在/cdrom中，而当你运行了umount -l /cdrom之后，该目录变成了空目录，所以系统无法找到原来我们拷贝过去的文件filesystem.size，因此会报错。那么如何解决呢？方案有两个，一个是将iso镜像中的所有文件都重新拷贝到/cdrom文件夹中，当然，这是不太可行的，至少2G内存是木有搞定，呵呵，说不定你是4G内存可以搞定呢~~~这个方法我们pass掉，现在说说真正的方法，用loop将iso文件挂载到/cdrom目录下。具体做法：
-1.准备好你的bt5的安装iso，最好是放在你的系统盘也就是sda1中，如果放不开当然放别的盘里也可以的，命名全部用英文，免得有不必要的麻烦。打开一个终端，终端在程序的附件中。
-在终端中运行
-cd /
-sudo mkdir nenew
-sudo umount -l /cdrom
-sudo mount /dev/sda1 /nenew
-ls /nenew | grep iso
-运行到这一步的时候，看看回显的结果中是否有你的镜像文件，如果你放到了第一个分区中，应该可以看到你的镜像名称，可以继续第二步了。如果你没有放到系统根目录下，就执行下面的命令，将sda的数字依次递增，直到ls 的结果有你的镜像为止。
-sudo umount -l /nenew
-sudo mount /dev/sda2 /nenew
-ls /nenew | grep iso
-好了，到此我们假设你已经看到了你的BackTrack5的iso镜像文件，如果你没有看到，自己找找原因吧，不解释。
-2.执行下列命令
-sudo modprobe loop
-sudo mount -o loop /nenew/BT5-GNOME-32.iso /cdrom
-这里的BT5-GNOME-32.iso为你的BT5的镜像名称。
-sudo umount -l /nenew
-ls /cdrom
-这时候会回显cdrom目录下的文件，自己确定下跟iso文件中是否一致，如果一致，ok，你的操作正确了，可以进行安装了，如果不一致，sorry，回头继续看教程找原因。
-3.运行桌面上的install来安装即可，安装过程可以参考ubuntu的安装过程，这里就不熬述了。最后安装结束，提示是否重启，选择reboot重启，当出现提示让输入enter的时候回车，这个地方没法过去，当然这并没有什么影响，直接关掉电源就可以了，因为该关闭的东东已经都关闭了。如果你是笔记本就长按开机按钮就可以关机的。重新开机就可以进入系统了。当然，你没有看到windows的启动项。启动正常后，用户名root密码toor进入系统，startx进入图形，打开终端，sudo update-grub就有windows的启动项了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2012/12/25/db-sql-convert/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/12/25/db-sql-convert/" itemprop="url">SQL中CONVERT转化函数的用法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-12-25T18:09:17+08:00">
-                2012-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index">
-                    <span itemprop="name">db</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/12/25/db-sql-convert/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2012/12/25/db-sql-convert/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p>格式:
-<code>CONVERT(data_type,expression[,style])</code>
-说明:
-此样式一般在时间类型(datetime,smalldatetime)与字符串类型(nchar,nvarchar,char,varchar)
-相互转换的时候才用到.</p>
-<p>例子:
-<code>SELECT CONVERT(varchar(30),getdate(),101) now</code>
-结果为:</p>
-<blockquote>
-<p>now
-—————————————
-|09/15/2001</p>
-</blockquote>
-<p>style数字在转换时间时的含义如下:</p>
-<p>STYLE(2位表示年份)|	STYLE(4位表示年份)|	输入输出格式
-0|	100|	mon dd yyyy hh:miAM(或PM)
-1|	101美国| 	mm/dd/yy
-2|	102ANSI| 	yy-mm-dd
-3|	103英法| 	dd/mm/yy
-4|	104德国| 	dd.mm.yy
-5|	105意大利| 	dd-mm-yy
-6|	106|	dd mon yy
-7|	107|	mon dd,yy
-8|	108|	hh:mm:ss
-9|	109|	mon dd yyyy hh:mi:ss:mmmmAM(或PM)
-10|	110美国| 	mm-dd-yy
-11|	111日本| 	yy/mm/dd
-12|	112ISO| 	yymmdd
-13|	113欧洲默认值| 	dd mon yyyy hh:mi:ss:mmm(24小时制)
-14|	114|	hh:mi:ss:mmm(24小时制)
-20|	120 ODBC 规范| 	yyyy-mm-dd hh:mi:ss(24小时制)
-21|	121|	yyyy-mm-dd hh:mi:ss:mmm(24小时制)</p>
-<p>语句及查询结果：
-SELECT CONVERT(varchar(100), GETDATE(), 0): 05 16 2006 10:57AM
-SELECT CONVERT(varchar(100), GETDATE(), 1): 05/16/06
-SELECT CONVERT(varchar(100), GETDATE(), 2): 06.05.16
-SELECT CONVERT(varchar(100), GETDATE(), 3): 16/05/06
-SELECT CONVERT(varchar(100), GETDATE(), 4): 16.05.06
-SELECT CONVERT(varchar(100), GETDATE(), 5): 16-05-06
-SELECT CONVERT(varchar(100), GETDATE(), 6): 16 05 06
-SELECT CONVERT(varchar(100), GETDATE(), 7): 05 16, 06
-SELECT CONVERT(varchar(100), GETDATE(), 8): 10:57:46
-SELECT CONVERT(varchar(100), GETDATE(), 9): 05 16 2006 10:57:46:827AM
-SELECT CONVERT(varchar(100), GETDATE(), 10): 05-16-06
-SELECT CONVERT(varchar(100), GETDATE(), 11): 06/05/16
-SELECT CONVERT(varchar(100), GETDATE(), 12): 060516
-SELECT CONVERT(varchar(100), GETDATE(), 13): 16 05 2006 10:57:46:937
-SELECT CONVERT(varchar(100), GETDATE(), 14): 10:57:46:967
-SELECT CONVERT(varchar(100), GETDATE(), 20): 2006-05-16 10:57:47
-SELECT CONVERT(varchar(100), GETDATE(), 21): 2006-05-16 10:57:47.157
-SELECT CONVERT(varchar(100), GETDATE(), 22): 05/16/06 10:57:47 AM
-SELECT CONVERT(varchar(100), GETDATE(), 23): 2006-05-16
-SELECT CONVERT(varchar(100), GETDATE(), 24): 10:57:47
-SELECT CONVERT(varchar(100), GETDATE(), 25): 2006-05-16 10:57:47.250
-SELECT CONVERT(varchar(100), GETDATE(), 100): 05 16 2006 10:57AM
-SELECT CONVERT(varchar(100), GETDATE(), 101): 05/16/2006
-SELECT CONVERT(varchar(100), GETDATE(), 102): 2006.05.16
-SELECT CONVERT(varchar(100), GETDATE(), 103): 16/05/2006
-SELECT CONVERT(varchar(100), GETDATE(), 104): 16.05.2006
-SELECT CONVERT(varchar(100), GETDATE(), 105): 16-05-2006
-SELECT CONVERT(varchar(100), GETDATE(), 106): 16 05 2006
-SELECT CONVERT(varchar(100), GETDATE(), 107): 05 16, 2006
-SELECT CONVERT(varchar(100), GETDATE(), 108): 10:57:49
-SELECT CONVERT(varchar(100), GETDATE(), 109): 05 16 2006 10:57:49:437AM
-SELECT CONVERT(varchar(100), GETDATE(), 110): 05-16-2006
-SELECT CONVERT(varchar(100), GETDATE(), 111): 2006/05/16
-SELECT CONVERT(varchar(100), GETDATE(), 112): 20060516
-SELECT CONVERT(varchar(100), GETDATE(), 113): 16 05 2006 10:57:49:513
-SELECT CONVERT(varchar(100), GETDATE(), 114): 10:57:49:547
-SELECT CONVERT(varchar(100), GETDATE(), 120): 2006-05-16 10:57:49
-SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2547,7 +2466,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">306</span>
+                  <span class="site-state-item-count">308</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2558,7 +2477,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2569,7 +2488,7 @@ SELECT CONVERT(varchar(100), GETDATE(), 121): 2006</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">188</span>
+                  <span class="site-state-item-count">190</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -362,6 +362,324 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/mysql-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/22/mysql-tips/" itemprop="url">小技巧 - mysql篇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-22T15:42:37+08:00">
+                2016-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/22/mysql-tips/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2016/11/22/mysql-tips/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="mysql-查询行号"><a class="header-anchor" href="#mysql-查询行号"> </a>mysql 查询行号</h2>
+<figure class="highlight moonscript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">select</span> @rowno:=@rowno+<span class="number">1</span> as rowno,t.* <span class="keyword">from</span> test t,(<span class="built_in">select</span> @rowno:=<span class="number">0</span>) r</div></pre></td></tr></table></figure>
+<h2 id="mysql里int字段插入float会四舍五入"><a class="header-anchor" href="#mysql里int字段插入float会四舍五入"> </a>mysql里int字段插入float会四舍五入</h2>
+<h2 id="关于索引-2016-12-28-15-15-20补充"><a class="header-anchor" href="#关于索引-2016-12-28-15-15-20补充"> </a>关于索引（2016-12-28 15:15:20补充）</h2>
+<ol>
+<li>字符串类型索引字段，查询条件如果传数字，索引不生效</li>
+<li>联合索引，查询条件只有部分字段的话，索引不生效</li>
+</ol>
+<p>以下忽略：
+红掌柜项目优化sql</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">SELECT</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span>,</div><div class="line">	M. NAME,</div><div class="line">	M<span class="selector-class">.MOBILE</span>,</div><div class="line">	M<span class="selector-class">.CARD_DATE</span>,</div><div class="line">	M<span class="selector-class">.MAINTAIN_DATE</span>,</div><div class="line">	M<span class="selector-class">.EMPLOYEE_ID</span>,</div><div class="line">	M<span class="selector-class">.BABY_NAME</span>,</div><div class="line">	M<span class="selector-class">.BABY_BIRTHDAY</span>,</div><div class="line">	M<span class="selector-class">.BABY_SEX</span>,</div><div class="line">	M<span class="selector-class">.MEMBER_SEX</span>,</div><div class="line">	M<span class="selector-class">.IS_OFFLINE</span>,</div><div class="line">	T<span class="selector-class">.TOTAL_CONSUME_AMOUNT</span>,</div><div class="line">	T<span class="selector-class">.TOTAL_ORDER_NUM</span>,</div><div class="line">	T<span class="selector-class">.LAST_CONSUME_DATE</span>,</div><div class="line">	r<span class="selector-class">.connect_status</span>,</div><div class="line">	CASE WHEN r<span class="selector-class">.connect_status</span> = <span class="number">3</span> THEN <span class="number">1</span> WHEN r<span class="selector-class">.connect_status</span> IS NULL THEN <span class="number">3</span> ELSE r<span class="selector-class">.connect_status</span> END remark_type</div><div class="line">FROM</div><div class="line">	RM_MEMBER M</div><div class="line">LEFT JOIN rm_contact_remark r ON r<span class="selector-class">.employee_id</span> = m<span class="selector-class">.employee_id</span></div><div class="line">AND r<span class="selector-class">.member_id</span> = m<span class="selector-class">.member_id</span></div><div class="line">AND act_id =- <span class="number">1</span>,</div><div class="line"> RM_MEMBER_TAG T</div><div class="line">WHERE</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span> = T<span class="selector-class">.MEMBER_ID</span></div><div class="line">AND M<span class="selector-class">.EMPLOYEE_ID</span> = <span class="string">'14082377'</span></div><div class="line">ORDER BY</div><div class="line">	remark_type DESC,</div><div class="line">	M<span class="selector-class">.UPDATE_TIME</span> DESC,</div><div class="line">	M<span class="selector-class">.MEMBER_ID</span></div><div class="line">LIMIT <span class="number">0</span>,</div><div class="line"> <span class="number">20</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/sublime-text-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/11/22/sublime-text-2/" itemprop="url">sublime-text-2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-22T10:56:27+08:00">
+                2016-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/st2/" itemprop="url" rel="index">
+                    <span itemprop="name">st2</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/11/22/sublime-text-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2016/11/22/sublime-text-2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>st2相关</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/22/sublime-text-2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/22/run-apk-in-chrome/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1686,342 +2004,6 @@ Alternatively, you can use the --charset option:</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/16/python-tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/16/python-tips/" itemprop="url">小技巧 - python篇</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-16T17:18:10+08:00">
-                2016-11-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/16/python-tips/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2016/11/16/python-tips/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="list获取最后一个元素"><a class="header-anchor" href="#list获取最后一个元素"> </a>list获取最后一个元素</h2>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">li = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">print li[<span class="number">-1</span>]</div></pre></td></tr></table></figure>
-<blockquote>
-<p>3</p>
-</blockquote>
-<h2 id="数字数组转字符串"><a class="header-anchor" href="#数字数组转字符串"> </a>数字数组转字符串</h2>
-<p>我们知道<code>join()</code>可以将字符串数组转字符串，数字数组怎么转呢？</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">a</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b=<span class="string">"-"</span>.join(str(i) <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> a)</div><div class="line">print b</div></pre></td></tr></table></figure>
-<blockquote>
-<p>‘1-2-3’</p>
-</blockquote>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">a</span> = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="selector-tag">b</span> = <span class="string">"-"</span>.join(imap(str,a))</div><div class="line">print b</div></pre></td></tr></table></figure>
-<blockquote>
-<p>‘1-2-3’</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2016/11/14/ubuntu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/11/14/ubuntu/" itemprop="url">ubuntu</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-14T10:29:51+08:00">
-                2016-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/11/14/ubuntu/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2016/11/14/ubuntu/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="更换源"><a class="header-anchor" href="#更换源"> </a>更换源</h2>
-<p><a href="http://www.linuxidc.com/Linux/2013-05/83902.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2013-05/83902.htm</a></p>
-<h2 id="ubuntu-文本模式黑屏"><a class="header-anchor" href="#ubuntu-文本模式黑屏"> </a>ubuntu 文本模式黑屏</h2>
-<p><a href="http://forum.ubuntu.org.cn/viewtopic.php?t=474823" target="_blank" rel="external">http://forum.ubuntu.org.cn/viewtopic.php?t=474823</a></p>
-<h2 id="ubuntu清dns缓存"><a class="header-anchor" href="#ubuntu清dns缓存"> </a>ubuntu清dns缓存</h2>
-<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line">sudo <span class="regexp">/etc/i</span>nit.d<span class="regexp">/dns-clean start</span></div></pre></td></tr></table></figure>
-<h2 id="安装apache2"><a class="header-anchor" href="#安装apache2"> </a>安装apache2</h2>
-<ol>
-<li>安装</li>
-</ol>
-<figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install apache2</div></pre></td></tr></table></figure>
-<ol start="2">
-<li>修改端口号</li>
-</ol>
-<figure class="highlight vim"><table><tr><td class="code"><pre><div class="line"><span class="keyword">cd</span> /etc/apache2</div><div class="line"><span class="keyword">vim</span> ports.<span class="keyword">conf</span></div><div class="line"><span class="keyword">cd</span> sites-enabled/</div><div class="line"><span class="keyword">vim</span> <span class="number">000</span>-default.<span class="keyword">conf</span></div></pre></td></tr></table></figure>
-<ol start="3">
-<li>重启</li>
-</ol>
-<figure class="highlight maxima"><table><tr><td class="code"><pre><div class="line">service apache2 <span class="built_in">restart</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2076,7 +2058,7 @@ Alternatively, you can use the --charset option:</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">306</span>
+                  <span class="site-state-item-count">308</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2087,7 +2069,7 @@ Alternatively, you can use the --charset option:</p>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2098,7 +2080,7 @@ Alternatively, you can use the --charset option:</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">188</span>
+                  <span class="site-state-item-count">190</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
