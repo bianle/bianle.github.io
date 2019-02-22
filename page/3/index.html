@@ -362,6 +362,345 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2018/12/07/linux-ssh-auth-log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/07/linux-ssh-auth-log/" itemprop="url">通过Auth.log来查看VPS服务器是否被扫描和暴力破解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-07T17:19:56+08:00">
+                2018-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/07/linux-ssh-auth-log/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/07/linux-ssh-auth-log/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
+<h2 id="查看登录成功日志"><a class="header-anchor" href="#查看登录成功日志"> </a>查看登录成功日志</h2>
+<figure class="highlight stata"><table><tr><td class="code"><pre><div class="line">grep <span class="string">"Accepted password for root"</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/auth.<span class="keyword">log</span> | awk '&#123;<span class="keyword">print</span> <span class="variable">$11&#125;</span>' | <span class="keyword">sort</span> | uniq -c | <span class="keyword">sort</span> -nr | <span class="keyword">more</span></div></pre></td></tr></table></figure>
+<h2 id="查看登录失败日志"><a class="header-anchor" href="#查看登录失败日志"> </a>查看登录失败日志</h2>
+<figure class="highlight stata"><table><tr><td class="code"><pre><div class="line">grep <span class="string">"Failed password for root"</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/auth.<span class="keyword">log</span> | awk '&#123;<span class="keyword">print</span> <span class="variable">$11&#125;</span>' | <span class="keyword">sort</span> | uniq -c | <span class="keyword">sort</span> -nr | <span class="keyword">more</span></div></pre></td></tr></table></figure>
+<h2 id="修改ssh端口"><a class="header-anchor" href="#修改ssh端口"> </a>修改ssh端口</h2>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">sed -<span class="selector-tag">i</span> <span class="string">"s/Port .*/Port 2222/g"</span> /etc/ssh/sshd_config</div></pre></td></tr></table></figure>
+<h2 id="重启sshd服务"><a class="header-anchor" href="#重启sshd服务"> </a>重启sshd服务</h2>
+<figure class="highlight awk"><table><tr><td class="code"><pre><div class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/sshd restart</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://2le.me/2018/12/05/solr-demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="bianle">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bianle's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/05/solr-demo/" itemprop="url">solr-demo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-05T13:23:45+08:00">
+                2018-12-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/solr/" itemprop="url" rel="index">
+                    <span itemprop="name">solr</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/05/solr-demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/05/solr-demo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><h2 id="solr服务端安装配置"><a class="header-anchor" href="#solr服务端安装配置"> </a>solr服务端安装配置</h2>
+<h3 id="下载gcs代码"><a class="header-anchor" href="#下载gcs代码"> </a>下载GCS代码</h3>
+<h3 id="修改环境变量"><a class="header-anchor" href="#修改环境变量"> </a>修改环境变量</h3>
+<p><img src="http://blimg.bovod.org/2018/12/05/20181205142457.png" alt="环境变量配置"><span class="image-caption">环境变量配置</span></p>
+<h3 id="部署并启动gcs"><a class="header-anchor" href="#部署并启动gcs"> </a>部署并启动GCS</h3>
+<p>第一次启动系统会自动将配置文件拷贝到指定目录
+<img src="http://blimg.bovod.org/2018/12/05/20181205195251.png" alt="solrhome文件一览"><span class="image-caption">solrhome文件一览</span>
+<img src="http://blimg.bovod.org/2018/12/05/20181205143423.png" alt="solr控制台界面"><span class="image-caption">solr控制台界面</span></p>
+<h3 id="定义schema"><a class="header-anchor" href="#定义schema"> </a>定义schema</h3>
+<p>定义schema好比mysql里定义表结构
+<img src="http://blimg.bovod.org/2018/12/05/20181205145211.png" alt="新增配置文件"><span class="image-caption">新增配置文件</span>
+<img src="http://blimg.bovod.org/2018/12/05/20181205145101.png" alt="定义schema"><span class="image-caption">定义schema</span>
+<img src="http://blimg.bovod.org/2018/12/05/20181205145437.png" alt="修改solr配置"><span class="image-caption">修改solr配置</span></p>
+<h3 id="上传配置文件并新增core"><a class="header-anchor" href="#上传配置文件并新增core"> </a>上传配置文件并新增core</h3>
+<p>生产环境主从节点都需要上传，注意主从节点solrconfig.xml有区别
+<img src="http://blimg.bovod.org/2018/12/05/20181205150101.png" alt="上传配置文件"><span class="image-caption">上传配置文件</span>
+<img src="http://blimg.bovod.org/2018/12/05/20181205152538.png" alt="新增core"><span class="image-caption">新增core</span>
+<img src="http://blimg.bovod.org/2018/12/05/20181205164038.png" alt="reload"><span class="image-caption">reload</span></p>
+<h2 id="客户端配置"><a class="header-anchor" href="#客户端配置"> </a>客户端配置</h2>
+<h3 id="新建springboot项目"><a class="header-anchor" href="#新建springboot项目"> </a>新建springboot项目</h3>
+<h3 id="测试数据库"><a class="header-anchor" href="#测试数据库"> </a>测试数据库</h3>
+<p><img src="http://blimg.bovod.org/2018/12/05/20181205132400.png" alt="新建数据库"><span class="image-caption">新建数据库</span>
+<img src="http://blimg.bovod.org/2018/12/05/20181205132746.png" alt="新建表"><span class="image-caption">新建表</span></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`ebook`</span> (</div><div class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`book_name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> utf8mb4_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`book_tags`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> utf8mb4_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`book_starts`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`book_url`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> utf8mb4_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`crt_time`</span> datetime <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`mod_time`</span> datetime <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4 <span class="keyword">COLLATE</span>=utf8mb4_bin;</div></pre></td></tr></table></figure>
+<h3 id="添加solr依赖"><a class="header-anchor" href="#添加solr依赖"> </a>添加solr依赖</h3>
+<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.solr<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>solr-solrj<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.10.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="更新示例"><a class="header-anchor" href="#更新示例"> </a>更新示例</h3>
+<h3 id="检索示例"><a class="header-anchor" href="#检索示例"> </a>检索示例</h3>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://2le.me/2018/12/04/markdown-previewer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1602,667 +1941,6 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2018/03/07/keycode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/07/keycode/" itemprop="url">keycode</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T14:22:59+08:00">
-                2018-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/编程/" itemprop="url" rel="index">
-                    <span itemprop="name">编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/07/keycode/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/07/keycode/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><div id="articlecontent">
-        <span class="Apple-style-span" style="WORD-SPACING: 0px; FONT: 13px/19px Verdana; TEXT-TRANSFORM: none; COLOR: rgb(75,75,75); TEXT-INDENT: 0px; WHITE-SPACE: normal; LETTER-SPACING: normal; BORDER-COLLAPSE: separate; orphans: 2; widows: 2; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0"><br class="Apple-interchange-newline">
-<table class=" FCK__ShowTableBorders" cellspacing="1" cellpadding="1" width="100%" bgcolor="#999999" border="0" _fckxhtmljob="1">
-<tbody _fckxhtmljob="1">
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" colspan="8" _fckxhtmljob="1"><strong _fckxhtmljob="1">字母和数字键的键码值(keyCode)</strong></td></tr>
-<tr align="middle" bgcolor="#dddddd" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">键码</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">A</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">65</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">J</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">74</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">S</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">83</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">1</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">49</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">B</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">66</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">K</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">75</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">T</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">84</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">2</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">50</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">C</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">67</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">L</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">76</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">U</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">85</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">3</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">51</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">D</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">68</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">M</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">77</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">V</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">86</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">4</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">52</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">E</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">69</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">N</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">78</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">W</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">87</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">5</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">53</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">70</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">O</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">79</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">X</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">88</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">6</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">54</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">G</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">71</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">P</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">80</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Y</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">89</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">7</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">55</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">H</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">72</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Q</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">81</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Z</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">90</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">8</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">56</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">I</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">73</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">R</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">82</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">0</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">48</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">9</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">57</td></tr></tbody></table>
-<p _fckxhtmljob="1">　　&nbsp;</p>
-<p _fckxhtmljob="1">
-</p><table class=" FCK__ShowTableBorders" cellspacing="1" cellpadding="1" width="100%" bgcolor="#999999" border="0" _fckxhtmljob="1">
-<tbody _fckxhtmljob="1">
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" colspan="4" _fckxhtmljob="1"><strong _fckxhtmljob="1">数字键盘上的键的键码值(keyCode)</strong></td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" colspan="4" _fckxhtmljob="1"><strong _fckxhtmljob="1">功能键键码值(keyCode)</strong></td></tr>
-<tr align="middle" bgcolor="#dddddd" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">0</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">96</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">8</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">104</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F1</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">112</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F7</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">118</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">1</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">97</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">9</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">105</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F2</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">113</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F8</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">119</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">2</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">98</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">*</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">106</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F3</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">114</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F9</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">120</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">3</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">99</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">+</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">107</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F4</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">115</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F10</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">121</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">4</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">100</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Enter</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">108</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F5</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">116</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F11</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">122</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">5</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">101</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">-</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">109</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F6</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">117</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">F12</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">123</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">6</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">102</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">.</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">110</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">7</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">103</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">/</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">111</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr></tbody></table><p></p>
-<p _fckxhtmljob="1">　　&nbsp;</p>
-<p _fckxhtmljob="1">
-</p><table class=" FCK__ShowTableBorders" cellspacing="1" cellpadding="1" width="100%" bgcolor="#999999" border="0" _fckxhtmljob="1">
-<tbody _fckxhtmljob="1">
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" colspan="8" _fckxhtmljob="1"><strong _fckxhtmljob="1">控制键键码值(keyCode)</strong></td></tr>
-<tr align="middle" bgcolor="#dddddd" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">BackSpace</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">8</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Esc</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">27</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Right Arrow</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">39</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">-_</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">189</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Tab</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">9</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Spacebar</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">32</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Dw Arrow</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">40</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">.&gt;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">190</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Clear</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">12</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Page Up</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">33</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Insert</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">45</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">/?</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">191</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Enter</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">13</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Page Down</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">34</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Delete</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">46</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">`~</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">192</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Shift</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">16</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">End</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">35</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Num Lock</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">144</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">[{</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">219</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Control</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">17</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Home</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">36</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">;:</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">186</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">|</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">220</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Alt</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">18</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Left Arrow</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">37</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">=+</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">187</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">]}</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">221</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Cape Lock</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">20</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">Up Arrow</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">38</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">,&lt;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">188</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">'"</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">222</td></tr></tbody></table><p></p>
-<p _fckxhtmljob="1">
-</p><table class=" FCK__ShowTableBorders" cellspacing="1" cellpadding="1" width="100%" bgcolor="#999999" border="0" _fckxhtmljob="1">
-<tbody _fckxhtmljob="1">
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" colspan="8" _fckxhtmljob="1"><strong _fckxhtmljob="1">多媒体键码值(keyCode)</strong></td></tr>
-<tr align="middle" bgcolor="#dddddd" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">按键</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" width="10%" _fckxhtmljob="1">键码</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">音量加</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">175</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">音量减</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">174</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">停止</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">179</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">静音</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">173</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">浏览器</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">172</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">邮件</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">180</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">搜索</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">170</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr>
-<tr align="middle" bgcolor="#ffffff" _fckxhtmljob="1">
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">收藏</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">171</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td>
-<td style="FONT-SIZE: 12px; COLOR: rgb(69,69,69); LINE-HEIGHT: 120%; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif; WORD-WRAP: break-word" _fckxhtmljob="1">&nbsp;</td></tr></tbody></table><p></p></span>        <div class="cutpage"></div>
-            </div>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://2le.me/2018/03/05/wubi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="bianle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/bianle">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bianle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/05/wubi/" itemprop="url">五笔</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T15:55:07+08:00">
-                2018-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/五笔/" itemprop="url" rel="index">
-                    <span itemprop="name">五笔</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/05/wubi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/05/wubi/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script src="/assets/js/DPlayer.min.js"> </script><script src="/assets/js/APlayer.min.js"> </script><p><img src="http://blimg.bovod.org/2018/03/05/20180305155535.png" alt="五笔字根表_2560x1600"><span class="image-caption">五笔字根表_2560x1600</span></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2317,7 +1995,7 @@ rescan_local:重新扫描，这个如果忘了配置，上传一次后，再添�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">308</span>
+                  <span class="site-state-item-count">310</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
