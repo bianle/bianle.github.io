@@ -1,4 +1,4 @@
-<script src="/assets/js/APlayer.min.js"> </script>const live2d_path = "https://www.example.com/path/to/live2d-widget/";
+const live2d_path = "https://www.example.com/path/to/live2d-widget/";
 
 $("<link>").attr({href: live2d_path + "waifu.css", rel: "stylesheet", type: "text/css"}).appendTo("head");
 //waifu.css的绝对路径
